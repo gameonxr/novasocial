@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <title>NovaSocial</title>
 <link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <meta name="theme-color" content="#E1306C">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -149,6 +152,7 @@ input::placeholder,textarea::placeholder{color:#444}
 
 <!-- SPLASH SCREEN -->
 <div id="splash">
+  <img src="icon-512.png" onerror="this.style.display='none'" style="width:84px;height:84px;border-radius:20px;box-shadow:0 8px 32px rgba(225,48,108,0.45)">
   <div class="splash-logo">NovaSocial</div>
   <div class="splash-tag">CONNECT · SHARE · VIBE</div>
 </div>
@@ -234,7 +238,7 @@ const db=createClient(SURL,SKEY);
 
 let ME=null,PROF=null,amode="login",curTab="home";
 let svData=[],svIdx=0,svTimer=null,svProg=0;
-let reelsMuted=true;
+let reelsMuted=true,currentReelIdx=0;
 let lpTimer=null,lpFired=false;
 let mediaRecorder=null,audioChunks=[],recording=false;
 let searchDebounceT=null;
@@ -291,6 +295,9 @@ function isOnline(ts){if(!ts)return false;return (Date.now()-new Date(ts).getTim
 
 let toastT;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
+
+// Stop ALL videos (fixes background audio/video continuing to play)
+function pauseAllVideos(){document.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}});}
 
 // ── INIT ──────────────────────────────────────
 window.addEventListener('load',async()=>{
@@ -367,6 +374,7 @@ function showErr(m){const e=document.getElementById('aerr');e.textContent=m;e.st
 
 // ── NAVIGATION ──────────────────────────────────────
 function go(tab){
+  pauseAllVideos();
   curTab=tab;
   document.querySelectorAll('.nb').forEach(b=>{
     const on=b.dataset.t===tab;
@@ -739,7 +747,7 @@ function renderSV(){
 }
 function nextSV(){if(svIdx<svData.length-1){svIdx++;renderSV();}else closeSV();}
 function prevSV(){if(svIdx>0){svIdx--;renderSV();}}
-function closeSV(){clearInterval(svTimer);document.getElementById('sv').classList.remove('show');}
+function closeSV(){clearInterval(svTimer);pauseAllVideos();document.getElementById('sv').classList.remove('show');}
 
 // ── CREATE ──────────────────────────────────────
 function showCreate(type){
@@ -875,7 +883,7 @@ async function showUserProfile(userId){
   <div style="padding:16px 16px 10px;display:flex;align-items:center;gap:20px">
     ${av(prof.avatar_url,prof.username,88,false,online)}
     <div style="display:flex;flex:1;justify-content:space-around">
-      ${[['Posts',myPosts.length],['Followers',fmt(prof.followers_count||0)],['Following',fmt(prof.following_count||0)]].map(([l,v])=>`<div class="pstat"><div class="pstat-n">${v}</div><div class="pstat-l">${l}</div></div>`).join('')}
+      ${[['Posts',myPosts.length,null],['Followers',fmt(prof.followers_count||0),'followers'],['Following',fmt(prof.following_count||0),'following']].map(([l,v,type])=>`<div class="pstat" ${type?`onclick="showFollowList('${userId}','${type}')" style="cursor:pointer"`:''}><div class="pstat-n"${type==='followers'?` id="followers-count" data-raw="${prof.followers_count||0}"`:''}>${v}</div><div class="pstat-l">${l}</div></div>`).join('')}
     </div>
   </div>
   <div style="padding:0 16px 14px">
@@ -897,17 +905,82 @@ async function showUserProfile(userId){
   <div style="height:80px"></div>`;
 }
 
+function adjustFollowerCount(delta){
+  const el=document.getElementById('followers-count');
+  if(!el)return;
+  const raw=Math.max(0,(parseInt(el.dataset.raw)||0)+delta);
+  el.dataset.raw=raw;
+  el.textContent=fmt(raw);
+}
+
 async function toggleFollowProfile(userId){
   const btn=document.getElementById('follow-btn');if(!btn)return;
-  const isFollowing=btn.textContent.trim()==='Following';
-  if(isFollowing){
-    await db.from('follows').delete().eq('follower_id',ME.id).eq('following_id',userId);
-    btn.textContent='Follow';btn.className='bgrd';
-  }else{
-    await db.from('follows').insert({follower_id:ME.id,following_id:userId});
-    db.from('notifications').insert({recipient_id:userId,sender_id:ME.id,type:'follow',message:'started following you'}).catch(()=>{});
-    btn.textContent='Following';btn.className='bout';
-    toast('Following! 🎉');
+  const wasFollowing=btn.textContent.trim()==='Following';
+  const newFollowing=!wasFollowing;
+  // optimistic UI update — changes instantly, no need to reopen profile
+  btn.textContent=newFollowing?'Following':'Follow';
+  btn.className=newFollowing?'bout':'bgrd';
+  adjustFollowerCount(newFollowing?1:-1);
+  try{
+    if(newFollowing){
+      const{error}=await db.from('follows').insert({follower_id:ME.id,following_id:userId});
+      if(error)throw error;
+      db.from('notifications').insert({recipient_id:userId,sender_id:ME.id,type:'follow',message:'started following you'}).catch(()=>{});
+      toast('Following! 🎉');
+    }else{
+      await db.from('follows').delete().eq('follower_id',ME.id).eq('following_id',userId);
+    }
+  }catch(e){
+    btn.textContent=wasFollowing?'Following':'Follow';
+    btn.className=wasFollowing?'bout':'bgrd';
+    adjustFollowerCount(wasFollowing?1:-1);
+    toast('Error, try again 😕');
+  }
+}
+
+// FOLLOWERS / FOLLOWING LIST
+async function showFollowList(userId,type){
+  const m=modal(type==='followers'?'Followers':'Following');
+  const body=m.querySelector('#mbody');
+  body.innerHTML='<div class="ldiv"><div class="spin"></div></div>';
+  const col=type==='followers'?'follower_id':'following_id';
+  const filterCol=type==='followers'?'following_id':'follower_id';
+  const{data:rows}=await db.from('follows').select(col).eq(filterCol,userId);
+  const ids=[...new Set((rows||[]).map(r=>r[col]))];
+  if(!ids.length){body.innerHTML=`<div style="text-align:center;padding:48px;color:#444">Koi ${type==='followers'?'follower':'following'} nahi abhi</div>`;return;}
+  const{data:list}=await db.from('profiles').select('id,username,avatar_url,full_name,is_verified,last_seen').in('id',ids);
+  let followingSet=new Set();
+  const{data:mf}=await db.from('follows').select('following_id').eq('follower_id',ME.id).in('following_id',ids);
+  (mf||[]).forEach(f=>followingSet.add(f.following_id));
+  body.innerHTML=(list||[]).map(u=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d">
+      <div onclick="closeModal();goToProfile('${u.id}')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1;overflow:hidden">
+        ${av(u.avatar_url,u.username,46,false,isOnline(u.last_seen))}
+        <div style="overflow:hidden">
+          <div style="font-weight:700;font-size:14px;display:flex;align-items:center;gap:5px">${u.username}${u.is_verified?ico('verified','',13):''}</div>
+          <div style="color:#666;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${u.full_name||''}</div>
+        </div>
+      </div>
+      ${u.id!==ME.id?`<button class="${followingSet.has(u.id)?'bout':'bgrd'}" style="width:auto;padding:8px 16px;font-size:12px;flex-shrink:0" onclick="quickFollow('${u.id}',this)">${followingSet.has(u.id)?'Following':'Follow'}</button>`:''}
+    </div>`).join('');
+}
+
+async function quickFollow(userId,btn){
+  const wasFollowing=btn.textContent.trim()==='Following';
+  btn.textContent=wasFollowing?'Follow':'Following';
+  btn.className=wasFollowing?'bgrd':'bout';
+  try{
+    if(wasFollowing){
+      await db.from('follows').delete().eq('follower_id',ME.id).eq('following_id',userId);
+    }else{
+      const{error}=await db.from('follows').insert({follower_id:ME.id,following_id:userId});
+      if(error)throw error;
+      db.from('notifications').insert({recipient_id:userId,sender_id:ME.id,type:'follow',message:'started following you'}).catch(()=>{});
+    }
+  }catch(e){
+    btn.textContent=wasFollowing?'Following':'Follow';
+    btn.className=wasFollowing?'bout':'bgrd';
+    toast('Error, try again 😕');
   }
 }
 
@@ -929,6 +1002,7 @@ async function renderReels(){
   (lk||[]).forEach(x=>{likedSet.add(x.post_id);reactionMap[x.post_id]=x.reaction||'heart';});
 
   let ri=0;
+  currentReelIdx=0;
   scr.style.overflow='hidden';
   scr.innerHTML=`<div id="rwrap" style="height:100%;position:relative;touch-action:pan-y">
     <div id="rinner" style="height:${reels.length*100}%;transition:transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94)">
@@ -980,8 +1054,14 @@ async function renderReels(){
   wrap.addEventListener('touchstart',e=>{sy=e.touches[0].clientY;},{passive:true});
   wrap.addEventListener('touchend',e=>{
     const d=sy-e.changedTouches[0].clientY;
-    if(d>60&&ri<reels.length-1){ri++;inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;const v=document.getElementById('rv-'+ri);if(v){v.muted=reelsMuted;v.play().catch(()=>{});}}
-    if(d<-60&&ri>0){ri--;inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;const v=document.getElementById('rv-'+ri);if(v){v.muted=reelsMuted;v.play().catch(()=>{});}}
+    const old=ri;
+    if(d>60&&ri<reels.length-1)ri++;
+    else if(d<-60&&ri>0)ri--;
+    else return;
+    inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;
+    currentReelIdx=ri;
+    const ov=document.getElementById('rv-'+old);if(ov){ov.pause();}
+    const v=document.getElementById('rv-'+ri);if(v){v.muted=reelsMuted;v.currentTime=0;v.play().catch(()=>{});}
   },{passive:true});
 }
 
@@ -1086,9 +1166,9 @@ async function loadMsgs(cid,isGrp){
       ?`<audio controls src="${m.media_url}" style="width:200px;height:36px;filter:invert(${isMe?0:0})"></audio>`
       :(m.text||'');
     return `<div style="display:flex;justify-content:${isMe?'flex-end':'flex-start'};gap:8px;align-items:flex-end">
-      ${!isMe?av(m.profiles?.avatar_url,m.profiles?.username,28):''}
+      ${!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="cursor:pointer">${av(m.profiles?.avatar_url,m.profiles?.username,28)}</div>`:''}
       <div class="${isMe?'mme':'mthem'}">
-        ${isGrp&&!isMe?`<div style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px">${m.profiles?.username}</div>`:''}
+        ${isGrp&&!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">${m.profiles?.username}</div>`:''}
         ${content}
         <div style="color:rgba(255,255,255,0.35);font-size:10px;margin-top:4px;text-align:right">${ago(m.created_at)}</div>
       </div>
@@ -1213,11 +1293,15 @@ function togGC(uid,el){
 
 async function createGC(){
   const n=document.getElementById('gc-n')?.value.trim();
-  if(!n||!window._gcs?.length){toast('Group naam aur members select karo');return;}
-  const{data:c}=await db.from('conversations').insert({is_group:true,group_name:n,created_by:ME.id}).select().single();
-  if(c){
-    await Promise.all([ME.id,...window._gcs].map(uid=>db.from('conversation_members').insert({conversation_id:c.id,user_id:uid,is_admin:uid===ME.id})));
+  if(!n){toast('Group ka naam likho');return;}
+  if(!window._gcs?.length){toast('Kam se kam 1 member select karo');return;}
+  try{
+    const{data:c,error}=await db.from('conversations').insert({is_group:true,group_name:n,created_by:ME.id}).select().single();
+    if(error||!c){toast('Group nahi bana: '+(error?.message||'try again'));return;}
+    const results=await Promise.all([ME.id,...window._gcs].map(uid=>db.from('conversation_members').insert({conversation_id:c.id,user_id:uid,is_admin:uid===ME.id})));
     closeModal();toast('Group ban gaya! 🎉');openChat(c.id,n,true);
+  }catch(e){
+    toast('Error: '+(e.message||'Group create nahi hua'));
   }
 }
 
@@ -1247,8 +1331,8 @@ async function renderProfile(){
     </div>
     <input id="avpick" type="file" accept="image/*" style="display:none" onchange="uploadAv(this)">
     <div style="display:flex;flex:1;justify-content:space-around">
-      ${[['Posts',myP.length],['Followers',fmt(PROF.followers_count||0)],['Following',fmt(PROF.following_count||0)]].map(([l,v])=>`
-        <div class="pstat"><div class="pstat-n">${v}</div><div class="pstat-l">${l}</div></div>`).join('')}
+      ${[['Posts',myP.length,null],['Followers',fmt(PROF.followers_count||0),'followers'],['Following',fmt(PROF.following_count||0),'following']].map(([l,v,type])=>`
+        <div class="pstat" ${type?`onclick="showFollowList('${ME.id}','${type}')" style="cursor:pointer"`:''}><div class="pstat-n"${type==='followers'?` id="followers-count" data-raw="${PROF.followers_count||0}"`:''}>${v}</div><div class="pstat-l">${l}</div></div>`).join('')}
     </div>
   </div>
   <div style="padding:0 16px 14px">
@@ -1365,6 +1449,7 @@ function copyProfileLink(link){
 // ── MODAL HELPER ──────────────────────────────────────
 function modal(title){
   closeModal();
+  pauseAllVideos();
   const el=document.createElement('div');
   el.className='mbg';el.id='cmodal';
   el.innerHTML=`<div class="msheet">
@@ -1378,8 +1463,14 @@ function modal(title){
   document.body.appendChild(el);
   return el;
 }
-function closeModal(){const m=document.getElementById('cmodal');if(m)m.remove();}
+function closeModal(){
+  pauseAllVideos();
+  const m=document.getElementById('cmodal');if(m)m.remove();
+  if(curTab==='reels'){
+    const v=document.getElementById('rv-'+currentReelIdx);
+    if(v){v.muted=reelsMuted;v.play().catch(()=>{});}
+  }
+}
 </script>
 </body>
 </html>
-
