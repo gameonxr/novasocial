@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>NovaSocial</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#E1306C">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -14,6 +16,13 @@ body{height:100%;height:-webkit-fill-available;background:#000;color:#f5f5f5;fon
 *::-webkit-scrollbar{display:none}
 input,textarea,button{font-family:inherit}
 input::placeholder,textarea::placeholder{color:#444}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;background:#000;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.5s ease}
+#splash.hide{opacity:0;pointer-events:none}
+.splash-logo{font-size:48px;font-weight:900;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:splashPulse 1.3s ease-in-out infinite}
+.splash-tag{color:#444;font-size:13px;letter-spacing:1.5px}
+@keyframes splashPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:0.75}}
 
 /* CORE LAYOUT */
 #root{display:flex;flex-direction:column;height:100vh;height:-webkit-fill-available;width:100%;position:fixed;top:0;left:0;right:0;bottom:0}
@@ -56,6 +65,7 @@ input::placeholder,textarea::placeholder{color:#444}
 .av img{width:100%;height:100%;object-fit:cover}
 .avring{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);padding:2px;border-radius:50%}
 .avrinner{border:2px solid #000;border-radius:50%}
+.onlinedot{position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;background:#3db83d;border:2px solid #000}
 
 /* STORIES */
 .sbar{overflow-x:auto;display:flex;gap:16px;padding:14px 16px;border-bottom:1px solid #0d0d0d}
@@ -81,6 +91,11 @@ input::placeholder,textarea::placeholder{color:#444}
 
 /* HEART POP */
 .hpop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;pointer-events:none;z-index:10;animation:heartPop 0.7s ease forwards}
+
+/* REACTION BAR */
+.reaction-bar{position:absolute;bottom:100%;left:0;margin-bottom:8px;background:#1a1a1a;border:1px solid #2e2e2e;border-radius:24px;padding:8px 12px;display:none;gap:9px;box-shadow:0 6px 24px rgba(0,0,0,0.55);z-index:60;white-space:nowrap;animation:fadeIn 0.15s ease}
+.reaction-bar span{transition:transform 0.15s}
+.reaction-bar span:active{transform:scale(1.4)}
 
 /* EXPLORE */
 .egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
@@ -115,9 +130,11 @@ input::placeholder,textarea::placeholder{color:#444}
 
 /* REEL */
 .rvid{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.mute-btn{position:absolute;top:60px;right:14px;z-index:6;background:rgba(0,0,0,0.45);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 
 /* NOTIF */
-.nitem{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #0d0d0d}
+.nitem{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #0d0d0d;cursor:pointer;transition:background 0.15s}
+.nitem:active{background:#0d0d0d}
 
 /* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -130,6 +147,12 @@ input::placeholder,textarea::placeholder{color:#444}
 <body>
 <div id="toast"></div>
 
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-logo">NovaSocial</div>
+  <div class="splash-tag">CONNECT · SHARE · VIBE</div>
+</div>
+
 <!-- STORY VIEWER -->
 <div id="sv">
   <div id="sv-bars" style="position:absolute;top:0;left:0;right:0;display:flex;gap:3px;padding:10px 12px;z-index:10"></div>
@@ -139,7 +162,6 @@ input::placeholder,textarea::placeholder{color:#444}
   <div id="sv-nav" style="position:absolute;inset:0;display:flex;z-index:5"></div>
   <div style="position:absolute;bottom:20px;left:12px;right:12px;display:flex;gap:10px;z-index:10">
     <input id="sv-reply" placeholder="Reply..." style="flex:1;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:24px;padding:12px 16px;color:#fff;font-size:14px;outline:none">
-    <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer">${ico('send')}</div>
   </div>
 </div>
 
@@ -172,23 +194,28 @@ input::placeholder,textarea::placeholder{color:#444}
   <div id="screen"></div>
   <div id="nav">
     <div class="nb on" data-t="home" onclick="go('home')">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" class="ni-home"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="#fff"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       <div class="ndot"></div>
     </div>
     <div class="nb" data-t="explore" onclick="go('explore')">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <div class="ndot"></div>
     </div>
     <div class="nb" data-t="reels" onclick="go('reels')">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><polygon points="10 8 16 12 10 16 10 8" fill="#555" stroke="none"/></svg>
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><polygon points="10 8 16 12 10 16 10 8" fill="#555" stroke="none"/></svg>
+      <div class="ndot"></div>
+    </div>
+    <div class="nb" data-t="notifs" onclick="go('notifs')" style="position:relative">
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <div id="notif-dot" style="display:none;position:absolute;top:6px;right:20px;width:9px;height:9px;border-radius:50%;background:#E1306C;border:2px solid #000"></div>
       <div class="ndot"></div>
     </div>
     <div class="nb" data-t="dms" onclick="go('dms')">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       <div class="ndot"></div>
     </div>
     <div class="nb" data-t="profile" onclick="go('profile')">
-      <div id="nav-av" class="av" style="width:28px;height:28px;font-size:12px;border:2px solid #555"></div>
+      <div id="nav-av" class="av" style="width:26px;height:26px;font-size:12px;border:2px solid #555"></div>
       <div class="ndot"></div>
     </div>
   </div>
@@ -199,12 +226,18 @@ const SURL="https://ecztpnnydvlzpppmzvzm.supabase.co";
 const SKEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjenRwbm55ZHZsenBwcG16dnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyNjIwMzcsImV4cCI6MjA5NjgzODAzN30.JMyscxYflCOmzfeqURG4X-n0DNhW9x4PFIBLSjJ9a6M";
 const CLD="dhtf1b9ak", CPRE="novasocial";
 const GRAD="linear-gradient(135deg,#833AB4,#E1306C,#F77737)";
+const REACT_MAP={heart:'❤️',love:'😍',fire:'🔥',haha:'😂',wow:'😮',sad:'😢',clap:'👏'};
+const REACT_EMOJIS=['❤️','😍','🔥','😂','😮','😢','👏'];
 
 const {createClient}=supabase;
 const db=createClient(SURL,SKEY);
 
-let ME=null,PROF=null,amode="login";
+let ME=null,PROF=null,amode="login",curTab="home";
 let svData=[],svIdx=0,svTimer=null,svProg=0;
+let reelsMuted=true;
+let lpTimer=null,lpFired=false;
+let mediaRecorder=null,audioChunks=[],recording=false;
+let searchDebounceT=null;
 
 // ── ICONS ──────────────────────────────────────
 function ico(n,c='#fff',s=24){
@@ -233,39 +266,61 @@ function ico(n,c='#fff',s=24){
     vid:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`,
     bell:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>`,
     link:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>`,
+    mic:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`,
+    stop:`<svg ${a} fill="${c}"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`,
+    mute:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="${c}"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`,
+    unmute:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="${c}"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>`,
+    qr:`<svg ${a} fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="17" y1="14" x2="17" y2="17"/><line x1="14" y1="17" x2="17" y2="17"/><line x1="21" y1="17" x2="21" y2="17"/><line x1="17" y1="21" x2="21" y2="21"/></svg>`,
   };
   return m[n]||'';
 }
 
-function av(url,name,size=36,ring=false){
+function av(url,name,size=36,ring=false,online=false){
   const l=(name||'?')[0].toUpperCase();
   const inner=url?`<img src="${url}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:${Math.round(size*0.42)}px;font-weight:700;line-height:1">${l}</span>`;
-  if(ring) return `<div class="avring"><div class="avrinner"><div class="av" style="width:${size-5}px;height:${size-5}px">${inner}</div></div></div>`;
-  return `<div class="av" style="width:${size}px;height:${size}px">${inner}</div>`;
+  let html;
+  if(ring) html=`<div class="avring"><div class="avrinner"><div class="av" style="width:${size-5}px;height:${size-5}px">${inner}</div></div></div>`;
+  else html=`<div class="av" style="width:${size}px;height:${size}px">${inner}</div>`;
+  if(online) return `<div style="position:relative;flex-shrink:0">${html}<div class="onlinedot"></div></div>`;
+  return html;
 }
 
 function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1000?(n/1000).toFixed(1)+'k':String(n||0)}
 function ago(ts){const s=Math.floor((Date.now()-new Date(ts))/1000);if(s<60)return s+'s';if(s<3600)return Math.floor(s/60)+'m';if(s<86400)return Math.floor(s/3600)+'h';return Math.floor(s/86400)+'d';}
+function isOnline(ts){if(!ts)return false;return (Date.now()-new Date(ts).getTime())<5*60*1000;}
 
 let toastT;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
 
 // ── INIT ──────────────────────────────────────
 window.addEventListener('load',async()=>{
-  const {data:{session}}=await db.auth.getSession();
+  const minSplash=new Promise(r=>setTimeout(r,900));
+  const{data:{session}}=await db.auth.getSession();
   if(session?.user){ME=session.user;await loadProf();showApp();}
+  await minSplash;
+  document.getElementById('splash').classList.add('hide');
   db.auth.onAuthStateChange(async(e,s)=>{if(s?.user&&!ME){ME=s.user;await loadProf();showApp();}});
 });
+
+// keep "last seen" fresh
+setInterval(()=>{if(ME)updateLastSeen();},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ME)updateLastSeen();});
+
+async function updateLastSeen(){
+  try{await db.from('profiles').update({last_seen:new Date().toISOString()}).eq('id',ME.id);}catch(e){}
+}
 
 async function loadProf(){
   const {data}=await db.from('profiles').select('*').eq('id',ME.id).single();
   PROF=data||{};
+  updateLastSeen();
   const el=document.getElementById('nav-av');
   if(el){
     if(PROF.avatar_url) el.innerHTML=`<img src="${PROF.avatar_url}" style="width:100%;height:100%;object-fit:cover">`;
     else el.textContent=(PROF.username||ME.email||'?')[0].toUpperCase();
     el.style.borderColor='#fff';
   }
+  checkUnreadNotifs();
 }
 
 function showApp(){
@@ -312,11 +367,11 @@ function showErr(m){const e=document.getElementById('aerr');e.textContent=m;e.st
 
 // ── NAVIGATION ──────────────────────────────────────
 function go(tab){
+  curTab=tab;
   document.querySelectorAll('.nb').forEach(b=>{
     const on=b.dataset.t===tab;
     b.classList.toggle('on',on);
   });
-  // Update nav icons color
   updateNavIcons(tab);
   const scr=document.getElementById('screen');
   scr.innerHTML=`<div class="ldiv"><div class="spin"></div></div>`;
@@ -327,6 +382,7 @@ function go(tab){
   else if(tab==='explore') renderExplore();
   else if(tab==='reels') renderReels();
   else if(tab==='dms') renderDMs();
+  else if(tab==='notifs') renderNotifs();
   else if(tab==='profile') renderProfile();
 }
 
@@ -339,26 +395,138 @@ function updateNavIcons(tab){
     const svg=b.querySelector('svg');
     if(svg){
       if(t==='home'){svg.setAttribute('fill',on?'#fff':'none');svg.setAttribute('stroke',on?'none':'#555');}
-      else if(t==='explore'){svg.setAttribute('stroke',on?'#fff':'#555');}
-      else if(t==='reels'){svg.setAttribute('stroke',on?'#fff':'#555');const poly=svg.querySelector('polygon');if(poly)poly.setAttribute('fill',on?'#fff':'#555');}
-      else if(t==='dms'){svg.setAttribute('stroke',on?'#fff':'#555');}
+      else{svg.setAttribute('stroke',on?'#fff':'#555');const poly=svg.querySelector('polygon');if(poly)poly.setAttribute('fill',on?'#fff':'#555');}
     }
     const navav=b.querySelector('#nav-av');
     if(navav) navav.style.borderColor=on?'#fff':'#555';
   });
 }
 
+// ── NOTIFICATIONS ──────────────────────────────────────
+async function checkUnreadNotifs(){
+  try{
+    const{count}=await db.from('notifications').select('id',{count:'exact',head:true}).eq('recipient_id',ME.id).eq('is_read',false);
+    const dot=document.getElementById('notif-dot');
+    if(dot) dot.style.display=(count>0)?'block':'none';
+  }catch(e){}
+}
+
+async function renderNotifs(){
+  const scr=document.getElementById('screen');
+  const{data:notifs}=await db.from('notifications').select('*,profiles!sender_id(username,avatar_url)').eq('recipient_id',ME.id).order('created_at',{ascending:false}).limit(50);
+  const texts={like:'liked your post',follow:'started following you'};
+  scr.innerHTML=`
+  <div class="topbar"><span style="font-weight:700;font-size:18px">Notifications</span></div>
+  ${!notifs?.length?`
+    <div style="text-align:center;padding:60px 20px;color:#444">
+      <div style="font-size:52px;margin-bottom:16px">🔔</div>
+      <div style="font-weight:700;font-size:17px;color:#fff">Koi notification nahi abhi</div>
+      <div style="font-size:14px;margin-top:6px">Jab koi like/comment/follow karega yahan dikhega</div>
+    </div>`
+  :notifs.map(n=>{
+    const icons={like:'❤️',comment:'💬',follow:'👤'};
+    let txt=n.type==='comment'?('commented: '+(n.message||'')):(n.message||texts[n.type]||'');
+    return `<div class="nitem" onclick="notifClick('${n.type}','${n.sender_id}','${n.post_id||''}')">
+      <div style="position:relative;flex-shrink:0">
+        ${av(n.profiles?.avatar_url,n.profiles?.username,46)}
+        <div style="position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #000">${icons[n.type]||'🔔'}</div>
+      </div>
+      <div style="flex:1;overflow:hidden">
+        <span style="font-weight:700;font-size:14px">${n.profiles?.username||''} </span>
+        <span style="color:#aaa;font-size:14px">${txt}</span>
+        <div style="color:#444;font-size:11px;margin-top:3px">${ago(n.created_at)}</div>
+      </div>
+      ${!n.is_read?`<div style="width:8px;height:8px;border-radius:50%;background:#E1306C;flex-shrink:0"></div>`:''}
+    </div>`;
+  }).join('')}
+  <div style="height:80px"></div>`;
+  await db.from('notifications').update({is_read:true}).eq('recipient_id',ME.id).eq('is_read',false);
+  const dot=document.getElementById('notif-dot'); if(dot) dot.style.display='none';
+}
+
+function notifClick(type,senderId,postId){
+  if(type==='follow') showUserProfile(senderId);
+  else if(postId) viewPost(postId);
+  else showUserProfile(senderId);
+}
+
 // ── UPLOAD ──────────────────────────────────────
 async function upload(file,onProg){
   return new Promise((res,rej)=>{
     const fd=new FormData();fd.append('file',file);fd.append('upload_preset',CPRE);
-    const isV=file.type.startsWith('video/');
+    const isMedia=file.type.startsWith('video/')||file.type.startsWith('audio/');
     const xhr=new XMLHttpRequest();
-    xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLD}/${isV?'video':'image'}/upload`);
+    xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLD}/${isMedia?'video':'image'}/upload`);
     xhr.upload.onprogress=e=>{if(e.lengthComputable&&onProg)onProg(Math.round(e.loaded*100/e.total));};
     xhr.onload=()=>{const d=JSON.parse(xhr.responseText);d.secure_url?res(d.secure_url):rej(d);};
     xhr.onerror=rej;xhr.send(fd);
   });
+}
+
+// ── LIKE / REACTIONS ──────────────────────────────────────
+function likeIconHTML(liked,reaction){
+  if(liked && reaction && reaction!=='heart') return `<span style="font-size:25px;line-height:1">${REACT_MAP[reaction]||'❤️'}</span>`;
+  return liked?ico('heartf'):ico('heart');
+}
+
+function startLongPress(pid){
+  lpFired=false;
+  lpTimer=setTimeout(()=>{lpFired=true;showReactionBar(pid);},420);
+}
+function cancelLongPress(){clearTimeout(lpTimer);}
+
+function showReactionBar(pid){
+  const bar=document.getElementById('rbar-'+pid);if(!bar)return;
+  bar.innerHTML=REACT_EMOJIS.map(em=>`<span onclick="setReaction(event,'${pid}','${em}')">${em}</span>`).join('');
+  bar.style.display='flex';
+  setTimeout(()=>{if(bar)bar.style.display='none';},4000);
+}
+
+function updateLikeUI(pid,liked,cnt,reaction){
+  const el=document.getElementById('lbtn-'+pid);
+  if(el){el.dataset.liked=liked;el.dataset.cnt=cnt;el.dataset.reaction=reaction;el.innerHTML=likeIconHTML(liked,reaction);}
+  const lc1=document.getElementById('lcnt-'+pid);
+  if(lc1){lc1.textContent=fmt(cnt)+' likes';lc1.style.display=cnt>0?'block':'none';}
+  const lc2=document.getElementById('lcnt-'+pid+'-txt');
+  if(lc2) lc2.textContent=fmt(cnt);
+}
+
+async function toggleLike(pid){
+  if(lpFired){lpFired=false;return;}
+  const el=document.getElementById('lbtn-'+pid);if(!el)return;
+  const wasLiked=el.dataset.liked==='true';
+  const newLiked=!wasLiked;
+  const cnt=parseInt(el.dataset.cnt)||0;
+  const newCnt=newLiked?cnt+1:Math.max(0,cnt-1);
+  const owner=el.dataset.owner;
+  updateLikeUI(pid,newLiked,newCnt,'heart');
+  if(newLiked){
+    await db.from('likes').upsert({user_id:ME.id,post_id:pid,reaction:'heart'},{onConflict:'user_id,post_id'});
+    if(owner&&owner!==ME.id) db.from('notifications').insert({recipient_id:owner,sender_id:ME.id,type:'like',post_id:pid,message:'liked your post ❤️'}).catch(()=>{});
+  }else{
+    await db.from('likes').delete().eq('user_id',ME.id).eq('post_id',pid);
+  }
+}
+
+function dblLike(pid,cont){
+  const el=document.getElementById('lbtn-'+pid);
+  if(el&&el.dataset.liked!=='true') toggleLike(pid);
+  const p=document.createElement('div');p.className='hpop';p.textContent='❤️';
+  cont.appendChild(p);setTimeout(()=>p.remove(),700);
+}
+
+async function setReaction(e,pid,emoji){
+  e.stopPropagation();
+  const reactionKey=Object.keys(REACT_MAP).find(k=>REACT_MAP[k]===emoji)||'heart';
+  const el=document.getElementById('lbtn-'+pid);if(!el)return;
+  const wasLiked=el.dataset.liked==='true';
+  const cnt=parseInt(el.dataset.cnt)||0;
+  const owner=el.dataset.owner;
+  const newCnt=wasLiked?cnt:cnt+1;
+  updateLikeUI(pid,true,newCnt,reactionKey);
+  await db.from('likes').upsert({user_id:ME.id,post_id:pid,reaction:reactionKey},{onConflict:'user_id,post_id'});
+  if(!wasLiked&&owner&&owner!==ME.id) db.from('notifications').insert({recipient_id:owner,sender_id:ME.id,type:'like',post_id:pid,message:`reacted ${emoji} to your post`}).catch(()=>{});
+  const bar=document.getElementById('rbar-'+pid);if(bar)bar.style.display='none';
 }
 
 // ── HOME ──────────────────────────────────────
@@ -366,16 +534,16 @@ async function renderHome(){
   const scr=document.getElementById('screen');
   const[{data:stories},{data:posts}]=await Promise.all([
     db.from('stories').select('*,profiles(username,avatar_url)').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(20),
-    db.from('posts').select('*,profiles(username,avatar_url,is_verified)').eq('is_reel',false).order('created_at',{ascending:false}).limit(30)
+    db.from('posts').select('*,profiles(username,avatar_url,is_verified,last_seen)').eq('is_reel',false).order('created_at',{ascending:false}).limit(30)
   ]);
-  let likedSet=new Set(),savedSet=new Set();
+  let likedSet=new Set(),savedSet=new Set(),reactionMap={};
   if(posts?.length){
     const ids=posts.map(p=>p.id);
     const[{data:lk},{data:sv}]=await Promise.all([
-      db.from('likes').select('post_id').eq('user_id',ME.id).in('post_id',ids),
+      db.from('likes').select('post_id,reaction').eq('user_id',ME.id).in('post_id',ids),
       db.from('bookmarks').select('post_id').eq('user_id',ME.id).in('post_id',ids)
     ]);
-    (lk||[]).forEach(x=>likedSet.add(x.post_id));
+    (lk||[]).forEach(x=>{likedSet.add(x.post_id);reactionMap[x.post_id]=x.reaction||'heart';});
     (sv||[]).forEach(x=>savedSet.add(x.post_id));
   }
   svData=stories||[];
@@ -410,21 +578,22 @@ async function renderHome(){
       <div style="font-size:14px">Pehla post share karo!</div>
       <button class="bgrd" onclick="showCreate('post')" style="width:auto;padding:13px 28px;margin-top:20px">+ New Post</button>
     </div>`
-  :(posts||[]).map(p=>postCard(p,likedSet.has(p.id),savedSet.has(p.id))).join('')}
+  :(posts||[]).map(p=>postCard(p,likedSet.has(p.id),savedSet.has(p.id),reactionMap[p.id]||'heart')).join('')}
   <div style="height:80px"></div>`;
 }
 
-function postCard(p,liked,saved){
+function postCard(p,liked,saved,reaction){
+  const online=isOnline(p.profiles?.last_seen);
   return `<div class="post fade" id="pc-${p.id}">
   <div class="post-hdr">
-    <div style="display:flex;align-items:center;gap:10px;cursor:pointer">
-      ${av(p.profiles?.avatar_url,p.profiles?.username,40,true)}
+    <div onclick="goToProfile('${p.user_id}')" style="display:flex;align-items:center;gap:10px;cursor:pointer">
+      ${av(p.profiles?.avatar_url,p.profiles?.username,40,true,online)}
       <div>
         <div style="display:flex;align-items:center;gap:5px">
           <span style="font-weight:700;font-size:14px">${p.profiles?.username||''}</span>
           ${p.profiles?.is_verified?ico('verified','',14):''}
         </div>
-        ${p.location?`<div style="color:#777;font-size:11px">${p.location}</div>`:''}
+        ${p.location?`<div style="color:#777;font-size:11px">${p.location}</div>`:online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
       </div>
     </div>
     <div style="display:flex;gap:14px;align-items:center">
@@ -434,14 +603,19 @@ function postCard(p,liked,saved){
   </div>
   <div style="position:relative;aspect-ratio:1/1;background:#111;overflow:hidden;cursor:pointer" ondblclick="dblLike('${p.id}',this)">
     ${p.media_url?
-      p.media_type==='video'?`<video src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" controls playsinline muted loop></video>`
+      p.media_type==='video'?`<video src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" controls playsinline loop></video>`
       :`<img src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
     :`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#333;font-size:48px">📷</div>`}
   </div>
   <div class="post-acts">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
       <div style="display:flex;gap:18px;align-items:center">
-        <div id="lbtn-${p.id}" data-liked="${liked}" data-cnt="${p.likes_count||0}" onclick="toggleLike('${p.id}')" style="cursor:pointer;display:flex;align-items:center">${liked?ico('heartf'):ico('heart')}</div>
+        <div style="position:relative">
+          <div id="lbtn-${p.id}" data-liked="${liked}" data-cnt="${p.likes_count||0}" data-owner="${p.user_id}" data-reaction="${reaction}"
+            onclick="toggleLike('${p.id}')" ontouchstart="startLongPress('${p.id}')" ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()"
+            style="cursor:pointer;display:flex;align-items:center">${likeIconHTML(liked,reaction)}</div>
+          <div id="rbar-${p.id}" class="reaction-bar"></div>
+        </div>
         <div onclick="openComments('${p.id}')" style="cursor:pointer">${ico('comment')}</div>
         <div onclick="shareIt()" style="cursor:pointer">${ico('send')}</div>
       </div>
@@ -455,25 +629,9 @@ function postCard(p,liked,saved){
 </div>`;
 }
 
-async function toggleLike(pid){
-  const el=document.getElementById('lbtn-'+pid);if(!el)return;
-  const wasLiked=el.dataset.liked==='true';
-  const newLiked=!wasLiked;
-  const cnt=parseInt(el.dataset.cnt)||0;
-  const newCnt=newLiked?cnt+1:Math.max(0,cnt-1);
-  el.dataset.liked=newLiked;el.dataset.cnt=newCnt;
-  el.innerHTML=newLiked?ico('heartf'):ico('heart');
-  const lc=document.getElementById('lcnt-'+pid);
-  if(lc){lc.textContent=fmt(newCnt)+' likes';lc.style.display=newCnt>0?'block':'none';}
-  if(newLiked) await db.from('likes').insert({user_id:ME.id,post_id:pid});
-  else await db.from('likes').delete().eq('user_id',ME.id).eq('post_id',pid);
-}
-
-function dblLike(pid,cont){
-  const el=document.getElementById('lbtn-'+pid);
-  if(el&&el.dataset.liked!=='true') toggleLike(pid);
-  const p=document.createElement('div');p.className='hpop';p.textContent='❤️';
-  cont.appendChild(p);setTimeout(()=>p.remove(),700);
+function goToProfile(userId){
+  if(userId===ME.id){go('profile');return;}
+  showUserProfile(userId);
 }
 
 async function toggleSave(pid){
@@ -495,6 +653,18 @@ async function delPost(pid){
 
 function shareIt(){if(navigator.share)navigator.share({text:'Check NovaSocial!'});else toast('Link copied!');}
 
+// VIEW SINGLE POST (from explore/profile grid)
+async function viewPost(pid){
+  const{data:p}=await db.from('posts').select('*,profiles(username,avatar_url,is_verified,last_seen)').eq('id',pid).single();
+  if(!p){toast('Post not found');return;}
+  const[{data:lk},{data:sv}]=await Promise.all([
+    db.from('likes').select('reaction').eq('user_id',ME.id).eq('post_id',pid).maybeSingle(),
+    db.from('bookmarks').select('id').eq('user_id',ME.id).eq('post_id',pid).maybeSingle()
+  ]);
+  const m=modal('Post');
+  m.querySelector('#mbody').innerHTML=postCard(p,!!lk,!!sv,lk?.reaction||'heart');
+}
+
 // COMMENTS
 async function openComments(pid){
   const m=modal('Comments');
@@ -505,7 +675,7 @@ async function openComments(pid){
       ${!(cmts?.length)?'<div style="text-align:center;color:#444;padding:40px">Pehla comment karo! 💬</div>'
       :(cmts||[]).map(c=>`
         <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d">
-          ${av(c.profiles?.avatar_url,c.profiles?.username,34)}
+          <div onclick="closeModal();goToProfile('${c.user_id}')" style="cursor:pointer">${av(c.profiles?.avatar_url,c.profiles?.username,34)}</div>
           <div style="flex:1">
             <span style="font-weight:700;font-size:13px">${c.profiles?.username} </span>
             <span style="font-size:13px;color:#ddd">${c.text}</span>
@@ -524,6 +694,9 @@ async function sendCmt(pid){
   const txt=inp.value.trim();if(!txt)return;
   inp.value='';
   await db.from('comments').insert({user_id:ME.id,post_id:pid,text:txt});
+  const owner=document.getElementById('lbtn-'+pid)?.dataset.owner;
+  if(owner&&owner!==ME.id) db.from('notifications').insert({recipient_id:owner,sender_id:ME.id,type:'comment',post_id:pid,message:txt.slice(0,60)}).catch(()=>{});
+  const cntEl=document.querySelector(`[onclick="openComments('${pid}')"]`);
   openComments(pid);
 }
 
@@ -543,7 +716,7 @@ function renderSV(){
       <div id="svb-${i}" style="height:100%;background:#fff;border-radius:2px;width:${i<svIdx?'100%':i===svIdx?'0%':'0%'};transition:${i===svIdx?'width 0.1s linear':'none'}"></div>
     </div>`).join('');
   document.getElementById('sv-hdr').innerHTML=`
-    <div style="display:flex;align-items:center;gap:10px">
+    <div onclick="closeSV();goToProfile('${s.user_id}')" style="display:flex;align-items:center;gap:10px;cursor:pointer">
       ${av(s.profiles?.avatar_url,s.profiles?.username,38)}
       <div>
         <div style="color:#fff;font-weight:700;font-size:14px">${s.profiles?.username||''}</div>
@@ -553,7 +726,7 @@ function renderSV(){
     <div onclick="closeSV()" style="cursor:pointer;padding:4px">${ico('close')}</div>`;
   const med=document.getElementById('sv-media');
   med.innerHTML=s.media_type==='video'
-    ?`<video src="${s.media_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted playsinline loop></video>`
+    ?`<video src="${s.media_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay playsinline loop></video>`
     :`<img src="${s.media_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`;
   document.getElementById('sv-cap').textContent=s.caption||'';
   document.getElementById('sv-nav').innerHTML=`<div style="flex:1" onclick="${svIdx>0?'prevSV()':'closeSV()'}"></div><div style="flex:1" onclick="nextSV()"></div>`;
@@ -624,16 +797,16 @@ async function renderExplore(){
   const{data:posts}=await db.from('posts').select('*,profiles(username,avatar_url)').eq('is_reel',false).order('likes_count',{ascending:false}).limit(30);
   scr.innerHTML=`
   <div class="topbar">
-    <div class="sbar2">${ico('search','#666',18)}<input placeholder="Search users, posts, hashtags..." id="sq" onkeydown="if(event.key==='Enter')doSearch(this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div>
+    <div class="sbar2">${ico('search','#666',18)}<input placeholder="Search users, posts, hashtags..." id="sq" oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter')doSearch(this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div>
   </div>
-  <div class="pills">
-    ${['All','Photos','Videos','Travel','Food','Art','Tech','Fashion'].map((c,i)=>`<div class="pill" style="background:${i===0?'#fff':'#1a1a1a'};color:${i===0?'#000':'#777'}" onclick="exPill(this,'${c}')">${c}</div>`).join('')}
+  <div class="pills" id="explore-pills">
+    ${['All','People','Photos','Videos','Travel','Food','Art','Tech'].map((c,i)=>`<div class="pill" style="background:${i===0?'#fff':'#1a1a1a'};color:${i===0?'#000':'#777'}" onclick="exPill(this,'${c}')">${c}</div>`).join('')}
   </div>
   <div style="height:10px"></div>
   <div class="egrid" id="egrid">
     ${(posts||[]).map(p=>`
-      <div class="eitem">
-        ${p.media_url?`<img src="${p.media_url}" loading="lazy">`:`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#333;font-size:32px">📷</div>`}
+      <div class="eitem" onclick="viewPost('${p.id}')">
+        ${p.media_url?(p.media_type==='video'?`<video src="${p.media_url}" muted></video>`:`<img src="${p.media_url}" loading="lazy">`):`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#333;font-size:32px">📷</div>`}
         ${p.is_reel?`<div style="position:absolute;top:6px;right:6px">${ico('reelico','#fff',16)}</div>`:''}
       </div>`).join('')}
   </div>
@@ -645,25 +818,97 @@ function exPill(el,c){
   el.style.background='#fff';el.style.color='#000';
 }
 
+function onSearchInput(q){
+  clearTimeout(searchDebounceT);
+  if(!q.trim())return;
+  searchDebounceT=setTimeout(()=>doSearch(q),350);
+}
+
 async function doSearch(q){
   if(!q.trim())return;
+  const qq=q.trim();
   const[{data:users},{data:posts}]=await Promise.all([
-    db.from('profiles').select('*').ilike('username',`%${q}%`).limit(10),
-    db.from('posts').select('*,profiles(username,avatar_url)').ilike('caption',`%${q}%`).limit(20)
+    db.from('profiles').select('*').ilike('username',`%${qq}%`).limit(15),
+    db.from('posts').select('*,profiles(username,avatar_url)').ilike('caption',`%${qq}%`).limit(20)
   ]);
   const g=document.getElementById('egrid');if(!g)return;
   let h='';
   if(users?.length){
-    h+=`<div style="grid-column:1/-1;padding:12px 16px;font-weight:700;font-size:12px;color:#666;letter-spacing:1px">PEOPLE</div>`;
+    h+=`<div style="grid-column:1/-1;padding:12px 16px;font-weight:700;font-size:12px;color:#666;letter-spacing:1px">PEOPLE (${users.length})</div>`;
     h+=users.map(u=>`<div style="grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d;cursor:pointer" onclick="showUserProfile('${u.id}')">
-      ${av(u.avatar_url,u.username,46)}<div><div style="font-weight:700;font-size:14px">${u.username}</div><div style="color:#666;font-size:13px">${u.full_name||''}</div></div>
+      ${av(u.avatar_url,u.username,46,false,isOnline(u.last_seen))}
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:5px"><span style="font-weight:700;font-size:14px">${u.username}</span>${u.is_verified?ico('verified','',13):''}</div>
+        <div style="color:#666;font-size:13px">${u.full_name||''}</div>
+      </div>
+      ${ico('back','#444',18)}
     </div>`).join('');
   }
   if(posts?.length){
-    h+=`<div style="grid-column:1/-1;padding:12px 16px;font-weight:700;font-size:12px;color:#666;letter-spacing:1px">POSTS</div>`;
-    h+=posts.map(p=>`<div class="eitem">${p.media_url?`<img src="${p.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;font-size:32px;width:100%;height:100%;color:#333">📷</div>'}</div>`).join('');
+    h+=`<div style="grid-column:1/-1;padding:12px 16px;font-weight:700;font-size:12px;color:#666;letter-spacing:1px">POSTS (${posts.length})</div>`;
+    h+=posts.map(p=>`<div class="eitem" onclick="viewPost('${p.id}')">${p.media_url?`<img src="${p.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;font-size:32px;width:100%;height:100%;color:#333">📷</div>'}</div>`).join('');
   }
-  g.innerHTML=h||`<div style="grid-column:1/-1;text-align:center;padding:48px;color:#444">Koi result nahi mila 😕</div>`;
+  g.innerHTML=h||`<div style="grid-column:1/-1;text-align:center;padding:48px;color:#444">"${qq}" ke liye koi result nahi mila 😕</div>`;
+}
+
+// ── USER PROFILE VIEW ──────────────────────────────────────
+async function showUserProfile(userId){
+  if(userId===ME.id){go('profile');return;}
+  const scr=document.getElementById('screen');
+  scr.style.overflow='auto';
+  scr.innerHTML=`<div class="ldiv"><div class="spin"></div></div>`;
+  const[{data:prof},{data:posts},{data:followCheck}]=await Promise.all([
+    db.from('profiles').select('*').eq('id',userId).single(),
+    db.from('posts').select('*').eq('user_id',userId).order('created_at',{ascending:false}),
+    db.from('follows').select('id').eq('follower_id',ME.id).eq('following_id',userId).maybeSingle()
+  ]);
+  if(!prof){scr.innerHTML='<div class="ldiv">User not found</div>';return;}
+  const isFollowing=!!followCheck;
+  const myPosts=(posts||[]).filter(p=>!p.is_reel);
+  const online=isOnline(prof.last_seen);
+  scr.innerHTML=`
+  <div class="topbar">
+    <div onclick="go(curTab)" style="cursor:pointer;margin-right:8px">${ico('back')}</div>
+    <span style="font-weight:700;font-size:18px;flex:1">${prof.username}</span>
+    ${prof.is_verified?ico('verified','',18):''}
+  </div>
+  <div style="padding:16px 16px 10px;display:flex;align-items:center;gap:20px">
+    ${av(prof.avatar_url,prof.username,88,false,online)}
+    <div style="display:flex;flex:1;justify-content:space-around">
+      ${[['Posts',myPosts.length],['Followers',fmt(prof.followers_count||0)],['Following',fmt(prof.following_count||0)]].map(([l,v])=>`<div class="pstat"><div class="pstat-n">${v}</div><div class="pstat-l">${l}</div></div>`).join('')}
+    </div>
+  </div>
+  <div style="padding:0 16px 14px">
+    ${prof.full_name?`<div style="font-weight:700;font-size:15px">${prof.full_name}</div>`:''}
+    ${prof.bio?`<div style="color:#ccc;font-size:14px;margin-top:4px;line-height:1.6">${prof.bio}</div>`:''}
+    ${online?`<div style="color:#3db83d;font-size:12px;margin-top:6px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#3db83d;display:inline-block"></span>Active now</div>`:''}
+  </div>
+  <div style="display:flex;gap:8px;padding:0 16px 16px">
+    <button id="follow-btn" class="${isFollowing?'bout':'bgrd'}" onclick="toggleFollowProfile('${userId}')" style="font-size:14px;padding:11px 0">${isFollowing?'Following':'Follow'}</button>
+    <button class="bout" onclick="startDM('${userId}')" style="font-size:14px;padding:11px 0">Message</button>
+  </div>
+  <div style="display:flex;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;margin-bottom:2px">
+    <div style="flex:1;display:flex;justify-content:center;padding:13px;border-bottom:2px solid #fff">${ico('grid','#fff',22)}</div>
+  </div>
+  <div class="pgrid">
+    ${!myPosts.length?`<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>Koi post nahi</div>`
+    :myPosts.map(p=>`<div class="pitem" onclick="viewPost('${p.id}')">${p.media_url?`<img src="${p.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>'}</div>`).join('')}
+  </div>
+  <div style="height:80px"></div>`;
+}
+
+async function toggleFollowProfile(userId){
+  const btn=document.getElementById('follow-btn');if(!btn)return;
+  const isFollowing=btn.textContent.trim()==='Following';
+  if(isFollowing){
+    await db.from('follows').delete().eq('follower_id',ME.id).eq('following_id',userId);
+    btn.textContent='Follow';btn.className='bgrd';
+  }else{
+    await db.from('follows').insert({follower_id:ME.id,following_id:userId});
+    db.from('notifications').insert({recipient_id:userId,sender_id:ME.id,type:'follow',message:'started following you'}).catch(()=>{});
+    btn.textContent='Following';btn.className='bout';
+    toast('Following! 🎉');
+  }
 }
 
 // ── REELS ──────────────────────────────────────
@@ -678,21 +923,34 @@ async function renderReels(){
       <button class="bgrd" onclick="showCreate('reel')" style="width:auto;padding:13px 32px">🎬 New Reel</button>
     </div>`;return;
   }
+  let likedSet=new Set(),reactionMap={};
+  const ids=reels.map(r=>r.id);
+  const{data:lk}=await db.from('likes').select('post_id,reaction').eq('user_id',ME.id).in('post_id',ids);
+  (lk||[]).forEach(x=>{likedSet.add(x.post_id);reactionMap[x.post_id]=x.reaction||'heart';});
+
   let ri=0;
   scr.style.overflow='hidden';
   scr.innerHTML=`<div id="rwrap" style="height:100%;position:relative;touch-action:pan-y">
     <div id="rinner" style="height:${reels.length*100}%;transition:transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94)">
-      ${reels.map((r,i)=>`
+      ${reels.map((r,i)=>{
+        const liked=likedSet.has(r.id), reaction=reactionMap[r.id]||'heart';
+        return `
         <div style="height:${100/reels.length}%;position:relative;background:#000;overflow:hidden">
-          ${r.media_url?`<video src="${r.media_url}" id="rv-${i}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" ${i===0?'autoplay':''} muted playsinline loop></video>`:`<div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0533,#0d1f3c);display:flex;align-items:center;justify-content:center;font-size:90px">🎬</div>`}
+          ${r.media_url?`<video src="${r.media_url}" class="rvid" id="rv-${i}" ${i===0?'autoplay':''} ${reelsMuted?'muted':''} playsinline loop></video>`:`<div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0533,#0d1f3c);display:flex;align-items:center;justify-content:center;font-size:90px">🎬</div>`}
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 70%,rgba(0,0,0,0.3) 100%)"></div>
           <div style="position:absolute;top:0;left:0;right:0;padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
             <span style="font-weight:800;font-size:18px;text-shadow:0 2px 8px rgba(0,0,0,0.8)">Reels</span>
             <div onclick="showCreate('reel')" style="cursor:pointer">${ico('cam')}</div>
           </div>
+          <div class="mute-btn" onclick="toggleReelsMute()"><span class="mute-icon">${reelsMuted?ico('mute','#fff',20):ico('unmute','#fff',20)}</span></div>
           <div style="position:absolute;right:12px;bottom:110px;display:flex;flex-direction:column;gap:22px;align-items:center">
-            <div onclick="rLike(this,'${r.id}')" data-liked="false" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer">
-              ${ico('heart')}<span style="color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)">${fmt(r.likes_count||0)}</span>
+            <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:5px">
+              <div id="lbtn-${r.id}" data-liked="${liked}" data-cnt="${r.likes_count||0}" data-owner="${r.user_id}" data-reaction="${reaction}"
+                onclick="toggleLike('${r.id}')" ontouchstart="startLongPress('${r.id}')" ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()" style="cursor:pointer">
+                ${likeIconHTML(liked,reaction)}
+              </div>
+              <span id="lcnt-${r.id}-txt" style="color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)">${fmt(r.likes_count||0)}</span>
+              <div id="rbar-${r.id}" class="reaction-bar" style="bottom:auto;top:0;left:auto;right:46px"></div>
             </div>
             <div onclick="openComments('${r.id}')" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer">
               ${ico('comment')}<span style="color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)">${fmt(r.comments_count||0)}</span>
@@ -702,7 +960,7 @@ async function renderReels(){
             </div>
           </div>
           <div style="position:absolute;left:14px;right:64px;bottom:80px">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div onclick="goToProfile('${r.user_id}')" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer">
               ${av(r.profiles?.avatar_url,r.profiles?.username,40)}
               <span style="font-weight:700;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,0.9)">${r.profiles?.username||''}</span>
               ${r.profiles?.is_verified?ico('verified','',14):''}
@@ -712,7 +970,8 @@ async function renderReels(){
           <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:5px">
             ${reels.map((_,j)=>`<div style="width:3px;height:${j===i?18:5}px;border-radius:3px;background:${j===i?'#fff':'rgba(255,255,255,0.3)'};transition:all 0.3s"></div>`).join('')}
           </div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     </div>
   </div>`;
   const wrap=document.getElementById('rwrap');
@@ -721,17 +980,19 @@ async function renderReels(){
   wrap.addEventListener('touchstart',e=>{sy=e.touches[0].clientY;},{passive:true});
   wrap.addEventListener('touchend',e=>{
     const d=sy-e.changedTouches[0].clientY;
-    if(d>60&&ri<reels.length-1){ri++;inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;const v=document.getElementById('rv-'+ri);if(v)v.play();}
-    if(d<-60&&ri>0){ri--;inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;const v=document.getElementById('rv-'+ri);if(v)v.play();}
+    if(d>60&&ri<reels.length-1){ri++;inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;const v=document.getElementById('rv-'+ri);if(v){v.muted=reelsMuted;v.play().catch(()=>{});}}
+    if(d<-60&&ri>0){ri--;inner.style.transform=`translateY(-${ri*(100/reels.length)}%)`;const v=document.getElementById('rv-'+ri);if(v){v.muted=reelsMuted;v.play().catch(()=>{});}}
   },{passive:true});
 }
 
-function rLike(el,pid){
-  const was=el.dataset.liked==='true';
-  el.dataset.liked=!was;
-  el.innerHTML=(!was?ico('heartf'):ico('heart'))+`<span style="color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)">${!was?'❤️':'♡'}</span>`;
-  if(!was) db.from('likes').insert({user_id:ME.id,post_id:pid}).catch(()=>{});
-  else db.from('likes').delete().eq('user_id',ME.id).eq('post_id',pid).catch(()=>{});
+function toggleReelsMute(){
+  reelsMuted=!reelsMuted;
+  document.querySelectorAll('.rvid').forEach(v=>{
+    v.muted=reelsMuted;
+    if(!reelsMuted) v.play().catch(()=>{});
+  });
+  document.querySelectorAll('.mute-icon').forEach(el=>{el.innerHTML=reelsMuted?ico('mute','#fff',20):ico('unmute','#fff',20);});
+  toast(reelsMuted?'🔇 Muted':'🔊 Sound On');
 }
 
 // ── DMS ──────────────────────────────────────
@@ -739,6 +1000,15 @@ async function renderDMs(){
   const scr=document.getElementById('screen');
   const{data:mem}=await db.from('conversation_members').select('conversation_id,conversations(*)').eq('user_id',ME.id);
   const convos=(mem||[]).map(m=>m.conversations).filter(Boolean).sort((a,b)=>new Date(b.last_message_at)-new Date(a.last_message_at));
+
+  // Get "other" member profile for 1:1 chats
+  const oneOnOneIds=convos.filter(c=>!c.is_group).map(c=>c.id);
+  let otherMap={};
+  if(oneOnOneIds.length){
+    const{data:others}=await db.from('conversation_members').select('conversation_id,user_id,profiles(username,avatar_url,last_seen)').in('conversation_id',oneOnOneIds).neq('user_id',ME.id);
+    (others||[]).forEach(o=>{otherMap[o.conversation_id]=o.profiles;});
+  }
+
   scr.innerHTML=`
   <div class="topbar">
     <span style="font-weight:700;font-size:18px">Messages</span>
@@ -753,33 +1023,55 @@ async function renderDMs(){
       <div style="font-weight:700;font-size:17px;color:#fff;margin-bottom:8px">Koi message nahi</div>
       <button class="bgrd" onclick="showNewDM()" style="width:auto;padding:13px 28px;margin-top:8px">New Message</button>
     </div>`
-  :convos.map(c=>`
-    <div class="clist" onclick="openChat('${c.id}','${(c.group_name||'Chat').replace(/'/g,"\\'")}',${c.is_group})">
-      <div style="width:54px;height:54px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">${c.is_group?'👥':'💬'}</div>
+  :convos.map(c=>{
+    const other=otherMap[c.id];
+    const name=c.is_group?c.group_name:(other?.username||'Chat');
+    const online=other?isOnline(other.last_seen):false;
+    const avatarHtml=c.is_group
+      ?`<div style="width:54px;height:54px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">👥</div>`
+      :av(other?.avatar_url,other?.username,54,false,online);
+    return `
+    <div class="clist" onclick="openChat('${c.id}','${(name||'Chat').replace(/'/g,"\\'")}',${c.is_group})">
+      ${avatarHtml}
       <div style="flex:1;overflow:hidden">
         <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-          <span style="font-weight:700;font-size:15px">${c.is_group?c.group_name:'Chat'}</span>
+          <span style="font-weight:700;font-size:15px">${name}</span>
           <span style="color:#444;font-size:11px;flex-shrink:0">${ago(c.last_message_at)}</span>
         </div>
         <div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.last_message||'Tap to open'}</div>
       </div>
-    </div>`).join('')}
+    </div>`;
+  }).join('')}
   <div style="height:80px"></div>`;
 }
 
 async function openChat(cid,name,isGrp){
   const scr=document.getElementById('screen');
   scr.style.overflow='hidden';
+  window._curIsGrp=isGrp;
+  window._curChatId=cid;
+  let otherProf=null;
+  if(!isGrp){
+    const{data:mems}=await db.from('conversation_members').select('user_id,profiles(username,avatar_url,last_seen)').eq('conversation_id',cid);
+    const other=(mems||[]).find(m=>m.user_id!==ME.id);
+    if(other){otherProf=other.profiles;name=other.profiles?.username||'Chat';window._chatOtherId=other.user_id;}
+  }
+  const online=otherProf?isOnline(otherProf.last_seen):false;
   scr.innerHTML=`<div style="display:flex;flex-direction:column;height:100%">
     <div class="topbar">
-      <div onclick="go('dms')" style="cursor:pointer;margin-right:8px">${ico('back')}</div>
-      <span style="font-weight:700;font-size:16px;flex:1">${name}</span>
+      <div onclick="go('dms')" style="cursor:pointer;margin-right:10px">${ico('back')}</div>
+      ${otherProf?av(otherProf.avatar_url,otherProf.username,36,false,online):''}
+      <div style="flex:1;margin-left:${otherProf?'10px':'0'}">
+        <div onclick="${otherProf?`goToProfile('${window._chatOtherId}')`:''}" style="font-weight:700;font-size:15px;cursor:${otherProf?'pointer':'default'}">${name}</div>
+        ${online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
+      </div>
       ${ico('more','#555')}
     </div>
     <div id="mlist" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch"></div>
-    <div style="padding:10px 14px;display:flex;gap:10px;background:rgba(0,0,0,0.95);border-top:1px solid #111;flex-shrink:0">
-      <input id="minp" placeholder="Message..." onkeydown="if(event.key==='Enter')sendMsg('${cid}',${isGrp})" style="flex:1;background:#111;border:1px solid #222;border-radius:24px;padding:12px 16px;color:#fff;font-size:14px;outline:none">
-      <div onclick="sendMsg('${cid}',${isGrp})" style="width:46px;height:46px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">${ico('send')}</div>
+    <div style="padding:10px 14px;display:flex;gap:8px;background:rgba(0,0,0,0.95);border-top:1px solid #111;flex-shrink:0;align-items:center">
+      <div id="mic-btn" onclick="toggleRecording('${cid}')" style="width:44px;height:44px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">${ico('mic')}</div>
+      <input id="minp" placeholder="Message..." onkeydown="if(event.key==='Enter')sendMsg('${cid}')" style="flex:1;background:#111;border:1px solid #222;border-radius:24px;padding:12px 16px;color:#fff;font-size:14px;outline:none">
+      <div onclick="sendMsg('${cid}')" style="width:46px;height:46px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">${ico('send')}</div>
     </div>
   </div>`;
   loadMsgs(cid,isGrp);
@@ -790,11 +1082,14 @@ async function loadMsgs(cid,isGrp){
   const list=document.getElementById('mlist');if(!list)return;
   list.innerHTML=(msgs||[]).map(m=>{
     const isMe=m.sender_id===ME.id;
+    const content=m.media_type==='audio'
+      ?`<audio controls src="${m.media_url}" style="width:200px;height:36px;filter:invert(${isMe?0:0})"></audio>`
+      :(m.text||'');
     return `<div style="display:flex;justify-content:${isMe?'flex-end':'flex-start'};gap:8px;align-items:flex-end">
       ${!isMe?av(m.profiles?.avatar_url,m.profiles?.username,28):''}
       <div class="${isMe?'mme':'mthem'}">
         ${isGrp&&!isMe?`<div style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px">${m.profiles?.username}</div>`:''}
-        ${m.text}
+        ${content}
         <div style="color:rgba(255,255,255,0.35);font-size:10px;margin-top:4px;text-align:right">${ago(m.created_at)}</div>
       </div>
     </div>`;
@@ -802,12 +1097,47 @@ async function loadMsgs(cid,isGrp){
   list.scrollTop=list.scrollHeight;
 }
 
-async function sendMsg(cid,isGrp){
+async function sendMsg(cid){
   const inp=document.getElementById('minp');if(!inp)return;
   const txt=inp.value.trim();if(!txt)return;
   inp.value='';
   await db.from('messages').insert({conversation_id:cid,sender_id:ME.id,text:txt});
-  loadMsgs(cid,isGrp);
+  loadMsgs(cid,window._curIsGrp);
+}
+
+// VOICE MESSAGES
+async function toggleRecording(cid){
+  const btn=document.getElementById('mic-btn');if(!btn)return;
+  if(!recording){
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      mediaRecorder=new MediaRecorder(stream);
+      audioChunks=[];
+      mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+      mediaRecorder.onstop=async()=>{
+        const blob=new Blob(audioChunks,{type:'audio/webm'});
+        if(blob.size<500){toast('Recording too short');stream.getTracks().forEach(t=>t.stop());return;}
+        toast('Sending voice message... 🎤');
+        try{
+          const file=new File([blob],'voice.webm',{type:'audio/webm'});
+          const url=await upload(file);
+          await db.from('messages').insert({conversation_id:cid,sender_id:ME.id,text:'',media_url:url,media_type:'audio'});
+          loadMsgs(cid,window._curIsGrp);
+        }catch(e){toast('Voice message failed');}
+        stream.getTracks().forEach(t=>t.stop());
+      };
+      mediaRecorder.start();
+      recording=true;
+      btn.style.background='#E1306C';
+      btn.innerHTML=ico('stop');
+      toast('🔴 Recording... tap to stop');
+    }catch(e){toast('Microphone permission denied');}
+  }else{
+    mediaRecorder.stop();
+    recording=false;
+    btn.style.background='#1a1a1a';
+    btn.innerHTML=ico('mic');
+  }
 }
 
 async function showNewDM(){
@@ -825,19 +1155,27 @@ async function searchDM(q){
   const r=document.getElementById('dms-res');if(!r)return;
   r.innerHTML=(u||[]).map(x=>`
     <div onclick="startDM('${x.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
-      ${av(x.avatar_url,x.username,46)}
+      ${av(x.avatar_url,x.username,46,false,isOnline(x.last_seen))}
       <div><div style="font-weight:700;font-size:14px">${x.username}</div><div style="color:#555;font-size:13px">${x.full_name||''}</div></div>
     </div>`).join('')||'<div style="color:#444;text-align:center;padding:24px">Koi nahi mila</div>';
 }
 
 async function startDM(uid){
+  closeModal();
+  // Check if conversation already exists between ME and uid
+  const{data:myConvos}=await db.from('conversation_members').select('conversation_id,conversations!inner(is_group)').eq('user_id',ME.id);
+  const oneOnOneIds=(myConvos||[]).filter(c=>!c.conversations.is_group).map(c=>c.conversation_id);
+  if(oneOnOneIds.length){
+    const{data:existing}=await db.from('conversation_members').select('conversation_id').eq('user_id',uid).in('conversation_id',oneOnOneIds);
+    if(existing?.length){openChat(existing[0].conversation_id,'Chat',false);return;}
+  }
   const{data:c}=await db.from('conversations').insert({is_group:false,created_by:ME.id}).select().single();
   if(c){
     await Promise.all([
       db.from('conversation_members').insert({conversation_id:c.id,user_id:ME.id}),
       db.from('conversation_members').insert({conversation_id:c.id,user_id:uid})
     ]);
-    closeModal();openChat(c.id,'Chat',false);
+    openChat(c.id,'Chat',false);
   }
 }
 
@@ -917,10 +1255,11 @@ async function renderProfile(){
     ${PROF.full_name?`<div style="font-weight:700;font-size:15px;margin-bottom:4px">${PROF.full_name}</div>`:''}
     ${PROF.bio?`<div style="color:#ccc;font-size:14px;line-height:1.6">${PROF.bio}</div>`:''}
     ${PROF.website?`<div style="color:#4a90d9;font-size:14px;margin-top:4px;display:flex;align-items:center;gap:4px">${ico('link','#4a90d9',14)}${PROF.website}</div>`:''}
+    <div style="color:#3db83d;font-size:12px;margin-top:6px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#3db83d;display:inline-block"></span>Active now</div>
   </div>
   <div style="display:flex;gap:8px;padding:0 16px 16px">
     <button class="bout" onclick="showEdit()" style="font-size:13px;padding:10px 0">Edit Profile</button>
-    <button class="bout" onclick="shareIt()" style="font-size:13px;padding:10px 0">Share</button>
+    <button class="bout" onclick="shareProfile()" style="font-size:13px;padding:10px 0">Share / QR</button>
     <button class="bout" onclick="showCreate('post')" style="font-size:13px;padding:10px 0;border-color:#333">+ Post</button>
   </div>
   <div style="display:flex;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;margin-bottom:2px">
@@ -929,7 +1268,7 @@ async function renderProfile(){
   </div>
   <div class="pgrid" id="pgrid">
     ${!myP.length?`<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>Koi post nahi</div>`
-    :myP.map(p=>`<div class="pitem">${p.media_url?`<img src="${p.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>'}</div>`).join('')}
+    :myP.map(p=>`<div class="pitem" onclick="viewPost('${p.id}')">${p.media_url?`<img src="${p.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>'}</div>`).join('')}
   </div>
   <div style="height:80px"></div>`;
 }
@@ -942,13 +1281,13 @@ function profTab(t){
     rb.style.borderBottomColor='transparent';rb.innerHTML=ico('reelico','#555',22);
     const p=window._pp||[];
     g.innerHTML=!p.length?`<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>Koi post nahi</div>`
-    :p.map(x=>`<div class="pitem">${x.media_url?`<img src="${x.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>'}</div>`).join('');
+    :p.map(x=>`<div class="pitem" onclick="viewPost('${x.id}')">${x.media_url?`<img src="${x.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>'}</div>`).join('');
   }else{
     rb.style.borderBottomColor='#fff';rb.innerHTML=ico('reelico','#fff',22);
     pb.style.borderBottomColor='transparent';pb.innerHTML=ico('grid','#555',22);
     const r=window._pr||[];
     g.innerHTML=!r.length?`<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">🎬</div>Koi reel nahi</div>`
-    :r.map(x=>`<div class="pitem">${x.media_url?`<img src="${x.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">🎬</div>'}</div>`).join('');
+    :r.map(x=>`<div class="pitem" onclick="viewPost('${x.id}')">${x.media_url?`<img src="${x.media_url}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">🎬</div>'}</div>`).join('');
   }
 }
 
@@ -1001,6 +1340,28 @@ async function saveEdit(){
   renderProfile();
 }
 
+// SHARE / QR CODE
+function shareProfile(){
+  const link=`${window.location.origin}/?u=${PROF.username}`;
+  const m=modal('Share Profile');
+  const body=m.querySelector('#mbody');
+  body.innerHTML=`<div style="padding:24px;display:flex;flex-direction:column;align-items:center;gap:18px">
+    ${av(PROF.avatar_url,PROF.username,72)}
+    <div style="font-weight:700;font-size:16px">@${PROF.username}</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(link)}" style="border-radius:14px;background:#fff;padding:12px;width:220px;height:220px">
+    <div style="color:#666;font-size:12px;text-align:center;word-break:break-all;padding:0 10px">${link}</div>
+    <button class="bgrd" onclick="copyProfileLink('${link}')">📋 Copy Link</button>
+    ${navigator.share?`<button class="bout" onclick="navigator.share({text:'Follow me on NovaSocial!',url:'${link}'})">Share via...</button>`:''}
+  </div>`;
+}
+
+function copyProfileLink(link){
+  try{
+    navigator.clipboard.writeText(link);
+    toast('Link copied! 📋');
+  }catch(e){toast('Could not copy');}
+}
+
 // ── MODAL HELPER ──────────────────────────────────────
 function modal(title){
   closeModal();
@@ -1021,3 +1382,4 @@ function closeModal(){const m=document.getElementById('cmodal');if(m)m.remove();
 </script>
 </body>
 </html>
+
