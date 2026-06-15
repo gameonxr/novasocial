@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1131,21 +1130,26 @@ async function openChat(cid,name,isGrp){
   window._curIsGrp=isGrp;
   window._curChatId=cid;
   let otherProf=null;
+  let memberCount=0;
   if(!isGrp){
     const{data:mems}=await db.from('conversation_members').select('user_id,profiles(username,avatar_url,last_seen)').eq('conversation_id',cid);
     const other=(mems||[]).find(m=>m.user_id!==ME.id);
     if(other){otherProf=other.profiles;name=other.profiles?.username||'Chat';window._chatOtherId=other.user_id;}
+  }else{
+    const{count}=await db.from('conversation_members').select('id',{count:'exact',head:true}).eq('conversation_id',cid);
+    memberCount=count||0;
   }
   const online=otherProf?isOnline(otherProf.last_seen):false;
   scr.innerHTML=`<div style="display:flex;flex-direction:column;height:100%">
     <div class="topbar">
       <div onclick="go('dms')" style="cursor:pointer;margin-right:10px">${ico('back')}</div>
-      ${otherProf?av(otherProf.avatar_url,otherProf.username,36,false,online):''}
-      <div style="flex:1;margin-left:${otherProf?'10px':'0'}">
-        <div onclick="${otherProf?`goToProfile('${window._chatOtherId}')`:''}" style="font-weight:700;font-size:15px;cursor:${otherProf?'pointer':'default'}">${name}</div>
-        ${online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
+      ${otherProf?av(otherProf.avatar_url,otherProf.username,36,false,online)
+        :isGrp?`<div style="width:36px;height:36px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:18px">👥</div>`:''}
+      <div onclick="${isGrp?`showGroupInfo('${cid}')`:otherProf?`goToProfile('${window._chatOtherId}')`:''}" style="flex:1;margin-left:10px;cursor:pointer">
+        <div style="font-weight:700;font-size:15px">${name}</div>
+        ${isGrp?`<div style="color:#666;font-size:11px">${memberCount} members</div>`:online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
       </div>
-      ${ico('more','#555')}
+      <div onclick="${isGrp?`showGroupInfo('${cid}')`:''}" style="cursor:${isGrp?'pointer':'default'}">${ico('more','#555')}</div>
     </div>
     <div id="mlist" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch"></div>
     <div style="padding:10px 14px;display:flex;gap:8px;background:rgba(0,0,0,0.95);border-top:1px solid #111;flex-shrink:0;align-items:center">
@@ -1303,6 +1307,115 @@ async function createGC(){
   }catch(e){
     toast('Error: '+(e.message||'Group create nahi hua'));
   }
+}
+
+// ── GROUP INFO / ADMIN MANAGEMENT ──────────────────────────────────────
+async function showGroupInfo(cid){
+  const m=modal('Group Info');
+  const body=m.querySelector('#mbody');
+  body.innerHTML='<div class="ldiv"><div class="spin"></div></div>';
+  const[{data:conv},{data:members}]=await Promise.all([
+    db.from('conversations').select('*').eq('id',cid).single(),
+    db.from('conversation_members').select('user_id,is_admin,profiles(username,avatar_url,is_verified,last_seen)').eq('conversation_id',cid)
+  ]);
+  const mine=(members||[]).find(x=>x.user_id===ME.id);
+  const amAdmin=!!mine?.is_admin;
+  // sort: admins first, then me, then others
+  const sorted=(members||[]).sort((a,b)=>{
+    if(a.user_id===ME.id)return -1;
+    if(b.user_id===ME.id)return 1;
+    if(a.is_admin!==b.is_admin)return a.is_admin?-1:1;
+    return 0;
+  });
+  body.innerHTML=`
+    <div style="padding:24px 20px;text-align:center;border-bottom:1px solid #1a1a1a">
+      <div style="width:72px;height:72px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 10px">👥</div>
+      <div style="font-weight:800;font-size:18px">${conv?.group_name||'Group'}</div>
+      <div style="color:#666;font-size:13px;margin-top:4px">${(members||[]).length} members</div>
+    </div>
+    <div style="padding:14px 16px 0">
+      <button class="bgrd" onclick="showAddMembers('${cid}')">+ Add Members</button>
+    </div>
+    <div style="padding:8px 0">
+      ${sorted.map(mb=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px">
+          <div onclick="closeModal();goToProfile('${mb.user_id}')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1;overflow:hidden">
+            ${av(mb.profiles?.avatar_url,mb.profiles?.username,46,false,isOnline(mb.profiles?.last_seen))}
+            <div style="overflow:hidden">
+              <div style="font-weight:700;font-size:14px;display:flex;align-items:center;gap:5px">
+                ${mb.profiles?.username||''}${mb.user_id===ME.id?' <span style="color:#666;font-weight:400">(You)</span>':''}
+                ${mb.profiles?.is_verified?ico('verified','',13):''}
+              </div>
+              ${mb.is_admin?'<div style="color:#E1306C;font-size:11px;font-weight:700;margin-top:2px">★ Admin</div>':''}
+            </div>
+          </div>
+          ${amAdmin&&mb.user_id!==ME.id?`
+            <div style="display:flex;gap:6px;flex-shrink:0">
+              <button class="bout" style="width:auto;padding:6px 10px;font-size:11px;white-space:nowrap" onclick="toggleAdmin('${cid}',${mb.user_id?`'${mb.user_id}'`:'null'},${mb.is_admin})">${mb.is_admin?'- Admin':'+ Admin'}</button>
+              <button class="bout" style="width:auto;padding:6px 10px;font-size:11px;border-color:#E1306C;color:#E1306C;white-space:nowrap" onclick="removeMember('${cid}','${mb.user_id}')">Remove</button>
+            </div>`:''}
+        </div>`).join('')}
+    </div>
+    <div style="padding:8px 16px 20px">
+      <button class="bout" style="border-color:#E1306C;color:#E1306C" onclick="leaveGroup('${cid}')">🚪 Leave Group</button>
+    </div>`;
+}
+
+async function toggleAdmin(cid,userId,currentlyAdmin){
+  const{error}=await db.from('conversation_members').update({is_admin:!currentlyAdmin}).eq('conversation_id',cid).eq('user_id',userId);
+  if(error){toast('Error: '+error.message);return;}
+  toast(!currentlyAdmin?'Admin bana diya ✅':'Admin hata diya');
+  showGroupInfo(cid);
+}
+
+async function removeMember(cid,userId){
+  if(!confirm('Is member ko group se hatana hai?'))return;
+  const{error}=await db.from('conversation_members').delete().eq('conversation_id',cid).eq('user_id',userId);
+  if(error){toast('Error: '+error.message);return;}
+  toast('Member removed');
+  showGroupInfo(cid);
+}
+
+async function leaveGroup(cid){
+  if(!confirm('Group leave karna hai? Tum dobara invite ke bina join nahi kar paoge.'))return;
+  await db.from('conversation_members').delete().eq('conversation_id',cid).eq('user_id',ME.id);
+  closeModal();
+  toast('Group left');
+  go('dms');
+}
+
+async function showAddMembers(cid){
+  const m=modal('Add Members');
+  const body=m.querySelector('#mbody');
+  body.innerHTML=`<div style="padding:16px">
+    <div class="sbar2">${ico('search','#666',18)}<input placeholder="Search users by username..." id="am-search" oninput="searchAddMembers('${cid}',this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div>
+    <div id="am-results" style="margin-top:12px"></div>
+  </div>`;
+}
+
+async function searchAddMembers(cid,q){
+  if(!q.trim()){document.getElementById('am-results').innerHTML='';return;}
+  const[{data:existing},{data:users}]=await Promise.all([
+    db.from('conversation_members').select('user_id').eq('conversation_id',cid),
+    db.from('profiles').select('*').ilike('username',`%${q}%`).limit(15)
+  ]);
+  const existingIds=new Set((existing||[]).map(e=>e.user_id));
+  const r=document.getElementById('am-results');if(!r)return;
+  const filtered=(users||[]).filter(u=>!existingIds.has(u.id));
+  r.innerHTML=filtered.map(u=>`
+    <div id="am-row-${u.id}" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d">
+      ${av(u.avatar_url,u.username,40)}
+      <span style="font-weight:600;font-size:14px;flex:1">${u.username}</span>
+      <button class="bgrd" style="width:auto;padding:7px 16px;font-size:12px" onclick="addMemberToGroup('${cid}','${u.id}')">Add</button>
+    </div>`).join('')||'<div style="color:#444;text-align:center;padding:20px">Koi nahi mila</div>';
+}
+
+async function addMemberToGroup(cid,uid){
+  const{error}=await db.from('conversation_members').insert({conversation_id:cid,user_id:uid,is_admin:false});
+  if(error){toast('Error: '+error.message);return;}
+  toast('Member added! 🎉');
+  const row=document.getElementById('am-row-'+uid);
+  if(row) row.innerHTML+=`<span style="color:#3db83d;font-weight:700;font-size:13px;margin-left:8px">✓ Added</span>`;
 }
 
 // ── PROFILE ──────────────────────────────────────
