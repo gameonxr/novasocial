@@ -1176,8 +1176,29 @@ async function openChat(cid,name,isGrp){
     </div>
   </div>`;
   loadMsgs(cid,isGrp);
+
+  if(window.chatSubscription){
+  db.removeChannel(window.chatSubscription);
 }
 
+window.chatSubscription = db
+.channel('chat-' + cid)
+.on(
+  'postgres_changes',
+  {
+    event: 'INSERT',
+    schema: 'public',
+    table: 'messages'
+  },
+  (payload) => {
+    if(payload.new.conversation_id === cid){
+      loadMsgs(cid,isGrp);
+    }
+  }
+)
+.subscribe();
+
+}
 async function showGroupInfo(cid){
   const members=window._chatMembers||[];
   const isAdmin=window._chatIsAdmin;
