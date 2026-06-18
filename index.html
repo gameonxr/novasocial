@@ -1465,6 +1465,15 @@ function showMsgMenu(e,id,text){
   `;
 
   document.body.appendChild(div);
+
+setTimeout(() => {
+  document.addEventListener('click', closeReactionMenu, { once:true });
+}, 100);
+
+function closeReactionMenu(){
+  const box=document.getElementById('react-box');
+  if(box) box.remove();
+}
 }
 
 function replyMsg(id,text){
@@ -1488,12 +1497,17 @@ function replyMsg(id,text){
 async function reactMsg(mid,emoji){
 
   await db
-  .from('message_reactions')
-  .upsert({
-    message_id:mid,
-    user_id:ME.id,
-    emoji:emoji
-  });
+.from('message_reactions')
+.upsert(
+{
+  message_id:mid,
+  user_id:ME.id,
+  emoji:emoji
+},
+{
+  onConflict:'message_id,user_id'
+}
+);
 
   loadMsgs(window._curChatId,window._curIsGrp);
 
