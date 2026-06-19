@@ -2115,15 +2115,30 @@ function closeModal(){
 }
 </script>
 
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js", {
-  scope: "./"
-})
-    .then(() => console.log("Service Worker Registered"))
-    .catch(err => console.log("SW Error:", err));
-}
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My PWA App</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#000000">
+</head>
+
+<body>
+  <h1>My PWA App</h1>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./service-worker.js")
+        .then(() => console.log("SW Registered"))
+        .catch(err => console.log(err));
+    }
+  </script>
+</body>
+  </html>
   
 </body>
 </html>
