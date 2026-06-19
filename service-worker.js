@@ -1,28 +1,28 @@
 const CACHE_NAME = "novasocial-v1";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/icon-192.png",
-  "/icon-512.png"
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
-// Install SW
-self.addEventListener("install", (event) => {
+// INSTALL
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-// Activate SW
-self.addEventListener("activate", (event) => {
+// ACTIVATE
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((keys) => {
+    caches.keys().then(keys => {
       return Promise.all(
-        keys.map((key) => {
+        keys.map(key => {
           if (key !== CACHE_NAME) {
             return caches.delete(key);
           }
@@ -32,10 +32,10 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Fetch (offline support)
-self.addEventListener("fetch", (event) => {
+// FETCH
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    caches.match(event.request).then(response => {
       return response || fetch(event.request);
     })
   );
