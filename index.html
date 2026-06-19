@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+}<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -291,6 +291,25 @@ function av(url,name,size=36,ring=false,online=false){
 function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1000?(n/1000).toFixed(1)+'k':String(n||0)}
 function ago(ts){const s=Math.floor((Date.now()-new Date(ts))/1000);if(s<60)return s+'s';if(s<3600)return Math.floor(s/60)+'m';if(s<86400)return Math.floor(s/3600)+'h';return Math.floor(s/86400)+'d';}
 function isOnline(ts){if(!ts)return false;return (Date.now()-new Date(ts).getTime())<5*60*1000;}
+
+function lastSeenText(ts){
+
+  if(!ts) return '';
+
+  const diff=Math.floor(
+    (Date.now()-new Date(ts).getTime())/1000
+  );
+
+  if(diff < 60) return 'Active now';
+
+  if(diff < 3600)
+    return `Last seen ${Math.floor(diff/60)}m ago`;
+
+  if(diff < 86400)
+    return `Last seen ${Math.floor(diff/3600)}h ago`;
+
+  return `Last seen ${Math.floor(diff/86400)}d ago`;
+}
 
 let toastT;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2500);}
@@ -905,83 +924,137 @@ async function showUserProfile(userId){
   <div style="height:80px"></div>`;
 }
 
-function adjustFollowerCount(delta){
-  const el=document.getElementById('followers-count');
-  if(!el)return;
-  const raw=Math.max(0,(parseInt(el.dataset.raw)||0)+delta);
-  el.dataset.raw=raw;
-  el.textContent=fmt(raw);
+// ── WORKING FOLLOW SYSTEM (Stable) ──────────────────────────────────────
+
+async function adjustFollowerCount(delta) {
+  const el = document.getElementById('followers-count');
+  if (!el) return;
+  let raw = parseInt(el.dataset.raw || 0) + delta;
+  raw = Math.max(0, raw);
+  el.dataset.raw = raw;
+  el.textContent = fmt(raw);
 }
 
-async function toggleFollowProfile(userId){
-  const btn=document.getElementById('follow-btn');if(!btn)return;
-  const wasFollowing=btn.textContent.trim()==='Following';
-  const newFollowing=!wasFollowing;
-  // optimistic UI update — changes instantly, no need to reopen profile
-  btn.textContent=newFollowing?'Following':'Follow';
-  btn.className=newFollowing?'bout':'bgrd';
-  adjustFollowerCount(newFollowing?1:-1);
-  try{
-    if(newFollowing){
-      const{error}=await db.from('follows').upsert({follower_id:ME.id,following_id:userId},{onConflict:'follower_id,following_id'});
-      if(error)throw error;
-      db.from('notifications').insert({recipient_id:userId,sender_id:ME.id,type:'follow',message:'started following you'}).catch(()=>{});
-      toast('Following! 🎉');
-    }else{
-      await db.from('follows').delete().eq('follower_id',ME.id).eq('following_id',userId);
-    }
-  }catch(e){
-    // Revert UI on actual network failure
-    btn.textContent=wasFollowing?'Following':'Follow';
-    btn.className=wasFollowing?'bout':'bgrd';
-    adjustFollowerCount(wasFollowing?1:-1);
-    toast('Network error, try again 😕');
+async function updateMyFollowingCount(delta) {
+  const fel = document.getElementById('following-count');
+  if (fel) {
+    let raw = parseInt(fel.dataset.raw || 0) + delta;
+    raw = Math.max(0, raw);
+    fel.dataset.raw = raw;
+    fel.textContent = fmt(raw);
   }
 }
 
-// FOLLOWERS / FOLLOWING LIST
-async function showFollowList(userId,type){
-  const m=modal(type==='followers'?'Followers':'Following');
-  const body=m.querySelector('#mbody');
-  body.innerHTML='<div class="ldiv"><div class="spin"></div></div>';
-  const col=type==='followers'?'follower_id':'following_id';
-  const filterCol=type==='followers'?'following_id':'follower_id';
-  const{data:rows}=await db.from('follows').select(col).eq(filterCol,userId);
-  const ids=[...new Set((rows||[]).map(r=>r[col]))];
-  if(!ids.length){body.innerHTML=`<div style="text-align:center;padding:48px;color:#444">Koi ${type==='followers'?'follower':'following'} nahi abhi</div>`;return;}
-  const{data:list}=await db.from('profiles').select('id,username,avatar_url,full_name,is_verified,last_seen').in('id',ids);
-  let followingSet=new Set();
-  const{data:mf}=await db.from('follows').select('following_id').eq('follower_id',ME.id).in('following_id',ids);
-  (mf||[]).forEach(f=>followingSet.add(f.following_id));
-  body.innerHTML=(list||[]).map(u=>`
-    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d">
-      <div onclick="closeModal();goToProfile('${u.id}')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1;overflow:hidden">
-        ${av(u.avatar_url,u.username,46,false,isOnline(u.last_seen))}
-        <div style="overflow:hidden">
-          <div style="font-weight:700;font-size:14px;display:flex;align-items:center;gap:5px">${u.username}${u.is_verified?ico('verified','',13):''}</div>
-          <div style="color:#666;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${u.full_name||''}</div>
-        </div>
-      </div>
-      ${u.id!==ME.id?`<button class="${followingSet.has(u.id)?'bout':'bgrd'}" style="width:auto;padding:8px 16px;font-size:12px;flex-shrink:0" onclick="quickFollow('${u.id}',this)">${followingSet.has(u.id)?'Following':'Follow'}</button>`:''}
-    </div>`).join('');
+async function toggleFollowProfile(userId) {
+  const btn = document.getElementById('follow-btn');
+  if (!btn) return;
+
+  const wasFollowing = btn.textContent.trim() === 'Following';
+  const newFollowing = !wasFollowing;
+
+  console.log(`[Follow] ${wasFollowing ? 'Unfollow' : 'Follow'} attempt for user:`, userId);
+
+  // Optimistic UI
+  btn.textContent = newFollowing ? 'Following' : 'Follow';
+  btn.className = newFollowing ? 'bout' : 'bgrd';
+  adjustFollowerCount(newFollowing ? 1 : -1);
+  updateMyFollowingCount(newFollowing ? 1 : -1);
+
+  try {
+    let error = null;
+
+    if (newFollowing) {
+      // Follow
+      const res = await db.from('follows').insert({
+        follower_id: ME.id,
+        following_id: userId
+      });
+      error = res.error;
+      if (!error) console.log("[Follow] Insert successful");
+    } else {
+      // Unfollow
+      const res = await db.from('follows').delete()
+        .eq('follower_id', ME.id)
+        .eq('following_id', userId);
+      error = res.error;
+      if (!error) console.log("[Follow] Delete successful");
+    }
+
+    if (error) {
+      console.error("[Follow] Supabase Error:", error);
+      throw error;
+    }
+
+    // Success - refresh counts from server
+    await refreshProfileCounts(userId);
+    toast(newFollowing ? 'Following! 🎉' : 'Unfollowed');
+
+  } catch (e) {
+    console.error("❌ Full Follow Error:", e);
+    
+    // Revert UI
+    btn.textContent = wasFollowing ? 'Following' : 'Follow';
+    btn.className = wasFollowing ? 'bout' : 'bgrd';
+    adjustFollowerCount(wasFollowing ? 1 : -1);
+    updateMyFollowingCount(wasFollowing ? 1 : -1);
+
+    toast('Network error, 2 second baad try karo');
+  }
 }
 
-async function quickFollow(userId,btn){
-  const wasFollowing=btn.textContent.trim()==='Following';
-  btn.textContent=wasFollowing?'Follow':'Following';
-  btn.className=wasFollowing?'bgrd':'bout';
-  try{
-    if(wasFollowing){
-      await db.from('follows').delete().eq('follower_id',ME.id).eq('following_id',userId);
-    }else{
-      const{error}=await db.from('follows').upsert({follower_id:ME.id,following_id:userId},{onConflict:'follower_id,following_id'});
-      if(error)throw error;
-      db.from('notifications').insert({recipient_id:userId,sender_id:ME.id,type:'follow',message:'started following you'}).catch(()=>{});
+async function refreshProfileCounts(userId) {
+  try {
+    const [{ data: target }, { data: me }] = await Promise.all([
+      db.from('profiles').select('followers_count').eq('id', userId).single(),
+      db.from('profiles').select('following_count').eq('id', ME.id).single()
+    ]);
+
+    if (target && document.getElementById('followers-count')) {
+      const fel = document.getElementById('followers-count');
+      fel.dataset.raw = target.followers_count || 0;
+      fel.textContent = fmt(target.followers_count || 0);
     }
-  }catch(e){
-    btn.textContent=wasFollowing?'Following':'Follow';
-    btn.className=wasFollowing?'bout':'bgrd';
-    toast('Error, try again 😕');
+
+    if (me && document.getElementById('following-count')) {
+      const myFel = document.getElementById('following-count');
+      myFel.dataset.raw = me.following_count || 0;
+      myFel.textContent = fmt(me.following_count || 0);
+    }
+  } catch (e) {
+    console.log("Count refresh skipped");
+  }
+}
+
+async function quickFollow(userId, btn) {
+  const wasFollowing = btn.textContent.trim() === 'Following';
+  const newFollowing = !wasFollowing;
+
+  btn.textContent = newFollowing ? 'Following' : 'Follow';
+  btn.className = newFollowing ? 'bout' : 'bgrd';
+
+  try {
+    let error = null;
+
+    if (newFollowing) {
+      const res = await db.from('follows').insert({ follower_id: ME.id, following_id: userId });
+      error = res.error;
+    } else {
+      const res = await db.from('follows').delete()
+        .eq('follower_id', ME.id)
+        .eq('following_id', userId);
+      error = res.error;
+    }
+
+    if (error) throw error;
+
+    await refreshProfileCounts(userId);
+    toast(newFollowing ? 'Following! 🎉' : 'Unfollowed');
+
+  } catch (e) {
+    console.error("QuickFollow Error:", e);
+    btn.textContent = wasFollowing ? 'Following' : 'Follow';
+    btn.className = wasFollowing ? 'bout' : 'bgrd';
+    toast('Error, 2 second baad try karo');
   }
 }
 
@@ -1081,6 +1154,18 @@ async function renderDMs(){
   const scr=document.getElementById('screen');
   const{data:mem}=await db.from('conversation_members').select('conversation_id,conversations(*)').eq('user_id',ME.id);
   const convos=(mem||[]).map(m=>m.conversations).filter(Boolean).sort((a,b)=>new Date(b.last_message_at)-new Date(a.last_message_at));
+  const { data: unreadRows } = await db
+  .from('messages')
+  .select('conversation_id')
+  .is('seen_at', null)
+  .neq('sender_id', ME.id);
+
+const unreadMap = {};
+
+(unreadRows || []).forEach(r => {
+  unreadMap[r.conversation_id] =
+    (unreadMap[r.conversation_id] || 0) + 1;
+});
 
   // Get "other" member profile for 1:1 chats
   const oneOnOneIds=convos.filter(c=>!c.is_group).map(c=>c.id);
@@ -1117,7 +1202,30 @@ async function renderDMs(){
       <div style="flex:1;overflow:hidden">
         <div style="display:flex;justify-content:space-between;margin-bottom:3px">
           <span style="font-weight:700;font-size:15px">${name}</span>
-          <span style="color:#444;font-size:11px;flex-shrink:0">${ago(c.last_message_at)}</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+  ${
+    unreadMap[c.id]
+      ? `<div style="
+          min-width:20px;
+          height:20px;
+          border-radius:10px;
+          background:#E1306C;
+          color:#fff;
+          font-size:11px;
+          font-weight:700;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          padding:0 6px;
+        ">
+          ${unreadMap[c.id] > 99 ? '99+' : unreadMap[c.id]}
+        </div>`
+      : ''
+  }
+  <span style="color:#444;font-size:11px">
+    ${ago(c.last_message_at)}
+  </span>
+</div>
         </div>
         <div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.last_message||'Tap to open'}</div>
       </div>
@@ -1168,10 +1276,23 @@ async function openChat(cid,name,isGrp){
       </div>
       <div onclick="${isGrp?`showGroupInfo('${cid}')`:otherProf?`goToProfile('${window._chatOtherId}')`:''}" style="flex:1;margin-left:10px;cursor:pointer">
         <div style="font-weight:700;font-size:15px">${gcName}</div>
-        ${isGrp?`<div style="color:#666;font-size:11px">${members.length} members · tap for info</div>`:online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
+        ${isGrp
+  ? `<div style="color:#666;font-size:11px">${members.length} members · tap for info</div>`
+  : `<div style="color:${online ? '#3db83d' : '#666'};font-size:11px">
+      ${lastSeenText(otherProf?.last_seen)}
+    </div>`
+}
       </div>
       ${isGrp?`<div onclick="showGroupInfo('${cid}')" style="cursor:pointer">${ico('more','#aaa')}</div>`:''}
     </div>
+    <div id="typing-indicator"
+style="
+padding:4px 14px;
+font-size:12px;
+color:#888;
+display:none;">
+Typing...
+</div>
     <div id="mlist" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch"></div>
     <div id="reply-preview"
      style="display:none;padding:8px 14px;background:#111;border-top:1px solid #222">
@@ -1183,6 +1304,8 @@ async function openChat(cid,name,isGrp){
     </div>
   </div>`;
   loadMsgs(cid,isGrp);
+  
+  startTypingWatcher(cid);
 
 if(window.chatSubscription){
   db.removeChannel(window.chatSubscription);
@@ -1353,15 +1476,18 @@ const reactionMap={};
     const isMe=m.sender_id===ME.id;
     // System messages (join/leave/add/remove/admin)
     if(isSystem(m.text)) return `<div style="text-align:center;padding:6px 0"><span style="background:#1a1a1a;color:#888;font-size:12px;padding:4px 12px;border-radius:12px">${m.text}</span></div>`;
-    const content=m.media_type==='audio'
-      ?`<audio controls src="${m.media_url}" style="max-width:200px;height:36px"></audio>`
-      :(m.text||'');
+    const content =
+  m.deleted
+    ? `<i style="color:#888">This message was unsent</i>`
+    : m.media_type==='audio'
+      ? `<audio controls src="${m.media_url}" style="max-width:200px;height:36px"></audio>`
+      : (m.text||'');
       console.log("MSG =",m);
     return `<div style="display:flex;justify-content:${isMe?'flex-end':'flex-start'};gap:8px;align-items:flex-end;margin-bottom:2px">
       ${!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="cursor:pointer;flex-shrink:0">${av(m.profiles?.avatar_url,m.profiles?.username,28)}</div>`:''}
       <div class="${isMe?'mme':'mthem'}"
      style="max-width:72%"
-     oncontextmenu="event.preventDefault();showMsgMenu(event,'${m.id}','${(m.text||'').replace(/'/g,'\\\'')}')">
+     oncontextmenu="event.preventDefault();showMsgMenu(event,'${m.id}','${(m.text||'').replace(/'/g,'\\\'')}',${isMe})">
         ${isGrp&&!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">${m.profiles?.username}</div>`:''}
         ${m.replied?.text ? `
 <div style="
@@ -1432,7 +1558,7 @@ cancelReply();
   loadMsgs(cid,window._curIsGrp);
 }
 
-function showMsgMenu(e,id,text){
+function showMsgMenu(e,id,text,isMe){
 
   const old=document.getElementById('react-box');
   if(old) old.remove();
@@ -1456,15 +1582,16 @@ function showMsgMenu(e,id,text){
   `;
 
   div.innerHTML=`
-    <span onclick="reactMsg('${id}','❤️')">❤️</span>
-    <span onclick="reactMsg('${id}','😂')">😂</span>
-    <span onclick="reactMsg('${id}','🔥')">🔥</span>
-    <span onclick="reactMsg('${id}','👍')">👍</span>
-    <span onclick="reactMsg('${id}','😮')">😮</span>
-    <span onclick="replyMsg('${id}','${text}')">↩️</span>
-  `;
+  <span onclick="reactMsg('${id}','❤️')">❤️</span>
+  <span onclick="reactMsg('${id}','😂')">😂</span>
+  <span onclick="reactMsg('${id}','🔥')">🔥</span>
+  <span onclick="reactMsg('${id}','👍')">👍</span>
+  <span onclick="reactMsg('${id}','😮')">😮</span>
+  <span onclick="replyMsg('${id}','${text}')">↩️</span>
+  ${isMe ? `<span onclick="unsendMsg('${id}')">🗑️</span>` : ''}
+`;
 
-  document.body.appendChild(div);
+document.body.appendChild(div);
 
 setTimeout(() => {
   document.addEventListener('click', closeReactionMenu, { once:true });
@@ -1474,45 +1601,114 @@ function closeReactionMenu(){
   const box=document.getElementById('react-box');
   if(box) box.remove();
 }
+
 }
 
-function replyMsg(id,text){
-  window.replyToId=id;
-  window.replyToText=text;
+async function unsendMsg(mid){
 
-  const box=document.getElementById('reply-preview');
-  if(box){
-    box.style.display='block';
-    box.innerHTML=`
-      <div style="font-size:12px;color:#E1306C;font-weight:700">
-        Replying
-      </div>
-      <div style="font-size:12px;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-        ${text || 'Media'}
-      </div>
-    `;
-  }
+  const ok=confirm('Unsend this message?');
+  if(!ok) return;
+
+  await db
+  .from('messages')
+  .update({
+    deleted:true,
+    text:''
+  })
+  .eq('id',mid);
+
+  const box=document.getElementById('react-box');
+  if(box) box.remove();
+
+  loadMsgs(window._curChatId,window._curIsGrp);
 }
 
 async function reactMsg(mid,emoji){
 
   await db
-.from('message_reactions')
-.upsert(
-{
-  message_id:mid,
-  user_id:ME.id,
-  emoji:emoji
-},
-{
-  onConflict:'message_id,user_id'
-}
-);
+  .from('message_reactions')
+  .upsert({
+    message_id:mid,
+    user_id:ME.id,
+    emoji:emoji
+  });
 
   loadMsgs(window._curChatId,window._curIsGrp);
 
   const box=document.getElementById('react-box');
   if(box) box.remove();
+}
+
+async function setTyping(cid,isTyping){
+
+  await db
+  .from('profiles')
+  .update({
+    typing_in:isTyping ? cid : null
+  })
+  .eq('id',ME.id);
+
+}
+
+function startTypingWatcher(cid){
+
+  const inp=document.getElementById('minp');
+
+  if(inp){
+
+    let typingTimer;
+
+    inp.addEventListener('input',()=>{
+
+      setTyping(cid,true);
+
+      clearTimeout(typingTimer);
+
+      typingTimer=setTimeout(()=>{
+        setTyping(cid,false);
+      },1500);
+
+    });
+
+  }
+
+  if(window.typingSub){
+    db.removeChannel(window.typingSub);
+  }
+
+  window.typingSub=db
+  .channel('typing-'+cid)
+  .on(
+    'postgres_changes',
+    {
+      event:'UPDATE',
+      schema:'public',
+      table:'profiles'
+    },
+    (payload)=>{
+
+      if(payload.new.id===ME.id) return;
+
+      const box=document.getElementById('typing-indicator');
+
+      if(!box) return;
+
+      if(payload.new.typing_in===cid){
+
+        box.style.display='block';
+        box.textContent=
+        payload.new.username + ' is typing...';
+
+      }else{
+
+        box.style.display='none';
+
+      }
+
+    }
+  )
+  .subscribe();
+
 }
 
 function cancelReply(){
