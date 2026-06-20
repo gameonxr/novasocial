@@ -20,11 +20,18 @@ input,textarea,button{font-family:inherit}
 input::placeholder,textarea::placeholder{color:#444}
 
 /* SPLASH */
-#splash{position:fixed;inset:0;background:#000;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.5s ease}
+#splash{position:fixed;inset:0;background:radial-gradient(circle at 50% 42%,#14171c 0%,#0a0b0d 45%,#000 100%);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity 0.45s ease}
 #splash.hide{opacity:0;pointer-events:none}
-.splash-logo{font-size:48px;font-weight:900;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:splashPulse 1.3s ease-in-out infinite}
-.splash-tag{color:#444;font-size:13px;letter-spacing:1.5px}
-@keyframes splashPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:0.75}}
+.splash-icon-wrap{position:relative;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.splash-icon{width:96px;height:96px;border-radius:24px;display:block;box-shadow:0 0 30px rgba(0,252,255,0.22),0 0 30px rgba(252,0,124,0.22),0 10px 36px rgba(0,0,0,0.5);position:relative;z-index:2;opacity:0;transform:scale(0.82);animation:splashIconIn 0.6s cubic-bezier(0.22,1,0.36,1) forwards}
+.splash-ring{position:absolute;inset:-14px;border-radius:32px;border:1.5px solid rgba(255,255,255,0.35);opacity:0;animation:splashRing 1.8s ease-out 0.55s infinite}
+.splash-word{font-size:30px;font-weight:800;letter-spacing:0.3px;opacity:0;transform:translateY(8px);animation:splashWordIn 0.5s ease 0.48s forwards}
+.sw-nova{background:linear-gradient(135deg,#ff6fc4,#fc007c,#7a0042);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(252,0,124,0.55))}
+.sw-social{background:linear-gradient(135deg,#7afdff,#00fcff,#00626c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(0,252,255,0.55))}
+.splash-tag{color:#444;font-size:12px;letter-spacing:2.5px;opacity:0;animation:splashWordIn 0.5s ease 0.72s forwards}
+@keyframes splashIconIn{from{opacity:0;transform:scale(0.82) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes splashRing{0%{opacity:0.55;transform:scale(0.92)}70%{opacity:0}100%{opacity:0;transform:scale(1.28)}}
+@keyframes splashWordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* CORE LAYOUT */
 #root{display:flex;flex-direction:column;height:100vh;height:-webkit-fill-available;width:100%;position:fixed;top:0;left:0;right:0;bottom:0}
@@ -151,8 +158,11 @@ input::placeholder,textarea::placeholder{color:#444}
 
 <!-- SPLASH SCREEN -->
 <div id="splash">
-  <img src="icon-512.png" onerror="this.style.display='none'" style="width:84px;height:84px;border-radius:20px;box-shadow:0 8px 32px rgba(225,48,108,0.45)">
-  <div class="splash-logo">NovaSocial</div>
+  <div class="splash-icon-wrap">
+    <div class="splash-ring"></div>
+    <img class="splash-icon" src="icon-512.png" onerror="this.style.display='none'">
+  </div>
+  <div class="splash-word"><span class="sw-nova">Nova</span><span class="sw-social">Social</span></div>
   <div class="splash-tag">CONNECT · SHARE · VIBE</div>
 </div>
 
@@ -326,7 +336,7 @@ if('serviceWorker' in navigator){
 
 // ── INIT ──────────────────────────────────────
 window.addEventListener('load',async()=>{
-  const minSplash=new Promise(r=>setTimeout(r,900));
+  const minSplash=new Promise(r=>setTimeout(r,1250));
   const{data:{session}}=await db.auth.getSession();
   if(session?.user){ME=session.user;await loadProf();showApp();}
   await minSplash;
