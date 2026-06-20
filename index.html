@@ -1,4 +1,4 @@
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,8 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>NovaSocial</title>
-  <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#E1306C">
+<link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <meta name="theme-color" content="#E1306C">
@@ -318,6 +317,13 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 // Stop ALL videos (fixes background audio/video continuing to play)
 function pauseAllVideos(){document.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}});}
 
+// ── PWA: Service Worker Registration ──────────────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(e=>console.log('SW register failed',e));
+  });
+}
+
 // ── INIT ──────────────────────────────────────
 window.addEventListener('load',async()=>{
   const minSplash=new Promise(r=>setTimeout(r,900));
@@ -352,6 +358,8 @@ async function loadProf(){
 function showApp(){
   document.getElementById('auth').style.display='none';
   document.getElementById('root').style.display='flex';
+  setupNotifsRealtime();
+  setupPostsRealtime();
   go('home');
 }
 
@@ -475,6 +483,50 @@ function notifClick(type,senderId,postId){
   if(type==='follow') showUserProfile(senderId);
   else if(postId) viewPost(postId);
   else showUserProfile(senderId);
+}
+
+// ── REALTIME: NOTIFICATIONS + LIVE POST COUNTS ──────────────────────────────────────
+function setupNotifsRealtime(){
+  if(window.notifsSub) db.removeChannel(window.notifsSub);
+  window.notifsSub=db
+  .channel('notifs-'+ME.id)
+  .on(
+    'postgres_changes',
+    {event:'INSERT',schema:'public',table:'notifications',filter:`recipient_id=eq.${ME.id}`},
+    (payload)=>{
+      const dot=document.getElementById('notif-dot');
+      if(dot) dot.style.display='block';
+      if(curTab==='notifs') renderNotifs();
+    }
+  )
+  .subscribe();
+}
+
+function updatePostCounts(pid,likesCount,commentsCount){
+  const el=document.getElementById('lbtn-'+pid);
+  if(el) el.dataset.cnt=likesCount;
+  const lc1=document.getElementById('lcnt-'+pid);
+  if(lc1){lc1.textContent=fmt(likesCount)+' likes';lc1.style.display=likesCount>0?'block':'none';}
+  const lc2=document.getElementById('lcnt-'+pid+'-txt');
+  if(lc2) lc2.textContent=fmt(likesCount);
+  const cc=document.getElementById('ccnt-'+pid);
+  if(cc){cc.textContent='View all '+commentsCount+' comments';cc.style.display=commentsCount>0?'block':'none';}
+  const cc2=document.getElementById('ccnt-'+pid+'-txt');
+  if(cc2) cc2.textContent=fmt(commentsCount);
+}
+
+function setupPostsRealtime(){
+  if(window.postsSub) db.removeChannel(window.postsSub);
+  window.postsSub=db
+  .channel('posts-realtime')
+  .on(
+    'postgres_changes',
+    {event:'UPDATE',schema:'public',table:'posts'},
+    (payload)=>{
+      updatePostCounts(payload.new.id,payload.new.likes_count,payload.new.comments_count);
+    }
+  )
+  .subscribe();
 }
 
 // ── UPLOAD ──────────────────────────────────────
@@ -651,7 +703,7 @@ function postCard(p,liked,saved,reaction){
     </div>
     <div id="lcnt-${p.id}" style="font-weight:700;font-size:14px;margin-bottom:5px;${!(p.likes_count>0)?'display:none':''}">${fmt(p.likes_count)} likes</div>
     ${p.caption?`<div style="font-size:14px;line-height:1.6;margin-bottom:4px"><span style="font-weight:700">${p.profiles?.username} </span><span style="color:#ddd">${p.caption}</span></div>`:''}
-    ${p.comments_count>0?`<div onclick="openComments('${p.id}')" style="color:#777;font-size:13px;cursor:pointer;margin-bottom:4px">View all ${p.comments_count} comments</div>`:''}
+    <div id="ccnt-${p.id}" onclick="openComments('${p.id}')" style="color:#777;font-size:13px;cursor:pointer;margin-bottom:4px;${!(p.comments_count>0)?'display:none':''}">View all ${p.comments_count} comments</div>
     <div style="color:#444;font-size:11px">${ago(p.created_at)}</div>
   </div>
 </div>`;
@@ -1102,7 +1154,7 @@ async function renderReels(){
               <div id="rbar-${r.id}" class="reaction-bar" style="bottom:auto;top:0;left:auto;right:46px"></div>
             </div>
             <div onclick="openComments('${r.id}')" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer">
-              ${ico('comment')}<span style="color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)">${fmt(r.comments_count||0)}</span>
+              ${ico('comment')}<span id="ccnt-${r.id}-txt" style="color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)">${fmt(r.comments_count||0)}</span>
             </div>
             <div onclick="shareIt()" style="display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer">
               ${ico('send')}<span style="color:#fff;font-size:12px;font-weight:700">Share</span>
@@ -1488,7 +1540,7 @@ const reactionMap={};
       ${!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="cursor:pointer;flex-shrink:0">${av(m.profiles?.avatar_url,m.profiles?.username,28)}</div>`:''}
       <div class="${isMe?'mme':'mthem'}"
      style="max-width:72%"
-     oncontextmenu="event.preventDefault();showMsgMenu(event,'${m.id}','${(m.text||'').replace(/'/g,'\\\'')}',${isMe})">
+     oncontextmenu="event.preventDefault();showMsgMenu(event,'${m.id}','${(m.text||'').replace(/'/g,'\\\'')}',${isMe})"ondblclick="heartReact('${m.id}')">
         ${isGrp&&!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">${m.profiles?.username}</div>`:''}
         ${m.replied?.text ? `
 <div style="
@@ -1624,15 +1676,75 @@ async function unsendMsg(mid){
   loadMsgs(window._curChatId,window._curIsGrp);
 }
 
-async function reactMsg(mid,emoji){
+async function heartReact(mid){
+
+  const {data:old} = await db
+    .from('message_reactions')
+    .select('*')
+    .eq('message_id',mid)
+    .eq('user_id',ME.id)
+    .maybeSingle();
+
+  if(old){
+
+    await db
+      .from('message_reactions')
+      .delete()
+      .eq('id',old.id);
+
+    loadMsgs(window._curChatId,window._curIsGrp);
+    return;
+  }
 
   await db
-  .from('message_reactions')
-  .upsert({
-    message_id:mid,
-    user_id:ME.id,
-    emoji:emoji
-  });
+    .from('message_reactions')
+    .insert({
+      message_id:mid,
+      user_id:ME.id,
+      emoji:'❤️'
+    });
+
+  loadMsgs(window._curChatId,window._curIsGrp);
+}
+
+async function reactMsg(mid,emoji){
+
+  const {data:old} = await db
+    .from('message_reactions')
+    .select('*')
+    .eq('message_id',mid)
+    .eq('user_id',ME.id)
+    .maybeSingle();
+
+  if(old){
+
+    if(old.emoji === emoji){
+
+      await db
+        .from('message_reactions')
+        .delete()
+        .eq('id',old.id);
+
+    }else{
+
+      await db
+        .from('message_reactions')
+        .update({emoji})
+        .eq('id',old.id);
+
+    }
+
+  }else{
+
+    await db
+      .from('message_reactions')
+      .insert({
+        message_id:mid,
+        user_id:ME.id,
+        emoji
+      });
+
+  }
 
   loadMsgs(window._curChatId,window._curIsGrp);
 
@@ -2114,31 +2226,5 @@ function closeModal(){
   }
 }
 </script>
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>My PWA App</title>
-
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#000000">
-</head>
-
-<body>
-  <h1>My PWA App</h1>
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./service-worker.js")
-        .then(() => console.log("SW Registered"))
-        .catch(err => console.log(err));
-    }
-  </script>
-</body>
-  </html>
-  
 </body>
 </html>
