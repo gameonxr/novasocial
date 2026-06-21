@@ -1621,7 +1621,7 @@ async function loadMsgs(cid,isGrp){
 `)
   .eq('conversation_id',cid)
   .order('created_at',{ascending:true})
-  .limit(200);
+  .limit(400);
   
   const {data:reacts}=await db
 .from('message_reactions')
