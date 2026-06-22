@@ -151,6 +151,34 @@ input::placeholder,textarea::placeholder{color:#444}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .fade{animation:fadeIn 0.3s ease}
+
+.notif-pill{
+background:#111;
+color:#aaa;
+border:none;
+padding:10px 18px;
+border-radius:999px;
+font-size:14px;
+font-weight:700;
+cursor:pointer;
+transition:.5s;
+}
+.notif-pill.active{
+background:#fff;
+color:#000;
+}
+.notif-pill:active{
+transform:scale(.96);
+}
+
+.nitem{
+transition:.25s;
+}
+
+.nitem:active{
+background:#111;
+}
+
 </style>
 </head>
 <body>
@@ -338,10 +366,21 @@ if('serviceWorker' in navigator){
 window.addEventListener('load',async()=>{
   const minSplash=new Promise(r=>setTimeout(r,1250));
   const{data:{session}}=await db.auth.getSession();
-  if(session?.user){ME=session.user;await loadProf();showApp();}
+  if(session?.user){
+  ME=session.user;
+  await loadProf();
+  console.log("ME =", ME);
+  showApp();
+}
   await minSplash;
   document.getElementById('splash').classList.add('hide');
-  db.auth.onAuthStateChange(async(e,s)=>{if(s?.user&&!ME){ME=s.user;await loadProf();showApp();}});
+  db.auth.onAuthStateChange(async(e,s)=>{if(s?.user&&!ME){
+  ME=s.user;
+  await loadProf();
+  console.log("ME =", ME);
+  showApp();
+}
+  });
 });
 
 // keep "last seen" fresh
@@ -456,37 +495,226 @@ async function checkUnreadNotifs(){
   }catch(e){}
 }
 
+let notifFilter = 'all';
+
+function setNotifFilter(type){
+
+  notifFilter = type;
+
+  document.querySelectorAll('.notif-pill').forEach(btn=>{
+    btn.style.background='#111';
+    btn.style.color='#aaa';
+  });
+
+  event.target.style.background='#fff';
+  event.target.style.color='#000';
+
+  renderNotifs();
+}
+
 async function renderNotifs(){
   const scr=document.getElementById('screen');
-  const{data:notifs}=await db.from('notifications').select('*,profiles!sender_id(username,avatar_url)').eq('recipient_id',ME.id).order('created_at',{ascending:false}).limit(50);
+  const {data:notifs,error}=await db
+.from('notifications')
+.select(`
+  *,
+  sender:profiles!notifications_sender_id_fkey(
+    username,
+    avatar_url
+  )
+`)
+.eq('recipient_id',ME.id)
+.order('created_at',{ascending:false})
+.limit(50);
+const { data: myFollowing } = await db
+.from('follows')
+.select('following_id')
+.eq('follower_id', ME.id);
+
+const followingSet = new Set(
+  (myFollowing || []).map(x => x.following_id)
+);
+console.log("NOTIFS =", notifs);
+
+console.log("PROFILE =", notifs?.[0]?.profiles);
+console.log("NOTIF ERROR =", error);
   const texts={like:'liked your post',follow:'started following you'};
+  let filteredNotifs = notifs || [];
+
+if(notifFilter !== 'all'){
+  filteredNotifs = filteredNotifs.filter(
+    n => n.type === notifFilter
+  );
+}
   scr.innerHTML=`
-  <div class="topbar"><span style="font-weight:700;font-size:18px">Notifications</span></div>
+<div class="topbar" style="
+flex-direction:column;
+align-items:center;
+padding-top:20px;
+padding-bottom:12px;
+">
+
+<div style="
+display:flex;
+gap:8px;
+padding:10px 14px;
+overflow-x:auto;
+">
+
+</div>
+
+  <div style="
+    font-weight:800;
+    font-size:24px;
+    margin-bottom:14px;
+  ">
+    Notifications
+  </div>
+
+<div style="
+display:flex;
+gap:10px;
+justify-content:center;
+width:100%;
+">
+
+<button onclick="setNotifFilter('all')"
+class="notif-pill ${notifFilter==='all'?'active':''}">
+All
+</button>
+
+<button onclick="setNotifFilter('like')"
+class="notif-pill ${notifFilter==='like'?'active':''}">
+Likes
+</button>
+
+<button onclick="setNotifFilter('comment')"
+class="notif-pill ${notifFilter==='comment'?'active':''}">
+Comments
+</button>
+
+<button onclick="setNotifFilter('follow')"
+class="notif-pill ${notifFilter==='follow'?'active':''}">
+Follows
+</button>
+
+</div>
+</div>
   ${!notifs?.length?`
     <div style="text-align:center;padding:60px 20px;color:#444">
       <div style="font-size:52px;margin-bottom:16px">🔔</div>
       <div style="font-weight:700;font-size:17px;color:#fff">Koi notification nahi abhi</div>
       <div style="font-size:14px;margin-top:6px">Jab koi like/comment/follow karega yahan dikhega</div>
     </div>`
-  :notifs.map(n=>{
+  :filteredNotifs.map(n=>{
     const icons={like:'❤️',comment:'💬',follow:'👤'};
     let txt=n.type==='comment'?('commented: '+(n.message||'')):(n.message||texts[n.type]||'');
-    return `<div class="nitem" onclick="notifClick('${n.type}','${n.sender_id}','${n.post_id||''}')">
-      <div style="position:relative;flex-shrink:0">
-        ${av(n.profiles?.avatar_url,n.profiles?.username,46)}
-        <div style="position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #000">${icons[n.type]||'🔔'}</div>
-      </div>
-      <div style="flex:1;overflow:hidden">
-        <span style="font-weight:700;font-size:14px">${n.profiles?.username||''} </span>
-        <span style="color:#aaa;font-size:14px">${txt}</span>
-        <div style="color:#444;font-size:11px;margin-top:3px">${ago(n.created_at)}</div>
-      </div>
-      ${!n.is_read?`<div style="width:8px;height:8px;border-radius:50%;background:#E1306C;flex-shrink:0"></div>`:''}
-    </div>`;
+    return `
+<div
+class="nitem"
+onclick="notifClick('${n.type}','${n.sender_id}','${n.post_id||''}')"
+style="
+padding:14px 18px;
+display:flex;
+align-items:center;
+gap:14px;
+border-bottom:1px solid rgba(255,255,255,.04);
+">
+
+<div style="position:relative">
+
+${av(n.sender?.avatar_url, n.sender?.username, 52)}
+
+  <div style="
+    position:absolute;
+    bottom:-2px;
+    right:-2px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#111;
+    border:2px solid #000;
+    font-size:12px;
+  ">
+    ${icons[n.type]||'🔔'}
+  </div>
+
+</div>
+
+<div style="flex:1">
+
+  <div style="
+color:#fff;
+font-size:14px;
+line-height:1.5;
+">
+  <b>${n.sender?.username || 'User'}</b>
+  ${txt}
+</div>
+
+${n.type==='follow' && !followingSet.has(n.sender_id) ? `
+<button
+onclick="event.stopPropagation();followBack('${n.sender_id}',this)"
+style="
+padding:8px 14px;
+border:none;
+border-radius:10px;
+background:#0095f6;
+color:#fff;
+font-weight:700;
+cursor:pointer;
+">
+Follow Back
+</button>
+` : ''}
+
+  <div style="
+    color:#666;
+    font-size:12px;
+    margin-top:4px;
+  ">
+    ${ago(n.created_at)}
+  </div>
+
+</div>
+
+${!n.is_read?`
+<div style="
+width:10px;
+height:10px;
+border-radius:50%;
+background:#ff2d55;
+"></div>
+`:''}
+
+</div>
+`;
   }).join('')}
   <div style="height:80px"></div>`;
   await db.from('notifications').update({is_read:true}).eq('recipient_id',ME.id).eq('is_read',false);
   const dot=document.getElementById('notif-dot'); if(dot) dot.style.display='none';
+}
+
+async function followBack(userId, btn){
+
+  btn.disabled = true;
+  btn.textContent = "Following";
+
+  const { error } = await db.from('follows').insert({
+    follower_id: ME.id,
+    following_id: userId
+  });
+
+  if(error){
+    btn.disabled = false;
+    btn.textContent = "Follow Back";
+    return;
+  }
+
+  btn.style.background = "#262626";
 }
 
 function notifClick(type,senderId,postId){
@@ -496,20 +724,39 @@ function notifClick(type,senderId,postId){
 }
 
 // ── REALTIME: NOTIFICATIONS + LIVE POST COUNTS ──────────────────────────────────────
+
 function setupNotifsRealtime(){
-  if(window.notifsSub) db.removeChannel(window.notifsSub);
-  window.notifsSub=db
-  .channel('notifs-'+ME.id)
-  .on(
-    'postgres_changes',
-    {event:'INSERT',schema:'public',table:'notifications',filter:`recipient_id=eq.${ME.id}`},
-    (payload)=>{
-      const dot=document.getElementById('notif-dot');
-      if(dot) dot.style.display='block';
-      if(curTab==='notifs') renderNotifs();
-    }
-  )
-  .subscribe();
+
+  if(window.notifsSub){
+    db.removeChannel(window.notifsSub);
+  }
+
+  window.notifsSub = db
+    .channel('notifs-' + ME.id)
+    .on(
+      'postgres_changes',
+      {
+        event:'INSERT',
+        schema:'public',
+        table:'notifications',
+        filter:`recipient_id=eq.${ME.id}`
+      },
+      (payload)=>{
+
+        console.log("NEW NOTIFICATION", payload);
+
+        const dot=document.getElementById('notif-dot');
+        if(dot) dot.style.display='block';
+
+        // Notification page open ho to turant refresh
+        renderNotifs();
+
+      }
+    )
+    .subscribe((status)=>{
+      console.log("NOTIF REALTIME STATUS =", status);
+    });
+
 }
 
 function updatePostCounts(pid,likesCount,commentsCount){
@@ -588,10 +835,26 @@ async function toggleLike(pid){
   const cnt=parseInt(el.dataset.cnt)||0;
   const newCnt=newLiked?cnt+1:Math.max(0,cnt-1);
   const owner=el.dataset.owner;
+  console.log("LIKE OWNER =", owner);
+console.log("MY ID =", ME.id);
   updateLikeUI(pid,newLiked,newCnt,'heart');
   if(newLiked){
     await db.from('likes').upsert({user_id:ME.id,post_id:pid,reaction:'heart'},{onConflict:'user_id,post_id'});
-    if(owner&&owner!==ME.id) db.from('notifications').insert({recipient_id:owner,sender_id:ME.id,type:'like',post_id:pid,message:'liked your post ❤️'}).catch(()=>{});
+    if(owner && owner !== ME.id){
+
+  const { error:nErr } = await db
+    .from('notifications')
+    .insert({
+      recipient_id: owner,
+      sender_id: ME.id,
+      type: 'like',
+      post_id: pid,
+      message: 'liked your post ❤️'
+    });
+
+  console.log("LIKE NOTIFICATION ERROR =", nErr);
+
+}
   }else{
     await db.from('likes').delete().eq('user_id',ME.id).eq('post_id',pid);
   }
@@ -614,27 +877,31 @@ async function setReaction(e,pid,emoji){
   const newCnt=wasLiked?cnt:cnt+1;
   updateLikeUI(pid,true,newCnt,reactionKey);
   await db.from('likes').upsert({user_id:ME.id,post_id:pid,reaction:reactionKey},{onConflict:'user_id,post_id'});
-  if(!wasLiked&&owner&&owner!==ME.id) db.from('notifications').insert({recipient_id:owner,sender_id:ME.id,type:'like',post_id:pid,message:`reacted ${emoji} to your post`}).catch(()=>{});
+  if(!wasLiked && owner && owner !== ME.id){
+
+  const { error:nErr } = await db
+    .from('notifications')
+    .insert({
+      recipient_id: owner,
+      sender_id: ME.id,
+      type: 'like',
+      post_id: pid,
+      message: `reacted ${emoji} to your post`
+    });
+
+  console.log("REACTION NOTIFICATION ERROR =", nErr);
+
+}
   const bar=document.getElementById('rbar-'+pid);if(bar)bar.style.display='none';
 }
 
-// ── HOME ──────────────────────────────────────
+let feedOffset=0,feedHasMore=true,feedLoading=false;
+const FEED_PAGE=10;
+
 async function renderHome(){
+  feedOffset=0;feedHasMore=true;feedLoading=false;
   const scr=document.getElementById('screen');
-  const[{data:stories},{data:posts}]=await Promise.all([
-    db.from('stories').select('*,profiles(username,avatar_url)').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(20),
-    db.from('posts').select('*,profiles(username,avatar_url,is_verified,last_seen)').eq('is_reel',false).order('created_at',{ascending:false}).limit(30)
-  ]);
-  let likedSet=new Set(),savedSet=new Set(),reactionMap={};
-  if(posts?.length){
-    const ids=posts.map(p=>p.id);
-    const[{data:lk},{data:sv}]=await Promise.all([
-      db.from('likes').select('post_id,reaction').eq('user_id',ME.id).in('post_id',ids),
-      db.from('bookmarks').select('post_id').eq('user_id',ME.id).in('post_id',ids)
-    ]);
-    (lk||[]).forEach(x=>{likedSet.add(x.post_id);reactionMap[x.post_id]=x.reaction||'heart';});
-    (sv||[]).forEach(x=>savedSet.add(x.post_id));
-  }
+  const{data:stories}=await db.from('stories').select('*,profiles(username,avatar_url)').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(20);
   svData=stories||[];
   scr.innerHTML=`
   <div class="topbar">
@@ -660,16 +927,49 @@ async function renderHome(){
         <span class="sname">${s.profiles?.username||''}</span>
       </div>`).join('')}
   </div>
-  ${!(posts?.length)?`
-    <div style="text-align:center;padding:60px 20px;color:#444">
-      <div style="font-size:52px;margin-bottom:16px">📸</div>
-      <div style="font-weight:700;font-size:17px;color:#fff;margin-bottom:8px">Koi post nahi abhi</div>
-      <div style="font-size:14px">Pehla post share karo!</div>
-      <button class="bgrd" onclick="showCreate('post')" style="width:auto;padding:13px 28px;margin-top:20px">+ New Post</button>
-    </div>`
-  :(posts||[]).map(p=>postCard(p,likedSet.has(p.id),savedSet.has(p.id),reactionMap[p.id]||'heart')).join('')}
+  <div id="feed-list"></div>
+  <div id="feed-loader" class="ldiv" style="display:none"><div class="spin"></div></div>
   <div style="height:80px"></div>`;
-  setTimeout(()=>initVideoObserver(),400);
+  await loadMoreFeedPosts();
+  scr.onscroll=()=>{
+    if(scr.scrollTop+scr.clientHeight>scr.scrollHeight-600) loadMoreFeedPosts();
+  };
+}
+
+async function loadMoreFeedPosts(){
+  if(feedLoading||!feedHasMore) return;
+  feedLoading=true;
+  const loader=document.getElementById('feed-loader');
+  if(loader) loader.style.display='flex';
+  const{data:posts}=await db.from('posts').select('*,profiles(username,avatar_url,is_verified,last_seen)').eq('is_reel',false).order('created_at',{ascending:false}).range(feedOffset,feedOffset+FEED_PAGE-1);
+  if(loader) loader.style.display='none';
+  if(!posts?.length){
+    feedHasMore=false;feedLoading=false;
+    if(feedOffset===0){
+      document.getElementById('feed-list').innerHTML=`
+      <div style="text-align:center;padding:60px 20px;color:#444">
+        <div style="font-size:52px;margin-bottom:16px">📸</div>
+        <div style="font-weight:700;font-size:17px;color:#fff;margin-bottom:8px">Koi post nahi abhi</div>
+        <div style="font-size:14px">Pehla post share karo!</div>
+        <button class="bgrd" onclick="showCreate('post')" style="width:auto;padding:13px 28px;margin-top:20px">+ New Post</button>
+      </div>`;
+    }
+    return;
+  }
+  let likedSet=new Set(),savedSet=new Set(),reactionMap={};
+  const ids=posts.map(p=>p.id);
+  const[{data:lk},{data:sv}]=await Promise.all([
+    db.from('likes').select('post_id,reaction').eq('user_id',ME.id).in('post_id',ids),
+    db.from('bookmarks').select('post_id').eq('user_id',ME.id).in('post_id',ids)
+  ]);
+  (lk||[]).forEach(x=>{likedSet.add(x.post_id);reactionMap[x.post_id]=x.reaction||'heart';});
+  (sv||[]).forEach(x=>savedSet.add(x.post_id));
+  const list=document.getElementById('feed-list');
+  list.insertAdjacentHTML('beforeend',posts.map(p=>postCard(p,likedSet.has(p.id),savedSet.has(p.id),reactionMap[p.id]||'heart')).join(''));
+  feedOffset+=posts.length;
+  if(posts.length<FEED_PAGE) feedHasMore=false;
+  feedLoading=false;
+  setTimeout(()=>initVideoObserver(),300);
 }
 
 function postCard(p,liked,saved,reaction){
@@ -784,8 +1084,30 @@ async function sendCmt(pid){
   const txt=inp.value.trim();if(!txt)return;
   inp.value='';
   await db.from('comments').insert({user_id:ME.id,post_id:pid,text:txt});
-  const owner=document.getElementById('lbtn-'+pid)?.dataset.owner;
-  if(owner&&owner!==ME.id) db.from('notifications').insert({recipient_id:owner,sender_id:ME.id,type:'comment',post_id:pid,message:txt.slice(0,60)}).catch(()=>{});
+  const { data: postData } = await db
+  .from('posts')
+  .select('user_id')
+  .eq('id', pid)
+  .single();
+
+const owner = postData?.user_id;
+
+console.log("COMMENT OWNER =", owner);
+console.log("MY ID =", ME.id);
+
+if(owner && owner !== ME.id){
+
+  const nres = await db.from('notifications').insert({
+    recipient_id: owner,
+    sender_id: ME.id,
+    type: 'comment',
+    post_id: pid,
+    message: txt.slice(0,60)
+  });
+
+  console.log("COMMENT NOTIFICATION =", nres);
+
+}
   const cntEl=document.querySelector(`[onclick="openComments('${pid}')"]`);
   openComments(pid);
 }
@@ -842,6 +1164,10 @@ function showCreate(type){
       <div style="color:#555;font-size:14px">Tap to select ${type==='reel'?'video':'photo/video'}</div>
     </div>
     <input id="fpick" type="file" accept="${type==='reel'?'video/*':'image/*,video/*'}" style="display:none" onchange="prevMedia(this,'${type}')">
+    <div id="vlenpick" style="display:none;flex-direction:column;gap:8px">
+  <div style="color:#666;font-size:12px;font-weight:600">Video length</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap" id="vlen-opts"></div>
+</div>
     ${type!=='story'?`
       <textarea id="capinp" placeholder="Caption... #hashtag @mention" rows="3" style="width:100%;background:#0f0f0f;border:1px solid #222;border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;outline:none;resize:none;font-family:inherit;line-height:1.5"></textarea>
       <input id="locinp" placeholder="📍 Location (optional)" style="width:100%;background:#0f0f0f;border:1px solid #222;border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;outline:none">`:''}
@@ -857,8 +1183,80 @@ function prevMedia(inp,type){
   const f=inp.files[0];if(!f)return;
   const url=URL.createObjectURL(f);
   const prev=document.getElementById('mprev');
-  prev.innerHTML=f.type.startsWith('video/')?`<video src="${url}" style="width:100%;height:100%;object-fit:cover" muted playsinline autoplay loop></video>`:`<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
+  window._videoTrimTo=null;
+  if(f.type.startsWith('video/')){
+    prev.innerHTML=`<video src="${url}" style="width:100%;height:100%;object-fit:cover" muted playsinline autoplay loop></video>`;
+    const probe=document.createElement('video');
+    probe.preload='metadata';
+    probe.src=url;
+    probe.onloadedmetadata=()=>{window._videoFullDuration=probe.duration;showVideoLengthOptions(probe.duration);};
+  }else{
+    prev.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
+    const vp=document.getElementById('vlenpick');if(vp)vp.style.display='none';
+  }
   const btn=document.getElementById('cbtn');btn.disabled=false;btn.style.opacity='1';
+}
+
+const MAX_VIDEO_LEN=180; // Instagram jaisa: 3 minute hard cap
+
+function showVideoLengthOptions(dur){
+  const wrap=document.getElementById('vlenpick'),opts=document.getElementById('vlen-opts');
+  if(!wrap||!opts)return;
+  const presets=[15,30,60,90,180].filter(s=>s<dur-1);
+  let html=presets.map(s=>`<div class="pill vlen-pill" data-s="${s}" onclick="selectVideoLen(${s})" style="background:#1a1a1a;color:#aaa">${s}s</div>`).join('');
+  if(dur<=MAX_VIDEO_LEN){
+    html+=`<div class="pill vlen-pill" data-s="full" onclick="selectVideoLen('full')" style="background:#fff;color:#000">Full (${Math.round(dur)}s)</div>`;
+    window._videoTrimTo=null;
+  }else{
+    window._videoTrimTo=180;
+    toast('Video 3 min se lambi hai — length choose karo ✂️');
+  }
+  opts.innerHTML=html;
+  wrap.style.display=(presets.length||dur>MAX_VIDEO_LEN)?'flex':'none';
+  if(dur>MAX_VIDEO_LEN) setTimeout(()=>selectVideoLen(180),0);
+}
+
+function selectVideoLen(s){
+  window._videoTrimTo=s;
+  document.querySelectorAll('.vlen-pill').forEach(p=>{
+    const match=(s==='full'&&p.dataset.s==='full')||(p.dataset.s==String(s));
+    p.style.background=match?'#fff':'#1a1a1a';p.style.color=match?'#000':'#aaa';
+  });
+}
+
+function trimVideo(file,seconds){
+  return new Promise((resolve,reject)=>{
+    const video=document.createElement('video');
+    video.src=URL.createObjectURL(file);
+    video.muted=false;video.playsInline=true;
+    video.onloadedmetadata=async()=>{
+      try{
+        const canvas=document.createElement('canvas');
+        canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+        const ctx=canvas.getContext('2d');
+        const canvasStream=canvas.captureStream(30);
+        try{
+          const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+          const src=audioCtx.createMediaElementSource(video);
+          const dest=audioCtx.createMediaStreamDestination();
+          src.connect(dest);
+          const at=dest.stream.getAudioTracks()[0];
+          if(at) canvasStream.addTrack(at);
+        }catch(e){}
+        const recorder=new MediaRecorder(canvasStream,{mimeType:'video/webm;codecs=vp9,opus'});
+        const chunks=[];
+        recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+        recorder.onstop=()=>resolve(new File([new Blob(chunks,{type:'video/webm'})],'trimmed.webm',{type:'video/webm'}));
+        video.currentTime=0;
+        await video.play();
+        recorder.start();
+        let drawing=true;
+        (function draw(){if(!drawing)return;ctx.drawImage(video,0,0,canvas.width,canvas.height);requestAnimationFrame(draw);})();
+        setTimeout(()=>{drawing=false;video.pause();recorder.stop();},seconds*1000);
+      }catch(err){reject(err);}
+    };
+    video.onerror=reject;
+  });
 }
 
 async function submitCreate(type){
@@ -868,7 +1266,21 @@ async function submitCreate(type){
   btn.disabled=true;btn.textContent='Uploading...';
   document.getElementById('uprog').style.display='block';
   try{
-    const url=await upload(f,p=>{
+    let uploadFile=f;
+if(f.type.startsWith('video/')){
+  const dur=window._videoFullDuration||0;
+  if(dur>MAX_VIDEO_LEN&&(!window._videoTrimTo||window._videoTrimTo==='full')){
+    toast('Video max 3 minute tak honi chahiye — length select karo');
+    btn.disabled=false;btn.textContent='Share';
+    document.getElementById('uprog').style.display='none';
+    return;
+  }
+  if(window._videoTrimTo&&window._videoTrimTo!=='full'){
+    toast('Video trim ho raha hai... ✂️');
+    uploadFile=await trimVideo(f,window._videoTrimTo);
+  }
+}
+const url=await upload(uploadFile,p=>{
       document.getElementById('upct').textContent=p+'%';
       document.getElementById('upfill').style.width=p+'%';
     });
@@ -1009,60 +1421,74 @@ async function updateMyFollowingCount(delta) {
 }
 
 async function toggleFollowProfile(userId) {
+
   const btn = document.getElementById('follow-btn');
   if (!btn) return;
 
   const wasFollowing = btn.textContent.trim() === 'Following';
   const newFollowing = !wasFollowing;
 
-  console.log(`[Follow] ${wasFollowing ? 'Unfollow' : 'Follow'} attempt for user:`, userId);
-
-  // Optimistic UI
   btn.textContent = newFollowing ? 'Following' : 'Follow';
   btn.className = newFollowing ? 'bout' : 'bgrd';
+
   adjustFollowerCount(newFollowing ? 1 : -1);
   updateMyFollowingCount(newFollowing ? 1 : -1);
 
   try {
+
     let error = null;
 
     if (newFollowing) {
-      // Follow
+
       const res = await db.from('follows').insert({
         follower_id: ME.id,
         following_id: userId
       });
+
       error = res.error;
-      if (!error) console.log("[Follow] Insert successful");
+
+      if (!error) {
+
+        await db.from('notifications').insert({
+          recipient_id: userId,
+          sender_id: ME.id,
+          type: 'follow',
+          message: `started following you`
+        });
+
+      }
+
     } else {
-      // Unfollow
-      const res = await db.from('follows').delete()
+
+      const res = await db.from('follows')
+        .delete()
         .eq('follower_id', ME.id)
         .eq('following_id', userId);
+
       error = res.error;
-      if (!error) console.log("[Follow] Delete successful");
+
     }
 
-    if (error) {
-      console.error("[Follow] Supabase Error:", error);
-      throw error;
-    }
+    if (error) throw error;
 
-    // Success - refresh counts from server
     await refreshProfileCounts(userId);
+
     toast(newFollowing ? 'Following! 🎉' : 'Unfollowed');
 
   } catch (e) {
-    console.error("❌ Full Follow Error:", e);
-    
-    // Revert UI
+
+    console.error(e);
+
     btn.textContent = wasFollowing ? 'Following' : 'Follow';
     btn.className = wasFollowing ? 'bout' : 'bgrd';
+
     adjustFollowerCount(wasFollowing ? 1 : -1);
     updateMyFollowingCount(wasFollowing ? 1 : -1);
 
-    toast('Network error, 2 second baad try karo');
+    toast('Network error');
+
   }
+
 }
 
 async function refreshProfileCounts(userId) {
@@ -1089,6 +1515,7 @@ async function refreshProfileCounts(userId) {
 }
 
 async function quickFollow(userId, btn) {
+
   const wasFollowing = btn.textContent.trim() === 'Following';
   const newFollowing = !wasFollowing;
 
@@ -1096,29 +1523,57 @@ async function quickFollow(userId, btn) {
   btn.className = newFollowing ? 'bout' : 'bgrd';
 
   try {
+
     let error = null;
 
     if (newFollowing) {
-      const res = await db.from('follows').insert({ follower_id: ME.id, following_id: userId });
+
+      const res = await db.from('follows').insert({
+        follower_id: ME.id,
+        following_id: userId
+      });
+
       error = res.error;
+
+      if (!error) {
+
+        await db.from('notifications').insert({
+          recipient_id: userId,
+          sender_id: ME.id,
+          type: 'follow',
+          message: `${ME.name || ME.username || 'Someone'} started following you`
+        });
+
+      }
+
     } else {
-      const res = await db.from('follows').delete()
+
+      const res = await db.from('follows')
+        .delete()
         .eq('follower_id', ME.id)
         .eq('following_id', userId);
+
       error = res.error;
+
     }
 
     if (error) throw error;
 
     await refreshProfileCounts(userId);
+
     toast(newFollowing ? 'Following! 🎉' : 'Unfollowed');
 
   } catch (e) {
-    console.error("QuickFollow Error:", e);
+
+    console.error(e);
+
     btn.textContent = wasFollowing ? 'Following' : 'Follow';
     btn.className = wasFollowing ? 'bout' : 'bgrd';
-    toast('Error, 2 second baad try karo');
+
+    toast('Error');
+
   }
+
 }
 
 // ── REELS ──────────────────────────────────────
