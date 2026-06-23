@@ -120,8 +120,30 @@ input::placeholder,textarea::placeholder{color:#444}
 .pstat-l{color:#777;font-size:12px}
 
 /* MSG */
-.clist{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #0d0d0d;cursor:pointer;transition:background 0.15s}
-.clist:active{background:#0d0d0d}
+  .clist {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(79,142,247,0.4);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 0 8px rgba(255,255,255,0.08),
+    0 6px 14px rgba(0,0,0,0.6),
+    0 0 20px rgba(79,142,247,0.3);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.clist:active {
+  background: linear-gradient(145deg, rgba(79,142,247,0.25), rgba(0,224,255,0.15));
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,0.15),
+    0 0 25px rgba(79,142,247,0.6);
+  transform: scale(0.98);
+                              }
 .mme{background:linear-gradient(135deg,#833AB4,#E1306C);border-radius:18px 18px 4px 18px;padding:10px 14px;max-width:72%;font-size:14px;line-height:1.5;margin-left:auto}
 .mthem{background:#1a1a1a;border-radius:18px 18px 18px 4px;padding:10px 14px;max-width:72%;font-size:14px;line-height:1.5}
 
