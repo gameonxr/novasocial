@@ -64,8 +64,22 @@ input::placeholder,textarea::placeholder{color:#444}
 .logo{font-size:24px;font-weight:900;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* CARDS */
-.post{border-bottom:8px solid #0a0a0a}
-.post-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 14px}
+.post{
+margin:10px 12px;
+border-radius:22px;
+overflow:hidden;
+background:#0f0f0f;
+border:1px solid rgba(255,255,255,.05);
+box-shadow:
+0 8px 20px rgba(0,0,0,.45),
+0 0 18px rgba(79,142,247,.08);
+}
+.post-hdr{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:14px 16px;
+}
 .post-media{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
 .post-acts{padding:10px 14px 8px}
 
@@ -120,33 +134,34 @@ input::placeholder,textarea::placeholder{color:#444}
 .pstat-l{color:#777;font-size:12px}
 
 /* MSG */
-  .clist{
-margin:8px 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(79,142,247,0.4);
-  border-radius: 18px;
-  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-  backdrop-filter: blur(6px);
+.clist{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  padding:14px 16px;
+  margin:10px 12px;
+
+  border-radius:14px;
+
+  background:#0c0c0c;
+
+  border:1px solid rgba(255,255,255,.04);
+
   box-shadow:
-    inset 0 0 8px rgba(255,255,255,0.08),
-    0 6px 14px rgba(0,0,0,0.6),
-    0 0 20px rgba(79,142,247,0.3);
-  cursor: pointer;
-  transition: 0.3s ease;
+    0 4px 12px rgba(0,0,0,.45);
+
+  cursor:pointer;
+  transition:.2s ease;
 }
 
-.clist:active {
-  background: linear-gradient(145deg, rgba(79,142,247,0.25), rgba(0,224,255,0.15));
-  box-shadow:
-    inset 0 0 10px rgba(255,255,255,0.15),
-    0 0 25px rgba(79,142,247,0.6);
-  transform: scale(0.98);
-                              }
+.clist:active{
+  background:#0d0d0d;
+  transform:scale(.98);
+}
 .mme{background:linear-gradient(135deg,#833AB4,#E1306C);border-radius:18px 18px 4px 18px;padding:10px 14px;max-width:72%;font-size:14px;line-height:1.5;margin-left:auto}
 .mthem{background:#1a1a1a;border-radius:18px 18px 18px 4px;padding:10px 14px;max-width:72%;font-size:14px;line-height:1.5}
+
 
 /* SEARCH */
 .sbar2{display:flex;align-items:center;gap:10px;background:#111;border-radius:14px;padding:11px 14px;flex:1}
@@ -165,7 +180,23 @@ margin:8px 12px;
 .mute-btn{position:absolute;top:60px;right:14px;z-index:6;background:rgba(0,0,0,0.45);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 
 /* NOTIF */
-.nitem{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #0d0d0d;cursor:pointer;transition:background 0.15s}
+.nitem{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  margin:10px 12px;
+  padding:18px;
+
+  border-radius:14px;
+
+  background:#0c0c0c;
+
+  box-shadow:
+  0 4px 12px rgba(0,0,0,.35);
+
+  border:1px solid rgba(255,255,255,.03);
+}
 .nitem:active{background:#0d0d0d}
 
 /* ANIMATIONS */
@@ -271,7 +302,24 @@ background:#111;
     </div>
     <div class="nb" data-t="notifs" onclick="go('notifs')" style="position:relative">
       <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-      <div id="notif-dot" style="display:none;position:absolute;top:6px;right:20px;width:9px;height:9px;border-radius:50%;background:#E1306C;border:2px solid #000"></div>
+      <div id="notif-dot"
+style="
+display:none;
+position:absolute;
+top:2px;
+right:14px;
+min-width:18px;
+height:18px;
+padding:0 5px;
+border-radius:999px;
+background:#E1306C;
+border:2px solid #000;
+color:#fff;
+font-size:10px;
+font-weight:700;
+align-items:center;
+justify-content:center">
+</div>
       <div class="ndot"></div>
     </div>
     <div class="nb" data-t="dms" onclick="go('dms')">
@@ -493,6 +541,8 @@ function go(tab){
   else if(tab==='profile') renderProfile();
 }
 
+
+
 function updateNavIcons(tab){
   const navEl=document.getElementById('nav');
   const btns=navEl.querySelectorAll('.nb');
@@ -514,7 +564,15 @@ async function checkUnreadNotifs(){
   try{
     const{count}=await db.from('notifications').select('id',{count:'exact',head:true}).eq('recipient_id',ME.id).eq('is_read',false);
     const dot=document.getElementById('notif-dot');
-    if(dot) dot.style.display=(count>0)?'block':'none';
+
+if(dot){
+  if(count > 0){
+    dot.style.display='flex';
+    dot.textContent = count > 99 ? '99+' : count;
+  }else{
+    dot.style.display='none';
+  }
+}
   }catch(e){}
 }
 
