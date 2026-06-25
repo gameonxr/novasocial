@@ -2143,6 +2143,8 @@ async function openChat(cid,name,isGrp){
   
   // Right Dynamic Icons
   htmlArr.push('<div class="right-icons-chat">');
+    // Camera
+  htmlArr.push('<div id="cam-icon" class="icon-morph" onclick="document.getElementById(\'dm-cam-pick\').click()">'+ico('cam','#fff',0)+'</div>');
   // Mic
     htmlArr.push('<div id="mic-btn" class="icon-morph" onclick="toggleRecording(\''+cid+'\')">'+ico('mic','#fff',24)+'</div>');
   // Send
