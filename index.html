@@ -11,7 +11,43 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <meta name="theme-color" content="#E1306C">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+
+/* Next-Gen Chat Input Bar */
+.chat-input-wrap { position: relative; padding: 0 12px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; align-items: flex-end; gap: 10px; background: transparent; }
+.chat-pill { flex: 0 1 65%; max-width: 280px; display: flex; align-items: center; background: rgba(20,20,20,0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 30px; min-height: 50px; padding: 4px 6px 4px 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: flex 0.3s ease, max-width 0.3s ease, box-shadow 0.3s; }
+.chat-pill.expanded { flex: 1; max-width: 100%; }
+.chat-pill:focus-within { box-shadow: 0 0 0 1px rgba(225,48,108,0.4), 0 4px 20px rgba(225,48,108,0.1); }
+
+/* Typing Dots Animation */
+.typing-dot { width: 6px; height: 6px; background: #888; border-radius: 50%; display: inline-block; animation: bounce 1s infinite ease-in-out; margin: 0 1px; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(-4px); opacity: 1; } }
+.chat-textarea { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 15px; resize: none; max-height: 100px; line-height: 1.4; font-family: inherit; padding: 12px 0; }
+.chat-textarea::placeholder { color: #666; }
+.plus-btn-chat { width: 42px; height: 42px; border-radius: 50%; background: rgba(20,20,20,0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-bottom: 4px; }
+.right-icons-chat { position: relative; width: 42px; height: 42px; flex-shrink: 0; margin-bottom: 4px; }
+.right-icons-chat > div { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.icon-morph { position: absolute; transition: all 0.2s cubic-bezier(0.25,0.46,0.45,0.94); opacity: 1; transform: scale(1); cursor: pointer; }
+.icon-hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
+.send-btn-chat { background: linear-gradient(135deg, #8a3ab9, #e1306c, #fd1d1d); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(225,48,108,0.4); }
+
+/* Mic Pulse Animation */
+@keyframes pulse-mic { 0% { box-shadow: 0 0 0 0 rgba(225, 48, 108, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(225, 48, 108, 0); } 100% { box-shadow: 0 0 0 0 rgba(225, 48, 108, 0); } }
+.pulse-mic { animation: pulse-mic 1.5s infinite; border-radius: 50%; }
+
+/* Skeleton Loader (Premium Look) */
+.skel-card{background:#0f0f0f;border-radius:22px;margin:10px 12px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.skel-hdr{display:flex;align-items:center;gap:10px;padding:14px 16px}
+.skel-av{width:40px;height:40px;border-radius:50%;background:#1a1a1a;flex-shrink:0}
+.skel-line{height:8px;background:#1a1a1a;border-radius:4px;width:100px}
+.skel-media{width:100%;aspect-ratio:1/1;background:#1a1a1a}
+.skel-acts{padding:10px 14px}
+.skel-acts div{height:20px;width:20px;background:#1a1a1a;border-radius:4px;display:inline-block;margin-right:18px}
+@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:calc(200px + 100%) 0}}
+.shimmer{background:linear-gradient(90deg,#1a1a1a 0px,#222 40px,#1a1a1a 80px);background-size:200px 100%;animation:shimmer 1.2s infinite linear}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{height:100%;height:-webkit-fill-available}
 body{height:100%;height:-webkit-fill-available;background:#000;color:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;position:fixed;width:100%}
@@ -427,22 +463,76 @@ async function doAuth(){
 function showErr(m){const e=document.getElementById('aerr');e.textContent=m;e.style.display='block';}
 
 // ── NAVIGATION ──────────────────────────────────────
+// Haptic Feedback (Premium Feel)
+function haptic(ms = 10) { if(window.navigator && navigator.vibrate) navigator.vibrate(ms); }
+
+function viewChatImage(url) {
+  const m = modal('');
+  m.querySelector('.mhdr').style.display = 'none'; 
+  m.querySelector('.msheet').style.background = 'rgba(0,0,0,0.95)'; 
+  m.querySelector('#mbody').innerHTML = '<div style="position:relative;display:flex;align-items:center;justify-content:center;min-height:90vh;padding:10px;"><img src="'+url+'" style="max-width:100%;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div><div onclick="downloadMedia(\''+url+'\',\'novasocial_image\')" style="position:absolute;top:30px;right:20px;background:rgba(0,0,0,0.6);padding:12px;border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);">'+ico('img','#fff',24)+'</div>';
+  m.onclick = e => { if(e.target === m) closeModal(); };
+}
+
+function changeAudioSpeed(btn) {
+  const audio = btn.previousElementSibling;
+  if(!audio) return;
+  if(audio.playbackRate === 1) { audio.playbackRate = 1.5; btn.textContent = '1.5x'; }
+  else if(audio.playbackRate === 1.5) { audio.playbackRate = 2; btn.textContent = '2x'; }
+  else { audio.playbackRate = 1; btn.textContent = '1x'; }
+  toast('Speed: ' + btn.textContent);
+}
+
+// Clear Stuck Overlays (Agar koi modal background me phans jaye)
+function clearOverlays() {
+  document.querySelectorAll('.mbg').forEach(el => el.remove());
+  const sv = document.getElementById('sv');
+  if(sv) sv.classList.remove('show');
+}
+
+// Navigation Function (Crash Proof)
 function go(tab){
-  pauseAllVideos();
-  curTab=tab;
-  document.querySelectorAll('.nb').forEach(b=>{b.classList.toggle('on',b.dataset.t===tab);});
-  updateNavIcons(tab);
-  const scr=document.getElementById('screen');
-  scr.innerHTML=`<div class="ldiv"><div class="spin"></div></div>`;
-  scr.scrollTop=0;
-  scr.style.overflow='auto';
-  scr.style.display='block';
-  if(tab==='home') renderHome();
-  else if(tab==='explore') renderExplore();
-  else if(tab==='reels') renderReels();
-  else if(tab==='dms') renderDMs();
-  else if(tab==='notifs') renderNotifs();
-  else if(tab==='profile') renderProfile();
+  try {
+    haptic(10);
+    clearOverlays();
+    pauseAllVideos();
+    curTab=tab;
+    document.querySelectorAll('.nb').forEach(b=>{
+      const on=b.dataset.t===tab;
+      b.classList.toggle('on',on);
+    });
+    updateNavIcons(tab);
+    const scr=document.getElementById('screen');
+    
+    // Panel-wise Skeleton Loading
+    let skelHtml = '';
+    if(tab === 'home' || tab === 'profile') {
+      for(let i=0; i<3; i++) skelHtml += '<div class="skel-card"><div class="skel-hdr"><div class="skel-av shimmer"></div><div class="skel-line shimmer"></div></div><div class="skel-media shimmer"></div><div class="skel-acts"><div class="shimmer"></div><div class="shimmer"></div><div class="shimmer"></div></div></div>';
+    } else if(tab === 'explore') {
+      skelHtml = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">';
+      for(let i=0; i<9; i++) skelHtml += '<div class="skel-media shimmer" style="border-radius:0"></div>';
+      skelHtml += '</div>';
+    } else if(tab === 'dms') {
+      for(let i=0; i<6; i++) skelHtml += '<div style="display:flex;gap:14px;padding:14px 16px;margin:10px 12px;border-radius:14px;background:#0c0c0c;"><div class="skel-av shimmer" style="width:54px;height:54px;"></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px;"><div class="skel-line shimmer" style="width:40%"></div><div class="skel-line shimmer" style="width:80%"></div></div></div>';
+    } else {
+      skelHtml = '<div class="ldiv"><div class="spin"></div></div>';
+    }
+    
+    scr.innerHTML=skelHtml;
+    scr.scrollTop=0;
+    scr.style.overflow='auto';
+    scr.style.display='block';
+    
+    if(tab==='home') renderHome();
+    else if(tab==='explore') renderExplore();
+    else if(tab==='reels') renderReels();
+    else if(tab==='dms') renderDMs();
+    else if(tab==='notifs') renderNotifs();
+    else if(tab==='profile') renderProfile();
+  } catch(e) {
+    console.error("Navigation Error:", e);
+    document.getElementById('screen').innerHTML = '<div style="text-align:center;padding:40px;color:#E1306C;">App me error aaya hai. Console check karein.</div>';
+  }
 }
 
 function updateNavIcons(tab){
@@ -558,8 +648,13 @@ async function upload(file,onProg){
 }
 
 // ── VIEWS & CAPTION HELPER ──────────────────────────────────────
-async function incrementView(postId) {
-  try { await db.rpc('increment_post_view', { post_id: postId }); } catch (e) {}
+async function recordPostView(postId) {
+  try {
+    await db.from('post_views').upsert(
+      { post_id: postId, user_id: ME.id },
+      { onConflict: 'post_id,user_id', ignoreDuplicates: true }
+    );
+  } catch (e) {}
 }
 
 function formatCaption(username, caption) {
@@ -598,7 +693,8 @@ function updateLikeUI(pid,liked,cnt,reaction){
 }
 
 async function toggleLike(pid){
-  if(lpFired){lpFired=false;return;}
+    if(lpFired){lpFired=false;return;}
+  haptic(15); // Vibrate on like
   const el=document.getElementById('lbtn-'+pid);if(!el)return;
   const wasLiked=el.dataset.liked==='true';
   const newLiked=!wasLiked;
@@ -617,10 +713,25 @@ async function toggleLike(pid){
 }
 
 function dblLike(pid,cont){
+  cont.appendChild(p);setTimeout(()=>p.remove(),700);
+  haptic(20);
   const el=document.getElementById('lbtn-'+pid);
   if(el&&el.dataset.liked!=='true') toggleLike(pid);
-  const p=document.createElement('div');p.className='hpop';p.textContent='❤️';
-  cont.appendChild(p);setTimeout(()=>p.remove(),700);
+  
+  // Flying Hearts Animation
+  for(let i=0; i<6; i++) {
+    setTimeout(() => {
+      const p=document.createElement('div');
+      p.className='hpop';
+      p.textContent='❤️';
+      p.style.left = (30 + Math.random() * 50) + '%';
+      p.style.top = (30 + Math.random() * 50) + '%';
+      p.style.fontSize = (40 + Math.random() * 30) + 'px';
+      p.style.animationDuration = (0.8 + Math.random() * 0.5) + 's';
+      cont.appendChild(p);
+      setTimeout(()=>p.remove(), 1300);
+    }, i * 100);
+  }
 }
 
 async function setReaction(e,pid,emoji){
@@ -726,10 +837,7 @@ async function loadMoreFeedPosts(){
     (sv||[]).forEach(x=>savedSet.add(x.post_id));
   }
   
-  validPosts.forEach(p => {
-    incrementView(p.id);
-    p.views = (p.views || 0) + 1;
-  });
+  validPosts.forEach(p => { recordPostView(p.id); });
   
   const list=document.getElementById('feed-list');
   list.insertAdjacentHTML('beforeend',validPosts.map(p=>postCard(p,likedSet.has(p.id),savedSet.has(p.id),reactionMap[p.id]||'heart')).join(''));
@@ -781,7 +889,7 @@ function postCard(p,liked,saved,reaction){
     </div>
     <div style="display:flex;gap:15px;font-weight:700;font-size:14px;margin-bottom:5px;align-items:center;">
       <div id="lcnt-${p.id}" style="${!(p.likes_count>0)?'display:none':''}">${fmt(p.likes_count||0)} likes</div>
-      <div style="color:#aaa;font-weight:600;">${fmt(p.views||0)} views</div>
+     <div style="color:#aaa;font-weight:600;">${fmt(p.views_count||0)} views</div>
       ${isMine?`<div onclick="viewInsights('${p.id}')" style="color:#4a90d9;font-weight:600;cursor:pointer;margin-left:auto;">Insights</div>`:''}
     </div>
     ${p.caption?`<div style="font-size:14px;line-height:1.6;margin-bottom:4px">${formatCaption(p.profiles?.username, p.caption)}</div>`:''}
@@ -1309,36 +1417,29 @@ async function showFollowList(userId, type) {
   const body = m.querySelector('#mbody');
   body.innerHTML = `<div class="ldiv"><div class="spin"></div></div>`;
   
-  const fk = type === 'followers' ? 'follower_id' : 'following_id';
-  const uk = type === 'followers' ? 'following_id' : 'follower_id';
+  let fk, uk;
+  if (type === 'followers') {
+    fk = 'following_id'; // userId is being followed
+    uk = 'follower_id';  // fetch the followers
+  } else {
+    fk = 'follower_id';  // userId is following
+    uk = 'following_id'; // fetch the following
+  }
   
   const { data } = await db.from('follows').select(`profiles!follows_${uk}_fkey(username, avatar_url, id)`).eq(fk, userId);
   const users = (data || []).map(d => d.profiles).filter(Boolean);
-  
-  // Check which of these I am following (for the Follow/Following button)
-  const { data: myFollowing } = await db.from('follows').select('following_id').eq('follower_id', ME.id);
-  const myFollowingSet = new Set((myFollowing||[]).map(x => x.following_id));
   
   if(!users.length) {
     body.innerHTML = `<div style="text-align:center;padding:40px;color:#555">No ${type} yet.</div>`;
     return;
   }
   
-  body.innerHTML = users.map(u => {
-    const isMe = u.id === ME.id;
-    const isFollowing = myFollowingSet.has(u.id);
-    let btn = '';
-    if(!isMe) {
-      btn = `<button onclick="quickFollowFromList('${u.id}', this)" class="${isFollowing?'bout':'bgrd'}" style="width:auto;padding:7px 16px;font-size:12px;border-radius:8px;">${isFollowing?'Following':'Follow'}</button>`;
-    }
-    return `<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #0d0d0d;">
-      <div onclick="closeModal();showUserProfile('${u.id}')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1;">
-        ${av(u.avatar_url, u.username, 44)}
-        <div><div style="font-weight:700;font-size:14px;">${u.username}</div></div>
-      </div>
-      ${btn}
-    </div>`;
-  }).join('');
+  body.innerHTML = users.map(u => `
+    <div onclick="closeModal();showUserProfile('${u.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
+      ${av(u.avatar_url, u.username, 40)}
+      <div style="flex:1"><div style="font-weight:700;font-size:14px">${u.username}</div></div>
+    </div>
+  `).join('');
 }
 
 async function quickFollowFromList(uid, btn) {
@@ -1645,6 +1746,239 @@ async function renderReels(){
   },{passive:true});
 }
 
+function checkMention(inp, cid) {
+  const val = inp.value;
+  const words = val.split(' ');
+  const lastWord = words[words.length - 1];
+  
+  const existingList = document.getElementById('mention-list');
+  
+  if (lastWord.startsWith('@') && lastWord.length < 20) {
+    const query = lastWord.substring(1).toLowerCase();
+    const members = window._chatMembers || [];
+    const matched = members.filter(m => m.profiles?.username && m.profiles.username.toLowerCase().includes(query) && m.user_id !== ME.id);
+    
+    if (matched.length > 0) {
+      if (!existingList) {
+        const list = document.createElement('div');
+        list.id = 'mention-list';
+        list.style.cssText = 'position:absolute;bottom:70px;left:10px;right:10px;background:#1a1a1a;border:1px solid #333;border-radius:12px;max-height:200px;overflow-y:auto;z-index:100;box-shadow:0 -4px 12px rgba(0,0,0,0.5);';
+        document.getElementById('mlist').parentElement.appendChild(list);
+      }
+      
+      let html = '';
+      matched.forEach(m => {
+        html += '<div onclick="insertMention(\''+m.profiles.username+'\', \'minp\')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid #222;">';
+        html += av(m.profiles?.avatar_url, m.profiles.username, 32);
+        html += '<span style="font-weight:600;font-size:14px;">'+m.profiles.username+'</span></div>';
+      });
+      document.getElementById('mention-list').innerHTML = html;
+    } else {
+      existingList?.remove();
+    }
+  } else {
+    existingList?.remove();
+  }
+}
+
+function insertMention(username, inpId) {
+  const inp = document.getElementById(inpId);
+  let words = inp.value.split(' ');
+  words[words.length - 1] = '@' + username + ' ';
+  inp.value = words.join(' ');
+  document.getElementById('mention-list')?.remove();
+  inp.focus();
+}
+function saveLocalSticker(type, url) {
+  let arr = getLocalStickers(type);
+  if(!arr.includes(url)) { arr.unshift(url); if(arr.length > 20) arr.pop(); localStorage.setItem(type+'_stickers', JSON.stringify(arr)); }
+}
+
+let activeStickerTab = 'recent';
+
+function getLocalStickers(type) {
+  try { 
+    return JSON.parse(localStorage.getItem(type+'_stickers') || '[]'); 
+  } catch(e) { 
+    localStorage.removeItem(type+'_stickers'); 
+    return []; 
+  }
+}
+
+function toggleFavSticker(url, e, btn) {
+  if(e) e.stopPropagation(); // Sticker send na ho
+  let favs = getLocalStickers('fav');
+  if (favs.includes(url)) {
+    favs = favs.filter(u => u !== url);
+    if(btn) btn.textContent = '☆';
+    toast('Removed from Favorites');
+  } else {
+    favs.unshift(url);
+    if(btn) btn.textContent = '⭐';
+    toast('Added to Favorites ⭐');
+  }
+  localStorage.setItem('fav_stickers', JSON.stringify(favs));
+}
+
+async function openStickerPicker(cid) {
+  window._stickerCid = cid;
+  activeStickerTab = 'recent'; // Reset tab
+  const m = modal('Stickers & GIFs');
+  const body = m.querySelector('#mbody');
+  body.innerHTML = ''; // Clear body
+  
+  let html = '<div style="padding:16px;">';
+  // Upload Button
+  html += '<div style="margin-bottom:16px;">';
+  html += '<button onclick="document.getElementById(\'sticker-upload\').click()" class="bgrd" style="width:100%;padding:12px;font-size:14px;">+ Upload Custom Sticker</button>';
+  html += '<input id="sticker-upload" type="file" accept="image/*" style="display:none" onchange="uploadCustomSticker(this, \''+cid+'\')">';
+  html += '</div>';
+  
+  // Tabs
+  html += '<div style="display:flex;gap:10px;border-bottom:1px solid #222;margin-bottom:16px;">';
+  html += '<div onclick="showStickerTab(\'recent\')" id="tab-recent" style="padding:8px 0;cursor:pointer;font-weight:700;color:#fff;border-bottom:2px solid #fff;font-size:14px;">Recent</div>';
+  html += '<div onclick="showStickerTab(\'fav\')" id="tab-fav" style="padding:8px 0;cursor:pointer;font-weight:600;color:#666;font-size:14px;">Favorites</div>';
+  html += '<div onclick="showStickerTab(\'search\')" id="tab-search" style="padding:8px 0;cursor:pointer;font-weight:600;color:#666;font-size:14px;">Search GIFs</div>';
+  html += '</div>';
+  
+  html += '<div id="sticker-content" style="min-height:200px;"></div>';
+  html += '</div>';
+  
+  body.innerHTML = html;
+  showStickerTab('recent');
+}
+
+function showStickerTab(tab) {
+  activeStickerTab = tab;
+  ['recent','fav','search'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
+    if(el) { el.style.color='#666'; el.style.fontWeight='600'; el.style.borderBottom='none'; }
+  });
+  const activeEl = document.getElementById('tab-'+tab);
+  if(activeEl) { activeEl.style.color='#fff'; activeEl.style.fontWeight='700'; activeEl.style.borderBottom='2px solid #fff'; }
+  const content = document.getElementById('sticker-content');
+  if(!content) return;
+  const favUrls = JSON.parse(localStorage.getItem('fav_stickers') || '[]');
+  const recentUrls = JSON.parse(localStorage.getItem('recent_stickers') || '[]');
+  window._stickerUrls = [];
+  if(tab === 'recent') {
+    if(!recentUrls.length) { content.innerHTML = '<div style="color:#444;text-align:center;padding:30px">Abhi koi recent sticker nahi hai.</div>'; return; }
+    window._stickerUrls = [...recentUrls];
+    let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">';
+    recentUrls.forEach((url, i) => {
+      const isFav = favUrls.includes(url);
+      html += '<div style="position:relative;"><img src="'+url+'" onclick="stickerSend('+i+')" style="width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;"><div id="fav-btn-'+i+'" onclick="stickerToggleFav('+i+')" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;">'+(isFav?'⭐':'☆')+'</div></div>';
+    });
+    content.innerHTML = html + '</div>';
+  } else if(tab === 'fav') {
+    if(!favUrls.length) { content.innerHTML = '<div style="color:#444;text-align:center;padding:30px">Koi favorite nahi. Sticker par ☆ dabakar add karein.</div>'; return; }
+    window._stickerUrls = [...favUrls];
+    let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">';
+    favUrls.forEach((url, i) => {
+      html += '<div style="position:relative;"><img src="'+url+'" onclick="stickerSend('+i+')" style="width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;"><div id="fav-btn-'+i+'" onclick="stickerToggleFav('+i+')" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;">❌</div></div>';
+    });
+    content.innerHTML = html + '</div>';
+  } else if(tab === 'search') {
+    content.innerHTML = '<div class="sbar2" style="margin-bottom:12px;">'+ico('search','#666',18)+'<input placeholder="Search GIFs..." id="giphy-inp" oninput="searchGiphy(this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div><div id="giphy-results" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;"></div>';
+    searchGiphy('trending');
+  }
+}
+
+function stickerSend(idx) {
+  const url = (window._stickerUrls || [])[idx];
+  if(!url) return;
+  let recents = JSON.parse(localStorage.getItem('recent_stickers') || '[]');
+  recents = [url, ...recents.filter(u => u !== url)];
+  if(recents.length > 20) recents.pop();
+  localStorage.setItem('recent_stickers', JSON.stringify(recents));
+  db.from('messages').insert({ conversation_id: window._stickerCid, sender_id: ME.id, text: '', media_url: url, media_type: 'image' }).then(() => {
+    closeModal();
+    loadMsgs(window._stickerCid, window._curIsGrp);
+  });
+}
+
+function stickerToggleFav(idx) {
+  const url = (window._stickerUrls || [])[idx];
+  if(!url) return;
+  let favs = JSON.parse(localStorage.getItem('fav_stickers') || '[]');
+  const wasFav = favs.includes(url);
+  if(wasFav) {
+    favs = favs.filter(u => u !== url);
+    toast('Removed from Favorites');
+  } else {
+    favs.unshift(url);
+    toast('Added to Favorites ⭐');
+  }
+  localStorage.setItem('fav_stickers', JSON.stringify(favs));
+  if(activeStickerTab === 'fav') {
+    showStickerTab('fav');
+  } else {
+    const btn = document.getElementById('fav-btn-'+idx);
+    if(btn) btn.textContent = wasFav ? '☆' : '⭐';
+  }
+}
+
+let giphyDebounce;
+async function searchGiphy(q) {
+  clearTimeout(giphyDebounce);
+  const r = document.getElementById('giphy-results');
+  if(!r) return;
+  if(!q.trim()) { r.innerHTML = ''; return; }
+  
+  r.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;"><div class="spin"></div></div>';
+  giphyDebounce = setTimeout(async () => {
+    try {
+      const res = await fetch('https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q='+q+'&limit=12&rating=pg');
+      const data = await res.json();
+      if(data.data.length === 0) { r.innerHTML = '<div style="grid-column:1/-1;color:#555;text-align:center;">No GIFs found</div>'; return; }
+      r.innerHTML = data.data.map(g => '<img src="'+g.images.fixed_height_small.url+'" data-url="'+g.images.original.url+'" onclick="sendGif(this)" style="width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;">').join('');
+    } catch(e) { r.innerHTML = '<div style="grid-column:1/-1;color:#555;text-align:center;">Failed to load. Try again.</div>'; }
+  }, 500);
+}
+
+async function sendGif(img) {
+  const url = img.getAttribute('data-url') || img.src;
+  if(!url) return;
+  let recents = JSON.parse(localStorage.getItem('recent_stickers') || '[]');
+  recents = [url, ...recents.filter(u => u !== url)];
+  if(recents.length > 20) recents.pop();
+  localStorage.setItem('recent_stickers', JSON.stringify(recents));
+  await db.from('messages').insert({ conversation_id: window._stickerCid, sender_id: ME.id, text: '', media_url: url, media_type: 'image' });
+  closeModal();
+  loadMsgs(window._stickerCid, window._curIsGrp);
+}
+
+async function uploadCustomSticker(inp, cid) {
+  const f = inp.files[0]; if(!f) return; closeModal(); toast('Uploading sticker...');
+  try {
+    const url = await upload(f);
+    let recents = getLocalStickers('recent');
+    if(!recents.includes(url)) {
+      recents.unshift(url);
+      if(recents.length > 20) recents.pop();
+      localStorage.setItem('recent_stickers', JSON.stringify(recents));
+    }
+    await db.from('messages').insert({ conversation_id: cid, sender_id: ME.id, text: '', media_url: url, media_type: 'image' });
+    toast('Sticker sent! 🎉');
+  } catch(e) { toast('Upload failed'); }
+}
+
+async function sendSticker(cid, emoji) {
+  await db.from('messages').insert({ conversation_id: cid, sender_id: ME.id, text: emoji });
+  closeModal();
+}
+
+function toggleVanishMode() {
+  window._vanishMode = !window._vanishMode;
+  const btn = document.getElementById('vanish-btn');
+  if(btn) btn.innerHTML = window._vanishMode ? '👻' : '🔓';
+  const mlist = document.getElementById('mlist');
+  if(mlist) {
+    mlist.style.background = window._vanishMode ? "repeating-linear-gradient(45deg, #000, #000 10px, #0a0a0a 10px, #0a0a0a 20px)" : "#000";
+  }
+  toast(window._vanishMode ? 'Vanish Mode ON 👻' : 'Vanish Mode OFF');
+}
+
 function toggleReelsMute(){
   reelsMuted=!reelsMuted;
   // Sirf current reel ka sound change karo, baaki sab muted rahenge
@@ -1692,8 +2026,8 @@ async function renderDMs(){
     const name=c.is_group?c.group_name:(other?.username||'Chat');
     const online=other?isOnline(other.last_seen):false;
     const avatarHtml=c.is_group
-      ?`<div style="width:54px;height:54px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">👥</div>`
-      :av(other?.avatar_url,other?.username,54,false,online);
+  ? (c.group_avatar ? '<div style="width:54px;height:54px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="'+c.group_avatar+'" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div style="width:54px;height:54px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">👥</div>')
+  : av(other?.avatar_url,other?.username,54,false,online);
     return `
     <div class="clist" onclick="openChat('${c.id}','${(name||'Chat').replace(/'/g,"\\'")}',${c.is_group})">
       ${avatarHtml}
@@ -1717,9 +2051,9 @@ async function openChat(cid,name,isGrp){
   scr.style.overflow='hidden';
   window._curIsGrp=isGrp;
   window._curChatId=cid;
-  
   window.replyToId=null;
   window.replyToText='';
+  window._vanishMode = false; 
 
   let otherProf=null,members=[],gcAvatar='',gcName=name;
   let convoInfo=null;
@@ -1749,44 +2083,95 @@ async function openChat(cid,name,isGrp){
   window._chatGcName=gcName;
   window._chatCid=cid;
 
-  const gcAvatarHtml=gcAvatar
-    ?`<div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0"><img src="${gcAvatar}" style="width:100%;height:100%;object-fit:cover"></div>`
-    :`<div style="width:36px;height:36px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">👥</div>`;
-    
-  scr.style.opacity="0.95";
-  scr.innerHTML=`<div style="display:flex;flex-direction:column;height:100%">
-    <div class="topbar">
-      <div onclick="pauseAllVideos();go('dms')" style="cursor:pointer;margin-right:10px">${ico('back')}</div>
-      <div onclick="${isGrp?`showGroupInfo('${cid}')`:otherProf?`goToProfile('${window._chatOtherId}')`:''}" style="cursor:pointer">
-        ${isGrp?gcAvatarHtml:av(otherProf?.avatar_url,otherProf?.username,36,false,online)}
-      </div>
-      <div onclick="${isGrp?`showGroupInfo('${cid}')`:otherProf?`goToProfile('${window._chatOtherId}')`:''}" style="flex:1;margin-left:10px;cursor:pointer">
-        <div style="font-weight:700;font-size:15px">${gcName}</div>
-        ${isGrp
-  ? `<div style="color:#666;font-size:11px">${members.length} members · tap for info</div>`
-  : `<div style="color:${online ? '#3db83d' : '#666'};font-size:11px">
-      ${lastSeenText(otherProf?.last_seen)}
-    </div>`
-}
-      </div>
-      <div onclick="searchMessages('${cid}')" style="cursor:pointer;margin-right:12px">🔍</div>
-      ${isGrp?`<div onclick="showGroupInfo('${cid}')" style="cursor:pointer">${ico('more','#aaa')}</div>`:''}
-    </div>
- <div id="pin-bar" style="${convoInfo?.pinned_message_text ? '' : 'display:none;'}padding:8px 14px;background:#1a1a1a;border-bottom:1px solid #222;font-size:13px;cursor:pointer;color:#fff;">📌 ${convoInfo?.pinned_message_text || ''}</div>
-    <div id="typing-indicator" style="padding:4px 14px;font-size:12px;color:#888;display:none;">Typing...</div>
-    <div id="mlist" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch"></div>
-    <div id="reply-preview" style="display:none;padding:8px 14px;background:#111;border-top:1px solid #222"></div>
-   <div style="padding:10px 14px;display:flex;gap:8px;background:rgba(0,0,0,0.95);border-top:1px solid #111;flex-shrink:0;align-items:center">
-  <div onclick="document.getElementById('dm-file-pick').click()" style="cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center">${ico('img','#aaa')}</div>
-  <input id="dm-file-pick" type="file" accept="image/*,video/*" style="display:none" onchange="sendMediaMsg('${cid}', this)">
-  <div id="mic-btn" onclick="toggleRecording('${cid}')" style="width:44px;height:44px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">${ico('mic')}</div>
-  <input id="minp" placeholder="Message..." onkeydown="if(event.key==='Enter')sendMsg('${cid}')" style="flex:1;background:#111;border:1px solid #222;border-radius:24px;padding:12px 16px;color:#fff;font-size:14px;outline:none">
-  <div onclick="sendMsg('${cid}')" style="width:46px;height:46px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">${ico('send')}</div>
-</div>
-  </div>`;
-  loadMsgs(cid,isGrp);
+  let headerClick = isGrp ? "showGroupInfo('" + cid + "')" : (otherProf ? "goToProfile('" + window._chatOtherId + "')" : '');
+  let headerAv = isGrp ? (gcAvatar ? '<div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0"><img src="'+gcAvatar+'" style="width:100%;height:100%;object-fit:cover"></div>' : '<div style="width:36px;height:36px;border-radius:50%;background:'+GRAD+';display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">👥</div>') : av(otherProf?.avatar_url,otherProf?.username,36,false,online);
   
+    let callIcons = isGrp ? 
+    '<div onclick="startGroupCall(\''+cid+'\', \'audio\')" style="cursor:pointer;margin-right:12px">'+ico('mic','#aaa',20)+'</div><div onclick="startGroupCall(\''+cid+'\', \'video\')" style="cursor:pointer;margin-right:12px">'+ico('vid','#aaa',20)+'</div><div onclick="showGroupInfo(\''+cid+'\')" style="cursor:pointer">'+ico('more','#aaa')+'</div>' 
+    : 
+    '<div onclick="toast(\'Calling...\')" style="cursor:pointer;margin-right:12px">'+ico('mic','#aaa',20)+'</div><div onclick="toast(\'Video Calling...\')" style="cursor:pointer;margin-right:12px">'+ico('vid','#aaa',20)+'</div><div onclick="showChatActions(\''+cid+'\')" style="cursor:pointer">'+ico('more','#aaa')+'</div>';
+  
+  let subText = isGrp ? '<div style="color:#666;font-size:11px">'+members.length+' members · tap for info</div>' : '<div style="color:'+(online?'#3db83d':'#666')+';font-size:11px">'+lastSeenText(otherProf?.last_seen)+'</div>';
+
+  let callBannerHtml = '';
+  if(convoInfo?.active_call_type) {
+    callBannerHtml = '<div id="active-call-banner" style="background:linear-gradient(90deg,#0a0a0a,#1a0533);padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #222;">';
+    callBannerHtml += ico(convoInfo.active_call_type === 'video' ? 'vid' : 'mic', '#E1306C', 20);
+    callBannerHtml += '<div style="flex:1;font-size:12px;color:#fff;"><b>'+(convoInfo.active_call_type === 'video' ? 'Video' : 'Audio')+' Call</b><br><span style="color:#aaa;">'+(convoInfo.active_call_by === ME.id ? 'You started' : 'In progress')+'</span></div>';
+    callBannerHtml += '<button onclick="endGroupCall(\''+cid+'\')" style="background:#E1306C;border:none;color:#fff;font-weight:700;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;">End</button>';
+    callBannerHtml += '<button style="background:#3db83d;border:none;color:#000;font-weight:700;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;">Join</button>';
+    callBannerHtml += '</div>';
+  }
+
+  let pinBarHtml = convoInfo?.pinned_message_text ? '<div id="pin-bar" style="padding:8px 14px;background:#1a1a1a;border-bottom:1px solid #222;font-size:13px;cursor:pointer;color:#fff;">📌 '+convoInfo.pinned_message_text+'</div>' : '';
+
+  // Safe HTML Array (Zero Syntax Error Risk)
+  let htmlArr = [];
+  htmlArr.push('<div style="display:flex;flex-direction:column;height:100%;position:relative;">');
+  htmlArr.push('<div class="topbar">');
+  htmlArr.push('<div onclick="pauseAllVideos();go(\'dms\')" style="cursor:pointer;margin-right:10px">'+ico('back')+'</div>');
+  htmlArr.push('<div onclick="'+headerClick+'" style="cursor:pointer">'+headerAv+'</div>');
+  htmlArr.push('<div onclick="'+headerClick+'" style="flex:1;margin-left:10px;cursor:pointer"><div style="font-weight:700;font-size:15px">'+gcName+'</div>'+subText+'</div>');
+  htmlArr.push('<div onclick="searchMessages(\''+cid+'\')" style="cursor:pointer;margin-right:12px">'+ico('search','#aaa',22)+'</div>');
+  htmlArr.push('<div onclick="toggleVanishMode()" style="cursor:pointer;margin-right:12px;font-size:20px;" id="vanish-btn">🔓</div>');
+  htmlArr.push(callIcons);
+  htmlArr.push('</div>'); // topbar end
+  
+  htmlArr.push(pinBarHtml);
+  htmlArr.push(callBannerHtml);
+  htmlArr.push('<div id="typing-indicator" style="padding:4px 14px;font-size:12px;color:#888;display:none;">Typing...</div>');
+  htmlArr.push('<div id="mlist" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch"></div>');
+  
+  // Scroll to Bottom Button (Premium Feature)
+  htmlArr.push('<div id="scroll-down-btn" onclick="document.getElementById(\'mlist\').scrollTop=document.getElementById(\'mlist\').scrollHeight" style="position:absolute;bottom:70px;right:20px;background:#333;width:36px;height:36px;border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.5);">'+ico('back','#fff',20)+'</div>');
+  
+  htmlArr.push('<div id="reply-preview" style="display:none;padding:8px 14px;background:#111;border-top:1px solid #222"></div>');
+  
+  // Input Bar
+    // Next-Gen Input Bar
+  htmlArr.push('<div class="chat-input-wrap">');
+  
+  // Left Plus Button
+  htmlArr.push('<div class="plus-btn-chat" onclick="toggleAttachmentSheet(\''+cid+'\')" style="color:#fff">'+ico('plus','#fff',24)+'</div>');
+  
+  // Main Pill
+  htmlArr.push('<div class="chat-pill">');
+  htmlArr.push('<textarea id="minp" rows="1" placeholder="Message..." onfocus="this.parentElement.classList.add(\'expanded\')" onblur="if(!this.value.trim())this.parentElement.classList.remove(\'expanded\')" oninput="autoGrow(this); toggleSendBtn(); checkMention(this, \''+cid+'\')" onkeydown="if(event.key===\'Enter\' && !event.shiftKey){event.preventDefault(); sendMsg(\''+cid+'\')}" class="chat-textarea"></textarea>');
+   // Emoji Button inside Pill
+  htmlArr.push('<div onclick="openStickerPicker(\''+cid+'\')" style="cursor:pointer; width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#aaa; flex-shrink:0;">😊</div>');
+  htmlArr.push('</div>'); // chat-pill end
+  
+  // Right Dynamic Icons
+  htmlArr.push('<div class="right-icons-chat">');
+  // Mic
+    htmlArr.push('<div id="mic-btn" class="icon-morph" onclick="toggleRecording(\''+cid+'\')">'+ico('mic','#fff',24)+'</div>');
+  // Send
+  htmlArr.push('<div id="send-icon" class="icon-morph icon-hidden" onclick="haptic(15); sendMsg(\''+cid+'\')"><div class="send-btn-chat">'+ico('send','#fff',20)+'</div></div>');
+  htmlArr.push('</div>'); // right-icons-chat end
+  
+  htmlArr.push('</div>'); // chat-input-wrap end
+
+  scr.style.opacity="0.95";
+  
+  console.log("Rendering input bar");
+  console.log("Screen rendered");
+  scr.innerHTML = htmlArr.join('');
+  
+  loadMsgs(cid,isGrp);
   startTypingWatcher(cid);
+
+  // Scroll Event for Scroll-to-Bottom Button
+  const mlist = document.getElementById('mlist');
+  const scrollBtn = document.getElementById('scroll-down-btn');
+  if(mlist && scrollBtn) {
+    mlist.onscroll = () => {
+      if(mlist.scrollTop < mlist.scrollHeight - mlist.clientHeight - 200) {
+        scrollBtn.style.display = 'flex';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    };
+  }
 
   if(window.chatSubscription){ db.removeChannel(window.chatSubscription); }
   window.chatSubscription = db.channel('chat-' + cid).on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},(payload) => {
@@ -1794,14 +2179,138 @@ async function openChat(cid,name,isGrp){
   }).subscribe();
 }
 
+function toggleSendBtn(){
+  const txt = document.getElementById('minp')?.value.trim();
+  const cam = document.getElementById('cam-icon');
+  const mic = document.getElementById('mic-btn');
+  const send = document.getElementById('send-icon');
+  const pill = document.querySelector('.chat-pill');
+  
+  if(!cam || !mic || !send || !pill) return;
+  
+  if(txt) {
+    cam.classList.add('icon-hidden');
+    mic.classList.add('icon-hidden');
+    send.classList.remove('icon-hidden');
+    pill.classList.add('expanded'); // Expand when typing
+  } else {
+    cam.classList.remove('icon-hidden');
+    mic.classList.remove('icon-hidden');
+    send.classList.add('icon-hidden');
+    // Shrink only if not focused
+    if(document.activeElement !== document.getElementById('minp')) pill.classList.remove('expanded');
+  }
+}
+
+// Auto-grow Textarea
+function autoGrow(el) {
+  el.style.height = 'auto';
+  el.style.height = (el.scrollHeight) + 'px';
+  if(el.scrollHeight > 100) el.style.overflowY = 'auto';
+  else el.style.overflowY = 'hidden';
+}
+
+function showChatActions(cid) {
+  const m = modal('Chat Options');
+  const body = m.querySelector('#mbody');
+  let html = '<div style="padding:8px 0;">';
+  html += '<button onclick="clearChat(\''+cid+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;color:#E1306C;">🗑️ Clear Chat</button>';
+  html += '<button onclick="closeModal()" class="bout" style="border:none;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;color:#aaa;margin-top:8px;">Cancel</button>';
+  html += '</div>';
+  body.innerHTML = html;
+}
+
+async function clearChat(cid) {
+  if(!confirm('Clear all messages? This cannot be undone.')) return;
+  await db.from('messages').delete().eq('conversation_id', cid);
+  toast('Chat cleared');
+  closeModal();
+  loadMsgs(cid, window._curIsGrp);
+}
+
+// Premium Attachment Sheet (Instagram Style)
+function toggleAttachmentSheet(cid) {
+  const m = modal('Attachments');
+  const body = m.querySelector('#mbody');
+  let html = '<div style="padding:20px; display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; text-align:center;">';
+  
+  // Gallery
+  html += '<div onclick="document.getElementById(\'dm-file-pick\').click()" style="cursor:pointer;">';
+  html += '<div style="width:56px; height:56px; border-radius:50%; background:#1a1a1a; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;">'+ico('img','#fff',24)+'</div>';
+  html += '<span style="font-size:12px; color:#aaa;">Gallery</span></div>';
+  
+  // Camera
+  html += '<div onclick="document.getElementById(\'dm-cam-pick\').click()" style="cursor:pointer;">';
+  html += '<div style="width:56px; height:56px; border-radius:50%; background:#1a1a1a; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;">'+ico('cam','#fff',24)+'</div>';
+  html += '<span style="font-size:12px; color:#aaa;">Camera</span></div>';
+  
+  // Location
+  html += '<div onclick="shareLocation(\''+cid+'\')" style="cursor:pointer;">';
+  html += '<div style="width:56px; height:56px; border-radius:50%; background:#1a1a1a; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-size:24px;">📍</div>';
+  html += '<span style="font-size:12px; color:#aaa;">Location</span></div>';
+  
+  // Sticker
+  html += '<div onclick="closeModal(); openStickerPicker(\''+cid+'\')" style="cursor:pointer;">';
+  html += '<div style="width:56px; height:56px; border-radius:50%; background:#1a1a1a; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-size:24px;">😊</div>';
+  html += '<span style="font-size:12px; color:#aaa;">Sticker</span></div>';
+  
+  html += '</div>';
+  
+  // Hidden Inputs
+  html += '<input id="dm-file-pick" type="file" accept="image/*,video/*" style="display:none" onchange="closeModal(); sendMediaMsg(\''+cid+'\', this)">';
+  html += '<input id="dm-cam-pick" type="file" accept="image/*" capture="environment" style="display:none" onchange="closeModal(); sendMediaMsg(\''+cid+'\', this)">';
+  
+  body.innerHTML = html;
+}
+
+// New Feature: Location Sharing
+async function shareLocation(cid) {
+  closeModal();
+  if (!navigator.geolocation) return toast('Geolocation not supported');
+  toast('Getting location...');
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const { latitude, longitude } = pos.coords;
+    const mapUrl = `https://staticmap.openstreetmap.de/staticmap.php?center=${latitude},${longitude}&zoom=15&size=400x400&markers=${latitude},${longitude},red-pushpin`;
+    await db.from('messages').insert({ conversation_id: cid, sender_id: ME.id, text: `${latitude},${longitude}`, media_url: mapUrl, media_type: 'location' });
+    toast('Location sent! 📍');
+  }, err => toast('Location permission denied'), { enableHighAccuracy: true });
+}
+
 async function searchMessages(cid){
-  const q = prompt("Search messages");
-  if(!q) return;
-  const {data:msgs,error} = await db.from('messages').select('*').eq('conversation_id',cid).ilike('text',`%${q}%`).order('created_at',{ascending:false}).limit(50);
-  if(error){ toast("Search failed"); return; }
-  if(!msgs?.length){ toast("No messages found"); return; }
-  const m = modal(`Results (${msgs.length})`);
-  m.querySelector('#mbody').innerHTML = msgs.map(x=>`<div onclick="jumpToMessage('${x.id}')" style="padding:10px;border-bottom:1px solid #222;cursor:pointer"><div style="color:#fff">${x.text||'[media]'}</div><div style="color:#666;font-size:11px">${ago(x.created_at)}</div></div>`).join('');
+  const m = modal('Search in Chat');
+  const body = m.querySelector('#mbody');
+  body.innerHTML = `
+    <div style="padding:16px;position:sticky;top:0;background:#0d0d0d;z-index:10;border-bottom:1px solid #222;">
+      <div class="sbar2" style="background:#1a1a1a;border-radius:12px;">${ico('search','#888',18)}<input placeholder="Search messages..." id="search-inp" oninput="doSearchMessages('${cid}', this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1" autofocus></div>
+    </div>
+    <div id="search-results" style="padding:8px 0;">
+      <div style="color:#444;text-align:center;padding:40px 20px;font-size:13px;">Search karna shuru karo...</div>
+    </div>
+  `;
+}
+
+async function doSearchMessages(cid, q) {
+  const r = document.getElementById('search-results');
+  if(!r) return;
+  if(!q.trim()) {
+    r.innerHTML = '<div style="color:#444;text-align:center;padding:40px 20px;font-size:13px;">Search karna shuru karo...</div>';
+    return;
+  }
+  r.innerHTML = '<div class="ldiv"><div class="spin"></div></div>';
+  
+  const {data:msgs} = await db.from('messages').select('*').eq('conversation_id',cid).ilike('text',`%${q}%`).order('created_at',{ascending:false}).limit(30);
+  
+  if(!msgs?.length){
+    r.innerHTML = '<div style="color:#444;text-align:center;padding:40px 20px;font-size:13px;">Koi message nahi mila 😕</div>';
+    return;
+  }
+  
+  r.innerHTML = msgs.map(x => `
+    <div onclick="jumpToMessage('${x.id}')" style="padding:14px 16px;border-bottom:1px solid #111;cursor:pointer;">
+      <div style="color:#fff;font-size:14px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${x.text || '[Media]'}</div>
+      <div style="color:#666;font-size:11px;">${ago(x.created_at)}</div>
+    </div>
+  `).join('');
 }
 
 function jumpToMessage(mid){
@@ -1819,68 +2328,219 @@ async function showGroupInfo(cid){
   const members=window._chatMembers||[];
   const isAdmin=window._chatIsAdmin;
   const gcName=window._chatGcName||'Group';
-  const{data:ci}=await db.from('conversations').select('group_avatar,group_name').eq('id',cid).single();
-  const gcAvatar=ci?.group_avatar||'';
-  const m=modal(`${gcName} · Info`);
-  const body=m.querySelector('#mbody');
   
+  const { data: ci } = await db.from('conversations').select('group_avatar, group_name, admin_approval_required, theme').eq('id', cid).single();
+  const { data: myMem } = await db.from('conversation_members').select('muted_until').eq('conversation_id', cid).eq('user_id', ME.id).maybeSingle();
+  
+  // Shared Media Fetch
+  const { data: mediaMsgs } = await db.from('messages').select('media_url, media_type').eq('conversation_id', cid).not('media_url', 'is', null).order('created_at', {ascending:false}).limit(9);
+  
+  const gcAvatar = ci?.group_avatar || '';
+  const approvalReq = ci?.admin_approval_required || false;
+  const isMuted = myMem?.muted_until && new Date(myMem.muted_until) > new Date();
+  const chatTheme = ci?.theme || 'default';
+  
+  const m = modal(`${gcName} · Info`);
+  const body = m.querySelector('#mbody');
   const inviteLink = `${window.location.origin}/?gc=${cid}`;
   
-  body.innerHTML=`
-    <div style="display:flex;flex-direction:column;align-items:center;padding:24px 16px 16px;gap:12px;border-bottom:1px solid #1a1a1a">
-      <div onclick="${isAdmin?`document.getElementById('gc-av-pick').click()`:''}" style="position:relative;cursor:${isAdmin?'pointer':'default'}">
-        ${gcAvatar?`<div style="width:80px;height:80px;border-radius:50%;overflow:hidden"><img src="${gcAvatar}" style="width:100%;height:100%;object-fit:cover"></div>`:`<div style="width:80px;height:80px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;font-size:36px">👥</div>`}
-        ${isAdmin?`<div style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #000">📷</div>`:''}
-      </div>
-      <input id="gc-av-pick" type="file" accept="image/*" style="display:none" onchange="uploadGCAvatar(this,'${cid}')">
-      ${isAdmin?`<input id="gc-rename" value="${gcName.replace(/"/g,'&quot;')}" style="background:transparent;border:none;border-bottom:1px solid #444;color:#fff;font-size:18px;font-weight:700;text-align:center;outline:none;width:220px" onblur="saveGCName('${cid}',this.value)">`:`<div style="font-size:18px;font-weight:700">${gcName}</div>`}
-      <div style="color:#666;font-size:13px">${members.length} members</div>
-    </div>
-    
-    <div style="padding:12px 16px; border-bottom:1px solid #1a1a1a;">
-      <div style="color:#666;font-size:12px;font-weight:700;margin-bottom:8px">INVITE LINK</div>
-      <div style="display:flex;align-items:center;gap:8px;background:#111;padding:8px 12px;border-radius:10px;">
-        <span style="flex:1;color:#aaa;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${inviteLink}</span>
-        <button onclick="copyInviteLink('${inviteLink}')" style="background:${GRAD};border:none;border-radius:6px;color:#fff;font-size:11px;padding:6px 10px;cursor:pointer;font-weight:700;">Copy</button>
-      </div>
-    </div>
+  let html = '<div style="display:flex;flex-direction:column;align-items:center;padding:24px 16px 16px;gap:8px;border-bottom:8px solid #0a0a0a;">';
+  
+  html += '<div onclick="'+(isAdmin?`document.getElementById('gc-av-pick').click()`:'')+'" style="position:relative;cursor:'+(isAdmin?'pointer':'default')+';margin-bottom:8px;">';
+  if(gcAvatar) {
+    html += '<div style="width:90px;height:90px;border-radius:50%;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.5);"><img src="'+gcAvatar+'" style="width:100%;height:100%;object-fit:cover"></div>';
+  } else {
+    html += '<div style="width:90px;height:90px;border-radius:50%;background:'+GRAD+';display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 4px 12px rgba(0,0,0,0.5);">👥</div>';
+  }
+  if(isAdmin) html += '<div style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:'+GRAD+';display:flex;align-items:center;justify-content:center;font-size:14px;border:3px solid #0d0d0d;">📷</div>';
+  html += '</div>';
+  
+  html += '<input id="gc-av-pick" type="file" accept="image/*" style="display:none" onchange="uploadGCAvatar(this,\''+cid+'\')">';
+  if(isAdmin) {
+    html += '<input id="gc-rename" value="'+gcName.replace(/"/g,'&quot;')+'" style="background:transparent;border:none;color:#fff;font-size:20px;font-weight:800;text-align:center;outline:none;width:220px" onblur="saveGCName(\''+cid+'\',this.value)">';
+  } else {
+    html += '<div style="font-size:20px;font-weight:800">'+gcName+'</div>';
+  }
+  html += '<div style="color:#666;font-size:13px">Group · '+members.length+' members</div></div>';
+  
+  // Quick Action Icons
+  html += '<div style="display:flex;justify-content:space-around;padding:16px 0;border-bottom:8px solid #0a0a0a;">';
+  html += '<div onclick="startGroupCall(\''+cid+'\', \'audio\')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#fff;"><div style="width:50px;height:50px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;">'+ico('mic','#fff',22)+'</div><span style="font-size:11px;color:#aaa;">Audio</span></div>';
+  html += '<div onclick="startGroupCall(\''+cid+'\', \'video\')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#fff;"><div style="width:50px;height:50px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;">'+ico('vid','#fff',22)+'</div><span style="font-size:11px;color:#aaa;">Video</span></div>';
+  html += '<div onclick="searchMessages(\''+cid+'\')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#fff;"><div style="width:50px;height:50px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;">'+ico('search','#fff',22)+'</div><span style="font-size:11px;color:#aaa;">Search</span></div>';
+  html += '</div>';
 
-    <div style="padding:12px 16px 4px">
-      <div style="color:#666;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:8px">MEMBERS</div>
-      ${members.map(mem=>{
-        const isMe=mem.user_id===ME.id;
-        return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d">
-          <div onclick="closeModal();goToProfile('${mem.user_id}')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1">
-            ${av(mem.profiles?.avatar_url,mem.profiles?.username,42,false,isOnline(mem.profiles?.last_seen))}
-            <div><div style="font-weight:600;font-size:14px">${mem.profiles?.username||'User'}${isMe?' (You)':''}</div>
-            ${mem.is_admin?`<div style="color:#E1306C;font-size:11px;font-weight:700">Admin ⭐</div>`:`<div style="color:#555;font-size:11px">Member</div>`}</div>
-          </div>
-          ${isAdmin&&!isMe?`<div style="display:flex;gap:6px">
-            ${!mem.is_admin?`<button onclick="makeAdmin('${cid}','${mem.user_id}')" style="background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#aaa;font-size:11px;padding:5px 8px;cursor:pointer">Admin</button>`:''}
-            <button onclick="removeMember('${cid}','${mem.user_id}')" style="background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#E1306C;font-size:11px;padding:5px 8px;cursor:pointer">Remove</button>
-          </div>`:''}
-        </div>`;
-      }).join('')}
-    </div>
-    
-    ${isAdmin?`
-    <div style="padding:12px 16px; border-top:1px solid #1a1a1a;">
-      <div style="color:#666;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:8px">ADD MEMBER</div>
-      
-      <!-- Suggestions (Followers/Following not in group) -->
-      <div id="gc-suggest-res" style="margin-bottom:12px;"></div>
-      
-      <div class="sbar2" style="margin-bottom:10px">${ico('search','#666',18)}<input placeholder="Search username to add..." id="gc-add-inp" oninput="searchAddMember(this.value,'${cid}')" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div>
-      <div id="gc-add-res"></div>
-    </div>
-    `:''}
+  // Shared Media Gallery
+  if(mediaMsgs && mediaMsgs.length > 0) {
+    html += '<div style="padding:16px; border-bottom:8px solid #0a0a0a;"><div style="color:#666;font-size:12px;font-weight:700;margin-bottom:8px; display:flex; justify-content:space-between;">SHARED MEDIA <span style="color:#4a90d9;cursor:pointer;" onclick="toast(\'Opening all media...\')">See All</span></div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:4px;">';
+    mediaMsgs.forEach(m => {
+      if(m.media_type === 'image') html += '<img src="'+m.media_url+'" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;cursor:pointer;" onclick="window.open(\''+m.media_url+'\',\'_blank\')">';
+      else if(m.media_type === 'video') html += '<div style="position:relative;width:100%;aspect-ratio:1/1;background:#000;border-radius:8px;overflow:hidden;"><video src="'+m.media_url+'" style="width:100%;height:100%;object-fit:cover;"></video><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;">▶️</div></div>';
+    });
+    html += '</div></div>';
+  }
 
-    <div style="padding:16px;border-top:1px solid #1a1a1a">
-      <button onclick="leaveGroup('${cid}')" style="width:100%;padding:12px;background:transparent;border:1px solid #E1306C;border-radius:12px;color:#E1306C;font-weight:600;font-size:14px;cursor:pointer">Leave Group</button>
-    </div><div style="height:20px"></div>`;
-    
-  // Load suggestions for admin
+  // Mute Notifications Dropdown
+  html += '<div style="padding:0 16px; border-bottom:1px solid #1a1a1a;">';
+  html += '<div onclick="var d=document.getElementById(\'mute-opts\'); d.style.display = d.style.display === \'none\' ? \'flex\' : \'none\';" style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;">';
+  html += '<div style="font-size:14px;font-weight:600;">Mute Notifications</div>';
+  html += '<div id="mute-label" style="color:#aaa;font-size:12px;">'+(isMuted?'Muted':'Off')+' 🔽</div></div>';
+  html += '<div id="mute-opts" style="display:none;padding-bottom:16px;gap:8px;flex-wrap:wrap;">';
+  const muteDurations = [['Off', null], ['1H', '1 hour'], ['8H', '8 hours'], ['24H', '24 hours']];
+  muteDurations.forEach(([label, duration]) => {
+    const isActive = (duration === null && !isMuted) || (duration !== null && isMuted);
+    html += '<button onclick="muteGroup(\''+cid+'\', \''+duration+'\', this)" class="bout" style="font-size:11px;padding:6px 14px;'+(isActive?'border-color:#E1306C;color:#E1306C;':'')+'">'+label+'</button>';
+  });
+  html += '</div></div>';
+
+  // Admin Approval System Toggle
+  if(isAdmin) {
+    html += '<div style="padding:16px; border-bottom:1px solid #1a1a1a; display:flex; justify-content:space-between; align-items:center;">';
+    html += '<div><div style="font-size:14px;font-weight:600;">Approval System</div><div style="color:#666;font-size:11px;">Approve new members manually</div></div>';
+    html += '<button onclick="toggleApprovalSystem(\''+cid+'\', '+(approvalReq?'false':'true')+', this)" style="width:46px;height:26px;border-radius:14px;border:none;background:'+(approvalReq?'#E1306C':'#333')+';position:relative;cursor:pointer;transition:0.3s;">';
+    html += '<div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;left:'+(approvalReq?'23px':'3px')+';transition:0.3s;"></div></button>';
+    html += '</div>';
+  }
+
+  // Chat Themes
+  html += '<div style="padding:0 16px; border-bottom:8px solid #0a0a0a;">';
+  html += '<div onclick="var d=document.getElementById(\'theme-opts\'); d.style.display = d.style.display === \'none\' ? \'flex\' : \'none\';" style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;">';
+  html += '<div style="font-size:14px;font-weight:600;">Theme</div><div style="color:#aaa;font-size:12px;">'+chatTheme.charAt(0).toUpperCase()+chatTheme.slice(1)+' 🔽</div></div>';
+  html += '<div id="theme-opts" style="display:none;padding-bottom:16px;gap:12px;flex-wrap:wrap;">';
+  const themes = [['Default', 'default', '#0d0d0d'], ['Cyberpunk', 'cyberpunk', '#1a0533'], ['Tropical', 'tropical', '#05331a'], ['Pride', 'pride', '#330a0a']];
+  themes.forEach(([name, val, color]) => {
+    html += '<div onclick="setChatTheme(\''+cid+'\',\''+val+'\', this)" style="width:60px;height:60px;border-radius:50%;background:'+color+';border:2px solid '+(chatTheme===val?'#E1306C':'transparent')+';cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">'+name+'</div>';
+  });
+  html += '</div></div>';
+
+  // Invite Link
+  html += '<div style="padding:16px; border-bottom:8px solid #0a0a0a;"><div style="color:#666;font-size:12px;font-weight:700;margin-bottom:8px">INVITE VIA LINK</div>';
+  html += '<div style="display:flex;align-items:center;gap:8px;background:#111;padding:10px 12px;border-radius:10px;"><span style="flex:1;color:#aaa;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+inviteLink+'</span>';
+  html += '<button onclick="copyInviteLink(\''+inviteLink+'\')" style="background:'+GRAD+';border:none;border-radius:6px;color:#fff;font-size:11px;padding:6px 10px;cursor:pointer;font-weight:700;">Copy</button></div></div>';
+
+  // Members Section
+  html += '<div style="padding:16px 16px 4px"><div style="color:#666;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:8px">MEMBERS ('+members.length+')</div>';
+    members.forEach(mem => {
+    const isMe = mem.user_id === ME.id;
+    html += '<div id="member-'+mem.user_id+'" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d">';
+    html += '<div onclick="closeModal();goToProfile(\''+mem.user_id+'\')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1">';
+    html += av(mem.profiles?.avatar_url, mem.profiles?.username, 44, false, isOnline(mem.profiles?.last_seen));
+    html += '<div><div style="font-weight:600;font-size:14px">'+(mem.profiles?.username||'User')+(isMe?' (You)':'')+'</div>';
+    html += '<div class="member-role">'; // Class added for instant update
+    if(mem.is_admin) html += '<div style="color:#E1306C;font-size:11px;font-weight:700">Admin ⭐</div>';
+    else html += '<div style="color:#555;font-size:11px">Member</div>';
+    html += '</div></div></div>';
+    if(isAdmin && !isMe) {
+      html += '<div style="display:flex;gap:6px">';
+      html += '<button class="admin-btn" onclick="makeAdmin(\''+cid+'\',\''+mem.user_id+'\')" style="background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#aaa;font-size:11px;padding:5px 8px;cursor:pointer">'+(!mem.is_admin?'Admin':'Remove Admin')+'</button>';
+      html += '<button onclick="removeMember(\''+cid+'\',\''+mem.user_id+'\')" style="background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#E1306C;font-size:11px;padding:5px 8px;cursor:pointer">Remove</button>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+
+  if(isAdmin) {
+    html += '<div style="padding:16px; border-top:8px solid #0a0a0a;"><div style="color:#666;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:8px">ADD MEMBER</div>';
+    html += '<div id="gc-suggest-res" style="margin-bottom:12px;"></div>';
+    html += '<div class="sbar2" style="margin-bottom:10px">'+ico('search','#666',18)+'<input placeholder="Search username to add..." id="gc-add-inp" oninput="searchAddMember(this.value,\''+cid+'\')" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div>';
+    html += '<div id="gc-add-res"></div></div>';
+  }
+  
+  // Leave & Report Group
+  html += '<div style="padding:16px; display:flex; flex-direction:column; gap:10px;">';
+  html += '<button onclick="leaveGroup(\''+cid+'\')" style="width:100%;padding:12px;background:transparent;border:1px solid #E1306C;border-radius:12px;color:#E1306C;font-weight:600;font-size:14px;cursor:pointer">Leave Group</button>';
+  html += '<button onclick="reportGroup(\''+cid+'\')" style="width:100%;padding:12px;background:transparent;border:1px solid #333;border-radius:12px;color:#aaa;font-weight:600;font-size:14px;cursor:pointer">🚩 Report Group</button>';
+  html += '</div><div style="height:20px"></div>';
+  
+  body.innerHTML = html;
   if(isAdmin) loadGCSuggestions(cid);
+}
+
+async function reportGroup(cid) {
+  if(!confirm('Report this group for violating guidelines?')) return;
+  toast('Group reported. Admin will review. 🚩');
+  closeModal();
+}
+
+async function removeAdmin(cid, uid) {
+  await db.from('conversation_members').update({is_admin:false}).eq('conversation_id',cid).eq('user_id',uid);
+  await db.from('messages').insert({conversation_id:cid,sender_id:ME.id,text:'👑 An admin was demoted to member'});
+  toast('Admin removed 👑');
+  showGroupInfo(cid);
+}
+
+
+async function startGroupCall(cid, type) {
+  if(!confirm('Start '+type+' call for everyone in this group?')) return;
+  await db.from('conversations').update({ active_call_type: type, active_call_by: ME.id }).eq('id', cid);
+  await db.from('messages').insert({ conversation_id: cid, sender_id: ME.id, call_event: 'call_started', text: '📞 '+type+' call started' });
+  toast('Call started! Notify members...');
+  closeModal();
+  // Yahan actual WebRTC/ZegoCloud call logic aayega future me
+}
+
+async function endGroupCall(cid) {
+  await db.from('conversations').update({ active_call_type: null, active_call_by: null }).eq('id', cid);
+  await db.from('messages').insert({ conversation_id: cid, sender_id: ME.id, call_event: 'call_ended', text: '📞 Call ended' });
+  toast('Call ended.');
+}
+
+async function muteGroup(cid, duration, btn) {
+  let mutedUntil = null;
+  let label = 'Off';
+  if(duration) {
+    let hrs = duration.includes('1') ? 1 : duration.includes('8') ? 8 : 24;
+    mutedUntil = new Date(Date.now() + hrs * 60 * 60 * 1000).toISOString();
+    label = 'Muted';
+  }
+  await db.from('conversation_members').update({ muted_until: mutedUntil }).eq('conversation_id', cid).eq('user_id', ME.id);
+  toast(duration ? `Muted for ${duration} 🔇` : 'Notifications turned on 🔊');
+  
+  // Instant UI Update without Modal Reload
+  const muteLabel = document.getElementById('mute-label');
+  if(muteLabel) muteLabel.innerHTML = label + ' 🔽';
+  
+  // Remove active style from all buttons
+  document.querySelectorAll('#mute-opts button').forEach(b => {
+    b.style.borderColor = '#2a2a2a';
+    b.style.color = '#fff';
+  });
+  // Add active style to clicked button
+  if(btn) {
+    btn.style.borderColor = '#E1306C';
+    btn.style.color = '#E1306C';
+  }
+}
+
+async function toggleApprovalSystem(cid, isEnabled, btn) {
+  await db.from('conversations').update({ admin_approval_required: isEnabled }).eq('id', cid);
+  toast(isEnabled ? 'Approval system enabled ✅' : 'Approval system disabled');
+  // Instant UI Update
+  if(btn) {
+    btn.style.background = isEnabled ? '#E1306C' : '#333';
+    let knob = btn.querySelector('div');
+    if(knob) knob.style.left = isEnabled ? '23px' : '3px';
+    btn.setAttribute('onclick', `toggleApprovalSystem('${cid}', ${!isEnabled}, this)`);
+  }
+}
+
+async function setChatTheme(cid, theme, elem) {
+  await db.from('conversations').update({ theme: theme }).eq('id', cid);
+  toast('Theme updated! 🎨');
+  // Instant UI Update
+  document.querySelectorAll('#theme-opts > div').forEach(d => d.style.borderColor = 'transparent');
+  if(elem) elem.style.borderColor = '#E1306C';
+  
+  // Chat background instantly change
+  const mlist = document.getElementById('mlist');
+  if(mlist) {
+    if(theme === 'cyberpunk') mlist.style.background = "linear-gradient(45deg,#0a0a0a,#1a0533)";
+    else if(theme === 'tropical') mlist.style.background = "linear-gradient(45deg,#0a0a0a,#05331a)";
+    else if(theme === 'pride') mlist.style.background = "linear-gradient(45deg,#0a0a0a,#330a0a)";
+    else mlist.style.background = "#000";
+  }
 }
 
 async function loadGCSuggestions(cid) {
@@ -1893,13 +2553,15 @@ async function loadGCSuggestions(cid) {
   if (!res) return;
   if (suggestions.length === 0) return;
   
-  res.innerHTML = '<div style="color:#666;font-size:11px;margin-bottom:6px;">SUGGESTED</div>' + suggestions.map(u => `
-    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;">
-       ${av(u.avatar_url, u.username, 36)}
-       <div style="flex:1;font-size:14px;font-weight:600">${u.username}</div>
-       <button onclick="addToGroup('${cid}','${u.id}','${u.username}',this)" style="background:${GRAD};border:none;border-radius:6px;color:#fff;font-size:11px;padding:5px 10px;cursor:pointer">Add</button>
-    </div>
-  `).join('');
+  let html = '<div style="color:#666;font-size:11px;margin-bottom:6px;">SUGGESTED</div>';
+  suggestions.forEach(u => {
+    html += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;">';
+    html += av(u.avatar_url, u.username, 36);
+    html += '<div style="flex:1;font-size:14px;font-weight:600">'+u.username+'</div>';
+    html += '<button onclick="addToGroup(\''+cid+'\',\''+u.id+'\',\''+u.username+'\',this)" style="background:'+GRAD+';border:none;border-radius:6px;color:#fff;font-size:11px;padding:5px 10px;cursor:pointer">Add</button>';
+    html += '</div>';
+  });
+  res.innerHTML = html;
 }
 
 function copyInviteLink(link) {
@@ -1971,29 +2633,92 @@ async function submitCreate(type){
 
 async function uploadGCAvatar(inp,cid){
   const f=inp.files[0];if(!f)return;
-  toast('Uploading...');
-  try{const url=await upload(f);await db.from('conversations').update({group_avatar:url}).eq('id',cid);toast('Group photo updated! 🎉');closeModal();openChat(cid,window._chatGcName,true);}
-  catch(e){toast('Upload failed');}
+  const url=await upload(f);
+  await db.from('conversations').update({group_avatar:url}).eq('id',cid);
+  window._chatGcAvatar = url; // Store for later use
+  
+  // Update Modal UI Instantly
+  const avModal = document.querySelector('#cmodal .avring, #cmodal img[src*="cloudinary"]');
+  const avDiv = inp.previousElementSibling;
+  if(avDiv) {
+    avDiv.innerHTML = '<div style="width:90px;height:90px;border-radius:50%;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.5);"><img src="'+url+'" style="width:100%;height:100%;object-fit:cover"></div><div style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:'+GRAD+';display:flex;align-items:center;justify-content:center;font-size:14px;border:3px solid #0d0d0d;">📷</div>';
+  }
+  
+  // Update Chat Topbar UI Instantly
+  const topAv = document.querySelector('.topbar .avring, .topbar img[src*="cloudinary"]');
+  if(topAv) {
+    const topParent = topAv.closest('div[onclick*="showGroupInfo"]');
+    if(topParent) topParent.innerHTML = '<div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0"><img src="'+url+'" style="width:100%;height:100%;object-fit:cover"></div>';
+  }
 }
 
 async function saveGCName(cid,n){
   if(!n?.trim())return;
   await db.from('conversations').update({group_name:n.trim()}).eq('id',cid);
-  window._chatGcName=n.trim();toast('Name updated ✨');
+  window._chatGcName=n.trim();
+  
+  // Update Chat Topbar UI Instantly
+  const topNameDiv = document.querySelector('.topbar div[style*="font-weight:700"]');
+  if(topNameDiv) topNameDiv.innerText = n.trim();
 }
 
-async function makeAdmin(cid,uid){
+async function makeAdmin(cid, uid) {
   await db.from('conversation_members').update({is_admin:true}).eq('conversation_id',cid).eq('user_id',uid);
-  await db.from('messages').insert({conversation_id:cid,sender_id:ME.id,text:'👑 A member was made admin'});
-  toast('Admin ban gaya! 👑');closeModal();openChat(cid,window._chatGcName,true);
+  await db.from('messages').insert({conversation_id:cid, sender_id:ME.id, text:`👑 ${PROF.username} made an admin`});
+  let m = window._chatMembers?.find(x => x.user_id === uid);
+  if(m) m.is_admin = true;
+  
+  // Instant DOM Update
+  const row = document.getElementById('member-'+uid);
+  if(row) {
+    const btn = row.querySelector('.admin-btn');
+    const role = row.querySelector('.member-role');
+    if(btn) { btn.textContent = 'Remove Admin'; btn.setAttribute('onclick', `removeAdmin('${cid}','${uid}')`); }
+    if(role) role.innerHTML = '<div style="color:#E1306C;font-size:11px;font-weight:700">Admin ⭐</div>';
+  }
 }
 
-async function removeMember(cid,uid){
-  if(!confirm('Remove this member?'))return;
-  const uname=window._chatMembers?.find(m=>m.user_id===uid)?.profiles?.username||'Someone';
+async function removeAdmin(cid, uid) {
+  await db.from('conversation_members').update({is_admin:false}).eq('conversation_id',cid).eq('user_id',uid);
+  await db.from('messages').insert({conversation_id:cid, sender_id:ME.id, text:`👤 ${PROF.username} removed an admin`});
+  let m = window._chatMembers?.find(x => x.user_id === uid);
+  if(m) m.is_admin = false;
+  
+  // Instant DOM Update
+  const row = document.getElementById('member-'+uid);
+  if(row) {
+    const btn = row.querySelector('.admin-btn');
+    const role = row.querySelector('.member-role');
+    if(btn) { btn.textContent = 'Admin'; btn.setAttribute('onclick', `makeAdmin('${cid}','${uid}')`); }
+    if(role) role.innerHTML = '<div style="color:#555;font-size:11px">Member</div>';
+  }
+}
+
+async function removeMember(cid, uid) {
+  if(!confirm('Remove this member?')) return;
+  const uname = window._chatMembers?.find(m => m.user_id === uid)?.profiles?.username || 'Someone';
   await db.from('conversation_members').delete().eq('conversation_id',cid).eq('user_id',uid);
-  await db.from('messages').insert({conversation_id:cid,sender_id:ME.id,text:`❌ ${uname} was removed`});
-  toast('Removed');closeModal();openChat(cid,window._chatGcName,true);
+  await db.from('messages').insert({conversation_id:cid, sender_id:ME.id, text:`❌ ${PROF.username} removed ${uname}`});
+  window._chatMembers = window._chatMembers.filter(m => m.user_id !== uid);
+  
+  // Instant DOM Removal
+  const row = document.getElementById('member-'+uid);
+  if(row) {
+    row.style.transition = '0.3s';
+    row.style.opacity = '0';
+    row.style.height = '0';
+    setTimeout(() => row.remove(), 300);
+  }
+}
+
+async function addToGroup(cid, uid, uname, btn) {
+  try {
+    await db.from('conversation_members').insert({conversation_id:cid, user_id:uid, is_admin:false});
+    await db.from('messages').insert({conversation_id:cid, sender_id:ME.id, text:`✅ ${PROF.username} added ${uname}`});
+    const {data:mems} = await db.from('conversation_members').select('user_id,is_admin,profiles(username,avatar_url,last_seen)').eq('conversation_id',cid);
+    window._chatMembers = mems||[];
+    if(btn) { btn.textContent = 'Added ✓'; btn.disabled = true; btn.style.opacity = '0.5'; }
+  } catch(e) {}
 }
 
 async function leaveGroup(cid){
@@ -2028,58 +2753,137 @@ async function addToGroup(cid,uid,uname,btn){
   }catch(e){toast('Error: '+e.message);}
 }
 
-async function loadMsgs(cid,isGrp){
+ async function loadMsgs(cid,isGrp){
   const list=document.getElementById('mlist');if(!list)return;
+  
+  // Theme Apply
+  const { data: cInfo } = await db.from('conversations').select('theme').eq('id', cid).single();
+  const cTheme = cInfo?.theme || 'default';
+  if(cTheme === 'cyberpunk') list.style.background = "linear-gradient(45deg,#0a0a0a,#1a0533)";
+  else if(cTheme === 'tropical') list.style.background = "linear-gradient(45deg,#0a0a0a,#05331a)";
+  else if(cTheme === 'pride') list.style.background = "linear-gradient(45deg,#0a0a0a,#330a0a)";
+  else list.style.background = "#000";
 
   await db.from('messages').update({seen_at:new Date().toISOString()}).eq('conversation_id',cid).neq('sender_id',ME.id).is('seen_at',null);
 
-  const{data:msgs}=await db.from('messages').select(`*,profiles(username,avatar_url),replied:reply_to(text)`).eq('conversation_id',cid).order('created_at',{ascending:true}).limit(400);
+    const{data:msgs}=await db.from('messages').select(`*,profiles(username,avatar_url),replied:reply_to(text, sender_id, profiles!messages_sender_id_fkey(username))`).eq('conversation_id',cid).order('created_at',{ascending:true}).limit(400);
   
-  const {data:reacts}=await db.from('message_reactions').select('*').in('message_id',(msgs||[]).map(x=>x.id));
+  if(!msgs || msgs.length === 0){
+    list.innerHTML = '<div style="text-align:center;color:#333;padding:40px;font-size:14px">Baat shuru karo! 👋</div>';
+    return;
+  }
+
+  // Mark as Read
+  const unreadMsgs = msgs.filter(m => m.sender_id !== ME.id);
+  if(unreadMsgs.length) {
+    const readInserts = unreadMsgs.map(m => ({ message_id: m.id, user_id: ME.id }));
+    await db.from('message_reads').upsert(readInserts, { onConflict: 'message_id,user_id', ignoreDuplicates: true });
+  }
+
+  // Seen By Logic
+  let lastMyMsgId = null;
+  for(let i = msgs.length - 1; i >= 0; i--) {
+    if(msgs[i].sender_id === ME.id && !msgs[i].call_event) {
+      lastMyMsgId = msgs[i].id;
+      break;
+    }
+  }
+  let seenByHtml = '';
+  if(lastMyMsgId) {
+    const { data: reads } = await db.from('message_reads').select('user_id').eq('message_id', lastMyMsgId).neq('user_id', ME.id);
+    if(reads && reads.length > 0) {
+      if(isGrp) seenByHtml = '<div style="text-align:right;font-size:11px;color:#4FC3F7;margin-top:4px;padding-right:4px;">Seen by '+reads.length+' people</div>';
+      else seenByHtml = '<div style="text-align:right;font-size:11px;color:#4FC3F7;margin-top:4px;padding-right:4px;">Seen</div>';
+    }
+  }
+  
+  // Reactions Map
+  const {data:reacts}=await db.from('message_reactions').select('*').in('message_id',msgs.map(x=>x.id));
   const reactionMap={};
   (reacts||[]).forEach(r=>{
     if(!reactionMap[r.message_id]) reactionMap[r.message_id]=[];
     reactionMap[r.message_id].push(r.emoji);
   });
   
-  const isSystem=t=>t&&(t.startsWith('✅')||t.startsWith('❌')||t.startsWith('👑')||t.startsWith('👋'));
-  list.innerHTML=(msgs||[]).map(m=>{
-    const isMe=m.sender_id===ME.id;
-    if(isSystem(m.text)) return `<div style="text-align:center;padding:6px 0"><span style="background:#1a1a1a;color:#888;font-size:12px;padding:4px 12px;border-radius:12px">${m.text}</span></div>`;
+  const isSystem=t=>t&&(t.startsWith('✅')||t.startsWith('❌')||t.startsWith('👑')||t.startsWith('👋')||t.startsWith('📞'));
+  const now = new Date();
+  const validMsgs = msgs.filter(m => !m.expires_at || new Date(m.expires_at) > now);
+  
+  let lastDate = '';
+  let finalHtml = validMsgs.map(m => {
+    const isMe = m.sender_id === ME.id;
+      
+    let dateStr = new Date(m.created_at).toLocaleDateString();
+    let separator = '';
+    if (dateStr !== lastDate) {
+      lastDate = dateStr;
+      let today = new Date().toLocaleDateString();
+      let yesterday = new Date(Date.now() - 86400000).toLocaleDateString();
+      let label = dateStr === today ? 'Today' : dateStr === yesterday ? 'Yesterday' : new Date(m.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      separator = '<div style="text-align:center;margin:10px 0;"><span style="background:#1a1a1a;color:#aaa;font-size:11px;padding:4px 12px;border-radius:8px;">'+label+'</span></div>';
+    }
+
+    if(isSystem(m.text)) return separator + '<div style="text-align:center;padding:6px 0"><span style="background:#1a1a1a;color:#888;font-size:12px;padding:4px 12px;border-radius:12px">' + m.text + '</span></div>';
     
     let content = '';
     if (m.deleted) {
-      content = `<i style="color:#888">This message was unsent</i>`;
+      content = '<i style="color:#888">This message was unsent</i>';
     } else if (m.shared_post_id) {
-      content = `<div onclick="closeModal();viewPost('${m.shared_post_id}')" style="background:#111;padding:10px 12px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:8px;">${ico('img','#aaa',16)} <span style="color:#fff;font-size:13px">View Shared Post 📸</span></div>`;
+      content = '<div onclick="closeModal();viewPost(\'' + m.shared_post_id + '\')" style="background:#111;padding:10px 12px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:8px;">' + ico('img','#aaa',16) + ' <span style="color:#fff;font-size:13px">View Shared Post 📸</span></div>';
     } else if (m.media_type === 'audio') {
-      content = `<audio controls src="${m.media_url}" style="max-width:200px;height:36px"></audio>`;
+      content = '<div style="display:flex;align-items:center;gap:8px;background:#111;padding:4px 8px;border-radius:12px;"><audio controls src="' + m.media_url + '" style="max-width:150px;height:32px" onended="playNextAudio(this)"></audio><button onclick="changeAudioSpeed(this)" style="background:#333;border:none;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:10px;flex-shrink:0;font-weight:700;">1x</button></div>';
+    } else if (m.media_type === 'location') {
+      content = '<img src="' + m.media_url + '" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="window.open(\'https://www.google.com/maps?q=' + m.text + '\',\'_blank\')">';
     } else if (m.media_type === 'image') {
-      content = `<img src="${m.media_url}" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="window.open('${m.media_url}','_blank')">`;
+      content = '<img src="' + m.media_url + '" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="viewChatImage(\'' + m.media_url + '\')">';
     } else if (m.media_type === 'video') {
-      content = `<video controls src="${m.media_url}" style="max-width:180px;border-radius:12px"></video>`;
+      content = '<video controls src="' + m.media_url + '" style="max-width:180px;border-radius:12px"></video>';
     } else {
-      content = m.text || '';
+            let rawText = m.text || '';
+      // Auto Linkify URLs
+      rawText = rawText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4FC3F7;text-decoration:underline;">$1</a>');
+      
+      if (window._chatMembers && rawText.includes('@')) {
+        window._chatMembers.forEach(mem => {
+          if(mem.profiles?.username) {
+            const regex = new RegExp('@' + mem.profiles.username, 'g');
+            rawText = rawText.replace(regex, '<span style="color:#4FC3F7;font-weight:600;cursor:pointer;" onclick="closeModal();goToProfile(\'' + mem.user_id + '\')">@' + mem.profiles.username + '</span>');
+          }
+        });
+      }
+      content = rawText;
     }
     
-    return `<div style="display:flex;justify-content:${isMe?'flex-end':'flex-start'};gap:8px;align-items:flex-end;margin-bottom:2px">
-      ${!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="cursor:pointer;flex-shrink:0">${av(m.profiles?.avatar_url,m.profiles?.username,28)}</div>`:''}
-           <div class="${isMe?'mme':'mthem'}" data-msgid="${m.id}" style="max-width:72%" ontouchstart="swipeStart(event,'${m.id}','${(m.text||'').replace(/'/g,'\\\'')}')" ontouchmove="swipeMove(event)" ontouchend="swipeEnd(event)" oncontextmenu="event.preventDefault();showMsgMenu(event,'${m.id}','${(m.text||'').replace(/'/g,'\\\'')}',${isMe})" ondblclick="heartReact('${m.id}')">
-        ${isGrp&&!isMe?`<div onclick="goToProfile('${m.sender_id}')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">${m.profiles?.username}</div>`:''}
-        ${m.replied?.text ? `<div style="border-left:3px solid #E1306C;padding-left:8px;margin-bottom:6px;font-size:12px;color:#bbb;opacity:.9">${m.replied.text}</div>` : ''}
-        ${content}
-        ${reactionMap[m.id]?.length ? `<div style="margin-top:6px;font-size:16px;display:flex;gap:4px;flex-wrap:wrap;">${reactionMap[m.id].join(' ')}</div>` : ''}
-        <div style="font-size:10px;margin-top:3px;text-align:right">
-          <span style="color:rgba(255,255,255,0.3)">${ago(m.created_at)}</span>
-          ${isMe ? m.seen_at ? '<span style="color:#4FC3F7"> ✓✓</span>' : '<span style="color:rgba(255,255,255,0.4)"> ✓</span>' : ''}
-        </div>
-      </div>
-    </div>`;
-  }).join('')||'<div style="text-align:center;color:#333;padding:40px;font-size:14px">Baat shuru karo! 👋</div>';
-  list.scrollTop=list.scrollHeight;
-  setTimeout(()=>initVideoObserver(),300);
-}
+    // 100% Safe Encoded Attributes (Zero Crash Risk)
+    const encText = encodeURIComponent(m.text || '');
+    const encName = encodeURIComponent(m.profiles?.username || '');
+    const encMtype = encodeURIComponent(m.media_type || '');
+    const encMurl = encodeURIComponent(m.media_url || '');
+    
+    let replyContext = '';
+    if (m.replied) {
+      let replyText = m.replied.text || '📷 Media';
+      replyContext = '<div style="border-left:3px solid #E1306C;padding-left:8px;margin-bottom:6px;font-size:12px;color:#bbb;opacity:.9"><b style="color:#fff">'+(m.replied.profiles?.username||'User')+'</b><br>'+replyText+'</div>';
+    }
 
+    return separator + '<div style="display:flex;justify-content:' + (isMe?'flex-end':'flex-start') + ';gap:8px;align-items:flex-end;margin-bottom:2px">' +
+      (!isMe ? '<div onclick="goToProfile(\'' + m.sender_id + '\')" style="cursor:pointer;flex-shrink:0">' + av(m.profiles?.avatar_url, m.profiles?.username, 28) + '</div>' : '') +
+      '<div class="' + (isMe?'mme':'mthem') + '" data-msgid="' + m.id + '" data-sender="' + m.sender_id + '" data-text="' + encText + '" data-name="' + encName + '" data-mtype="' + encMtype + '" data-murl="' + encMurl + '" style="max-width:72%" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event)" ontouchend="swipeEnd(event)" oncontextmenu="event.preventDefault();showMsgMenuFromEl(event,this)" ondblclick="heartReact(\'' + m.id + '\')">' +
+      (isGrp && !isMe ? '<div onclick="goToProfile(\'' + m.sender_id + '\')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">' + (m.profiles?.username||'') + '</div>' : '') +
+      replyContext +
+      content +
+      (reactionMap[m.id]?.length ? '<div style="margin-top:6px;font-size:16px;display:flex;gap:4px;flex-wrap:wrap;">' + reactionMap[m.id].join(' ') + '</div>' : '') +
+      '<div style="font-size:10px;margin-top:3px;text-align:right"><span style="color:rgba(255,255,255,0.3)">' + ago(m.created_at) + '</span>' +
+      (isMe ? (m.seen_at ? '<span style="color:#4FC3F7"> ✓✓</span>' : '<span style="color:rgba(255,255,255,0.4)"> ✓</span>') : '') +
+      '</div></div></div>';
+  }).join('');
+  
+  finalHtml += seenByHtml;
+  list.innerHTML = finalHtml;
+  list.scrollTop = list.scrollHeight;
+  setTimeout(()=>initVideoObserver(), 300);
+}
+  
 // ── DM MEDIA SHARE ──────────────────────────────────────
 async function sendMediaMsg(cid, inp) {
   const f = inp.files[0];
@@ -2113,35 +2917,21 @@ async function sendMsg(cid){
     div.innerHTML=`<div class="mme" style="max-width:72%">${txt}<div style="color:rgba(255,255,255,0.3);font-size:10px;margin-top:3px;text-align:right">now</div></div>`;
     list.appendChild(div);list.scrollTop=list.scrollHeight;
   }
-  try{
-    await db.from('messages').insert({conversation_id:cid,sender_id:ME.id,text:txt,reply_to:window.replyToId});
+    try {
+    let msgData = { conversation_id:cid, sender_id:ME.id, text:txt, reply_to:window.replyToId };
+    // Agar Vanish Mode on hai, toh 10 minute ki expiry laga do
+    if(window._vanishMode) {
+      msgData.expires_at = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 mins
+    }
+    await db.from('messages').insert(msgData);
     cancelReply();
-  }catch(e){toast('Message send nahi hua 😕');}
+  } catch(e) { toast('Message send nahi hua 😕'); }
   loadMsgs(cid,window._curIsGrp);
 }
 
-function showMsgMenu(e,id,text,isMe){
-  const old=document.getElementById('react-box');
-  if(old) old.remove();
-  const div=document.createElement('div');
-  div.id='react-box';
-  div.style.cssText=`position:fixed;left:50%;top:${e.clientY-70}px;transform:translateX(-50%);background:#111;border:1px solid #222;border-radius:18px;padding:10px;z-index:99999;display:flex;gap:10px;font-size:26px;`;
-  
-  // Agar text empty na ho to copy dikhao
-  const copyBtn = text ? `<span onclick="copyMsg('${id}','${text.replace(/'/g, "\\'")}')">📋</span>` : '';
-  
-  div.innerHTML=`
-  <span onclick="reactMsg('${id}','❤️')">❤️</span>
-  <span onclick="reactMsg('${id}','😂')">😂</span>
-  <span onclick="reactMsg('${id}','🔥')">🔥</span>
-  <span onclick="reactMsg('${id}','👍')">👍</span>
-  <span onclick="replyMsg('${id}','${text.replace(/'/g, "\\'")}')">↩️</span>
-  ${copyBtn}
-  ${isMe ? `<span onclick="unsendMsg('${id}')">🗑️</span>` : ''}
-  <span onclick="pinMsg('${id}','${text.replace(/'/g, "\\'")}')">📌</span>`;
-  document.body.appendChild(div);
-  setTimeout(() => { document.addEventListener('click', closeReactionMenu, { once:true }); }, 100);
-  function closeReactionMenu(){ const box=document.getElementById('react-box'); if(box) box.remove(); }
+async function favoriteMessage(mid) {
+  toast('Message Favorited ⭐');
+  closeModal();
 }
 
 async function copyMsg(id, text) {
@@ -2217,10 +3007,10 @@ function startTypingWatcher(cid){
     if(payload.new.id===ME.id) return;
     const box=document.getElementById('typing-indicator');
     if(!box) return;
-    if(payload.new.typing_in===cid){
-      box.style.display='block';
-      box.textContent=payload.new.username + ' is typing...';
-    }else{
+          if(payload.new.typing_in===cid){
+        box.style.display='block';
+        box.innerHTML='<span style="color:#aaa">'+payload.new.username+' is typing <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></span>';
+      }else{
       box.style.display='none';
     }
   }).subscribe();
@@ -2230,18 +3020,28 @@ function startTypingWatcher(cid){
 let swipeStartX = 0;
 let swipeMsgId = null;
 let swipeMsgText = '';
+let swipeIsMe = false;
 
-function swipeStart(e, id, text) {
+function swipeStart(e, el) {
   swipeStartX = e.touches[0].clientX;
-  swipeMsgId = id;
-  swipeMsgText = text;
+  swipeMsgId = el.dataset.msgid;
+  swipeMsgText = decodeURIComponent(el.dataset.text || '');
+  swipeIsMe = el.classList.contains('mme');
 }
 
 function swipeMove(e) {
-  // Optional: Add visual translation if you want the bubble to move
+  if(!swipeMsgId) return;
   const diff = e.touches[0].clientX - swipeStartX;
-  if(diff > 20 && diff < 80) {
-    // Can add visual feedback here later
+  // Max 70px tak hi slide ho
+  let clampedDiff = diff;
+  if(swipeIsMe && diff < 0) clampedDiff = Math.max(-70, diff);
+  else if(!swipeIsMe && diff > 0) clampedDiff = Math.min(70, diff);
+  else return;
+
+  const el = document.querySelector('[data-msgid="'+swipeMsgId+'"]');
+  if(el) {
+    el.style.transform = 'translateX('+clampedDiff+'px)';
+    el.style.transition = 'transform 0.1s ease-out';
   }
 }
 
@@ -2250,20 +3050,158 @@ function swipeEnd(e) {
   const endX = e.changedTouches[0].clientX;
   const diff = endX - swipeStartX;
   
-  if(diff > 50) { // Swiped right
-    replyMsg(swipeMsgId, swipeMsgText);
+  const el = document.querySelector('[data-msgid="'+swipeMsgId+'"]');
+  if(el) {
+    el.style.transform = 'translateX(0)';
+    el.style.transition = 'transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
+  }
+  
+  if((swipeIsMe && diff < -50) || (!swipeIsMe && diff > 50)) {
+    const elData = el.dataset;
+    const name = decodeURIComponent(elData.name || '');
+    const mtype = decodeURIComponent(elData.mtype || '');
+    const murl = decodeURIComponent(elData.murl || '');
+    replyMsg(swipeMsgId, swipeMsgText, name, mtype, murl);
   }
   swipeMsgId = null;
   swipeStartX = 0;
 }
 
-function replyMsg(id,text){
+function showMsgMenuFromEl(e, el) {
+  e.preventDefault();
+  const d = el.dataset;
+  showMsgMenu(d.msgid, el.classList.contains('mme'), d.sender, d.text, d.name, d.mtype, d.murl);
+}
+
+function showMsgMenu(id, isMe, senderId, encText, encName, encMtype, encMurl) {
+  const m = modal('Message Actions');
+  const body = m.querySelector('#mbody');
+  
+  // Decode for display
+  const text = decodeURIComponent(encText || '');
+  const name = decodeURIComponent(encName || '');
+  
+  let html = '<div style="padding:8px 0;">';
+  html += '<div style="display:flex;justify-content:space-around;padding:10px 0 20px 0;border-bottom:1px solid #1a1a1a;">';
+  html += '<div onclick="reactMsg(\''+id+'\',\'❤️\')" style="font-size:32px;cursor:pointer;">❤️</div>';
+  html += '<div onclick="reactMsg(\''+id+'\',\'😂\')" style="font-size:32px;cursor:pointer;">😂</div>';
+  html += '<div onclick="reactMsg(\''+id+'\',\'🔥\')" style="font-size:32px;cursor:pointer;">🔥</div>';
+  html += '<div onclick="reactMsg(\''+id+'\',\'👍\')" style="font-size:32px;cursor:pointer;">👍</div>';
+  html += '<div onclick="reactMsg(\''+id+'\',\'😮\')" style="font-size:32px;cursor:pointer;">😮</div>';
+  html += '</div>';
+  
+  if(!isMe) {
+    html += '<button onclick="closeModal();goToProfile(\''+senderId+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">👤 View Profile</button>';
+  }
+  html += '<button onclick="forwardMessage(\''+id+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">➡️ Forward</button>';
+  
+  if(isMe) {
+    html += '<button onclick="showMsgInfo(\''+id+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">ℹ️ Info</button>';
+  }
+  
+  if(text) {
+    html += '<button onclick="copyMsgFromEnc(\''+encText+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">📋 Copy</button>';
+  }
+  html += '<button onclick="pinMsgFromEnc(\''+id+'\',\''+encText+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">📌 Pin</button>';
+  
+  if(isMe) {
+    html += '<button onclick="unsendMsg(\''+id+'\')" class="bout" style="border:none;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;color:#E1306C;">🗑️ Unsend</button>';
+  }
+  html += '<button onclick="closeModal()" class="bout" style="border:none;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;color:#aaa;margin-top:8px;">Cancel</button>';
+  html += '</div>';
+  
+  body.innerHTML = html;
+}
+
+function copyMsgFromEnc(encText) {
+  const text = decodeURIComponent(encText || '');
+  navigator.clipboard.writeText(text).then(() => toast('Message copied! 📋'));
+  closeModal();
+}
+
+async function pinMsgFromEnc(id, encText) {
+  const text = decodeURIComponent(encText || '');
+  await db.from('conversations').update({pinned_message_id: id, pinned_message_text: text}).eq('id', window._curChatId);
+  toast('Message pinned 📌');
+  const pinBar=document.getElementById('pin-bar');
+  if(pinBar){ pinBar.innerHTML='📌 ' + text; pinBar.style.display='block'; }
+  closeModal();
+}
+
+// React Msg pe modal band ho jaye
+async function reactMsg(mid, emoji) {
+  closeModal(); // Close menu instantly
+  const {data:old} = await db.from('message_reactions').select('*').eq('message_id',mid).eq('user_id',ME.id).maybeSingle();
+  if(old){
+    if(old.emoji === emoji){ await db.from('message_reactions').delete().eq('id',old.id); }
+    else { await db.from('message_reactions').update({emoji}).eq('id',old.id); }
+  } else {
+    await db.from('message_reactions').insert({message_id:mid,user_id:ME.id,emoji});
+  }
+  loadMsgs(window._curChatId, window._curIsGrp);
+}
+
+// New Feature: Message Info
+async function showMsgInfo(mid) {
+  const m = modal('Message Info');
+  const body = m.querySelector('#mbody');
+  body.innerHTML = '<div class="ldiv"><div class="spin"></div></div>';
+  const { data: msg } = await db.from('messages').select('created_at, seen_at').eq('id', mid).single();
+  const { data: reads } = await db.from('message_reads').select('read_at, profiles!message_reads_user_id_fkey(username)').eq('message_id', mid);
+  
+  let html = '<div style="padding:20px;">';
+  html += '<div style="margin-bottom:20px;"><div style="color:#666;font-size:12px;margin-bottom:4px;">Sent</div><div style="font-size:14px;">'+new Date(msg.created_at).toLocaleString()+'</div></div>';
+  if(msg.seen_at) {
+    html += '<div style="margin-bottom:20px;"><div style="color:#666;font-size:12px;margin-bottom:4px;">Delivered</div><div style="font-size:14px;">'+new Date(msg.seen_at).toLocaleString()+'</div></div>';
+  }
+  if(reads && reads.length > 0) {
+    html += '<div style="border-top:1px solid #222;padding-top:16px;"><div style="color:#666;font-size:12px;margin-bottom:10px;">Read by</div>';
+    reads.forEach(r => {
+      html += '<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:14px;"><span>'+r.profiles?.username+'</span><span style="color:#666;">'+new Date(r.read_at).toLocaleTimeString()+'</span></div>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div style="border-top:1px solid #222;padding-top:16px;color:#666;font-size:14px;">Not read yet</div>';
+  }
+  html += '</div>';
+  body.innerHTML = html;
+}
+
+// New Feature: Auto-play next audio
+function playNextAudio(audioEl) {
+  const allAudios = document.querySelectorAll('audio');
+  for(let i=0; i<allAudios.length; i++) {
+    if(allAudios[i] === audioEl && i+1 < allAudios.length) {
+      allAudios[i+1].play();
+      break;
+    }
+  }
+}
+
+function replyMsg(id, text, name, mediaType, mediaUrl) {
   window.replyToId=id;
-  window.replyToText=text;
   const box=document.getElementById('reply-preview');
   if(!box) return;
   box.style.display='block';
-  box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;color:#E1306C">Replying to</div><div style="font-size:13px;color:#fff">${text||''}</div></div><div onclick="cancelReply()" style="cursor:pointer;font-size:18px">✕</div></div>`;
+  
+  let previewContent = text;
+  if(!text && mediaUrl) {
+    if(mediaType === 'image') previewContent = '📷 Photo';
+    else if(mediaType === 'video') previewContent = '🎬 Video';
+    else if(mediaType === 'audio') previewContent = '🎤 Voice Message';
+  }
+  
+  let html = '<div style="display:flex;justify-content:space-between;align-items:center;background:#111;padding:10px 14px;border-left:3px solid #E1306C;border-radius:4px;">';
+  html += '<div style="flex:1;overflow:hidden;">';
+  html += '<div style="font-size:12px;color:#E1306C;font-weight:600;margin-bottom:2px;">Replying to '+(name||'User')+'</div>';
+  if(mediaUrl && mediaType === 'image') html += '<div style="display:flex;align-items:center;gap:8px;"><img src="'+mediaUrl+'" style="width:30px;height:30px;border-radius:4px;object-fit:cover;"><span style="font-size:13px;color:#fff;">'+previewContent+'</span></div>';
+  else html += '<div style="font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+previewContent+'</div>';
+  html += '</div>';
+  html += '<div onclick="cancelReply()" style="cursor:pointer;font-size:18px;padding-left:10px;">✕</div>';
+  html += '</div>';
+  
+  box.innerHTML = html;
+  document.getElementById('minp')?.focus();
 }
 
 function cancelReply(){
