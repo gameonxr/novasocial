@@ -1918,21 +1918,52 @@ function stickerToggleFav(idx) {
   }
 }
 
+
 let giphyDebounce;
+
 async function searchGiphy(q) {
   clearTimeout(giphyDebounce);
+
   const r = document.getElementById('giphy-results');
   if(!r) return;
-  if(!q.trim()) { r.innerHTML = ''; return; }
-  
-  r.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;"><div class="spin"></div></div>';
+
+  if(!q.trim()) {
+    r.innerHTML = '';
+    return;
+  }
+
+  r.innerHTML = '<div style="padding:20px;text-align:center">Loading...</div>';
+
   giphyDebounce = setTimeout(async () => {
     try {
-      const res = await fetch('https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q='+q+'&limit=12&rating=pg');
+      const res = await fetch(
+        'https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=' +
+        encodeURIComponent(q) +
+        '&limit=12&rating=pg'
+      );
+
+      console.log('GIPHY STATUS:', res.status);
+
       const data = await res.json();
-      if(data.data.length === 0) { r.innerHTML = '<div style="grid-column:1/-1;color:#555;text-align:center;">No GIFs found</div>'; return; }
-      r.innerHTML = data.data.map(g => '<img src="'+g.images.fixed_height_small.url+'" data-url="'+g.images.original.url+'" onclick="sendGif(this)" style="width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;">').join('');
-    } catch(e) { r.innerHTML = '<div style="grid-column:1/-1;color:#555;text-align:center;">Failed to load. Try again.</div>'; }
+      console.log('GIPHY DATA:', data);
+
+      if (!data.data || !data.data.length) {
+        r.innerHTML =
+          '<div style="padding:20px;text-align:center">No GIFs found</div>';
+        return;
+      }
+
+      r.innerHTML = data.data.map(g =>
+        '<img src="' + g.images.fixed_height_small.url +
+        '" data-url="' + g.images.original.url +
+        '" onclick="sendGif(this)" style="width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;">'
+      ).join('');
+
+    } catch(err) {
+      console.error(err);
+      r.innerHTML =
+        '<div style="padding:20px;text-align:center">Failed to load GIFs</div>';
+    }
   }, 500);
 }
 
@@ -2143,7 +2174,7 @@ async function openChat(cid,name,isGrp){
   
   // Right Dynamic Icons
   htmlArr.push('<div class="right-icons-chat">');
-    // Camera
+  // Camera
   htmlArr.push('<div id="cam-icon" class="icon-morph" onclick="document.getElementById(\'dm-cam-pick\').click()">'+ico('cam','#fff',0)+'</div>');
   // Mic
     htmlArr.push('<div id="mic-btn" class="icon-morph" onclick="toggleRecording(\''+cid+'\')">'+ico('mic','#fff',24)+'</div>');
@@ -3097,6 +3128,15 @@ function showMsgMenu(id, isMe, senderId, encText, encName, encMtype, encMurl) {
   }
   html += '<button onclick="forwardMessage(\''+id+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">➡️ Forward</button>';
   
+  if(encMurl && encMtype === 'image') {
+  const favs = JSON.parse(localStorage.getItem('fav_stickers') || '[]');
+  const isFav = favs.includes(decodeURIComponent(encMurl));
+
+  html += '<button onclick="toggleFavFromMsg(\''+encMurl+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">'
+       + (isFav ? '⭐ Remove Favorite Sticker' : '☆ Add To Favorites')
+       + '</button>';
+}
+  
   if(isMe) {
     html += '<button onclick="showMsgInfo(\''+id+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">ℹ️ Info</button>';
   }
@@ -3113,6 +3153,23 @@ function showMsgMenu(id, isMe, senderId, encText, encName, encMtype, encMurl) {
   html += '</div>';
   
   body.innerHTML = html;
+}
+
+function toggleFavFromMsg(encUrl){
+  const url = decodeURIComponent(encUrl);
+
+  let favs = JSON.parse(localStorage.getItem('fav_stickers') || '[]');
+
+  if(favs.includes(url)){
+    favs = favs.filter(u => u !== url);
+    toast('Removed from Favorites');
+  }else{
+    favs.unshift(url);
+    toast('Added to Favorites ⭐');
+  }
+
+  localStorage.setItem('fav_stickers', JSON.stringify(favs));
+  closeModal();
 }
 
 function copyMsgFromEnc(encText) {
