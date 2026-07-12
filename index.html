@@ -8007,7 +8007,7 @@ async function addToGroup(cid,uid,uname,btn){
 
   await db.from('messages').update({seen_at:new Date().toISOString()}).eq('conversation_id',cid).neq('sender_id',ME.id).is('seen_at',null);
 
-    const{data:msgs}=await db.from('messages').select(`*,profiles(username,avatar_url),replied:reply_to(text, sender_id, profiles!messages_sender_id_fkey(username))`).eq('conversation_id',cid).order('created_at',{ascending:true}).limit(400);
+    const{data:msgs}=await db.from('messages').select(`*,profiles(username,avatar_url),replied:reply_to(text, sender_id, profiles!messages_sender_id_fkey(username))`).eq('conversation_id',cid).order('created_at',{ascending:true}).limit(1000);
   
   if(!msgs || msgs.length === 0){
     list.innerHTML = '<div style="text-align:center;color:#333;padding:40px;font-size:14px">Baat shuru karo! 👋</div>';
