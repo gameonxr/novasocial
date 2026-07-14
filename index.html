@@ -4945,7 +4945,7 @@ async function publishStoryEditor(){
       } catch(e2) { throw e2; }
     }
     try {
-      const{data:followers}=await db.from('follows').select('follower_id').eq('following_id',ME.id).limit(200);
+      const{data:followers}=await db.from('follows').select('follower_id').eq('following_id',ME.id).limit(1000);
       if(followers?.length){
         for(const f of followers){
           await sendNotif(f.follower_id, 'story_mention', {message: 'added a new story', story_id: newStoryId});
