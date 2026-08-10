@@ -1,1 +1,68 @@
+/* NovaSocial — Base Design System */
 
+:root {
+  --nova-black: #000000;
+  --nova-card: #0A0A0A;
+  --nova-card2: #121212;
+  --nova-border: rgba(255,255,255,0.06);
+  --nova-border2: rgba(255,255,255,0.1);
+  --nova-text: #FFFFFF;
+  --nova-text2: rgba(255,255,255,0.5);
+  --nova-text3: rgba(255,255,255,0.3);
+  --nova-pink: #FF2D7A;
+  --nova-blue: #00E5FF;
+  --nova-purple: #833AB4;
+  --nova-green: #3db83d;
+
+  --nova-grad: linear-gradient(135deg,#FF2D7A,#833AB4,#00E5FF);
+  --nova-grad-pink: linear-gradient(135deg,#FF2D7A,#833AB4);
+  --nova-grad-blue: linear-gradient(135deg,#00E5FF,#833AB4);
+
+  --nova-r: 24px;
+  --nova-r-sm: 16px;
+  --nova-r-xs: 12px;
+
+  --nova-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  --nova-shadow-glow: 0 4px 20px rgba(255,45,122,0.25);
+
+  --nova-t: 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+  --nova-spring: 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  height: -webkit-fill-available;
+}
+
+body {
+  height: 100%;
+  height: -webkit-fill-available;
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #333;
+  }
