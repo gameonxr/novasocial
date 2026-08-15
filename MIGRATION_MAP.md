@@ -552,3 +552,8 @@ At commit `93d5a2d`, `src/features/games.js` extracted `showGames`, `startGame`,
 ### Reels UI Enhancement checkpoint — Branch2
 
 At commit `11b9ec9`, `src/features/reels-enhancement.js` extracted the self-contained `enhanceReelsUI` style injection and preserved its immediate initializer. The protected `renderReels` renderer and swipe system, Smart Feed ranking, DMs, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the enhancement global and all protected globals. Static syntax, initializer-timing, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Smart Feed ranking checkpoint — Branch2
+
+At commit `2ab5f96`, `src/features/smart-ranking.js` extracted `calculatePostRank`, `loadRankedFeed`, `updateMyInterests`, and the existing disabled feed-patch block. It loads after the inline application script and immediately before the final `nova-init.js` and `like-effects.js` wrappers, preserving their required last-two order. The cache-busted preview confirmed ranking, wrapper, and all protected globals. Static syntax, post-inline timing, script-order, protected-boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
