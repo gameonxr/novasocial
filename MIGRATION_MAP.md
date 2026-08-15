@@ -522,3 +522,8 @@ At commit `572ba27`, `src/features/voice-rooms.js` extracted `showVoiceRooms`, `
 ### Calendar checkpoint — Branch2
 
 At commit `8be2f56`, `src/features/calendar.js` extracted the Calendar display function `showCalendar`. The existing inline `addCalendarEvent` helper remained in place because it follows the Notes section marker in the source, and `showNotes`/`saveNote` also remained inline. The cache-busted preview confirmed Calendar, Voice Rooms, Communities, Channels, Notes, DMs, Reels, Calls, Stories, and `spawnLikeParticles` globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Notes checkpoint — Branch2
+
+At commit `ee128d9`, `src/features/notes.js` extracted the localStorage-backed `myNotes` state and `showNotes`, `createNote`, and `saveNote`. Marketplace and the inline `addCalendarEvent` helper remained in place. The cache-busted preview confirmed Notes, Calendar, Voice Rooms, Communities, Marketplace, DMs, Reels, Calls, Stories, and `spawnLikeParticles` globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
