@@ -259,6 +259,7 @@
 <script src="src/features/learning.js"></script>
 <script src="src/features/news.js"></script>
 <script src="src/features/games.js"></script>
+<script src="src/features/reels-enhancement.js"></script>
 <script src="src/features/explore.js"></script>
 <script src="src/features/home.js"></script>
 <script>
@@ -12478,24 +12479,6 @@ if(typeof _origGetLocalAIResponse === 'function'){
   };
 }
 
-// ── Reels UI Enhancement (better layout) ──────────────────────────────────────
-function enhanceReelsUI(){
-  // Add subtle improvements to reels — better overlay, smoother animations
-  const style = document.createElement('style');
-  style.textContent = `
-    .reel-card { transition: transform 0.3s ease; }
-    .reel-card:active { transform: scale(0.98); }
-    .reel-overlay { background: linear-gradient(180deg, transparent 0%, transparent 50%, rgba(0,0,0,0.8) 100%); }
-  `;
-  document.head.appendChild(style);
-}
-
-// Initialize
-enhanceReelsUI();
-
-
-
-// ═══════════════════════════════════════════════════════════════
 // NOVA ULTRA v5.0 — Smart Algorithms + Bug Fixes + Advanced AI
 // ═══════════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════════════════
