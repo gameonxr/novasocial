@@ -15,7 +15,7 @@
 | Phase | Status | Verification |
 |------:|--------|--------------|
 | 0 — Inventory | Complete | Inventory baseline preserved |
-| 1 — CSS Extraction | Complete | 18 source-order-preserving stylesheets linked from `index.html`; exact CSS reconstruction and static validation passed |
+| 1 — CSS Extraction | Complete | 18 source-order-preserving stylesheets linked from `index.html`; exact CSS reconstruction and static validation passed; mobile safe-area nav follow-up added in `responsive.css` |
 | 2 — Core Setup | Pending | Must begin only after Phase 1 runtime click-through review |
 
 **Checkpoint**: Phase 1 changes are isolated on `Branch2`. The `main` branch has not been modified.
