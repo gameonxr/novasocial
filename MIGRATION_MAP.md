@@ -452,3 +452,8 @@ At commit `782d6b2`, `src/features/smart-feed.js` extracted `showSmartFeed`, `se
 ### AI Journal and AI Video Editor checkpoints — Branch2
 
 At commit `094c67b`, `src/features/ai-journal.js` extracted `showAIJournal`, `showAIJournalEntry`, `saveJournalEntry`, and `generateAIJournal`; the live preview confirmed those globals, while `showAIVideoEditor` and all protected fragile globals remained callable. At commit `f83b9da`, `src/features/ai-video-editor.js` extracted `showAIVideoEditor`; the live preview confirmed it alongside the prior extracted globals, while `showAvatarCreator`, `showSecurityCenter`, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained callable. Both checkpoints passed syntax, script-order, boundary, and whitespace validation on `Branch2`; remote `main` remains unchanged.
+
+
+### Avatar Creator checkpoint — Branch2
+
+At commit `6a8e502`, `src/features/avatar-creator.js` extracted `showAvatarCreator` while Security Center, Creator Wallet, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview loaded the login shell and confirmed the extracted Avatar Creator chain plus all protected globals as functions. Static syntax, script-order, boundary, and whitespace checks passed; remote `main` remains unchanged.
