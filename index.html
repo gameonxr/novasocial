@@ -344,6 +344,10 @@ function _saveTabToCache(tab) {
   const scr = document.getElementById('screen');
   if (!scr) return;
 
+  // Never snapshot chat DOM as the DMs tab. Chat and DMs share #screen while
+  // curTab remains 'dms'; this preserves the last valid DMs list cache.
+  if (tab === 'dms' && window._chatScreenActive) return;
+
   // Scroll position HAMESHA save karo (chahe cache disabled ho)
   _tabScrollPos[tab] = scr.scrollTop;
 
@@ -1287,6 +1291,16 @@ function clearOverlays() {
 
 // Navigation Function (Crash Proof)
 function go(tab){
+  // Leaving an open chat from a bottom-nav tap must cancel chat-only realtime
+  // work before the DMs cache is considered again.
+  if (window._chatScreenActive && tab !== 'dms') {
+    window._chatScreenActive = false;
+    if (window.chatSubscription) {
+      db.removeChannel(window.chatSubscription);
+      window.chatSubscription = null;
+    }
+  }
+
   _renderGeneration++; // 🛡️ Race condition fix: invalidate any in-flight async renders
 
   // ── SUBTLE TAB-SWITCH FADE (Instagram-style cross-dissolve) ──
@@ -1463,6 +1477,10 @@ async function _silentBackgroundRefresh(tab) {
   const scr = document.getElementById('screen');
   if (!scr) return;
 
+  // Do not let the DMs refresh patch the chat screen while an async chat open
+  // is fetching members/conversation data.
+  if (tab === 'dms' && window._chatScreenActive) return;
+
   try {
     if(tab==='home'){
       // Poora rebuild MAT karo — sirf check karo kya naye posts hain
@@ -1538,6 +1556,7 @@ async function _silentBackgroundRefresh(tab) {
 async function _refreshDmsInPlace() {
   if (!ME?.id) return false;
   if (curTab !== 'dms') return false;
+  if (window._chatScreenActive) return false;
 
   try {
     // ── Fetch fresh data (same shape as renderDMs uses) ──
@@ -9681,8 +9700,20 @@ async function renderDMs(){
 }
 
 async function openChat(cid,name,isGrp){
+  // Mark the subscreen before the first await so DMs refresh/cache work cannot
+  // mistake the chat DOM for the DMs tab during the async open.
+  window._chatScreenActive = true;
+  const chatGeneration = ++_renderGeneration;
+
   // NAV-STACK: push chat entry
-  pushNavState('chat', cid, function(){ go('dms'); });
+  pushNavState('chat', cid, function(){
+    window._chatScreenActive = false;
+    if (window.chatSubscription) {
+      db.removeChannel(window.chatSubscription);
+      window.chatSubscription = null;
+    }
+    go('dms');
+  });
   const scr=document.getElementById('screen');
   scr.style.overflow='hidden';
   window._curIsGrp=isGrp;
@@ -9819,6 +9850,10 @@ async function openChat(cid,name,isGrp){
 
   htmlArr.push('</div>'); // chat-input-wrap end
   } // end else (not blocked)
+
+  // A tab switch/back action may have invalidated this async open while the
+  // member/conversation queries were in flight. Never paint stale chat DOM.
+  if (chatGeneration !== _renderGeneration || !window._chatScreenActive) return;
 
   scr.style.opacity="0.95";
   
