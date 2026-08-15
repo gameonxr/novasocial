@@ -16,9 +16,9 @@
 |------:|--------|--------------|
 | 0 — Inventory | Complete | Inventory baseline preserved |
 | 1 — CSS Extraction | Complete | 18 source-order-preserving stylesheets linked from `index.html`; exact CSS reconstruction and static validation passed; mobile safe-area nav follow-up added in `responsive.css` |
-| 2 — Core Setup | Pending | Must begin only after Phase 1 runtime click-through review |
+| 2 — Core Setup | In progress | 9 classic core scripts extracted; syntax, script-order, marker-preservation, and whitespace checks passed; runtime click-through pending |
 
-**Checkpoint**: Phase 1 changes are isolated on `Branch2`. The `main` branch has not been modified.
+**Checkpoint**: Phase 2 core extraction is isolated on `Branch2`. The `main` branch has not been modified. Runtime click-through is required before proceeding to shared components.
 
 ---
 

@@ -1,0 +1,5 @@
+const SURL="https://ecztpnnydvlzpppmzvzm.supabase.co";
+const SKEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjenRwbm55ZHZsenBwcG16dnptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyNjIwMzcsImV4cCI6MjA5NjgzODAzN30.JMyscxYflCOmzfeqURG4X-n0DNhW9x4PFIBLSjJ9a6M";
+
+const {createClient}=supabase;
+const db=createClient(SURL,SKEY);
