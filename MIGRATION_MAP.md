@@ -487,3 +487,8 @@ At commit `590c194`, `src/features/voice-assistant.js` extracted the Voice Assis
 ### Scheduled Posts checkpoint — Branch2
 
 At commit `82adf91`, `src/features/scheduled-posts.js` extracted the shared `scheduledPosts` state plus `showScheduledPosts` and `deleteScheduledPost`; Live Streaming UI and AI Auto-Moderation remained inline. The cache-busted preview confirmed the extracted Scheduled Posts globals and preserved `moderateContent`, `showLiveStreamUI`, `endLiveStream`, DMs, Reels, Calls, Stories, and `spawnLikeParticles`. Static syntax, script-order, state-boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Live Streaming checkpoint — Branch2
+
+At commit `79c95c5`, `src/features/live-stream.js` extracted `showLiveStreamUI`, `startLiveStream`, and `endLiveStream`; AI Auto-Moderation and Scheduled Posts were already separately guarded. The cache-busted preview confirmed the extracted Live Streaming globals and preserved `moderateContent`, Scheduled Posts, Voice Assistant, Universal Search, DMs, Reels, Calls, Stories, and `spawnLikeParticles`. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
