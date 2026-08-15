@@ -547,3 +547,8 @@ At commit `9e8d345`, `src/features/news.js` extracted the standalone `showNews` 
 ### Functional Games checkpoint — Branch2
 
 At commit `93d5a2d`, `src/features/games.js` extracted `showGames`, `startGame`, and the Tic-Tac-Toe helpers `showTicTacToe`, `tttMove`, `checkTTTWin`, and `tttReset`. The Nova Universe update code, News Feed, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Games globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Reels UI Enhancement checkpoint — Branch2
+
+At commit `11b9ec9`, `src/features/reels-enhancement.js` extracted the self-contained `enhanceReelsUI` style injection and preserved its immediate initializer. The protected `renderReels` renderer and swipe system, Smart Feed ranking, DMs, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the enhancement global and all protected globals. Static syntax, initializer-timing, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
