@@ -492,3 +492,8 @@ At commit `82adf91`, `src/features/scheduled-posts.js` extracted the shared `sch
 ### Live Streaming checkpoint — Branch2
 
 At commit `79c95c5`, `src/features/live-stream.js` extracted `showLiveStreamUI`, `startLiveStream`, and `endLiveStream`; AI Auto-Moderation and Scheduled Posts were already separately guarded. The cache-busted preview confirmed the extracted Live Streaming globals and preserved `moderateContent`, Scheduled Posts, Voice Assistant, Universal Search, DMs, Reels, Calls, Stories, and `spawnLikeParticles`. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### AI Auto-Moderation checkpoint — Branch2
+
+At commit `8d0011d`, `src/features/ai-moderation.js` extracted `moderateContent`, `initUltraFeatures`, and their original pre-inline comment and initialization patch timing. Reels Interactive Poll and the functional Mood Feed remained inline. The cache-busted preview confirmed the extracted moderation/initialization globals and preserved `showReelPoll`, `saveReelPoll`, `applyMoodToFeed`, DMs, Reels, Calls, Stories, and `spawnLikeParticles`. Static syntax, script-order, timing, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
