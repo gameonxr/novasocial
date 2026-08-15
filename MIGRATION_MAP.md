@@ -537,3 +537,8 @@ At commit `af92a84`, `src/features/marketplace.js` extracted `showMarketplace`, 
 ### Learning checkpoint — Branch2
 
 At commit `1c68bfb`, `src/features/learning.js` extracted `showLearning` and `startCourse`; News Feed, Games, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Learning globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Functional News checkpoint — Branch2
+
+At commit `9e8d345`, `src/features/news.js` extracted the standalone `showNews` feature; the later `showNewsFeed` implementation, Games, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Functional News globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
