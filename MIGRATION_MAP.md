@@ -462,3 +462,8 @@ At commit `6a8e502`, `src/features/avatar-creator.js` extracted `showAvatarCreat
 ### Security Center checkpoint — Branch2
 
 At commit `cbf5f33`, `src/features/security-center.js` extracted `showSecurityCenter`, `setup2FA`, `toggleBiometric`, and `logoutDevice`; the exact next section, Creator Wallet, remained inline. A stale validation assertion for a nonexistent `showUniversalSearch` name was corrected after inspecting the actual section, whose later preserved function is `showNovaUniverseHub`; the corrected static checks passed. The live preview confirmed the extracted Security Center chain and preserved Creator Wallet, Nova Universe Hub, DMs, Reels, Calls, Stories, and `spawnLikeParticles` globals. Remote `main` remains unchanged.
+
+
+### Creator Wallet checkpoint — Branch2
+
+At commit `f4dead4`, `src/features/creator-wallet.js` extracted `showCreatorWallet`; Universal AI Search and Nova Universe Hub remained inline. The cache-busted preview confirmed the Creator Wallet chain and preserved `showNovaUniverseHub`, `translatePost`, DMs, Reels, Calls, Stories, and `spawnLikeParticles` globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
