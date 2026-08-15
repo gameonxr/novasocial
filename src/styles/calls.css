@@ -1,0 +1,11 @@
+
+
+/* ── CALL SYSTEM CSS ── */
+#nova-call-screen{position:fixed;inset:0;z-index:99000;background:#000;display:none;flex-direction:column;align-items:center;justify-content:space-between;padding:env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px) 0}
+#nova-call-screen.show{display:flex}
+#nova-incoming-call{position:fixed;top:-160px;left:12px;right:12px;z-index:99001;background:#0A0A0A;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,0.8);transition:top 0.4s cubic-bezier(0.32,0.72,0,1);display:flex;align-items:center;gap:14px}
+#nova-incoming-call.show{top:calc(env(safe-area-inset-top,0px) + 8px)}
+@keyframes callPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(61,184,61,0.4)}50%{transform:scale(1.05);box-shadow:0 0 0 20px rgba(61,184,61,0)}}
+@keyframes callRing{0%,100%{transform:rotate(0deg)}10%{transform:rotate(-15deg)}20%{transform:rotate(15deg)}30%{transform:rotate(-10deg)}40%{transform:rotate(10deg)}50%{transform:rotate(0deg)}}
+.call-avatar-ring{animation:callPulse 1.5s infinite}
+.call-ringing-icon{animation:callRing 1s infinite}

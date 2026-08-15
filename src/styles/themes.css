@@ -1,0 +1,20 @@
+
+
+/* Theme Variables */
+[data-theme="cyber"]{--nova-card:#13001f;--nova-card2:#1f0030}
+[data-theme="aurora"]{--nova-card:#001f17;--nova-card2:#00301f}
+[data-theme="holo"]{--nova-card:#13132a;--nova-card2:#1d1d3f}
+[data-theme="sunset"]{--nova-card:#1f0d0d;--nova-card2:#2a1414}
+[data-theme="ocean"]{--nova-card:#001629;--nova-card2:#002236}
+[data-theme="pure"]{--nova-card:#0a0a0a;--nova-card2:#141414}
+body{background:var(--nova-black,#000)}
+.post{background:var(--nova-card,#0A0A0A);border-color:rgba(255,255,255,0.04)}
+.clist{background:var(--nova-card,#0A0A0A)}
+.nitem{background:var(--nova-card,#0A0A0A)}
+.msheet{background:var(--nova-card,#0A0A0A)}
+.mhdr{background:var(--nova-card,#0A0A0A)}
+.inp{background:var(--nova-card,#0A0A0A)}
+.sbar2{background:var(--nova-card,#0A0A0A)}
+.av{background:var(--nova-card2,#121212)}
+.skel-card{background:var(--nova-card,#0A0A0A)}
+.skel-av,.skel-line,.skel-media,.skel-acts div{background:var(--nova-card2,#121212)}

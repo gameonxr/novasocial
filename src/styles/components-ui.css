@@ -1,0 +1,37 @@
+
+
+/* Modal */
+.mbg{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;flex-direction:column}
+.msheet{background:#0A0A0A;border-radius:28px 28px 0 0;margin-top:auto;max-height:94vh;overflow-y:auto;animation:novaSlideUp 0.3s cubic-bezier(0.32,0.72,0,1);border-top:1px solid rgba(255,255,255,0.06)}
+.mhdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:#0A0A0A;z-index:1}
+
+/* Loader */
+.ldiv{display:flex;justify-content:center;align-items:center;padding:40px}
+.spin{width:28px;height:28px;border-radius:50%;border:2px solid #121212;border-top-color:#FF2D7A;animation:spin 0.7s linear infinite}
+
+/* Pull-to-Refresh (Home feed only — scoped to #feed-list's sibling indicator) */
+.pull-refresh-indicator{height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:height 0.2s ease;will-change:height}
+.pull-refresh-spinner{width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,0.08);border-top-color:#FF2D7A;border-right-color:#833AB4;opacity:0;transform:rotate(0deg);transition:opacity 0.15s ease;will-change:transform,opacity}
+.pull-refresh-spinner.spinning{animation:spin 0.7s linear infinite;opacity:1 !important}
+
+/* Toast */
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:#0A0A0A;color:#fff;font-size:13px;padding:12px 24px;border-radius:24px;z-index:9999;white-space:nowrap;opacity:0;transition:0.3s;pointer-events:none;border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Heart Pop */
+.hpop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;pointer-events:none;z-index:10;animation:novaHeartPop 0.7s ease forwards}
+
+/* Reaction Bar */
+.reaction-bar{position:absolute;bottom:100%;left:0;margin-bottom:8px;background:#0A0A0A;border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:8px 12px;display:none;gap:9px;box-shadow:0 6px 24px rgba(0,0,0,0.5);z-index:60;white-space:nowrap;animation:novaFadeIn 0.15s ease}
+.reaction-bar span{transition:transform 0.15s}
+.reaction-bar span:active{transform:scale(1.4)}
+
+/* Explore/Profile Grid */
+.egrid,.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.eitem,.pitem{aspect-ratio:1/1;background:#0A0A0A;overflow:hidden;cursor:pointer;position:relative}
+.eitem img,.eitem video,.pitem img{width:100%;height:100%;object-fit:cover}
+
+/* Stats */
+.pstat{text-align:center;flex:1}
+.pstat-n{font-weight:800;font-size:18px;color:#fff}
+.pstat-l{color:rgba(255,255,255,0.5);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}

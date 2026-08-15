@@ -1,0 +1,41 @@
+
+
+/* ═══════════════════════════════════════════════════════════════
+   120 FPS PERFORMANCE LAYER
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Scroll container — GPU compositing layer + momentum scroll */
+#screen {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  will-change: scroll-position;
+  backface-visibility: hidden;
+}
+
+/* Post cards, list items — content-visibility se off-screen
+   elements ko browser skip kar deta hai render karne mein */
+.post, .call-slide-in, .skel-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Animated/interactive elements — GPU layer promote karo */
+.nb, .av, .msheet, .mbg, #sv, #nova-call-screen,
+.shimmer, .call-avatar-breathe {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Images/videos — smoother rendering, less repaint cost */
+img, video {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Touch feedback ko turant feel karwane ke liye */
+* {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}

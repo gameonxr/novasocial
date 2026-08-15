@@ -1,9 +1,24 @@
-# NOVASOCIAL MODULARIZATION — PHASE 0 INVENTORY
+# NOVASOCIAL MODULARIZATION — PHASE 1 CSS EXTRACTION
 
-**Status**: Code Analysis Complete  
-**Date**: 2026-08-10  
-**Target Branch**: Branch2  
+**Status**: Phase 1 CSS Extraction Complete
+
+**Date**: 2026-08-15
+
+**Target Branch**: Branch2
+
 **Original Source**: index.html (main branch)
+
+---
+
+## MIGRATION STATUS
+
+| Phase | Status | Verification |
+|------:|--------|--------------|
+| 0 — Inventory | Complete | Inventory baseline preserved |
+| 1 — CSS Extraction | Complete | 18 source-order-preserving stylesheets linked from `index.html`; exact CSS reconstruction and static validation passed |
+| 2 — Core Setup | Pending | Must begin only after Phase 1 runtime click-through review |
+
+**Checkpoint**: Phase 1 changes are isolated on `Branch2`. The `main` branch has not been modified.
 
 ---
 
@@ -424,5 +439,6 @@ src/
 ---
 
 **Prepared by**: Copilot  
-**Status**: Ready for Phase 1  
-**Next Checkpoint**: CSS extraction verification
+**Status**: Phase 1 complete; ready for Phase 2 after runtime verification
+
+**Next Checkpoint**: Core setup extraction verification
