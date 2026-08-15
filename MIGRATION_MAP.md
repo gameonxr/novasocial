@@ -542,3 +542,8 @@ At commit `1c68bfb`, `src/features/learning.js` extracted `showLearning` and `st
 ### Functional News checkpoint — Branch2
 
 At commit `9e8d345`, `src/features/news.js` extracted the standalone `showNews` feature; the later `showNewsFeed` implementation, Games, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Functional News globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Functional Games checkpoint — Branch2
+
+At commit `93d5a2d`, `src/features/games.js` extracted `showGames`, `startGame`, and the Tic-Tac-Toe helpers `showTicTacToe`, `tttMove`, `checkTTTWin`, and `tttReset`. The Nova Universe update code, News Feed, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Games globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
