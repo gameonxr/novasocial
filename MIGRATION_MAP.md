@@ -557,3 +557,23 @@ At commit `11b9ec9`, `src/features/reels-enhancement.js` extracted the self-cont
 ### Smart Feed ranking checkpoint — Branch2
 
 At commit `2ab5f96`, `src/features/smart-ranking.js` extracted `calculatePostRank`, `loadRankedFeed`, `updateMyInterests`, and the existing disabled feed-patch block. It loads after the inline application script and immediately before the final `nova-init.js` and `like-effects.js` wrappers, preserving their required last-two order. The cache-busted preview confirmed ranking, wrapper, and all protected globals. Static syntax, post-inline timing, script-order, protected-boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### AI context checkpoint — Branch2
+
+At commit `8f1fbb4`, `src/features/ai-context.js` extracted the shared `novaAIContext` state and `detectUserMood` before the inline application script. The Enhanced Nova AI, local-response, login-interest, and caption patches remained inline, as did Calls/WebRTC, DMs, Reels, Stories, navigation, and the final wrappers. The cache-busted preview confirmed the AI context, patch, wrapper, and protected globals. Static syntax, pre-inline timing, script-order, protected-boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### News Feed checkpoint — Branch2
+
+At commit `d128aae`, `src/features/news-feed.js` extracted the distinct async `showNewsFeed` implementation, while the previously extracted `showNews` remained in `news.js`. The protected calling-system boundary begins immediately afterward and remains inline, including WebRTC and all fragile DMs, Reels, Stories, and navigation code. The cache-busted preview confirmed `showNewsFeed`, prior News/Games globals, the final wrappers, Enhanced AI patches, and all protected globals. Static syntax, script-order, exact-boundary, protected-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Call UI wrappers checkpoint — Branch2
+
+At commit `9fdf630`, `src/features/call-feature.js` extracted only `showCallFeature` and `startNovaCall`, the lightweight modal/navigation wrappers. `initCallingSystem`, `createPeerConnection`, signaling, media setup, and the rest of the WebRTC implementation remain inline and protected. The cache-busted preview confirmed both extracted wrappers, `showNewsFeed`, the Enhanced AI patches, final wrappers, and all protected fragile globals. Static syntax, script-order, exact-boundary, protected-marker, inline-handler, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### External profile view checkpoint — Branch2
+
+At commit `975e210`, `src/features/profile-view.js` extracted the other-user profile rendering and interaction stack: `showUserProfile`, `showProfilePreview`, `openFullProfile`, `showConnectOptions`, `userProfileTab`, `showUserProfileOptions`, and `shareUserProfile`. The bidirectional block query, messaging-block check, block/unblock mutations, blocked-list rendering, and their `.throwOnError()` safeguards remained inline so the critical block system can be validated independently. The cache-busted preview confirmed the extracted profile globals, preserved block helpers, adjacent feature globals, Enhanced AI patches, final wrappers, and all fragile globals. Static syntax, module-order, exact-boundary, block-helper, rate-limit, protected-marker, inline-handler, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
