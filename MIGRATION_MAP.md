@@ -477,3 +477,8 @@ At commit `28f9448`, `src/features/universal-search.js` extracted the actual `un
 ### Nova Universe Hub checkpoint — Branch2
 
 At commit `8a4d995`, `src/features/nova-universe.js` extracted `showNovaUniverseHub`; Voice Assistant, Scheduled Posts, Live Streaming UI, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted chain and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Voice Assistant checkpoint — Branch2
+
+At commit `590c194`, `src/features/voice-assistant.js` extracted the Voice Assistant and voice-to-voice conversation helpers: `startVoiceAssistant`, `startVoiceConversation`, `startVoiceConvListening`, `processVoiceConversationMsg`, `speakText`, `speakTextAsync`, and `stopVoiceConversation`. AI Auto-Moderation, Scheduled Posts, Live Streaming UI, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed all extracted and protected globals; static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
