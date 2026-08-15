@@ -472,3 +472,8 @@ At commit `f4dead4`, `src/features/creator-wallet.js` extracted `showCreatorWall
 ### Universal AI Search checkpoint — Branch2
 
 At commit `28f9448`, `src/features/universal-search.js` extracted the actual `universalAISearch` function; there is no `showUniversalSearch` declaration in this codebase. Nova Universe Hub and Voice Assistant remained inline. The cache-busted preview confirmed `universalAISearch`, the previously extracted globals, `showNovaUniverseHub`, `startVoiceAssistant`, DMs, Reels, Calls, Stories, and `spawnLikeParticles` as functions. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Nova Universe Hub checkpoint — Branch2
+
+At commit `8a4d995`, `src/features/nova-universe.js` extracted `showNovaUniverseHub`; Voice Assistant, Scheduled Posts, Live Streaming UI, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted chain and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
