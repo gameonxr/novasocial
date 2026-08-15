@@ -502,3 +502,8 @@ At commit `8d0011d`, `src/features/ai-moderation.js` extracted `moderateContent`
 ### Reels Interactive Poll checkpoint — Branch2
 
 At commit `3ac7146`, `src/features/reel-poll.js` extracted only `showReelPoll` and `saveReelPoll`. The protected `renderReels` renderer and swipe system, DMs, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted poll globals and all protected globals. Static syntax, script-order, protected-boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Channels checkpoint — Branch2
+
+At commit `3212c86`, `src/features/channels.js` extracted the localStorage-backed Channels feature: `showChannels`, `createChannel`, `saveChannel`, `openChannel`, `broadcastToChannel`, and `subscribeChannel`. Communities, Voice Rooms, Calendar, Notes, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Channels globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
