@@ -16,9 +16,9 @@
 |------:|--------|--------------|
 | 0 — Inventory | Complete | Inventory baseline preserved |
 | 1 — CSS Extraction | Complete | 18 source-order-preserving stylesheets linked from `index.html`; exact CSS reconstruction and static validation passed; mobile safe-area nav follow-up added in `responsive.css` |
-| 2 — Core Setup | In progress | 9 classic core scripts extracted; syntax, script-order, marker-preservation, and whitespace checks passed; DMs/chat-screen cache-refresh guard added after regression report; shared UI, settings, and profile feature modules now extracted; runtime click-through pending |
+| 2 — Core Setup | In progress | 9 classic core scripts extracted; syntax, script-order, marker-preservation, and whitespace checks passed; DMs/chat-screen cache-refresh guard added after regression report; shared UI, settings, and profile feature modules now extracted; account-switch cache isolation fix added after regression report; runtime click-through pending |
 
-**Checkpoint**: Phase 2 core extraction and shared components (`modal.js`, `shared-ui.js`) are isolated on `Branch2`. The `main` branch has not been modified. Static checks pass; modal, navigation, haptic, overlay, FAB, settings, and profile click-through remain required before additional feature extraction.
+**Checkpoint**: Phase 2 core extraction and shared components (`modal.js`, `shared-ui.js`) are isolated on `Branch2`. The `main` branch has not been modified. Static checks pass; account-switch reset now covers startup, logout, and add-account transitions; modal, navigation, haptic, overlay, FAB, settings, profile, and account-switch click-through remain required before additional feature extraction.
 
 ---
 

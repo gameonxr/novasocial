@@ -344,6 +344,9 @@ async function logout(){
   const sv = document.getElementById('sv');
   if(sv) sv.classList.remove('show');
 
+  // Clear account-bound UI before sign-out so the next user cannot inherit
+  // the previous account's story tray, feed DOM, scroll, or tab cache.
+  resetAccountScopedUiState(null);
   await db.auth.signOut();
   ME=null; PROF=null;
   clearNavStack();

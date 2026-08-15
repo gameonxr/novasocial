@@ -515,6 +515,37 @@ let searchDebounceT=null;
 // Agar badal gaya (user kahin aur navigate kar chuka), silently return karte hain.
 let _renderGeneration = 0;
 
+// Account-scoped UI state must never survive a user change. In-memory tab HTML,
+// story trays, scroll positions, and parked Reels DOM belong to the previous
+// session and can otherwise be restored before the new profile has rendered.
+let _uiAccountUserId = null;
+function resetAccountScopedUiState(nextUserId){
+  const normalizedUserId = nextUserId || null;
+  if(_uiAccountUserId === normalizedUserId) return;
+
+  _renderGeneration++;
+  Object.keys(_tabCache).forEach(k => delete _tabCache[k]);
+  Object.keys(_tabScrollPos).forEach(k => delete _tabScrollPos[k]);
+  window._lastKnownFeedTimestamp = null;
+
+  svData = [];
+  svBuckets = [];
+  svBucketIdx = 0;
+  svStoryIdx = 0;
+  svProg = 0;
+  svIsPaused = false;
+  if(typeof _myActiveNote !== 'undefined') _myActiveNote = null;
+  if(typeof destroyReelsPersistentContainer === 'function') destroyReelsPersistentContainer();
+
+  const scr = document.getElementById('screen');
+  if(scr){
+    scr.innerHTML = '';
+    scr.onscroll = null;
+    scr.scrollTop = 0;
+  }
+  _uiAccountUserId = normalizedUserId;
+}
+
 // ═══════════════════════════════════════════════════════════════
 // 👥 MULTI-ACCOUNT SUPPORT — Instagram-style account switching
 // localStorage mein multiple sessions store karo, 1-tap se switch karo
@@ -902,6 +933,7 @@ function showApp(){
   initFabSystem();
   startBanRecheck();
   checkEmergencyLock();  // 🛡️ Check if platform is in emergency lock mode
+  resetAccountScopedUiState(ME?.id);
   go('home');
   setTimeout(() => { if (ME && typeof initCallingSystem === 'function') initCallingSystem(); }, 1500);
   setTimeout(() => { if (ME && typeof setupSelfProfileRealtimeSync === 'function') setupSelfProfileRealtimeSync(); }, 1500);
@@ -20467,6 +20499,11 @@ function addNewAccount(){
   // Current session ko background mein rakho, sirf UI ko logout-jaisa dikhao
   // taaki naya login ho sake bina purane account ka session delete kiye
   window._addingNewAccount = true;
+  // The Supabase client has one active session. Clear the in-memory identity
+  // so the next auth event runs the normal new-account bootstrap path.
+  ME = null;
+  PROF = null;
+  resetAccountScopedUiState(null);
   document.getElementById('root').style.display='none';
   document.getElementById('auth').style.display='flex';
   setMode('login');
