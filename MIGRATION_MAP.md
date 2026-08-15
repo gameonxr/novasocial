@@ -442,3 +442,8 @@ src/
 **Status**: Phase 1 complete; ready for Phase 2 after runtime verification
 
 **Next Checkpoint**: Core setup extraction verification
+
+
+### Smart Feed/Mood Feed and Memories checkpoints — Branch2
+
+At commit `782d6b2`, `src/features/smart-feed.js` extracted `showSmartFeed`, `setMoodFeed`, and `loadMoodFeed`; static validation passed and the live preview exposed all three globals. At commit `aa53d2b`, `src/features/memories.js` extracted `showMemories` while AI Journal remained inline. The cache-busted preview exposed `showMemories`, the Smart Feed globals, and the protected `showAIJournal`, `showAIJournalEntry`, `saveJournalEntry`, `generateAIJournal`, `renderDMs`, `openChat`, `renderReels`, `createPeerConnection`, `openSV`, and `spawnLikeParticles` functions. Remote `main` remains unchanged at `ef418007c9b9a797488b4825be5f0c807da22369`; all changes are on `Branch2`.
