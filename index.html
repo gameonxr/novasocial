@@ -211,6 +211,7 @@
 <script src="src/core/utils.js"></script>
 <script src="src/core/diagnostics.js"></script>
 <script src="src/components/modal.js"></script>
+<script src="src/components/shared-ui.js"></script>
 <script>
 
 
@@ -1263,9 +1264,6 @@ function togglePasswordVisibility(inputId, iconEl){
 }
 
 // ── NAVIGATION ──────────────────────────────────────
-// Haptic Feedback (Premium Feel)
-function haptic(ms = 10) { if(window.navigator && navigator.vibrate) navigator.vibrate(ms); }
-
 function viewChatImage(url) {
   const m = modal('');
   m.querySelector('.mhdr').style.display = 'none'; 
@@ -1281,13 +1279,6 @@ function changeAudioSpeed(btn) {
   else if(audio.playbackRate === 1.5) { audio.playbackRate = 2; btn.textContent = '2x'; }
   else { audio.playbackRate = 1; btn.textContent = '1x'; }
   toast('Speed: ' + btn.textContent);
-}
-
-// Clear Stuck Overlays (Agar koi modal background me phans jaye)
-function clearOverlays() {
-  document.querySelectorAll('.mbg').forEach(el => el.remove());
-  const sv = document.getElementById('sv');
-  if(sv) sv.classList.remove('show');
 }
 
 // Navigation Function (Crash Proof)
@@ -1768,35 +1759,6 @@ function goBack(){
   const banScreen = document.getElementById('ban-screen');
   if(banScreen){ banScreen.remove(); return; }
   if(curTab !== 'home'){ go('home'); }
-}
-
-function updateNavIcons(tab){
-  const homeEl = document.getElementById('nav-ico-home');
-  const exploreEl = document.getElementById('nav-ico-explore');
-  const reelsEl = document.getElementById('nav-ico-reels');
-  const dmsEl = document.getElementById('nav-ico-dms');
-  
-  if(homeEl) homeEl.innerHTML = ico('home', tab==='home'?'#fff':'#555', 24);
-  if(exploreEl) exploreEl.innerHTML = ico(tab==='explore'?'compass':'search', tab==='explore'?'#fff':'#555', 24);
-  if(reelsEl) reelsEl.innerHTML = ico('film', tab==='reels'?'#fff':'#555', 24);
-  if(dmsEl) dmsEl.innerHTML = ico('msg', tab==='dms'?'#fff':'#555', 24);
-  
-  const navav=document.querySelector('#nav-av');
-  if(navav) navav.style.borderColor=tab==='profile'?'#fff':'#555';
-  
-  // FAB ONLY on Home (not Reels, not Search, not Profile, not Chat, not Settings, not Notifications)
-  const fab = document.getElementById('fab-main');
-  if(fab){
-    if(tab === 'home'){
-      if(localStorage.getItem('nova-fab-hidden') !== 'true'){
-        fab.style.display = 'flex';
-      }
-    } else {
-      fab.style.display = 'none';
-      closeFabMenu();
-      closeFabLongPressMenu();
-    }
-  }
 }
 
 // ═══════════════════════════════════════════════════════════════
