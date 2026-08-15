@@ -447,3 +447,8 @@ src/
 ### Smart Feed/Mood Feed and Memories checkpoints — Branch2
 
 At commit `782d6b2`, `src/features/smart-feed.js` extracted `showSmartFeed`, `setMoodFeed`, and `loadMoodFeed`; static validation passed and the live preview exposed all three globals. At commit `aa53d2b`, `src/features/memories.js` extracted `showMemories` while AI Journal remained inline. The cache-busted preview exposed `showMemories`, the Smart Feed globals, and the protected `showAIJournal`, `showAIJournalEntry`, `saveJournalEntry`, `generateAIJournal`, `renderDMs`, `openChat`, `renderReels`, `createPeerConnection`, `openSV`, and `spawnLikeParticles` functions. Remote `main` remains unchanged at `ef418007c9b9a797488b4825be5f0c807da22369`; all changes are on `Branch2`.
+
+
+### AI Journal and AI Video Editor checkpoints — Branch2
+
+At commit `094c67b`, `src/features/ai-journal.js` extracted `showAIJournal`, `showAIJournalEntry`, `saveJournalEntry`, and `generateAIJournal`; the live preview confirmed those globals, while `showAIVideoEditor` and all protected fragile globals remained callable. At commit `f83b9da`, `src/features/ai-video-editor.js` extracted `showAIVideoEditor`; the live preview confirmed it alongside the prior extracted globals, while `showAvatarCreator`, `showSecurityCenter`, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained callable. Both checkpoints passed syntax, script-order, boundary, and whitespace validation on `Branch2`; remote `main` remains unchanged.
