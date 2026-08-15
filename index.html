@@ -229,6 +229,7 @@
 <script src="src/features/follow-list.js"></script>
 <script src="src/features/profile-customizer.js"></script>
 <script src="src/features/close-friends.js"></script>
+<script src="src/features/voice.js"></script>
 <script src="src/features/explore.js"></script>
 <script src="src/features/home.js"></script>
 <script>
@@ -12361,19 +12362,6 @@ function deleteScheduledPost(idx){
   try { localStorage.setItem('nova-scheduled', JSON.stringify(scheduledPosts)); } catch(e) {}
   showScheduledPosts();
   toast('Deleted');
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// VOICE MESSAGE TRANSCRIPTION (Futuristic)
-// ═══════════════════════════════════════════════════════════════════════
-function transcribeVoiceMsg(audioBlob, callback){
-  // Use Web Speech API as fallback for live transcription
-  // For pre-recorded, we'd need a backend service
-  if(!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)){
-    callback('Transcription unavailable');
-    return;
-  }
-  callback('🎤 Voice message (tap to play)');
 }
 
 // ═══════════════════════════════════════════════════════════════════════
