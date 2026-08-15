@@ -512,3 +512,8 @@ At commit `3212c86`, `src/features/channels.js` extracted the localStorage-backe
 ### Communities checkpoint — Branch2
 
 At commit `b7c8e4e`, `src/features/communities.js` extracted community navigation and handlers: `showCommunities`, `createCommunity`, `saveCommunity`, `openCommunity`, `showVoiceRoomsForCommunity`, `showCommunityEvents`, `showCommunityMembers`, and `joinCommunity`. Voice Rooms, Calendar, Notes, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Communities globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Voice Rooms checkpoint — Branch2
+
+At commit `572ba27`, `src/features/voice-rooms.js` extracted `showVoiceRooms`, `createVoiceRoom`, and `joinVoiceRoom`; Functional Calendar and Notes remained inline. The cache-busted preview confirmed the extracted Voice Rooms globals and preserved Calendar, Notes, DMs, Reels, Calls, Stories, and `spawnLikeParticles`. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
