@@ -497,3 +497,8 @@ At commit `79c95c5`, `src/features/live-stream.js` extracted `showLiveStreamUI`,
 ### AI Auto-Moderation checkpoint — Branch2
 
 At commit `8d0011d`, `src/features/ai-moderation.js` extracted `moderateContent`, `initUltraFeatures`, and their original pre-inline comment and initialization patch timing. Reels Interactive Poll and the functional Mood Feed remained inline. The cache-busted preview confirmed the extracted moderation/initialization globals and preserved `showReelPoll`, `saveReelPoll`, `applyMoodToFeed`, DMs, Reels, Calls, Stories, and `spawnLikeParticles`. Static syntax, script-order, timing, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Reels Interactive Poll checkpoint — Branch2
+
+At commit `3ac7146`, `src/features/reel-poll.js` extracted only `showReelPoll` and `saveReelPoll`. The protected `renderReels` renderer and swipe system, DMs, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted poll globals and all protected globals. Static syntax, script-order, protected-boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
