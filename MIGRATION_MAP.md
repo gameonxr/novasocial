@@ -527,3 +527,8 @@ At commit `8be2f56`, `src/features/calendar.js` extracted the Calendar display f
 ### Notes checkpoint — Branch2
 
 At commit `ee128d9`, `src/features/notes.js` extracted the localStorage-backed `myNotes` state and `showNotes`, `createNote`, and `saveNote`. Marketplace and the inline `addCalendarEvent` helper remained in place. The cache-busted preview confirmed Notes, Calendar, Voice Rooms, Communities, Marketplace, DMs, Reels, Calls, Stories, and `spawnLikeParticles` globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Marketplace checkpoint — Branch2
+
+At commit `af92a84`, `src/features/marketplace.js` extracted `showMarketplace`, `listProduct`, and `buyProduct`; Learning, News Feed, Games, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Marketplace globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
