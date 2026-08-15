@@ -260,6 +260,7 @@
 <script src="src/features/news.js"></script>
 <script src="src/features/games.js"></script>
 <script src="src/features/reels-enhancement.js"></script>
+<script src="src/features/ai-context.js"></script>
 <script src="src/features/explore.js"></script>
 <script src="src/features/home.js"></script>
 <script>
@@ -12484,34 +12485,6 @@ if(typeof _origGetLocalAIResponse === 'function'){
 // ═══════════════════════════════════════════════════════════════════════
 // NOVA ULTRA v5.0 — Smart Algorithms + Bug Fixes + Advanced AI
 // ═══════════════════════════════════════════════════════════════════════
-
-// ── ADVANCED AI — Context Awareness ──────────────────────────────────────
-// AI remembers context from recent commands
-let novaAIContext = {
-  lastCommand: null,
-  lastTopic: null,
-  pendingAction: null,
-  userMood: null
-};
-
-// Detect user mood from message
-function detectUserMood(text){
-  const t = text.toLowerCase();
-  const moods = {
-    happy: ['happy', 'khush', 'mast', 'great', 'awesome', '😊', '😄', '❤️'],
-    sad: ['sad', 'udaas', 'depressed', '😔', '😢', '😭', 'akela'],
-    angry: ['angry', 'gussa', 'frustrated', '😤', '😡', 'annoyed'],
-    excited: ['excited', 'excited hu', 'can\'t wait', '🤩', '🔥', 'pumped'],
-    tired: ['tired', 'thaka', 'exhausted', '😴', 'sleepy'],
-    motivated: ['motivated', 'pumped', 'let\'s do', '💪', 'hustle'],
-    confused: ['confused', 'samajh nahi', 'pata nahi', '🤔', 'kya karu'],
-  };
-  
-  for(const [mood, keywords] of Object.entries(moods)){
-    if(keywords.some(k => t.includes(k))) return mood;
-  }
-  return null;
-}
 
 // ── ENHANCED NOVA AI — More commands & smarter responses ──────────────────────────────────────
 const _origHandleNovaCommand = window.handleNovaCommand;
