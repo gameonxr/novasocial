@@ -18,7 +18,7 @@
 | 1 — CSS Extraction | Complete | 18 source-order-preserving stylesheets linked from `index.html`; exact CSS reconstruction and static validation passed; mobile safe-area nav follow-up added in `responsive.css` |
 | 2 — Core Setup | In progress | 9 classic core scripts extracted; syntax, script-order, marker-preservation, and whitespace checks passed; DMs/chat-screen cache-refresh guard added after regression report; runtime click-through pending |
 
-**Checkpoint**: Phase 2 core extraction is isolated on `Branch2`. The `main` branch has not been modified. Runtime click-through is required before proceeding to shared components.
+**Checkpoint**: Phase 2 core extraction and the first shared component (`modal.js`) are isolated on `Branch2`. The `main` branch has not been modified. Modal and navigation click-through are required before extracting additional shared helpers.
 
 ---
 
