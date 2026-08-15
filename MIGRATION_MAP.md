@@ -507,3 +507,8 @@ At commit `3ac7146`, `src/features/reel-poll.js` extracted only `showReelPoll` a
 ### Channels checkpoint — Branch2
 
 At commit `3212c86`, `src/features/channels.js` extracted the localStorage-backed Channels feature: `showChannels`, `createChannel`, `saveChannel`, `openChannel`, `broadcastToChannel`, and `subscribeChannel`. Communities, Voice Rooms, Calendar, Notes, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Channels globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Communities checkpoint — Branch2
+
+At commit `b7c8e4e`, `src/features/communities.js` extracted community navigation and handlers: `showCommunities`, `createCommunity`, `saveCommunity`, `openCommunity`, `showVoiceRoomsForCommunity`, `showCommunityEvents`, `showCommunityMembers`, and `joinCommunity`. Voice Rooms, Calendar, Notes, DMs, Reels, Calls, Stories, and `spawnLikeParticles` remained inline. The cache-busted preview confirmed the extracted Communities globals and all preserved globals. Static syntax, script-order, boundary, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
