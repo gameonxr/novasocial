@@ -607,3 +607,8 @@ At commit `4a75de8`, `src/features/chat-input-helpers.js` extracted only `toggle
 ### DM draft helpers checkpoint — Branch2
 
 At commit `28b93b5`, `src/features/dm-drafts.js` extracted only the localStorage-backed `saveDmDraft` and `clearDmDraft` helpers. `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, block checks, typing state, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted draft helpers, protected DMs functions, prior chat-input/Notes/Reels/Stories/Calls/deep-link/profile globals, and all fragile markers. Static syntax, inline-call-site, DMs/realtime/scroll-protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Chat actions checkpoint — Branch2
+
+At commit `9e89474`, `src/features/chat-actions.js` extracted only the `showChatActions` modal/menu helper used by the inline chat header. `clearChat`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted menu helper, protected DMs functions, prior chat-input/draft/Notes/Reels/Stories/Calls/deep-link/profile globals, and all fragile markers. Static syntax, inline-caller, DMs/realtime/scroll-protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
