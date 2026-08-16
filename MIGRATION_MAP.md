@@ -617,3 +617,8 @@ At commit `9e89474`, `src/features/chat-actions.js` extracted only the `showChat
 ### Copy invite link checkpoint — Branch2
 
 At commit `766a307`, `src/features/copy-invite-link.js` extracted only the `copyInviteLink` clipboard/toast helper used by Group Info markup. `showGroupInfo`, attachment and location helpers, `clearChat`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted clipboard helper, preserved Group Info/attachment/location functions, protected DMs functions, prior chat helpers, and all fragile markers. Static syntax, inline-caller, Group Info/DM protection, realtime/scroll, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Message clipboard helpers checkpoint — Branch2
+
+At commit `4d3743c`, `src/features/message-clipboard-helpers.js` extracted only `copyMsg` and `copyMsgFromEnc`, the clipboard paths used by the message menu. `loadMsgs`, `deleteMsgForMe`, `unsendMsg`, `pinMsg`, `pinMsgFromEnc`, `reactMsg`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading/pagination, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed both clipboard helpers, all preserved message actions, protected DMs functions, prior chat helpers, and all fragile markers. Static syntax, inline-caller, DB-action/DM protection, realtime/scroll, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
