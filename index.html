@@ -302,6 +302,7 @@
 <script src="src/features/fab-customization.js"></script>
 <script src="src/features/fab-longpress-menu.js"></script>
 <script src="src/features/fab-speed-dial.js"></script>
+<script src="src/features/new-posts-indicator.js"></script>
 <script>
 
 
@@ -1387,18 +1388,6 @@ function go(tab){
  * bina full rebuild kiye, user ko upar chhota indicator dikhta hai.
  * Tap karne pe fresh feed load hota hai.
  */
-function showNewPostsIndicator(){
-  if(document.getElementById('new-posts-pill')) return; // already dikh raha hai
-  const scr = document.getElementById('screen');
-  if(!scr) return;
-  const pill = document.createElement('div');
-  pill.id = 'new-posts-pill';
-  pill.onclick = ()=>{ pill.remove(); invalidateTabCache('home'); go('home'); }; // tap = fresh load
-  pill.style.cssText = 'position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#E1306C;color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:20px;box-shadow:0 6px 20px rgba(225,48,108,0.4);z-index:500;cursor:pointer;display:flex;align-items:center;gap:6px;animation:slideDownFade 0.3s ease';
-  pill.innerHTML = '↑ New posts';
-  document.body.appendChild(pill);
-  setTimeout(()=>{ if(pill && pill.parentNode) pill.remove(); }, 8000); // 8 sec baad khud gayab
-}
 
 /**
  * Background mein SILENTLY fresh data check karo jab cache se
