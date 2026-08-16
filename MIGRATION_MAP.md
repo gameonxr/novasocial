@@ -666,3 +666,9 @@ Static checks passed for JavaScript syntax, integration, script order, whitespac
 At commit `6a56634`, the isolated `showSettingsPrivacy` settings-page renderer moved to `src/features/settings-privacy.js`. It remains a classic script global for existing inline settings navigation and continues to read the existing `PROF` and `ME` state. Its privacy callbacks (`toggleGhostMode`, `toggleReadReceipts`, `showPrivateAccount`, `showBlockedList`, `showCloseFriendsManager`, and `showDisappearingOptions`) remain in their existing locations. No notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
 
 Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded all four extracted settings modules, and the browser probe confirmed the privacy renderer plus all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
+
+### Settings Features checkpoint — Branch2
+
+At commit `c0c72a2`, the isolated `showSettingsFeatures` settings-page renderer moved to `src/features/settings-features.js`. It remains a classic script global for existing inline settings navigation, while the existing feature callbacks and the `ME.id` reference remain unchanged. No notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
+
+Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded all five extracted settings modules, and the browser probe confirmed the features renderer plus all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
