@@ -809,3 +809,8 @@ At commit `61addf7`, the standalone `toggleFavFromMsg` helper moved to `src/feat
 ### Theme-system extraction — Branch2
 
 At commit `e6a1702`, the cohesive theme helper trio—`toggleThemePicker`, `setTheme`, and `loadSavedTheme`—moved to `src/features/theme-system.js`. The module preserves the inline HTML globals, theme-panel class toggling, HTML/body data-theme attributes, `nova-theme` localStorage persistence, active-option styling, toast feedback, and saved-theme loading. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push opened and closed the picker, applied Cyberpunk, verified persistence, and restored the original theme and panel state exactly. Remote `main` remains unchanged.
+
+
+### FAB customization extraction — Branch2
+
+At commit `846943d`, the standalone `changeFabSize` and `changeFabStyle` helpers moved to `src/features/fab-customization.js`. The module preserves the inline settings handlers, `fabSize`/`fabStyle` state, visible FAB dimensions and styling, `nova-fab-size`/`nova-fab-style` localStorage persistence, toast feedback, and long-press-menu close behavior. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push opened the FAB long-press menu, cycled size to 60px and style to glass mode, verified persisted values and menu closure, and restored the original FAB style, storage, menu, and Home state exactly. Remote `main` remains unchanged.
