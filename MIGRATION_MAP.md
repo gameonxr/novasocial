@@ -829,3 +829,8 @@ At commit `96560b9`, the standalone `toggleFabMenu` and `closeFabMenu` helpers m
 ### New-posts indicator extraction — Branch2
 
 At commit `21462a0`, the standalone `showNewPostsIndicator` helper moved to `src/features/new-posts-indicator.js`. Its duplicate guard, fixed pill styling, `invalidateTabCache('home')` and `go('home')` click callback, and eight-second auto-dismiss behavior are preserved. The `_silentBackgroundRefresh` caller and protected DMs refresh logic remain inline. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push rendered the `↑ New posts` pill, confirmed exactly one instance on repeated calls, verified the guarded click callback, confirmed timed dismissal, and kept the Home shell stable without account/database mutation. Remote `main` remains unchanged.
+
+
+### Avatar action-sheet extraction — Branch2
+
+At commit `597bf0a`, the standalone `showAvatarActionSheet` helper moved to `src/features/avatar-action-sheet.js`. Its profile-dependent View Photo option, Change Photo `avpick` handler, Cancel action, fixed bottom-sheet styling, duplicate replacement, and outside-overlay cleanup are preserved. Upload and crop logic remain inline. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push rendered the current View Photo, Change Photo, and Cancel options, confirmed exactly one sheet on repeated invocation, verified Cancel and outside-tap dismissal, and avoided any upload/profile/database mutation. Remote `main` remains unchanged.
