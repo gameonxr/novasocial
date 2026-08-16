@@ -587,3 +587,8 @@ At commit `eca81a6`, `src/features/deep-links.js` extracted `resolveAndOpenProfi
 ### Story text helpers checkpoint — Branch2
 
 At commit `bb0eb6b`, `src/features/story-text-helpers.js` extracted only the independent Story Creator helpers `addStoryTextMode`, `prevStoryMedia`, `addStoryText`, `changeStoryTextColor`, and `changeStoryTextSize`. `submitStory`, all Story editor state declarations, `openSV`, `renderSV`, `svTimer`, and the viewer navigation/swipe/timer system remained inline. The cache-busted preview loaded successfully and confirmed the extracted helpers, preserved Story functions, deep-link handlers, adjacent feature globals, and protected DMs, Reels, Calls, and like-effect globals. Static syntax, deep-link-aware integration, exact boundary, protected Stories-state, fragile-marker, script-order, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Notes Bar checkpoint — Branch2
+
+At commit `c4ac667`, `src/features/notes-bar.js` extracted the unchanged Notes Bar helper trio `_fetchNotesBarData`, `_renderNotesBarHtml`, and `loadNotesBar`. The DMs renderer continues to fetch notes data in parallel with conversations, while `_refreshDmsInPlace`, `_silentBackgroundRefresh`, `renderDMs`, and `openChat` remain inline so the non-destructive refresh and scroll-preservation fixes are untouched. The cache-busted preview confirmed the extracted Notes Bar and Notes globals, all protected DMs/Reels/Calls/Stories globals, and prior deep-link/profile/news globals. Static syntax, integration, parallel-split, protected-boundary, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
