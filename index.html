@@ -297,6 +297,7 @@
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
+<script src="src/features/message-favorite-toggle.js"></script>
 <script>
 
 
@@ -8589,23 +8590,6 @@ function showMsgMenu(id, isMe, senderId, encText, encName, encMtype, encMurl) {
   html += '</div>';
   
   body.innerHTML = html;
-}
-
-function toggleFavFromMsg(encUrl){
-  const url = decodeURIComponent(encUrl);
-
-  let favs = JSON.parse(localStorage.getItem('fav_stickers') || '[]');
-
-  if(favs.includes(url)){
-    favs = favs.filter(u => u !== url);
-    toast('Removed from Favorites');
-  }else{
-    favs.unshift(url);
-    toast('Added to Favorites ⭐');
-  }
-
-  localStorage.setItem('fav_stickers', JSON.stringify(favs));
-  closeModal();
 }
 
 async function pinMsgFromEnc(id, encText) {
