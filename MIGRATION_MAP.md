@@ -642,3 +642,9 @@ At commit `080e45f`, `src/features/favorite-message.js` extracted only the UI-on
 ### Play-next-audio checkpoint — Branch2
 
 At commit `a9a619a`, `src/features/play-next-audio.js` extracted only the independent `playNextAudio` helper used by inline audio `onended` handlers. `replyMsg`, `cancelReply`, `loadMsgs`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading/pagination, block enforcement, message-list scrolling, background refresh, scroll restoration, Stories, Reels, and WebRTC Calls remain inline and unchanged. The cache-busted preview confirmed the extracted audio helper, preserved reply and DMs functions, prior helpers, and all fragile markers. Static syntax, inline-caller, reply/DM/realtime/scroll protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+### Settings Support checkpoint — Branch2
+
+At commit `9ecb602`, the isolated `showSettingsSupport` settings-page renderer moved to `src/features/settings-support.js`. The helper remains a classic script global for inline navigation and event-handler compatibility; its referenced actions (`toggleNovaAI`, `showHelpCenter`, `showReportProblem`, and `showAbout`) remain string-based UI callbacks and were not moved. The extraction did not touch settings notifications, push subscription logic, admin functions, DMs, Stories, Reels, Calls, or navigation state.
+
+Static validation passed for JavaScript syntax, integration, script ordering, whitespace, inline-caller preservation, protected-function markers, and deep-link safeguards. The cache-busted preview loaded successfully, and the browser probe confirmed `showSettingsSupport`, `playNextAudio`, reply helpers, the DMs core, Reels, Stories, Calls, and like-effect globals remained callable. Remote `main` remained unchanged.
