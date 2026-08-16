@@ -278,6 +278,7 @@
 <script src="src/features/explore.js"></script>
 <script src="src/features/home.js"></script>
 <script src="src/features/settings-support.js"></script>
+<script src="src/features/settings-appearance.js"></script>
 <script>
 
 
@@ -8946,15 +8947,6 @@ function showSettingsPrivacy(){
     <div onclick="showCloseFriendsManager()" class="nova-setting-row">${ico('star','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Close Friends</div><div style="font-size:11px;color:#8A8A8A">Manage your close friends list</div></div>${ico('chevron_right','#555',16)}</div>
     <div onclick="showDisappearingOptions('${ME.id}')" class="nova-setting-row">${ico('clock','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Story Privacy</div><div style="font-size:11px;color:#8A8A8A">Who can see your stories</div></div>${ico('chevron_right','#555',16)}</div>
     <div onclick="toast('Message privacy settings')" class="nova-setting-row">${ico('msg','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Message Privacy</div><div style="font-size:11px;color:#8A8A8A">Who can message you</div></div>${ico('chevron_right','#555',16)}</div>
-  </div>`;
-}
-
-function showSettingsAppearance(){
-  const m=modal('Appearance'); m.querySelector('#mbody').innerHTML=`<div style="padding:16px;display:flex;flex-direction:column;gap:8px">
-    <div onclick="showThemePickerModal()" class="nova-setting-row">${ico('palette','#a855f7',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Themes</div><div style="font-size:11px;color:#8A8A8A">7 premium themes</div></div>${ico('chevron_right','#555',16)}</div>
-    <div onclick="showProfileCustomizer()" class="nova-setting-row">${ico('sparkles','#a855f7',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Profile Themes</div><div style="font-size:11px;color:#8A8A8A">Gradient ring & verified plus</div></div>${ico('chevron_right','#555',16)}</div>
-    <div onclick="showThemePickerModal()" class="nova-setting-row">${ico('palette','#a855f7',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Gradient Packs</div><div style="font-size:11px;color:#8A8A8A">Premium gradient collections</div></div>${ico('chevron_right','#555',16)}</div>
-    <div onclick="showProfileCustomizer()" class="nova-setting-row">${ico('star','#a855f7',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Premium Customization</div><div style="font-size:11px;color:#8A8A8A">Exclusive creator themes</div></div>${ico('chevron_right','#555',16)}</div>
   </div>`;
 }
 
