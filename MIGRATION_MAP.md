@@ -814,3 +814,8 @@ At commit `e6a1702`, the cohesive theme helper trio—`toggleThemePicker`, `setT
 ### FAB customization extraction — Branch2
 
 At commit `846943d`, the standalone `changeFabSize` and `changeFabStyle` helpers moved to `src/features/fab-customization.js`. The module preserves the inline settings handlers, `fabSize`/`fabStyle` state, visible FAB dimensions and styling, `nova-fab-size`/`nova-fab-style` localStorage persistence, toast feedback, and long-press-menu close behavior. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push opened the FAB long-press menu, cycled size to 60px and style to glass mode, verified persisted values and menu closure, and restored the original FAB style, storage, menu, and Home state exactly. Remote `main` remains unchanged.
+
+
+### FAB long-press menu extraction — Branch2
+
+At commit `2153727`, the standalone `showFabLongPressMenu` and `closeFabLongPressMenu` helpers moved to `src/features/fab-longpress-menu.js`. The outside-tap document listener remains inline and continues to call the extracted global close helper. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push opened the menu with animation, verified CSS-pixel placement inside the 5120×4400 browser viewport, confirmed outside-tap dismissal and explicit close, and restored the original menu and Home state. The large coordinate values are valid because the browser uses `devicePixelRatio=0.25`; no positioning defect was found. Remote `main` remains unchanged.
