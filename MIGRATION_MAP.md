@@ -597,3 +597,8 @@ At commit `c4ac667`, `src/features/notes-bar.js` extracted the unchanged Notes B
 ### Reels like-helper checkpoint — Branch2
 
 At commit `27965a9`, `src/features/reel-like-helper.js` extracted only the top-level `dblLikeReel` global used by inline double-tap handlers. The nested `dblLikeReel` copy inside `renderReels` remains inline, along with `renderReels`, `_applyReelsVideoWindowing`, `switchReelsView`, the persistent container, `_savedReelIndex`, dynamic reel percentage logic, settle timing, and touch swipe handlers. The cache-busted preview confirmed the extracted helper, preserved nested/renderer/toggle globals, Reels state, and all protected DMs, Stories, Calls, deep-link, profile, News Feed, and like-effect globals. Static syntax, nested-copy, persistent-container, saved-index, swipe/timing, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Chat input helpers checkpoint — Branch2
+
+At commit `4a75de8`, `src/features/chat-input-helpers.js` extracted only `toggleSendBtn` and `autoGrow`, the isolated textarea UI helpers used by the inline chat markup. `renderDMs`, `openChat`, `sendMsg`, chat realtime subscriptions, typing state, message-list scroll behavior, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted helpers, protected DMs functions, prior Notes/Reels/deep-link/profile globals, and all fragile Stories/Calls globals. Static syntax, inline-handler, DMs/realtime/scroll-protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
