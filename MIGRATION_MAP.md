@@ -637,3 +637,8 @@ At commit `080e45f`, `src/features/favorite-message.js` extracted only the UI-on
 ### DMs verification-readiness checkpoint — Branch2
 
 `DM_VERIFICATION_READINESS.md` defines the non-invasive authenticated smoke sequence required before moving `loadMsgs`, `renderDMs`, `openChat`, or their realtime/typing/scroll dependencies. The sandbox has no authenticated Supabase session even though the My Browser connector is enabled, so no mock user, synthetic session, database seed, or application-code fixture was added. The gate remains: perform read-only authenticated DMs navigation and subscription/scroll observations on the current `Branch2` checkpoint before any high-risk extraction.
+
+
+### Play-next-audio checkpoint — Branch2
+
+At commit `a9a619a`, `src/features/play-next-audio.js` extracted only the independent `playNextAudio` helper used by inline audio `onended` handlers. `replyMsg`, `cancelReply`, `loadMsgs`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading/pagination, block enforcement, message-list scrolling, background refresh, scroll restoration, Stories, Reels, and WebRTC Calls remain inline and unchanged. The cache-busted preview confirmed the extracted audio helper, preserved reply and DMs functions, prior helpers, and all fragile markers. Static syntax, inline-caller, reply/DM/realtime/scroll protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
