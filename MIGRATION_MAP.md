@@ -622,3 +622,8 @@ At commit `766a307`, `src/features/copy-invite-link.js` extracted only the `copy
 ### Message clipboard helpers checkpoint — Branch2
 
 At commit `4d3743c`, `src/features/message-clipboard-helpers.js` extracted only `copyMsg` and `copyMsgFromEnc`, the clipboard paths used by the message menu. `loadMsgs`, `deleteMsgForMe`, `unsendMsg`, `pinMsg`, `pinMsgFromEnc`, `reactMsg`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading/pagination, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed both clipboard helpers, all preserved message actions, protected DMs functions, prior chat helpers, and all fragile markers. Static syntax, inline-caller, DB-action/DM protection, realtime/scroll, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Favorite message checkpoint — Branch2
+
+At commit `080e45f`, `src/features/favorite-message.js` extracted only the UI-only `favoriteMessage` stub. `deleteMsgForMe`, `unsendMsg`, `pinMsg`, `pinMsgFromEnc`, `reactMsg`, `loadMsgs`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading/pagination, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted favorite helper, preserved clipboard/message actions, protected DMs functions, and all fragile markers. Static syntax, inline-caller, DB/DM/realtime/scroll protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
