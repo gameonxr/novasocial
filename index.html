@@ -260,6 +260,7 @@
 <script src="src/features/notes.js"></script>
 <script src="src/features/notes-bar.js"></script>
 <script src="src/features/chat-input-helpers.js"></script>
+<script src="src/features/dm-drafts.js"></script>
 <script src="src/features/marketplace.js"></script>
 <script src="src/features/learning.js"></script>
 <script src="src/features/news.js"></script>
@@ -8212,27 +8213,6 @@ async function sendMediaMsg(cid, inp) {
       toast('Media upload failed');
     }
   }
-}
-
-// DM DRAFT SYSTEM — preserves typed text when navigating away (Instagram-style)
-function saveDmDraft(cid, text){
-  try {
-    var drafts = JSON.parse(localStorage.getItem('nova-dm-drafts') || '{}');
-    if(text && text.trim()){
-      drafts[cid] = text;
-    } else {
-      delete drafts[cid];
-    }
-    localStorage.setItem('nova-dm-drafts', JSON.stringify(drafts));
-  } catch(e) {}
-}
-
-function clearDmDraft(cid){
-  try {
-    var drafts = JSON.parse(localStorage.getItem('nova-dm-drafts') || '{}');
-    delete drafts[cid];
-    localStorage.setItem('nova-dm-drafts', JSON.stringify(drafts));
-  } catch(e) {}
 }
 
 async function sendMsg(cid){
