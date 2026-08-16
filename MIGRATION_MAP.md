@@ -792,3 +792,10 @@ At the `40dea5f` checkpoint, the authorized authenticated account completed a co
 ### Message Info helper checkpoint — Branch2
 
 At commit `7e07cbf`, the read-only `showMsgInfo` helper moved to `src/features/message-info.js` and was loaded after `reply-helpers.js` before the inline application script. It preserves the sent/delivered/read-status queries and Message Info modal rendering, and remains available as a classic-script global for the existing inline message-menu handler. JavaScript syntax, inline-script syntax, deep-link validation, protected markers, script ordering, exact boundary checks, and whitespace checks passed. Authenticated smoke testing on an existing `suspense` message rendered Sent, Delivered, and Not read yet details; modal and chat back navigation restored DMs with `chatSubscription: null` and `typingSub: null`. Remote `main` remains unchanged.
+
+
+### Stale DMs preview after unsend — Branch2
+
+At commit `c30138d`, authenticated regression exposed a denormalized preview defect: an unsent message row was correctly marked `deleted=true` and cleared, but `conversations.last_message` retained the deleted text, so DMs refresh continued showing it. The existing protected DMs renderer and in-place refresh were not replaced. Instead, `unsendMsg` now captures `conversation_id`, clears the message, finds the newest non-deleted prior message, and updates `conversations.last_message` and `last_message_at`. Preview cleanup is best-effort and cannot undo message deletion.
+
+The live reversible regression passed: a marked message was sent, confirmed in the conversation preview, unsent through the app flow, and the DMs preview returned to the prior active message `Hi`; the deleted probe text was absent from both the conversation database field and rendered DMs item. Post-push verification at `c30138d` passed. Remote `main` remains unchanged.
