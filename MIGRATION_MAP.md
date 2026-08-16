@@ -627,3 +627,8 @@ At commit `4d3743c`, `src/features/message-clipboard-helpers.js` extracted only 
 ### Favorite message checkpoint — Branch2
 
 At commit `080e45f`, `src/features/favorite-message.js` extracted only the UI-only `favoriteMessage` stub. `deleteMsgForMe`, `unsendMsg`, `pinMsg`, `pinMsgFromEnc`, `reactMsg`, `loadMsgs`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading/pagination, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted favorite helper, preserved clipboard/message actions, protected DMs functions, and all fragile markers. Static syntax, inline-caller, DB/DM/realtime/scroll protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### DMs core risk-map checkpoint — Branch2
+
+`DM_CORE_RISK_MAP.md` records the remaining high-risk DMs dependency graph and preservation invariants. It explicitly keeps `renderDMs`, `openChat`, `loadMsgs`, `_loadOlderMessages`, `_refreshDmsInPlace`, `_silentBackgroundRefresh`, typing subscriptions/timers, message sending, block enforcement, realtime handling, and scroll restoration inline. The map documents the required extraction order and prohibits mixing these systems with Stories, Reels, or WebRTC work. Live preview startup and protected-global probes passed at the `44a7eb4` analysis baseline; no high-risk application code was moved in this checkpoint.
