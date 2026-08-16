@@ -654,3 +654,9 @@ Static validation passed for JavaScript syntax, integration, script ordering, wh
 At commit `20609dc`, the isolated `showSettingsAppearance` settings-page renderer moved to `src/features/settings-appearance.js`. It remains a classic script global for the existing inline settings navigation, while its existing theme and profile-customizer callbacks remain untouched. No notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
 
 Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded both settings modules and the browser probe confirmed the new renderer, the previous support renderer, and all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
+
+### Settings Account checkpoint — Branch2
+
+At commit `5231773`, the isolated `showSettingsAccount` settings-page renderer moved to `src/features/settings-account.js`. It remains a classic script global for existing inline settings navigation, while its account actions (`showEditProfile`, `showPasswordReset`, `showVerificationApply`, `showAccountInfo`, `downloadMyData`, and `showDeleteAccount`) remain in their existing locations. No privacy, notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
+
+Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded all three extracted settings modules, and the browser probe confirmed the account renderer plus all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
