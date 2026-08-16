@@ -262,6 +262,7 @@
 <script src="src/features/chat-input-helpers.js"></script>
 <script src="src/features/dm-drafts.js"></script>
 <script src="src/features/chat-actions.js"></script>
+<script src="src/features/copy-invite-link.js"></script>
 <script src="src/features/marketplace.js"></script>
 <script src="src/features/learning.js"></script>
 <script src="src/features/news.js"></script>
@@ -7494,13 +7495,6 @@ async function loadGCSuggestions(cid) {
     html += '</div>';
   });
   res.innerHTML = html;
-}
-
-function copyInviteLink(link) {
-  try {
-    navigator.clipboard.writeText(link);
-    toast('Invite link copied! 📋');
-  } catch(e) { toast('Could not copy'); }
 }
 
 // ── CREATE POST / STORY FIX ──────────────────────────────────────
