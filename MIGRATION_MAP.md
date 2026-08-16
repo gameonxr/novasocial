@@ -799,3 +799,8 @@ At commit `7e07cbf`, the read-only `showMsgInfo` helper moved to `src/features/m
 At commit `c30138d`, authenticated regression exposed a denormalized preview defect: an unsent message row was correctly marked `deleted=true` and cleared, but `conversations.last_message` retained the deleted text, so DMs refresh continued showing it. The existing protected DMs renderer and in-place refresh were not replaced. Instead, `unsendMsg` now captures `conversation_id`, clears the message, finds the newest non-deleted prior message, and updates `conversations.last_message` and `last_message_at`. Preview cleanup is best-effort and cannot undo message deletion.
 
 The live reversible regression passed: a marked message was sent, confirmed in the conversation preview, unsent through the app flow, and the DMs preview returned to the prior active message `Hi`; the deleted probe text was absent from both the conversation database field and rendered DMs item. Post-push verification at `c30138d` passed. Remote `main` remains unchanged.
+
+
+### Message sticker favorite-toggle extraction — Branch2
+
+At commit `61addf7`, the standalone `toggleFavFromMsg` helper moved to `src/features/message-favorite-toggle.js`. It preserves the `fav_stickers` localStorage round-trip, toast feedback, modal close, and classic-script global used by the inline message menu. The extraction was guarded for Branch2, validated for JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace. Authenticated live testing before and after push added and removed a synthetic favorite URL and restored the original localStorage array exactly. No database, message, like, follow, or account state was changed. Remote `main` remains unchanged.
