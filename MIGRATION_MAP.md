@@ -602,3 +602,8 @@ At commit `27965a9`, `src/features/reel-like-helper.js` extracted only the top-l
 ### Chat input helpers checkpoint — Branch2
 
 At commit `4a75de8`, `src/features/chat-input-helpers.js` extracted only `toggleSendBtn` and `autoGrow`, the isolated textarea UI helpers used by the inline chat markup. `renderDMs`, `openChat`, `sendMsg`, chat realtime subscriptions, typing state, message-list scroll behavior, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted helpers, protected DMs functions, prior Notes/Reels/deep-link/profile globals, and all fragile Stories/Calls globals. Static syntax, inline-handler, DMs/realtime/scroll-protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### DM draft helpers checkpoint — Branch2
+
+At commit `28b93b5`, `src/features/dm-drafts.js` extracted only the localStorage-backed `saveDmDraft` and `clearDmDraft` helpers. `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, block checks, typing state, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted draft helpers, protected DMs functions, prior chat-input/Notes/Reels/Stories/Calls/deep-link/profile globals, and all fragile markers. Static syntax, inline-call-site, DMs/realtime/scroll-protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
