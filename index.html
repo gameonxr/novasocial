@@ -284,6 +284,7 @@
 <script src="src/features/settings-features.js"></script>
 <script src="src/features/toggle-ghost-mode.js"></script>
 <script src="src/features/show-edit.js"></script>
+<script src="src/features/change-audio-speed.js"></script>
 <script>
 
 
@@ -1206,15 +1207,6 @@ function viewChatImage(url) {
   m.querySelector('.msheet').style.background = 'rgba(0,0,0,0.95)'; 
   m.querySelector('#mbody').innerHTML = '<div style="position:relative;display:flex;align-items:center;justify-content:center;min-height:90vh;padding:10px;"><img src="'+url+'" style="max-width:100%;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div><div onclick="downloadMedia(\''+url+'\',\'novasocial_image\')" style="position:absolute;top:30px;right:20px;background:rgba(0,0,0,0.6);padding:12px;border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);">'+ico('img','#fff',24)+'</div>';
   m.onclick = e => { if(e.target === m) closeModal(); };
-}
-
-function changeAudioSpeed(btn) {
-  const audio = btn.previousElementSibling;
-  if(!audio) return;
-  if(audio.playbackRate === 1) { audio.playbackRate = 1.5; btn.textContent = '1.5x'; }
-  else if(audio.playbackRate === 1.5) { audio.playbackRate = 2; btn.textContent = '2x'; }
-  else { audio.playbackRate = 1; btn.textContent = '1x'; }
-  toast('Speed: ' + btn.textContent);
 }
 
 // Navigation Function (Crash Proof)
