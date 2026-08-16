@@ -1229,6 +1229,10 @@ function go(tab){
       db.removeChannel(window.chatSubscription);
       window.chatSubscription = null;
     }
+    if (window.typingSub) {
+      db.removeChannel(window.typingSub);
+      window.typingSub = null;
+    }
   }
 
   _renderGeneration++; // 🛡️ Race condition fix: invalidate any in-flight async renders
@@ -6983,6 +6987,10 @@ async function openChat(cid,name,isGrp){
     if (window.chatSubscription) {
       db.removeChannel(window.chatSubscription);
       window.chatSubscription = null;
+    }
+    if (window.typingSub) {
+      db.removeChannel(window.typingSub);
+      window.typingSub = null;
     }
     go('dms');
   });
