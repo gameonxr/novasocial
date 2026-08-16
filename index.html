@@ -8320,12 +8320,14 @@ async function unsendMsg(mid){
 
   // ── STEP 1: Fetch media_url + ownership before update ──
   let mediaUrlToClean = null;
+  let conversationId = null;
   try {
     const { data: msg } = await db
       .from('messages')
-      .select('media_url, sender_id')
+      .select('media_url, sender_id, conversation_id')
       .eq('id', mid)
       .maybeSingle();
+    conversationId = msg?.conversation_id || null;
     if(msg && msg.sender_id === ME.id && msg.media_url) {
       mediaUrlToClean = msg.media_url;
     }
@@ -8350,6 +8352,28 @@ async function unsendMsg(mid){
     console.error('Unsend DB update failed:', e);
     toast('❌ Unsend failed');
     return;
+  }
+
+  // Keep the denormalized DMs preview aligned with the newest active message.
+  // This is non-critical to unsend itself: a preview failure must not undo deletion.
+  if(conversationId) {
+    try {
+      const { data: recentMsgs } = await db
+        .from('messages')
+        .select('id, text, media_type, deleted, created_at')
+        .eq('conversation_id', conversationId)
+        .neq('id', mid)
+        .order('created_at', { ascending: false })
+        .limit(20);
+      const previous = (recentMsgs || []).find(m => !m.deleted);
+      const preview = previous ? (previous.text || (previous.media_type ? '[' + previous.media_type + ' message]' : '')) : null;
+      await db.from('conversations').update({
+        last_message: preview,
+        last_message_at: previous?.created_at || null,
+      }).eq('id', conversationId);
+    } catch(e) {
+      console.warn('Conversation preview cleanup failed:', e.message);
+    }
   }
 
   // ── STEP 3: Cloudinary media cleanup (production engine) ──
