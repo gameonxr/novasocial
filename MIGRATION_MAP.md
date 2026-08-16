@@ -582,3 +582,8 @@ At commit `975e210`, `src/features/profile-view.js` extracted the other-user pro
 ### Deep-link handlers checkpoint — Branch2
 
 At commit `eca81a6`, `src/features/deep-links.js` extracted `resolveAndOpenProfile` and `processDeepLinks`. The URL parsing, `_pendingDeepLinks` queue initialization, immediate authenticated processing, and delayed post-login callback remain inline so the original sequencing is preserved. Stories, DMs, Reels, WebRTC Calls, and the block system remain protected and inline. Static syntax, deep-link-aware integration, queue-timing, script-order, exact-boundary, protected-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged. The live preview host returned a retryable `SESSION_CONNECT_FAILED` 502 at both the cache-busted and base URLs during this checkpoint, so browser global probing is pending host recovery rather than being claimed as completed.
+
+
+### Story text helpers checkpoint — Branch2
+
+At commit `bb0eb6b`, `src/features/story-text-helpers.js` extracted only the independent Story Creator helpers `addStoryTextMode`, `prevStoryMedia`, `addStoryText`, `changeStoryTextColor`, and `changeStoryTextSize`. `submitStory`, all Story editor state declarations, `openSV`, `renderSV`, `svTimer`, and the viewer navigation/swipe/timer system remained inline. The cache-busted preview loaded successfully and confirmed the extracted helpers, preserved Story functions, deep-link handlers, adjacent feature globals, and protected DMs, Reels, Calls, and like-effect globals. Static syntax, deep-link-aware integration, exact boundary, protected Stories-state, fragile-marker, script-order, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
