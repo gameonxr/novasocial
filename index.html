@@ -287,6 +287,7 @@
 <script src="src/features/change-audio-speed.js"></script>
 <script src="src/features/show-new-dm.js"></script>
 <script src="src/features/show-gc.js"></script>
+<script src="src/features/show-add-members.js"></script>
 <script>
 
 
@@ -8786,12 +8787,6 @@ async function createGC(){
     const results=await Promise.all([ME.id,...window._gcs].map(uid=>db.from('conversation_members').insert({conversation_id:c.id,user_id:uid,is_admin:uid===ME.id})));
     closeModal();toast('Group ban gaya! 🎉');openChat(c.id,n,true);
   }catch(e){toast('Error: '+(e.message||'Group create nahi hua'));}
-}
-
-async function showAddMembers(cid){
-  const m=modal('Add Members');
-  const body=m.querySelector('#mbody');
-  body.innerHTML=`<div style="padding:16px"><div class="sbar2">${ico('search','#666',18)}<input placeholder="Search users by username..." id="am-search" oninput="searchAddMembers('${cid}',this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div><div id="am-results" style="margin-top:12px"></div></div>`;
 }
 
 async function searchAddMembers(cid,q){
