@@ -648,3 +648,9 @@ At commit `a9a619a`, `src/features/play-next-audio.js` extracted only the indepe
 At commit `9ecb602`, the isolated `showSettingsSupport` settings-page renderer moved to `src/features/settings-support.js`. The helper remains a classic script global for inline navigation and event-handler compatibility; its referenced actions (`toggleNovaAI`, `showHelpCenter`, `showReportProblem`, and `showAbout`) remain string-based UI callbacks and were not moved. The extraction did not touch settings notifications, push subscription logic, admin functions, DMs, Stories, Reels, Calls, or navigation state.
 
 Static validation passed for JavaScript syntax, integration, script ordering, whitespace, inline-caller preservation, protected-function markers, and deep-link safeguards. The cache-busted preview loaded successfully, and the browser probe confirmed `showSettingsSupport`, `playNextAudio`, reply helpers, the DMs core, Reels, Stories, Calls, and like-effect globals remained callable. Remote `main` remained unchanged.
+
+### Settings Appearance checkpoint — Branch2
+
+At commit `20609dc`, the isolated `showSettingsAppearance` settings-page renderer moved to `src/features/settings-appearance.js`. It remains a classic script global for the existing inline settings navigation, while its existing theme and profile-customizer callbacks remain untouched. No notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
+
+Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded both settings modules and the browser probe confirmed the new renderer, the previous support renderer, and all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
