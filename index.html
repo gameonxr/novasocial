@@ -300,6 +300,7 @@
 <script src="src/features/message-favorite-toggle.js"></script>
 <script src="src/features/theme-system.js"></script>
 <script src="src/features/fab-customization.js"></script>
+<script src="src/features/fab-longpress-menu.js"></script>
 <script>
 
 
@@ -1869,27 +1870,6 @@ function restoreFabButton(){
     }
     toast('Upload Button Restored');
   }
-}
-
-function showFabLongPressMenu(){
-  const menu = document.getElementById('fab-longpress-menu');
-  const fab = document.getElementById('fab-main');
-  if(!menu || !fab) return;
-  const rect = fab.getBoundingClientRect();
-  menu.style.display = 'flex';
-  menu.style.animation = 'novaScaleIn 0.2s ease';
-  // Position above FAB
-  let menuLeft = rect.left;
-  let menuTop = rect.top - 200;
-  if(menuTop < 10) menuTop = rect.bottom + 10;
-  if(menuLeft + 180 > window.innerWidth) menuLeft = window.innerWidth - 190;
-  menu.style.left = menuLeft + 'px';
-  menu.style.top = menuTop + 'px';
-}
-
-function closeFabLongPressMenu(){
-  const menu = document.getElementById('fab-longpress-menu');
-  if(menu) menu.style.display = 'none';
 }
 
 // Close long press menu on outside tap
