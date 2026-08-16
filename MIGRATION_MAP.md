@@ -672,3 +672,9 @@ Static checks passed for JavaScript syntax, integration, script order, whitespac
 At commit `c0c72a2`, the isolated `showSettingsFeatures` settings-page renderer moved to `src/features/settings-features.js`. It remains a classic script global for existing inline settings navigation, while the existing feature callbacks and the `ME.id` reference remain unchanged. No notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
 
 Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded all five extracted settings modules, and the browser probe confirmed the features renderer plus all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
+
+### Toggle Ghost Mode checkpoint — Branch2
+
+At commit `c2b079e`, the isolated `toggleGhostMode` privacy mutation helper moved to `src/features/toggle-ghost-mode.js`. Its behavior remains unchanged: it derives the next mode from `PROF.ghost_mode`, updates the current profile through Supabase using `ME.id`, updates the in-memory profile and status element, and displays the existing toast. No settings-page, notification/push, admin, DM, Story, Reel, Call, or navigation state code was moved.
+
+Static checks passed for JavaScript syntax, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded the extracted helper and all five settings modules, and the browser probe confirmed the ghost-mode helper plus all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
