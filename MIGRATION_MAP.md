@@ -632,3 +632,8 @@ At commit `080e45f`, `src/features/favorite-message.js` extracted only the UI-on
 ### DMs core risk-map checkpoint — Branch2
 
 `DM_CORE_RISK_MAP.md` records the remaining high-risk DMs dependency graph and preservation invariants. It explicitly keeps `renderDMs`, `openChat`, `loadMsgs`, `_loadOlderMessages`, `_refreshDmsInPlace`, `_silentBackgroundRefresh`, typing subscriptions/timers, message sending, block enforcement, realtime handling, and scroll restoration inline. The map documents the required extraction order and prohibits mixing these systems with Stories, Reels, or WebRTC work. Live preview startup and protected-global probes passed at the `44a7eb4` analysis baseline; no high-risk application code was moved in this checkpoint.
+
+
+### DMs verification-readiness checkpoint — Branch2
+
+`DM_VERIFICATION_READINESS.md` defines the non-invasive authenticated smoke sequence required before moving `loadMsgs`, `renderDMs`, `openChat`, or their realtime/typing/scroll dependencies. The sandbox has no authenticated Supabase session even though the My Browser connector is enabled, so no mock user, synthetic session, database seed, or application-code fixture was added. The gate remains: perform read-only authenticated DMs navigation and subscription/scroll observations on the current `Branch2` checkpoint before any high-risk extraction.
