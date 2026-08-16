@@ -285,6 +285,7 @@
 <script src="src/features/toggle-ghost-mode.js"></script>
 <script src="src/features/show-edit.js"></script>
 <script src="src/features/change-audio-speed.js"></script>
+<script src="src/features/show-new-dm.js"></script>
 <script>
 
 
@@ -8735,15 +8736,6 @@ async function toggleRecording(cid){
     btn.style.background='#1a1a1a';
     btn.innerHTML=ico('mic');
   }
-}
-
-async function showNewDM(){
-  const m=modal('New Message');
-  const body=m.querySelector('#mbody');
-  body.innerHTML=`<div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-    <div class="sbar2">${ico('search','#666',18)}<input placeholder="Username search karo..." id="dms-inp" oninput="searchDM(this.value)" style="background:transparent;border:none;outline:none;color:#fff;font-size:14px;flex:1"></div>
-    <div id="dms-res"></div>
-  </div>`;
 }
 
 async function searchDM(q){
