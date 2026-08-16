@@ -804,3 +804,8 @@ The live reversible regression passed: a marked message was sent, confirmed in t
 ### Message sticker favorite-toggle extraction — Branch2
 
 At commit `61addf7`, the standalone `toggleFavFromMsg` helper moved to `src/features/message-favorite-toggle.js`. It preserves the `fav_stickers` localStorage round-trip, toast feedback, modal close, and classic-script global used by the inline message menu. The extraction was guarded for Branch2, validated for JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace. Authenticated live testing before and after push added and removed a synthetic favorite URL and restored the original localStorage array exactly. No database, message, like, follow, or account state was changed. Remote `main` remains unchanged.
+
+
+### Theme-system extraction — Branch2
+
+At commit `e6a1702`, the cohesive theme helper trio—`toggleThemePicker`, `setTheme`, and `loadSavedTheme`—moved to `src/features/theme-system.js`. The module preserves the inline HTML globals, theme-panel class toggling, HTML/body data-theme attributes, `nova-theme` localStorage persistence, active-option styling, toast feedback, and saved-theme loading. Guarded extraction, JavaScript syntax, inline syntax, deep-link safeguards, protected markers, script order, exact boundaries, and whitespace checks passed. Authenticated live testing before and after push opened and closed the picker, applied Cyberpunk, verified persistence, and restored the original theme and panel state exactly. Remote `main` remains unchanged.
