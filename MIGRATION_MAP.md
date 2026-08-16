@@ -690,3 +690,9 @@ The extraction initially hit the repository whitespace gate because template-lit
 At commit `63bf2e7`, the isolated `changeAudioSpeed` helper moved to `src/features/change-audio-speed.js`. Its behavior remains unchanged: it finds the preceding audio element, cycles playback rate through 1x, 1.5x, and 2x, updates the button label, and displays the existing speed toast. Both static inline callers remain in `index.html`; no DMs, Stories, Reels, Calls, navigation, or message-rendering code was moved.
 
 Static checks passed for JavaScript syntax, both inline callers, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded the new helper and all prior extracted modules; the browser probe confirmed the audio helper, settings/ghost-mode/show-edit globals, and all protected DMs, Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
+
+### Show New DM checkpoint — Branch2
+
+At commit `4121ca6`, the isolated `showNewDM` modal renderer moved to `src/features/show-new-dm.js`. It continues to create the New Message modal and invoke the existing inline `searchDM` handler; `searchDM`, `startDM`, `renderDMs`, `openChat`, message loading, realtime subscriptions, block enforcement, and scroll restoration remain inline by design. No group-chat creation, admin, Story, Reel, Call, or navigation state code was moved.
+
+Static checks passed for JavaScript syntax, static New DM callers, DM-core protection, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded the new module and all prior extracted modules; the browser probe confirmed `showNewDM`, inline search/start handlers, the protected DMs core, and all protected Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
