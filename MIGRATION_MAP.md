@@ -766,3 +766,7 @@ The current Branch2 preview was reopened at the residual-audit checkpoint. The u
 ### My Browser availability and current preview probe — Branch2
 
 The current session configuration contains an enabled `My Browser` connector, but the active page remains the unauthenticated sandbox preview. A read-only probe on the current preview reached `readyState: complete`, confirmed the extracted settings/admin/DM-creation/group helpers and protected DMs/message/reply/voice/Reels/Stories/Calls globals, and found the login shell present. No authentication, mutation, message send, database write, or subscription action was invoked. The authenticated DMs verification gate remains open and no protected code was moved.
+
+### Autonomous continuation checkpoint — Branch2
+
+The current autonomous pass revalidated Branch2 and the preview. The remaining inline inventory contains only protected DMs/reply/voice/Stories/Reels/Calls paths and DB-backed admin/push flows. A read-only browser probe reached `readyState: complete`, showed the unauthenticated login shell, and confirmed extracted helper globals plus protected DMs/message/reply/voice/Reels/Stories/Calls globals. No authentication or mutation was available or invoked; the protected extraction gate remains enforced.
