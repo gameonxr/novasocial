@@ -714,3 +714,9 @@ Static checks passed for JavaScript syntax, group/DM-core protection, integratio
 At commit `9653cac`, the isolated `searchDM` DM-creation search helper moved to `src/features/search-dm.js`. It continues to query profiles, render selectable results, and invoke the existing inline `startDM` callback. `startDM`, `renderDMs`, `openChat`, message loading, realtime subscriptions, block enforcement, and scroll restoration remain inline by design. No group creation, Story, Reel, Call, admin, or navigation state code was moved.
 
 Static checks passed for JavaScript syntax, the DM-creation caller chain, DM-core protection, integration, script order, whitespace, inline-caller preservation, protected fragile markers, and deep-link safeguards. The cache-busted preview loaded the new module and all prior extracted modules; the browser probe confirmed the search helper, inline conversation creation, protected DMs/chat core, and all protected Reels, Stories, Calls, reply, audio, and like-effect globals. Remote `main` remained unchanged.
+
+### Toggle Group Chat recovery checkpoint — Branch2
+
+The Phase 79 code commit `d3c20a7` (`togGC` extracted to `src/features/tog-gc.js`) was initially created locally but its first push failed because the GitHub credential had expired. The failure was an authentication issue, not an extraction or `togGC` code issue. GitHub device reauthorization completed successfully, and the existing local commit was pushed only to `Branch2`.
+
+After the push, the cache-busted preview loaded `tog-gc.js` and all prior modules at `readyState: complete`. The browser probe confirmed `togGC`, group/DM helper globals, settings/audio helpers, and protected DMs, Reels, Stories, Calls, reply, and like-effect functions. Remote `main` remained at its prior hash and was not touched.
