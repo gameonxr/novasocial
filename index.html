@@ -282,6 +282,7 @@
 <script src="src/features/settings-account.js"></script>
 <script src="src/features/settings-privacy.js"></script>
 <script src="src/features/settings-features.js"></script>
+<script src="src/features/toggle-ghost-mode.js"></script>
 <script>
 
 
@@ -8837,14 +8838,6 @@ async function addMemberToGroup(cid,uid){
   toast('Member added! 🎉');
   const row=document.getElementById('am-row-'+uid);
   if(row) row.innerHTML+=`<span style="color:#3db83d;font-weight:700;font-size:13px;margin-left:8px">✓ Added</span>`;
-}
-
-async function toggleGhostMode() {
-  const newMode = !(PROF?.ghost_mode || false);
-  await db.from('profiles').update({ ghost_mode: newMode }).eq('id', ME.id);
-  PROF.ghost_mode = newMode;
-  document.getElementById('ghost-status').innerText = newMode ? 'ON 🟢' : 'OFF 🔴';
-  toast(newMode ? 'Ghost Mode Activated 👻' : 'Ghost Mode Deactivated');
 }
 
 function showEdit(){
