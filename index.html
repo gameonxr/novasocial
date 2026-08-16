@@ -265,6 +265,7 @@
 <script src="src/features/copy-invite-link.js"></script>
 <script src="src/features/message-clipboard-helpers.js"></script>
 <script src="src/features/favorite-message.js"></script>
+<script src="src/features/play-next-audio.js"></script>
 <script src="src/features/marketplace.js"></script>
 <script src="src/features/learning.js"></script>
 <script src="src/features/news.js"></script>
@@ -8650,16 +8651,6 @@ async function showMsgInfo(mid) {
 }
 
 // New Feature: Auto-play next audio
-function playNextAudio(audioEl) {
-  const allAudios = document.querySelectorAll('audio');
-  for(let i=0; i<allAudios.length; i++) {
-    if(allAudios[i] === audioEl && i+1 < allAudios.length) {
-      allAudios[i+1].play();
-      break;
-    }
-  }
-}
-
 function replyMsg(id, text, name, mediaType, mediaUrl) {
   window.replyToId=id;
   const box=document.getElementById('reply-preview');
