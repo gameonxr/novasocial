@@ -612,3 +612,8 @@ At commit `28b93b5`, `src/features/dm-drafts.js` extracted only the localStorage
 ### Chat actions checkpoint — Branch2
 
 At commit `9e89474`, `src/features/chat-actions.js` extracted only the `showChatActions` modal/menu helper used by the inline chat header. `clearChat`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted menu helper, protected DMs functions, prior chat-input/draft/Notes/Reels/Stories/Calls/deep-link/profile globals, and all fragile markers. Static syntax, inline-caller, DMs/realtime/scroll-protection, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Copy invite link checkpoint — Branch2
+
+At commit `766a307`, `src/features/copy-invite-link.js` extracted only the `copyInviteLink` clipboard/toast helper used by Group Info markup. `showGroupInfo`, attachment and location helpers, `clearChat`, `sendMsg`, `renderDMs`, `openChat`, realtime subscriptions, typing state, message loading, block enforcement, message-list scrolling, background refresh, and scroll restoration remain inline and unchanged. The cache-busted preview confirmed the extracted clipboard helper, preserved Group Info/attachment/location functions, protected DMs functions, prior chat helpers, and all fragile markers. Static syntax, inline-caller, Group Info/DM protection, realtime/scroll, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
