@@ -592,3 +592,8 @@ At commit `bb0eb6b`, `src/features/story-text-helpers.js` extracted only the ind
 ### Notes Bar checkpoint — Branch2
 
 At commit `c4ac667`, `src/features/notes-bar.js` extracted the unchanged Notes Bar helper trio `_fetchNotesBarData`, `_renderNotesBarHtml`, and `loadNotesBar`. The DMs renderer continues to fetch notes data in parallel with conversations, while `_refreshDmsInPlace`, `_silentBackgroundRefresh`, `renderDMs`, and `openChat` remain inline so the non-destructive refresh and scroll-preservation fixes are untouched. The cache-busted preview confirmed the extracted Notes Bar and Notes globals, all protected DMs/Reels/Calls/Stories globals, and prior deep-link/profile/news globals. Static syntax, integration, parallel-split, protected-boundary, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
+
+
+### Reels like-helper checkpoint — Branch2
+
+At commit `27965a9`, `src/features/reel-like-helper.js` extracted only the top-level `dblLikeReel` global used by inline double-tap handlers. The nested `dblLikeReel` copy inside `renderReels` remains inline, along with `renderReels`, `_applyReelsVideoWindowing`, `switchReelsView`, the persistent container, `_savedReelIndex`, dynamic reel percentage logic, settle timing, and touch swipe handlers. The cache-busted preview confirmed the extracted helper, preserved nested/renderer/toggle globals, Reels state, and all protected DMs, Stories, Calls, deep-link, profile, News Feed, and like-effect globals. Static syntax, nested-copy, persistent-container, saved-index, swipe/timing, script-order, fragile-marker, and whitespace checks passed on `Branch2`; remote `main` remains unchanged.
