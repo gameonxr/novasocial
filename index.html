@@ -264,6 +264,7 @@
 <script src="src/features/chat-actions.js"></script>
 <script src="src/features/copy-invite-link.js"></script>
 <script src="src/features/message-clipboard-helpers.js"></script>
+<script src="src/features/favorite-message.js"></script>
 <script src="src/features/marketplace.js"></script>
 <script src="src/features/learning.js"></script>
 <script src="src/features/news.js"></script>
@@ -8275,11 +8276,6 @@ async function sendMsg(cid){
   // and loadMsgs will fire from there — giving proper render with profile data.
   // Net effect: if user is scrolled up, their position is preserved + message appended.
   // If at bottom, realtime handler reloads cleanly (as before).
-}
-
-async function favoriteMessage(mid) {
-  toast('Message Favorited ⭐');
-  closeModal();
 }
 
 async function deleteMsgForMe(mid) {
