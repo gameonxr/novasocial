@@ -280,6 +280,7 @@
 <script src="src/features/settings-support.js"></script>
 <script src="src/features/settings-appearance.js"></script>
 <script src="src/features/settings-account.js"></script>
+<script src="src/features/settings-privacy.js"></script>
 <script>
 
 
@@ -8927,18 +8928,6 @@ function showEdit(){
 // ═══════════════════════════════════════════════════════════════
 // HIERARCHICAL SETTINGS — 6 DEDICATED PAGES
 // ═══════════════════════════════════════════════════════════════
-
-function showSettingsPrivacy(){
-  const m=modal('Privacy'); m.querySelector('#mbody').innerHTML=`<div style="padding:16px;display:flex;flex-direction:column;gap:8px">
-    <div onclick="toggleGhostMode()" class="nova-setting-row">${ico('ghost','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Ghost Mode</div><div style="font-size:11px;color:#8A8A8A">View stories anonymously</div></div><span id="ghost-status" style="color:${PROF?.ghost_mode?'#3db83d':'#555'};font-size:12px;font-weight:700">${PROF?.ghost_mode?'ON':'OFF'}</span></div>
-    <div onclick="toggleReadReceipts()" class="nova-setting-row">${ico('eye','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Read Receipts</div><div style="font-size:11px;color:#8A8A8A">Show blue ticks in chat</div></div><span style="color:${PROF?.read_receipts_enabled!==false?'#3db83d':'#555'};font-size:12px;font-weight:700">${PROF?.read_receipts_enabled!==false?'ON':'OFF'}</span></div>
-    <div onclick="showPrivateAccount()" class="nova-setting-row">${ico('lock','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Private Account</div><div style="font-size:11px;color:#8A8A8A">Approve followers manually</div></div><span id="private-status" style="color:${PROF?.is_private?'#3db83d':'#555'};font-size:12px;font-weight:700">${PROF?.is_private?'ON':'OFF'}</span></div>
-    <div onclick="showBlockedList()" class="nova-setting-row">${ico('lock','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Blocked Users</div><div style="font-size:11px;color:#8A8A8A">Manage blocked accounts</div></div>${ico('chevron_right','#555',16)}</div>
-    <div onclick="showCloseFriendsManager()" class="nova-setting-row">${ico('star','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Close Friends</div><div style="font-size:11px;color:#8A8A8A">Manage your close friends list</div></div>${ico('chevron_right','#555',16)}</div>
-    <div onclick="showDisappearingOptions('${ME.id}')" class="nova-setting-row">${ico('clock','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Story Privacy</div><div style="font-size:11px;color:#8A8A8A">Who can see your stories</div></div>${ico('chevron_right','#555',16)}</div>
-    <div onclick="toast('Message privacy settings')" class="nova-setting-row">${ico('msg','#00E5FF',18)}<div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">Message Privacy</div><div style="font-size:11px;color:#8A8A8A">Who can message you</div></div>${ico('chevron_right','#555',16)}</div>
-  </div>`;
-}
 
 function showSettingsFeatures(){
   const m=modal('Features'); m.querySelector('#mbody').innerHTML=`<div style="padding:16px;display:flex;flex-direction:column;gap:8px">
