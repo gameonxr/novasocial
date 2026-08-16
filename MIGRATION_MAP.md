@@ -762,3 +762,7 @@ The final static audit passed across every JavaScript file under `src/`, the dee
 ### Current authenticated verification gate smoke — Branch2
 
 The current Branch2 preview was reopened at the residual-audit checkpoint. The unauthenticated login shell rendered successfully, and a read-only browser probe reached `readyState: complete`, confirming the extracted settings/admin/DM-creation/group helpers and all protected DMs, message-sending, reply, voice, Reels, Stories, and Calls globals. Subscription state was undefined because no authenticated session was available. No mutation function was invoked and no database or subscription state was changed. The authenticated sequence in `DM_VERIFICATION_READINESS.md` remains the required gate before any protected extraction.
+
+### My Browser availability and current preview probe — Branch2
+
+The current session configuration contains an enabled `My Browser` connector, but the active page remains the unauthenticated sandbox preview. A read-only probe on the current preview reached `readyState: complete`, confirmed the extracted settings/admin/DM-creation/group helpers and protected DMs/message/reply/voice/Reels/Stories/Calls globals, and found the login shell present. No authentication, mutation, message send, database write, or subscription action was invoked. The authenticated DMs verification gate remains open and no protected code was moved.
