@@ -263,6 +263,7 @@
 <script src="src/features/dm-drafts.js"></script>
 <script src="src/features/chat-actions.js"></script>
 <script src="src/features/copy-invite-link.js"></script>
+<script src="src/features/message-clipboard-helpers.js"></script>
 <script src="src/features/marketplace.js"></script>
 <script src="src/features/learning.js"></script>
 <script src="src/features/news.js"></script>
@@ -8281,14 +8282,6 @@ async function favoriteMessage(mid) {
   closeModal();
 }
 
-async function copyMsg(id, text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    toast('Message copied! 📋');
-  } catch(e) { toast('Could not copy'); }
-  const box=document.getElementById('react-box'); if(box) box.remove();
-}
-
 async function deleteMsgForMe(mid) {
   closeModal();
   const msgEl = document.querySelector('[data-msgid="'+mid+'"]');
@@ -8572,12 +8565,6 @@ function toggleFavFromMsg(encUrl){
   }
 
   localStorage.setItem('fav_stickers', JSON.stringify(favs));
-  closeModal();
-}
-
-function copyMsgFromEnc(encText) {
-  const text = decodeURIComponent(encText || '');
-  navigator.clipboard.writeText(text).then(() => toast('Message copied! 📋'));
   closeModal();
 }
 
