@@ -770,3 +770,7 @@ The current session configuration contains an enabled `My Browser` connector, bu
 ### Autonomous continuation checkpoint — Branch2
 
 The current autonomous pass revalidated Branch2 and the preview. The remaining inline inventory contains only protected DMs/reply/voice/Stories/Reels/Calls paths and DB-backed admin/push flows. A read-only browser probe reached `readyState: complete`, showed the unauthenticated login shell, and confirmed extracted helper globals plus protected DMs/message/reply/voice/Reels/Stories/Calls globals. No authentication or mutation was available or invoked; the protected extraction gate remains enforced.
+
+### Autonomous final probe checkpoint — Branch2
+
+The autonomous pass rechecked the remaining inline inventory and the readiness gate. Only protected DMs/reply/voice/Stories/Reels/Calls paths and DB-backed admin/push flows remain. The current preview reached `readyState: complete` with the login shell visible; a read-only probe confirmed extracted helpers and protected globals. No authentication or mutation was invoked, so the protected extraction gate remains enforced.
