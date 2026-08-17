@@ -322,6 +322,7 @@
 <script src="src/features/render-recent-music-suggestions.js"></script>
 <script src="src/features/cancel-segment-picker.js"></script>
 <script src="src/features/confirm-music-segment.js"></script>
+<script src="src/features/toggle-segment-preview.js"></script>
 <script>
 
 
@@ -12665,21 +12666,6 @@ function setupSegmentDragWindow(previewUrl){
 }
 
 let _segmentAudio = null;
-function toggleSegmentPreview(url){
-  const icon = document.getElementById('segment-play-icon');
-  if(_segmentAudio && !_segmentAudio.paused){
-    _segmentAudio.pause();
-    icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
-    return;
-  }
-  if(!_segmentAudio) _segmentAudio = new Audio(url);
-  _segmentAudio.currentTime = window._segmentStartSec || 0;
-  _segmentAudio.play().catch(()=>toast('Play failed'));
-  icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
-  _segmentAudio.onended = ()=>{ icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>'; };
-}
-
-
 
 async function submitNote(){
   const text = document.getElementById('note-text-inp')?.value?.trim();
