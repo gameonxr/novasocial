@@ -308,6 +308,7 @@
 <script src="src/features/filter-tray.js"></script>
 <script src="src/features/sticker-tab.js"></script>
 <script src="src/features/get-local-stickers.js"></script>
+<script src="src/features/save-local-sticker.js"></script>
 <script src="src/features/toggle-vanish-mode.js"></script>
 <script src="src/features/toggle-reels-mute.js"></script>
 <script src="src/features/show-report-modal.js"></script>
@@ -6390,10 +6391,6 @@ function insertMention(username, inpId) {
   inp.value = words.join(' ');
   document.getElementById('mention-list')?.remove();
   inp.focus();
-}
-function saveLocalSticker(type, url) {
-  let arr = getLocalStickers(type);
-  if(!arr.includes(url)) { arr.unshift(url); if(arr.length > 20) arr.pop(); localStorage.setItem(type+'_stickers', JSON.stringify(arr)); }
 }
 
 let activeStickerTab = 'recent';
