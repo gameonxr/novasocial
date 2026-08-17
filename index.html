@@ -317,6 +317,7 @@
 <script src="src/features/reset-preview-icon.js"></script>
 <script src="src/features/stop-all-preview-audio.js"></script>
 <script src="src/features/toggle-preview-play.js"></script>
+<script src="src/features/select-note-music-result.js"></script>
 <script>
 
 
@@ -12580,18 +12581,6 @@ let _previewAudio = null;
 let _previewPlayingIdx = null;
 
 
-function selectNoteMusicResult(title, artist, artwork, previewUrl){
-  stopAllPreviewAudio();
-  if(!previewUrl){
-    // Preview nahi hai to seedha attach karo bina segment-picker ke
-    window._noteMusic = {title, artist, artwork, previewUrl:'', startSec:0};
-    document.getElementById('music-search-panel')?.remove();
-    renderNoteMusicSection();
-    saveRecentMusic(title, artist, artwork);
-    return;
-  }
-  showMusicSegmentPicker(title, artist, artwork, previewUrl);
-}
 
 function saveRecentMusic(title, artist, artwork, previewUrl){
   try{
