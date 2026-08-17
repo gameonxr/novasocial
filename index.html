@@ -315,6 +315,7 @@
 <script src="src/features/select-note-visibility.js"></script>
 <script src="src/features/render-note-music-section.js"></script>
 <script src="src/features/reset-preview-icon.js"></script>
+<script src="src/features/stop-all-preview-audio.js"></script>
 <script>
 
 
@@ -12595,10 +12596,6 @@ function togglePreviewPlay(idx, url){
 }
 
 
-function stopAllPreviewAudio(){
-  if(_previewAudio){ _previewAudio.pause(); _previewAudio=null; }
-  _previewPlayingIdx = null;
-}
 
 function selectNoteMusicResult(title, artist, artwork, previewUrl){
   stopAllPreviewAudio();
