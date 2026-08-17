@@ -246,6 +246,7 @@
 <script src="src/features/se-select-draw-color.js"></script>
 <script src="src/features/se-undo-draw.js"></script>
 <script src="src/features/setup-story-drawing.js"></script>
+<script src="src/features/init-video-observer.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -10035,17 +10036,6 @@ async function adminTabMyApprovals(content){
   }
 }
 
-function initVideoObserver(){
-  const videos = document.querySelectorAll('video');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(!entry.isIntersecting){
-        entry.target.pause();
-      }
-    });
-  });
-  videos.forEach(v => observer.observe(v));
-}
 
 // ═══════════════════════════════════════════════════════════════
 // 🔍 DIAGNOSTIC FUNCTION — Run from browser console: novaDebug()
