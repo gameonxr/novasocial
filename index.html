@@ -312,6 +312,7 @@
 <script src="src/features/show-report-modal.js"></script>
 <script src="src/features/attachment-sheet.js"></script>
 <script src="src/features/open-note-creator.js"></script>
+<script src="src/features/select-note-visibility.js"></script>
 <script>
 
 
@@ -12505,17 +12506,6 @@ function addNewAccount(){
 let _myActiveNote = null;
 
 
-function selectNoteVisibility(v){
-  window._noteVisibility = v;
-  ['everyone','followers','close_friends'].forEach(vv=>{
-    const el = document.getElementById('note-vis-'+vv);
-    if(el){
-      el.style.background = vv===v ? 'rgba(255,255,255,0.12)' : 'transparent';
-      el.style.color = vv===v ? '#fff' : '#666';
-      el.style.borderColor = vv===v ? 'rgba(255,255,255,0.18)' : '#1a1a1a';
-    }
-  });
-}
 
 // 📝 Render sirf music section (poori modal re-render nahi hota — text safe rehta hai)
 function renderNoteMusicSection(){
