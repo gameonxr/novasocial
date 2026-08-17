@@ -329,6 +329,7 @@
 <script src="src/features/search-music-for-note.js"></script>
 <script src="src/features/open-more-emoji-picker.js"></script>
 <script src="src/features/show-account-switcher.js"></script>
+<script src="src/features/remove-account-from-switcher.js"></script>
 <script>
 
 
@@ -12464,11 +12465,6 @@ async function switchToAccount(userId){
   }
 }
 
-function removeAccountFromSwitcher(userId){
-  if(userId === ME?.id){ toast('Current account remove nahi kar sakte, pehle switch karo'); return; }
-  removeAccountSession(userId);
-  showAccountSwitcher(); // refresh list
-}
 
 function addNewAccount(){
   const accounts = getSavedAccounts();
