@@ -335,6 +335,7 @@
 <script src="src/features/setup-segment-drag-window.js"></script>
 <script src="src/features/open-music-search.js"></script>
 <script src="src/features/search-music-for-note.js"></script>
+<script src="src/features/update-note-music-icon.js"></script>
 <script src="src/features/open-more-emoji-picker.js"></script>
 <script src="src/features/show-account-switcher.js"></script>
 <script src="src/features/remove-account-from-switcher.js"></script>
@@ -12430,13 +12431,6 @@ function toggleNoteMusicManual(url, startSec){
   autoPlayNoteMusic(url, startSec);
 }
 
-function updateNoteMusicIcon(playing){
-  const icon = document.getElementById('note-music-play-icon');
-  if(!icon) return;
-  icon.innerHTML = playing
-    ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
-    : '<polygon points="5 3 19 12 5 21 5 3"/>';
-}
 
 async function refreshAndOpenNoteCreator(){
   const{data:latestNote} = await db.from('quick_notes').select('*').eq('user_id',ME.id).gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(1).maybeSingle();
