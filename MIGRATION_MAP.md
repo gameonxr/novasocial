@@ -1061,3 +1061,21 @@ Moved the shared video visibility observer to `src/features/init-video-observer.
 ### Phase 154 — `optimizeCloudinaryUrl` — COMPLETE
 
 Moved the pure Cloudinary delivery URL optimizer to `src/features/optimize-cloudinary-url.js`. The module preserves invalid/non-Cloudinary/video early returns, connection-quality branching, transform detection, existing `q_auto` replacement, and fresh transform insertion while leaving Call/network monitoring logic inline. Full static validation passed for all JavaScript and inline syntax, deep-link integration, the complete extraction validator suite, protected Call/network/media boundaries, script order, and whitespace. Commit `89c47c9961088348e7128670b74e2fd4772c4188` is pushed to Branch2; `main` remains untouched at `ef418007c9b9a797488b4825be5f0c807da22369`. Authenticated post-push testing used a temporary quality stub and representative URL fixtures to verify every early-return and transformation branch, global accessibility, and complete restoration without touching real media, Calls, database, or user state.
+
+### Phase 155 — Story Sticker helper inspection — COMPLETE
+
+Inspected the exact Story Sticker boundary and confirmed that `seOpenStickerTool`, `seCloseStickerPanel`, `seAddSticker`, and adjacent `seAddCustomSticker` are pure UI/local editor-state helpers. The Music boundary and Story editor state were preserved; protected Stories, Reels, DMs, Calls, and note systems were not included.
+
+### Phase 156 — Story Sticker helpers — COMPLETE
+
+Moved the four Sticker helpers to `src/features/story-sticker-helpers.js` and inserted the module before the inline application script. Focused and complete static validation passed, including module/inline syntax, deep-link integration, global inline-handler accessibility, protected fragile boundaries, script ordering, and whitespace. Post-push isolated browser testing at commit `856bd4ebb005235363f1be3b2582d7dbb6af6911` verified panel open/close, emoji and custom-text element creation, renderer calls, global accessibility, and exact live-state restoration. The first commit attempt was correctly stopped by the whitespace guard; the extra EOF blank line was removed before the successful push.
+
+### Phase 157 — Story Music helpers — COMPLETE
+
+Moved `seOpenMusicTool`, `seCloseMusicPanel`, `seSelectMusic`, and `removeStoryMusic` to `src/features/story-music-helpers.js`. Focused and complete static validation passed, including the Background boundary, local state/UI/toast dependencies, protected boundaries, script ordering, syntax, and whitespace. Post-push isolated browser testing at commit `6aa00189ff6718954a4c2465b6e131bbb0c81213` verified panel open/close, `Midnight City — Neon Lights` selection metadata, toast delegation, removal, global accessibility, and exact restoration of the original music state and DOM fixtures.
+
+### Phase 158 — Story Background helpers — COMPLETE
+
+Moved `seOpenBgTool`, `seCloseBgPanel`, and `seSelectBg` to `src/features/story-background-helpers.js`. Focused and complete static validation passed after correcting the validator’s Addons assumption and updating stale cross-validator expectations for the new Sticker, Music, and Background module tags. Post-push isolated browser testing at commit `9654e48441bf5b66aee7291f9b6082550c44f482` verified panel open/close, gradient assignment, indexed option-border reset/selection styling, automatic close, global accessibility, and exact restoration. The complete suite covered all JavaScript and inline syntax, deep links, every extraction validator, protected fragile systems, script order, and whitespace.
+
+All commits in Phases 156–158 were pushed exclusively to Branch2. `main` remains untouched at `ef418007c9b9a797488b4825be5f0c807da22369`.
