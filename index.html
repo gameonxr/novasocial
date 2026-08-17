@@ -244,6 +244,7 @@
 <script src="src/features/se-close-draw-panel.js"></script>
 <script src="src/features/se-select-draw-type.js"></script>
 <script src="src/features/se-select-draw-color.js"></script>
+<script src="src/features/se-undo-draw.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -3092,13 +3093,6 @@ let seEditingTextId = null;
 
 
 
-function seUndoDraw(){
-  if(storyEditorUndoStack.length > 0){
-    storyEditorUndoStack.pop();
-    storyEditorDrawCtx.clearRect(0,0,storyEditorCanvas.width,storyEditorCanvas.height);
-    storyEditorUndoStack.forEach(imgData => storyEditorDrawCtx.putImageData(imgData, 0, 0));
-  }
-}
 
 function setupStoryDrawing(){
   let drawing = false;
