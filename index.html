@@ -252,6 +252,7 @@
 <script src="src/features/story-music-helpers.js"></script>
 <script src="src/features/story-background-helpers.js"></script>
 <script src="src/features/get-network-quality-html.js"></script>
+<script src="src/features/refresh-and-open-note-creator.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -12063,13 +12064,6 @@ async function viewNote(noteId){
 let _noteViewAudio = null;
 
 
-
-async function refreshAndOpenNoteCreator(){
-  const{data:latestNote} = await db.from('quick_notes').select('*').eq('user_id',ME.id).gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(1).maybeSingle();
-  console.log('%c[NOTE] refreshAndOpenNoteCreator | latestNote=', 'color:magenta;font-weight:bold', latestNote);
-  _myActiveNote = latestNote;
-  setTimeout(()=>{ openNoteCreator(); }, 200);
-}
 
 async function removeMyNoteFromViewer(noteId){
   if(_noteViewAudio){ _noteViewAudio.pause(); _noteViewAudio=null; }
