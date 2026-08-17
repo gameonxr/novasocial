@@ -340,6 +340,7 @@
 <script src="src/features/auto-play-note-music.js"></script>
 <script src="src/features/toggle-note-music-manual.js"></script>
 <script src="src/features/cleanup-expired-notes.js"></script>
+<script src="src/features/setup-notes-realtime.js"></script>
 <script src="src/features/open-more-emoji-picker.js"></script>
 <script src="src/features/show-account-switcher.js"></script>
 <script src="src/features/remove-account-from-switcher.js"></script>
@@ -12494,13 +12495,6 @@ function reactToNote(noteId, emoji, clickedEl){
 // ═══════════════════════════════════════════════════════════════
 // 📝 NOTES REALTIME — naya note aane pe bar refresh ho
 // ═══════════════════════════════════════════════════════════════
-function setupNotesRealtime(){
-  if(window._notesSub) db.removeChannel(window._notesSub);
-  window._notesSub = db.channel('notes-realtime')
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'quick_notes'},()=>{
-      if(curTab==='dms') loadNotesBar();
-    }).subscribe();
-}
 
 // 🎵 Stop all audio when app goes to background (tab switch / home button)
 document.addEventListener('visibilitychange', function(){
