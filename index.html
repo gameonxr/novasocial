@@ -338,6 +338,7 @@
 <script src="src/features/update-note-music-icon.js"></script>
 <script src="src/features/close-note-viewer.js"></script>
 <script src="src/features/auto-play-note-music.js"></script>
+<script src="src/features/toggle-note-music-manual.js"></script>
 <script src="src/features/open-more-emoji-picker.js"></script>
 <script src="src/features/show-account-switcher.js"></script>
 <script src="src/features/remove-account-from-switcher.js"></script>
@@ -12390,15 +12391,6 @@ async function viewNote(noteId){
 
 let _noteViewAudio = null;
 
-
-function toggleNoteMusicManual(url, startSec){
-  if(_noteViewAudio && !_noteViewAudio.paused){
-    _noteViewAudio.pause();
-    updateNoteMusicIcon(false);
-    return;
-  }
-  autoPlayNoteMusic(url, startSec);
-}
 
 
 async function refreshAndOpenNoteCreator(){
