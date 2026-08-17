@@ -332,6 +332,7 @@
 <script src="src/features/remove-account-from-switcher.js"></script>
 <script src="src/features/add-new-account.js"></script>
 <script src="src/features/switch-to-account.js"></script>
+<script src="src/features/get-blocked-list.js"></script>
 <script src="src/features/show-blocked-list.js"></script>
 <script src="src/features/setup-self-profile-realtime-sync.js"></script>
 <script>
@@ -5531,10 +5532,6 @@ async function unmuteUser(userId, btn) {
 }
 
 // ── BLOCK SYSTEM ─────────────────────────────────────
-async function getBlockedList() {
-  const { data } = await db.from('blocks').select('blocked_id').eq('blocker_id', ME.id);
-  return new Set((data || []).map(b => b.blocked_id));
-}
 
 /**
  * Bidirectional block set — users I blocked OR users who blocked me.
