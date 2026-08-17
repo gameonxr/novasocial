@@ -307,6 +307,7 @@
 <script src="src/features/video-length-options.js"></script>
 <script src="src/features/filter-tray.js"></script>
 <script src="src/features/sticker-tab.js"></script>
+<script src="src/features/get-local-stickers.js"></script>
 <script src="src/features/toggle-vanish-mode.js"></script>
 <script src="src/features/toggle-reels-mute.js"></script>
 <script src="src/features/show-report-modal.js"></script>
@@ -6397,14 +6398,6 @@ function saveLocalSticker(type, url) {
 
 let activeStickerTab = 'recent';
 
-function getLocalStickers(type) {
-  try { 
-    return JSON.parse(localStorage.getItem(type+'_stickers') || '[]'); 
-  } catch(e) { 
-    localStorage.removeItem(type+'_stickers'); 
-    return []; 
-  }
-}
 
 function toggleFavSticker(url, e, btn) {
   if(e) e.stopPropagation(); // Sticker send na ho
