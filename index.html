@@ -233,6 +233,7 @@
 <script src="src/features/profile-view.js"></script>
 <script src="src/features/deep-links.js"></script>
 <script src="src/features/story-text-helpers.js"></script>
+<script src="src/features/se-open-text-tool.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -3071,11 +3072,6 @@ let seCurrentTextColor = '#FFFFFF';
 let seGradientText = false;
 let seEditingTextId = null;
 
-function seOpenTextTool(){
-  document.getElementById('se-text-panel').style.display = 'block';
-  document.getElementById('se-text-input').focus();
-  seEditingTextId = null;
-}
 
 function seCloseTextPanel(){
   document.getElementById('se-text-panel').style.display = 'none';
