@@ -240,6 +240,7 @@
 <script src="src/features/se-toggle-gradient-text.js"></script>
 <script src="src/features/se-update-text-preview.js"></script>
 <script src="src/features/se-confirm-text.js"></script>
+<script src="src/features/se-open-draw-tool.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -3084,11 +3085,6 @@ let seEditingTextId = null;
 
 
 // ── DRAW TOOL ──
-function seOpenDrawTool(){
-  document.getElementById('se-draw-panel').style.display = 'block';
-  storyEditorDrawMode = true;
-  storyEditorCanvas.style.pointerEvents = 'auto';
-}
 
 function seCloseDrawPanel(){
   document.getElementById('se-draw-panel').style.display = 'none';
