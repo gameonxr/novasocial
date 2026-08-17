@@ -320,6 +320,7 @@
 <script src="src/features/select-note-music-result.js"></script>
 <script src="src/features/save-recent-music.js"></script>
 <script src="src/features/render-recent-music-suggestions.js"></script>
+<script src="src/features/cancel-segment-picker.js"></script>
 <script>
 
 
@@ -12677,10 +12678,6 @@ function toggleSegmentPreview(url){
   _segmentAudio.onended = ()=>{ icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>'; };
 }
 
-function cancelSegmentPicker(){
-  if(_segmentAudio){ _segmentAudio.pause(); _segmentAudio=null; }
-  document.getElementById('music-segment-panel')?.remove();
-}
 
 function confirmMusicSegment(title, artist, artwork, previewUrl){
   if(_segmentAudio){ _segmentAudio.pause(); _segmentAudio=null; }
