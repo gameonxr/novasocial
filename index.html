@@ -236,6 +236,7 @@
 <script src="src/features/se-open-text-tool.js"></script>
 <script src="src/features/se-close-text-panel.js"></script>
 <script src="src/features/se-select-font.js"></script>
+<script src="src/features/se-toggle-gradient-text.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -3084,10 +3085,6 @@ function seSelectTextColor(c){
   event.target.style.borderColor = '#FF2D7A';
 }
 
-function seToggleGradientText(){
-  seGradientText = !seGradientText;
-  if(seGradientText) toast('Gradient text ON');
-}
 
 function seUpdateTextPreview(val){
   // live preview could be added
