@@ -308,6 +308,7 @@
 <script src="src/features/filter-tray.js"></script>
 <script src="src/features/sticker-tab.js"></script>
 <script src="src/features/toggle-vanish-mode.js"></script>
+<script src="src/features/toggle-reels-mute.js"></script>
 <script>
 
 
@@ -6663,17 +6664,6 @@ async function sendSticker(cid, emoji) {
 }
 
 
-function toggleReelsMute(){
-  reelsMuted=!reelsMuted;
-  // Sirf current reel ka sound change karo, baaki sab muted rahenge
-  const v = document.getElementById('rv-' + currentReelIdx);
-  if(v) {
-    v.muted = reelsMuted;
-    if(!reelsMuted) v.play().catch(()=>{});
-  }
-  document.querySelectorAll('.mute-icon').forEach(el=>{el.innerHTML=reelsMuted?ico('mute','#fff',20):ico('unmute','#fff',20);});
-  toast(reelsMuted?'🔇 Muted':'🔊 Sound On');
-}
 
 // ── DMS ──────────────────────────────────────
 async function renderDMs(){
