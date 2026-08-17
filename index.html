@@ -309,6 +309,7 @@
 <script src="src/features/sticker-tab.js"></script>
 <script src="src/features/get-local-stickers.js"></script>
 <script src="src/features/save-local-sticker.js"></script>
+<script src="src/features/toggle-fav-sticker.js"></script>
 <script src="src/features/toggle-vanish-mode.js"></script>
 <script src="src/features/toggle-reels-mute.js"></script>
 <script src="src/features/show-report-modal.js"></script>
@@ -6396,20 +6397,6 @@ function insertMention(username, inpId) {
 let activeStickerTab = 'recent';
 
 
-function toggleFavSticker(url, e, btn) {
-  if(e) e.stopPropagation(); // Sticker send na ho
-  let favs = getLocalStickers('fav');
-  if (favs.includes(url)) {
-    favs = favs.filter(u => u !== url);
-    if(btn) btn.textContent = '☆';
-    toast('Removed from Favorites');
-  } else {
-    favs.unshift(url);
-    if(btn) btn.textContent = '⭐';
-    toast('Added to Favorites ⭐');
-  }
-  localStorage.setItem('fav_stickers', JSON.stringify(favs));
-}
 
 async function openStickerPicker(cid) {
   window._stickerCid = cid;
