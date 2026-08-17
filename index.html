@@ -236,6 +236,7 @@
 <script src="src/features/se-open-text-tool.js"></script>
 <script src="src/features/se-close-text-panel.js"></script>
 <script src="src/features/se-select-font.js"></script>
+<script src="src/features/se-select-text-color.js"></script>
 <script src="src/features/se-toggle-gradient-text.js"></script>
 <script src="src/features/se-update-text-preview.js"></script>
 <script src="src/features/close-friends.js"></script>
@@ -3077,14 +3078,6 @@ let seGradientText = false;
 let seEditingTextId = null;
 
 
-
-
-function seSelectTextColor(c){
-  seCurrentTextColor = c;
-  seGradientText = false;
-  document.querySelectorAll('.se-color-opt').forEach(el=>{el.style.borderColor='rgba(255,255,255,0.1)';});
-  event.target.style.borderColor = '#FF2D7A';
-}
 
 
 
