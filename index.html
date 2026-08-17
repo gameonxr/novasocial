@@ -234,6 +234,7 @@
 <script src="src/features/deep-links.js"></script>
 <script src="src/features/story-text-helpers.js"></script>
 <script src="src/features/se-open-text-tool.js"></script>
+<script src="src/features/se-close-text-panel.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -3073,9 +3074,6 @@ let seGradientText = false;
 let seEditingTextId = null;
 
 
-function seCloseTextPanel(){
-  document.getElementById('se-text-panel').style.display = 'none';
-}
 
 function seSelectFont(idx){
   seCurrentFont = idx;
