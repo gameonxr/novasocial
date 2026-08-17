@@ -224,6 +224,7 @@
 <script src="src/features/comments.js"></script>
 <script src="src/features/create.js"></script>
 <script src="src/features/mention.js"></script>
+<script src="src/features/insert-mention.js"></script>
 <script src="src/features/notifications.js"></script>
 <script src="src/features/trending.js"></script>
 <script src="src/features/follow-list.js"></script>
@@ -6385,14 +6386,6 @@ function checkMention(inp, cid) {
   }
 }
 
-function insertMention(username, inpId) {
-  const inp = document.getElementById(inpId);
-  let words = inp.value.split(' ');
-  words[words.length - 1] = '@' + username + ' ';
-  inp.value = words.join(' ');
-  document.getElementById('mention-list')?.remove();
-  inp.focus();
-}
 
 let activeStickerTab = 'recent';
 
