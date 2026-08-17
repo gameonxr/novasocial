@@ -318,6 +318,7 @@
 <script src="src/features/stop-all-preview-audio.js"></script>
 <script src="src/features/toggle-preview-play.js"></script>
 <script src="src/features/select-note-music-result.js"></script>
+<script src="src/features/save-recent-music.js"></script>
 <script>
 
 
@@ -12582,17 +12583,7 @@ let _previewPlayingIdx = null;
 
 
 
-function saveRecentMusic(title, artist, artwork, previewUrl){
-  try{
-    let recents = JSON.parse(localStorage.getItem('nova_recent_music')||'[]');
-    recents = recents.filter(s=>s.title!==title || s.artist!==artist);
-    recents.unshift({title, artist, artwork, previewUrl});
-    if(recents.length>8) recents = recents.slice(0,8);
-    localStorage.setItem('nova_recent_music', JSON.stringify(recents));
-  }catch(e){}
-}
 
-// 🎚️ Instagram-style segment picker — choose which 10-sec part of the 30-sec preview
 function showMusicSegmentPicker(title, artist, artwork, previewUrl){
   stopAllPreviewAudio();
   document.getElementById('music-search-panel')?.remove();
