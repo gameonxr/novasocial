@@ -1346,3 +1346,7 @@ Added `docs/story-viewer-contract.md` and `docs/story-viewer-contract-harness.js
 ### Calls/WebRTC contract harness checkpoint — Branch2
 
 Added `docs/calls-webrtc-contract.md` and `docs/calls-webrtc-contract-harness.js` as standalone non-production artifacts. The harness covers local track attachment, local ICE signaling, early ICE queueing and ordered flush, offer/answer sequencing, own-signal filtering, remote-track activation, connection recovery timeout, connected-state timeout clearing, individual ICE failure tolerance, and complete end-call cleanup. The deterministic harness and complete repository/static validation suite passed. Protected Calls/WebRTC production functions remain inline and unchanged; main remains untouched.
+
+### Story editor contract harness checkpoint — Branch2
+
+Added `docs/story-editor-contract.md` and `docs/story-editor-contract-harness.js` as standalone non-production artifacts. The harness covers type-specific rendering, transform preservation, 5–95 percent drag bounds, delete-zone highlight/removal/rerender behavior, transition restoration, and text double-tap editing state. The deterministic harness and complete repository/static validation suite passed. Protected Story editor production functions remain inline and unchanged; main remains untouched.
