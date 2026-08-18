@@ -1370,3 +1370,7 @@ Added `docs/local-deletion-fallback-contract.md` and `docs/local-deletion-fallba
 ### Smart Mood Feed contract harness checkpoint — Branch2
 
 Added `docs/mood-feed-contract.md` and `docs/mood-feed-contract-harness.js` as standalone non-production artifacts. The harness covers followed/own scope, case-insensitive substring keyword matching including `cod`→`coding` overlap, default-mood ordering, blocked/muted filtering, empty/non-empty rendering, observer/pruning scheduling, missing-scope home fallback, and stale-generation protection. The corrected deterministic harness and complete repository/static validation suite passed. Protected Smart Mood Feed production code remains inline and unchanged; main remains untouched.
+
+### Network diagnostics contract harness checkpoint — Branch2
+
+Added `docs/network-diagnostics-contract.md` and `docs/network-diagnostics-contract-harness.js` as standalone non-production artifacts. The harness covers effective-type quality defaults, packet-loss thresholds/colors, inactive-call no-op behavior, inbound RTP aggregation, active monitor updates, and idempotent monitor cleanup. The deterministic harness and complete repository/static validation suite passed. Protected network/call diagnostic functions remain inline and unchanged; main remains untouched.
