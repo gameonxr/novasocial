@@ -373,6 +373,7 @@
 <script src="src/features/toggle-reels-mute.js"></script>
 <script src="src/features/show-report-modal.js"></script>
 <script src="src/features/report-user.js"></script>
+<script src="src/features/adjust-follower-count.js"></script>
 <script src="src/features/attachment-sheet.js"></script>
 <script src="src/features/open-note-creator.js"></script>
 <script src="src/features/select-note-visibility.js"></script>
@@ -4612,15 +4613,6 @@ async function unblockUser(userId, btn) {
 
 
 // ── WORKING FOLLOW SYSTEM ──────────────────────────────────────
-async function adjustFollowerCount(delta) {
-  const el = document.getElementById('followers-count');
-  if (!el) return;
-  let raw = parseInt(el.dataset.raw || 0) + delta;
-  raw = Math.max(0, raw);
-  el.dataset.raw = raw;
-  el.textContent = fmt(raw);
-}
-
 async function updateMyFollowingCount(delta) {
   const fel = document.getElementById('following-count');
   if (fel) {
