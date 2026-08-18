@@ -1502,3 +1502,7 @@ Added `docs/admin-post-delete-two-tier-contract.md` and `docs/admin-post-delete-
 ### Admin-approval-tabs contract harness checkpoint — Branch2
 
 Added `docs/admin-approval-tabs-contract.md` and `docs/admin-approval-tabs-contract-harness.js` as standalone non-production artifacts. The harness covers pending admin recommendations, moderator-request history, embedded moderator/target profiles, existing-ban markers, escaped reasons and notes, pending actions, current-moderator filtering, empty states, and failures. The harness and complete repository validation chain passed. Protected approval, ban, audit, notification, and account production code remains inline and unchanged; main remains untouched.
+
+### Moderator-recommend-ban contract harness checkpoint — Branch2
+
+Added `docs/moderator-recommend-ban-contract.md` and `docs/moderator-recommend-ban-contract-harness.js` as standalone non-production artifacts. The harness covers staff authorization, blank-reason rejection, trimmed pending payload insertion, audit and success behavior, modal close, and failure-safe behavior. The harness and complete repository validation chain passed. Protected recommendation, approval, ban, notification, and moderation production code remains inline and unchanged; main remains untouched.
