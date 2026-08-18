@@ -1426,3 +1426,7 @@ Added `docs/mute-unmute-contract.md` and `docs/mute-unmute-contract-harness.js` 
 ### Notification dispatch contract harness checkpoint — Branch2
 
 Added `docs/notification-dispatch-contract.md` and `docs/notification-dispatch-contract-harness.js` as standalone non-production artifacts. The harness covers self/empty-recipient suppression, block and preference gates, lookup-error tolerance, notification payload mapping, and insert-error isolation. The deterministic harness and complete repository/static validation suite passed. Protected notification production code remains inline and unchanged; main remains untouched.
+
+### Follow/unfollow contract harness checkpoint — Branch2
+
+Added `docs/follow-toggle-contract.md` and `docs/follow-toggle-contract-harness.js` as standalone non-production artifacts. The harness covers optimistic UI and count updates, offline queueing, follow notification/cache behavior, and failed mutation rollback. The deterministic harness and complete repository/static validation suite passed. Protected follow production code remains inline and unchanged; main remains untouched.
