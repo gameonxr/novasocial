@@ -280,6 +280,7 @@
 <script src="src/features/update-account-avatar.js"></script>
 <script src="src/features/get-saved-accounts.js"></script>
 <script src="src/features/client-moderation-guards.js"></script>
+<script src="src/features/private-public-id.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -2565,20 +2566,6 @@ async function _instantCloudinaryDelete(deleteToken, cloudName, resourceType = '
  * Example: https://res.cloudinary.com/dhtf1b9ak/image/upload/v1234/novasocial/stories/abc123.webp
  * Returns: novasocial/stories/abc123
  */
-function _extractPublicId(url) {
-  if(!url || !url.includes('cloudinary.com')) return null;
-  try {
-    const parts = url.split('/upload/');
-    if(parts.length < 2) return null;
-    let path = parts[1];
-    // Remove version prefix (v1234567/)
-    path = path.replace(/^v\d+\//, '');
-    // Remove file extension
-    path = path.replace(/\.[^.]+$/, '');
-    return path;
-  } catch(e) { return null; }
-}
-
 /**
  * Local storage fallback — agar Supabase down ho
  * Max 500 entries rakhta hai, FIFO eviction
