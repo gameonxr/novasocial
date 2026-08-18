@@ -1526,3 +1526,7 @@ Added `docs/spawn-like-particles-contract.md` and `docs/spawn-like-particles-con
 ### Protected-inline boundary inventory checkpoint — Branch2
 
 Added `docs/protected-inline-boundary-contract.md` and `docs/protected-inline-boundary-contract-harness.js` as standalone non-production artifacts. The inventory records 19 fragile protected declarations that remain inline, plus script-order and documentation-set safeguards. The harness and complete repository validation chain passed. No protected production function was extracted or modified; main remains untouched.
+
+### Protected-contract coverage checkpoint — Branch2
+
+Added `docs/protected-contract-coverage.md` and `docs/protected-contract-coverage-harness.js` as standalone non-production artifacts. The coverage harness maps all 19 remaining protected inline declarations to 11 published contract families, verifies every contract/harness pair exists, and preserves trailing script order. The harness and complete repository validation chain passed. No protected production code was extracted or modified; main remains untouched.
