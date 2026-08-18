@@ -271,6 +271,7 @@
 <script src="src/features/select-filter.js"></script>
 <script src="src/features/prev-media.js"></script>
 <script src="src/features/view-chat-image.js"></script>
+<script src="src/features/update-crop-zoom.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -2326,16 +2327,6 @@ function _setupCropDragHandlers() {
     onEnd();
     viewport.style.cursor = 'grab';
   });
-}
-
-function updateCropZoom(sliderVal) {
-  const zoomPercent = parseInt(sliderVal) / 100;
-  _cropState.scale = _cropState.minScale * zoomPercent;
-
-  const imgEl = document.getElementById('crop-image');
-  if(imgEl) {
-    imgEl.style.transform = `translate(calc(-50% + ${_cropState.offsetX}px), calc(-50% + ${_cropState.offsetY}px)) scale(${_cropState.scale})`;
-  }
 }
 
 function closeCropPreview() {
