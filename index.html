@@ -273,6 +273,7 @@
 <script src="src/features/view-chat-image.js"></script>
 <script src="src/features/update-crop-zoom.js"></script>
 <script src="src/features/close-crop-preview.js"></script>
+<script src="src/features/hide-fab-button.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -1885,14 +1886,6 @@ function setupHomeHoldRestore(){
     }
   });
   document.addEventListener('mouseup', () => { if(homeTimer){ clearTimeout(homeTimer); homeTimer = null; } });
-}
-
-function hideFabButton(){
-  const fab = document.getElementById('fab-main');
-  if(fab) fab.style.display = 'none';
-  try { localStorage.setItem('nova-fab-hidden', 'true'); } catch(e) {}
-  closeFabLongPressMenu();
-  toast('Upload shortcut hidden. Long press Home icon to restore.');
 }
 
 function restoreFabButton(){
