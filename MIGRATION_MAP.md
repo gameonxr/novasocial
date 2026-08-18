@@ -1342,3 +1342,7 @@ Added `docs/reels-persistent-contract.md` and `docs/reels-persistent-contract-ha
 ### Stories viewer contract harness checkpoint — Branch2
 
 Added `docs/story-viewer-contract.md` and `docs/story-viewer-contract-harness.js` as standalone non-production artifacts. The harness covers user-bucket grouping, start-story selection, image/video playback lifecycle, timer/progress boundaries, next/previous story and user navigation, close/clamp behavior, gesture thresholds, pause/resume, and viewer cleanup. The deterministic harness and complete repository/static validation suite passed. Protected Stories viewer/editor production functions remain inline and unchanged; main remains untouched.
+
+### Calls/WebRTC contract harness checkpoint — Branch2
+
+Added `docs/calls-webrtc-contract.md` and `docs/calls-webrtc-contract-harness.js` as standalone non-production artifacts. The harness covers local track attachment, local ICE signaling, early ICE queueing and ordered flush, offer/answer sequencing, own-signal filtering, remote-track activation, connection recovery timeout, connected-state timeout clearing, individual ICE failure tolerance, and complete end-call cleanup. The deterministic harness and complete repository/static validation suite passed. Protected Calls/WebRTC production functions remain inline and unchanged; main remains untouched.
