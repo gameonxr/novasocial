@@ -372,6 +372,7 @@
 <script src="src/features/toggle-vanish-mode.js"></script>
 <script src="src/features/toggle-reels-mute.js"></script>
 <script src="src/features/show-report-modal.js"></script>
+<script src="src/features/report-user.js"></script>
 <script src="src/features/attachment-sheet.js"></script>
 <script src="src/features/open-note-creator.js"></script>
 <script src="src/features/select-note-visibility.js"></script>
@@ -4462,10 +4463,6 @@ async function submitReport(targetType, targetId, reason){
       toast('❌ Report failed: ' + (e.message || 'error'));
     }
   }
-}
-
-function reportUser(userId){
-  showReportModal('user', userId);
 }
 
 async function muteUser(userId, btn) {
