@@ -1430,3 +1430,7 @@ Added `docs/notification-dispatch-contract.md` and `docs/notification-dispatch-c
 ### Follow/unfollow contract harness checkpoint — Branch2
 
 Added `docs/follow-toggle-contract.md` and `docs/follow-toggle-contract-harness.js` as standalone non-production artifacts. The harness covers optimistic UI and count updates, offline queueing, follow notification/cache behavior, and failed mutation rollback. The deterministic harness and complete repository/static validation suite passed. Protected follow production code remains inline and unchanged; main remains untouched.
+
+### Follower-count contract harness checkpoint — Branch2
+
+Added `docs/follower-count-contract.md` and `docs/follower-count-contract-harness.js` as standalone non-production artifacts. The harness covers positive/negative optimistic deltas, zero-floor clamping, compact formatting, malformed-raw `NaN` preservation, and missing-element no-op behavior. The deterministic harness and complete repository/static validation suite passed. Extracted count helpers remain unchanged; main remains untouched.
