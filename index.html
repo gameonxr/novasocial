@@ -261,6 +261,7 @@
 <script src="src/features/se-search-mention-users.js"></script>
 <script src="src/features/local-ai-response.js"></script>
 <script src="src/features/extract-cloudinary-public-id.js"></script>
+<script src="src/features/url-base64-to-uint8-array.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -880,15 +881,6 @@ const VAPID_PUBLIC_KEY = 'BJ0cpJ4UjNgiw3Q24Ah65N797A7FBpwT1awmS2wl2oos5uhCPOGn3i
 /**
  * Convert VAPID base64-url string to Uint8Array (required by PushManager.subscribe).
  */
-function urlBase64ToUint8Array(base64String) {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-  for (let i = 0; i < rawData.length; i++) outputArray[i] = rawData.charCodeAt(i);
-  return outputArray;
-}
-
 /**
  * Subscribe this device to push notifications via the service worker's PushManager.
  * Saves the subscription to the `push_subscriptions` table via upsert (onConflict:endpoint)
