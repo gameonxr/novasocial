@@ -1418,3 +1418,7 @@ Added `docs/story-viewers-list-contract.md` and `docs/story-viewers-list-contrac
 ### Report submission contract harness checkpoint — Branch2
 
 Added `docs/report-submission-contract.md` and `docs/report-submission-contract-harness.js` as standalone non-production artifacts. The harness covers modal closure, current-reporter pending payloads, successful submission feedback, missing-reports-table setup guidance, and generic database/RLS error handling. The deterministic harness and complete repository/static validation suite passed. Protected report production code remains inline and unchanged; main remains untouched.
+
+### Mute/unmute contract harness checkpoint — Branch2
+
+Added `docs/mute-unmute-contract.md` and `docs/mute-unmute-contract-harness.js` as standalone non-production artifacts. The harness covers throwOnError mutation enforcement, successful mute/unmute toasts, button label/action updates, missing-button tolerance, and failure-state preservation. The deterministic harness and complete repository/static validation suite passed. Protected moderation production code remains inline and unchanged; main remains untouched.
