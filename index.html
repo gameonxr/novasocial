@@ -279,6 +279,7 @@
 <script src="src/features/setup-home-hold-restore.js"></script>
 <script src="src/features/update-account-avatar.js"></script>
 <script src="src/features/get-saved-accounts.js"></script>
+<script src="src/features/client-moderation-guards.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -1179,22 +1180,6 @@ function startBanRecheck(){
       }
     } catch(e) {}
   }, 5 * 60 * 1000);
-}
-
-function isBannedClient(){
-  if(PROF && PROF.is_banned === true){
-    toast('🚫 Your account is suspended.');
-    return true;
-  }
-  return false;
-}
-
-function isMsgBannedClient(){
-  if(PROF && PROF.is_msg_banned === true){
-    toast('🚫 You are restricted from sending messages.');
-    return true;
-  }
-  return false;
 }
 
 function showBanScreen(reason, userId){
