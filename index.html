@@ -260,6 +260,7 @@
 <script src="src/features/se-select-mention-user.js"></script>
 <script src="src/features/se-search-mention-users.js"></script>
 <script src="src/features/local-ai-response.js"></script>
+<script src="src/features/extract-cloudinary-public-id.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -390,27 +391,6 @@
 // Cloudinary URL se public_id extract karo
 // Example URL: https://res.cloudinary.com/dhtf1b9ak/image/upload/v1234/novasocial/stories/abc123.webp
 // Public ID: novasocial/stories/abc123
-function extractCloudinaryPublicId(url) {
-  if(!url || !url.includes('cloudinary.com')) return null;
-  try {
-    // /upload/ ke baad wala part lo
-    const parts = url.split('/upload/');
-    if(parts.length < 2) return null;
-    let path = parts[1];
-    // Version number remove karo (v1234567/)
-    path = path.replace(/^v\d+\//, '');
-    // Extension remove karo
-    path = path.replace(/\.[^.]+$/, '');
-    return path;
-  } catch(e) {
-    return null;
-  }
-}
-
-// Cloudinary se file delete karo (via deleted_media tracking table)
-// NOTE: Free plan mein client-side direct delete ke liye
-// signed request chahiye — isliye hum Supabase mein URL save karke
-// track karenge, aur baad mein Edge Function se delete karwayenge
 async function deleteCloudinaryMedia(mediaUrl) {
   if(!mediaUrl || !mediaUrl.includes('cloudinary.com')) return;
 
