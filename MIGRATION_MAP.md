@@ -1518,3 +1518,7 @@ Added `docs/network-monitor-contract.md` and `docs/network-monitor-contract-harn
 ### novaDebug contract harness checkpoint — Branch2
 
 Added `docs/nova-debug-contract.md` and `docs/nova-debug-contract-harness.js` as standalone non-production artifacts. The harness covers the no-session guard, six read-only diagnostic query boundaries, query-error isolation, and completion logging. The harness and complete repository validation chain passed. Protected diagnostics and production application code remain inline and unchanged; main remains untouched.
+
+### Spawn-like-particles contract harness checkpoint — Branch2
+
+Added `docs/spawn-like-particles-contract.md` and `docs/spawn-like-particles-contract-harness.js` as standalone non-production artifacts. The harness covers null no-op, twelve-particle geometry, palette/transform setup, and 800 ms cleanup. The harness and complete repository validation chain passed. Protected particle and like production code remains inline and unchanged; main remains untouched.
