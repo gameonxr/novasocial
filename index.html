@@ -263,6 +263,7 @@
 <script src="src/features/extract-cloudinary-public-id.js"></script>
 <script src="src/features/url-base64-to-uint8-array.js"></script>
 <script src="src/features/cld-url.js"></script>
+<script src="src/features/derive-video-thumbnail-url.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -2045,28 +2046,6 @@ const NOVA_MEDIA_CONFIG = {
  * @param {string} videoUrl - Cloudinary video URL (the media_url just uploaded)
  * @returns {string|null} Derived thumbnail URL, or null if derivation fails
  */
-function _deriveVideoThumbnailUrl(videoUrl) {
-  if (!videoUrl || typeof videoUrl !== 'string') return null;
-  if (!videoUrl.includes('cloudinary.com')) return null;
-  if (!videoUrl.includes('/video/upload/')) return null;
-  try {
-    // Step 1: Change resource type from video → image
-    let thumbUrl = videoUrl.replace('/video/upload/', '/image/upload/');
-    // Step 2: Insert so_0 transform (start_offset=0 = first frame)
-    //         + f_jpg (force JPG output) + reasonable size for poster use
-    thumbUrl = thumbUrl.replace(
-      '/image/upload/',
-      '/image/upload/so_0,f_jpg,q_auto:good,w_800,c_limit/'
-    );
-    // Step 3: Change video extension to .jpg (Cloudinary needs explicit ext for image delivery)
-    // Common video extensions: .mp4, .webm, .mov, .avi, .m4v, .mkv
-    thumbUrl = thumbUrl.replace(/\.(mp4|webm|mov|avi|m4v|mkv)$/i, '.jpg');
-    return thumbUrl;
-  } catch(e) {
-    console.warn('[Thumbnail] Derivation failed:', e.message);
-    return null;
-  }
-}
 function _generateFileName(userId, mediaType) {
   const ts = Date.now(); const rand = Math.random().toString(36).substr(2, 6);
   const uid = (userId || 'u').substr(0, 8); const ext = mediaType === 'video' ? 'mp4' : 'webp';
