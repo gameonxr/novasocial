@@ -277,6 +277,7 @@
 <script src="src/features/update-post-counts.js"></script>
 <script src="src/features/restore-fab-button.js"></script>
 <script src="src/features/setup-home-hold-restore.js"></script>
+<script src="src/features/update-account-avatar.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -734,11 +735,6 @@ function removeAccountSession(userId){
   localStorage.setItem('nova_accounts', JSON.stringify(accounts));
 }
 
-function updateAccountAvatar(userId, avatarUrl){
-  let accounts = getSavedAccounts();
-  const acc = accounts.find(a => a.userId === userId);
-  if(acc){ acc.avatarUrl = avatarUrl; localStorage.setItem('nova_accounts', JSON.stringify(accounts)); }
-}
 let _callState = {
   active: false, callId: null, callType: 'audio', isOutgoing: false,
   remoteUserId: null, remoteUserName: null, remoteUserAvatar: null,
