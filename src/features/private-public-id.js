@@ -1,6 +1,6 @@
 // Pure Cloudinary deletion-helper public-ID parser.
 function _extractPublicId(url) {
-  if(!url || !url.includes('cloudinary.com')) return null;
+  if(!url || typeof url !== 'string' || !url.includes('cloudinary.com')) return null;
   try {
     const parts = url.split('/upload/');
     if(parts.length < 2) return null;
