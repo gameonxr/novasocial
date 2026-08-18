@@ -1474,3 +1474,7 @@ Added `docs/show-admin-user-detail-contract.md` and `docs/show-admin-user-detail
 ### Admin-reports-tab contract harness checkpoint — Branch2
 
 Added `docs/admin-reports-tab-contract.md` and `docs/admin-reports-tab-contract-harness.js` as standalone non-production artifacts. The harness covers four filter controls, pending/all query semantics, selected-filter styling, grouped target enrichment, reporter/author profile lookup, escaped content previews, pending resolve/dismiss actions, empty states, and query failures. The harness and complete repository validation chain passed. Protected reports-tab, report-detail, resolve, dismiss, notification, and moderation production code remains inline and unchanged; main remains untouched.
+
+### Admin-verification-tab contract harness checkpoint — Branch2
+
+Added `docs/admin-verification-tab-contract.md` and `docs/admin-verification-tab-contract-harness.js` as standalone non-production artifacts. The harness covers four status filters, selected styling, embedded profile/status rendering, escaped reasons, conditional ID-proof links, pending approve/reject actions, all-filter behavior, empty states, and failures. The harness and complete repository validation chain passed. Protected verification-tab and approval/rejection production code remains inline and unchanged; main remains untouched.
