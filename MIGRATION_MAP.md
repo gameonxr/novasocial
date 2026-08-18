@@ -1490,3 +1490,7 @@ Added `docs/admin-audit-tab-contract.md` and `docs/admin-audit-tab-contract-harn
 ### Admin-content-tab contract harness checkpoint — Branch2
 
 Added `docs/admin-content-tab-contract.md` and `docs/admin-content-tab-contract-harness.js` as standalone non-production artifacts. The harness covers Posts/Comments/Stories controls, default Posts loading, selected-type switching, author enrichment, safe previews, delete and ban controls, 50-item limits, empty results, and failures. The harness and complete repository validation chain passed. Protected content-tab and delete/ban production code remains inline and unchanged; main remains untouched.
+
+### Admin-team-list contract harness checkpoint — Branch2
+
+Added `docs/admin-team-list-contract.md` and `docs/admin-team-list-contract-harness.js` as standalone non-production artifacts. The harness covers staff filtering and ordering, role/status badges, current-user protection, super-admin and ordinary-admin management visibility, non-admin behavior, activity fallback, empty results, and failures. The harness and complete repository validation chain passed. Protected team-list and staff mutation production code remains inline and unchanged; main remains untouched.
