@@ -262,6 +262,7 @@
 <script src="src/features/local-ai-response.js"></script>
 <script src="src/features/extract-cloudinary-public-id.js"></script>
 <script src="src/features/url-base64-to-uint8-array.js"></script>
+<script src="src/features/cld-url.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -2026,13 +2027,6 @@ const NOVA_MEDIA_CONFIG = {
  * @param {string} transform - Cloudinary transform string (e.g. 'q_auto:good,f_auto,w_400,h_400,c_fill')
  * @returns {string} URL with transform inserted, or original URL if not applicable
  */
-function cldUrl(url, transform) {
-  if (!url || typeof url !== 'string') return url;
-  if (!url.includes('/upload/')) return url; // not a Cloudinary URL or unexpected format
-  if (!transform) return url;
-  return url.replace('/upload/', `/upload/${transform}/`);
-}
-
 /**
  * NovaEngine X Part 7 — Fix 2: Derive video thumbnail URL from Cloudinary
  * WITHOUT a separate upload. Uses Cloudinary's `so_0` frame-extraction
