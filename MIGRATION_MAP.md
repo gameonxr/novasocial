@@ -1378,3 +1378,7 @@ Added `docs/network-diagnostics-contract.md` and `docs/network-diagnostics-contr
 ### Story viewer mute contract harness checkpoint — Branch2
 
 Added `docs/story-viewer-mute-contract.md` and `docs/story-viewer-mute-contract-harness.js` as standalone non-production artifacts. The harness covers shared mute-state toggling, active-video synchronization, rerendering, reversible round trips, and the no-video branch. The deterministic harness and complete repository/static validation suite passed. Protected Story viewer mute/playback functions remain inline and unchanged; main remains untouched.
+
+### Saved-account session contract harness checkpoint — Branch2
+
+Added `docs/saved-account-session-contract.md` and `docs/saved-account-session-contract-harness.js` as standalone non-production artifacts. The harness covers duplicate replacement, newest-first ordering, five-account retention, oldest-entry eviction, account removal, token/profile/timestamp preservation, malformed-storage fallback, and recovery save. The deterministic harness and complete repository/static validation suite passed. Protected account/session production helpers remain unchanged; main remains untouched.
