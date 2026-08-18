@@ -265,6 +265,7 @@
 <script src="src/features/cld-url.js"></script>
 <script src="src/features/derive-video-thumbnail-url.js"></script>
 <script src="src/features/generate-file-name.js"></script>
+<script src="src/features/pause-all-videos.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -753,8 +754,6 @@ let _groupCallState = {
 };
 window._pendingIceCandidates = [];
 
-
-function pauseAllVideos(){document.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}});}
 
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(e=>console.log('SW register failed',e));});
