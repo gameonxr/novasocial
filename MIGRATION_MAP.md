@@ -1482,3 +1482,7 @@ Added `docs/admin-verification-tab-contract.md` and `docs/admin-verification-tab
 ### Admin-appeals-tab contract harness checkpoint — Branch2
 
 Added `docs/admin-appeals-tab-contract.md` and `docs/admin-appeals-tab-contract-harness.js` as standalone non-production artifacts. The harness covers four status filters, selected styling, embedded profile and ban-reason rendering, escaped appeal reasons, pending approve/unban and reject actions, all-filter behavior, empty states, and failures. The harness and complete repository validation chain passed. Protected appeals-tab and approval/rejection production code remains inline and unchanged; main remains untouched.
+
+### Admin-audit-tab contract harness checkpoint — Branch2
+
+Added `docs/admin-audit-tab-contract.md` and `docs/admin-audit-tab-contract-harness.js` as standalone non-production artifacts. The harness covers audit-log-first loading, admin-actions fallback, source labeling, action labels and category colors, status and actor-role badges, target metadata, escaped notes/IP metadata, and the empty state. The harness and complete repository validation chain passed. Protected audit-tab production code remains inline and unchanged; main remains untouched.
