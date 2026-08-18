@@ -34,6 +34,12 @@ Normal password login reaches `db.auth.signInWithPassword`, assigns the returned
 
 `src/core/navigation.js` owns `window.navStack`, history buffering, `popstate`, and navigation logging, but its `popNavState()` and `popstate` handler still depend on inline `_noteViewAudio`, `curTab`, `go()`, and `toast()`. The account/bootstrap adapter must not claim navigation ownership until those dependencies have an explicit interface.
 
+## `showApp()` sequence contract
+
+The current inline bootstrap sequence is intentionally preserved as one lifecycle. It first hides auth and reveals the root, then starts Notifications and Posts realtime, initializes the FAB, starts ban rechecking, checks emergency lock, resets account-scoped UI, and navigates home. It schedules Calls, self-profile realtime, and Notes realtime after 1.5 seconds. It then synchronizes the current saved session, installs offline handlers, shows or silently resubscribes Push, and schedules the 3-second background lifecycle that prioritizes local deletion fallback sync before expired Stories, expired Notes, and admin soft-delete cleanup.
+
+A future adapter must observe or reproduce this ordering without moving a single task across the account-reset, navigation, delayed-realtime, Push, or cleanup boundaries. In particular, local deletion fallback sync must remain the first delayed cleanup task, and the delayed tasks must continue to guard on the active `ME` identity.
+
 ## Adapter acceptance criteria
 
 A future adapter may be introduced only if it can be tested against the following invariants without real account mutation:
