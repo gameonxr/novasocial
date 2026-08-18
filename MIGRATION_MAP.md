@@ -1510,3 +1510,7 @@ Added `docs/moderator-recommend-ban-contract.md` and `docs/moderator-recommend-b
 ### Tab-cache contract harness checkpoint — Branch2
 
 Added `docs/tab-cache-contract.md` and `docs/tab-cache-contract-harness.js` as standalone non-production artifacts. The harness covers ordinary-tab snapshots and scroll positions, expiry, double-rAF restore, DMs active-chat protection, Reels HTML-cache exclusion, targeted invalidation, and global invalidation. The harness and complete repository validation chain passed. Protected navigation, DMs, Reels, and lexical cache production code remains inline and unchanged; main remains untouched.
+
+### Network-monitor contract harness checkpoint — Branch2
+
+Added `docs/network-monitor-contract.md` and `docs/network-monitor-contract-harness.js` as standalone non-production artifacts. The harness covers interval replacement, three-second sampling, inactive-call no-op behavior, packet-loss quality thresholds/colors, stats-error resilience, and teardown. The harness and complete repository validation chain passed. Protected network-monitor and WebRTC production code remains inline and unchanged; main remains untouched.
