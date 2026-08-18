@@ -1454,3 +1454,7 @@ Added `docs/audit-log-contract.md` and `docs/audit-log-contract-harness.js` as s
 ### Confirmation-dialog contract harness checkpoint — Branch2
 
 Added `docs/confirm-dialog-contract.md` and `docs/confirm-dialog-contract-harness.js` as standalone non-production artifacts. The harness covers defaults, custom labels/title, danger styling, confirm/cancel resolution, overlay cancellation, cleanup, and focus behavior. The deterministic harness and complete repository/static validation suite passed. Extracted confirmation-dialog utility remains unchanged; main remains untouched.
+
+### Admin-dashboard contract harness checkpoint — Branch2
+
+Added `docs/admin-dashboard-contract.md` and `docs/admin-dashboard-contract-harness.js` as standalone non-production artifacts. The harness covers eight parallel metrics, metric preservation, partial query failure isolation, all-failure zero fallback, and render ordering. The deterministic harness and complete repository/static validation suite passed. Protected admin dashboard production code remains inline and unchanged; main remains untouched.
