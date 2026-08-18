@@ -1402,3 +1402,7 @@ Added `docs/story-download-contract.md` and `docs/story-download-contract-harnes
 ### Share Story as Post contract harness checkpoint — Branch2
 
 Added `docs/share-story-post-contract.md` and `docs/share-story-post-contract-harness.js` as standalone non-production artifacts. The harness covers source media reuse, normal-post defaults, image/video paths, not-found handling, successful modal/viewer/Home cleanup, and insert failure feedback. The deterministic harness and complete repository/static validation suite passed. Protected Story sharing production code remains inline and unchanged; main remains untouched.
+
+### Story deletion and expiry contract harness checkpoint — Branch2
+
+Added `docs/story-deletion-contract.md` and `docs/story-deletion-contract-harness.js` as standalone non-production artifacts. The harness covers confirmation and ownership guards, all-settled related-row cleanup, Story/media deletion, success navigation, expiry batch cap at 100, session-once gating, empty results, and noncritical failure handling. The deterministic harness and complete repository/static validation suite passed. Protected Story deletion/expiry production code remains inline and unchanged; main remains untouched.
