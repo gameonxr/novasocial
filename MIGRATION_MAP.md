@@ -1390,3 +1390,7 @@ Added `docs/story-poll-contract.md` and `docs/story-poll-contract-harness.js` as
 ### Voice-recording contract harness checkpoint — Branch2
 
 Added `docs/voice-recording-contract.md` and `docs/voice-recording-contract-harness.js` as standalone non-production artifacts. The harness covers microphone denial, recorder/button transitions, under-500-byte rejection, stream cleanup, successful chat upload and `.throwOnError()` audio insertion, messaging-blocked feedback, and generic failure handling. The deterministic harness and complete repository/static validation suite passed. Protected DM voice production code remains inline and unchanged; main remains untouched.
+
+### Story submission contract harness checkpoint — Branch2
+
+Added `docs/story-submission-contract.md` and `docs/story-submission-contract-harness.js` as standalone non-production artifacts. The harness covers ban/empty validation, 50-second video rejection, image/text and text-only canvas paths, upload progress, video overlay capture and retry without overlay column, nonfatal notifications, success viewer/home routing, and upload failure reset. The deterministic harness and complete repository/static validation suite passed. Protected Story submission production code remains inline and unchanged; main remains untouched.
