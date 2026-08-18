@@ -1522,3 +1522,7 @@ Added `docs/nova-debug-contract.md` and `docs/nova-debug-contract-harness.js` as
 ### Spawn-like-particles contract harness checkpoint — Branch2
 
 Added `docs/spawn-like-particles-contract.md` and `docs/spawn-like-particles-contract-harness.js` as standalone non-production artifacts. The harness covers null no-op, twelve-particle geometry, palette/transform setup, and 800 ms cleanup. The harness and complete repository validation chain passed. Protected particle and like production code remains inline and unchanged; main remains untouched.
+
+### Protected-inline boundary inventory checkpoint — Branch2
+
+Added `docs/protected-inline-boundary-contract.md` and `docs/protected-inline-boundary-contract-harness.js` as standalone non-production artifacts. The inventory records 19 fragile protected declarations that remain inline, plus script-order and documentation-set safeguards. The harness and complete repository validation chain passed. No protected production function was extracted or modified; main remains untouched.
