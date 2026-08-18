@@ -1442,3 +1442,7 @@ Added `docs/block-unblock-contract.md` and `docs/block-unblock-contract-harness.
 ### Profile-count refresh contract harness checkpoint — Branch2
 
 Added `docs/profile-count-refresh-contract.md` and `docs/profile-count-refresh-contract-harness.js` as standalone non-production artifacts. The harness covers parallel target/current-user count queries, zero fallback, formatted DOM updates, missing-element tolerance, and silent query failures. The deterministic harness and complete repository/static validation suite passed. Protected profile-count production code remains inline and unchanged; main remains untouched.
+
+### Admin-notification contract harness checkpoint — Branch2
+
+Added `docs/admin-notification-contract.md` and `docs/admin-notification-contract-harness.js` as standalone non-production artifacts. The harness covers admin notification payload mapping, empty-message preservation, and silent notification insert failure. The deterministic harness and complete repository/static validation suite passed. Protected admin notification production code remains inline and unchanged; main remains untouched.
