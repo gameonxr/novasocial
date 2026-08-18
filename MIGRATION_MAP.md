@@ -1458,3 +1458,7 @@ Added `docs/confirm-dialog-contract.md` and `docs/confirm-dialog-contract-harnes
 ### Admin-dashboard contract harness checkpoint — Branch2
 
 Added `docs/admin-dashboard-contract.md` and `docs/admin-dashboard-contract-harness.js` as standalone non-production artifacts. The harness covers eight parallel metrics, metric preservation, partial query failure isolation, all-failure zero fallback, and render ordering. The deterministic harness and complete repository/static validation suite passed. Protected admin dashboard production code remains inline and unchanged; main remains untouched.
+
+### Staff-search contract harness checkpoint — Branch2
+
+Added `docs/search-user-for-promotion-contract.md` and `docs/search-user-for-promotion-contract-harness.js` as standalone non-production artifacts. The harness covers deferred 300 ms debounce, short-query clearing, trimmed username `ilike`, current-user exclusion, five-result limit, staff indicators, caller-role-sensitive promotion actions, empty results, missing target element, and failure-safe rendering. The harness and complete repository validation chain passed. Protected staff-management production code remains inline and unchanged; main remains untouched.
