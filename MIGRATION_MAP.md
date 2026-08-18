@@ -1438,3 +1438,7 @@ Added `docs/follower-count-contract.md` and `docs/follower-count-contract-harnes
 ### Block/unblock contract harness checkpoint — Branch2
 
 Added `docs/block-unblock-contract.md` and `docs/block-unblock-contract-harness.js` as standalone non-production artifacts. The harness covers confirmation cancellation, throwOnError mutation, duplicate-block synchronization, noncritical auto-unfollow and engagement cleanup, and unblock failure preservation. The deterministic harness and complete repository/static validation suite passed. Protected blocking production code remains inline and unchanged; main remains untouched.
+
+### Profile-count refresh contract harness checkpoint — Branch2
+
+Added `docs/profile-count-refresh-contract.md` and `docs/profile-count-refresh-contract-harness.js` as standalone non-production artifacts. The harness covers parallel target/current-user count queries, zero fallback, formatted DOM updates, missing-element tolerance, and silent query failures. The deterministic harness and complete repository/static validation suite passed. Protected profile-count production code remains inline and unchanged; main remains untouched.
