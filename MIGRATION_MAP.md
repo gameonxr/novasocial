@@ -1450,3 +1450,7 @@ Added `docs/admin-notification-contract.md` and `docs/admin-notification-contrac
 ### Audit-log contract harness checkpoint — Branch2
 
 Added `docs/audit-log-contract.md` and `docs/audit-log-contract-harness.js` as standalone non-production artifacts. The harness covers secure RPC action/target normalization, default values, target ID conversion, success status, and silent RPC failure. The deterministic harness and complete repository/static validation suite passed. Protected audit-log production code remains inline and unchanged; main remains untouched.
+
+### Confirmation-dialog contract harness checkpoint — Branch2
+
+Added `docs/confirm-dialog-contract.md` and `docs/confirm-dialog-contract-harness.js` as standalone non-production artifacts. The harness covers defaults, custom labels/title, danger styling, confirm/cancel resolution, overlay cancellation, cleanup, and focus behavior. The deterministic harness and complete repository/static validation suite passed. Extracted confirmation-dialog utility remains unchanged; main remains untouched.
