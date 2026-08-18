@@ -1410,3 +1410,7 @@ Added `docs/story-deletion-contract.md` and `docs/story-deletion-contract-harnes
 ### Story reaction/reply contract harness checkpoint — Branch2
 
 Added `docs/story-reply-reaction-contract.md` and `docs/story-reply-reaction-contract-harness.js` as standalone non-production artifacts. The harness covers one-to-one conversation reuse, new conversation/member creation, `.throwOnError()` message insertion, blocked and generic failure feedback, 40-character notification truncation, notification isolation, and reaction delegation. The deterministic harness and complete repository/static validation suite passed. Protected Story reaction/reply production code remains inline and unchanged; main remains untouched.
+
+### Story viewers-list contract harness checkpoint — Branch2
+
+Added `docs/story-viewers-list-contract.md` and `docs/story-viewers-list-contract-harness.js` as standalone non-production artifacts. The harness covers playback pause, timer/video cleanup, modal loading, existing/empty viewer states, query failure handling, modal resume, and profile navigation. The deterministic harness and complete repository/static validation suite passed. Protected Story viewers-list production code remains inline and unchanged; main remains untouched.
