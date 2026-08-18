@@ -278,6 +278,7 @@
 <script src="src/features/restore-fab-button.js"></script>
 <script src="src/features/setup-home-hold-restore.js"></script>
 <script src="src/features/update-account-avatar.js"></script>
+<script src="src/features/get-saved-accounts.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -711,11 +712,6 @@ function resetAccountScopedUiState(nextUserId){
 // localStorage mein multiple sessions store karo, 1-tap se switch karo
 // ═══════════════════════════════════════════════════════════════
 const MAX_ACCOUNTS = 5;
-
-function getSavedAccounts(){
-  try{ return JSON.parse(localStorage.getItem('nova_accounts')||'[]'); }
-  catch(e){ return []; }
-}
 
 function saveAccountSession(userId, username, avatarUrl, session){
   let accounts = getSavedAccounts();
