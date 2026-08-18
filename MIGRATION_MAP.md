@@ -1366,3 +1366,7 @@ Added `docs/note-viewer-contract.md` and `docs/note-viewer-contract-harness.js` 
 ### Local-deletion fallback contract harness checkpoint — Branch2
 
 Added `docs/local-deletion-fallback-contract.md` and `docs/local-deletion-fallback-contract-harness.js` as standalone non-production artifacts. The harness covers empty-queue no-op behavior, ordered replay, per-item failure tolerance, post-loop queue clearing, and silent malformed-JSON/storage failures. The deterministic harness and complete repository/static validation suite passed. Protected deletion/sync production functions remain inline and unchanged; main remains untouched.
+
+### Smart Mood Feed contract harness checkpoint — Branch2
+
+Added `docs/mood-feed-contract.md` and `docs/mood-feed-contract-harness.js` as standalone non-production artifacts. The harness covers followed/own scope, case-insensitive substring keyword matching including `cod`→`coding` overlap, default-mood ordering, blocked/muted filtering, empty/non-empty rendering, observer/pruning scheduling, missing-scope home fallback, and stale-generation protection. The corrected deterministic harness and complete repository/static validation suite passed. Protected Smart Mood Feed production code remains inline and unchanged; main remains untouched.
