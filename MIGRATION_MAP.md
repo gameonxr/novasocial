@@ -1326,3 +1326,7 @@ Added `docs/blocking-contract-assessment.md` and `docs/blocking-contract-harness
 ### Mock Push permission contract harness checkpoint — Branch2
 
 Added `docs/push-permission-contract.md` and `docs/push-permission-contract-harness.js` as standalone non-production artifacts. The contract preserves unsupported-browser silence, granted silent resubscribe, denied-permission respect, dismissed-banner suppression, delayed active-user guards, and granted/denied request outcomes. The deterministic harness and complete repository/static validation suite passed. Protected Push settings handlers, subscription mutations, service-worker behavior, account lifecycle, production code, and main were unchanged.
+
+### Emergency-lock contract harness checkpoint — Branch2
+
+Added `docs/emergency-lock-contract.md` and `docs/emergency-lock-contract-harness.js` as standalone non-production artifacts. The harness covers boolean/string/toString truthy normalization, false values, thrown database exceptions with fail-silent handling, overlay invocation boundaries, and clearing/restarting the 60-second polling timer. The corrected harness and complete repository/static validation suite passed. Security-critical emergency-lock production functions remain inline and unchanged; main remains untouched.
