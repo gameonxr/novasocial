@@ -1312,3 +1312,9 @@ This is a documentation and harness checkpoint only. DMs, Reels, Stories, Calls/
 ### Mock account/bootstrap adapter harness checkpoint — Branch2
 
 Added the standalone non-production `docs/account-bootstrap-adapter-harness.js`. It models the current `showApp()` sequence with mocked side effects and deterministically validates normal-login and add-account modes without importing or mutating application code. The harness captures the intentional add-account double saved-session synchronization: `doAuth()` syncs before `showApp()`, and `showApp()` syncs again after navigation. The first harness run exposed this real contract nuance and was corrected; the rerun passed both mode sequences. No production implementation, protected system, account, server, or main branch was changed.
+
+### Mock logout/account-transition harness checkpoint — Branch2
+
+Added `docs/logout-account-transition-contract.md` and `docs/logout-account-transition-harness.js` as standalone non-production artifacts. The deterministic harness covers no-remaining-account auth fallback, valid saved-session recovery with scheduled reload, invalid saved-session removal with auth fallback, active-call teardown, ringtone stop, overlay/modal cleanup, Story viewer hiding, navigation clearing, account-scoped reset, sign-out, and identity clearing.
+
+The harness passed all branches. The complete JavaScript/repository validator suite, inline-script syntax check, protected markers, script-order checks, whitespace checks, Branch2 check, clean-state check, and untouched-main check also passed. No production logout, account-switch, Calls/WebRTC, Story, navigation, auth, database, or main code was changed. No real account or server mutation was performed.
