@@ -1334,3 +1334,7 @@ Added `docs/emergency-lock-contract.md` and `docs/emergency-lock-contract-harnes
 ### DMs realtime contract harness checkpoint — Branch2
 
 Added `docs/dms-realtime-contract.md` and `docs/dms-realtime-contract-harness.js` as standalone non-production artifacts. The harness covers parallel conversation/unread/Notes Bar fetching, dependent other-member loading, active-account/tab/chat guards, navigation-abort checks, targeted in-place list updates, separate Notes Bar patching, cache-save boundary, and scroll preservation. The deterministic harness and complete repository/static validation suite passed. Protected DMs functions remain inline and unchanged; main remains untouched.
+
+### Reels persistent-container contract harness checkpoint — Branch2
+
+Added `docs/reels-persistent-contract.md` and `docs/reels-persistent-contract-harness.js` as standalone non-production artifacts. The harness covers persistent-container park/reattach identity, overflow and scroll guards, saved-index transform restore, dynamic live-count math, current−1 through current+3 video source windowing, fallback-source preservation, overlapping swipe settle completion, and the existing settle timing/easing. The deterministic harness and complete repository/static validation suite passed. Protected Reels production functions remain inline and unchanged; main remains untouched.
