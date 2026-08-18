@@ -1322,3 +1322,7 @@ The harness passed all branches. The complete JavaScript/repository validator su
 ### Mock blocking contract harness checkpoint — Branch2
 
 Added `docs/blocking-contract-assessment.md` and `docs/blocking-contract-harness.js` as standalone non-production artifacts. The contract preserves bidirectional content hiding, one-direction Block/Unblock button semantics, and `.throwOnError()` propagation for duplicate/server failures. The deterministic harness passed union, gating, button, success, and duplicate-error cases. The complete repository/static validation suite passed, and no production block mutation, database action, account action, or main branch was changed.
+
+### Mock Push permission contract harness checkpoint — Branch2
+
+Added `docs/push-permission-contract.md` and `docs/push-permission-contract-harness.js` as standalone non-production artifacts. The contract preserves unsupported-browser silence, granted silent resubscribe, denied-permission respect, dismissed-banner suppression, delayed active-user guards, and granted/denied request outcomes. The deterministic harness and complete repository/static validation suite passed. Protected Push settings handlers, subscription mutations, service-worker behavior, account lifecycle, production code, and main were unchanged.
