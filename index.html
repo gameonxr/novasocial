@@ -267,6 +267,7 @@
 <script src="src/features/generate-file-name.js"></script>
 <script src="src/features/pause-all-videos.js"></script>
 <script src="src/features/view-avatar-fullscreen.js"></script>
+<script src="src/features/select-video-len.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -4630,14 +4631,6 @@ const AI_FILTERS=[
 
 const MAX_VIDEO_LEN=180;
 
-
-function selectVideoLen(s){
-  window._videoTrimTo=s;
-  document.querySelectorAll('.vlen-pill').forEach(p=>{
-    const match=(s==='full'&&p.dataset.s==='full')||(p.dataset.s==String(s));
-    p.style.background=match?'#fff':'#1a1a1a';p.style.color=match?'#000':'#aaa';
-  });
-}
 
 function trimVideo(file,seconds){
   return new Promise((resolve,reject)=>{
