@@ -276,6 +276,7 @@
 <script src="src/features/hide-fab-button.js"></script>
 <script src="src/features/update-post-counts.js"></script>
 <script src="src/features/restore-fab-button.js"></script>
+<script src="src/features/setup-home-hold-restore.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -1866,28 +1867,6 @@ function setupFabDrag(){
   }
   
   setupHomeHoldRestore();
-}
-
-function setupHomeHoldRestore(){
-  let homeTimer = null;
-  document.addEventListener('touchstart', (e) => {
-    const homeNav = e.target.closest('.nb[data-t="home"]');
-    if(homeNav){
-      homeTimer = setTimeout(() => {
-        restoreFabButton();
-        haptic(20);
-      }, 2000);
-    }
-  }, {passive: true});
-  document.addEventListener('touchend', () => { if(homeTimer){ clearTimeout(homeTimer); homeTimer = null; } });
-  document.addEventListener('touchmove', () => { if(homeTimer){ clearTimeout(homeTimer); homeTimer = null; } });
-  document.addEventListener('mousedown', (e) => {
-    const homeNav = e.target.closest('.nb[data-t="home"]');
-    if(homeNav){
-      homeTimer = setTimeout(() => restoreFabButton(), 2000);
-    }
-  });
-  document.addEventListener('mouseup', () => { if(homeTimer){ clearTimeout(homeTimer); homeTimer = null; } });
 }
 
 // Close long press menu on outside tap
