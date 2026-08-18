@@ -1382,3 +1382,7 @@ Added `docs/story-viewer-mute-contract.md` and `docs/story-viewer-mute-contract-
 ### Saved-account session contract harness checkpoint — Branch2
 
 Added `docs/saved-account-session-contract.md` and `docs/saved-account-session-contract-harness.js` as standalone non-production artifacts. The harness covers duplicate replacement, newest-first ordering, five-account retention, oldest-entry eviction, account removal, token/profile/timestamp preservation, malformed-storage fallback, and recovery save. The deterministic harness and complete repository/static validation suite passed. Protected account/session production helpers remain unchanged; main remains untouched.
+
+### Story poll contract harness checkpoint — Branch2
+
+Added `docs/story-poll-contract.md` and `docs/story-poll-contract-harness.js` as standalone non-production artifacts. The harness covers single-vote guards, multi-vote add/remove/final-clear behavior, best-effort persistence, valid-index percentage rendering, local fallback counts, empty results, prior-vote restoration, and silent missing-state handling. The deterministic harness and complete repository/static validation suite passed. Protected Story poll production functions remain inline and unchanged; main remains untouched.
