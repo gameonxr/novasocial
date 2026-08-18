@@ -66,3 +66,7 @@ This checkpoint defines the contract and test seam only. It does not change `ind
 4. [Auth bootstrap caller](file:///home/ubuntu/novasocial/src/features/auth.js)
 5. [Profile logout/account lifecycle caller](file:///home/ubuntu/novasocial/src/features/profile.js)
 6. [Navigation stack](file:///home/ubuntu/novasocial/src/core/navigation.js)
+
+## Mock adapter harness checkpoint
+
+`docs/account-bootstrap-adapter-harness.js` is a standalone, non-production harness. It records the required bootstrap sequence with mocked operations and validates both normal-login and add-account modes. Add-account mode intentionally records two saved-account synchronization points: the pre-bootstrap sync in `doAuth()` and the post-navigation sync inside `showApp()`. This double point is part of the current behavior and must not be collapsed without a dedicated regression decision.
