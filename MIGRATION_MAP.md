@@ -1494,3 +1494,7 @@ Added `docs/admin-content-tab-contract.md` and `docs/admin-content-tab-contract-
 ### Admin-team-list contract harness checkpoint — Branch2
 
 Added `docs/admin-team-list-contract.md` and `docs/admin-team-list-contract-harness.js` as standalone non-production artifacts. The harness covers staff filtering and ordering, role/status badges, current-user protection, super-admin and ordinary-admin management visibility, non-admin behavior, activity fallback, empty results, and failures. The harness and complete repository validation chain passed. Protected team-list and staff mutation production code remains inline and unchanged; main remains untouched.
+
+### Admin two-tier post-delete contract harness checkpoint — Branch2
+
+Added `docs/admin-post-delete-two-tier-contract.md` and `docs/admin-post-delete-two-tier-contract-harness.js` as standalone non-production artifacts. The harness covers recoverable soft-delete metadata and 30-day purge, soft-delete media preservation, hard-delete related cleanup and media ordering, video-to-reel media mapping, recovery reset and refresh delegation, deleted-post listing, empty states, and failure-safe outcomes. The harness and complete repository validation chain passed. Protected deletion, media, audit, notification, and moderation production code remains inline and unchanged; main remains untouched.
