@@ -1462,3 +1462,7 @@ Added `docs/admin-dashboard-contract.md` and `docs/admin-dashboard-contract-harn
 ### Staff-search contract harness checkpoint — Branch2
 
 Added `docs/search-user-for-promotion-contract.md` and `docs/search-user-for-promotion-contract-harness.js` as standalone non-production artifacts. The harness covers deferred 300 ms debounce, short-query clearing, trimmed username `ilike`, current-user exclusion, five-result limit, staff indicators, caller-role-sensitive promotion actions, empty results, missing target element, and failure-safe rendering. The harness and complete repository validation chain passed. Protected staff-management production code remains inline and unchanged; main remains untouched.
+
+### Staff-actions contract harness checkpoint — Branch2
+
+Added `docs/show-staff-actions-contract.md` and `docs/show-staff-actions-contract-harness.js` as standalone non-production artifacts. The harness covers super-admin versus ordinary-admin visibility for administrator and moderator targets, cancel-only fallbacks for unsupported roles, safe username/role display escaping, and preservation of target IDs in generated handlers. The harness and complete repository validation chain passed. Protected staff-actions and mutation production code remains inline and unchanged; main remains untouched.
