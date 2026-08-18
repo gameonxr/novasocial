@@ -1358,3 +1358,7 @@ Added `docs/ban-appeal-contract.md` and `docs/ban-appeal-contract-harness.js` as
 ### Admin-access contract harness checkpoint — Branch2
 
 Added `docs/admin-access-contract.md` and `docs/admin-access-contract-harness.js` as standalone non-production artifacts. The harness covers secure RPC role mapping, ordinary-role denial, legacy profile fallback, banned-profile denial, verification failure, and the independent server-side action boundary. The deterministic harness and complete repository/static validation suite passed. Protected admin production functions remain inline and unchanged; main remains untouched.
+
+### Note viewer contract harness checkpoint — Branch2
+
+Added `docs/note-viewer-contract.md` and `docs/note-viewer-contract-harness.js` as standalone non-production artifacts. The harness covers missing-note expiry handling, view registration, own/other controls, viewer count and reaction lookup, attached-music autoplay, successful removal, Cloudinary artwork cleanup, and failure cleanup. The deterministic harness and complete repository/static validation suite passed. Protected Note viewer/removal production functions remain inline and unchanged; main remains untouched.
