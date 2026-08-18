@@ -281,6 +281,7 @@
 <script src="src/features/get-saved-accounts.js"></script>
 <script src="src/features/client-moderation-guards.js"></script>
 <script src="src/features/private-public-id.js"></script>
+<script src="src/features/fallback-local-queue.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -2570,17 +2571,6 @@ async function _instantCloudinaryDelete(deleteToken, cloudName, resourceType = '
  * Local storage fallback — agar Supabase down ho
  * Max 500 entries rakhta hai, FIFO eviction
  */
-function _fallbackLocalQueue(mediaUrl, source, reason) {
-  try {
-    const pending = JSON.parse(localStorage.getItem('_mediaDeleteFallback') || '[]');
-    pending.push({ mediaUrl, source, reason, ts: Date.now() });
-    if(pending.length > 500) pending.splice(0, 100); // Drop oldest 100
-    localStorage.setItem('_mediaDeleteFallback', JSON.stringify(pending));
-  } catch(e) {
-    console.warn('Local fallback queue failed:', e);
-  }
-}
-
 /**
  * App load hone par local fallback queue ko Supabase mein sync karo
  * (agar pehle Supabase down tha aur local mein save hua tha)
