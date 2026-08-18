@@ -1406,3 +1406,7 @@ Added `docs/share-story-post-contract.md` and `docs/share-story-post-contract-ha
 ### Story deletion and expiry contract harness checkpoint — Branch2
 
 Added `docs/story-deletion-contract.md` and `docs/story-deletion-contract-harness.js` as standalone non-production artifacts. The harness covers confirmation and ownership guards, all-settled related-row cleanup, Story/media deletion, success navigation, expiry batch cap at 100, session-once gating, empty results, and noncritical failure handling. The deterministic harness and complete repository/static validation suite passed. Protected Story deletion/expiry production code remains inline and unchanged; main remains untouched.
+
+### Story reaction/reply contract harness checkpoint — Branch2
+
+Added `docs/story-reply-reaction-contract.md` and `docs/story-reply-reaction-contract-harness.js` as standalone non-production artifacts. The harness covers one-to-one conversation reuse, new conversation/member creation, `.throwOnError()` message insertion, blocked and generic failure feedback, 40-character notification truncation, notification isolation, and reaction delegation. The deterministic harness and complete repository/static validation suite passed. Protected Story reaction/reply production code remains inline and unchanged; main remains untouched.
