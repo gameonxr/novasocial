@@ -1398,3 +1398,7 @@ Added `docs/story-submission-contract.md` and `docs/story-submission-contract-ha
 ### Story download contract harness checkpoint — Branch2
 
 Added `docs/story-download-contract.md` and `docs/story-download-contract-harness.js` as standalone non-production artifacts. The harness covers modal/toast start order, not-found handling, video `.mp4` and image `.jpg` filenames, temporary anchor cleanup, object-URL revocation, and fetch/blob failure feedback. The deterministic harness and complete repository/static validation suite passed. Protected Story download production code remains inline and unchanged; main remains untouched.
+
+### Share Story as Post contract harness checkpoint — Branch2
+
+Added `docs/share-story-post-contract.md` and `docs/share-story-post-contract-harness.js` as standalone non-production artifacts. The harness covers source media reuse, normal-post defaults, image/video paths, not-found handling, successful modal/viewer/Home cleanup, and insert failure feedback. The deterministic harness and complete repository/static validation suite passed. Protected Story sharing production code remains inline and unchanged; main remains untouched.
