@@ -1338,3 +1338,7 @@ Added `docs/dms-realtime-contract.md` and `docs/dms-realtime-contract-harness.js
 ### Reels persistent-container contract harness checkpoint — Branch2
 
 Added `docs/reels-persistent-contract.md` and `docs/reels-persistent-contract-harness.js` as standalone non-production artifacts. The harness covers persistent-container park/reattach identity, overflow and scroll guards, saved-index transform restore, dynamic live-count math, current−1 through current+3 video source windowing, fallback-source preservation, overlapping swipe settle completion, and the existing settle timing/easing. The deterministic harness and complete repository/static validation suite passed. Protected Reels production functions remain inline and unchanged; main remains untouched.
+
+### Stories viewer contract harness checkpoint — Branch2
+
+Added `docs/story-viewer-contract.md` and `docs/story-viewer-contract-harness.js` as standalone non-production artifacts. The harness covers user-bucket grouping, start-story selection, image/video playback lifecycle, timer/progress boundaries, next/previous story and user navigation, close/clamp behavior, gesture thresholds, pause/resume, and viewer cleanup. The deterministic harness and complete repository/static validation suite passed. Protected Stories viewer/editor production functions remain inline and unchanged; main remains untouched.
