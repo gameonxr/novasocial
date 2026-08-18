@@ -1394,3 +1394,7 @@ Added `docs/voice-recording-contract.md` and `docs/voice-recording-contract-harn
 ### Story submission contract harness checkpoint — Branch2
 
 Added `docs/story-submission-contract.md` and `docs/story-submission-contract-harness.js` as standalone non-production artifacts. The harness covers ban/empty validation, 50-second video rejection, image/text and text-only canvas paths, upload progress, video overlay capture and retry without overlay column, nonfatal notifications, success viewer/home routing, and upload failure reset. The deterministic harness and complete repository/static validation suite passed. Protected Story submission production code remains inline and unchanged; main remains untouched.
+
+### Story download contract harness checkpoint — Branch2
+
+Added `docs/story-download-contract.md` and `docs/story-download-contract-harness.js` as standalone non-production artifacts. The harness covers modal/toast start order, not-found handling, video `.mp4` and image `.jpg` filenames, temporary anchor cleanup, object-URL revocation, and fetch/blob failure feedback. The deterministic harness and complete repository/static validation suite passed. Protected Story download production code remains inline and unchanged; main remains untouched.
