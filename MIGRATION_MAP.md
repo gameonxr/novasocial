@@ -1374,3 +1374,7 @@ Added `docs/mood-feed-contract.md` and `docs/mood-feed-contract-harness.js` as s
 ### Network diagnostics contract harness checkpoint — Branch2
 
 Added `docs/network-diagnostics-contract.md` and `docs/network-diagnostics-contract-harness.js` as standalone non-production artifacts. The harness covers effective-type quality defaults, packet-loss thresholds/colors, inactive-call no-op behavior, inbound RTP aggregation, active monitor updates, and idempotent monitor cleanup. The deterministic harness and complete repository/static validation suite passed. Protected network/call diagnostic functions remain inline and unchanged; main remains untouched.
+
+### Story viewer mute contract harness checkpoint — Branch2
+
+Added `docs/story-viewer-mute-contract.md` and `docs/story-viewer-mute-contract-harness.js` as standalone non-production artifacts. The harness covers shared mute-state toggling, active-video synchronization, rerendering, reversible round trips, and the no-video branch. The deterministic harness and complete repository/static validation suite passed. Protected Story viewer mute/playback functions remain inline and unchanged; main remains untouched.
