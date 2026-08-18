@@ -1434,3 +1434,7 @@ Added `docs/follow-toggle-contract.md` and `docs/follow-toggle-contract-harness.
 ### Follower-count contract harness checkpoint — Branch2
 
 Added `docs/follower-count-contract.md` and `docs/follower-count-contract-harness.js` as standalone non-production artifacts. The harness covers positive/negative optimistic deltas, zero-floor clamping, compact formatting, malformed-raw `NaN` preservation, and missing-element no-op behavior. The deterministic harness and complete repository/static validation suite passed. Extracted count helpers remain unchanged; main remains untouched.
+
+### Block/unblock contract harness checkpoint — Branch2
+
+Added `docs/block-unblock-contract.md` and `docs/block-unblock-contract-harness.js` as standalone non-production artifacts. The harness covers confirmation cancellation, throwOnError mutation, duplicate-block synchronization, noncritical auto-unfollow and engagement cleanup, and unblock failure preservation. The deterministic harness and complete repository/static validation suite passed. Protected blocking production code remains inline and unchanged; main remains untouched.
