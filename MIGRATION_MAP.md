@@ -1506,3 +1506,7 @@ Added `docs/admin-approval-tabs-contract.md` and `docs/admin-approval-tabs-contr
 ### Moderator-recommend-ban contract harness checkpoint — Branch2
 
 Added `docs/moderator-recommend-ban-contract.md` and `docs/moderator-recommend-ban-contract-harness.js` as standalone non-production artifacts. The harness covers staff authorization, blank-reason rejection, trimmed pending payload insertion, audit and success behavior, modal close, and failure-safe behavior. The harness and complete repository validation chain passed. Protected recommendation, approval, ban, notification, and moderation production code remains inline and unchanged; main remains untouched.
+
+### Tab-cache contract harness checkpoint — Branch2
+
+Added `docs/tab-cache-contract.md` and `docs/tab-cache-contract-harness.js` as standalone non-production artifacts. The harness covers ordinary-tab snapshots and scroll positions, expiry, double-rAF restore, DMs active-chat protection, Reels HTML-cache exclusion, targeted invalidation, and global invalidation. The harness and complete repository validation chain passed. Protected navigation, DMs, Reels, and lexical cache production code remains inline and unchanged; main remains untouched.
