@@ -264,6 +264,7 @@
 <script src="src/features/url-base64-to-uint8-array.js"></script>
 <script src="src/features/cld-url.js"></script>
 <script src="src/features/derive-video-thumbnail-url.js"></script>
+<script src="src/features/generate-file-name.js"></script>
 <script src="src/features/close-friends.js"></script>
 <script src="src/features/voice.js"></script>
 <script src="src/features/disappearing.js"></script>
@@ -2046,12 +2047,6 @@ const NOVA_MEDIA_CONFIG = {
  * @param {string} videoUrl - Cloudinary video URL (the media_url just uploaded)
  * @returns {string|null} Derived thumbnail URL, or null if derivation fails
  */
-function _generateFileName(userId, mediaType) {
-  const ts = Date.now(); const rand = Math.random().toString(36).substr(2, 6);
-  const uid = (userId || 'u').substr(0, 8); const ext = mediaType === 'video' ? 'mp4' : 'webp';
-  return `${uid}_${ts}_${rand}.${ext}`;
-}
-
 async function _compressImage(file, config) {
   return new Promise((resolve) => {
     if(file.size < 200 * 1024) { resolve(file); return; }
