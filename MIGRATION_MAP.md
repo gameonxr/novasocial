@@ -1362,3 +1362,7 @@ Added `docs/admin-access-contract.md` and `docs/admin-access-contract-harness.js
 ### Note viewer contract harness checkpoint — Branch2
 
 Added `docs/note-viewer-contract.md` and `docs/note-viewer-contract-harness.js` as standalone non-production artifacts. The harness covers missing-note expiry handling, view registration, own/other controls, viewer count and reaction lookup, attached-music autoplay, successful removal, Cloudinary artwork cleanup, and failure cleanup. The deterministic harness and complete repository/static validation suite passed. Protected Note viewer/removal production functions remain inline and unchanged; main remains untouched.
+
+### Local-deletion fallback contract harness checkpoint — Branch2
+
+Added `docs/local-deletion-fallback-contract.md` and `docs/local-deletion-fallback-contract-harness.js` as standalone non-production artifacts. The harness covers empty-queue no-op behavior, ordered replay, per-item failure tolerance, post-loop queue clearing, and silent malformed-JSON/storage failures. The deterministic harness and complete repository/static validation suite passed. Protected deletion/sync production functions remain inline and unchanged; main remains untouched.
