@@ -1514,3 +1514,7 @@ Added `docs/tab-cache-contract.md` and `docs/tab-cache-contract-harness.js` as s
 ### Network-monitor contract harness checkpoint — Branch2
 
 Added `docs/network-monitor-contract.md` and `docs/network-monitor-contract-harness.js` as standalone non-production artifacts. The harness covers interval replacement, three-second sampling, inactive-call no-op behavior, packet-loss quality thresholds/colors, stats-error resilience, and teardown. The harness and complete repository validation chain passed. Protected network-monitor and WebRTC production code remains inline and unchanged; main remains untouched.
+
+### novaDebug contract harness checkpoint — Branch2
+
+Added `docs/nova-debug-contract.md` and `docs/nova-debug-contract-harness.js` as standalone non-production artifacts. The harness covers the no-session guard, six read-only diagnostic query boundaries, query-error isolation, and completion logging. The harness and complete repository validation chain passed. Protected diagnostics and production application code remain inline and unchanged; main remains untouched.
