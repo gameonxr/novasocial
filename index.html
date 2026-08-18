@@ -267,6 +267,7 @@
 <script src="src/features/generate-file-name.js"></script>
 <script src="src/features/compress-image.js"></script>
 <script src="src/features/compress-video.js"></script>
+<script src="src/features/delete-multiple-media.js"></script>
 <script src="src/features/pause-all-videos.js"></script>
 <script src="src/features/view-avatar-fullscreen.js"></script>
 <script src="src/features/select-video-len.js"></script>
@@ -2469,20 +2470,6 @@ async function deleteMediaProduction(mediaUrl, source = 'unknown', reason = 'use
  * @param {string} source
  * @param {string} reason
  * @returns {Promise<Array<{status: string, value?: any, reason?: any}>>}
- */
-async function deleteMultipleMediaProduction(mediaUrls, source, reason) {
-  const urls = (mediaUrls || []).filter(Boolean);
-  if(!urls.length) return [];
-  const results = await Promise.allSettled(
-    urls.map(url => deleteMediaProduction(url, source, reason))
-  );
-  return results;
-}
-
-/**
- * Cloudinary se instant delete (delete_token use karke)
- * Ye SAFE hai client-side pe use karne ke liye kyunki
- * token sirf 1 specific file ke liye kaam karta hai aur 1 hour mein expire ho jaata hai
  */
 async function _instantCloudinaryDelete(deleteToken, cloudName, resourceType = 'image') {
   if(!deleteToken || !cloudName) return false;
