@@ -1422,3 +1422,7 @@ Added `docs/report-submission-contract.md` and `docs/report-submission-contract-
 ### Mute/unmute contract harness checkpoint — Branch2
 
 Added `docs/mute-unmute-contract.md` and `docs/mute-unmute-contract-harness.js` as standalone non-production artifacts. The harness covers throwOnError mutation enforcement, successful mute/unmute toasts, button label/action updates, missing-button tolerance, and failure-state preservation. The deterministic harness and complete repository/static validation suite passed. Protected moderation production code remains inline and unchanged; main remains untouched.
+
+### Notification dispatch contract harness checkpoint — Branch2
+
+Added `docs/notification-dispatch-contract.md` and `docs/notification-dispatch-contract-harness.js` as standalone non-production artifacts. The harness covers self/empty-recipient suppression, block and preference gates, lookup-error tolerance, notification payload mapping, and insert-error isolation. The deterministic harness and complete repository/static validation suite passed. Protected notification production code remains inline and unchanged; main remains untouched.
