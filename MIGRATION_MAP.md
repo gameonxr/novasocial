@@ -1318,3 +1318,7 @@ Added the standalone non-production `docs/account-bootstrap-adapter-harness.js`.
 Added `docs/logout-account-transition-contract.md` and `docs/logout-account-transition-harness.js` as standalone non-production artifacts. The deterministic harness covers no-remaining-account auth fallback, valid saved-session recovery with scheduled reload, invalid saved-session removal with auth fallback, active-call teardown, ringtone stop, overlay/modal cleanup, Story viewer hiding, navigation clearing, account-scoped reset, sign-out, and identity clearing.
 
 The harness passed all branches. The complete JavaScript/repository validator suite, inline-script syntax check, protected markers, script-order checks, whitespace checks, Branch2 check, clean-state check, and untouched-main check also passed. No production logout, account-switch, Calls/WebRTC, Story, navigation, auth, database, or main code was changed. No real account or server mutation was performed.
+
+### Mock blocking contract harness checkpoint — Branch2
+
+Added `docs/blocking-contract-assessment.md` and `docs/blocking-contract-harness.js` as standalone non-production artifacts. The contract preserves bidirectional content hiding, one-direction Block/Unblock button semantics, and `.throwOnError()` propagation for duplicate/server failures. The deterministic harness passed union, gating, button, success, and duplicate-error cases. The complete repository/static validation suite passed, and no production block mutation, database action, account action, or main branch was changed.
