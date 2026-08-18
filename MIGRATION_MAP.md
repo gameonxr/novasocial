@@ -1466,3 +1466,7 @@ Added `docs/search-user-for-promotion-contract.md` and `docs/search-user-for-pro
 ### Staff-actions contract harness checkpoint — Branch2
 
 Added `docs/show-staff-actions-contract.md` and `docs/show-staff-actions-contract-harness.js` as standalone non-production artifacts. The harness covers super-admin versus ordinary-admin visibility for administrator and moderator targets, cancel-only fallbacks for unsupported roles, safe username/role display escaping, and preservation of target IDs in generated handlers. The harness and complete repository validation chain passed. Protected staff-actions and mutation production code remains inline and unchanged; main remains untouched.
+
+### Admin-user-detail contract harness checkpoint — Branch2
+
+Added `docs/show-admin-user-detail-contract.md` and `docs/show-admin-user-detail-contract-harness.js` as standalone non-production artifacts. The harness covers parallel profile/post reads, escaped identity and ban reasons, status badges, post/follower counts, self-action protection, status-dependent action rendering, report-stats delegation, not-found handling, and safe profile-query failure rendering. The harness and complete repository validation chain passed. Protected admin detail, report, and mutation production code remains inline and unchanged; main remains untouched.
