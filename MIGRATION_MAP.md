@@ -1414,3 +1414,7 @@ Added `docs/story-reply-reaction-contract.md` and `docs/story-reply-reaction-con
 ### Story viewers-list contract harness checkpoint — Branch2
 
 Added `docs/story-viewers-list-contract.md` and `docs/story-viewers-list-contract-harness.js` as standalone non-production artifacts. The harness covers playback pause, timer/video cleanup, modal loading, existing/empty viewer states, query failure handling, modal resume, and profile navigation. The deterministic harness and complete repository/static validation suite passed. Protected Story viewers-list production code remains inline and unchanged; main remains untouched.
+
+### Report submission contract harness checkpoint — Branch2
+
+Added `docs/report-submission-contract.md` and `docs/report-submission-contract-harness.js` as standalone non-production artifacts. The harness covers modal closure, current-reporter pending payloads, successful submission feedback, missing-reports-table setup guidance, and generic database/RLS error handling. The deterministic harness and complete repository/static validation suite passed. Protected report production code remains inline and unchanged; main remains untouched.
