@@ -1350,3 +1350,7 @@ Added `docs/calls-webrtc-contract.md` and `docs/calls-webrtc-contract-harness.js
 ### Story editor contract harness checkpoint — Branch2
 
 Added `docs/story-editor-contract.md` and `docs/story-editor-contract-harness.js` as standalone non-production artifacts. The harness covers type-specific rendering, transform preservation, 5–95 percent drag bounds, delete-zone highlight/removal/rerender behavior, transition restoration, and text double-tap editing state. The deterministic harness and complete repository/static validation suite passed. Protected Story editor production functions remain inline and unchanged; main remains untouched.
+
+### Ban/appeal contract harness checkpoint — Branch2
+
+Added `docs/ban-appeal-contract.md` and `docs/ban-appeal-contract-harness.js` as standalone non-production artifacts. The harness covers five-minute recheck behavior, banned/default reasons, silent database errors, manual sign-out teardown, empty/missing appeal validation, valid pending appeal submission with delayed sign-out, and specific missing-table/duplicate/RLS/generic error guidance. The deterministic harness and complete repository/static validation suite passed. Protected ban/authentication production functions remain inline and unchanged; main remains untouched.
