@@ -1330,3 +1330,7 @@ Added `docs/push-permission-contract.md` and `docs/push-permission-contract-harn
 ### Emergency-lock contract harness checkpoint — Branch2
 
 Added `docs/emergency-lock-contract.md` and `docs/emergency-lock-contract-harness.js` as standalone non-production artifacts. The harness covers boolean/string/toString truthy normalization, false values, thrown database exceptions with fail-silent handling, overlay invocation boundaries, and clearing/restarting the 60-second polling timer. The corrected harness and complete repository/static validation suite passed. Security-critical emergency-lock production functions remain inline and unchanged; main remains untouched.
+
+### DMs realtime contract harness checkpoint — Branch2
+
+Added `docs/dms-realtime-contract.md` and `docs/dms-realtime-contract-harness.js` as standalone non-production artifacts. The harness covers parallel conversation/unread/Notes Bar fetching, dependent other-member loading, active-account/tab/chat guards, navigation-abort checks, targeted in-place list updates, separate Notes Bar patching, cache-save boundary, and scroll preservation. The deterministic harness and complete repository/static validation suite passed. Protected DMs functions remain inline and unchanged; main remains untouched.
