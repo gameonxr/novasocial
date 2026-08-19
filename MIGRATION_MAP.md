@@ -1562,3 +1562,7 @@ Added `docs/branch2-only-safety-contract.md` and `docs/branch2-only-safety-contr
 ### Migration-map reference audit checkpoint — Branch2
 
 Added `docs/migration-map-reference-contract.md` and `docs/migration-map-reference-contract-harness.js` as standalone non-production artifacts. The audit verifies 124 documented docs paths, zero missing references, and records for the latest Branch2 safety, hygiene, stylesheet, module-reference, and inline-handler checkpoints. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Cross-module lexical collision checkpoint — Branch2
+
+Added `docs/cross-module-lexical-collision-contract.md` and `docs/cross-module-lexical-collision-contract-harness.js` as standalone non-production artifacts. The audit covers index.html plus 211 extracted scripts, 117 top-level const/let names, and zero duplicate lexical declarations. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
