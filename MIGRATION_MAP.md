@@ -1598,3 +1598,7 @@ Added `docs/branch2-final-readiness-contract.md` and `docs/branch2-final-readine
 ### Classic-script compatibility contract checkpoint — Branch2
 
 Added `docs/classic-script-compatibility-contract.md` and `docs/classic-script-compatibility-contract-harness.js` as standalone non-production artifacts. The static audit verifies 213 integrated HTML script tags, zero `type="module"` tags, zero `defer`/`async` attributes that could reorder globals, and zero top-level import/export markers across the 211 extracted JavaScript files. The harness passed before publication; no production code was changed and main remains untouched.
+
+### Source-boundary hygiene contract checkpoint — Branch2
+
+Added `docs/source-boundary-hygiene-contract.md` and `docs/source-boundary-hygiene-contract-harness.js` as standalone non-production artifacts. The static audit scans all 229 extracted JavaScript/CSS files and verifies UTF-8 round-tripping, zero NUL bytes, zero CRLF contamination, and zero executable/template script or style container tags after comments are removed. The harness passed before publication; no production code was changed and main remains untouched.
