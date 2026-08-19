@@ -1618,3 +1618,7 @@ Added `docs/credential-surface-contract.md` and `docs/credential-surface-contrac
 ### Root deployment-integrity checkpoint — Branch2
 
 Added `docs/root-deployment-integrity-contract.md` and `docs/root-deployment-integrity-contract-harness.js` as standalone non-production artifacts. The static audit verifies non-empty root `index.html`, `manifest.json`, and `sw.js`, exact 180×180, 192×192, and 512×512 PNG icon dimensions and signatures, plus manifest, favicon, Apple touch icon, and service-worker integration references. The empty legacy file named `chore: add feature architecture` remains unchanged and is not a deployment asset; main remains untouched.
+
+### External-resource URL integrity checkpoint — Branch2
+
+Added `docs/external-resource-url-integrity-contract.md` and `docs/external-resource-url-integrity-contract-harness.js` as standalone non-production artifacts. The static audit scans 232 application HTML/JavaScript/CSS/JSON files and verifies zero `javascript:` URLs, zero executable data payload URLs, zero unexpected insecure HTTP references, and exactly two intentional user-link normalization expressions in `src/core/utils.js`. The harness passed; no production code was changed and main remains untouched.
