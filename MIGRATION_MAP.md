@@ -1586,3 +1586,7 @@ Added `docs/index-html-tag-integrity-contract.md` and `docs/index-html-tag-integ
 ### Service-worker contract audit checkpoint — Branch2
 
 Added `docs/service-worker-contract.md` and `docs/service-worker-contract-harness.js` as standalone non-production artifacts. The static audit verifies root-level service-worker presence, shell cache URLs, install/activate lifecycle, same-origin GET guards, navigation network-first behavior, asset cache-first behavior, push JSON/text fallback handling, notification display, notification close/focus/navigation/open-window behavior, and isolation from extracted application modules. The harness and service-worker syntax check passed. No production code was changed; main remains untouched.
+
+### PWA manifest contract audit checkpoint — Branch2
+
+Added `docs/pwa-manifest-contract.md` and `docs/pwa-manifest-contract-harness.js` as standalone non-production artifacts. The static audit verifies valid manifest JSON, NovaSocial identity, root start URL/scope, standalone portrait display, theme/background branding, both PNG icon references and files, the HTML manifest link, matching theme metadata, mobile web-app capability metadata, and root service-worker registration. The harness and JSON syntax checks passed. No production code was changed; main remains untouched.
