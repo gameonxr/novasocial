@@ -1594,3 +1594,7 @@ Added `docs/pwa-manifest-contract.md` and `docs/pwa-manifest-contract-harness.js
 ### Branch2 final-readiness contract checkpoint — Branch2
 
 Added `docs/branch2-final-readiness-contract.md` and `docs/branch2-final-readiness-contract-harness.js` as standalone non-production artifacts. The consolidated readiness audit verifies Branch2-only safety, 211 JavaScript modules, 18 stylesheets, 200 feature modules, balanced HTML script integration and required trailing order, protected inline markers, PWA references, 70 documentation files and 70 harnesses with mapped legacy exceptions, and the single documented pre-existing `forwardMessage` seam. The harness passed before publication; no production code was changed and main remains untouched.
+
+### Classic-script compatibility contract checkpoint — Branch2
+
+Added `docs/classic-script-compatibility-contract.md` and `docs/classic-script-compatibility-contract-harness.js` as standalone non-production artifacts. The static audit verifies 213 integrated HTML script tags, zero `type="module"` tags, zero `defer`/`async` attributes that could reorder globals, and zero top-level import/export markers across the 211 extracted JavaScript files. The harness passed before publication; no production code was changed and main remains untouched.
