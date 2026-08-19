@@ -1634,3 +1634,7 @@ Added `docs/saved-account-schema-contract.md` and `docs/saved-account-schema-con
 ### Inline-declaration closure checkpoint — Branch2
 
 Added `docs/inline-declaration-closure-contract.md` and `docs/inline-declaration-closure-contract-harness.js` as standalone non-production artifacts. The static closure audit verifies the established 251 top-level inline declarations, exact 19 protected declaration set, zero protected declarations under `src/`, and the caller-only unresolved `forwardMessage` seam. No speculative extraction or production code change was made; main remains untouched.
+
+### Explicit-error-boundary checkpoint — Branch2
+
+Added `docs/explicit-error-boundary-contract.md` and `docs/explicit-error-boundary-contract-harness.js` as standalone non-production artifacts. The static audit verifies exactly ten existing `throw new Error` sites: six in `index.html`, two in `src/features/profile.js`, and two in `src/features/home.js`, with zero unexpected throws elsewhere. No error path or production code was changed; main remains untouched.
