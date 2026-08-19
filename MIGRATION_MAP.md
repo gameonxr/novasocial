@@ -1570,3 +1570,7 @@ Added `docs/cross-module-lexical-collision-contract.md` and `docs/cross-module-l
 ### Cross-module function collision checkpoint — Branch2
 
 Added `docs/cross-module-function-collision-contract.md` and `docs/cross-module-function-collision-contract-harness.js` as standalone non-production artifacts. The audit covers index.html plus 211 extracted scripts, 719 top-level function names, and zero duplicate global function declarations. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Static HTML ID checkpoint — Branch2
+
+Added `docs/static-html-id-contract.md` and `docs/static-html-id-contract-harness.js` as standalone non-production artifacts. The corrected audit verifies 166 actual static HTML IDs with zero duplicates and explicitly preserves dynamic Calls/WebRTC ID management as protected runtime code. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
