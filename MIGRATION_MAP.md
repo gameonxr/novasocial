@@ -1582,3 +1582,7 @@ Added `docs/local-html-asset-reference-contract.md` and `docs/local-html-asset-r
 ### index.html tag-integrity checkpoint — Branch2
 
 Added `docs/index-html-tag-integrity-contract.md` and `docs/index-html-tag-integrity-contract-harness.js` as standalone non-production artifacts. The audit verifies 213 balanced script tags, 212 integrated module/external script tags, one inline application script, and intact document/body/html boundaries. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Service-worker contract audit checkpoint — Branch2
+
+Added `docs/service-worker-contract.md` and `docs/service-worker-contract-harness.js` as standalone non-production artifacts. The static audit verifies root-level service-worker presence, shell cache URLs, install/activate lifecycle, same-origin GET guards, navigation network-first behavior, asset cache-first behavior, push JSON/text fallback handling, notification display, notification close/focus/navigation/open-window behavior, and isolation from extracted application modules. The harness and service-worker syntax check passed. No production code was changed; main remains untouched.
