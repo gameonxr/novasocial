@@ -1558,3 +1558,7 @@ Added `docs/extracted-file-hygiene-contract.md` and `docs/extracted-file-hygiene
 ### Branch2-only safety checkpoint — Branch2
 
 Added `docs/branch2-only-safety-contract.md` and `docs/branch2-only-safety-contract-harness.js` as standalone non-production artifacts. The safety harness verifies Branch2-only operation, local/origin parity, untouched main, clean worktree, docs-only latest checkpoint scope, and protected markers. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Migration-map reference audit checkpoint — Branch2
+
+Added `docs/migration-map-reference-contract.md` and `docs/migration-map-reference-contract-harness.js` as standalone non-production artifacts. The audit verifies 124 documented docs paths, zero missing references, and records for the latest Branch2 safety, hygiene, stylesheet, module-reference, and inline-handler checkpoints. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
