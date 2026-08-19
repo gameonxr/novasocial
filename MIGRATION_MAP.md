@@ -1630,3 +1630,7 @@ Added `docs/dependency-loading-order-contract.md` and `docs/dependency-loading-o
 ### Saved-account schema checkpoint — Branch2
 
 Added `docs/saved-account-schema-contract.md` and `docs/saved-account-schema-contract-harness.js` as standalone non-production artifacts. The static audit verifies the shared `nova_accounts` key, identity/avatar/session-token/timestamp fields, empty-array read fallback, both-token `setSession` handoff, matching-user avatar updates, and continuity between extracted helpers and inline save/sync functions. The harness passed after aligning assertions to the existing schema; no production code was changed and main remains untouched.
+
+### Inline-declaration closure checkpoint — Branch2
+
+Added `docs/inline-declaration-closure-contract.md` and `docs/inline-declaration-closure-contract-harness.js` as standalone non-production artifacts. The static closure audit verifies the established 251 top-level inline declarations, exact 19 protected declaration set, zero protected declarations under `src/`, and the caller-only unresolved `forwardMessage` seam. No speculative extraction or production code change was made; main remains untouched.
