@@ -1566,3 +1566,7 @@ Added `docs/migration-map-reference-contract.md` and `docs/migration-map-referen
 ### Cross-module lexical collision checkpoint — Branch2
 
 Added `docs/cross-module-lexical-collision-contract.md` and `docs/cross-module-lexical-collision-contract-harness.js` as standalone non-production artifacts. The audit covers index.html plus 211 extracted scripts, 117 top-level const/let names, and zero duplicate lexical declarations. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Cross-module function collision checkpoint — Branch2
+
+Added `docs/cross-module-function-collision-contract.md` and `docs/cross-module-function-collision-contract-harness.js` as standalone non-production artifacts. The audit covers index.html plus 211 extracted scripts, 719 top-level function names, and zero duplicate global function declarations. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
