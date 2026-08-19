@@ -1610,3 +1610,7 @@ Added `docs/forward-message-seam-parity-contract.md` and `docs/forward-message-s
 ### Protected-inline parity checkpoint — Branch2
 
 Added `docs/protected-inline-parity-contract.md` and `docs/protected-inline-parity-contract-harness.js` as standalone non-production artifacts. The read-only audit compares Branch2 with `origin/main:index.html` and verifies all 19 safeguarded DM, Reels, Calls/WebRTC, Story, Notes, push, recording, local-deletion, and particle signatures occur exactly once in both references and zero protected signatures occur in extracted `src/` files. The harness passed; no production code was changed and main remains untouched.
+
+### Credential-surface contract checkpoint — Branch2
+
+Added `docs/credential-surface-contract.md` and `docs/credential-surface-contract-harness.js` as standalone non-production artifacts. The redacted static audit scans 383 tracked HTML/JavaScript/CSS/JSON/Markdown files for high-confidence private-key blocks, GitHub PATs, OpenAI secret prefixes, Supabase service-role markers, AWS secret assignments, and Cloudinary API-secret assignments. It found zero findings; no credential content is printed, no production code was changed, and main remains untouched.
