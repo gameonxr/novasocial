@@ -1606,3 +1606,7 @@ Added `docs/source-boundary-hygiene-contract.md` and `docs/source-boundary-hygie
 ### Forward-message seam parity checkpoint — Branch2
 
 Added `docs/forward-message-seam-parity-contract.md` and `docs/forward-message-seam-parity-contract-harness.js` as standalone non-production artifacts. The read-only parity audit compares Branch2 with `origin/main:index.html` and verifies one preserved `forwardMessage` caller in each, zero implementations or assignments in either reference, and intact inline `renderDMs`/`showMsgMenu` protected markers. The harness passed; no production code was changed and main remains untouched.
+
+### Protected-inline parity checkpoint — Branch2
+
+Added `docs/protected-inline-parity-contract.md` and `docs/protected-inline-parity-contract-harness.js` as standalone non-production artifacts. The read-only audit compares Branch2 with `origin/main:index.html` and verifies all 19 safeguarded DM, Reels, Calls/WebRTC, Story, Notes, push, recording, local-deletion, and particle signatures occur exactly once in both references and zero protected signatures occur in extracted `src/` files. The harness passed; no production code was changed and main remains untouched.
