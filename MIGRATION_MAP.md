@@ -1614,3 +1614,7 @@ Added `docs/protected-inline-parity-contract.md` and `docs/protected-inline-pari
 ### Credential-surface contract checkpoint — Branch2
 
 Added `docs/credential-surface-contract.md` and `docs/credential-surface-contract-harness.js` as standalone non-production artifacts. The redacted static audit scans 383 tracked HTML/JavaScript/CSS/JSON/Markdown files for high-confidence private-key blocks, GitHub PATs, OpenAI secret prefixes, Supabase service-role markers, AWS secret assignments, and Cloudinary API-secret assignments. It found zero findings; no credential content is printed, no production code was changed, and main remains untouched.
+
+### Root deployment-integrity checkpoint — Branch2
+
+Added `docs/root-deployment-integrity-contract.md` and `docs/root-deployment-integrity-contract-harness.js` as standalone non-production artifacts. The static audit verifies non-empty root `index.html`, `manifest.json`, and `sw.js`, exact 180×180, 192×192, and 512×512 PNG icon dimensions and signatures, plus manifest, favicon, Apple touch icon, and service-worker integration references. The empty legacy file named `chore: add feature architecture` remains unchanged and is not a deployment asset; main remains untouched.
