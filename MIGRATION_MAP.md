@@ -1638,3 +1638,7 @@ Added `docs/inline-declaration-closure-contract.md` and `docs/inline-declaration
 ### Explicit-error-boundary checkpoint — Branch2
 
 Added `docs/explicit-error-boundary-contract.md` and `docs/explicit-error-boundary-contract-harness.js` as standalone non-production artifacts. The static audit verifies exactly ten existing `throw new Error` sites: six in `index.html`, two in `src/features/profile.js`, and two in `src/features/home.js`, with zero unexpected throws elsewhere. No error path or production code was changed; main remains untouched.
+
+### Splash-asset parity checkpoint — Branch2
+
+Added `docs/splash-asset-parity-contract.md` and `docs/splash-asset-parity-contract-harness.js` after local Branch2 browser smoke testing found the splash PNG data URL reports zero natural dimensions. The read-only parity audit proves Branch2 and untouched `origin/main:index.html` share the identical 48,047-character payload and identical truncated PNG chunk stream, so the defect is pre-existing and not caused by modularization. No asset or production UI change was made; a future replacement requires a separate product decision.
