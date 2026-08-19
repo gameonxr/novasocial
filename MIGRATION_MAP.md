@@ -1578,3 +1578,7 @@ Added `docs/static-html-id-contract.md` and `docs/static-html-id-contract-harnes
 ### Local HTML asset-reference checkpoint — Branch2
 
 Added `docs/local-html-asset-reference-contract.md` and `docs/local-html-asset-reference-contract-harness.js` as standalone non-production artifacts. The audit verifies 232 static local asset references resolve, including `manifest.json` and `sw.js`, while excluding external URLs and dynamic runtime expressions. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### index.html tag-integrity checkpoint — Branch2
+
+Added `docs/index-html-tag-integrity-contract.md` and `docs/index-html-tag-integrity-contract-harness.js` as standalone non-production artifacts. The audit verifies 213 balanced script tags, 212 integrated module/external script tags, one inline application script, and intact document/body/html boundaries. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
