@@ -1622,3 +1622,7 @@ Added `docs/root-deployment-integrity-contract.md` and `docs/root-deployment-int
 ### External-resource URL integrity checkpoint — Branch2
 
 Added `docs/external-resource-url-integrity-contract.md` and `docs/external-resource-url-integrity-contract-harness.js` as standalone non-production artifacts. The static audit scans 232 application HTML/JavaScript/CSS/JSON files and verifies zero `javascript:` URLs, zero executable data payload URLs, zero unexpected insecure HTTP references, and exactly two intentional user-link normalization expressions in `src/core/utils.js`. The harness passed; no production code was changed and main remains untouched.
+
+### Dependency-loading order checkpoint — Branch2
+
+Added `docs/dependency-loading-order-contract.md` and `docs/dependency-loading-order-contract-harness.js` as standalone non-production artifacts. The static audit verifies the Supabase CDN as the first script, all 18 local stylesheets before local application scripts, core → components → features → inline application order, classic-script attributes, and the required final smart-ranking → nova-init → like-effects sequence. The harness passed; no production code was changed and main remains untouched.
