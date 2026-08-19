@@ -1574,3 +1574,7 @@ Added `docs/cross-module-function-collision-contract.md` and `docs/cross-module-
 ### Static HTML ID checkpoint — Branch2
 
 Added `docs/static-html-id-contract.md` and `docs/static-html-id-contract-harness.js` as standalone non-production artifacts. The corrected audit verifies 166 actual static HTML IDs with zero duplicates and explicitly preserves dynamic Calls/WebRTC ID management as protected runtime code. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Local HTML asset-reference checkpoint — Branch2
+
+Added `docs/local-html-asset-reference-contract.md` and `docs/local-html-asset-reference-contract-harness.js` as standalone non-production artifacts. The audit verifies 232 static local asset references resolve, including `manifest.json` and `sw.js`, while excluding external URLs and dynamic runtime expressions. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
