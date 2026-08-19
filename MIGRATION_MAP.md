@@ -1538,3 +1538,7 @@ Added `docs/contract-artifact-pairing-contract.md` and `docs/contract-artifact-p
 ### Modularization-completeness audit checkpoint — Branch2
 
 Added `docs/modularization-completeness-contract.md` and `docs/modularization-completeness-contract-harness.js` as standalone non-production artifacts. The audit verifies 18 stylesheets, 9 core scripts, 2 shared components, 200 feature modules, core-before-inline integration, required trailing script order, and protected inline markers. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Inline-handler surface audit checkpoint — Branch2
+
+Added `docs/inline-handler-surface-contract.md` and `docs/inline-handler-surface-contract-harness.js` as standalone non-production artifacts. The audit covers 159 unique onclick targets across index.html and extracted modules, with one pre-existing unresolved `forwardMessage` caller documented inside the protected DM action menu. The harness and complete repository validation chain passed. No protected DM production code was changed; main remains untouched.
