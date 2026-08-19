@@ -1626,3 +1626,7 @@ Added `docs/external-resource-url-integrity-contract.md` and `docs/external-reso
 ### Dependency-loading order checkpoint — Branch2
 
 Added `docs/dependency-loading-order-contract.md` and `docs/dependency-loading-order-contract-harness.js` as standalone non-production artifacts. The static audit verifies the Supabase CDN as the first script, all 18 local stylesheets before local application scripts, core → components → features → inline application order, classic-script attributes, and the required final smart-ranking → nova-init → like-effects sequence. The harness passed; no production code was changed and main remains untouched.
+
+### Saved-account schema checkpoint — Branch2
+
+Added `docs/saved-account-schema-contract.md` and `docs/saved-account-schema-contract-harness.js` as standalone non-production artifacts. The static audit verifies the shared `nova_accounts` key, identity/avatar/session-token/timestamp fields, empty-array read fallback, both-token `setSession` handoff, matching-user avatar updates, and continuity between extracted helpers and inline save/sync functions. The harness passed after aligning assertions to the existing schema; no production code was changed and main remains untouched.
