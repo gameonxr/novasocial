@@ -1602,3 +1602,7 @@ Added `docs/classic-script-compatibility-contract.md` and `docs/classic-script-c
 ### Source-boundary hygiene contract checkpoint — Branch2
 
 Added `docs/source-boundary-hygiene-contract.md` and `docs/source-boundary-hygiene-contract-harness.js` as standalone non-production artifacts. The static audit scans all 229 extracted JavaScript/CSS files and verifies UTF-8 round-tripping, zero NUL bytes, zero CRLF contamination, and zero executable/template script or style container tags after comments are removed. The harness passed before publication; no production code was changed and main remains untouched.
+
+### Forward-message seam parity checkpoint — Branch2
+
+Added `docs/forward-message-seam-parity-contract.md` and `docs/forward-message-seam-parity-contract-harness.js` as standalone non-production artifacts. The read-only parity audit compares Branch2 with `origin/main:index.html` and verifies one preserved `forwardMessage` caller in each, zero implementations or assignments in either reference, and intact inline `renderDMs`/`showMsgMenu` protected markers. The harness passed; no production code was changed and main remains untouched.
