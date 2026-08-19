@@ -1554,3 +1554,7 @@ Added `docs/stylesheet-reference-contract.md` and `docs/stylesheet-reference-con
 ### Extracted-file hygiene checkpoint — Branch2
 
 Added `docs/extracted-file-hygiene-contract.md` and `docs/extracted-file-hygiene-contract-harness.js` as standalone non-production artifacts. The audit verifies all 246 modularized source files are present and non-empty, with zero trailing-whitespace violations. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
+
+### Branch2-only safety checkpoint — Branch2
+
+Added `docs/branch2-only-safety-contract.md` and `docs/branch2-only-safety-contract-harness.js` as standalone non-production artifacts. The safety harness verifies Branch2-only operation, local/origin parity, untouched main, clean worktree, docs-only latest checkpoint scope, and protected markers. The harness and complete repository validation chain passed. No production code was changed; main remains untouched.
