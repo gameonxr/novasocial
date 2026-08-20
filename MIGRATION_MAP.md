@@ -1998,3 +1998,7 @@ Added `docs/new-posts-indicator-contract.md` and `docs/new-posts-indicator-contr
 ### Select Note Visibility audit checkpoint — Branch2
 
 Added `docs/select-note-visibility-contract.md` and `docs/select-note-visibility-contract-harness.js`. This structural audit locks visibility state assignment, three-option iteration, selected/unselected styles, and UI-only scope. The existing helper remains unchanged; protected note persistence and music systems remain untouched.
+
+### Select Video Length audit checkpoint — Branch2
+
+Added `docs/select-video-len-contract.md` and `docs/select-video-len-contract-harness.js`. This structural audit locks trim-state assignment, full/number matching, pill iteration, selected/unselected styles, and UI-only scope. The existing helper remains unchanged; protected media trimming and upload systems remain untouched.
