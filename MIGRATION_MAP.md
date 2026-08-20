@@ -1734,3 +1734,7 @@ Added `docs/calls-webrtc-seam-preparation-contract.md` and `docs/calls-webrtc-se
 ### DMs seam-preparation checkpoint — Branch2
 
 Added `docs/dms-seam-preparation-contract.md` and `docs/dms-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected render/refresh, query, account/tab, DOM, cache, scroll, and generation-race boundaries; confirms non-destructive refresh markers; and keeps DMs production split at 0. No chat or message code moved or changed.
+
+### Reels seam-preparation checkpoint — Branch2
+
+Added `docs/reels-seam-preparation-contract.md` and `docs/reels-seam-preparation-contract-harness.js`. This mapping-only milestone records persistent-container, saved-index, transform, video-window, swipe, playback, and navigation boundaries; confirms the current−1 through current+3 source window; and keeps Reels production split at 0. No Reels code moved or changed.
