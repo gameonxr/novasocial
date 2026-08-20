@@ -2022,3 +2022,7 @@ Added `docs/stop-all-preview-audio-contract.md` and `docs/stop-all-preview-audio
 ### Toggle Preview Play audit checkpoint — Branch2
 
 Added `docs/toggle-preview-play-contract.md` and `docs/toggle-preview-play-contract-harness.js`. This structural audit locks missing-preview handling, active-toggle pause/reset, prior-preview cleanup, audio setup, pause-icon rendering, and ended-event cleanup. The harness call-site assertion was corrected to the extracted music-search renderer; production code remains unchanged.
+
+### Confirm Music Segment audit checkpoint — Branch2
+
+Added `docs/confirm-music-segment-contract.md` and `docs/confirm-music-segment-contract-harness.js`. This structural audit locks segment-audio cleanup, selected note-music state assignment, start-time fallback, segment-panel cleanup, note-music rerendering, and delegated recents persistence. Production code remains unchanged.
