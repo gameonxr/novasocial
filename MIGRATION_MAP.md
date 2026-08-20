@@ -1990,3 +1990,7 @@ Added `docs/restore-fab-button-contract.md` and `docs/restore-fab-button-contrac
 ### Hide FAB Button audit checkpoint — Branch2
 
 Added `docs/hide-fab-button-contract.md` and `docs/hide-fab-button-contract-harness.js`. This structural audit locks guarded FAB lookup, display hiding, local hidden-state persistence, long-press-menu cleanup, and toast feedback. The existing helper remains unchanged; protected upload and post-creation systems remain untouched.
+
+### New Posts Indicator audit checkpoint — Branch2
+
+Added `docs/new-posts-indicator-contract.md` and `docs/new-posts-indicator-contract-harness.js`. This structural audit locks duplicate suppression, screen guard, pill rendering, Home-cache invalidation/navigation delegation, and timed cleanup. The existing helper remains unchanged; protected feed and post systems remain untouched.
