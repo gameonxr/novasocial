@@ -1690,3 +1690,7 @@ Added `docs/video-observer-contract.md` and `docs/video-observer-contract-harnes
 ### Media frame-loop checkpoint — Branch2
 
 Added `docs/media-frame-loop-contract.md` and `docs/media-frame-loop-contract-harness.js`. The static audit locks guarded animation-frame loops and stop ordering in compression and trimming helpers: disable drawing, pause video, then stop the recorder, while retaining existing failure cleanup markers. No browser media API, timing, or production behavior was changed.
+
+### Object-URL lifecycle checkpoint — Branch2
+
+Added `docs/object-url-lifecycle-contract.md` and `docs/object-url-lifecycle-contract-harness.js`. The static audit records 14 object-URL creations and eight revocations, preserves cleanup for Story/post downloads and image/video compression, and documents existing preview-owned creation sites without speculative revocation changes.
