@@ -1834,3 +1834,7 @@ Added `docs/comments-flow-contract.md` and `docs/comments-flow-contract-harness.
 ### Reply-preview audit checkpoint — Branch2
 
 Added `docs/reply-preview-contract.md` and `docs/reply-preview-contract-harness.js`. This structural audit locks reply target state, image/video/audio fallbacks, preview rendering, input focus, scroll-button offset, cancellation cleanup, and optional DOM tolerance. The existing reply-preview helper remains unchanged; protected DM rendering, chat opening, sending, and navigation remain inline and untouched.
+
+### Note-reply audit checkpoint — Branch2
+
+Added `docs/note-reply-contract.md` and `docs/note-reply-contract-harness.js`. This structural audit locks blank-input handling, one-to-one conversation reuse, conversation creation, membership setup, note-reply message format, successful overlay cleanup, blocked-recipient feedback, and generic failure handling. The existing note-reply helper remains unchanged; protected DM rendering, chat opening, sending, and navigation remain inline and untouched.
