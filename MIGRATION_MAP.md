@@ -1946,3 +1946,7 @@ Added `docs/adjust-follower-count-contract.md` and `docs/adjust-follower-count-c
 ### Derive Video Thumbnail URL audit checkpoint — Branch2
 
 Added `docs/derive-video-thumbnail-url-contract.md` and `docs/derive-video-thumbnail-url-contract-harness.js`. This structural audit locks input guards, Cloudinary/video-path validation, poster transforms, supported extension conversion, error fallback, and pure scope. The existing helper remains unchanged; protected media upload, playback, and deletion systems remain untouched.
+
+### Cloudinary URL audit checkpoint — Branch2
+
+Added `docs/cld-url-contract.md` and `docs/cld-url-contract-harness.js`. This structural audit locks safe passthrough guards, upload-path validation, transform insertion, and pure ownership. The existing helper remains unchanged; protected media upload and delivery systems remain untouched.
