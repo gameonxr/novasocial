@@ -1862,3 +1862,7 @@ Added `docs/games-contract.md` and `docs/games-contract-harness.js`. This struct
 ### Attachment-sheet audit checkpoint — Branch2
 
 Added `docs/attachment-sheet-contract.md` and `docs/attachment-sheet-contract-harness.js`. This structural audit locks Gallery/Camera/Location/Sticker action surfaces, hidden file-input accept/capture attributes, modal-close callbacks, and delegation boundaries. The existing attachment-sheet module remains unchanged; protected DM sending and media systems remain untouched.
+
+### Avatar Creator audit checkpoint — Branch2
+
+Added `docs/avatar-creator-contract.md` and `docs/avatar-creator-contract-harness.js`. This structural audit locks the shared modal entry, eight face styles, six background palettes, six voice options, Save Avatar dispatch, toast/modal cleanup, and UI-only scope. The existing Avatar Creator module remains unchanged; persistence, network, AI voice, and high-risk content systems remain untouched.
