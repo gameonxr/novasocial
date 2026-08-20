@@ -1870,3 +1870,7 @@ Added `docs/avatar-creator-contract.md` and `docs/avatar-creator-contract-harnes
 ### Chat Actions audit checkpoint — Branch2
 
 Added `docs/chat-actions-contract.md` and `docs/chat-actions-contract-harness.js`. This structural audit locks the Chat Options modal, conditional Call History delegation, Clear Chat routing, Cancel cleanup, and renderer-only scope. The existing chat-actions module remains unchanged; protected DM, deletion, realtime, and call execution systems remain untouched.
+
+### Open Sticker Picker audit checkpoint — Branch2
+
+Added `docs/open-sticker-picker-contract.md` and `docs/open-sticker-picker-contract-harness.js`. This structural audit locks conversation scoping, Stickers & GIFs modal assembly, custom image upload wiring, Recent/Favorites/Search GIF tabs, Recent initialization, and delegation boundaries. The existing picker module remains unchanged; sticker send, favorites, persistence, upload processing, GIF search, and protected messaging systems remain untouched.
