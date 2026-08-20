@@ -2018,3 +2018,7 @@ Added `docs/url-base64-to-uint8-array-contract.md` and `docs/url-base64-to-uint8
 ### Stop All Preview Audio audit checkpoint — Branch2
 
 Added `docs/stop-all-preview-audio-contract.md` and `docs/stop-all-preview-audio-contract-harness.js`. This structural audit locks guarded pause, preview reference clearing, unconditional playback-index reset, and non-ownership of audio creation or playback orchestration. Production code remains unchanged.
+
+### Toggle Preview Play audit checkpoint — Branch2
+
+Added `docs/toggle-preview-play-contract.md` and `docs/toggle-preview-play-contract-harness.js`. This structural audit locks missing-preview handling, active-toggle pause/reset, prior-preview cleanup, audio setup, pause-icon rendering, and ended-event cleanup. The harness call-site assertion was corrected to the extracted music-search renderer; production code remains unchanged.
