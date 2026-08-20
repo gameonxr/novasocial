@@ -1770,3 +1770,7 @@ Added `docs/post-creation-flow-contract.md` and `docs/post-creation-flow-contrac
 ### Scheduled-posts audit checkpoint — Branch2
 
 Added `docs/scheduled-posts-contract.md` and `docs/scheduled-posts-contract-harness.js`. This structural audit locks local-storage initialization, malformed-storage tolerance, empty and ordered rendering, delete confirmation, persistence, modal refresh, and non-throwing write failures. The existing scheduled-posts module remains unchanged; no scheduled-post production code moved or changed.
+
+### Explore and Trending audit checkpoint — Branch2
+
+Added `docs/explore-trending-contract.md` and `docs/explore-trending-contract-harness.js`. This structural audit locks Explore generation guards, joined-query fallback, bidirectional block filtering, debounced and smart-search routing, hashtag ranking, fallback trends, and hashtag navigation. The existing discovery modules remain unchanged; no Explore, search, ranking, or navigation production code moved or changed.
