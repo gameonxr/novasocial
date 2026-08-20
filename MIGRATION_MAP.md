@@ -1806,3 +1806,7 @@ Added `docs/message-favorite-contract.md` and `docs/message-favorite-contract-ha
 ### Vanish Mode audit checkpoint — Branch2
 
 Added `docs/vanish-mode-contract.md` and `docs/vanish-mode-contract-harness.js`. This structural audit locks window-state inversion, button icon updates, message-list styling, optional DOM tolerance, matching ON/OFF feedback, and the UI-only scope. The existing Vanish Mode module remains unchanged; protected DM rendering, chat opening, message sending, and deletion remain inline and untouched.
+
+### Sticker-favorites audit checkpoint — Branch2
+
+Added `docs/sticker-favorites-contract.md` and `docs/sticker-favorites-contract-harness.js`. This structural audit locks event isolation, local favorite-list toggling, star-button feedback, add/remove toasts, persistence, and the local UI-only scope. The existing sticker-favorites module remains unchanged; no sticker sending, message, or DM production code moved or changed.
