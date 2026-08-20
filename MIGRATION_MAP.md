@@ -1766,3 +1766,7 @@ Added `docs/admin-panel-rendering-contract.md` and `docs/admin-panel-rendering-c
 ### Post-creation flow audit checkpoint — Branch2
 
 Added `docs/post-creation-flow-contract.md` and `docs/post-creation-flow-contract-harness.js`. This structural audit locks create-menu entry, media selection, upload and insert ordering, co-author fallback, best-effort notifications, cache invalidation, Reels freshness, navigation, and failure feedback. Existing create-entry modules and inline `submitCreate()` remain unchanged; no post-creation production code moved or changed.
+
+### Scheduled-posts audit checkpoint — Branch2
+
+Added `docs/scheduled-posts-contract.md` and `docs/scheduled-posts-contract-harness.js`. This structural audit locks local-storage initialization, malformed-storage tolerance, empty and ordered rendering, delete confirmation, persistence, modal refresh, and non-throwing write failures. The existing scheduled-posts module remains unchanged; no scheduled-post production code moved or changed.
