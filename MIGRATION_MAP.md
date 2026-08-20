@@ -1642,3 +1642,7 @@ Added `docs/explicit-error-boundary-contract.md` and `docs/explicit-error-bounda
 ### Splash-asset parity checkpoint — Branch2
 
 Added `docs/splash-asset-parity-contract.md` and `docs/splash-asset-parity-contract-harness.js` after local Branch2 browser smoke testing found the splash PNG data URL reports zero natural dimensions. The read-only parity audit proves Branch2 and untouched `origin/main:index.html` share the identical 48,047-character payload and identical truncated PNG chunk stream, so the defect is pre-existing and not caused by modularization. No asset or production UI change was made; a future replacement requires a separate product decision.
+
+### Event-listener boundary checkpoint — Branch2
+
+Added `docs/event-listener-boundary-contract.md` and `docs/event-listener-boundary-contract-harness.js`. The static audit records 68 `addEventListener` registrations across 17 extracted modules, 34 in `index.html`, and five in `sw.js`, with zero `removeEventListener` registrations in the extracted modules or HTML. This is an observational boundary record, not a speculative cleanup request; no listener behavior or protected inline system was changed.
