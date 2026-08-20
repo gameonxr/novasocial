@@ -1902,3 +1902,7 @@ Added `docs/sticker-toggle-fav-contract.md` and `docs/sticker-toggle-fav-contrac
 ### Cancel Segment Picker audit checkpoint — Branch2
 
 Added `docs/cancel-segment-picker-contract.md` and `docs/cancel-segment-picker-contract-harness.js`. This structural audit locks guarded preview-audio pause, segment state reset, optional panel removal, and cleanup-only scope. The existing helper remains unchanged; protected media playback, segment confirmation, and note persistence systems remain untouched.
+
+### Show Music Segment Picker audit checkpoint — Branch2
+
+Added `docs/show-music-segment-picker-contract.md` and `docs/show-music-segment-picker-contract-harness.js`. This structural audit locks preview cleanup, segment-panel structure, metadata/artwork rendering, Cancel/Done delegation, preview control, 50-bar waveform scaffold, drag-window initialization, and renderer-only scope. The existing renderer remains unchanged; protected media playback, drag execution, segment confirmation, and note persistence systems remain untouched.
