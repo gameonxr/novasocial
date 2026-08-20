@@ -1994,3 +1994,7 @@ Added `docs/hide-fab-button-contract.md` and `docs/hide-fab-button-contract-harn
 ### New Posts Indicator audit checkpoint — Branch2
 
 Added `docs/new-posts-indicator-contract.md` and `docs/new-posts-indicator-contract-harness.js`. This structural audit locks duplicate suppression, screen guard, pill rendering, Home-cache invalidation/navigation delegation, and timed cleanup. The existing helper remains unchanged; protected feed and post systems remain untouched.
+
+### Select Note Visibility audit checkpoint — Branch2
+
+Added `docs/select-note-visibility-contract.md` and `docs/select-note-visibility-contract-harness.js`. This structural audit locks visibility state assignment, three-option iteration, selected/unselected styles, and UI-only scope. The existing helper remains unchanged; protected note persistence and music systems remain untouched.
