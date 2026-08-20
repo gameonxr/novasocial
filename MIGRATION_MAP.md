@@ -1878,3 +1878,7 @@ Added `docs/open-sticker-picker-contract.md` and `docs/open-sticker-picker-contr
 ### Get Local Stickers audit checkpoint — Branch2
 
 Added `docs/get-local-stickers-contract.md` and `docs/get-local-stickers-contract-harness.js`. This structural audit locks valid local JSON reads, missing-key empty fallback, malformed-data cleanup, dynamic key derivation, and local-only ownership. The existing helper remains unchanged; sticker UI, sending, upload, and protected messaging systems remain untouched.
+
+### Save Local Sticker audit checkpoint — Branch2
+
+Added `docs/save-local-sticker-contract.md` and `docs/save-local-sticker-contract-harness.js`. This structural audit locks duplicate suppression, newest-first insertion, the 20-item cap, dynamic local key derivation, delegated list loading, and local-only scope. The existing helper remains unchanged; sticker UI, sending, uploads, and protected messaging systems remain untouched.
