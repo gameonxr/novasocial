@@ -1746,3 +1746,7 @@ Added `docs/notes-seam-preparation-contract.md` and `docs/notes-seam-preparation
 ### Stories seam-preparation checkpoint — Branch2
 
 Added `docs/stories-seam-preparation-contract.md` and `docs/stories-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected viewer/navigation, playback, owner-viewers, poll, reply/reaction, submission, and deletion boundaries; confirms existing Story contracts remain paired; and keeps Stories production split at 0. No Story code moved or changed.
+
+### Voice Recording seam-preparation checkpoint — Branch2
+
+Added `docs/voice-recording-seam-preparation-contract.md` and `docs/voice-recording-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected recorder state, MediaRecorder capture, upload/insert, realtime delivery, cleanup, and separate `_segmentAudio` boundaries; confirms no speculative WebSocket owner was introduced; and keeps Voice Recording production split at 0. No recording code moved or changed.
