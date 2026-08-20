@@ -1890,3 +1890,7 @@ Added `docs/sticker-tab-contract.md` and `docs/sticker-tab-contract-harness.js`.
 ### Story Sticker Helpers audit checkpoint — Branch2
 
 Added `docs/story-sticker-helpers-contract.md` and `docs/story-sticker-helpers-contract-harness.js`. This structural audit locks sticker-panel open/close, emoji sticker defaults, custom text validation, custom text properties, render delegation, input cleanup, and story-editor-only scope. The existing helper remains unchanged; protected story rendering, persistence, publishing, and media systems remain untouched.
+
+### Toggle Favorite Sticker audit checkpoint — Branch2
+
+Added `docs/toggle-fav-sticker-contract.md` and `docs/toggle-fav-sticker-contract-harness.js`. This structural audit locks propagation stopping, delegated favorite reads, add/remove behavior, optional button feedback, toast messages, favorite persistence, and local-only scope. The existing helper remains unchanged; sticker sending, picker rendering, uploads, and protected messaging systems remain untouched.
