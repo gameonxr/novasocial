@@ -1978,3 +1978,7 @@ Added `docs/get-saved-accounts-contract.md` and `docs/get-saved-accounts-contrac
 ### Reset Preview Icon audit checkpoint — Branch2
 
 Added `docs/reset-preview-icon-contract.md` and `docs/reset-preview-icon-contract-harness.js`. This structural audit locks indexed icon lookup, missing-element safety, play-polygon replacement, and renderer-only scope. The existing helper remains unchanged; inline audio playback behavior remains untouched.
+
+### Pause All Videos audit checkpoint — Branch2
+
+Added `docs/pause-all-videos-contract.md` and `docs/pause-all-videos-contract-harness.js`. This structural audit locks rendered-video selection, guarded per-element pauses, exception tolerance, and DOM-only scope. The existing helper remains unchanged; protected Reels, Calls, and media playback systems remain untouched.
