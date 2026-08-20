@@ -1950,3 +1950,7 @@ Added `docs/derive-video-thumbnail-url-contract.md` and `docs/derive-video-thumb
 ### Cloudinary URL audit checkpoint — Branch2
 
 Added `docs/cld-url-contract.md` and `docs/cld-url-contract-harness.js`. This structural audit locks safe passthrough guards, upload-path validation, transform insertion, and pure ownership. The existing helper remains unchanged; protected media upload and delivery systems remain untouched.
+
+### Get Network Quality HTML audit checkpoint — Branch2
+
+Added `docs/get-network-quality-html-contract.md` and `docs/get-network-quality-html-contract-harness.js`. This structural audit locks browser connection fallbacks, 4g/3g/2g mapping, default medium quality, four-bar rendering, and Call-UI-only scope. The existing helper remains unchanged; protected Calls systems remain untouched.
