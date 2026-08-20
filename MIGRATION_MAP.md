@@ -1750,3 +1750,7 @@ Added `docs/stories-seam-preparation-contract.md` and `docs/stories-seam-prepara
 ### Voice Recording seam-preparation checkpoint — Branch2
 
 Added `docs/voice-recording-seam-preparation-contract.md` and `docs/voice-recording-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected recorder state, MediaRecorder capture, upload/insert, realtime delivery, cleanup, and separate `_segmentAudio` boundaries; confirms no speculative WebSocket owner was introduced; and keeps Voice Recording production split at 0. No recording code moved or changed.
+
+### Deletion-fallback seam-preparation checkpoint — Branch2
+
+Added `docs/deletion-fallback-seam-preparation-contract.md` and `docs/deletion-fallback-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected queue read, ordered replay, per-item isolation, finalization, media-deletion, and startup-guard boundaries; confirms outer failures preserve the queue; and keeps deletion-fallback production split at 0. No deletion or media code moved or changed.
