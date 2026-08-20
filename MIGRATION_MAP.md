@@ -2006,3 +2006,7 @@ Added `docs/select-video-len-contract.md` and `docs/select-video-len-contract-ha
 ### Select Filter audit checkpoint — Branch2
 
 Added `docs/select-filter-contract.md` and `docs/select-filter-contract-harness.js`. This structural audit locks filter-state assignment, `none` handling, preview styling, tray/chip highlighting, reset behavior, and UI-only scope. The existing helper remains unchanged; protected media processing and post-creation systems remain untouched.
+
+### Select Note Music Result audit checkpoint — Branch2
+
+Added `docs/select-note-music-result-contract.md` and `docs/select-note-music-result-contract-harness.js`. This structural audit locks preview-audio cleanup, no-preview direct attachment, panel/renderer delegation, preview-present segment-picker delegation, and protected persistence boundaries. The existing helper remains unchanged; note persistence, recents, audio playback, and segment-picker execution remain untouched.
