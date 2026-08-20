@@ -1774,3 +1774,7 @@ Added `docs/scheduled-posts-contract.md` and `docs/scheduled-posts-contract-harn
 ### Explore and Trending audit checkpoint — Branch2
 
 Added `docs/explore-trending-contract.md` and `docs/explore-trending-contract-harness.js`. This structural audit locks Explore generation guards, joined-query fallback, bidirectional block filtering, debounced and smart-search routing, hashtag ranking, fallback trends, and hashtag navigation. The existing discovery modules remain unchanged; no Explore, search, ranking, or navigation production code moved or changed.
+
+### DM-drafts audit checkpoint — Branch2
+
+Added `docs/dm-drafts-contract.md` and `docs/dm-drafts-contract-harness.js`. This structural audit locks local-storage hydration, per-conversation isolation, blank-text deletion, explicit clearing, persistence, and failure tolerance. The existing DM-drafts module remains unchanged; protected DM rendering, chat opening, message sending, and realtime code remain inline and untouched.
