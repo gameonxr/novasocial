@@ -1670,3 +1670,7 @@ Added `docs/mutation-error-boundary-contract.md` and `docs/mutation-error-bounda
 ### Realtime subscription lifecycle checkpoint — Branch2
 
 Added `docs/realtime-subscription-lifecycle-contract.md` and `docs/realtime-subscription-lifecycle-contract-harness.js`. The static audit records 10 Supabase realtime channel registrations, 10 subscribed channel chains, 10 managed slot assignments, and 21 existing `removeChannel` cleanup calls. Browser PushManager unsubscribe remains explicitly distinct. No DMs, Calls/WebRTC, subscription ownership, or teardown behavior was changed.
+
+### Extracted wrapper-seam checkpoint — Branch2
+
+Added `docs/extracted-wrapper-seam-contract.md` and `docs/extracted-wrapper-seam-contract-harness.js`. The static audit locks the intentional `nova-init`/`showApp` and `like-effects`/`toggleLike` seams, including guarded capture, argument forwarding, the 100 ms initialization delay, new-like particle condition, and trailing script order. No wrapper or production behavior was changed.
