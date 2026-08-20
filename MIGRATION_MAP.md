@@ -1906,3 +1906,7 @@ Added `docs/cancel-segment-picker-contract.md` and `docs/cancel-segment-picker-c
 ### Show Music Segment Picker audit checkpoint — Branch2
 
 Added `docs/show-music-segment-picker-contract.md` and `docs/show-music-segment-picker-contract-harness.js`. This structural audit locks preview cleanup, segment-panel structure, metadata/artwork rendering, Cancel/Done delegation, preview control, 50-bar waveform scaffold, drag-window initialization, and renderer-only scope. The existing renderer remains unchanged; protected media playback, drag execution, segment confirmation, and note persistence systems remain untouched.
+
+### Delete Multiple Media audit checkpoint — Branch2
+
+Added `docs/delete-multiple-media-contract.md` and `docs/delete-multiple-media-contract-harness.js`. This structural audit locks URL normalization, empty-input guard, `Promise.allSettled` orchestration, and the protected `deleteMediaProduction` delegate. The existing high-risk deletion helper remains unchanged; no destructive behavior was migrated, widened, or executed.
