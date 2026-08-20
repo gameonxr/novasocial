@@ -1810,3 +1810,7 @@ Added `docs/vanish-mode-contract.md` and `docs/vanish-mode-contract-harness.js`.
 ### Sticker-favorites audit checkpoint — Branch2
 
 Added `docs/sticker-favorites-contract.md` and `docs/sticker-favorites-contract-harness.js`. This structural audit locks event isolation, local favorite-list toggling, star-button feedback, add/remove toasts, persistence, and the local UI-only scope. The existing sticker-favorites module remains unchanged; no sticker sending, message, or DM production code moved or changed.
+
+### Local-sticker persistence audit checkpoint — Branch2
+
+Added `docs/local-sticker-persistence-contract.md` and `docs/local-sticker-persistence-contract-harness.js`. This structural audit locks type-key isolation, duplicate suppression, newest-first ordering, the 20-item cap, malformed-data cleanup, persistence, and local-only scope. The existing local-sticker reader and writer modules remain unchanged; no sticker, message, or DM production code moved or changed.
