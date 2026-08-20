@@ -1778,3 +1778,7 @@ Added `docs/explore-trending-contract.md` and `docs/explore-trending-contract-ha
 ### DM-drafts audit checkpoint — Branch2
 
 Added `docs/dm-drafts-contract.md` and `docs/dm-drafts-contract-harness.js`. This structural audit locks local-storage hydration, per-conversation isolation, blank-text deletion, explicit clearing, persistence, and failure tolerance. The existing DM-drafts module remains unchanged; protected DM rendering, chat opening, message sending, and realtime code remain inline and untouched.
+
+### Calendar display audit checkpoint — Branch2
+
+Added `docs/calendar-display-contract.md` and `docs/calendar-display-contract-harness.js`. This structural audit locks current-month date derivation, leading blanks, day-cell rendering, today highlighting, reminder toasts, upcoming-event cards, and the inline add-event boundary. The existing Calendar module remains unchanged; no calendar or event production code moved or changed.
