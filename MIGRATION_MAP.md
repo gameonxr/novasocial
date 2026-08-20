@@ -1842,3 +1842,7 @@ Added `docs/note-reply-contract.md` and `docs/note-reply-contract-harness.js`. T
 ### Local Nova AI fallback audit checkpoint — Branch2
 
 Added `docs/local-ai-response-contract.md` and `docs/local-ai-response-contract-harness.js`. This structural audit locks input normalization, deterministic content branches, identity/help responses, greeting personalization, courtesy handling, broad default coverage, and action-free scope. The existing Local AI fallback module remains unchanged; inline Nova AI overrides and navigation/action handlers remain unchanged.
+
+### Channels audit checkpoint — Branch2
+
+Added `docs/channels-contract.md` and `docs/channels-contract-harness.js`. This structural audit locks local-storage hydration, empty/list rendering, channel creation controls, blank-name validation, record defaults, channel opening, broadcast persistence/refresh, and subscription feedback. The existing Channels module remains unchanged; Communities and other group production code were not moved or changed.
