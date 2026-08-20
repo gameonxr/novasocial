@@ -1958,3 +1958,7 @@ Added `docs/get-network-quality-html-contract.md` and `docs/get-network-quality-
 ### Copy Story Link audit checkpoint — Branch2
 
 Added `docs/copy-story-link-contract.md` and `docs/copy-story-link-contract-harness.js`. This structural audit locks story URL construction, clipboard delegation, success/error toasts, and modal cleanup. The existing helper remains unchanged; protected Stories systems remain untouched.
+
+### Extract Cloudinary Public ID audit checkpoint — Branch2
+
+Added `docs/extract-cloudinary-public-id-contract.md` and `docs/extract-cloudinary-public-id-contract-harness.js`. This structural audit locks provider guards, upload-path parsing, version removal, extension stripping, null fallback, and parser-only scope. The existing helper remains unchanged; Cloudinary deletion and protected storage systems remain untouched.
