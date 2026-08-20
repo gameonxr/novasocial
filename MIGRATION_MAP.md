@@ -1874,3 +1874,7 @@ Added `docs/chat-actions-contract.md` and `docs/chat-actions-contract-harness.js
 ### Open Sticker Picker audit checkpoint — Branch2
 
 Added `docs/open-sticker-picker-contract.md` and `docs/open-sticker-picker-contract-harness.js`. This structural audit locks conversation scoping, Stickers & GIFs modal assembly, custom image upload wiring, Recent/Favorites/Search GIF tabs, Recent initialization, and delegation boundaries. The existing picker module remains unchanged; sticker send, favorites, persistence, upload processing, GIF search, and protected messaging systems remain untouched.
+
+### Get Local Stickers audit checkpoint — Branch2
+
+Added `docs/get-local-stickers-contract.md` and `docs/get-local-stickers-contract-harness.js`. This structural audit locks valid local JSON reads, missing-key empty fallback, malformed-data cleanup, dynamic key derivation, and local-only ownership. The existing helper remains unchanged; sticker UI, sending, upload, and protected messaging systems remain untouched.
