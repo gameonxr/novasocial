@@ -1694,3 +1694,7 @@ Added `docs/media-frame-loop-contract.md` and `docs/media-frame-loop-contract-ha
 ### Object-URL lifecycle checkpoint — Branch2
 
 Added `docs/object-url-lifecycle-contract.md` and `docs/object-url-lifecycle-contract-harness.js`. The static audit records 14 object-URL creations and eight revocations, preserves cleanup for Story/post downloads and image/video compression, and documents existing preview-owned creation sites without speculative revocation changes.
+
+### Clipboard interaction checkpoint — Branch2
+
+Added `docs/clipboard-interaction-contract.md` and `docs/clipboard-interaction-contract-harness.js`. The static audit records seven Async Clipboard writes, one legacy `execCommand('copy')` fallback, and the existing handled/unhandled message-copy boundaries. No clipboard permission, toast, fallback, or error-handling behavior was changed.
