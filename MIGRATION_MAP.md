@@ -1914,3 +1914,7 @@ Added `docs/delete-multiple-media-contract.md` and `docs/delete-multiple-media-c
 ### Generate File Name audit checkpoint — Branch2
 
 Added `docs/generate-file-name-contract.md` and `docs/generate-file-name-contract-harness.js`. This structural audit locks bounded user identifiers, timestamp/random uniqueness components, video/non-video extension mapping, and pure local scope. The existing helper remains unchanged; media upload and deletion systems remain untouched.
+
+### Previous Media audit checkpoint — Branch2
+
+Added `docs/prev-media-contract.md` and `docs/prev-media-contract-harness.js`. This structural audit locks file guards, object-URL preview setup, video/image branches, metadata probing, filter/edit-tool delegation, video-length handling, and publish-button enablement. The existing handler remains unchanged; protected media upload, trimming, filters, and post-creation systems remain untouched.
