@@ -2002,3 +2002,7 @@ Added `docs/select-note-visibility-contract.md` and `docs/select-note-visibility
 ### Select Video Length audit checkpoint — Branch2
 
 Added `docs/select-video-len-contract.md` and `docs/select-video-len-contract-harness.js`. This structural audit locks trim-state assignment, full/number matching, pill iteration, selected/unselected styles, and UI-only scope. The existing helper remains unchanged; protected media trimming and upload systems remain untouched.
+
+### Select Filter audit checkpoint — Branch2
+
+Added `docs/select-filter-contract.md` and `docs/select-filter-contract-harness.js`. This structural audit locks filter-state assignment, `none` handling, preview styling, tray/chip highlighting, reset behavior, and UI-only scope. The existing helper remains unchanged; protected media processing and post-creation systems remain untouched.
