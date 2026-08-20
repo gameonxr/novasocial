@@ -1986,3 +1986,7 @@ Added `docs/pause-all-videos-contract.md` and `docs/pause-all-videos-contract-ha
 ### Restore FAB Button audit checkpoint — Branch2
 
 Added `docs/restore-fab-button-contract.md` and `docs/restore-fab-button-contract-harness.js`. This structural audit locks guarded FAB lookup, display/animation restoration, local hidden-state reset, Home-tab behavior, and toast feedback. The existing helper remains unchanged; protected upload and post-creation systems remain untouched.
+
+### Hide FAB Button audit checkpoint — Branch2
+
+Added `docs/hide-fab-button-contract.md` and `docs/hide-fab-button-contract-harness.js`. This structural audit locks guarded FAB lookup, display hiding, local hidden-state persistence, long-press-menu cleanup, and toast feedback. The existing helper remains unchanged; protected upload and post-creation systems remain untouched.
