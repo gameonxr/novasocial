@@ -1742,3 +1742,7 @@ Added `docs/reels-seam-preparation-contract.md` and `docs/reels-seam-preparation
 ### Notes seam-preparation checkpoint — Branch2
 
 Added `docs/notes-seam-preparation-contract.md` and `docs/notes-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected viewer/removal, audio, reactions, Cloudinary cleanup, and Notes Bar refresh boundaries; confirms extracted Notes Bar helpers remain at their boundary; and keeps Notes production split at 0. No note code moved or changed.
+
+### Stories seam-preparation checkpoint — Branch2
+
+Added `docs/stories-seam-preparation-contract.md` and `docs/stories-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected viewer/navigation, playback, owner-viewers, poll, reply/reaction, submission, and deletion boundaries; confirms existing Story contracts remain paired; and keeps Stories production split at 0. No Story code moved or changed.
