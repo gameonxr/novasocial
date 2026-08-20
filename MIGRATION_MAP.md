@@ -1826,3 +1826,7 @@ Added `docs/notes-audio-helper-contract.md` and `docs/notes-audio-helper-contrac
 ### Profile-customizer audit checkpoint — Branch2
 
 Added `docs/profile-customizer-contract.md` and `docs/profile-customizer-contract-harness.js`. This structural audit locks theme rendering, index validation, profile-theme persistence, local synchronization, modal/profile refresh, Verified Plus activation feedback, and failure handling. The existing Profile Customizer module remains unchanged; no profile, account, authentication, or premium production code moved or changed.
+
+### Comments-flow audit checkpoint — Branch2
+
+Added `docs/comments-flow-contract.md` and `docs/comments-flow-contract-harness.js`. This structural audit locks explicit comment queries, joined-profile fallback, comment-like hydration, rendering/navigation, optimistic like toggles, owner notifications, banned and blank-input guards, rate-limit feedback, and successful-submit refresh ordering. The existing Comments module remains unchanged; no DM, Notes, Story, or comment production code moved or changed.
