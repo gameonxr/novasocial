@@ -1838,3 +1838,7 @@ Added `docs/reply-preview-contract.md` and `docs/reply-preview-contract-harness.
 ### Note-reply audit checkpoint — Branch2
 
 Added `docs/note-reply-contract.md` and `docs/note-reply-contract-harness.js`. This structural audit locks blank-input handling, one-to-one conversation reuse, conversation creation, membership setup, note-reply message format, successful overlay cleanup, blocked-recipient feedback, and generic failure handling. The existing note-reply helper remains unchanged; protected DM rendering, chat opening, sending, and navigation remain inline and untouched.
+
+### Local Nova AI fallback audit checkpoint — Branch2
+
+Added `docs/local-ai-response-contract.md` and `docs/local-ai-response-contract-harness.js`. This structural audit locks input normalization, deterministic content branches, identity/help responses, greeting personalization, courtesy handling, broad default coverage, and action-free scope. The existing Local AI fallback module remains unchanged; inline Nova AI overrides and navigation/action handlers remain unchanged.
