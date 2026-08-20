@@ -1814,3 +1814,7 @@ Added `docs/sticker-favorites-contract.md` and `docs/sticker-favorites-contract-
 ### Local-sticker persistence audit checkpoint — Branch2
 
 Added `docs/local-sticker-persistence-contract.md` and `docs/local-sticker-persistence-contract-harness.js`. This structural audit locks type-key isolation, duplicate suppression, newest-first ordering, the 20-item cap, malformed-data cleanup, persistence, and local-only scope. The existing local-sticker reader and writer modules remain unchanged; no sticker, message, or DM production code moved or changed.
+
+### Recent note-music persistence audit checkpoint — Branch2
+
+Added `docs/recent-music-persistence-contract.md` and `docs/recent-music-persistence-contract-harness.js`. This structural audit locks the `nova_recent_music` key, title/artist deduplication, newest-first ordering, metadata retention, the eight-item cap, and failure tolerance. The existing recent-music helper remains unchanged; protected Notes audio and reaction systems remain inline and untouched.
