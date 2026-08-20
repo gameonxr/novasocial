@@ -1970,3 +1970,7 @@ Added `docs/optimize-cloudinary-url-contract.md` and `docs/optimize-cloudinary-u
 ### Private Public ID audit checkpoint — Branch2
 
 Added `docs/private-public-id-contract.md` and `docs/private-public-id-contract-harness.js`. This structural audit locks Cloudinary/provider guards, upload-path parsing, version removal, extension stripping, null fallback, and parser-only scope. The existing helper remains unchanged; Cloudinary deletion and protected storage systems remain untouched.
+
+### Get Saved Accounts audit checkpoint — Branch2
+
+Added `docs/get-saved-accounts-contract.md` and `docs/get-saved-accounts-contract-harness.js`. This structural audit locks local-storage reading, JSON parsing, empty/error fallback, and account-list-local scope. The existing helper remains unchanged; protected authentication and account-transition systems remain untouched.
