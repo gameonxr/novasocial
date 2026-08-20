@@ -2014,3 +2014,7 @@ Added `docs/select-note-music-result-contract.md` and `docs/select-note-music-re
 ### URL Base64 to Uint8Array audit checkpoint — Branch2
 
 Added `docs/url-base64-to-uint8-array-contract.md` and `docs/url-base64-to-uint8-array-contract-harness.js`. This structural audit locks URL-safe alphabet normalization, Base64 padding, `atob` decoding, typed-array sizing, ordered byte copying, and the helper's non-ownership of push orchestration. Production code remains unchanged.
+
+### Stop All Preview Audio audit checkpoint — Branch2
+
+Added `docs/stop-all-preview-audio-contract.md` and `docs/stop-all-preview-audio-contract-harness.js`. This structural audit locks guarded pause, preview reference clearing, unconditional playback-index reset, and non-ownership of audio creation or playback orchestration. Production code remains unchanged.
