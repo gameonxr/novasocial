@@ -1934,3 +1934,7 @@ Added `docs/close-note-viewer-contract.md` and `docs/close-note-viewer-contract-
 ### Change Audio Speed audit checkpoint — Branch2
 
 Added `docs/change-audio-speed-contract.md` and `docs/change-audio-speed-contract-harness.js`. This structural audit locks guarded sibling-audio lookup, 1x/1.5x/2x cycling, button labels, and toast feedback. The existing helper remains unchanged; protected audio and note/story systems remain untouched.
+
+### Copy Invite Link audit checkpoint — Branch2
+
+Added `docs/copy-invite-link-contract.md` and `docs/copy-invite-link-contract-harness.js`. This structural audit locks clipboard delegation, success/error toasts, and isolated ownership. The existing helper remains unchanged; group invite and collaboration systems remain untouched.
