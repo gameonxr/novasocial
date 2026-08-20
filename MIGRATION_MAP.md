@@ -1866,3 +1866,7 @@ Added `docs/attachment-sheet-contract.md` and `docs/attachment-sheet-contract-ha
 ### Avatar Creator audit checkpoint — Branch2
 
 Added `docs/avatar-creator-contract.md` and `docs/avatar-creator-contract-harness.js`. This structural audit locks the shared modal entry, eight face styles, six background palettes, six voice options, Save Avatar dispatch, toast/modal cleanup, and UI-only scope. The existing Avatar Creator module remains unchanged; persistence, network, AI voice, and high-risk content systems remain untouched.
+
+### Chat Actions audit checkpoint — Branch2
+
+Added `docs/chat-actions-contract.md` and `docs/chat-actions-contract-harness.js`. This structural audit locks the Chat Options modal, conditional Call History delegation, Clear Chat routing, Cancel cleanup, and renderer-only scope. The existing chat-actions module remains unchanged; protected DM, deletion, realtime, and call execution systems remain untouched.
