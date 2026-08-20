@@ -1962,3 +1962,7 @@ Added `docs/copy-story-link-contract.md` and `docs/copy-story-link-contract-harn
 ### Extract Cloudinary Public ID audit checkpoint — Branch2
 
 Added `docs/extract-cloudinary-public-id-contract.md` and `docs/extract-cloudinary-public-id-contract-harness.js`. This structural audit locks provider guards, upload-path parsing, version removal, extension stripping, null fallback, and parser-only scope. The existing helper remains unchanged; Cloudinary deletion and protected storage systems remain untouched.
+
+### Optimize Cloudinary URL audit checkpoint — Branch2
+
+Added `docs/optimize-cloudinary-url-contract.md` and `docs/optimize-cloudinary-url-contract-harness.js`. This structural audit locks provider/video guards, quality mapping, existing-transform replacement, fresh insertion, and pure delivery scope. The existing helper remains unchanged; protected media delivery, upload, playback, and deletion systems remain untouched.
