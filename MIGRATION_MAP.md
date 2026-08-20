@@ -1726,3 +1726,7 @@ Added `docs/presence-formatting-contract.md` and `docs/presence-formatting-contr
 ### High-risk seam readiness matrix checkpoint — Branch2
 
 Added `docs/high-risk-seam-readiness-matrix-contract.md` and `docs/high-risk-seam-readiness-matrix-contract-harness.js`. The matrix confirms 19 protected signatures retained inline, zero extracted protected signatures, the account/bootstrap adapter as the current seam reference, and reversible browser proof as the remaining gate before any protected production split. No protected code moved.
+
+### Calls/WebRTC seam-preparation checkpoint — Branch2
+
+Added `docs/calls-webrtc-seam-preparation-contract.md` and `docs/calls-webrtc-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected state, signaling, peer/media, ICE, DOM, timer, and teardown boundaries; confirms the 8-second reconnect timeout; and keeps Calls/WebRTC production split at 0. No call code moved or changed.
