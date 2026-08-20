@@ -1722,3 +1722,7 @@ Added `docs/client-push-subscription-contract.md` and `docs/client-push-subscrip
 ### Presence-formatting checkpoint — Branch2
 
 Added `docs/presence-formatting-contract.md` and `docs/presence-formatting-contract-harness.js`. The pure-helper audit locks the five-minute online threshold, missing-timestamp behavior, and minute/hour/day last-seen labels without changing profile, post, search, or DM presence rendering.
+
+### High-risk seam readiness matrix checkpoint — Branch2
+
+Added `docs/high-risk-seam-readiness-matrix-contract.md` and `docs/high-risk-seam-readiness-matrix-contract-harness.js`. The matrix confirms 19 protected signatures retained inline, zero extracted protected signatures, the account/bootstrap adapter as the current seam reference, and reversible browser proof as the remaining gate before any protected production split. No protected code moved.
