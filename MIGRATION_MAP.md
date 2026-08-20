@@ -1650,3 +1650,7 @@ Added `docs/event-listener-boundary-contract.md` and `docs/event-listener-bounda
 ### Cloudinary URL-builder checkpoint — Branch2
 
 Added `docs/cloudinary-url-builder-contract.md` and `docs/cloudinary-url-builder-contract-harness.js`. The isolated audit verifies current `cldUrl`, `optimizeCloudinaryUrl`, and `_deriveVideoThumbnailUrl` behavior for transform insertion, quality optimization, video passthrough, poster derivation, and invalid-input passthrough. No stored media URL, upload setting, credential, database record, or protected inline media system was changed.
+
+### Window-assignment surface checkpoint — Branch2
+
+Added `docs/window-assignment-surface-contract.md` and `docs/window-assignment-surface-contract-harness.js`. The static audit freezes 192 explicit `window.<name> =` assignments across `index.html` and `src/**/*.js`, covering 93 unique compatibility/state names. It reports no unexpected or missing names; no production logic, protected inline system, or namespace ownership was changed.
