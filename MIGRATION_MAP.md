@@ -1666,3 +1666,7 @@ Added `docs/deep-link-queue-contract.md` and `docs/deep-link-queue-contract-harn
 ### Mutation error-boundary checkpoint — Branch2
 
 Added `docs/mutation-error-boundary-contract.md` and `docs/mutation-error-boundary-contract-harness.js`. The static audit locks `.throwOnError()` on the primary mutations of `sendCmt`, `submitCreate`, `sendMsg`, `blockUser`, and `unblockUser`, and preserves the comment rate-limit handling plus failed-insert early return. No query, policy, optimistic UI, or protected production behavior was changed.
+
+### Realtime subscription lifecycle checkpoint — Branch2
+
+Added `docs/realtime-subscription-lifecycle-contract.md` and `docs/realtime-subscription-lifecycle-contract-harness.js`. The static audit records 10 Supabase realtime channel registrations, 10 subscribed channel chains, 10 managed slot assignments, and 21 existing `removeChannel` cleanup calls. Browser PushManager unsubscribe remains explicitly distinct. No DMs, Calls/WebRTC, subscription ownership, or teardown behavior was changed.
