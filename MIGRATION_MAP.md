@@ -1830,3 +1830,7 @@ Added `docs/profile-customizer-contract.md` and `docs/profile-customizer-contrac
 ### Comments-flow audit checkpoint — Branch2
 
 Added `docs/comments-flow-contract.md` and `docs/comments-flow-contract-harness.js`. This structural audit locks explicit comment queries, joined-profile fallback, comment-like hydration, rendering/navigation, optimistic like toggles, owner notifications, banned and blank-input guards, rate-limit feedback, and successful-submit refresh ordering. The existing Comments module remains unchanged; no DM, Notes, Story, or comment production code moved or changed.
+
+### Reply-preview audit checkpoint — Branch2
+
+Added `docs/reply-preview-contract.md` and `docs/reply-preview-contract-harness.js`. This structural audit locks reply target state, image/video/audio fallbacks, preview rendering, input focus, scroll-button offset, cancellation cleanup, and optional DOM tolerance. The existing reply-preview helper remains unchanged; protected DM rendering, chat opening, sending, and navigation remain inline and untouched.
