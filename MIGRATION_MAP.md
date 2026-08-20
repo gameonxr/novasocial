@@ -2030,3 +2030,7 @@ Added `docs/confirm-music-segment-contract.md` and `docs/confirm-music-segment-c
 ### Toggle Segment Preview audit checkpoint — Branch2
 
 Added `docs/toggle-segment-preview-contract.md` and `docs/toggle-segment-preview-contract-harness.js`. This structural audit locks segment icon lookup, active pause behavior, audio creation/reuse, segment start offset, playback failure handling, pause/play icon transitions, and ended cleanup. Production code remains unchanged.
+
+### Update Note Music Icon audit checkpoint — Branch2
+
+Added `docs/update-note-music-icon-contract.md` and `docs/update-note-music-icon-contract-harness.js`. This structural audit locks guarded icon lookup and deterministic pause-bar/play-polygon rendering. Audio lifecycle and note state remain outside the helper; production code remains unchanged.
