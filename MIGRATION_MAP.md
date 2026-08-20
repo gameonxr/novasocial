@@ -1790,3 +1790,7 @@ Added `docs/security-center-contract.md` and `docs/security-center-contract-harn
 ### Account-switcher rendering audit checkpoint — Branch2
 
 Added `docs/account-switcher-rendering-contract.md` and `docs/account-switcher-rendering-contract-harness.js`. This structural audit locks current-account synchronization, current-account highlighting and removal guards, switch/remove actions, Add Account routing, session transitions, reload behavior, and failure cleanup. The existing account-switcher modules remain unchanged; no authentication or account production code moved or changed.
+
+### Close Friends audit checkpoint — Branch2
+
+Added `docs/close-friends-contract.md` and `docs/close-friends-contract-harness.js`. This structural audit locks following-list hydration, malformed profile JSON tolerance, empty-state rendering, Add/Added state, per-user toggling, profile persistence, button refresh, and error feedback. The existing Close Friends module remains unchanged; no Stories, privacy, profile, or account production code moved or changed.
