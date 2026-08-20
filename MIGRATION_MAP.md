@@ -1954,3 +1954,7 @@ Added `docs/cld-url-contract.md` and `docs/cld-url-contract-harness.js`. This st
 ### Get Network Quality HTML audit checkpoint — Branch2
 
 Added `docs/get-network-quality-html-contract.md` and `docs/get-network-quality-html-contract-harness.js`. This structural audit locks browser connection fallbacks, 4g/3g/2g mapping, default medium quality, four-bar rendering, and Call-UI-only scope. The existing helper remains unchanged; protected Calls systems remain untouched.
+
+### Copy Story Link audit checkpoint — Branch2
+
+Added `docs/copy-story-link-contract.md` and `docs/copy-story-link-contract-harness.js`. This structural audit locks story URL construction, clipboard delegation, success/error toasts, and modal cleanup. The existing helper remains unchanged; protected Stories systems remain untouched.
