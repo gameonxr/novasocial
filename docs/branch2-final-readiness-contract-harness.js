@@ -83,10 +83,10 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 86, '86 documentation Markdown files must be published');
-assert.strictEqual(allHarnesses.length, 86, '86 harness files must be published');
-assert.strictEqual(contractFiles.length, 84, '84 standard contract documents must be published');
-assert.strictEqual(harnessFiles.length, 83, '83 standard contract harnesses must be published');
+assert.strictEqual(allDocs.length, 87, '87 documentation Markdown files must be published');
+assert.strictEqual(allHarnesses.length, 87, '87 harness files must be published');
+assert.strictEqual(contractFiles.length, 85, '85 standard contract documents must be published');
+assert.strictEqual(harnessFiles.length, 84, '84 standard contract harnesses must be published');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'protected-contract-coverage-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {

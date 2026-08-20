@@ -1654,3 +1654,7 @@ Added `docs/cloudinary-url-builder-contract.md` and `docs/cloudinary-url-builder
 ### Window-assignment surface checkpoint — Branch2
 
 Added `docs/window-assignment-surface-contract.md` and `docs/window-assignment-surface-contract-harness.js`. The static audit freezes 192 explicit `window.<name> =` assignments across `index.html` and `src/**/*.js`, covering 93 unique compatibility/state names. It reports no unexpected or missing names; no production logic, protected inline system, or namespace ownership was changed.
+
+### High-risk extraction gate checkpoint — Branch2
+
+Added `docs/high-risk-extraction-gate-contract.md` and `docs/high-risk-extraction-gate-contract-harness.js`. The gate confirms that 19 protected signatures remain exactly once in `index.html`, absent from `src/`, and covered by the existing protected contract families. It formally blocks blind direct extraction: any future split must start with a subsystem-specific seam/adapter, deterministic mock proof, reversible browser smoke test, small Branch2-only checkpoint, and full regression pass. No protected production code was moved.
