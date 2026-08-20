@@ -1846,3 +1846,7 @@ Added `docs/local-ai-response-contract.md` and `docs/local-ai-response-contract-
 ### Channels audit checkpoint — Branch2
 
 Added `docs/channels-contract.md` and `docs/channels-contract-harness.js`. This structural audit locks local-storage hydration, empty/list rendering, channel creation controls, blank-name validation, record defaults, channel opening, broadcast persistence/refresh, and subscription feedback. The existing Channels module remains unchanged; Communities and other group production code were not moved or changed.
+
+### Communities audit checkpoint — Branch2
+
+Added `docs/communities-contract.md` and `docs/communities-contract-harness.js`. This structural audit locks local-storage hydration, empty/list rendering, community creation controls, blank-name validation, topic/icon/default record construction, persistence, community opening, voice/forum/event/member dispatch, and join feedback. The existing Communities module remains unchanged; Voice Rooms, Forums, Events, Members, and other group production systems were not moved or changed.
