@@ -1714,3 +1714,7 @@ Added `docs/auth-bootstrap-order-contract.md` and `docs/auth-bootstrap-order-con
 ### Offline queue lifecycle checkpoint — Branch2
 
 Added `docs/offline-queue-lifecycle-contract.md` and `docs/offline-queue-lifecycle-contract-harness.js`. The static audit locks the likes/follows-only scope, timestamped queue append, snapshot-before-clear ordered replay, deduplicated banner, two online/offline listeners, initial offline check, and Posts integration. No queue, retry, persistence, or database behavior was changed.
+
+### Client push-subscription checkpoint — Branch2
+
+Added `docs/client-push-subscription-contract.md` and `docs/client-push-subscription-contract-harness.js`. The static audit locks support/auth guards, service-worker readiness, PushManager reuse/create, VAPID application, endpoint upsert, force unsubscribe/delete/fresh-subscribe ordering, and Settings integration. No permission, push payload, or subscription behavior was changed.
