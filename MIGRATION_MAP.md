@@ -1658,3 +1658,7 @@ Added `docs/window-assignment-surface-contract.md` and `docs/window-assignment-s
 ### High-risk extraction gate checkpoint — Branch2
 
 Added `docs/high-risk-extraction-gate-contract.md` and `docs/high-risk-extraction-gate-contract-harness.js`. The gate confirms that 19 protected signatures remain exactly once in `index.html`, absent from `src/`, and covered by the existing protected contract families. It formally blocks blind direct extraction: any future split must start with a subsystem-specific seam/adapter, deterministic mock proof, reversible browser smoke test, small Branch2-only checkpoint, and full regression pass. No protected production code was moved.
+
+### Deep-link queue checkpoint — Branch2
+
+Added `docs/deep-link-queue-contract.md` and `docs/deep-link-queue-contract-harness.js`. The isolated audit verifies the existing `?gc=`, `?p=`, and `?u=` queue semantics, authenticated versus post-login dispatch, sequential processing, group membership/open-chat timing, profile UUID/username routing, and invalid-input safety. The inline queue initialization and extracted helper remain in their current boundaries; no deep-link production logic was changed.
