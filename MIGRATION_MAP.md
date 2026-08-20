@@ -1982,3 +1982,7 @@ Added `docs/reset-preview-icon-contract.md` and `docs/reset-preview-icon-contrac
 ### Pause All Videos audit checkpoint — Branch2
 
 Added `docs/pause-all-videos-contract.md` and `docs/pause-all-videos-contract-harness.js`. This structural audit locks rendered-video selection, guarded per-element pauses, exception tolerance, and DOM-only scope. The existing helper remains unchanged; protected Reels, Calls, and media playback systems remain untouched.
+
+### Restore FAB Button audit checkpoint — Branch2
+
+Added `docs/restore-fab-button-contract.md` and `docs/restore-fab-button-contract-harness.js`. This structural audit locks guarded FAB lookup, display/animation restoration, local hidden-state reset, Home-tab behavior, and toast feedback. The existing helper remains unchanged; protected upload and post-creation systems remain untouched.
