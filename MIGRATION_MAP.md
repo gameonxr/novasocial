@@ -1710,3 +1710,7 @@ Added `docs/visibility-audio-lifecycle-contract.md` and `docs/visibility-audio-l
 ### Auth bootstrap order checkpoint — Branch2
 
 Added `docs/auth-bootstrap-order-contract.md` and `docs/auth-bootstrap-order-contract-harness.js`. The static audit locks the two session lookups, single auth-state listener, initial/post-login `ME → loadProf → showApp` ordering, duplicate-init guard, and 500 ms queued deep-link settling delay. No authentication or protected inline behavior was changed.
+
+### Offline queue lifecycle checkpoint — Branch2
+
+Added `docs/offline-queue-lifecycle-contract.md` and `docs/offline-queue-lifecycle-contract-harness.js`. The static audit locks the likes/follows-only scope, timestamped queue append, snapshot-before-clear ordered replay, deduplicated banner, two online/offline listeners, initial offline check, and Posts integration. No queue, retry, persistence, or database behavior was changed.
