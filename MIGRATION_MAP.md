@@ -1858,3 +1858,7 @@ Added `docs/news-display-contract.md` and `docs/news-display-contract-harness.js
 ### Games audit checkpoint — Branch2
 
 Added `docs/games-contract.md` and `docs/games-contract-harness.js`. This structural audit locks six game cards, Tic-Tac-Toe dispatch, nine-cell board initialization, move guards, player/AI win and draw detection, eight winning lines, delayed AI turn handling, reset behavior, and non-persistent local scope. The existing Games module remains unchanged; the inline Nova Universe update surface remains untouched.
+
+### Attachment-sheet audit checkpoint — Branch2
+
+Added `docs/attachment-sheet-contract.md` and `docs/attachment-sheet-contract-harness.js`. This structural audit locks Gallery/Camera/Location/Sticker action surfaces, hidden file-input accept/capture attributes, modal-close callbacks, and delegation boundaries. The existing attachment-sheet module remains unchanged; protected DM sending and media systems remain untouched.
