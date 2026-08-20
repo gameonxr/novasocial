@@ -1718,3 +1718,7 @@ Added `docs/offline-queue-lifecycle-contract.md` and `docs/offline-queue-lifecyc
 ### Client push-subscription checkpoint — Branch2
 
 Added `docs/client-push-subscription-contract.md` and `docs/client-push-subscription-contract-harness.js`. The static audit locks support/auth guards, service-worker readiness, PushManager reuse/create, VAPID application, endpoint upsert, force unsubscribe/delete/fresh-subscribe ordering, and Settings integration. No permission, push payload, or subscription behavior was changed.
+
+### Presence-formatting checkpoint — Branch2
+
+Added `docs/presence-formatting-contract.md` and `docs/presence-formatting-contract-harness.js`. The pure-helper audit locks the five-minute online threshold, missing-timestamp behavior, and minute/hour/day last-seen labels without changing profile, post, search, or DM presence rendering.
