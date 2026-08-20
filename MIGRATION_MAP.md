@@ -1798,3 +1798,7 @@ Added `docs/close-friends-contract.md` and `docs/close-friends-contract-harness.
 ### Ghost Mode audit checkpoint — Branch2
 
 Added `docs/ghost-mode-contract.md` and `docs/ghost-mode-contract-harness.js`. This structural audit locks mode inversion, profile persistence, local profile synchronization, status-label updates, activation/deactivation feedback, and the focused privacy-state scope. The existing Ghost Mode module remains unchanged; no privacy, authentication, account, or visibility production code moved or changed.
+
+### Message-favorite audit checkpoint — Branch2
+
+Added `docs/message-favorite-contract.md` and `docs/message-favorite-contract-harness.js`. This structural audit locks the inline-compatible helper signature, favorite toast, modal closure, and UI-only scope. The existing favorite-message module remains unchanged; no message or DM production code moved or changed.
