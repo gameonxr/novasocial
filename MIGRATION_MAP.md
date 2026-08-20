@@ -1682,3 +1682,7 @@ Added `docs/storage-key-surface-contract.md` and `docs/storage-key-surface-contr
 ### Interval lifecycle checkpoint — Branch2
 
 Added `docs/interval-lifecycle-contract.md` and `docs/interval-lifecycle-contract-harness.js`. The static audit records seven interval registrations, ten cleanup calls, six managed timer handles, and the existing Nova Universe repeating interval. No timer values, callback behavior, ownership, or protected lifecycle code was changed.
+
+### Video-observer checkpoint — Branch2
+
+Added `docs/video-observer-contract.md` and `docs/video-observer-contract-harness.js`. The deterministic audit confirms that `initVideoObserver()` observes every current video, pauses only non-intersecting targets, leaves visible media playing, and remains integrated with Home rendering. No browser observer, video playback, or feed behavior was changed.
