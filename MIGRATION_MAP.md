@@ -1646,3 +1646,7 @@ Added `docs/splash-asset-parity-contract.md` and `docs/splash-asset-parity-contr
 ### Event-listener boundary checkpoint — Branch2
 
 Added `docs/event-listener-boundary-contract.md` and `docs/event-listener-boundary-contract-harness.js`. The static audit records 68 `addEventListener` registrations across 17 extracted modules, 34 in `index.html`, and five in `sw.js`, with zero `removeEventListener` registrations in the extracted modules or HTML. This is an observational boundary record, not a speculative cleanup request; no listener behavior or protected inline system was changed.
+
+### Cloudinary URL-builder checkpoint — Branch2
+
+Added `docs/cloudinary-url-builder-contract.md` and `docs/cloudinary-url-builder-contract-harness.js`. The isolated audit verifies current `cldUrl`, `optimizeCloudinaryUrl`, and `_deriveVideoThumbnailUrl` behavior for transform insertion, quality optimization, video passthrough, poster derivation, and invalid-input passthrough. No stored media URL, upload setting, credential, database record, or protected inline media system was changed.
