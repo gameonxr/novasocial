@@ -1706,3 +1706,7 @@ Added `docs/escape-helper-contract.md` and `docs/escape-helper-contract-harness.
 ### Visibility-audio lifecycle checkpoint — Branch2
 
 Added `docs/visibility-audio-lifecycle-contract.md` and `docs/visibility-audio-lifecycle-contract-harness.js`. The static audit locks the single hidden-tab visibility listener and its three audio pause targets without adding a resume policy or changing protected inline media behavior.
+
+### Auth bootstrap order checkpoint — Branch2
+
+Added `docs/auth-bootstrap-order-contract.md` and `docs/auth-bootstrap-order-contract-harness.js`. The static audit locks the two session lookups, single auth-state listener, initial/post-login `ME → loadProf → showApp` ordering, duplicate-init guard, and 500 ms queued deep-link settling delay. No authentication or protected inline behavior was changed.

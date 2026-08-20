@@ -1,0 +1,29 @@
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+
+const repo = path.resolve(__dirname, '..');
+const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+assert.strictEqual((html.match(/db\.auth\.getSession\(\)/g) || []).length, 2, 'two auth session lookups must remain');
+assert.strictEqual((html.match(/db\.auth\.onAuthStateChange\(/g) || []).length, 1, 'one auth state listener must remain');
+assert(html.includes('if(session?.user){'), 'initial authenticated-session branch must remain');
+assert(html.includes('ME=session.user;\n    await loadProf();\n    showApp();'), 'initial auth order must remain ME, loadProf, showApp');
+assert(html.includes('db.auth.onAuthStateChange(async(e,s)=>{if(s?.user&&!ME){'), 'post-login listener guard must remain');
+assert(html.includes('ME=s.user;\n    await loadProf();\n    showApp();'), 'post-login order must remain ME, loadProf, showApp');
+assert(html.includes('setTimeout(() => processDeepLinks(links), 500);'), 'post-login deep-link settling delay must remain 500ms');
+const initial = html.indexOf('if(session?.user){');
+const initialLoad = html.indexOf('await loadProf();', initial);
+const initialShow = html.indexOf('showApp();', initialLoad);
+assert(initial >= 0 && initialLoad > initial && initialShow > initialLoad, 'initial auth sequence must be ordered');
+const post = html.indexOf('db.auth.onAuthStateChange(');
+const postLoad = html.indexOf('await loadProf();', post);
+const postShow = html.indexOf('showApp();', postLoad);
+assert(post >= 0 && postLoad > post && postShow > postLoad, 'post-login sequence must be ordered');
+
+console.log('AUTH_BOOTSTRAP_ORDER_HARNESS=PASS');
+console.log('SESSION_LOOKUPS=2');
+console.log('AUTH_LISTENERS=1');
+console.log('INITIAL_ORDER=ME_LOADPROF_SHOWAPP');
+console.log('POST_LOGIN_ORDER=ME_LOADPROF_SHOWAPP');
+console.log('DUPLICATE_INIT_GUARD=PASS');
+console.log('DEEP_LINK_SETTLING_MS=500');
