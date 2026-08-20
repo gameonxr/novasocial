@@ -1822,3 +1822,7 @@ Added `docs/recent-music-persistence-contract.md` and `docs/recent-music-persist
 ### Notes-audio helper audit checkpoint — Branch2
 
 Added `docs/notes-audio-helper-contract.md` and `docs/notes-audio-helper-contract-harness.js`. This structural audit locks autoplay replacement, metadata timing, segment looping, manual toggle behavior, next-audio progression, preview cleanup, and autoplay-policy tolerance. The existing Notes-audio helper modules remain unchanged; protected Notes segmentation and reaction systems remain inline and untouched.
+
+### Profile-customizer audit checkpoint — Branch2
+
+Added `docs/profile-customizer-contract.md` and `docs/profile-customizer-contract-harness.js`. This structural audit locks theme rendering, index validation, profile-theme persistence, local synchronization, modal/profile refresh, Verified Plus activation feedback, and failure handling. The existing Profile Customizer module remains unchanged; no profile, account, authentication, or premium production code moved or changed.
