@@ -1926,3 +1926,7 @@ Added `docs/open-more-emoji-picker-contract.md` and `docs/open-more-emoji-picker
 ### Close Crop Preview audit checkpoint — Branch2
 
 Added `docs/close-crop-preview-contract.md` and `docs/close-crop-preview-contract-harness.js`. This structural audit locks crop-modal removal, complete crop-state reset, default avatar crop type, callback clearing, and cleanup-only scope. The existing helper remains unchanged; crop processing and avatar upload systems remain untouched.
+
+### Close Note Viewer audit checkpoint — Branch2
+
+Added `docs/close-note-viewer-contract.md` and `docs/close-note-viewer-contract-harness.js`. This structural audit locks guarded note-audio pause, overlay fade transition, delayed removal, and cleanup-only scope. The existing helper remains unchanged; protected note rendering, reactions, persistence, and audio systems remain untouched.
