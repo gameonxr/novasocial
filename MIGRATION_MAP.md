@@ -1898,3 +1898,7 @@ Added `docs/toggle-fav-sticker-contract.md` and `docs/toggle-fav-sticker-contrac
 ### Sticker Toggle Favorite audit checkpoint — Branch2
 
 Added `docs/sticker-toggle-fav-contract.md` and `docs/sticker-toggle-fav-contract-harness.js`. This structural audit locks indexed URL lookup, missing-index guard, add/remove persistence, Favorites-tab refresh, optional button feedback, and local-only scope. The existing helper remains unchanged; sticker sending, picker rendering, uploads, and protected messaging systems remain untouched.
+
+### Cancel Segment Picker audit checkpoint — Branch2
+
+Added `docs/cancel-segment-picker-contract.md` and `docs/cancel-segment-picker-contract-harness.js`. This structural audit locks guarded preview-audio pause, segment state reset, optional panel removal, and cleanup-only scope. The existing helper remains unchanged; protected media playback, segment confirmation, and note persistence systems remain untouched.
