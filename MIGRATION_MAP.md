@@ -1730,3 +1730,7 @@ Added `docs/high-risk-seam-readiness-matrix-contract.md` and `docs/high-risk-sea
 ### Calls/WebRTC seam-preparation checkpoint — Branch2
 
 Added `docs/calls-webrtc-seam-preparation-contract.md` and `docs/calls-webrtc-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected state, signaling, peer/media, ICE, DOM, timer, and teardown boundaries; confirms the 8-second reconnect timeout; and keeps Calls/WebRTC production split at 0. No call code moved or changed.
+
+### DMs seam-preparation checkpoint — Branch2
+
+Added `docs/dms-seam-preparation-contract.md` and `docs/dms-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected render/refresh, query, account/tab, DOM, cache, scroll, and generation-race boundaries; confirms non-destructive refresh markers; and keeps DMs production split at 0. No chat or message code moved or changed.
