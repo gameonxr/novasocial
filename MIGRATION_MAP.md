@@ -1922,3 +1922,7 @@ Added `docs/prev-media-contract.md` and `docs/prev-media-contract-harness.js`. T
 ### Open More Emoji Picker audit checkpoint — Branch2
 
 Added `docs/open-more-emoji-picker-contract.md` and `docs/open-more-emoji-picker-contract-harness.js`. This structural audit locks the bottom-sheet structure, four-character emoji input, note-ID reaction delegation, Cancel/backdrop cleanup, and delayed native-keyboard focus. The existing picker remains unchanged; protected note reactions and persistence remain untouched.
+
+### Close Crop Preview audit checkpoint — Branch2
+
+Added `docs/close-crop-preview-contract.md` and `docs/close-crop-preview-contract-harness.js`. This structural audit locks crop-modal removal, complete crop-state reset, default avatar crop type, callback clearing, and cleanup-only scope. The existing helper remains unchanged; crop processing and avatar upload systems remain untouched.
