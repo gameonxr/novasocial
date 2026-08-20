@@ -1894,3 +1894,7 @@ Added `docs/story-sticker-helpers-contract.md` and `docs/story-sticker-helpers-c
 ### Toggle Favorite Sticker audit checkpoint — Branch2
 
 Added `docs/toggle-fav-sticker-contract.md` and `docs/toggle-fav-sticker-contract-harness.js`. This structural audit locks propagation stopping, delegated favorite reads, add/remove behavior, optional button feedback, toast messages, favorite persistence, and local-only scope. The existing helper remains unchanged; sticker sending, picker rendering, uploads, and protected messaging systems remain untouched.
+
+### Sticker Toggle Favorite audit checkpoint — Branch2
+
+Added `docs/sticker-toggle-fav-contract.md` and `docs/sticker-toggle-fav-contract-harness.js`. This structural audit locks indexed URL lookup, missing-index guard, add/remove persistence, Favorites-tab refresh, optional button feedback, and local-only scope. The existing helper remains unchanged; sticker sending, picker rendering, uploads, and protected messaging systems remain untouched.
