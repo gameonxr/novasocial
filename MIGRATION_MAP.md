@@ -1850,3 +1850,7 @@ Added `docs/channels-contract.md` and `docs/channels-contract-harness.js`. This 
 ### Communities audit checkpoint — Branch2
 
 Added `docs/communities-contract.md` and `docs/communities-contract-harness.js`. This structural audit locks local-storage hydration, empty/list rendering, community creation controls, blank-name validation, topic/icon/default record construction, persistence, community opening, voice/forum/event/member dispatch, and join feedback. The existing Communities module remains unchanged; Voice Rooms, Forums, Events, Members, and other group production systems were not moved or changed.
+
+### News display audit checkpoint — Branch2
+
+Added `docs/news-display-contract.md` and `docs/news-display-contract-harness.js`. This structural audit locks the News modal entry, eight category labels, five static article cards, source/time metadata, article-opening feedback, static UI-only scope, and separation from the later inline `showNewsFeed` surface. The existing News module and inline News Feed implementation remain unchanged.
