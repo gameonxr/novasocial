@@ -1802,3 +1802,7 @@ Added `docs/ghost-mode-contract.md` and `docs/ghost-mode-contract-harness.js`. T
 ### Message-favorite audit checkpoint — Branch2
 
 Added `docs/message-favorite-contract.md` and `docs/message-favorite-contract-harness.js`. This structural audit locks the inline-compatible helper signature, favorite toast, modal closure, and UI-only scope. The existing favorite-message module remains unchanged; no message or DM production code moved or changed.
+
+### Vanish Mode audit checkpoint — Branch2
+
+Added `docs/vanish-mode-contract.md` and `docs/vanish-mode-contract-harness.js`. This structural audit locks window-state inversion, button icon updates, message-list styling, optional DOM tolerance, matching ON/OFF feedback, and the UI-only scope. The existing Vanish Mode module remains unchanged; protected DM rendering, chat opening, message sending, and deletion remain inline and untouched.
