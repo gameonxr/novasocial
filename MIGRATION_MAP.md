@@ -1754,3 +1754,7 @@ Added `docs/voice-recording-seam-preparation-contract.md` and `docs/voice-record
 ### Deletion-fallback seam-preparation checkpoint — Branch2
 
 Added `docs/deletion-fallback-seam-preparation-contract.md` and `docs/deletion-fallback-seam-preparation-contract-harness.js`. This mapping-only milestone records the protected queue read, ordered replay, per-item isolation, finalization, media-deletion, and startup-guard boundaries; confirms outer failures preserve the queue; and keeps deletion-fallback production split at 0. No deletion or media code moved or changed.
+
+### Notification rendering audit checkpoint — Branch2
+
+Added `docs/notification-rendering-contract.md` and `docs/notification-rendering-contract-harness.js`. This structural audit locks filter state, query fields, consecutive like/follow grouping, Follow Back visibility, generation-race protection, read-state updates, click routing, and recipient-filtered realtime refresh. The existing extracted notifications module remains unchanged; no notification production code moved or changed.
