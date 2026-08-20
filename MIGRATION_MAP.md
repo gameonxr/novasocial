@@ -1886,3 +1886,7 @@ Added `docs/save-local-sticker-contract.md` and `docs/save-local-sticker-contrac
 ### Sticker Tab audit checkpoint — Branch2
 
 Added `docs/sticker-tab-contract.md` and `docs/sticker-tab-contract-harness.js`. This structural audit locks tab activation, local recent/favorite reads, safe missing-content handling, Recent/Favorites empty states, indexed grid delegation, Search GIF controls, and renderer-only scope. The existing renderer remains unchanged; sticker send, favorite persistence, GIF search, uploads, and protected messaging systems remain untouched.
+
+### Story Sticker Helpers audit checkpoint — Branch2
+
+Added `docs/story-sticker-helpers-contract.md` and `docs/story-sticker-helpers-contract-harness.js`. This structural audit locks sticker-panel open/close, emoji sticker defaults, custom text validation, custom text properties, render delegation, input cleanup, and story-editor-only scope. The existing helper remains unchanged; protected story rendering, persistence, publishing, and media systems remain untouched.
