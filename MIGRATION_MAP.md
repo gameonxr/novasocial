@@ -1662,3 +1662,7 @@ Added `docs/high-risk-extraction-gate-contract.md` and `docs/high-risk-extractio
 ### Deep-link queue checkpoint — Branch2
 
 Added `docs/deep-link-queue-contract.md` and `docs/deep-link-queue-contract-harness.js`. The isolated audit verifies the existing `?gc=`, `?p=`, and `?u=` queue semantics, authenticated versus post-login dispatch, sequential processing, group membership/open-chat timing, profile UUID/username routing, and invalid-input safety. The inline queue initialization and extracted helper remain in their current boundaries; no deep-link production logic was changed.
+
+### Mutation error-boundary checkpoint — Branch2
+
+Added `docs/mutation-error-boundary-contract.md` and `docs/mutation-error-boundary-contract-harness.js`. The static audit locks `.throwOnError()` on the primary mutations of `sendCmt`, `submitCreate`, `sendMsg`, `blockUser`, and `unblockUser`, and preserves the comment rate-limit handling plus failed-insert early return. No query, policy, optimistic UI, or protected production behavior was changed.
