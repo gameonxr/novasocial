@@ -1758,3 +1758,7 @@ Added `docs/deletion-fallback-seam-preparation-contract.md` and `docs/deletion-f
 ### Notification rendering audit checkpoint — Branch2
 
 Added `docs/notification-rendering-contract.md` and `docs/notification-rendering-contract-harness.js`. This structural audit locks filter state, query fields, consecutive like/follow grouping, Follow Back visibility, generation-race protection, read-state updates, click routing, and recipient-filtered realtime refresh. The existing extracted notifications module remains unchanged; no notification production code moved or changed.
+
+### Admin panel rendering audit checkpoint — Branch2
+
+Added `docs/admin-panel-rendering-contract.md` and `docs/admin-panel-rendering-contract-harness.js`. This structural audit locks access gating, panel entry, tab loading/dispatch, contained failure rendering, server-side audit logging, and delegation to existing deletion and notification contracts. The existing admin UI module and inline moderation actions remain unchanged; no admin production code moved or changed.
