@@ -1818,3 +1818,7 @@ Added `docs/local-sticker-persistence-contract.md` and `docs/local-sticker-persi
 ### Recent note-music persistence audit checkpoint — Branch2
 
 Added `docs/recent-music-persistence-contract.md` and `docs/recent-music-persistence-contract-harness.js`. This structural audit locks the `nova_recent_music` key, title/artist deduplication, newest-first ordering, metadata retention, the eight-item cap, and failure tolerance. The existing recent-music helper remains unchanged; protected Notes audio and reaction systems remain inline and untouched.
+
+### Notes-audio helper audit checkpoint — Branch2
+
+Added `docs/notes-audio-helper-contract.md` and `docs/notes-audio-helper-contract-harness.js`. This structural audit locks autoplay replacement, metadata timing, segment looping, manual toggle behavior, next-audio progression, preview cleanup, and autoplay-policy tolerance. The existing Notes-audio helper modules remain unchanged; protected Notes segmentation and reaction systems remain inline and untouched.
