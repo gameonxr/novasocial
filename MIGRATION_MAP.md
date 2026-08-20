@@ -1686,3 +1686,7 @@ Added `docs/interval-lifecycle-contract.md` and `docs/interval-lifecycle-contrac
 ### Video-observer checkpoint — Branch2
 
 Added `docs/video-observer-contract.md` and `docs/video-observer-contract-harness.js`. The deterministic audit confirms that `initVideoObserver()` observes every current video, pauses only non-intersecting targets, leaves visible media playing, and remains integrated with Home rendering. No browser observer, video playback, or feed behavior was changed.
+
+### Media frame-loop checkpoint — Branch2
+
+Added `docs/media-frame-loop-contract.md` and `docs/media-frame-loop-contract-harness.js`. The static audit locks guarded animation-frame loops and stop ordering in compression and trimming helpers: disable drawing, pause video, then stop the recorder, while retaining existing failure cleanup markers. No browser media API, timing, or production behavior was changed.
