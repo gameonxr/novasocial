@@ -1918,3 +1918,7 @@ Added `docs/generate-file-name-contract.md` and `docs/generate-file-name-contrac
 ### Previous Media audit checkpoint — Branch2
 
 Added `docs/prev-media-contract.md` and `docs/prev-media-contract-harness.js`. This structural audit locks file guards, object-URL preview setup, video/image branches, metadata probing, filter/edit-tool delegation, video-length handling, and publish-button enablement. The existing handler remains unchanged; protected media upload, trimming, filters, and post-creation systems remain untouched.
+
+### Open More Emoji Picker audit checkpoint — Branch2
+
+Added `docs/open-more-emoji-picker-contract.md` and `docs/open-more-emoji-picker-contract-harness.js`. This structural audit locks the bottom-sheet structure, four-character emoji input, note-ID reaction delegation, Cancel/backdrop cleanup, and delayed native-keyboard focus. The existing picker remains unchanged; protected note reactions and persistence remain untouched.
