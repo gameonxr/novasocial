@@ -1930,3 +1930,7 @@ Added `docs/close-crop-preview-contract.md` and `docs/close-crop-preview-contrac
 ### Close Note Viewer audit checkpoint — Branch2
 
 Added `docs/close-note-viewer-contract.md` and `docs/close-note-viewer-contract-harness.js`. This structural audit locks guarded note-audio pause, overlay fade transition, delayed removal, and cleanup-only scope. The existing helper remains unchanged; protected note rendering, reactions, persistence, and audio systems remain untouched.
+
+### Change Audio Speed audit checkpoint — Branch2
+
+Added `docs/change-audio-speed-contract.md` and `docs/change-audio-speed-contract-harness.js`. This structural audit locks guarded sibling-audio lookup, 1x/1.5x/2x cycling, button labels, and toast feedback. The existing helper remains unchanged; protected audio and note/story systems remain untouched.
