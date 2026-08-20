@@ -1698,3 +1698,7 @@ Added `docs/object-url-lifecycle-contract.md` and `docs/object-url-lifecycle-con
 ### Clipboard interaction checkpoint — Branch2
 
 Added `docs/clipboard-interaction-contract.md` and `docs/clipboard-interaction-contract-harness.js`. The static audit records seven Async Clipboard writes, one legacy `execCommand('copy')` fallback, and the existing handled/unhandled message-copy boundaries. No clipboard permission, toast, fallback, or error-handling behavior was changed.
+
+### Escape-helper checkpoint — Branch2
+
+Added `docs/escape-helper-contract.md` and `docs/escape-helper-contract-harness.js`. The pure-function audit locks the shared `esc()` helper’s nullish handling, stringification, and five HTML-special-character entities without changing renderers or introducing speculative sanitization.
