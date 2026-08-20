@@ -1674,3 +1674,7 @@ Added `docs/realtime-subscription-lifecycle-contract.md` and `docs/realtime-subs
 ### Extracted wrapper-seam checkpoint — Branch2
 
 Added `docs/extracted-wrapper-seam-contract.md` and `docs/extracted-wrapper-seam-contract-harness.js`. The static audit locks the intentional `nova-init`/`showApp` and `like-effects`/`toggleLike` seams, including guarded capture, argument forwarding, the 100 ms initialization delay, new-like particle condition, and trailing script order. No wrapper or production behavior was changed.
+
+### Storage-key surface checkpoint — Branch2
+
+Added `docs/storage-key-surface-contract.md` and `docs/storage-key-surface-contract-harness.js`. The static audit freezes 29 literal localStorage compatibility keys, confirms zero sessionStorage references, and preserves dynamic sticker-family keys outside the literal allowlist. No storage values were read or changed and no account-reset or cache behavior was modified.
