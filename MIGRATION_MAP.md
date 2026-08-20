@@ -2026,3 +2026,7 @@ Added `docs/toggle-preview-play-contract.md` and `docs/toggle-preview-play-contr
 ### Confirm Music Segment audit checkpoint — Branch2
 
 Added `docs/confirm-music-segment-contract.md` and `docs/confirm-music-segment-contract-harness.js`. This structural audit locks segment-audio cleanup, selected note-music state assignment, start-time fallback, segment-panel cleanup, note-music rerendering, and delegated recents persistence. Production code remains unchanged.
+
+### Toggle Segment Preview audit checkpoint — Branch2
+
+Added `docs/toggle-segment-preview-contract.md` and `docs/toggle-segment-preview-contract-harness.js`. This structural audit locks segment icon lookup, active pause behavior, audio creation/reuse, segment start offset, playback failure handling, pause/play icon transitions, and ended cleanup. Production code remains unchanged.
