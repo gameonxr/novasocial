@@ -1786,3 +1786,7 @@ Added `docs/calendar-display-contract.md` and `docs/calendar-display-contract-ha
 ### Security Center audit checkpoint — Branch2
 
 Added `docs/security-center-contract.md` and `docs/security-center-contract-harness.js`. This structural audit locks session/device display, logout-device feedback, 2FA choices, biometric capability gating, enabling state, and security-status surfaces. The existing Security Center module remains unchanged; no authentication, account, session, or device-management production code moved or changed.
+
+### Account-switcher rendering audit checkpoint — Branch2
+
+Added `docs/account-switcher-rendering-contract.md` and `docs/account-switcher-rendering-contract-harness.js`. This structural audit locks current-account synchronization, current-account highlighting and removal guards, switch/remove actions, Add Account routing, session transitions, reload behavior, and failure cleanup. The existing account-switcher modules remain unchanged; no authentication or account production code moved or changed.
