@@ -1974,3 +1974,7 @@ Added `docs/private-public-id-contract.md` and `docs/private-public-id-contract-
 ### Get Saved Accounts audit checkpoint — Branch2
 
 Added `docs/get-saved-accounts-contract.md` and `docs/get-saved-accounts-contract-harness.js`. This structural audit locks local-storage reading, JSON parsing, empty/error fallback, and account-list-local scope. The existing helper remains unchanged; protected authentication and account-transition systems remain untouched.
+
+### Reset Preview Icon audit checkpoint — Branch2
+
+Added `docs/reset-preview-icon-contract.md` and `docs/reset-preview-icon-contract-harness.js`. This structural audit locks indexed icon lookup, missing-element safety, play-polygon replacement, and renderer-only scope. The existing helper remains unchanged; inline audio playback behavior remains untouched.
