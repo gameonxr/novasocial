@@ -2010,3 +2010,7 @@ Added `docs/select-filter-contract.md` and `docs/select-filter-contract-harness.
 ### Select Note Music Result audit checkpoint — Branch2
 
 Added `docs/select-note-music-result-contract.md` and `docs/select-note-music-result-contract-harness.js`. This structural audit locks preview-audio cleanup, no-preview direct attachment, panel/renderer delegation, preview-present segment-picker delegation, and protected persistence boundaries. The existing helper remains unchanged; note persistence, recents, audio playback, and segment-picker execution remain untouched.
+
+### URL Base64 to Uint8Array audit checkpoint — Branch2
+
+Added `docs/url-base64-to-uint8-array-contract.md` and `docs/url-base64-to-uint8-array-contract-harness.js`. This structural audit locks URL-safe alphabet normalization, Base64 padding, `atob` decoding, typed-array sizing, ordered byte copying, and the helper's non-ownership of push orchestration. Production code remains unchanged.
