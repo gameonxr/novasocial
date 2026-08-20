@@ -1938,3 +1938,7 @@ Added `docs/change-audio-speed-contract.md` and `docs/change-audio-speed-contrac
 ### Copy Invite Link audit checkpoint — Branch2
 
 Added `docs/copy-invite-link-contract.md` and `docs/copy-invite-link-contract-harness.js`. This structural audit locks clipboard delegation, success/error toasts, and isolated ownership. The existing helper remains unchanged; group invite and collaboration systems remain untouched.
+
+### Adjust Follower Count audit checkpoint — Branch2
+
+Added `docs/adjust-follower-count-contract.md` and `docs/adjust-follower-count-contract-harness.js`. This structural audit locks guarded DOM lookup, raw-count arithmetic, nonnegative clamping, dataset preservation, and formatted display delegation. The existing helper remains unchanged; follow and profile persistence systems remain untouched.
