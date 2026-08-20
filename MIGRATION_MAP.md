@@ -1882,3 +1882,7 @@ Added `docs/get-local-stickers-contract.md` and `docs/get-local-stickers-contrac
 ### Save Local Sticker audit checkpoint — Branch2
 
 Added `docs/save-local-sticker-contract.md` and `docs/save-local-sticker-contract-harness.js`. This structural audit locks duplicate suppression, newest-first insertion, the 20-item cap, dynamic local key derivation, delegated list loading, and local-only scope. The existing helper remains unchanged; sticker UI, sending, uploads, and protected messaging systems remain untouched.
+
+### Sticker Tab audit checkpoint — Branch2
+
+Added `docs/sticker-tab-contract.md` and `docs/sticker-tab-contract-harness.js`. This structural audit locks tab activation, local recent/favorite reads, safe missing-content handling, Recent/Favorites empty states, indexed grid delegation, Search GIF controls, and renderer-only scope. The existing renderer remains unchanged; sticker send, favorite persistence, GIF search, uploads, and protected messaging systems remain untouched.
