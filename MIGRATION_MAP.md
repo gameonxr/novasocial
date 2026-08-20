@@ -1794,3 +1794,7 @@ Added `docs/account-switcher-rendering-contract.md` and `docs/account-switcher-r
 ### Close Friends audit checkpoint — Branch2
 
 Added `docs/close-friends-contract.md` and `docs/close-friends-contract-harness.js`. This structural audit locks following-list hydration, malformed profile JSON tolerance, empty-state rendering, Add/Added state, per-user toggling, profile persistence, button refresh, and error feedback. The existing Close Friends module remains unchanged; no Stories, privacy, profile, or account production code moved or changed.
+
+### Ghost Mode audit checkpoint — Branch2
+
+Added `docs/ghost-mode-contract.md` and `docs/ghost-mode-contract-harness.js`. This structural audit locks mode inversion, profile persistence, local profile synchronization, status-label updates, activation/deactivation feedback, and the focused privacy-state scope. The existing Ghost Mode module remains unchanged; no privacy, authentication, account, or visibility production code moved or changed.
