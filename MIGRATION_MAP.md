@@ -1762,3 +1762,7 @@ Added `docs/notification-rendering-contract.md` and `docs/notification-rendering
 ### Admin panel rendering audit checkpoint — Branch2
 
 Added `docs/admin-panel-rendering-contract.md` and `docs/admin-panel-rendering-contract-harness.js`. This structural audit locks access gating, panel entry, tab loading/dispatch, contained failure rendering, server-side audit logging, and delegation to existing deletion and notification contracts. The existing admin UI module and inline moderation actions remain unchanged; no admin production code moved or changed.
+
+### Post-creation flow audit checkpoint — Branch2
+
+Added `docs/post-creation-flow-contract.md` and `docs/post-creation-flow-contract-harness.js`. This structural audit locks create-menu entry, media selection, upload and insert ordering, co-author fallback, best-effort notifications, cache invalidation, Reels freshness, navigation, and failure feedback. Existing create-entry modules and inline `submitCreate()` remain unchanged; no post-creation production code moved or changed.
