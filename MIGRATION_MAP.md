@@ -1942,3 +1942,7 @@ Added `docs/copy-invite-link-contract.md` and `docs/copy-invite-link-contract-ha
 ### Adjust Follower Count audit checkpoint — Branch2
 
 Added `docs/adjust-follower-count-contract.md` and `docs/adjust-follower-count-contract-harness.js`. This structural audit locks guarded DOM lookup, raw-count arithmetic, nonnegative clamping, dataset preservation, and formatted display delegation. The existing helper remains unchanged; follow and profile persistence systems remain untouched.
+
+### Derive Video Thumbnail URL audit checkpoint — Branch2
+
+Added `docs/derive-video-thumbnail-url-contract.md` and `docs/derive-video-thumbnail-url-contract-harness.js`. This structural audit locks input guards, Cloudinary/video-path validation, poster transforms, supported extension conversion, error fallback, and pure scope. The existing helper remains unchanged; protected media upload, playback, and deletion systems remain untouched.
