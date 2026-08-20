@@ -1854,3 +1854,7 @@ Added `docs/communities-contract.md` and `docs/communities-contract-harness.js`.
 ### News display audit checkpoint — Branch2
 
 Added `docs/news-display-contract.md` and `docs/news-display-contract-harness.js`. This structural audit locks the News modal entry, eight category labels, five static article cards, source/time metadata, article-opening feedback, static UI-only scope, and separation from the later inline `showNewsFeed` surface. The existing News module and inline News Feed implementation remain unchanged.
+
+### Games audit checkpoint — Branch2
+
+Added `docs/games-contract.md` and `docs/games-contract-harness.js`. This structural audit locks six game cards, Tic-Tac-Toe dispatch, nine-cell board initialization, move guards, player/AI win and draw detection, eight winning lines, delayed AI turn handling, reset behavior, and non-persistent local scope. The existing Games module remains unchanged; the inline Nova Universe update surface remains untouched.
