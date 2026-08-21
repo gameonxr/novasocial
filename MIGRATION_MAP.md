@@ -2322,3 +2322,7 @@ Added `docs/cleanup-expired-notes-contract.md` and `docs/cleanup-expired-notes-c
 ### Particle seam-preparation checkpoint — Branch2
 
 Added `docs/particle-seam-preparation-contract.md` and `docs/particle-seam-preparation-contract-harness.js`. This test-only checkpoint maps a future adapter around DOM geometry, body insertion, deterministic randomness, timers, and cleanup while preserving the inline `spawnLikeParticles()` owner. No particle, like, animation, or production code was moved; reversible browser proof remains required.
+
+### Push seam-preparation checkpoint — Branch2
+
+Added `docs/push-seam-preparation-contract.md` and `docs/push-seam-preparation-contract-harness.js`. This test-only checkpoint maps capability and permission guards, subscription/reset delegation, settings refresh, error handling, service-worker/VAPID ownership, and logout-race requirements while preserving the inline Push settings handlers. No permission prompt, subscription, reset, service-worker action, or production code change was performed; reversible browser proof remains required.
