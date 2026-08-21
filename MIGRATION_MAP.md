@@ -2342,3 +2342,7 @@ Added `docs/protected-split-acceptance-contract.md` and `docs/protected-split-ac
 ### Particle browser-proof evidence checkpoint — Branch2
 
 Added `docs/particle-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A non-destructive browser-context mock verified twelve particles, target-centered geometry, twelve 800 ms cleanup timers, transform vectors, complete removal, and restoration of temporary browser APIs. This is mock evidence only; before/after production parity and full reversible split proof remain unestablished. No like, database, account, permission, media, or production action was performed.
+
+### Particle parity and rollback evidence checkpoint — Branch2
+
+Added `docs/particle-parity-rollback-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. Protected marker counts, script order, extracted-owner absence, clean Branch2 state, and rollback-object availability all matched the captured baseline. This evidence still does not authorize a production split; browser proof remains incomplete. No checkout, reset, force-push, browser action, account mutation, or production code change was performed.

@@ -6,7 +6,7 @@
 
 ## Current state
 
-All protected production owners remain inline and the global direct-extraction gate remains blocked. A browser-context deterministic mock has now passed for the protected particle owner, with temporary DOM and timer APIs restored afterward. That evidence validates the mock boundary only; it does not prove before/after production parity or authorize a split. The high-risk matrix therefore records full reversible browser proof as **remaining**.
+All protected production owners remain inline and the global direct-extraction gate remains blocked. A browser-context deterministic mock has now passed for the protected particle owner, with temporary DOM and timer APIs restored afterward. Protected marker/script-order parity and rollback-object checks have also passed against the captured Branch2 baseline. These results validate mock, parity, and rollback prerequisites only; they do not prove before/after production behavior parity or authorize a split. The high-risk matrix therefore records full reversible browser proof as **remaining**.
 
 ## Required proof sequence
 
@@ -27,7 +27,7 @@ The proof must not send messages, create posts, change credentials, request brow
 
 ## Harness coverage
 
-`docs/reversible-browser-proof-contract-harness.js` verifies that the global matrix still marks full browser proof as remaining, that the protected extraction gate remains blocked, that all current seam-preparation contracts and `docs/particle-browser-proof-evidence.txt` exist, and that protected production owners remain absent from `src/`. It reports the particle browser-context mock as evidence while intentionally keeping production-split proof **remaining**.
+`docs/reversible-browser-proof-contract-harness.js` verifies that the global matrix still marks full browser proof as remaining, that the protected extraction gate remains blocked, that all current seam-preparation contracts, `docs/particle-browser-proof-evidence.txt`, and `docs/particle-parity-rollback-evidence.txt` exist, and that protected production owners remain absent from `src/`. It reports mock, parity, and rollback evidence while intentionally keeping production-split proof **remaining**.
 
 ## References
 
@@ -35,5 +35,6 @@ The proof must not send messages, create posts, change credentials, request brow
 2. [`high-risk-extraction-gate-contract.md`](./high-risk-extraction-gate-contract.md)
 3. [`protected-contract-coverage.md`](./protected-contract-coverage.md)
 4. [`particle-browser-proof-evidence.txt`](./particle-browser-proof-evidence.txt)
-5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+5. [`particle-parity-rollback-evidence.txt`](./particle-parity-rollback-evidence.txt)
+6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -1,0 +1,13 @@
+NovaSocial Branch2 protected parity and rollback evidence
+Date: 2026-08-21
+Branch: Branch2
+Published commit: 969b61ae1a7c4c3c7c01bf2dd6c326e9ca3c1406
+Protected main ref: ef418007c9b9a797488b4825be5f0c807da22369
+
+Parity result: PASS
+The current published tree matches the captured baseline for 213 script tags, 213 closing tags, 212 external scripts, all 19 protected marker counts exactly once, required trailing script order, and zero protected owner matches in src/. The baseline and after snapshots are byte-for-byte equivalent for the recorded checks.
+
+Rollback result: PASS
+The current commit object and its parent commit are available. The previous Branch2 checkpoint is 2c9b813dea1fd9d2a355cb22312025d4ee0bf56d. The current tree is clean, local HEAD matches origin/Branch2, and origin/main remains the protected untouched ref.
+
+Safety: This was read-only Git/source verification. No checkout, reset, force-push, browser action, account mutation, protected behavior, or production code change was performed.

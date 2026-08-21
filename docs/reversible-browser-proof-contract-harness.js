@@ -46,6 +46,9 @@ for (const file of [
 
 assert(fs.existsSync(path.join(docsDir, 'particle-browser-proof-evidence.txt')), 'particle browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'particle-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PARTICLE_BROWSER_MOCK=PASS'), 'particle browser mock evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt')), 'particle parity and rollback evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('Parity result: PASS'), 'particle parity evidence must remain PASS');
+assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('Rollback result: PASS'), 'particle rollback evidence must remain PASS');
 
 for (const signature of [
   'async function renderDMs()',
