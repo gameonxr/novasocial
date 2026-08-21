@@ -2438,3 +2438,7 @@ Added `docs/reels-query-error-fallback-browser-proof-evidence.txt` and updated `
 ### Recording getUserMedia-failure browser-proof checkpoint — Branch2
 
 Added `docs/recording-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic microphone denial exercised the protected `toggleRecording()` failure branch, verifying the expected denial toast, zero MediaRecorder construction, idle UI preservation, and restoration of the media API, recorder, recording state, handlers, and DOM. No real microphone access, upload, database insert, account action, or production code change occurred; the recording owner remains inline.
+
+### Notes removal-failure browser-proof checkpoint — Branch2
+
+Added `docs/notes-removal-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic quick_notes delete failure exercised the protected `removeMyNoteFromViewer()` branch, verifying note targeting, no media-deletion delegation, failure feedback, viewer close and Notes Bar reload delegation, and restoration of database, handlers, audio state, and console. No real note deletion, media deletion, database mutation, account action, or production code change occurred; the Notes owner remains inline.

@@ -1,0 +1,15 @@
+NovaSocial Branch2 Notes removal-failure browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 7c5c0857661665482ba7637e41b458df909b9182
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic removeMyNoteFromViewer(noteId) failure mock. Synthetic quick_notes fetch returned a note without artwork; synthetic delete.eq rejected with a deterministic error. db.from, deleteMediaProduction, toast, console.error, closeNoteViewer, loadNotesBar, and _noteViewAudio were replaced only for the mock and restored in finally. No real note deletion, media deletion, database mutation, account action, or production code occurred.
+
+Observed result: The protected handler fetched and targeted mock-note, attempted the synthetic delete once, did not invoke deleteMediaProduction, logged the deterministic failure, emitted "❌ Note remove failed", and delegated viewer close plus Notes Bar reload.
+
+Post-finally cleanup check: dbFromAvailable=true; deleteMediaAvailable=true; toastAvailable=true; closeViewerAvailable=true; loadNotesAvailable=true; audioRestored=true; consoleErrorAvailable=true.
+
+Result: NON_DESTRUCTIVE_NOTES_REMOVAL_FAILURE_BROWSER_MOCK=PASS
+
+Interpretation: The protected Notes removal failure, error feedback, no media-deletion delegation, and cleanup behavior are browser-context verified without real deletion or account-side effects. This does not authorize extracting removeMyNoteFromViewer() or the protected Notes lifecycle; full before/after and rollback proof remains incomplete.

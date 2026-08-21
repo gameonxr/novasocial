@@ -89,6 +89,8 @@ assert(fs.existsSync(path.join(docsDir, 'notes-music-insert-browser-proof-eviden
 assert(fs.readFileSync(path.join(docsDir, 'notes-music-insert-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_MUSIC_INSERT_BROWSER_MOCK=PASS'), 'Notes music-insert browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'notes-update-failure-browser-proof-evidence.txt')), 'Notes update-failure browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'notes-update-failure-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_UPDATE_FAILURE_BROWSER_MOCK=PASS'), 'Notes update-failure browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'notes-removal-failure-browser-proof-evidence.txt')), 'Notes removal-failure browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'notes-removal-failure-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_REMOVAL_FAILURE_BROWSER_MOCK=PASS'), 'Notes removal-failure browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt')), 'deletion-fallback browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DELETION_FALLBACK_ERROR_BROWSER_MOCK=PASS'), 'deletion-fallback browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-valid-queue-browser-proof-evidence.txt')), 'deletion-fallback valid-queue browser-proof evidence must remain present');
