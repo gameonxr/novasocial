@@ -2394,3 +2394,7 @@ Added `docs/push-reset-failure-browser-proof-evidence.txt` and updated `docs/rev
 ### Push reset-success browser-proof checkpoint — Branch2
 
 Added `docs/push-reset-success-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=granted` mock with deterministic `forceResubscribePush()` success verified the reset-start toast, exactly one mocked reset call, exact reset-success toast, exactly one settings refresh, and restoration of all temporary globals. No real unsubscribe, subscription, database mutation, account mutation, or production code change was performed.
+
+### Recording start-stop browser-proof checkpoint — Branch2
+
+Added `docs/recording-start-stop-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic mock exercised the protected inline `toggleRecording(cid)` start/stop path with synthetic getUserMedia, MediaRecorder, Blob/File, chat upload, and messages insert stubs. The proof observed recording UI transitions, mocked delivery delegation, idle-state restoration, one synthetic track cleanup, and complete restoration of temporary globals. No real microphone, upload, database, account, authentication, or message action occurred; the protected recorder owner remains inline.

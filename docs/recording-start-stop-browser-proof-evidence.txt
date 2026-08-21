@@ -1,0 +1,15 @@
+NovaSocial Branch2 recording start/stop browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 7b9d15b1c134247e47ec690a79f651d4d6fd4aac2
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser context, deterministic recording start/stop mock only. The protected inline toggleRecording(cid) implementation was called unchanged. Temporary navigator.mediaDevices.getUserMedia, MediaRecorder, Blob, File, upload, db.from, ME, recorder state, toast, ico, and mic button globals were replaced only for the mock and restored in finally. No real microphone, camera, upload, database insert, account, authentication, or message action occurred.
+
+Observed result: getUserMedia.audio; recorder.construct; recorder.start; recording UI changed to the stop icon with pink recording background and recording=true; recording toast emitted; recorder.stop; idle UI restored to mic icon with dark background and recording=false; sending toast emitted; mocked chat upload called; mocked messages insert/throwOnError called; one synthetic stream track stopped.
+
+Post-finally cleanup check: recordingIsIdle=true; mediaRecorderIsNull=true; audioChunksIsArray=true; dbFromAvailable=true; mediaDevicesAvailable=true; mediaRecorderNativeShape=true; temporaryButtonRemoved=true.
+
+Result: NON_DESTRUCTIVE_RECORDING_START_STOP_BROWSER_MOCK=PASS
+
+Interpretation: The browser-context start/stop, mocked delivery delegation, idle-state restoration, and track cleanup branches are evidenced without accessing real media or mutating production data. This does not authorize extracting toggleRecording or the DM voice-message path; protected split proof remains incomplete.
