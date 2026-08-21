@@ -2138,3 +2138,7 @@ Added `docs/favorite-message-contract.md` and `docs/favorite-message-contract-ha
 ### Message Clipboard Helpers audit checkpoint — Branch2
 
 Added `docs/message-clipboard-helpers-contract.md` and `docs/message-clipboard-helpers-contract-harness.js`. This structural audit locks clipboard write/decode behavior, success/failure toasts, reaction-box cleanup, modal closure, and the protected DM boundary. No clipboard, chat session, or message state was accessed; production code remains unchanged.
+
+### Message Favorite Toggle audit checkpoint — Branch2
+
+Added `docs/message-favorite-toggle-contract.md` and `docs/message-favorite-toggle-contract-harness.js`. This structural audit locks URL decoding, local favorite membership toggling, addition/removal toasts, newest-first insertion, persistence, and modal closure. No storage data or account state was accessed; production code remains unchanged.
