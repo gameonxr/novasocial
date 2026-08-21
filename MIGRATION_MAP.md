@@ -2102,3 +2102,7 @@ Added `docs/get-blocked-both-ways-set-contract.md` and `docs/get-blocked-both-wa
 ### Update Account Avatar audit checkpoint — Branch2
 
 Added `docs/update-account-avatar-contract.md` and `docs/update-account-avatar-contract-harness.js`. This structural audit locks saved-account lookup, matching-account avatar mutation, `nova_accounts` persistence, and unmatched-account no-op behavior. No account session or storage data was touched; production code remains unchanged.
+
+### Update Crop Zoom audit checkpoint — Branch2
+
+Added `docs/update-crop-zoom-contract.md` and `docs/update-crop-zoom-contract-harness.js`. This structural audit locks slider normalization, crop-state scale calculation, guarded image lookup, offset composition, and transform updates. Production code remains unchanged.
