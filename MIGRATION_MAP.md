@@ -2402,3 +2402,7 @@ Added `docs/recording-start-stop-browser-proof-evidence.txt` and updated `docs/r
 ### Deletion-fallback valid-queue browser-proof checkpoint — Branch2
 
 Added `docs/deletion-fallback-valid-queue-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic two-item queue mock verified ordered replay, isolation of one synthetic per-item deletion failure, final queue removal, expected sync logs, and restoration of local storage, the deletion boundary, and console methods. No real media deletion, provider call, database mutation, account mutation, or production code change occurred; the protected fallback owners remain inline.
+
+### Notes music-backed insert browser-proof checkpoint — Branch2
+
+Added `docs/notes-music-insert-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic music selection with whitespace-only text exercised the protected `submitNote()` insert path. The mock verified the complete payload, mocked quick_notes insert/select, success toast, modal close, Notes Bar reload, and restoration of database, account, note, music, visibility, console, and DOM state. No real database insert, media access, account mutation, authentication, or production code change occurred; the Notes owner remains inline.

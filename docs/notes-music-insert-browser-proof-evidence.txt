@@ -1,0 +1,15 @@
+NovaSocial Branch2 Notes music-backed insert browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: ef07ce4fc5e9b810fd9765b2c7e37e6ee363fc1a
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic Notes insert mock. The protected submitNote() implementation was called unchanged with a synthetic whitespace-only text input and a synthetic music selection. db.from, ME, _myActiveNote, note music/visibility state, toast, closeModal, loadNotesBar, console.log, and the temporary input were replaced only for the mock and restored in finally. No real database insert, media access, account mutation, authentication, or production code change occurred.
+
+Observed result: The quick_notes insert branch received user_id=mock-user, empty text, Mock Song, Mock Artist, mock artwork/preview URLs, start position 12, and friends visibility. The mocked query completed through insert and select. The protected handler emitted exactly "Note shared! ✨", closed the modal, and refreshed the Notes Bar.
+
+Post-finally cleanup check: dbFromAvailable=true; meRestored=true; noteStateRestored=true; musicStateRestored=true; visibilityStateRestored=true; toastAvailable=true; closeModalAvailable=true; loadNotesBarAvailable=true; consoleAvailable=true; temporaryInputRemoved=true.
+
+Result: NON_DESTRUCTIVE_NOTES_MUSIC_INSERT_BROWSER_MOCK=PASS
+
+Interpretation: The music-backed Notes insert payload, success feedback, close/reload delegation, and restoration are browser-context verified without real storage or account-side effects. This does not authorize extracting submitNote() or the protected Notes path; full before/after and rollback proof remains incomplete.
