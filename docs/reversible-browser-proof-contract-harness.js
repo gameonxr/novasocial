@@ -55,6 +55,8 @@ assert(fs.existsSync(path.join(docsDir, 'push-browser-proof-evidence.txt')), 'Pu
 assert(fs.readFileSync(path.join(docsDir, 'push-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PUSH_UNSUPPORTED_BROWSER_MOCK=PASS'), 'Push unsupported-capability browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'notes-browser-proof-evidence.txt')), 'Notes browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'notes-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_EMPTY_VALIDATION_BROWSER_MOCK=PASS'), 'Notes empty-validation browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt')), 'deletion-fallback browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DELETION_FALLBACK_ERROR_BROWSER_MOCK=PASS'), 'deletion-fallback browser evidence must remain PASS');
 
 for (const signature of [
   'async function renderDMs()',

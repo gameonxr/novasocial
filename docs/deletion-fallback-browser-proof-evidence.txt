@@ -1,0 +1,13 @@
+NovaSocial Branch2 deletion-fallback browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: c54210a9401b41f95a4e14df488535affee1c3a5
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic malformed-local-storage error mock only. No login, media deletion, database mutation, account mutation, or production code change.
+
+Observed result: The protected syncLocalDeletionFallback handler received malformed JSON in _mediaDeleteFallback. It emitted a warning beginning "Fallback sync failed:" and returned through its outer error boundary. The deleteMediaProduction stub was called 0 times. The malformed value was present only during the mock, then the original local-storage value was restored. The original console.warn and deleteMediaProduction functions were restored.
+
+Result: NON_DESTRUCTIVE_DELETION_FALLBACK_ERROR_BROWSER_MOCK=PASS
+
+Interpretation: The malformed-storage error boundary is browser-context verified. This is not full deletion-fallback production proof; valid pending-item iteration, individual failure continuation, cleanup, before/after parity, and rollback evidence remain separate requirements.

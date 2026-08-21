@@ -2358,3 +2358,7 @@ Added `docs/push-browser-proof-evidence.txt` and updated `docs/reversible-browse
 ### Notes empty-validation browser-proof checkpoint — Branch2
 
 Added `docs/notes-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context deterministic whitespace-only note input verified that the protected `submitNote()` handler emits the expected validation toast and returns before database or media paths, while restoring the temporary DOM, toast, and note-music state. No note submission, media upload, account mutation, or production code change was performed.
+
+### Deletion-fallback error browser-proof checkpoint — Branch2
+
+Added `docs/deletion-fallback-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context malformed `_mediaDeleteFallback` value verified the protected `syncLocalDeletionFallback()` warning boundary, zero `deleteMediaProduction()` calls, and restoration of local storage, console, and the deletion function. No media deletion, database mutation, account mutation, or production code change was performed.
