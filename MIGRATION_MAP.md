@@ -2110,3 +2110,7 @@ Added `docs/update-crop-zoom-contract.md` and `docs/update-crop-zoom-contract-ha
 ### Show Blocked List audit checkpoint — Branch2
 
 Added `docs/show-blocked-list-contract.md` and `docs/show-blocked-list-contract-harness.js`. This structural audit locks blocked-accounts modal/loading states, profile query shape, empty-state rendering, profile mapping, row rendering, and unblock delegation. No database request or unblock action was performed; production code remains unchanged.
+
+### View Chat Image audit checkpoint — Branch2
+
+Added `docs/view-chat-image-contract.md` and `docs/view-chat-image-contract-harness.js`. This structural audit locks modal/image presentation, dark-sheet styling, download delegation, backdrop dismissal, and the protected DM-realtime boundary. No chat session or media download was used; production code remains unchanged.
