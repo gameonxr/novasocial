@@ -2270,3 +2270,7 @@ Added `docs/search-admin-users-contract.md` and `docs/search-admin-users-contrac
 ### Follow List audit checkpoint — Branch2
 
 Added `docs/follow-list-contract.md` and `docs/follow-list-contract-harness.js`. This structural audit locks follower/following query inversion, loading and empty states, profile navigation, optimistic follow state, insert/delete persistence branches, notification delegation, and error feedback. No account action or database access was performed; production code remains unchanged.
+
+### Collaboration audit checkpoint — Branch2
+
+Added `docs/collaboration-contract.md` and `docs/collaboration-contract-harness.js`. This structural audit locks co-author picker loading and query behavior, empty state, user cache, search filtering, selection state, toast and close actions, and create-button update. No collaborator was selected and no post was created; production code remains unchanged.
