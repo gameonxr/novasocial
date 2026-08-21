@@ -1,0 +1,15 @@
+NovaSocial Branch2 deletion-fallback valid-queue browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: e3d46f5defa1f3d960ef4f1b1ee95fd75ea5624c
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic valid-queue replay mock. The protected syncLocalDeletionFallback() implementation was called unchanged. Synthetic _mediaDeleteFallback local-storage data contained two ordered items. deleteMediaProduction was replaced with a stub that recorded both calls and threw only for the second item. No real media deletion, provider call, database mutation, account mutation, authentication, or production code change occurred.
+
+Observed result: The first item was replayed before the second item; both item arguments were preserved. The second item failure was isolated by the protected per-item catch, replay continued to completion, and the queue key was removed after the loop. The protected log sequence included "Syncing 2 fallback deletions to Supabase..." and "Synced 2 fallback deletions".
+
+Post-finally cleanup check: queueRestored=true; deleteFunctionAvailable=true; consoleLogAvailable=true; consoleWarnAvailable=true. The original local-storage value, deleteMediaProduction function, console.log, and console.warn were restored.
+
+Result: NON_DESTRUCTIVE_DELETION_FALLBACK_VALID_QUEUE_BROWSER_MOCK=PASS
+
+Interpretation: Valid pending-item order, individual failure continuation, final queue removal, and cleanup are browser-context verified without real deletion or account-side effects. This does not authorize extracting syncLocalDeletionFallback() or deleteMediaProduction(); protected split proof remains incomplete.
