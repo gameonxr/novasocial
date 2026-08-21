@@ -2090,3 +2090,7 @@ Added `docs/show-account-switcher-contract.md` and `docs/show-account-switcher-c
 ### Switch To Account audit checkpoint — Branch2
 
 Added `docs/switch-to-account-contract.md` and `docs/switch-to-account-contract-harness.js`. This structural audit locks saved-target lookup, missing-target protection, session token handoff shape, successful modal close/reload, and failed-switch cleanup. No authentication call or account session was used; production code remains unchanged.
+
+### Get Blocked List audit checkpoint — Branch2
+
+Added `docs/get-blocked-list-contract.md` and `docs/get-blocked-list-contract-harness.js`. This structural audit locks the read-only `blocks` query, current-user filter, empty-data fallback, blocked-ID mapping, and Set conversion. No database request or account data access was performed; production code remains unchanged.
