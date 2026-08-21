@@ -2446,3 +2446,7 @@ Added `docs/notes-removal-failure-browser-proof-evidence.txt` and updated `docs/
 ### Stories synthetic-image setup browser-proof checkpoint — Branch2
 
 Added `docs/stories-image-setup-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic image story exercised the protected `openSV()` and `renderSV()` setup path. The proof verified navigation and overlay delegation, playback-stop delegation, progress/header/image DOM rendering, no video creation, and baseline-relative restoration of account, story arrays, indices, timer, helpers, and viewer DOM. No real media, database, account action, or production code change occurred; the Stories owners remain inline.
+
+### DMs refresh no-account guard browser-proof checkpoint — Branch2
+
+Added `docs/dms-refresh-no-account-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic no-account state exercised the protected `_refreshDmsInPlace()` early return. The proof verified immediate false return, zero database and Notes Bar calls, unchanged screen DOM, and baseline-relative restoration of account, tab, chat, database, and Notes Bar state. No login, realtime, chat, account action, or production code change occurred; the DMs refresh owner remains inline.

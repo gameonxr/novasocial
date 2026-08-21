@@ -1,0 +1,15 @@
+NovaSocial Branch2 DMs refresh no-account guard browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 8e0c34d9a954c2548315662fe52e04fb591940bd
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic _refreshDmsInPlace() no-account early-return mock. ME was temporarily set to null, db.from and _fetchNotesBarData were replaced with fail-fast sentinels, and the existing screen HTML was captured. No login, database, Notes Bar, realtime, chat, account, or production action occurred.
+
+Branch result: returnedFalse=true; noBackendCalls=true; tabDuringGuard=true; chatStateDuringGuard=true; domUnchanged=true.
+
+Baseline-relative post-finally restoration: me=true; curTab=true; chatState=true; dbFrom=true; fetchNotes=true; domUnchanged=true.
+
+Result: NON_DESTRUCTIVE_DMS_REFRESH_NO_ACCOUNT_BROWSER_MOCK=PASS
+
+Interpretation: The protected DMs background-refresh no-account guard and rollback behavior are browser-context verified without backend or account side effects. This does not authorize extracting _refreshDmsInPlace() or the protected DMs lifecycle; full before/after and rollback proof remains incomplete.
