@@ -2202,3 +2202,7 @@ Added `docs/calendar-contract.md` and `docs/calendar-contract-harness.js`. This 
 ### Learning audit checkpoint — Branch2
 
 Added `docs/learning-contract.md` and `docs/learning-contract-harness.js`. This structural audit locks the Learning modal, six course fixtures, lesson and progress metadata, conditional progress rendering, `startCourse` routing, toast feedback, and modal closure. No course was opened or started; production code remains unchanged.
+
+### AI Context audit checkpoint — Branch2
+
+Added `docs/ai-context-contract.md` and `docs/ai-context-contract-harness.js`. This structural audit locks shared context fields, ordered deterministic mood detection, keyword matching, lowercase normalization, first-match behavior, and null fallback. No AI service or protected system was invoked; production code remains unchanged.
