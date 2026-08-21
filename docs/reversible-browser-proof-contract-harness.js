@@ -67,6 +67,8 @@ assert(fs.existsSync(path.join(docsDir, 'push-request-failure-browser-proof-evid
 assert(fs.readFileSync(path.join(docsDir, 'push-request-failure-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PUSH_REQUEST_FAILURE_BROWSER_MOCK=PASS'), 'Push request-failure browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'push-reset-failure-browser-proof-evidence.txt')), 'Push reset-failure browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'push-reset-failure-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PUSH_RESET_FAILURE_BROWSER_MOCK=PASS'), 'Push reset-failure browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'push-reset-success-browser-proof-evidence.txt')), 'Push reset-success browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'push-reset-success-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PUSH_RESET_SUCCESS_BROWSER_MOCK=PASS'), 'Push reset-success browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'notes-browser-proof-evidence.txt')), 'Notes browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'notes-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_EMPTY_VALIDATION_BROWSER_MOCK=PASS'), 'Notes empty-validation browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt')), 'deletion-fallback browser-proof evidence must remain present');
