@@ -2414,3 +2414,7 @@ Added `docs/notes-update-failure-browser-proof-evidence.txt` and updated `docs/r
 ### Deletion-fallback empty-queue browser-proof checkpoint — Branch2
 
 Added `docs/deletion-fallback-empty-queue-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic empty queue exercised the protected early-return branch, verifying zero deletion calls, no sync-start or sync-complete logs, preserved empty queue state, and restoration of local storage, the deletion boundary, and console methods. No real media deletion, provider call, database mutation, account mutation, or production code change occurred; the protected fallback owners remain inline.
+
+### DMs empty-state browser-proof checkpoint — Branch2
+
+Added `docs/dms-empty-state-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, deterministic empty conversation and unread queries exercised the protected `renderDMs()` path against the existing screen element. The proof verified the Messages heading, no-message empty state, New Message control, Notes Bar delegation, and restoration of query, account, generation, helper, icon, and screen state. No login, realtime subscription, database query, message action, account mutation, or production code change occurred; the DMs renderer remains inline.

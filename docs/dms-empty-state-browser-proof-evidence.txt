@@ -1,0 +1,15 @@
+NovaSocial Branch2 DMs empty-state browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 09d16ed85217c2818e139c5b983a237d3df5ccd8
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic DMs renderer mock. The protected renderDMs() implementation was called unchanged against the existing screen element. conversation_members and messages queries returned synthetic empty data; the Notes Bar fetch/render helpers returned and rendered deterministic empty data. db.from, ME, render-generation state, Notes Bar helpers, icon helper, and screen HTML were restored in finally. No login, realtime subscription, database query, message action, account mutation, or production code change occurred.
+
+Observed result: The renderer executed both empty query branches and Notes Bar delegation. The existing DMs screen contained the Messages heading, the protected "Koi message nahi" empty state, the New Message control, and the deterministic Notes Bar marker.
+
+Post-finally cleanup check: screenAvailable=true; screenRestored=true; dbFromAvailable=true; meRestored=true; generationRestored=true; fetchNotesAvailable=true; renderNotesAvailable=true; icoAvailable=true.
+
+Result: NON_DESTRUCTIVE_DMS_EMPTY_STATE_BROWSER_MOCK=PASS
+
+Interpretation: The protected DMs empty-state render, empty query handling, Notes Bar delegation, and screen restoration are browser-context verified without login or backend/account-side effects. This does not authorize extracting renderDMs() or the protected DMs lifecycle; full before/after and rollback proof remains incomplete.
