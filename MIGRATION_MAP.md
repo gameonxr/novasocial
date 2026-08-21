@@ -2162,3 +2162,7 @@ Added `docs/toggle-reels-mute-contract.md` and `docs/toggle-reels-mute-contract-
 ### Reel Like Helper audit checkpoint — Branch2
 
 Added `docs/reel-like-helper-contract.md` and `docs/reel-like-helper-contract-harness.js`. This structural audit locks liked-state guarding, toggleLike delegation, six-heart scheduling, animation styling, delayed cleanup, and the protected Reels-renderer boundary. No Reels session or media action was used; production code remains unchanged.
+
+### Report User audit checkpoint — Branch2
+
+Added `docs/report-user-contract.md` and `docs/report-user-contract-harness.js`. This structural audit locks the exact `showReportModal('user', userId)` delegation, target typing, argument forwarding, and thin-wrapper boundary. No report modal was opened and no report was submitted; production code remains unchanged.
