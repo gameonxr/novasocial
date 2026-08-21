@@ -2314,3 +2314,7 @@ Added `docs/show-edit-contract.md` and `docs/show-edit-contract-harness.js`. Thi
 ### Mention audit checkpoint — Branch2
 
 Added `docs/mention-contract.md` and `docs/mention-contract-harness.js`. This structural audit locks caption mention parsing, debounced profile suggestions, cursor-safe insertion, staged notification delegation, and schedule-mode timing. No user search, caption mutation, notification send, or scheduled-post action was performed.
+
+### Cleanup-expired-notes audit checkpoint — Branch2
+
+Added `docs/cleanup-expired-notes-contract.md` and `docs/cleanup-expired-notes-contract-harness.js`. This structural audit locks the one-shot guard, bounded expiry query, Cloudinary-only artwork cleanup, related-data deletion, primary-note deletion, and non-critical error boundary. No note or media deletion was executed; production code remains unchanged.
