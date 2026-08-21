@@ -2238,3 +2238,7 @@ Added `docs/fab-longpress-menu-contract.md` and `docs/fab-longpress-menu-contrac
 ### Show Report Modal audit checkpoint — Branch2
 
 Added `docs/show-report-modal-contract.md` and `docs/show-report-modal-contract-harness.js`. This structural audit locks report modal lifecycle, escaped target display, dynamic reason rendering, cancel behavior, hover states, mouse and touch submission delegation, and inline persistence boundary. No report modal was opened or submitted; production code remains unchanged.
+
+### News Feed audit checkpoint — Branch2
+
+Added `docs/news-feed-contract.md` and `docs/news-feed-contract-harness.js`. This structural audit locks loading state, the 24-hour trending query, selected fields, descending likes order, twenty-item cap, empty and error states, escaped result rendering, and `viewPost` delegation. No database access or post navigation was performed; production code remains unchanged.
