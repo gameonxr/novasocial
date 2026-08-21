@@ -2366,3 +2366,7 @@ Added `docs/deletion-fallback-browser-proof-evidence.txt` and updated `docs/reve
 ### Push denied-permission browser-proof checkpoint — Branch2
 
 Added `docs/push-denied-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=denied` mock verified the protected enable/reset handlers emit the expected blocked/enable-first toasts, request no permission, call no subscription/reset/settings helpers, and restore all temporary globals. No permission prompt, subscription mutation, account mutation, or production code change was performed.
+
+### Push granted-resubscribe browser-proof checkpoint — Branch2
+
+Added `docs/push-granted-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=granted` mock verified the protected enable handler emits the already-enabled toast, delegates exactly once to a mocked subscription helper, refreshes settings exactly once, requests no permission, and restores all temporary globals. No real subscription, database mutation, account mutation, or production code change was performed.

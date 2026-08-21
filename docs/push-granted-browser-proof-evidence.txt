@@ -1,0 +1,13 @@
+NovaSocial Branch2 Push granted/resubscribe browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: d9fc7942086d79dac153da36b438faacde09184a
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic Notification.permission=granted delegation mock only. No login, browser permission request, real subscription, service-worker action, database mutation, account mutation, or production code change.
+
+Observed result: The protected enablePushFromSettings handler emitted exactly "Already enabled — refreshing subscription...". The subscription helper was replaced with a deterministic stub and called exactly once. The settings refresh helper was replaced with a deterministic stub and called exactly once. requestPermission was called zero times. The original Notification descriptor, toast, subscription helper, and settings helper were restored.
+
+Result: NON_DESTRUCTIVE_PUSH_GRANTED_DELEGATION_BROWSER_MOCK=PASS
+
+Interpretation: The granted-permission delegation branch is browser-context verified without invoking real subscription code. This is not full Push production proof; real subscription behavior, service-worker failure, reset failure, logout race, before/after parity, and rollback evidence remain separate requirements.
