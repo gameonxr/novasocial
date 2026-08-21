@@ -2210,3 +2210,7 @@ Added `docs/ai-context-contract.md` and `docs/ai-context-contract-harness.js`. T
 ### FAB Customization audit checkpoint — Branch2
 
 Added `docs/fab-customization-contract.md` and `docs/fab-customization-contract-harness.js`. This structural audit locks cyclic size and style presets, DOM assignments, local storage keys, blur behavior, toast feedback, and long-press menu closure. No FAB customization was performed; production code remains unchanged.
+
+### News audit checkpoint — Branch2
+
+Added `docs/news-contract.md` and `docs/news-contract-harness.js`. This structural audit locks the News modal, eight category chips, default For You selection, five article fixtures, metadata, article toast routing, and the independent inline `showNewsFeed` boundary. No news modal or external data source was accessed; production code remains unchanged.
