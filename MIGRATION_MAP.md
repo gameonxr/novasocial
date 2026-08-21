@@ -2318,3 +2318,7 @@ Added `docs/mention-contract.md` and `docs/mention-contract-harness.js`. This st
 ### Cleanup-expired-notes audit checkpoint — Branch2
 
 Added `docs/cleanup-expired-notes-contract.md` and `docs/cleanup-expired-notes-contract-harness.js`. This structural audit locks the one-shot guard, bounded expiry query, Cloudinary-only artwork cleanup, related-data deletion, primary-note deletion, and non-critical error boundary. No note or media deletion was executed; production code remains unchanged.
+
+### Particle seam-preparation checkpoint — Branch2
+
+Added `docs/particle-seam-preparation-contract.md` and `docs/particle-seam-preparation-contract-harness.js`. This test-only checkpoint maps a future adapter around DOM geometry, body insertion, deterministic randomness, timers, and cleanup while preserving the inline `spawnLikeParticles()` owner. No particle, like, animation, or production code was moved; reversible browser proof remains required.
