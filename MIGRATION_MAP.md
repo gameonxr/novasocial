@@ -2146,3 +2146,7 @@ Added `docs/message-favorite-toggle-contract.md` and `docs/message-favorite-togg
 ### Message Info audit checkpoint — Branch2
 
 Added `docs/message-info-contract.md` and `docs/message-info-contract-harness.js`. This structural audit locks message/read-receipt query shape, modal/loading state, sent/delivered timestamp branches, reader rendering, empty-read state, and protected DM boundaries. No database request or chat session was used; production code remains unchanged.
+
+### Chat Input Helpers audit checkpoint — Branch2
+
+Added `docs/chat-input-helpers-contract.md` and `docs/chat-input-helpers-contract-harness.js`. This structural audit locks required-element guarding, send-button icon branches, chat-pill expansion/focus behavior, and textarea auto-grow threshold handling. No chat session or message action was used; production code remains unchanged.
