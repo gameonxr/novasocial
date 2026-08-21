@@ -2354,3 +2354,7 @@ Added `docs/voice-browser-proof-evidence.txt` and updated `docs/reversible-brows
 ### Push unsupported-capability browser-proof checkpoint — Branch2
 
 Added `docs/push-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. Browser-context mocks verified that `enablePushFromSettings()` and `resetPushFromSettings()` take the unsupported-browser guard when `PushManager` is absent, emit the expected safe toast, request no permission, mutate no subscription or database state, and restore the original browser descriptor. The first invalid mock timed out because `in` checks remained true; it was discarded and the page was reloaded before the corrected proof. No production code or browser account state changed.
+
+### Notes empty-validation browser-proof checkpoint — Branch2
+
+Added `docs/notes-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context deterministic whitespace-only note input verified that the protected `submitNote()` handler emits the expected validation toast and returns before database or media paths, while restoring the temporary DOM, toast, and note-music state. No note submission, media upload, account mutation, or production code change was performed.

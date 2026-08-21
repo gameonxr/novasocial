@@ -1,0 +1,13 @@
+NovaSocial Branch2 Notes browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 778c7be2b2dc9c28293f21faf0b42c2eb7091775
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic empty-content validation mock only. No login, note submission, database insert, media upload, account mutation, or production code change.
+
+Observed result: The protected submitNote handler received a fake note input containing whitespace and no active music selection. The trimmed input was empty. The handler emitted exactly "Text likho ya gaana lagao" and returned before database or media paths. The real document.getElementById and toast functions were restored, and the temporary note-music state was restored.
+
+Result: NON_DESTRUCTIVE_NOTES_EMPTY_VALIDATION_BROWSER_MOCK=PASS
+
+Interpretation: The empty-note guard is browser-context verified. This is not full Notes production proof; insert/update success and failure, visibility, expiration, artwork cleanup, deletion, realtime refresh, before/after parity, and rollback evidence remain separate requirements.
