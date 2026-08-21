@@ -2282,3 +2282,7 @@ Added `docs/search-giphy-contract.md` and `docs/search-giphy-contract-harness.js
 ### AI Journal audit checkpoint — Branch2
 
 Added `docs/ai-journal-contract.md` and `docs/ai-journal-contract-harness.js`. This structural audit locks screen and modal rendering, summary and recent-entry fixtures, mood chips, validation, localStorage persistence, save lifecycle, and deterministic auto-generation. No journal entry was opened or saved; production code remains unchanged.
+
+### Toggle Ghost Mode audit checkpoint — Branch2
+
+Added `docs/toggle-ghost-mode-contract.md` and `docs/toggle-ghost-mode-contract-harness.js`. This structural audit locks safe mode inversion, profile persistence, local state synchronization, status text, and activation/deactivation feedback. No account preference was changed; production code remains unchanged.
