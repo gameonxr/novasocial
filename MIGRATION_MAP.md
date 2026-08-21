@@ -2218,3 +2218,7 @@ Added `docs/news-contract.md` and `docs/news-contract-harness.js`. This structur
 ### Mood Timeline audit checkpoint — Branch2
 
 Added `docs/mood-timeline-contract.md` and `docs/mood-timeline-contract-harness.js`. This structural audit locks screen rendering, five mood fixtures, timeline structure, back navigation, post-count metadata, and deterministic insight presentation. No mood timeline was opened and no AI or protected system was invoked; production code remains unchanged.
+
+### Client Moderation Guards audit checkpoint — Branch2
+
+Added `docs/client-moderation-guards-contract.md` and `docs/client-moderation-guards-contract-harness.js`. This structural audit locks profile-ban and message-ban checks, exact restriction toasts, boolean return paths, and side-effect-free behavior. No moderation action was performed; production code remains unchanged.
