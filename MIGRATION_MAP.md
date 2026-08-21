@@ -2034,3 +2034,7 @@ Added `docs/toggle-segment-preview-contract.md` and `docs/toggle-segment-preview
 ### Update Note Music Icon audit checkpoint — Branch2
 
 Added `docs/update-note-music-icon-contract.md` and `docs/update-note-music-icon-contract-harness.js`. This structural audit locks guarded icon lookup and deterministic pause-bar/play-polygon rendering. Audio lifecycle and note state remain outside the helper; production code remains unchanged.
+
+### Open Music Search audit checkpoint — Branch2
+
+Added `docs/open-music-search-contract.md` and `docs/open-music-search-contract-harness.js`. This structural audit locks the search panel class/ID surface, close and search handlers, DOM insertion, delayed focus/scroll hooks, and recent-suggestions delegation. Search requests, preview playback, and persistence remain delegated; production code remains unchanged.
