@@ -2226,3 +2226,7 @@ Added `docs/client-moderation-guards-contract.md` and `docs/client-moderation-gu
 ### Fallback Local Queue audit checkpoint — Branch2
 
 Added `docs/fallback-local-queue-contract.md` and `docs/fallback-local-queue-contract-harness.js`. This structural audit locks local queue parsing, append payload, timestamping, 500-item cap, oldest-100 trimming, storage persistence, and warning-only failure handling. No media deletion or queue write was performed; production code remains unchanged.
+
+### FAB Speed Dial audit checkpoint — Branch2
+
+Added `docs/fab-speed-dial-contract.md` and `docs/fab-speed-dial-contract-harness.js`. This structural audit locks guard lookups, five menu entries, delegated actions, side-aware positioning, display and animation state, icon rotation, and close behavior. No FAB menu or delegated feature was opened; production code remains unchanged.
