@@ -2078,3 +2078,7 @@ Added `docs/refresh-and-open-note-creator-contract.md` and `docs/refresh-and-ope
 ### View Avatar Fullscreen audit checkpoint — Branch2
 
 Added `docs/view-avatar-fullscreen-contract.md` and `docs/view-avatar-fullscreen-contract-harness.js`. This structural audit locks missing-avatar handling, existing-viewer replacement, viewer identity/styling, escaped username display, close control, backdrop dismissal, and body insertion. The existing avatar URL interpolation remains documented without speculative changes.
+
+### Remove Account From Switcher audit checkpoint — Branch2
+
+Added `docs/remove-account-from-switcher-contract.md` and `docs/remove-account-from-switcher-contract-harness.js`. This structural audit locks current-account protection, toast/early return, saved-session removal delegation, and account-switcher refresh. No account data was changed; production code remains unchanged.
