@@ -2154,3 +2154,7 @@ Added `docs/chat-input-helpers-contract.md` and `docs/chat-input-helpers-contrac
 ### Update Post Counts audit checkpoint — Branch2
 
 Added `docs/update-post-counts-contract.md` and `docs/update-post-counts-contract-harness.js`. This structural audit locks guarded like/comment targets, dataset updates, formatted count text, count-based visibility, and alternate count elements. Production code remains unchanged.
+
+### Toggle Reels Mute audit checkpoint — Branch2
+
+Added `docs/toggle-reels-mute-contract.md` and `docs/toggle-reels-mute-contract-harness.js`. This structural audit locks mute-state inversion, current-video lookup, guarded playback, mute-icon updates, toast feedback, and the protected Reels-renderer boundary. No Reels session or media playback was used; production code remains unchanged.
