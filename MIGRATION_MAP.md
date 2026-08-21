@@ -2166,3 +2166,7 @@ Added `docs/reel-like-helper-contract.md` and `docs/reel-like-helper-contract-ha
 ### Report User audit checkpoint — Branch2
 
 Added `docs/report-user-contract.md` and `docs/report-user-contract-harness.js`. This structural audit locks the exact `showReportModal('user', userId)` delegation, target typing, argument forwarding, and thin-wrapper boundary. No report modal was opened and no report was submitted; production code remains unchanged.
+
+### Switch Admin Tab audit checkpoint — Branch2
+
+Added `docs/switch-admin-tab-contract.md` and `docs/switch-admin-tab-contract-harness.js`. This structural audit locks complete tab iteration, active/inactive style assignment, unchanged tab forwarding, and single `loadAdminTab` delegation. No admin UI was opened and no destructive operation was performed; production code remains unchanged.
