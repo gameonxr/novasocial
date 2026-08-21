@@ -2174,3 +2174,7 @@ Added `docs/switch-admin-tab-contract.md` and `docs/switch-admin-tab-contract-ha
 ### Setup Home Hold Restore audit checkpoint — Branch2
 
 Added `docs/setup-home-hold-restore-contract.md` and `docs/setup-home-hold-restore-contract-harness.js`. This structural audit locks Home-target filtering, two-second touch and mouse timers, FAB restoration, touch haptic feedback, and cancellation on release or movement. No browser interaction was performed; production code remains unchanged.
+
+### Settings Appearance audit checkpoint — Branch2
+
+Added `docs/settings-appearance-contract.md` and `docs/settings-appearance-contract-harness.js`. This structural audit locks the Appearance modal title, four-row layout, exact theme-picker and profile-customizer routing, and presentation-only boundary. No settings modal was opened and no preference was changed; production code remains unchanged.
