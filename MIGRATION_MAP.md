@@ -2450,3 +2450,7 @@ Added `docs/stories-image-setup-browser-proof-evidence.txt` and updated `docs/re
 ### DMs refresh no-account guard browser-proof checkpoint — Branch2
 
 Added `docs/dms-refresh-no-account-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic no-account state exercised the protected `_refreshDmsInPlace()` early return. The proof verified immediate false return, zero database and Notes Bar calls, unchanged screen DOM, and baseline-relative restoration of account, tab, chat, database, and Notes Bar state. No login, realtime, chat, account action, or production code change occurred; the DMs refresh owner remains inline.
+
+### DMs refresh current-tab guard browser-proof checkpoint — Branch2
+
+Added `docs/dms-refresh-current-tab-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic non-DMs tab state exercised the protected `_refreshDmsInPlace()` current-tab early return. The proof verified immediate false return, zero database and Notes Bar calls, unchanged screen DOM, and baseline-relative restoration of account, tab, chat, database, and Notes Bar state. No login, realtime, chat, account action, or production code change occurred; the DMs refresh owner remains inline.

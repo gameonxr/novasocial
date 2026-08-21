@@ -65,6 +65,8 @@ assert(fs.existsSync(path.join(docsDir, 'dms-empty-state-browser-proof-evidence.
 assert(fs.readFileSync(path.join(docsDir, 'dms-empty-state-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DMS_EMPTY_STATE_BROWSER_MOCK=PASS'), 'DMs empty-state browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'dms-refresh-no-account-browser-proof-evidence.txt')), 'DMs refresh no-account browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'dms-refresh-no-account-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DMS_REFRESH_NO_ACCOUNT_BROWSER_MOCK=PASS'), 'DMs refresh no-account browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'dms-refresh-current-tab-browser-proof-evidence.txt')), 'DMs refresh current-tab browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'dms-refresh-current-tab-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DMS_REFRESH_CURRENT_TAB_BROWSER_MOCK=PASS'), 'DMs refresh current-tab browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'reels-empty-state-browser-proof-evidence.txt')), 'Reels empty-state browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'reels-empty-state-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_REELS_EMPTY_STATE_BROWSER_MOCK=PASS'), 'Reels empty-state browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'reels-query-error-fallback-browser-proof-evidence.txt')), 'Reels query-error fallback browser-proof evidence must remain present');
