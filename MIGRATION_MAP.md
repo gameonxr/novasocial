@@ -2098,3 +2098,7 @@ Added `docs/get-blocked-list-contract.md` and `docs/get-blocked-list-contract-ha
 ### Get Blocked Both Ways Set audit checkpoint — Branch2
 
 Added `docs/get-blocked-both-ways-set-contract.md` and `docs/get-blocked-both-ways-set-contract-harness.js`. This structural audit locks parallel reciprocal `blocks` reads, directional filters, empty-data fallbacks, deduplicated Set union, and content-hiding scope. No database request or account data access was performed; production code remains unchanged.
+
+### Update Account Avatar audit checkpoint — Branch2
+
+Added `docs/update-account-avatar-contract.md` and `docs/update-account-avatar-contract-harness.js`. This structural audit locks saved-account lookup, matching-account avatar mutation, `nova_accounts` persistence, and unmatched-account no-op behavior. No account session or storage data was touched; production code remains unchanged.
