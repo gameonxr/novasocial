@@ -2186,3 +2186,7 @@ Added `docs/settings-support-contract.md` and `docs/settings-support-contract-ha
 ### Show Nova Universe Overview audit checkpoint — Branch2
 
 Added `docs/show-nova-universe-overview-contract.md` and `docs/show-nova-universe-overview-contract-harness.js`. This structural audit locks the async stable overview response, named feature sections, Profile navigation hint, and side-effect-free boundary. No product surface was opened and no protected system was invoked; production code remains unchanged.
+
+### Theme System audit checkpoint — Branch2
+
+Added `docs/theme-system-contract.md` and `docs/theme-system-contract-harness.js`. This structural audit locks theme-panel toggling, root/body theme attributes, local preference persistence, active-option highlighting, delayed picker close, saved-theme restoration, and guarded storage access. No theme was changed; production code remains unchanged.
