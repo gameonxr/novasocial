@@ -2038,3 +2038,7 @@ Added `docs/update-note-music-icon-contract.md` and `docs/update-note-music-icon
 ### Open Music Search audit checkpoint — Branch2
 
 Added `docs/open-music-search-contract.md` and `docs/open-music-search-contract-harness.js`. This structural audit locks the search panel class/ID surface, close and search handlers, DOM insertion, delayed focus/scroll hooks, and recent-suggestions delegation. Search requests, preview playback, and persistence remain delegated; production code remains unchanged.
+
+### Render Note Music Section audit checkpoint — Branch2
+
+Added `docs/render-note-music-section-contract.md` and `docs/render-note-music-section-contract-harness.js`. This structural audit locks guarded section lookup, selected-song rendering, artwork fallback, title/artist display, clear behavior, empty-state rendering, and open-search delegation. Production code remains unchanged.
