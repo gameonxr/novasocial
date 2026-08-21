@@ -2222,3 +2222,7 @@ Added `docs/mood-timeline-contract.md` and `docs/mood-timeline-contract-harness.
 ### Client Moderation Guards audit checkpoint — Branch2
 
 Added `docs/client-moderation-guards-contract.md` and `docs/client-moderation-guards-contract-harness.js`. This structural audit locks profile-ban and message-ban checks, exact restriction toasts, boolean return paths, and side-effect-free behavior. No moderation action was performed; production code remains unchanged.
+
+### Fallback Local Queue audit checkpoint — Branch2
+
+Added `docs/fallback-local-queue-contract.md` and `docs/fallback-local-queue-contract-harness.js`. This structural audit locks local queue parsing, append payload, timestamping, 500-item cap, oldest-100 trimming, storage persistence, and warning-only failure handling. No media deletion or queue write was performed; production code remains unchanged.
