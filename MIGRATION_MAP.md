@@ -2182,3 +2182,7 @@ Added `docs/settings-appearance-contract.md` and `docs/settings-appearance-contr
 ### Settings Support audit checkpoint — Branch2
 
 Added `docs/settings-support-contract.md` and `docs/settings-support-contract-harness.js`. This structural audit locks the Support modal title, six-row layout, exact Nova AI/help/report/about delegates, and toast-only policy rows. No Support modal was opened and no support action was triggered; production code remains unchanged.
+
+### Show Nova Universe Overview audit checkpoint — Branch2
+
+Added `docs/show-nova-universe-overview-contract.md` and `docs/show-nova-universe-overview-contract-harness.js`. This structural audit locks the async stable overview response, named feature sections, Profile navigation hint, and side-effect-free boundary. No product surface was opened and no protected system was invoked; production code remains unchanged.
