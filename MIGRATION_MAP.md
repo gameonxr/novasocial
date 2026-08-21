@@ -2198,3 +2198,7 @@ Added `docs/setup-fab-drag-contract.md` and `docs/setup-fab-drag-contract-harnes
 ### Calendar audit checkpoint — Branch2
 
 Added `docs/calendar-contract.md` and `docs/calendar-contract-harness.js`. This structural audit locks current-month calculation, day-grid construction, today highlighting, weekday headings, upcoming event presentation, reminder toasts, and the intentional inline `addCalendarEvent()` Notes-boundary seam. No calendar or event action was performed; production code remains unchanged.
+
+### Learning audit checkpoint — Branch2
+
+Added `docs/learning-contract.md` and `docs/learning-contract-harness.js`. This structural audit locks the Learning modal, six course fixtures, lesson and progress metadata, conditional progress rendering, `startCourse` routing, toast feedback, and modal closure. No course was opened or started; production code remains unchanged.
