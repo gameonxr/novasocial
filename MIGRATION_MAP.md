@@ -2250,3 +2250,7 @@ Added `docs/filter-tray-contract.md` and `docs/filter-tray-contract-harness.js`.
 ### AI Moderation audit checkpoint — Branch2
 
 Added `docs/ai-moderation-contract.md` and `docs/ai-moderation-contract-harness.js`. This structural audit locks deterministic banned-word checks, sendCmt interception and clean delegation, flagged feedback, original initialization ordering, Ultra initialization, and saved-mood fallback. No comment was submitted and no AI service was invoked; production code remains unchanged.
+
+### Insights audit checkpoint — Branch2
+
+Added `docs/insights-contract.md` and `docs/insights-contract-harness.js`. This structural audit locks modal/loading state, dual post and view queries, not-found handling, 24-hour chart generation, stats, guarded engagement calculation, and four reaction fixtures. No database access or insights dashboard was opened; production code remains unchanged.
