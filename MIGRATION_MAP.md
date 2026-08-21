@@ -2346,3 +2346,7 @@ Added `docs/particle-browser-proof-evidence.txt` and updated `docs/reversible-br
 ### Particle parity and rollback evidence checkpoint — Branch2
 
 Added `docs/particle-parity-rollback-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. Protected marker counts, script order, extracted-owner absence, clean Branch2 state, and rollback-object availability all matched the captured baseline. This evidence still does not authorize a production split; browser proof remains incomplete. No checkout, reset, force-push, browser action, account mutation, or production code change was performed.
+
+### Voice permission-denied browser-proof checkpoint — Branch2
+
+Added `docs/voice-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context deterministic rejection verified the protected `toggleRecording()` permission-denied toast, preserved `recording=false`, left the fake mic button unchanged, and restored the real media and DOM APIs. This is a safe branch-only mock; no real microphone, message, upload, database, account, or production action was performed.

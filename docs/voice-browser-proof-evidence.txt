@@ -1,0 +1,13 @@
+NovaSocial Branch2 voice-recording browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 8db86e9f3afd6088a9ebb5fb7c91ed9fa3b9a833
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic mock of the permission-denied branch only. No real microphone was opened. No login, message, upload, database insert, account mutation, or recording occurred.
+
+Observed result: The protected owner was window.toggleRecording. A fake mic button was found and remained unchanged. getUserMedia was replaced with a deterministic rejected Promise. The toast event was exactly "Microphone permission denied". recording remained false after denial. The real mediaDevices.getUserMedia and document.getElementById APIs were restored successfully, and temporary toast and recording state were restored.
+
+Result: NON_DESTRUCTIVE_VOICE_PERMISSION_DENIED_BROWSER_MOCK=PASS
+
+Interpretation: The permission-denied browser branch behaves as expected under a deterministic mock and restores temporary browser APIs. This is not full recording production proof; start/stop, short-recording, upload, blocked-recipient, cleanup, before/after parity, and rollback evidence remain separate requirements.
