@@ -1,0 +1,15 @@
+NovaSocial Branch2 Reels query-error fallback browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 15687f100986ad19f070d4e30d3804faec6ef113
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic renderReels() query-error fallback mock. The first synthetic posts query returned a deterministic joined-query error; the fallback posts query returned an empty result. db.from, ME, render-generation state, console.log, console.error, and screen HTML were restored in finally. No login, real database, likes query, video element, playback, media access, account mutation, or production code change occurred.
+
+Observed result: The protected renderer logged the joined-query error, entered its fallback branch exactly once, fetched zero fallback reels, rendered the expected no-reel UI and New Reel control, and did not reach the likes query or video construction.
+
+Post-finally cleanup check: screenAvailable=true; dbFromAvailable=true; meRestored=true; generationRestored=true; consoleLogAvailable=true; consoleErrorAvailable=true.
+
+Result: NON_DESTRUCTIVE_REELS_QUERY_ERROR_FALLBACK_BROWSER_MOCK=PASS
+
+Interpretation: The protected Reels joined-query error fallback and empty-result rendering are browser-context verified without media or account-side effects. This does not authorize extracting renderReels() or the protected Reels lifecycle; full before/after and rollback proof remains incomplete.

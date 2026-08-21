@@ -2430,3 +2430,7 @@ Added `docs/calls-webrtc-mocked-setup-browser-proof-evidence.txt` and updated `d
 ### Stories empty-data browser-proof checkpoint — Branch2
 
 Added `docs/stories-empty-data-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic empty `svData` array exercised the protected `openSV()` early-return branch. The proof verified zero navigation calls, unchanged viewer class and progress-bar DOM, and restoration of story arrays, bucket/index state, and navigation function. No story query, login, media access, playback, polling, reaction, account action, or production code change occurred; the Stories owner remains inline.
+
+### Reels query-error fallback browser-proof checkpoint — Branch2
+
+Added `docs/reels-query-error-fallback-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic joined-query error exercised the protected `renderReels()` fallback query, which returned an empty result. The proof verified fallback logging, empty UI rendering, no likes query, no video creation, and restoration of query, account, generation, console, and screen state. No login, real database, media access, playback, account mutation, or production code change occurred; the Reels renderer remains inline.
