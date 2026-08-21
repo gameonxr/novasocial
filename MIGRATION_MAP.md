@@ -2062,3 +2062,7 @@ Added `docs/auto-play-note-music-contract.md` and `docs/auto-play-note-music-con
 ### Toggle Note Music Manual audit checkpoint — Branch2
 
 Added `docs/toggle-note-music-manual-contract.md` and `docs/toggle-note-music-manual-contract-harness.js`. This structural audit locks active-audio pause behavior, icon reset, early return, and inactive-state autoplay delegation. Production code remains unchanged.
+
+### Search Music for Note audit checkpoint — Branch2
+
+Added `docs/search-music-for-note-contract.md` and `docs/search-music-for-note-contract-harness.js`. This structural audit locks debounce cleanup, guarded results lookup, empty-query recent fallback, delayed iTunes request construction, searching/no-results/failure states, and delegated preview/selection handlers. No live request was executed; production code remains unchanged.
