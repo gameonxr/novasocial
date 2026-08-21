@@ -2206,3 +2206,7 @@ Added `docs/learning-contract.md` and `docs/learning-contract-harness.js`. This 
 ### AI Context audit checkpoint — Branch2
 
 Added `docs/ai-context-contract.md` and `docs/ai-context-contract-harness.js`. This structural audit locks shared context fields, ordered deterministic mood detection, keyword matching, lowercase normalization, first-match behavior, and null fallback. No AI service or protected system was invoked; production code remains unchanged.
+
+### FAB Customization audit checkpoint — Branch2
+
+Added `docs/fab-customization-contract.md` and `docs/fab-customization-contract-harness.js`. This structural audit locks cyclic size and style presets, DOM assignments, local storage keys, blur behavior, toast feedback, and long-press menu closure. No FAB customization was performed; production code remains unchanged.
