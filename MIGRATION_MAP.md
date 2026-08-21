@@ -2070,3 +2070,7 @@ Added `docs/search-music-for-note-contract.md` and `docs/search-music-for-note-c
 ### Open Note Creator audit checkpoint — Branch2
 
 Added `docs/open-note-creator-contract.md` and `docs/open-note-creator-contract-harness.js`. This structural audit locks modal edit/new mode, note-state initialization, escaped draft rendering, composer controls, visibility options, submit/delete delegation, character counting, and music-section rendering. Production code remains unchanged.
+
+### Refresh and Open Note Creator audit checkpoint — Branch2
+
+Added `docs/refresh-and-open-note-creator-contract.md` and `docs/refresh-and-open-note-creator-contract-harness.js`. This structural audit locks the bounded `quick_notes` query, user/expiry filters, newest-note ordering, single-row limit, active-note assignment, delayed creator opening, and protected database boundaries. No database request was executed; production code remains unchanged.
