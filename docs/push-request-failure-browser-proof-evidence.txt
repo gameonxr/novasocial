@@ -1,0 +1,13 @@
+NovaSocial Branch2 Push requestPermission-failure browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 67ca128e97c6b9f15f33b3e4b47caf877f4d0834
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic Notification.permission=default mock with requestPermission throwing a controlled error. No real browser prompt, login, subscription, service-worker action, database mutation, account mutation, or production code change.
+
+Observed result: The protected enablePushFromSettings handler emitted "Requesting permission...", called mocked requestPermission exactly once, captured the expected console error beginning "[Push] Settings enable failed:", emitted exactly "Could not enable notifications 😕", refreshed settings exactly once, and called the subscription helper zero times. The original Notification descriptor, toast, subscription helper, settings helper, and console.error were restored.
+
+Result: NON_DESTRUCTIVE_PUSH_REQUEST_FAILURE_BROWSER_MOCK=PASS
+
+Interpretation: The requestPermission failure branch is browser-context verified without invoking a real permission prompt or subscription code. This is not full Push production proof; real subscription behavior, service-worker failure, reset failure, logout race, before/after parity, and rollback evidence remain separate requirements.

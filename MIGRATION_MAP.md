@@ -2382,3 +2382,7 @@ Added `docs/push-default-granted-browser-proof-evidence.txt` and updated `docs/r
 ### Push default-dismissed browser-proof checkpoint — Branch2
 
 Added `docs/push-default-dismissed-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=default` mock with deterministic dismissed/default permission verified the request toast, exactly one permission call, exactly one settings refresh, zero subscription calls, and restoration of all temporary globals. No real browser prompt, subscription mutation, account mutation, or production code change was performed.
+
+### Push request-failure browser-proof checkpoint — Branch2
+
+Added `docs/push-request-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=default` mock with controlled `requestPermission()` failure verified the request toast, expected error log/toast, exactly one settings refresh, zero subscription calls, and restoration of all temporary globals. No real browser prompt, subscription mutation, account mutation, or production code change was performed.
