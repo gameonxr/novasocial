@@ -2122,3 +2122,7 @@ Added `docs/add-new-account-contract.md` and `docs/add-new-account-contract-harn
 ### Check Mention audit checkpoint — Branch2
 
 Added `docs/check-mention-contract.md` and `docs/check-mention-contract-harness.js`. This structural audit locks mention-token detection, member filtering, current-user exclusion, mention-list creation/removal, autocomplete rendering, and insertMention delegation. No DM session or message state was touched; production code remains unchanged.
+
+### Insert Mention audit checkpoint — Branch2
+
+Added `docs/insert-mention-contract.md` and `docs/insert-mention-contract-harness.js`. This structural audit locks input lookup, final-token replacement, trailing-space formatting, mention-list cleanup, and focus restoration. No DM session or message state was touched; production code remains unchanged.
