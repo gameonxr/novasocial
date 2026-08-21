@@ -1,0 +1,13 @@
+NovaSocial Branch2 Calls picture-in-picture success browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 79816f6963d4bab74778dbdc89c4b728a0ee2601
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic enableCallPiP() success mock. A temporary synthetic `#nova-call-remote-video` element was created. Picture-in-Picture request and exit APIs plus toast were temporarily stubbed. No real media, call, peer, account, or network action occurred.
+
+Observed result: The protected function made exactly one requestPictureInPicture call against the synthetic remote video, emitted `Floating window mode ON — app se bahar bhi call dikhegi`, made zero exitPictureInPicture calls, and removed the synthetic video while restoring all temporary API and toast stubs.
+
+Result: NON_DESTRUCTIVE_CALLS_PIP_SUCCESS_BROWSER_MOCK=PASS
+
+Interpretation: The protected Calls PiP success branch is browser-context verified without media or account side effects. This does not authorize extracting enableCallPiP() or the protected Calls lifecycle; full before/after and rollback proof remains incomplete.
