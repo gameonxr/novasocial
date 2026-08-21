@@ -1,0 +1,15 @@
+NovaSocial Branch2 Stories synthetic-image setup browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: f6976a6864eb5ea64204facadf5ddf2783a3e9cc
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic openSV(0)/renderSV() image-story setup mock. One synthetic image story, account state, viewer containers, story helpers, and timer API were mocked only for the test. No real story query, media access, playback, timer, reaction, navigation, account action, database mutation, or production code occurred.
+
+Branch result: navigationDelegated=true; playbackStopped=true; overlayDelegated=true; imagePresent=true; videoAbsent=true; progressBarPresent=true; headerPresent=true; viewerShown=true.
+
+Baseline-relative post-finally restoration: me=true; svData=true; svBuckets=true; bucketIdx=true; storyIdx=true; prog=true; timer=true; paused=true; helpers=true; viewerBaselineRestored=true.
+
+Result: NON_DESTRUCTIVE_STORIES_IMAGE_SETUP_BROWSER_MOCK=PASS
+
+Interpretation: The protected Stories synthetic-image setup, grouping/navigation delegation, image DOM rendering, overlay delegation, no-video branch, and rollback behavior are browser-context verified without media or account side effects. This does not authorize extracting openSV()/renderSV() or the protected Stories lifecycle; full before/after and rollback proof remains incomplete.

@@ -2442,3 +2442,7 @@ Added `docs/recording-failure-browser-proof-evidence.txt` and updated `docs/reve
 ### Notes removal-failure browser-proof checkpoint — Branch2
 
 Added `docs/notes-removal-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic quick_notes delete failure exercised the protected `removeMyNoteFromViewer()` branch, verifying note targeting, no media-deletion delegation, failure feedback, viewer close and Notes Bar reload delegation, and restoration of database, handlers, audio state, and console. No real note deletion, media deletion, database mutation, account action, or production code change occurred; the Notes owner remains inline.
+
+### Stories synthetic-image setup browser-proof checkpoint — Branch2
+
+Added `docs/stories-image-setup-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic image story exercised the protected `openSV()` and `renderSV()` setup path. The proof verified navigation and overlay delegation, playback-stop delegation, progress/header/image DOM rendering, no video creation, and baseline-relative restoration of account, story arrays, indices, timer, helpers, and viewer DOM. No real media, database, account action, or production code change occurred; the Stories owners remain inline.
