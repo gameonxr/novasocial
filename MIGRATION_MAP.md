@@ -2462,3 +2462,7 @@ Added `docs/calls-pip-missing-video-browser-proof-evidence.txt` and updated `doc
 ### Calls PiP success browser-proof checkpoint — Branch2
 
 Added `docs/calls-pip-success-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic remote-video state exercised the protected `enableCallPiP()` success branch. The proof verified exactly one Picture-in-Picture request, the expected success toast, zero exit calls, and restoration/removal of the temporary video and API stubs. No call, peer, microphone, camera, account action, or production code change occurred; the Calls PiP owner remains inline.
+
+### Calls PiP failure browser-proof checkpoint — Branch2
+
+Added `docs/calls-pip-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic remote-video state exercised the protected `enableCallPiP()` failure branch. The proof verified exactly one controlled Picture-in-Picture request rejection, the expected fallback toast, zero exit calls, and restoration/removal of the temporary video and API stubs. No call, peer, microphone, camera, account action, or production code change occurred; the Calls PiP owner remains inline.

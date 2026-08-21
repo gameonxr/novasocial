@@ -1,0 +1,13 @@
+NovaSocial Branch2 Calls picture-in-picture failure browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: d841407006e2130c65b1e0033562b7fc1973646a
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic enableCallPiP() failure mock. A temporary synthetic `#nova-call-remote-video` element was created. Picture-in-Picture request and exit APIs plus toast were temporarily stubbed. No real media, call, peer, account, or network action occurred.
+
+Observed result: The protected function made exactly one requestPictureInPicture call against the synthetic remote video, the request rejected deterministically, the function emitted `Floating window is device pe support nahi hai`, made zero exitPictureInPicture calls, and removed the synthetic video while restoring all temporary API and toast stubs.
+
+Result: NON_DESTRUCTIVE_CALLS_PIP_FAILURE_BROWSER_MOCK=PASS
+
+Interpretation: The protected Calls PiP failure fallback is browser-context verified without media or account side effects. This does not authorize extracting enableCallPiP() or the protected Calls lifecycle; full before/after and rollback proof remains incomplete.
