@@ -2074,3 +2074,7 @@ Added `docs/open-note-creator-contract.md` and `docs/open-note-creator-contract-
 ### Refresh and Open Note Creator audit checkpoint — Branch2
 
 Added `docs/refresh-and-open-note-creator-contract.md` and `docs/refresh-and-open-note-creator-contract-harness.js`. This structural audit locks the bounded `quick_notes` query, user/expiry filters, newest-note ordering, single-row limit, active-note assignment, delayed creator opening, and protected database boundaries. No database request was executed; production code remains unchanged.
+
+### View Avatar Fullscreen audit checkpoint — Branch2
+
+Added `docs/view-avatar-fullscreen-contract.md` and `docs/view-avatar-fullscreen-contract-harness.js`. This structural audit locks missing-avatar handling, existing-viewer replacement, viewer identity/styling, escaped username display, close control, backdrop dismissal, and body insertion. The existing avatar URL interpolation remains documented without speculative changes.
