@@ -1,0 +1,13 @@
+NovaSocial Branch2 Push reset-failure browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: de638626c71689ac44fac5075eede97a98a541c0
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic Notification.permission=granted mock with forceResubscribePush replaced by a false-returning stub. No real unsubscribe, subscription, service-worker action, database mutation, account mutation, or production code change.
+
+Observed result: The protected resetPushFromSettings handler emitted "Resetting push subscription...", called the mocked forceResubscribePush exactly once, received deterministic false, emitted exactly "Reset failed — check console 😕", refreshed settings exactly once, and restored the original Notification descriptor, toast, reset helper, and settings helper.
+
+Result: NON_DESTRUCTIVE_PUSH_RESET_FAILURE_BROWSER_MOCK=PASS
+
+Interpretation: The reset-failure branch is browser-context verified without invoking real unsubscribe, database deletion, or subscription code. This is not full Push production proof; real reset success, service-worker failure, logout race, before/after parity, and rollback evidence remain separate requirements.

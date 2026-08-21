@@ -2386,3 +2386,7 @@ Added `docs/push-default-dismissed-browser-proof-evidence.txt` and updated `docs
 ### Push request-failure browser-proof checkpoint — Branch2
 
 Added `docs/push-request-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=default` mock with controlled `requestPermission()` failure verified the request toast, expected error log/toast, exactly one settings refresh, zero subscription calls, and restoration of all temporary globals. No real browser prompt, subscription mutation, account mutation, or production code change was performed.
+
+### Push reset-failure browser-proof checkpoint — Branch2
+
+Added `docs/push-reset-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=granted` mock with deterministic `forceResubscribePush()` failure verified the reset-start toast, exactly one mocked reset call, exact reset-failure toast, exactly one settings refresh, and restoration of all temporary globals. No real unsubscribe, subscription, database mutation, account mutation, or production code change was performed.
