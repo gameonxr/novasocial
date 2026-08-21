@@ -1,0 +1,15 @@
+NovaSocial Branch2 Stories empty-data browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 552cb69e1857de567bd63612e288e10baddf9d78
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic openSV(0) empty-data guard mock. svData was temporarily replaced with an empty array, story bucket/index state was made synthetic, and pushNavState was stubbed. The protected openSV() implementation was called unchanged. No story query, login, media access, playback, polling, reaction, navigation, account action, or production code occurred.
+
+Observed result: The empty-data guard returned immediately. pushNavState was called zero times, the viewer class and progress-bar DOM remained unchanged, and synthetic bucket/story indices were not altered by the protected early return.
+
+Post-finally cleanup check: svDataRestored=true; svBucketsRestored=true; bucketIdxRestored=true; storyIdxRestored=true; pushNavAvailable=true; viewerAvailable=true; barsAvailable=true.
+
+Result: NON_DESTRUCTIVE_STORIES_EMPTY_DATA_BROWSER_MOCK=PASS
+
+Interpretation: The protected Stories empty-data guard is browser-context verified without navigation or media/account side effects. This does not authorize extracting openSV() or the protected Stories lifecycle; full before/after and rollback proof remains incomplete.

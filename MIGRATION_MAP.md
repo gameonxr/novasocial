@@ -2426,3 +2426,7 @@ Added `docs/reels-empty-state-browser-proof-evidence.txt` and updated `docs/reve
 ### Calls/WebRTC mocked setup browser-proof checkpoint — Branch2
 
 Added `docs/calls-webrtc-mocked-setup-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic RTCPeerConnection exercised the protected `createPeerConnection()` setup boundary. The proof verified four ICE servers, one synthetic local-track delegation, peer ownership, pending-candidate initialization, and restoration of the original constructor and call state. No real peer, microphone, camera, signaling, network, database, account, or production code change occurred; the Calls owner remains inline.
+
+### Stories empty-data browser-proof checkpoint — Branch2
+
+Added `docs/stories-empty-data-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic empty `svData` array exercised the protected `openSV()` early-return branch. The proof verified zero navigation calls, unchanged viewer class and progress-bar DOM, and restoration of story arrays, bucket/index state, and navigation function. No story query, login, media access, playback, polling, reaction, account action, or production code change occurred; the Stories owner remains inline.
