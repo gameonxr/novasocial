@@ -1,0 +1,38 @@
+# NovaSocial Reversible Browser Proof Contract
+
+**Repository:** `gameonxr/novasocial`  
+**Branch:** `Branch2` only  
+**Purpose:** Define the required reversible browser-proof gate for any future protected production split without executing protected behavior in this checkpoint.
+
+## Current state
+
+All protected production owners remain inline and the global direct-extraction gate remains blocked. Static contracts and deterministic mock harnesses establish behavioral baselines, but they do not prove browser parity. The high-risk matrix therefore records reversible browser proof as **remaining**.
+
+## Required proof sequence
+
+A future protected split must be made on `Branch2` as a small, reversible checkpoint. Before and after the change, the proof must capture protected-marker parity, load-order parity, clean startup, and the relevant neighboring flow. The browser proof must be able to revert to the prior commit without data loss or irreversible account action.
+
+| Protected area | Minimum reversible browser scenarios | Required observation |
+|---|---|---|
+| DMs | Open/close chat, return to list, background refresh | Chat container and scroll state remain stable |
+| Reels | Enter, swipe several items, leave, return | Persistent container, index, overflow, and playback lifecycle remain stable |
+| Stories | Open, navigate, close, poll/reaction path where applicable | Playback cleanup, bucket transitions, and controls remain stable |
+| Calls/voice | Permission denial or mocked setup, cleanup path | No live call or microphone action is required for the test checkpoint |
+| Notes/push | Mocked submission or permission branches | Protected owners and UI state remain unchanged |
+| Particles | Like-adjacent visual path with deterministic target | Twelve particles and cleanup remain unchanged |
+
+## Safety rules
+
+The proof must not send messages, create posts, change credentials, request browser permission, access a microphone or camera, call a real WebRTC peer, mutate subscriptions, delete data, or perform irreversible account actions. Any unexpected marker, load-order, DOM, timing, or global difference stops the split and restores the previous Branch2 commit.
+
+## Harness coverage
+
+`docs/reversible-browser-proof-contract-harness.js` verifies that the global matrix still marks browser proof as remaining, that the protected extraction gate remains blocked, that all current seam-preparation contracts exist, and that protected production owners remain absent from `src/`. It intentionally reports proof as **remaining** rather than falsely claiming a browser pass.
+
+## References
+
+1. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
+2. [`high-risk-extraction-gate-contract.md`](./high-risk-extraction-gate-contract.md)
+3. [`protected-contract-coverage.md`](./protected-contract-coverage.md)
+4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+
