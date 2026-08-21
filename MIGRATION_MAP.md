@@ -2278,3 +2278,7 @@ Added `docs/collaboration-contract.md` and `docs/collaboration-contract-harness.
 ### Search Giphy audit checkpoint — Branch2
 
 Added `docs/search-giphy-contract.md` and `docs/search-giphy-contract-harness.js`. This structural audit locks debounce behavior, empty/loading/no-result/error states, Giphy query parameters, twelve-result cap, encoded query, thumbnail and original URL mapping, and `sendGif` delegation. No external request or GIF send was performed; production code remains unchanged.
+
+### AI Journal audit checkpoint — Branch2
+
+Added `docs/ai-journal-contract.md` and `docs/ai-journal-contract-harness.js`. This structural audit locks screen and modal rendering, summary and recent-entry fixtures, mood chips, validation, localStorage persistence, save lifecycle, and deterministic auto-generation. No journal entry was opened or saved; production code remains unchanged.
