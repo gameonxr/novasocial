@@ -2230,3 +2230,7 @@ Added `docs/fallback-local-queue-contract.md` and `docs/fallback-local-queue-con
 ### FAB Speed Dial audit checkpoint — Branch2
 
 Added `docs/fab-speed-dial-contract.md` and `docs/fab-speed-dial-contract-harness.js`. This structural audit locks guard lookups, five menu entries, delegated actions, side-aware positioning, display and animation state, icon rotation, and close behavior. No FAB menu or delegated feature was opened; production code remains unchanged.
+
+### FAB Long Press Menu audit checkpoint — Branch2
+
+Added `docs/fab-longpress-menu-contract.md` and `docs/fab-longpress-menu-contract-harness.js`. This structural audit locks guard lookups, display and scale-in animation, above/below placement, viewport clamping, left/top assignments, and close behavior. No FAB menu was opened; production code remains unchanged.
