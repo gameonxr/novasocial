@@ -2254,3 +2254,7 @@ Added `docs/ai-moderation-contract.md` and `docs/ai-moderation-contract-harness.
 ### Insights audit checkpoint — Branch2
 
 Added `docs/insights-contract.md` and `docs/insights-contract-harness.js`. This structural audit locks modal/loading state, dual post and view queries, not-found handling, 24-hour chart generation, stats, guarded engagement calculation, and four reaction fixtures. No database access or insights dashboard was opened; production code remains unchanged.
+
+### Compress Image audit checkpoint — Branch2
+
+Added `docs/compress-image-contract.md` and `docs/compress-image-contract-harness.js`. This structural audit locks the small-file bypass, canvas scaling, default dimensions and quality, iterative size reduction, output format, generated filename, URL cleanup, and original-file fallbacks. No media was processed; production code remains unchanged.
