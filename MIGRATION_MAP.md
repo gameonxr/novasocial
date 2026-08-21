@@ -2150,3 +2150,7 @@ Added `docs/message-info-contract.md` and `docs/message-info-contract-harness.js
 ### Chat Input Helpers audit checkpoint — Branch2
 
 Added `docs/chat-input-helpers-contract.md` and `docs/chat-input-helpers-contract-harness.js`. This structural audit locks required-element guarding, send-button icon branches, chat-pill expansion/focus behavior, and textarea auto-grow threshold handling. No chat session or message action was used; production code remains unchanged.
+
+### Update Post Counts audit checkpoint — Branch2
+
+Added `docs/update-post-counts-contract.md` and `docs/update-post-counts-contract-harness.js`. This structural audit locks guarded like/comment targets, dataset updates, formatted count text, count-based visibility, and alternate count elements. Production code remains unchanged.
