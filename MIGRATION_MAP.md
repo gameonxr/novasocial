@@ -2118,3 +2118,7 @@ Added `docs/view-chat-image-contract.md` and `docs/view-chat-image-contract-harn
 ### Add New Account audit checkpoint — Branch2
 
 Added `docs/add-new-account-contract.md` and `docs/add-new-account-contract-harness.js`. This structural audit locks account-cap protection, new-account marker assignment, in-memory identity reset, scoped UI reset, auth-screen transition, login-mode selection, and protected authentication boundaries. No login or account state was changed; production code remains unchanged.
+
+### Check Mention audit checkpoint — Branch2
+
+Added `docs/check-mention-contract.md` and `docs/check-mention-contract-harness.js`. This structural audit locks mention-token detection, member filtering, current-user exclusion, mention-list creation/removal, autocomplete rendering, and insertMention delegation. No DM session or message state was touched; production code remains unchanged.
