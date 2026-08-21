@@ -2410,3 +2410,7 @@ Added `docs/notes-music-insert-browser-proof-evidence.txt` and updated `docs/rev
 ### Notes update-failure browser-proof checkpoint — Branch2
 
 Added `docs/notes-update-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic active-note update mock verified targeting of the existing note, preservation of updated text and visibility, the protected failure toast, absence of modal-close and Notes Bar reload side effects, and restoration of all temporary database, account, note, music, visibility, console, and DOM state. No real database update, media access, account mutation, authentication, or production code change occurred; the Notes owner remains inline.
+
+### Deletion-fallback empty-queue browser-proof checkpoint — Branch2
+
+Added `docs/deletion-fallback-empty-queue-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic empty queue exercised the protected early-return branch, verifying zero deletion calls, no sync-start or sync-complete logs, preserved empty queue state, and restoration of local storage, the deletion boundary, and console methods. No real media deletion, provider call, database mutation, account mutation, or production code change occurred; the protected fallback owners remain inline.

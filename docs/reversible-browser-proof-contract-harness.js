@@ -81,6 +81,8 @@ assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidenc
 assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DELETION_FALLBACK_ERROR_BROWSER_MOCK=PASS'), 'deletion-fallback browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-valid-queue-browser-proof-evidence.txt')), 'deletion-fallback valid-queue browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-valid-queue-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DELETION_FALLBACK_VALID_QUEUE_BROWSER_MOCK=PASS'), 'deletion-fallback valid-queue browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-empty-queue-browser-proof-evidence.txt')), 'deletion-fallback empty-queue browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-empty-queue-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DELETION_FALLBACK_EMPTY_QUEUE_BROWSER_MOCK=PASS'), 'deletion-fallback empty-queue browser evidence must remain PASS');
 
 for (const signature of [
   'async function renderDMs()',
