@@ -2114,3 +2114,7 @@ Added `docs/show-blocked-list-contract.md` and `docs/show-blocked-list-contract-
 ### View Chat Image audit checkpoint — Branch2
 
 Added `docs/view-chat-image-contract.md` and `docs/view-chat-image-contract-harness.js`. This structural audit locks modal/image presentation, dark-sheet styling, download delegation, backdrop dismissal, and the protected DM-realtime boundary. No chat session or media download was used; production code remains unchanged.
+
+### Add New Account audit checkpoint — Branch2
+
+Added `docs/add-new-account-contract.md` and `docs/add-new-account-contract-harness.js`. This structural audit locks account-cap protection, new-account marker assignment, in-memory identity reset, scoped UI reset, auth-screen transition, login-mode selection, and protected authentication boundaries. No login or account state was changed; production code remains unchanged.

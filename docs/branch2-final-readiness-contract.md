@@ -23,7 +23,7 @@ The pre-existing `forwardMessage` caller remains the only documented unresolved 
 | Script order | Core/modules precede inline code; smart-ranking, nova-init, and like-effects remain the final three | PASS |
 | Protected boundaries | Fragile DM, Reels, Calls, Stories, Notes, push, recording, diagnostics, and particle markers remain inline | PASS |
 | PWA surface | Manifest and service worker remain available and referenced | PASS |
-| Documentation pairing | 202 Markdown docs and 202 harnesses exist, with 200 standard contract docs, 199 standard contract harnesses, and three mapped legacy exceptions | PASS |
+| Documentation pairing | 203 Markdown docs and 203 harnesses exist, with 201 standard contract docs, 200 standard contract harnesses, and three mapped legacy exceptions | PASS |
 | Known seam | `forwardMessage` is the only unresolved inline handler target | PASS |
 
 The harness is static and documentation-only. It does not authenticate, call Supabase, register a service worker, open media, send messages, mutate accounts, or execute any protected application function.
