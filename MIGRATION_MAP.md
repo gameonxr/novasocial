@@ -2058,3 +2058,7 @@ Added `docs/play-next-audio-contract.md` and `docs/play-next-audio-contract-harn
 ### Auto Play Note Music audit checkpoint — Branch2
 
 Added `docs/auto-play-note-music-contract.md` and `docs/auto-play-note-music-contract-harness.js`. This structural audit locks previous-audio cleanup, preload setup, metadata-gated playback, start offset, icon update, autoplay-policy catches, and timeupdate looping. Protected note systems remain untouched; production code remains unchanged.
+
+### Toggle Note Music Manual audit checkpoint — Branch2
+
+Added `docs/toggle-note-music-manual-contract.md` and `docs/toggle-note-music-manual-contract-harness.js`. This structural audit locks active-audio pause behavior, icon reset, early return, and inactive-state autoplay delegation. Production code remains unchanged.
