@@ -2274,3 +2274,7 @@ Added `docs/follow-list-contract.md` and `docs/follow-list-contract-harness.js`.
 ### Collaboration audit checkpoint — Branch2
 
 Added `docs/collaboration-contract.md` and `docs/collaboration-contract-harness.js`. This structural audit locks co-author picker loading and query behavior, empty state, user cache, search filtering, selection state, toast and close actions, and create-button update. No collaborator was selected and no post was created; production code remains unchanged.
+
+### Search Giphy audit checkpoint — Branch2
+
+Added `docs/search-giphy-contract.md` and `docs/search-giphy-contract-harness.js`. This structural audit locks debounce behavior, empty/loading/no-result/error states, Giphy query parameters, twelve-result cap, encoded query, thumbnail and original URL mapping, and `sendGif` delegation. No external request or GIF send was performed; production code remains unchanged.
