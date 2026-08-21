@@ -2350,3 +2350,7 @@ Added `docs/particle-parity-rollback-evidence.txt` and updated `docs/reversible-
 ### Voice permission-denied browser-proof checkpoint — Branch2
 
 Added `docs/voice-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context deterministic rejection verified the protected `toggleRecording()` permission-denied toast, preserved `recording=false`, left the fake mic button unchanged, and restored the real media and DOM APIs. This is a safe branch-only mock; no real microphone, message, upload, database, account, or production action was performed.
+
+### Push unsupported-capability browser-proof checkpoint — Branch2
+
+Added `docs/push-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. Browser-context mocks verified that `enablePushFromSettings()` and `resetPushFromSettings()` take the unsupported-browser guard when `PushManager` is absent, emit the expected safe toast, request no permission, mutate no subscription or database state, and restore the original browser descriptor. The first invalid mock timed out because `in` checks remained true; it was discarded and the page was reloaded before the corrected proof. No production code or browser account state changed.

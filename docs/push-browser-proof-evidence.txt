@@ -1,0 +1,13 @@
+NovaSocial Branch2 Push browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 7d15107c85856a7044a29bf8d0ae81086c1b5ff3
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic unsupported-capability mock only. No login, notification permission request, subscription mutation, service-worker action, database mutation, account mutation, or production code change.
+
+Observed result: The protected enablePushFromSettings and resetPushFromSettings handlers both received a safely hidden PushManager capability and returned through their unsupported-browser guards. Toasts were exactly "Push notifications not supported on this browser" for both calls. Permission requested: false. Subscription mutation: false. Database mutation: false. The original PushManager property descriptor was restored, the original toast function was restored, and PushManager capability was visible again after cleanup.
+
+Result: NON_DESTRUCTIVE_PUSH_UNSUPPORTED_BROWSER_MOCK=PASS
+
+Interpretation: The unsupported-capability guard is browser-context verified. This is not full Push production proof; permission-denied, granted/resubscribe, service-worker failure, reset failure, logout race, before/after parity, and rollback evidence remain separate requirements.

@@ -51,6 +51,8 @@ assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt
 assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('Rollback result: PASS'), 'particle rollback evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'voice-browser-proof-evidence.txt')), 'voice browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'voice-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_VOICE_PERMISSION_DENIED_BROWSER_MOCK=PASS'), 'voice permission-denied browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'push-browser-proof-evidence.txt')), 'Push browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'push-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PUSH_UNSUPPORTED_BROWSER_MOCK=PASS'), 'Push unsupported-capability browser evidence must remain PASS');
 
 for (const signature of [
   'async function renderDMs()',
