@@ -2178,3 +2178,7 @@ Added `docs/setup-home-hold-restore-contract.md` and `docs/setup-home-hold-resto
 ### Settings Appearance audit checkpoint — Branch2
 
 Added `docs/settings-appearance-contract.md` and `docs/settings-appearance-contract-harness.js`. This structural audit locks the Appearance modal title, four-row layout, exact theme-picker and profile-customizer routing, and presentation-only boundary. No settings modal was opened and no preference was changed; production code remains unchanged.
+
+### Settings Support audit checkpoint — Branch2
+
+Added `docs/settings-support-contract.md` and `docs/settings-support-contract-harness.js`. This structural audit locks the Support modal title, six-row layout, exact Nova AI/help/report/about delegates, and toast-only policy rows. No Support modal was opened and no support action was triggered; production code remains unchanged.
