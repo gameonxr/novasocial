@@ -2310,3 +2310,7 @@ Added `docs/auth-contract.md` and `docs/auth-contract-harness.js`. This structur
 ### Show-edit audit checkpoint — Branch2
 
 Added `docs/show-edit-contract.md` and `docs/show-edit-contract-harness.js`. This structural audit locks the Settings modal/body boundary, profile header, six settings routes, role-gated admin route, logout action, and version footer. No settings navigation, admin action, logout, or production code change was performed.
+
+### Mention audit checkpoint — Branch2
+
+Added `docs/mention-contract.md` and `docs/mention-contract-harness.js`. This structural audit locks caption mention parsing, debounced profile suggestions, cursor-safe insertion, staged notification delegation, and schedule-mode timing. No user search, caption mutation, notification send, or scheduled-post action was performed.
