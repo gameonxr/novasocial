@@ -2290,3 +2290,7 @@ Added `docs/toggle-ghost-mode-contract.md` and `docs/toggle-ghost-mode-contract-
 ### Trending audit checkpoint — Branch2
 
 Added `docs/trending-contract.md` and `docs/trending-contract-harness.js`. This structural audit locks hashtag extraction and deduplication, atomic count RPC and post-link inserts, top-tag query and fallback fixtures, ranked rendering, top-three styling, and Explore search delegation. No hashtag indexing or trending query was executed; production code remains unchanged.
+
+### Memories audit checkpoint — Branch2
+
+Added `docs/memories-contract.md` and `docs/memories-contract-harness.js`. This structural audit locks one-year and seven-day date windows, user-post query fields/order/cap, same-day filtering, empty and error states, media and caption rendering, `viewPost` routing, and the mood-timeline boundary. No memory query or post navigation was performed; production code remains unchanged.
