@@ -1,0 +1,17 @@
+NovaSocial Branch2 particle browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 2c9b813dea1fd9d2a355cb22312025d4ee0bf56d
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Non-destructive browser-console mock only. No login, like action, database call, account mutation, browser permission, media access, or production code change.
+
+Observed startup: The local static preview loaded successfully and rendered the authentication screen with login/signup controls. No protected interaction was triggered.
+
+Particle mock observations: The protected owner was window.spawnLikeParticles. With target geometry left=100, top=200, width=20, height=40, the browser-context mock created 12 particles using the particle class. Computed positions were 106px left and 216px top. Twelve 800 ms cleanup timers were captured, transform vectors were present on every particle, and all 12 cleanup callbacks removed their particles.
+
+Restoration: The real document.createElement, document.body.appendChild, and window.setTimeout APIs were restored successfully after the mock.
+
+Result: NON_DESTRUCTIVE_PARTICLE_BROWSER_MOCK=PASS
+
+Interpretation: This proves the protected particle owner behaves correctly under a browser-context deterministic mock and that temporary browser APIs were restored. It is not yet a full production split proof because no adapter was introduced and no before/after production marker parity was required.

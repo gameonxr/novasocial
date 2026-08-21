@@ -2338,3 +2338,7 @@ Updated `docs/high-risk-seam-readiness-matrix-contract.md` and its harness to re
 ### Protected split acceptance checkpoint — Branch2
 
 Added `docs/protected-split-acceptance-contract.md` and `docs/protected-split-acceptance-contract-harness.js`. This documentation-only gate consolidates the current NOT_READY decision, 19 protected inline owners, seam and mock prerequisites, reversible browser proof, rollback rules, and stop conditions. No protected production split, browser action, account mutation, or production code change was performed.
+
+### Particle browser-proof evidence checkpoint — Branch2
+
+Added `docs/particle-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A non-destructive browser-context mock verified twelve particles, target-centered geometry, twelve 800 ms cleanup timers, transform vectors, complete removal, and restoration of temporary browser APIs. This is mock evidence only; before/after production parity and full reversible split proof remain unestablished. No like, database, account, permission, media, or production action was performed.
