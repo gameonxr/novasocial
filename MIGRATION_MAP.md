@@ -2194,3 +2194,7 @@ Added `docs/theme-system-contract.md` and `docs/theme-system-contract-harness.js
 ### Setup FAB Drag audit checkpoint — Branch2
 
 Added `docs/setup-fab-drag-contract.md` and `docs/setup-fab-drag-contract-harness.js`. This structural audit locks idempotent setup, touch and mouse wiring, 600-millisecond long press, movement cancellation, viewport clamping, edge snapping, local position persistence, hidden-state restore, click restoration, and Home-hold delegation. No FAB interaction was performed; production code remains unchanged.
+
+### Calendar audit checkpoint — Branch2
+
+Added `docs/calendar-contract.md` and `docs/calendar-contract-harness.js`. This structural audit locks current-month calculation, day-grid construction, today highlighting, weekday headings, upcoming event presentation, reminder toasts, and the intentional inline `addCalendarEvent()` Notes-boundary seam. No calendar or event action was performed; production code remains unchanged.
