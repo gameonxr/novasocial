@@ -2106,3 +2106,7 @@ Added `docs/update-account-avatar-contract.md` and `docs/update-account-avatar-c
 ### Update Crop Zoom audit checkpoint — Branch2
 
 Added `docs/update-crop-zoom-contract.md` and `docs/update-crop-zoom-contract-harness.js`. This structural audit locks slider normalization, crop-state scale calculation, guarded image lookup, offset composition, and transform updates. Production code remains unchanged.
+
+### Show Blocked List audit checkpoint — Branch2
+
+Added `docs/show-blocked-list-contract.md` and `docs/show-blocked-list-contract-harness.js`. This structural audit locks blocked-accounts modal/loading states, profile query shape, empty-state rendering, profile mapping, row rendering, and unblock delegation. No database request or unblock action was performed; production code remains unchanged.
