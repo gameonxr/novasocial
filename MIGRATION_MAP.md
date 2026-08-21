@@ -2190,3 +2190,7 @@ Added `docs/show-nova-universe-overview-contract.md` and `docs/show-nova-univers
 ### Theme System audit checkpoint — Branch2
 
 Added `docs/theme-system-contract.md` and `docs/theme-system-contract-harness.js`. This structural audit locks theme-panel toggling, root/body theme attributes, local preference persistence, active-option highlighting, delayed picker close, saved-theme restoration, and guarded storage access. No theme was changed; production code remains unchanged.
+
+### Setup FAB Drag audit checkpoint — Branch2
+
+Added `docs/setup-fab-drag-contract.md` and `docs/setup-fab-drag-contract-harness.js`. This structural audit locks idempotent setup, touch and mouse wiring, 600-millisecond long press, movement cancellation, viewport clamping, edge snapping, local position persistence, hidden-state restore, click restoration, and Home-hold delegation. No FAB interaction was performed; production code remains unchanged.
