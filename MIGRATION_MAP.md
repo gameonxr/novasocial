@@ -2306,3 +2306,7 @@ Added `docs/comments-contract.md` and `docs/comments-contract-harness.js`. This 
 ### Auth audit checkpoint — Branch2
 
 Added `docs/auth-contract.md` and `docs/auth-contract-harness.js`. This structural audit locks mode switching, credential validation, login/signup branches, email verification, password reset, new-password validation, and visibility toggling. No authentication action or credential change was performed; production code remains unchanged.
+
+### Show-edit audit checkpoint — Branch2
+
+Added `docs/show-edit-contract.md` and `docs/show-edit-contract-harness.js`. This structural audit locks the Settings modal/body boundary, profile header, six settings routes, role-gated admin route, logout action, and version footer. No settings navigation, admin action, logout, or production code change was performed.
