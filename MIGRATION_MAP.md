@@ -2362,3 +2362,7 @@ Added `docs/notes-browser-proof-evidence.txt` and updated `docs/reversible-brows
 ### Deletion-fallback error browser-proof checkpoint — Branch2
 
 Added `docs/deletion-fallback-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context malformed `_mediaDeleteFallback` value verified the protected `syncLocalDeletionFallback()` warning boundary, zero `deleteMediaProduction()` calls, and restoration of local storage, console, and the deletion function. No media deletion, database mutation, account mutation, or production code change was performed.
+
+### Push denied-permission browser-proof checkpoint — Branch2
+
+Added `docs/push-denied-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. A browser-context `Notification.permission=denied` mock verified the protected enable/reset handlers emit the expected blocked/enable-first toasts, request no permission, call no subscription/reset/settings helpers, and restore all temporary globals. No permission prompt, subscription mutation, account mutation, or production code change was performed.
