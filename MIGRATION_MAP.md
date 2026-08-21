@@ -2258,3 +2258,7 @@ Added `docs/insights-contract.md` and `docs/insights-contract-harness.js`. This 
 ### Compress Image audit checkpoint — Branch2
 
 Added `docs/compress-image-contract.md` and `docs/compress-image-contract-harness.js`. This structural audit locks the small-file bypass, canvas scaling, default dimensions and quality, iterative size reduction, output format, generated filename, URL cleanup, and original-file fallbacks. No media was processed; production code remains unchanged.
+
+### Marketplace audit checkpoint — Branch2
+
+Added `docs/marketplace-contract.md` and `docs/marketplace-contract-harness.js`. This structural audit locks the Marketplace modal, six product fixtures, metadata, Sell and buy routing, confirmation gating, cancellation, and order feedback. No purchase or payment action was performed; production code remains unchanged.
