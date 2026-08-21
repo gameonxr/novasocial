@@ -2294,3 +2294,7 @@ Added `docs/trending-contract.md` and `docs/trending-contract-harness.js`. This 
 ### Memories audit checkpoint — Branch2
 
 Added `docs/memories-contract.md` and `docs/memories-contract-harness.js`. This structural audit locks one-year and seven-day date windows, user-post query fields/order/cap, same-day filtering, empty and error states, media and caption rendering, `viewPost` routing, and the mood-timeline boundary. No memory query or post navigation was performed; production code remains unchanged.
+
+### Explore audit checkpoint — Branch2
+
+Added `docs/explore-contract.md` and `docs/explore-contract-harness.js`. This structural audit locks generation and stale-render guards, primary and fallback queries, bidirectional block filtering, search UI, six AI suggestions, eight pills, debounce, smart-search routing, result caps, and result rendering. No Explore query or navigation was performed; production code remains unchanged.
