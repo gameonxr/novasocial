@@ -1,0 +1,13 @@
+NovaSocial Branch2 Calls picture-in-picture missing-video guard browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 35e7e045b572b9a6fcbef8a5c67b7f0398694948
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic enableCallPiP() missing-remote-video guard mock. The toast function and Picture-in-Picture API methods were temporarily stubbed with fail-fast sentinels. No call, peer, microphone, camera, media, account, or network action occurred.
+
+Observed result: The protected function found no `#nova-call-remote-video` element, returned through the guard, emitted exactly `Ye feature sirf video call mein hai`, made zero `requestPictureInPicture` calls, and made zero `exitPictureInPicture` calls.
+
+Result: NON_DESTRUCTIVE_CALLS_PIP_MISSING_VIDEO_BROWSER_MOCK=PASS
+
+Interpretation: The protected Calls PiP missing-video guard is browser-context verified without media or account side effects. This does not authorize extracting enableCallPiP() or the protected Calls lifecycle; full before/after and rollback proof remains incomplete.

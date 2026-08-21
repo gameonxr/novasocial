@@ -57,6 +57,8 @@ assert(fs.existsSync(path.join(docsDir, 'recording-failure-browser-proof-evidenc
 assert(fs.readFileSync(path.join(docsDir, 'recording-failure-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_RECORDING_FAILURE_BROWSER_MOCK=PASS'), 'recording failure browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'calls-webrtc-mocked-setup-browser-proof-evidence.txt')), 'Calls/WebRTC mocked setup browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'calls-webrtc-mocked-setup-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_CALLS_WEBRTC_MOCKED_SETUP_BROWSER_MOCK=PASS'), 'Calls/WebRTC mocked setup browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'calls-pip-missing-video-browser-proof-evidence.txt')), 'Calls PiP missing-video browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'calls-pip-missing-video-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_CALLS_PIP_MISSING_VIDEO_BROWSER_MOCK=PASS'), 'Calls PiP missing-video browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'stories-empty-data-browser-proof-evidence.txt')), 'Stories empty-data browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'stories-empty-data-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_STORIES_EMPTY_DATA_BROWSER_MOCK=PASS'), 'Stories empty-data browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'stories-image-setup-browser-proof-evidence.txt')), 'Stories synthetic-image setup browser-proof evidence must remain present');

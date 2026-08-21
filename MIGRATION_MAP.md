@@ -2454,3 +2454,7 @@ Added `docs/dms-refresh-no-account-browser-proof-evidence.txt` and updated `docs
 ### DMs refresh current-tab guard browser-proof checkpoint — Branch2
 
 Added `docs/dms-refresh-current-tab-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic non-DMs tab state exercised the protected `_refreshDmsInPlace()` current-tab early return. The proof verified immediate false return, zero database and Notes Bar calls, unchanged screen DOM, and baseline-relative restoration of account, tab, chat, database, and Notes Bar state. No login, realtime, chat, account action, or production code change occurred; the DMs refresh owner remains inline.
+
+### Calls PiP missing-video guard browser-proof checkpoint — Branch2
+
+Added `docs/calls-pip-missing-video-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic missing-remote-video state exercised the protected `enableCallPiP()` early return. The proof verified the expected guard toast, zero Picture-in-Picture API calls, and restoration of temporary media API stubs. No call, peer, microphone, camera, account action, or production code change occurred; the Calls PiP owner remains inline.
