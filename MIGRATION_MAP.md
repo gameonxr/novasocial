@@ -2126,3 +2126,7 @@ Added `docs/check-mention-contract.md` and `docs/check-mention-contract-harness.
 ### Insert Mention audit checkpoint — Branch2
 
 Added `docs/insert-mention-contract.md` and `docs/insert-mention-contract-harness.js`. This structural audit locks input lookup, final-token replacement, trailing-space formatting, mention-list cleanup, and focus restoration. No DM session or message state was touched; production code remains unchanged.
+
+### Update My Following Count audit checkpoint — Branch2
+
+Added `docs/update-my-following-count-contract.md` and `docs/update-my-following-count-contract-harness.js`. This structural audit locks guarded count lookup, raw-count parsing, delta application, nonnegative clamping, dataset persistence, and formatted DOM rendering. Production code remains unchanged.
