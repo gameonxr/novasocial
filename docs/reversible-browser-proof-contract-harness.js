@@ -55,6 +55,8 @@ assert(fs.existsSync(path.join(docsDir, 'recording-start-stop-browser-proof-evid
 assert(fs.readFileSync(path.join(docsDir, 'recording-start-stop-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_RECORDING_START_STOP_BROWSER_MOCK=PASS'), 'recording start-stop browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'dms-empty-state-browser-proof-evidence.txt')), 'DMs empty-state browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'dms-empty-state-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DMS_EMPTY_STATE_BROWSER_MOCK=PASS'), 'DMs empty-state browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'reels-empty-state-browser-proof-evidence.txt')), 'Reels empty-state browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'reels-empty-state-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_REELS_EMPTY_STATE_BROWSER_MOCK=PASS'), 'Reels empty-state browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'push-browser-proof-evidence.txt')), 'Push browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'push-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PUSH_UNSUPPORTED_BROWSER_MOCK=PASS'), 'Push unsupported-capability browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'push-denied-browser-proof-evidence.txt')), 'Push denied browser-proof evidence must remain present');

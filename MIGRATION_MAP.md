@@ -2418,3 +2418,7 @@ Added `docs/deletion-fallback-empty-queue-browser-proof-evidence.txt` and update
 ### DMs empty-state browser-proof checkpoint — Branch2
 
 Added `docs/dms-empty-state-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, deterministic empty conversation and unread queries exercised the protected `renderDMs()` path against the existing screen element. The proof verified the Messages heading, no-message empty state, New Message control, Notes Bar delegation, and restoration of query, account, generation, helper, icon, and screen state. No login, realtime subscription, database query, message action, account mutation, or production code change occurred; the DMs renderer remains inline.
+
+### Reels empty-state browser-proof checkpoint — Branch2
+
+Added `docs/reels-empty-state-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic empty posts query exercised the protected `renderReels()` no-result branch. The proof verified the no-reel UI, no likes query, no video element creation, and restoration of query, account, generation, console, and screen state. No login, database query, media access, playback, account mutation, or production code change occurred; the Reels renderer remains inline.
