@@ -2334,3 +2334,7 @@ Added `docs/reversible-browser-proof-contract.md` and `docs/reversible-browser-p
 ### High-risk seam matrix alignment checkpoint — Branch2
 
 Updated `docs/high-risk-seam-readiness-matrix-contract.md` and its harness to record the current particle and Push seam-preparation coverage plus the reversible-browser-proof contract. Browser proof remains explicitly unestablished, all 19 protected signatures remain inline, and direct extraction remains blocked. No production code or browser state was changed.
+
+### Protected split acceptance checkpoint — Branch2
+
+Added `docs/protected-split-acceptance-contract.md` and `docs/protected-split-acceptance-contract-harness.js`. This documentation-only gate consolidates the current NOT_READY decision, 19 protected inline owners, seam and mock prerequisites, reversible browser proof, rollback rules, and stop conditions. No protected production split, browser action, account mutation, or production code change was performed.
