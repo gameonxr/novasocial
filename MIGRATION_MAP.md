@@ -2302,3 +2302,7 @@ Added `docs/explore-contract.md` and `docs/explore-contract-harness.js`. This st
 ### Comments audit checkpoint — Branch2
 
 Added `docs/comments-contract.md` and `docs/comments-contract-harness.js`. This structural audit locks joined and fallback comment queries, comment-like loading, empty and rendered states, profile and like routing, optimistic toggles, moderation guard, rate-limit feedback, owner notifications, and refresh behavior. No comment or like action was performed; production code remains unchanged.
+
+### Auth audit checkpoint — Branch2
+
+Added `docs/auth-contract.md` and `docs/auth-contract-harness.js`. This structural audit locks mode switching, credential validation, login/signup branches, email verification, password reset, new-password validation, and visibility toggling. No authentication action or credential change was performed; production code remains unchanged.
