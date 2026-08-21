@@ -2262,3 +2262,7 @@ Added `docs/compress-image-contract.md` and `docs/compress-image-contract-harnes
 ### Marketplace audit checkpoint — Branch2
 
 Added `docs/marketplace-contract.md` and `docs/marketplace-contract-harness.js`. This structural audit locks the Marketplace modal, six product fixtures, metadata, Sell and buy routing, confirmation gating, cancellation, and order feedback. No purchase or payment action was performed; production code remains unchanged.
+
+### Search Admin Users audit checkpoint — Branch2
+
+Added `docs/search-admin-users-contract.md` and `docs/search-admin-users-contract-harness.js`. This structural audit locks debounce behavior, read-only profile query fields, ordering and cap, optional username filtering, empty and error states, escaped output, moderation badges, and detail routing. No admin search or database access was performed; production code remains unchanged.
