@@ -12,10 +12,10 @@
 | Protected inline signatures | 19/19 retained exactly once | Baseline complete |
 | Protected signatures in `src/` | 0 | No protected production code has moved |
 | High-risk gate | Present and passing | Global guard complete |
-| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, and deletion fallback artifacts present | Behavioral baselines exist, but they are not adapter proofs by themselves |
+| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present | Feature-specific seam maps and deterministic mock boundaries exist, but they are not production-split approval |
 | Adapter/seam contract | Account/bootstrap contract present | One cross-cutting adapter seam is documented; it is not production-extracted |
 | Adapter harness | Account/bootstrap mock harness present | Test-only proof exists for the bootstrap seam |
-| Reversible browser proof | Not yet established for a protected split | Required before the first production move |
+| Reversible browser proof | Contract and harness are present; browser proof is not yet established for a protected split | Required before the first production move |
 | Protected production splits | 0/19 signatures moved | Direct extraction remains blocked |
 
 ## Contract decision
@@ -34,5 +34,6 @@ This checkpoint does not alter `index.html`, `src/`, load order, protected globa
 2. [`high-risk-extraction-gate-contract-harness.js`](./high-risk-extraction-gate-contract-harness.js)
 3. [`protected-inline-parity-contract.md`](./protected-inline-parity-contract.md)
 4. [`account-bootstrap-contract.md`](./account-bootstrap-contract.md)
-5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+5. [`reversible-browser-proof-contract.md`](./reversible-browser-proof-contract.md)
+6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

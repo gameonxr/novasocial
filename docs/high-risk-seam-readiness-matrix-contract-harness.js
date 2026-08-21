@@ -8,6 +8,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const gate = fs.readFileSync(path.join(repo, 'docs', 'high-risk-extraction-gate-contract-harness.js'), 'utf8');
+const matrix = fs.readFileSync(path.join(repo, 'docs', 'high-risk-seam-readiness-matrix-contract.md'), 'utf8');
 const protectedSignatures = [
   'async function renderDMs()',
   'function openChat(',
@@ -36,6 +37,10 @@ for (const signature of protectedSignatures) {
   assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be extracted: ${signature}`);
 }
 assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF'), 'global high-risk gate must remain blocked until seam proof');
+assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
+assert(matrix.includes('Contract and harness are present; browser proof is not yet established'), 'matrix must record browser proof as remaining');
+assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
+assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-contract.md')), 'account/bootstrap seam contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-adapter-harness.js')), 'account/bootstrap adapter harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'protected-inline-parity-contract-harness.js')), 'protected parity harness must remain present');

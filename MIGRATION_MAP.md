@@ -2330,3 +2330,7 @@ Added `docs/push-seam-preparation-contract.md` and `docs/push-seam-preparation-c
 ### Reversible browser proof checkpoint — Branch2
 
 Added `docs/reversible-browser-proof-contract.md` and `docs/reversible-browser-proof-contract-harness.js`. This documentation-only checkpoint defines the minimum reversible scenarios and rollback rules for future protected splits, verifies all current seam-preparation families, and intentionally keeps browser proof marked remaining. No browser action, protected behavior, account mutation, or production code change was performed.
+
+### High-risk seam matrix alignment checkpoint — Branch2
+
+Updated `docs/high-risk-seam-readiness-matrix-contract.md` and its harness to record the current particle and Push seam-preparation coverage plus the reversible-browser-proof contract. Browser proof remains explicitly unestablished, all 19 protected signatures remain inline, and direct extraction remains blocked. No production code or browser state was changed.
