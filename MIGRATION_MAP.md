@@ -2142,3 +2142,7 @@ Added `docs/message-clipboard-helpers-contract.md` and `docs/message-clipboard-h
 ### Message Favorite Toggle audit checkpoint — Branch2
 
 Added `docs/message-favorite-toggle-contract.md` and `docs/message-favorite-toggle-contract-harness.js`. This structural audit locks URL decoding, local favorite membership toggling, addition/removal toasts, newest-first insertion, persistence, and modal closure. No storage data or account state was accessed; production code remains unchanged.
+
+### Message Info audit checkpoint — Branch2
+
+Added `docs/message-info-contract.md` and `docs/message-info-contract-harness.js`. This structural audit locks message/read-receipt query shape, modal/loading state, sent/delivered timestamp branches, reader rendering, empty-read state, and protected DM boundaries. No database request or chat session was used; production code remains unchanged.
