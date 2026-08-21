@@ -2066,3 +2066,7 @@ Added `docs/toggle-note-music-manual-contract.md` and `docs/toggle-note-music-ma
 ### Search Music for Note audit checkpoint — Branch2
 
 Added `docs/search-music-for-note-contract.md` and `docs/search-music-for-note-contract-harness.js`. This structural audit locks debounce cleanup, guarded results lookup, empty-query recent fallback, delayed iTunes request construction, searching/no-results/failure states, and delegated preview/selection handlers. No live request was executed; production code remains unchanged.
+
+### Open Note Creator audit checkpoint — Branch2
+
+Added `docs/open-note-creator-contract.md` and `docs/open-note-creator-contract-harness.js`. This structural audit locks modal edit/new mode, note-state initialization, escaped draft rendering, composer controls, visibility options, submit/delete delegation, character counting, and music-section rendering. Production code remains unchanged.
