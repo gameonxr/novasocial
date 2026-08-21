@@ -1,0 +1,15 @@
+NovaSocial Branch2 Notes update-failure browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 1af80bcdae406e2d07db6999db712d496793efe4
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic active-note update-failure mock. The protected submitNote() implementation was called unchanged with a synthetic existing note, update text, private visibility, and a mocked quick_notes update/select response containing a deterministic error. db.from, ME, _myActiveNote, note state, toast, closeModal, loadNotesBar, console.log, and the temporary input were replaced only for the mock and restored in finally. No real database update, media access, account mutation, authentication, or production code change occurred.
+
+Observed result: The quick_notes update targeted id=existing-note and preserved the updated text and private visibility. The protected handler emitted exactly "Failed: deterministic update failure" and did not close the modal or reload the Notes Bar after the failure.
+
+Post-finally cleanup check: dbFromAvailable=true; meRestored=true; noteStateRestored=true; musicStateRestored=true; visibilityStateRestored=true; toastAvailable=true; closeModalAvailable=true; loadNotesBarAvailable=true; consoleAvailable=true; temporaryInputRemoved=true.
+
+Result: NON_DESTRUCTIVE_NOTES_UPDATE_FAILURE_BROWSER_MOCK=PASS
+
+Interpretation: The active-note update targeting, error feedback, and no-success-side-effect branch are browser-context verified without real storage or account-side effects. This does not authorize extracting submitNote() or the protected Notes path; full before/after and rollback proof remains incomplete.

@@ -2406,3 +2406,7 @@ Added `docs/deletion-fallback-valid-queue-browser-proof-evidence.txt` and update
 ### Notes music-backed insert browser-proof checkpoint — Branch2
 
 Added `docs/notes-music-insert-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic music selection with whitespace-only text exercised the protected `submitNote()` insert path. The mock verified the complete payload, mocked quick_notes insert/select, success toast, modal close, Notes Bar reload, and restoration of database, account, note, music, visibility, console, and DOM state. No real database insert, media access, account mutation, authentication, or production code change occurred; the Notes owner remains inline.
+
+### Notes update-failure browser-proof checkpoint — Branch2
+
+Added `docs/notes-update-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic active-note update mock verified targeting of the existing note, preservation of updated text and visibility, the protected failure toast, absence of modal-close and Notes Bar reload side effects, and restoration of all temporary database, account, note, music, visibility, console, and DOM state. No real database update, media access, account mutation, authentication, or production code change occurred; the Notes owner remains inline.
