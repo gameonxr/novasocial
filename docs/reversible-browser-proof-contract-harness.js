@@ -11,7 +11,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Not yet established for a protected split'), 'matrix must continue to mark browser proof as remaining');
+assert(matrix.includes('Reversible browser proof | Contract and harness are present; browser proof is not yet established for a protected split'), 'matrix must continue to mark browser proof as remaining');
 assert(matrix.includes('Protected production splits | 0/19 signatures moved'), 'matrix must continue to report zero protected production splits');
 assert(gate.includes('Direct extraction is explicitly blocked until adapter and proof work passes'), 'direct extraction gate must remain blocked');
 
