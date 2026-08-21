@@ -1,0 +1,13 @@
+NovaSocial Branch2 Push default-permission browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 98f4c140dc0b5db1da58c332f8e09c11c66cb8c0
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Browser-context deterministic Notification.permission=default mock with requestPermission returning default. No real browser prompt, login, subscription, service-worker action, database mutation, account mutation, or production code change.
+
+Observed result: The protected enablePushFromSettings handler emitted "Requesting permission...", called mocked requestPermission exactly once, received a deterministic dismissed/default result, emitted exactly "Permission dismissed — tap again to retry", refreshed settings exactly once, and called the subscription helper zero times. The original Notification descriptor, toast, subscription helper, and settings helper were restored.
+
+Result: NON_DESTRUCTIVE_PUSH_DEFAULT_DISMISSED_BROWSER_MOCK=PASS
+
+Interpretation: The default-permission dismissed-result branch is browser-context verified without invoking a real permission prompt or subscription code. This is not full Push production proof; subscription failure, service-worker failure, reset failure, logout race, before/after parity, and rollback evidence remain separate requirements.
