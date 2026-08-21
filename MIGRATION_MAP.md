@@ -2246,3 +2246,7 @@ Added `docs/news-feed-contract.md` and `docs/news-feed-contract-harness.js`. Thi
 ### Filter Tray audit checkpoint — Branch2
 
 Added `docs/filter-tray-contract.md` and `docs/filter-tray-contract-harness.js`. This structural audit locks tray guards and styling, combined base and AI filter sources, chip rendering, selected-first state, media and fallback branches, image-error hiding, and `selectFilter` delegation. No filter tray or media preview was opened; production code remains unchanged.
+
+### AI Moderation audit checkpoint — Branch2
+
+Added `docs/ai-moderation-contract.md` and `docs/ai-moderation-contract-harness.js`. This structural audit locks deterministic banned-word checks, sendCmt interception and clean delegation, flagged feedback, original initialization ordering, Ultra initialization, and saved-mood fallback. No comment was submitted and no AI service was invoked; production code remains unchanged.
