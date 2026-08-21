@@ -2158,3 +2158,7 @@ Added `docs/update-post-counts-contract.md` and `docs/update-post-counts-contrac
 ### Toggle Reels Mute audit checkpoint — Branch2
 
 Added `docs/toggle-reels-mute-contract.md` and `docs/toggle-reels-mute-contract-harness.js`. This structural audit locks mute-state inversion, current-video lookup, guarded playback, mute-icon updates, toast feedback, and the protected Reels-renderer boundary. No Reels session or media playback was used; production code remains unchanged.
+
+### Reel Like Helper audit checkpoint — Branch2
+
+Added `docs/reel-like-helper-contract.md` and `docs/reel-like-helper-contract-harness.js`. This structural audit locks liked-state guarding, toggleLike delegation, six-heart scheduling, animation styling, delayed cleanup, and the protected Reels-renderer boundary. No Reels session or media action was used; production code remains unchanged.
