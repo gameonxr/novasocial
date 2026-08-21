@@ -2298,3 +2298,7 @@ Added `docs/memories-contract.md` and `docs/memories-contract-harness.js`. This 
 ### Explore audit checkpoint — Branch2
 
 Added `docs/explore-contract.md` and `docs/explore-contract-harness.js`. This structural audit locks generation and stale-render guards, primary and fallback queries, bidirectional block filtering, search UI, six AI suggestions, eight pills, debounce, smart-search routing, result caps, and result rendering. No Explore query or navigation was performed; production code remains unchanged.
+
+### Comments audit checkpoint — Branch2
+
+Added `docs/comments-contract.md` and `docs/comments-contract-harness.js`. This structural audit locks joined and fallback comment queries, comment-like loading, empty and rendered states, profile and like routing, optimistic toggles, moderation guard, rate-limit feedback, owner notifications, and refresh behavior. No comment or like action was performed; production code remains unchanged.
