@@ -2266,3 +2266,7 @@ Added `docs/marketplace-contract.md` and `docs/marketplace-contract-harness.js`.
 ### Search Admin Users audit checkpoint — Branch2
 
 Added `docs/search-admin-users-contract.md` and `docs/search-admin-users-contract-harness.js`. This structural audit locks debounce behavior, read-only profile query fields, ordering and cap, optional username filtering, empty and error states, escaped output, moderation badges, and detail routing. No admin search or database access was performed; production code remains unchanged.
+
+### Follow List audit checkpoint — Branch2
+
+Added `docs/follow-list-contract.md` and `docs/follow-list-contract-harness.js`. This structural audit locks follower/following query inversion, loading and empty states, profile navigation, optimistic follow state, insert/delete persistence branches, notification delegation, and error feedback. No account action or database access was performed; production code remains unchanged.
