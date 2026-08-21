@@ -2286,3 +2286,7 @@ Added `docs/ai-journal-contract.md` and `docs/ai-journal-contract-harness.js`. T
 ### Toggle Ghost Mode audit checkpoint — Branch2
 
 Added `docs/toggle-ghost-mode-contract.md` and `docs/toggle-ghost-mode-contract-harness.js`. This structural audit locks safe mode inversion, profile persistence, local state synchronization, status text, and activation/deactivation feedback. No account preference was changed; production code remains unchanged.
+
+### Trending audit checkpoint — Branch2
+
+Added `docs/trending-contract.md` and `docs/trending-contract-harness.js`. This structural audit locks hashtag extraction and deduplication, atomic count RPC and post-link inserts, top-tag query and fallback fixtures, ranked rendering, top-three styling, and Explore search delegation. No hashtag indexing or trending query was executed; production code remains unchanged.
