@@ -2434,3 +2434,7 @@ Added `docs/stories-empty-data-browser-proof-evidence.txt` and updated `docs/rev
 ### Reels query-error fallback browser-proof checkpoint — Branch2
 
 Added `docs/reels-query-error-fallback-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic joined-query error exercised the protected `renderReels()` fallback query, which returned an empty result. The proof verified fallback logging, empty UI rendering, no likes query, no video creation, and restoration of query, account, generation, console, and screen state. No login, real database, media access, playback, account mutation, or production code change occurred; the Reels renderer remains inline.
+
+### Recording getUserMedia-failure browser-proof checkpoint — Branch2
+
+Added `docs/recording-failure-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic microphone denial exercised the protected `toggleRecording()` failure branch, verifying the expected denial toast, zero MediaRecorder construction, idle UI preservation, and restoration of the media API, recorder, recording state, handlers, and DOM. No real microphone access, upload, database insert, account action, or production code change occurred; the recording owner remains inline.

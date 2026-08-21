@@ -1,0 +1,15 @@
+NovaSocial Branch2 recording getUserMedia-failure browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 5019f4dec86ce7561d572e7a10973bdf46d72b3f
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic toggleRecording(cid) failure mock. navigator.mediaDevices.getUserMedia rejected with a synthetic microphone denial; MediaRecorder, toast, ico, recording, mediaRecorder, and a temporary mic button were mocked only for the test and restored in finally. No real microphone permission, media access, upload, database insert, account action, or production code occurred.
+
+Observed result: The protected handler called getUserMedia once, emitted exactly "Microphone permission denied", kept recording=false, constructed zero MediaRecorder instances, and preserved the idle button style and content.
+
+Post-finally cleanup check: getUserMediaAvailable=true; mediaRecorderAvailable=true; recordingRestored=true; mediaRecorderRestored=true; toastAvailable=true; icoAvailable=true; temporaryButtonRemoved=true.
+
+Result: NON_DESTRUCTIVE_RECORDING_FAILURE_BROWSER_MOCK=PASS
+
+Interpretation: The protected recording permission-failure branch is browser-context verified without real microphone access or message side effects. This does not authorize extracting toggleRecording() or the protected recording lifecycle; full before/after and rollback proof remains incomplete.
