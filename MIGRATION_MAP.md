@@ -2422,3 +2422,7 @@ Added `docs/dms-empty-state-browser-proof-evidence.txt` and updated `docs/revers
 ### Reels empty-state browser-proof checkpoint — Branch2
 
 Added `docs/reels-empty-state-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic empty posts query exercised the protected `renderReels()` no-result branch. The proof verified the no-reel UI, no likes query, no video element creation, and restoration of query, account, generation, console, and screen state. No login, database query, media access, playback, account mutation, or production code change occurred; the Reels renderer remains inline.
+
+### Calls/WebRTC mocked setup browser-proof checkpoint — Branch2
+
+Added `docs/calls-webrtc-mocked-setup-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic RTCPeerConnection exercised the protected `createPeerConnection()` setup boundary. The proof verified four ICE servers, one synthetic local-track delegation, peer ownership, pending-candidate initialization, and restoration of the original constructor and call state. No real peer, microphone, camera, signaling, network, database, account, or production code change occurred; the Calls owner remains inline.

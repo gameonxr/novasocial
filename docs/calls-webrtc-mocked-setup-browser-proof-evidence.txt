@@ -1,0 +1,15 @@
+NovaSocial Branch2 Calls/WebRTC mocked setup browser-proof evidence
+Date: 2026-08-21
+Branch: Branch2
+Commit under test: 0fd67701107a6ba4433ece674e92a4f72c017301
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic createPeerConnection(callId, remoteUserId) mock. RTCPeerConnection was replaced with a synthetic constructor; _callState.localStream contained one synthetic audio track. The protected connection setup was called unchanged. No real peer, microphone, camera, signaling, network, database, account, or production code was used.
+
+Observed result: The protected setup constructed one mocked peer, preserved four configured ICE servers (two STUN and two TURN), delegated one synthetic local track with its stream, assigned the peer to _callState.peer, and initialized an empty pending ICE candidate array.
+
+Post-finally cleanup check: peerConstructorAvailable=true; callPeerRestored=true; localStreamRestored=true; pendingCandidatesRestored=true.
+
+Result: NON_DESTRUCTIVE_CALLS_WEBRTC_MOCKED_SETUP_BROWSER_MOCK=PASS
+
+Interpretation: The protected Calls/WebRTC setup boundary and local-track delegation are browser-context verified using only a synthetic peer and stream. This does not authorize extracting createPeerConnection() or the protected Calls lifecycle; full before/after and rollback proof remains incomplete.
