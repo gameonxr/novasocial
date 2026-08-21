@@ -2094,3 +2094,7 @@ Added `docs/switch-to-account-contract.md` and `docs/switch-to-account-contract-
 ### Get Blocked List audit checkpoint — Branch2
 
 Added `docs/get-blocked-list-contract.md` and `docs/get-blocked-list-contract-harness.js`. This structural audit locks the read-only `blocks` query, current-user filter, empty-data fallback, blocked-ID mapping, and Set conversion. No database request or account data access was performed; production code remains unchanged.
+
+### Get Blocked Both Ways Set audit checkpoint — Branch2
+
+Added `docs/get-blocked-both-ways-set-contract.md` and `docs/get-blocked-both-ways-set-contract-harness.js`. This structural audit locks parallel reciprocal `blocks` reads, directional filters, empty-data fallbacks, deduplicated Set union, and content-hiding scope. No database request or account data access was performed; production code remains unchanged.
