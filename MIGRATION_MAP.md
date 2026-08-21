@@ -2130,3 +2130,7 @@ Added `docs/insert-mention-contract.md` and `docs/insert-mention-contract-harnes
 ### Update My Following Count audit checkpoint — Branch2
 
 Added `docs/update-my-following-count-contract.md` and `docs/update-my-following-count-contract-harness.js`. This structural audit locks guarded count lookup, raw-count parsing, delta application, nonnegative clamping, dataset persistence, and formatted DOM rendering. Production code remains unchanged.
+
+### Favorite Message audit checkpoint — Branch2
+
+Added `docs/favorite-message-contract.md` and `docs/favorite-message-contract-harness.js`. This structural audit locks the existing toast feedback, modal-close behavior, and non-ownership of favorite persistence or network mutation. Production code remains unchanged.
