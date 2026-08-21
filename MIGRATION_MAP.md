@@ -2046,3 +2046,7 @@ Added `docs/render-note-music-section-contract.md` and `docs/render-note-music-s
 ### Render Recent Music Suggestions audit checkpoint — Branch2
 
 Added `docs/render-recent-music-suggestions-contract.md` and `docs/render-recent-music-suggestions-contract-harness.js`. This structural audit locks guarded results lookup, local-storage parsing and fallback, empty-state rendering, recent-song mapping, artwork/preview fallbacks, and selection delegation. Production code remains unchanged.
+
+### Save Recent Music audit checkpoint — Branch2
+
+Added `docs/save-recent-music-contract.md` and `docs/save-recent-music-contract-harness.js`. This structural audit locks local-storage fallback, title/artist deduplication, newest-first insertion, the eight-item cap, persistence key/payload, and guarded failure behavior. The existing caller argument asymmetry is documented without changing production code.
