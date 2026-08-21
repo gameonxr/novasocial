@@ -2234,3 +2234,7 @@ Added `docs/fab-speed-dial-contract.md` and `docs/fab-speed-dial-contract-harnes
 ### FAB Long Press Menu audit checkpoint — Branch2
 
 Added `docs/fab-longpress-menu-contract.md` and `docs/fab-longpress-menu-contract-harness.js`. This structural audit locks guard lookups, display and scale-in animation, above/below placement, viewport clamping, left/top assignments, and close behavior. No FAB menu was opened; production code remains unchanged.
+
+### Show Report Modal audit checkpoint — Branch2
+
+Added `docs/show-report-modal-contract.md` and `docs/show-report-modal-contract-harness.js`. This structural audit locks report modal lifecycle, escaped target display, dynamic reason rendering, cancel behavior, hover states, mouse and touch submission delegation, and inline persistence boundary. No report modal was opened or submitted; production code remains unchanged.
