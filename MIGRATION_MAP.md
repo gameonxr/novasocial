@@ -2242,3 +2242,7 @@ Added `docs/show-report-modal-contract.md` and `docs/show-report-modal-contract-
 ### News Feed audit checkpoint — Branch2
 
 Added `docs/news-feed-contract.md` and `docs/news-feed-contract-harness.js`. This structural audit locks loading state, the 24-hour trending query, selected fields, descending likes order, twenty-item cap, empty and error states, escaped result rendering, and `viewPost` delegation. No database access or post navigation was performed; production code remains unchanged.
+
+### Filter Tray audit checkpoint — Branch2
+
+Added `docs/filter-tray-contract.md` and `docs/filter-tray-contract-harness.js`. This structural audit locks tray guards and styling, combined base and AI filter sources, chip rendering, selected-first state, media and fallback branches, image-error hiding, and `selectFilter` delegation. No filter tray or media preview was opened; production code remains unchanged.
