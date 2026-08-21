@@ -2082,3 +2082,7 @@ Added `docs/view-avatar-fullscreen-contract.md` and `docs/view-avatar-fullscreen
 ### Remove Account From Switcher audit checkpoint — Branch2
 
 Added `docs/remove-account-from-switcher-contract.md` and `docs/remove-account-from-switcher-contract-harness.js`. This structural audit locks current-account protection, toast/early return, saved-session removal delegation, and account-switcher refresh. No account data was changed; production code remains unchanged.
+
+### Show Account Switcher audit checkpoint — Branch2
+
+Added `docs/show-account-switcher-contract.md` and `docs/show-account-switcher-contract-harness.js`. This structural audit locks current-account synchronization, saved-account reading, current-row highlighting, switch/remove delegation, event propagation control, and add-account delegation. No account session was opened or changed; production code remains unchanged.
