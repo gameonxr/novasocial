@@ -7,6 +7,16 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const browserProofFiles = [
+  'deletion-fallback-browser-proof-evidence.txt',
+  'deletion-fallback-valid-queue-browser-proof-evidence.txt',
+  'deletion-fallback-empty-queue-browser-proof-evidence.txt'
+];
+for (const file of browserProofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `Deletion fallback browser proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Deletion fallback browser proof must contain PASS: ${file}`);
+}
 const requiredHtmlMarkers = [
   'async function syncLocalDeletionFallback()',
   '_mediaDeleteFallback',
@@ -32,5 +42,6 @@ assert(html.includes('syncLocalDeletionFallback().catch(() => {})'), 'Startup mu
 console.log('DELETION_FALLBACK_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=QUEUE_READ_ORDERED_REPLAY_ITEM_ISOLATION_FINALIZATION_MEDIA_STARTUP');
 console.log('PROTECTED_DELETION_SIGNATURES=2');
+console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
 console.log('EXTRACTED_PROTECTED_DELETION_SIGNATURES=0');
 console.log('PRODUCTION_SPLIT=0');

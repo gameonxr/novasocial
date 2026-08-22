@@ -2482,3 +2482,7 @@ Aligned `docs/high-risk-seam-readiness-matrix-contract.md` with the current evid
 ### Protected split acceptance inventory alignment checkpoint — Branch2
 
 Aligned `docs/protected-split-acceptance-contract.md` with the current inventory of 33 passing deterministic, non-destructive browser-context mock artifacts. The acceptance decision remains NOT READY because none of these mocks is before/after proof for a production split; all 19 protected signatures remain inline, zero protected owners are in `src/`, and direct extraction remains blocked.
+
+### Deletion-fallback browser-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/deletion-fallback-seam-preparation-contract.md` and its harness with the three existing non-destructive browser-context proofs: malformed-storage failure, valid-queue replay, and empty-queue handling. The harness now requires all three evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; `syncLocalDeletionFallback()` and `deleteMediaProduction()` remain inline.
