@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleDirs = ['src/core', 'src/components', 'src/features'];
 const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
 
-assert.strictEqual(modules.length, 215, 'all 215 extracted JavaScript modules must remain present after Note viewer split');
+assert.strictEqual(modules.length, 216, 'all 216 extracted JavaScript modules must remain present after Story editor split');
 
 const missing = [];
 const duplicates = [];

@@ -2948,3 +2948,6 @@ Updated the interval-lifecycle harness from 216 to 217 audited files (`index.htm
 
 ### Story editor asset-reference inventory correction — Branch2
 The extracted Story renderer adds one local JavaScript reference, raising the static local asset-reference inventory from 236 to 237. Updated the asset-reference harness; resolution and missing-asset checks remain unchanged.
+
+### Story editor module-reference inventory correction — Branch2
+Updated the module-script-reference harness from 215 to 216 extracted JavaScript modules after adding `src/features/story-editor-owners.js`; missing and duplicate script-reference checks remain unchanged.
