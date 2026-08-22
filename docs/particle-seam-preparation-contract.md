@@ -56,7 +56,7 @@ The particle candidate may not enter production-split execution until every gate
 
 | Approval check | Current status | Required evidence |
 |---|---|---|
-| Current inline baseline | PASS | 213/213/212 script counts, one inline owner, required markers, zero protected source matches |
+| Current inline baseline | PASS | 213/213/212 script counts, one inline owner, required markers, zero protected source matches, and owner hash `44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57` |
 | Test-only adapter comparison | PASS | Deterministic observations and cleanup delays match the inline owner |
 | Browser mock restoration | PASS | Temporary DOM/timer APIs restore and existing particle browser proof remains PASS |
 | After-split production parity | NOT RUN | Before/after marker, load-order, behavior, and source-ownership comparison |
@@ -69,7 +69,7 @@ The following procedure is defined for a future proof run and is **not executed 
 
 | Step | Required control | Current status |
 |---|---|---|
-| Baseline capture | Record the candidate commit, script counts, inline owner count, required particle markers, and zero protected `src/` matches | Prepared; current baseline revalidated |
+| Baseline capture | Record the candidate commit, script counts, inline owner count, required particle markers, zero protected `src/` matches, and exact inline owner hash | Prepared; current baseline revalidated |
 | Mock comparison | Run the deterministic browser mock and test-only injected adapter comparison with all temporary globals restored in `finally` | PASS |
 | Candidate proof | If and only if approved later, compare before/after marker, load-order, DOM, timing, cleanup, and owner snapshots | NOT RUN |
 | Rollback | Restore the prior Branch2 commit and rerun the baseline and mock checks; never force-push or alter `main` | NOT RUN |

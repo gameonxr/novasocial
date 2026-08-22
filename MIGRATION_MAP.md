@@ -2566,3 +2566,7 @@ Added a test-only append-boundary failure branch to the particle comparison harn
 ### Particle global-caller compatibility checkpoint — Branch2
 
 Added a static test-only check that the extracted `like-effects.js` caller preserves the global `spawnLikeParticles(el)` handoff and does not import a second particle owner. The inline owner remains exactly once in `index.html`; no production behavior or source ownership changed.
+
+### Particle exact-owner baseline anchor — Branch2
+
+Recorded the SHA-256 anchor for the current inline `spawnLikeParticles(el)` body: `44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57`. The anchor supports a future exact before/after comparison; it is read-only baseline evidence and does not authorize a split.
