@@ -2582,3 +2582,6 @@ Added `docs/particle-production-split-contract.md` and `docs/particle-production
 
 ### Particle split compatibility-count correction — Branch2
 Updated `classic-script-compatibility-contract-harness.js` for the intentional particle module addition: 214 classic script tags and 212 extracted JavaScript files. No module syntax, async/defer attributes, or classic-script behavior changed; the correction preserves the classic loader invariants after the verified particle split.
+
+### Particle split audit-count correction — Branch2
+Updated `clipboard-interaction-contract-harness.js` from 212 to 213 audited files to include `index.html` plus the new 212-file JavaScript source tree. Clipboard call counts and fallback behavior remain unchanged; this is a count-only compatibility correction after the particle module addition.
