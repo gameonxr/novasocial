@@ -2777,3 +2777,6 @@ The reversible-proof harness still expected Push owners inline and reported proo
 
 ### Push settings source-boundary compatibility correction — Branch2
 The full gate observed 232 extracted JavaScript/CSS files after adding `push-settings.js`, while the source-boundary harness expected 231. Updated only that deterministic aggregate count; encoding, CRLF, NUL-byte, and embedded-boundary protections remain unchanged.
+
+### Push settings storage-key audit compatibility correction — Branch2
+The full gate observed 215 audited files in the storage-key surface harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; the 29-key allowlist and zero-session-storage invariant remain unchanged.
