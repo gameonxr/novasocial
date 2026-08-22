@@ -15,6 +15,22 @@ function collect(dir) {
 }
 collect(srcDir);
 const extracted = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
+const browserProofFiles = [
+  'push-browser-proof-evidence.txt',
+  'push-denied-browser-proof-evidence.txt',
+  'push-granted-browser-proof-evidence.txt',
+  'push-default-denied-browser-proof-evidence.txt',
+  'push-default-granted-browser-proof-evidence.txt',
+  'push-default-dismissed-browser-proof-evidence.txt',
+  'push-request-failure-browser-proof-evidence.txt',
+  'push-reset-failure-browser-proof-evidence.txt',
+  'push-reset-success-browser-proof-evidence.txt'
+];
+for (const file of browserProofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `Push browser proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Push browser proof must contain PASS: ${file}`);
+}
 
 for (const ownerName of ['enablePushFromSettings', 'resetPushFromSettings']) {
   assert.strictEqual((html.match(new RegExp(`async function ${ownerName}\\s*\\(`, 'g')) || []).length, 1, `${ownerName} must remain exactly once inline`);
@@ -49,6 +65,7 @@ assert(!extracted.includes('VAPID_PUBLIC_KEY ='), 'seam preparation must not int
 
 console.log('PUSH_SEAM_PREPARATION_CONTRACT_HARNESS=PASS');
 console.log('PROTECTED_OWNERS_INLINE=ENABLE_RESET');
+console.log('BROWSER_MOCK_EVIDENCE=9_PASS');
 console.log('DETERMINISTIC_MOCK_BOUNDARY=CAPABILITY_PERMISSION_SUBSCRIBE_RESET_REFRESH_ERROR');
 console.log('REVERSIBLE_BROWSER_PROOF=REMAINING');
 console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');

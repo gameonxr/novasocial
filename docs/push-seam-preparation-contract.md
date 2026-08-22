@@ -24,11 +24,14 @@ A future adapter may receive injected capability, permission, subscribe, force-r
 
 ## Readiness gate
 
-This is seam preparation only. Before any production split, the project still requires protected-marker parity, subscription-error and logout-race proof, a reversible browser smoke test, a small Branch2-only adapter checkpoint, and the complete regression gate. Until then, `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` remains active and both inline handlers remain unchanged.
+This is seam preparation only. Nine non-destructive browser-context mock artifacts now cover unsupported capability, denied and granted permission, default permission outcomes, request failure, and reset failure/success. These artifacts prove reversible mock behavior only and are not production-split approval. Before any production split, the project still requires protected-marker parity, subscription-error and logout-race proof for the production boundary, a reversible browser smoke test, a small Branch2-only adapter checkpoint, and the complete regression gate. Until then, `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` remains active and both inline handlers remain unchanged.
 
 ## Harness coverage
 
-`docs/push-seam-preparation-contract-harness.js` statically verifies protected inline ownership, existing push behavior contract coverage, required capability/permission/delegation markers, negative ownership boundaries, and zero extracted protected Push handlers. It does not request browser permission, register a service worker, subscribe, reset a subscription, access account state, or change settings.
+`docs/push-seam-preparation-contract-harness.js` statically verifies protected inline ownership, existing push behavior contract coverage, the nine passing non-destructive browser mock artifacts, required capability/permission/delegation markers, negative ownership boundaries, and zero extracted protected Push handlers. It does not request browser permission, register a service worker, subscribe, reset a subscription, access account state, or change settings.
+
+| Browser mock inventory | Nine Push artifacts cover capability, permission, default outcomes, request failure, and reset branches | PASS |
+| Production split | Both protected handlers remain inline | PASS |
 
 ## References
 
@@ -37,5 +40,14 @@ This is seam preparation only. Before any production split, the project still re
 3. [`push-permission-contract-harness.js`](./push-permission-contract-harness.js)
 4. [`high-risk-extraction-gate-contract.md`](./high-risk-extraction-gate-contract.md)
 5. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
-6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+6. [`push-browser-proof-evidence.txt`](./push-browser-proof-evidence.txt)
+7. [`push-denied-browser-proof-evidence.txt`](./push-denied-browser-proof-evidence.txt)
+8. [`push-granted-browser-proof-evidence.txt`](./push-granted-browser-proof-evidence.txt)
+9. [`push-default-denied-browser-proof-evidence.txt`](./push-default-denied-browser-proof-evidence.txt)
+10. [`push-default-granted-browser-proof-evidence.txt`](./push-default-granted-browser-proof-evidence.txt)
+11. [`push-default-dismissed-browser-proof-evidence.txt`](./push-default-dismissed-browser-proof-evidence.txt)
+12. [`push-request-failure-browser-proof-evidence.txt`](./push-request-failure-browser-proof-evidence.txt)
+13. [`push-reset-failure-browser-proof-evidence.txt`](./push-reset-failure-browser-proof-evidence.txt)
+14. [`push-reset-success-browser-proof-evidence.txt`](./push-reset-success-browser-proof-evidence.txt)
+15. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
