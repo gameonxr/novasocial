@@ -2726,3 +2726,6 @@ The dependency-loading audit initially retained the prior two-split five-script 
 
 ### Push settings source-file hygiene compatibility correction — Branch2
 The full gate observed 249 extracted `src/` files after adding `push-settings.js`, while the hygiene harness still expected 248. Updated only that deterministic count and retained empty-file and trailing-whitespace protections.
+
+### Push settings index-tag compatibility correction — Branch2
+The full gate found `index-html-tag-integrity-contract-harness.js` still expected 215/215/214 script counts. Updated only its deterministic assertions and summary to 216 opening, 216 closing, and 215 external tags; HTML structure and one-inline-script invariants remain unchanged.
