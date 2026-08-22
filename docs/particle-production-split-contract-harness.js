@@ -43,7 +43,7 @@ assert.strictEqual(html.split('src/features/spawn-like-particles.js').length - 1
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'particle module must load before global caller');
 assert(source.includes('spawnLikeParticles(el);'), 'global caller handoff must remain present');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'function renderStoryElements()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected inline signature count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected named signature must not be duplicated in src: ${signature}`);
 }

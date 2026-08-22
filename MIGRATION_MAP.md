@@ -2954,3 +2954,6 @@ Updated the module-script-reference harness from 215 to 216 extracted JavaScript
 
 ### Story editor object-URL audit file-count correction — Branch2
 Updated the object-URL lifecycle harness from 216 to 217 audited files after adding the Story editor owner; object-URL creation and revocation counts remain unchanged.
+
+### Story editor particle-gate compatibility correction — Branch2
+Updated the particle production split harness’s shared protected-marker approval set to include the extracted Story renderer. Existing particle owner hash, browser smoke, caller handoff, and rollback proofs remain unchanged.
