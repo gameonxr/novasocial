@@ -2750,3 +2750,6 @@ The full gate found the particle production harness still assumed only particle/
 
 ### Push settings protected-coverage compatibility correction — Branch2
 The full gate found the protected coverage harness still required Push owners inline and omitted the Push trailing script. Updated only its approved-owner module checks and required order to include particle, deletion-fallback, Push settings, and like-effects; all remaining protected markers remain inline.
+
+### Push settings inline-boundary compatibility correction — Branch2
+The full gate found the protected inline-boundary harness still required Push owners inline and omitted the deletion-fallback/Push trailing references. Updated only its approved module-owner checks and trailing order list; all other protected owners remain inline and guarded.
