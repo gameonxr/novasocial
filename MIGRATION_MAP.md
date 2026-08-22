@@ -3075,3 +3075,9 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Synchronized `docs/deletion-fallback-production-split-contract-harness.js` to 219 total, 219 closing, and 218 external script tags after adding `note-deletion-owner.js`.
 - Added `async function deleteMyNote()` to the approved protected-owner set and updated the checkpoint to 8 of 19 moved signatures.
 - Existing deletion-fallback hash, global handoff, browser smoke, and rollback assertions remain unchanged.
+
+## 2026-08-22 — Note deletion dependency-tail compatibility correction
+
+- Updated `docs/dependency-loading-order-contract-harness.js` to validate the seven-script tail after adding `note-deletion-owner.js`.
+- Required order is now particle → deletion-fallback → Push → Note viewer → Note deletion → Story editor → like-effects.
+- All local scripts remain classic and ordered after core/components and the Supabase dependency.
