@@ -115,10 +115,13 @@ async function runHarness() {
     assert.deepStrictEqual(adapterTimers.map(timer => timer.delay), inlineDelays, 'test-only adapter cleanup delays match inline owner');
     adapterTimers.forEach(timer => timer.callback());
     assert(adapterParticles.every(p => p.removeCalled), 'test-only adapter cleanup removes every particle');
+    adapterTimers.forEach(timer => timer.callback());
+    assert(adapterParticles.every(p => p.removeCalled), 'cleanup callback replay remains harmless');
     assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'inline owner remains the only runtime owner under test');
 
     console.log('SPAWN_LIKE_PARTICLES_HARNESS=PASS');
     console.log('TEST_ONLY_ADAPTER_COMPARISON=PASS');
+    console.log('CLEANUP_REPLAY=PASS');
   } finally {
     global.document = originalDocument;
     global.setTimeout = originalSetTimeout;

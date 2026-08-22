@@ -59,6 +59,7 @@ assert(seamContract.includes('must not be imported by `index.html`'), 'particle 
 assert(seamContract.includes('## Test-only adapter comparison checklist'), 'particle comparison checklist must remain present');
 assert(seamContract.includes('Approval gate | Comparison remains unapproved'), 'particle comparison approval gate must remain locked');
 assert(seamContract.includes('Comparison harness | Test-only reference adapter observations match inline owner observations and cleanup delays | PASS'), 'particle comparison harness result must remain recorded');
+assert(seamContract.includes('Cleanup replay | Replaying captured cleanup callbacks is harmless and leaves every test particle removed | PASS'), 'particle cleanup replay result must remain recorded');
 assert(seamContract.includes('## Pre-approval gate'), 'particle pre-approval gate must remain present');
 assert(seamContract.includes('After-split production parity | NOT RUN'), 'particle after-split parity must remain unrun');
 assert(seamContract.includes('Rollback-after-split proof | NOT RUN'), 'particle rollback-after-split proof must remain unrun');

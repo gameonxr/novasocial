@@ -46,6 +46,7 @@ Particle is the first candidate for any future protected-split proof because its
 | Side-effect exclusion | No like persistence, database, authentication, navigation, realtime, or media API calls occur |
 | Approval gate | Comparison remains unapproved until reversible browser proof and before/after production marker parity pass |
 | Comparison harness | Test-only reference adapter observations match inline owner observations and cleanup delays | PASS |
+| Cleanup replay | Replaying captured cleanup callbacks is harmless and leaves every test particle removed | PASS |
 
 
 ## Pre-approval gate
@@ -79,7 +80,7 @@ This is a seam-preparation checkpoint only. Two non-destructive proof artifacts 
 
 ## Harness coverage
 
-`docs/particle-seam-preparation-contract-harness.js` statically verifies the inline owner, exact protected boundaries, existing particle contract/harness, the two passing non-destructive proof artifacts, deterministic mock requirements, proposed adapter inputs, the test-only comparison checklist, and zero extracted protected particle owners. The existing behavior harness executes the injected reference adapter comparison with deterministic DOM/timer dependencies; it does not create production modules, trigger likes, or modify production code.
+`docs/particle-seam-preparation-contract-harness.js` statically verifies the inline owner, exact protected boundaries, existing particle contract/harness, the two passing non-destructive proof artifacts, deterministic mock requirements, proposed adapter inputs, the test-only comparison checklist, and zero extracted protected particle owners. The existing behavior harness executes the injected reference adapter comparison and harmless cleanup-callback replay with deterministic DOM/timer dependencies; it does not create production modules, trigger likes, or modify production code.
 
 ## References
 

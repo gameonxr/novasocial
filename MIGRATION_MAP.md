@@ -2554,3 +2554,7 @@ Added a rollback-first runbook for the particle candidate. It records baseline c
 ### Particle candidate matrix approval lock — Branch2
 
 Updated the high-risk readiness matrix and harness to record the particle candidate as prepared but not approved. Test-only comparison, baseline, and mock restoration prerequisites pass; after-split production parity and rollback-after-split proof remain NOT RUN. The global extraction block and all protected inline owners remain unchanged.
+
+### Particle cleanup-replay proof-preparation checkpoint — Branch2
+
+Extended the test-only particle comparison with captured cleanup-callback replay. The branch confirms replay is harmless and every test particle remains removed, while the inline production owner and all extraction gates remain unchanged.
