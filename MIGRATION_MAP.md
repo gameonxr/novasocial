@@ -2615,3 +2615,6 @@ Updated `interval-lifecycle-contract-harness.js` from 212 to 213 audited files s
 
 ### Particle split local-asset inventory correction — Branch2
 Updated `local-html-asset-reference-contract-harness.js` from 232 to 233 unique static local references to include `src/features/spawn-like-particles.js`. All references still resolve, and manifest/service-worker availability remains unchanged.
+
+### Particle split modularization-completeness correction — Branch2
+Updated `modularization-completeness-contract-harness.js` to recognize the approved particle module and its required `nova-init → spawn-like-particles → like-effects` order, while continuing to require DMs, Reels, and WebRTC owners inline. Styles, core scripts, and shared components remain unchanged.
