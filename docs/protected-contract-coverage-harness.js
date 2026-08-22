@@ -8,6 +8,7 @@ const repo = '/home/ubuntu/novasocial';
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const docs = path.join(repo, 'docs');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -35,6 +36,10 @@ for (const [marker, base] of coverage) {
   if (marker === 'function spawnLikeParticles(') {
     assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle production owner missing from src');
     assert(!html.includes(marker), 'approved particle owner must be absent from inline HTML');
+  } else if (marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()') {
+    assert(!html.includes(marker), `approved Push owner must be absent from inline HTML: ${marker}`);
+    const ownerName = marker.includes('enablePushFromSettings') ? 'enablePushFromSettings' : 'resetPushFromSettings';
+    assert(pushModule.includes(`window.${ownerName} = async function(`), `approved Push owner missing from src: ${marker}`);
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
@@ -46,10 +51,12 @@ const trailing = [
   '<script src="src/features/smart-ranking.js"></script>',
   '<script src="src/features/nova-init.js"></script>',
   '<script src="src/features/spawn-like-particles.js"></script>',
+  '<script src="src/features/sync-local-deletion-fallback.js"></script>',
+  '<script src="src/features/push-settings.js"></script>',
   '<script src="src/features/like-effects.js"></script>'
 ].map(marker => html.indexOf(marker));
 assert(trailing.every(position => position >= 0), 'required trailing scripts are present');
-assert(trailing[0] < trailing[1] && trailing[1] < trailing[2] && trailing[2] < trailing[3], 'required trailing script order is preserved');
+assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order is preserved');
 
 console.log('PROTECTED_CONTRACT_COVERAGE_HARNESS=PASS');
 console.log(`PROTECTED_SEAMS=${coverage.length}`);

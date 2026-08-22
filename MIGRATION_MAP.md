@@ -2747,3 +2747,6 @@ The full gate observed 215 audited files in the object-URL lifecycle harness aft
 
 ### Push settings cross-split particle-gate compatibility correction — Branch2
 The full gate found the particle production harness still assumed only particle/deletion-fallback were approved. Updated only its approved-owner set and summary to include the two Push settings window owners, while preserving particle hash, rollback, browser, and global-caller checks.
+
+### Push settings protected-coverage compatibility correction — Branch2
+The full gate found the protected coverage harness still required Push owners inline and omitted the Push trailing script. Updated only its approved-owner module checks and required order to include particle, deletion-fallback, Push settings, and like-effects; all remaining protected markers remain inline.
