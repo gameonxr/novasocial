@@ -32,7 +32,7 @@ const protectedSignatures = [
   'function renderStoryElements()', 'async function voteStoryPoll(',
   'async function refreshPollResults(', 'async function loadStoryPollState('
 ];
-const approved = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(noteId){', 'async function removeMyNoteFromViewer(noteId){']);
+const approved = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(noteId){', 'async function removeMyNoteFromViewer(noteId){', 'function renderStoryElements()']);
 const branch = execFileSync('git', ['-C', repo, 'branch', '--show-current'], { encoding: 'utf8' }).trim();
 const originMain = execFileSync('git', ['-C', repo, 'rev-parse', 'origin/main'], { encoding: 'utf8' }).trim();
 assert.strictEqual(branch, 'Branch2', 'production split must be on Branch2');

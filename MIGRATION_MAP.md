@@ -2921,3 +2921,6 @@ Updated Branch2-only safety checks so the approved Story renderer is validated t
 
 ### Story editor repository-wide baseline corrections — Branch2
 Synchronized the remaining post-Note harness baselines after adding the Story editor owner: script tags, external scripts, source-module audits, lexical/clipboard audits, event-listener inventory, and extracted-file hygiene. No additional runtime behavior changed.
+
+### Story editor deletion-fallback compatibility correction — Branch2
+Updated the shared deletion-fallback production harness so the extracted `renderStoryElements()` marker is included in the approved-owner set. Existing deletion-fallback hash, rollback, browser proof, and protected-marker checks remain unchanged.
