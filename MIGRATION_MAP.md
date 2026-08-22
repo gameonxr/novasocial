@@ -2606,3 +2606,6 @@ Updated `extracted-file-hygiene-contract-harness.js` from 246 to 247 source file
 
 ### Particle split index-tag integrity count correction — Branch2
 Updated `index-html-tag-integrity-contract-harness.js` from 213 to 214 total/closed script tags and from 212 to 213 external script tags. The one-inline-script, doctype, HTML/body, and protected DMs/Reels checks remain unchanged.
+
+### Particle split inline-declaration count correction — Branch2
+Updated `inline-declaration-closure-contract-harness.js` from 251 to 250 inline function declarations. The decrease is the intentional removal of the named inline `spawnLikeParticles` declaration; the harness still locks all 19 protected names, requiring the remaining 18 inline and preserving the unresolved `forwardMessage` seam.
