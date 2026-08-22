@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 249, 'all 249 extracted source files must remain present after Push settings split');
+assert.strictEqual(files.length, 250, 'all 250 extracted source files must remain present after Note viewer split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {

@@ -2825,3 +2825,6 @@ The full gate found the dependency harness’s five-script tail still expected `
 
 ### Note viewer event-listener audit compatibility correction — Branch2
 The full gate observed 215 extracted JavaScript modules after adding the Note owner module, while the event-listener harness expected 214. Updated only that deterministic module count; listener registration and cleanup invariants remain unchanged.
+
+### Note viewer extracted-file hygiene compatibility correction — Branch2
+The full gate observed 250 extracted source files after adding `note-viewer-owners.js`, while the hygiene harness expected 249. Updated only that deterministic total; empty-file and trailing-whitespace protections remain unchanged.
