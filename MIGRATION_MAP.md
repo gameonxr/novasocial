@@ -2807,3 +2807,6 @@ The full gate found final readiness still encoded the pre-Note 214-JS/203-featur
 
 ### Note viewer classic-script compatibility correction — Branch2
 The full gate found classic-script compatibility still expected 216 script tags and 214 extracted JavaScript files after the Note owner module was added. Updated only those deterministic totals to 217 and 215; classic-script, no-module-syntax, and no-async/defer invariants remain unchanged.
+
+### Note viewer clipboard-audit compatibility correction — Branch2
+The full gate observed 216 audited files in the clipboard interaction harness after adding `note-viewer-owners.js`, while it expected 215. Updated only that deterministic file count; all clipboard write and legacy fallback invariants remain unchanged.
