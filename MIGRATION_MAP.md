@@ -2633,3 +2633,6 @@ Updated `source-boundary-hygiene-contract-harness.js` from 229 to 230 JS/CSS fil
 
 ### Particle split storage-key audit-count correction — Branch2
 Updated `storage-key-surface-contract-harness.js` from 212 to 213 audited files so its storage-key scan includes the new particle module. The 29-key localStorage allowlist, zero sessionStorage references, and dynamic sticker family checks remain unchanged.
+
+### Particle split window-assignment correction — Branch2
+Updated `window-assignment-surface-contract-harness.js` to include the intentional `window.spawnLikeParticles` global handoff, raising the explicit assignment count from 192 to 193 and the audited-file total from 212 to 213. All prior window names remain allowlisted with no unexpected or missing names.

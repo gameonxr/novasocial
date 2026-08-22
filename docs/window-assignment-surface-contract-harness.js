@@ -20,7 +20,7 @@ const expectedNames = [
   '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'loadMoodFeed',
   'loadMoreFeedPosts', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'replyToId', 'replyToText',
-  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'toggleLike', 'typingSub',
+  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'toggleLike', 'typingSub',
 ].sort();
 
 function collectSourceFiles(dir, files = []) {
@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 212, 'index.html plus 211 extracted modules must be audited');
-assert.strictEqual(matches.length, 192, 'application surface must retain 192 explicit window assignments');
+assert.strictEqual(files.length, 213, 'index.html plus 212 extracted modules must be audited');
+assert.strictEqual(matches.length, 193, 'application surface must retain 193 explicit window assignments after particle split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
