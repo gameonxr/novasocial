@@ -59,6 +59,10 @@ assert(seamContract.includes('must not be imported by `index.html`'), 'particle 
 assert(seamContract.includes('## Test-only adapter comparison checklist'), 'particle comparison checklist must remain present');
 assert(seamContract.includes('Approval gate | Comparison remains unapproved'), 'particle comparison approval gate must remain locked');
 assert(seamContract.includes('Comparison harness | Test-only reference adapter observations match inline owner observations and cleanup delays | PASS'), 'particle comparison harness result must remain recorded');
+assert(seamContract.includes('## Pre-approval gate'), 'particle pre-approval gate must remain present');
+assert(seamContract.includes('After-split production parity | NOT RUN'), 'particle after-split parity must remain unrun');
+assert(seamContract.includes('Rollback-after-split proof | NOT RUN'), 'particle rollback-after-split proof must remain unrun');
+assert(seamContract.includes('Approval decision | NOT READY'), 'particle approval decision must remain not ready');
 const parityEvidence = fs.readFileSync(path.join(repo, 'docs', 'particle-parity-rollback-evidence.txt'), 'utf8');
 assert(parityEvidence.includes('Latest baseline revalidation — 2026-08-22'), 'particle current baseline revalidation must remain recorded');
 assert(parityEvidence.includes('It is not before/after production-split proof'), 'particle baseline revalidation must not be treated as split proof');
@@ -72,6 +76,7 @@ console.log('PARTICLE_SEAM_PREPARATION_CONTRACT_HARNESS=PASS');
 console.log('PROTECTED_OWNER_INLINE=YES');
 console.log('DETERMINISTIC_MOCK_BOUNDARY=DOM_GEOMETRY_BODY_RANDOM_TIMER_CLEANUP');
 console.log('PROOF_ARTIFACTS=2_PASS');
+console.log('PRODUCTION_SPLIT_GATE=NOT_READY');
 console.log('REVERSIBLE_BROWSER_PROOF=REMAINING');
 console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');
 console.log('PRODUCTION_SPLIT=0');

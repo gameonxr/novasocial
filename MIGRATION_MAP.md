@@ -2542,3 +2542,7 @@ Revalidated the inline particle production baseline read-only at commit `f04dc1a
 ### Particle test-only comparison harness checkpoint — Branch2
 
 Extended the existing particle behavior harness with an injected reference adapter used only in test context. Deterministic observations match the inline owner for the null-target guard, 12-particle output, target-center geometry, palette/vector mutations, 800 ms cleanup delays, and cleanup callbacks. The inline owner remains the only runtime owner; no production adapter, browser import, or extraction was added.
+
+### Particle pre-approval gate preparation — Branch2
+
+Added a bounded pre-approval table for the particle candidate. Current inline baseline, test-only adapter comparison, and browser mock restoration are PASS; after-split production parity and rollback-after-split proof remain NOT RUN. The approval decision stays NOT READY, with all protected production ownership and extraction blocks unchanged.

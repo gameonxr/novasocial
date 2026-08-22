@@ -48,6 +48,19 @@ Particle is the first candidate for any future protected-split proof because its
 | Comparison harness | Test-only reference adapter observations match inline owner observations and cleanup delays | PASS |
 
 
+## Pre-approval gate
+
+The particle candidate may not enter production-split execution until every gate below is satisfied. Current preparation has only completed the test-only and baseline prerequisites; no production split has been attempted.
+
+| Approval check | Current status | Required evidence |
+|---|---|---|
+| Current inline baseline | PASS | 213/213/212 script counts, one inline owner, required markers, zero protected source matches |
+| Test-only adapter comparison | PASS | Deterministic observations and cleanup delays match the inline owner |
+| Browser mock restoration | PASS | Temporary DOM/timer APIs restore and existing particle browser proof remains PASS |
+| After-split production parity | NOT RUN | Before/after marker, load-order, behavior, and source-ownership comparison |
+| Rollback-after-split proof | NOT RUN | Revert to the prior Branch2 commit and rerun the protected checks |
+| Approval decision | NOT READY | Keep `PROOF_STATUS=REMAINING` and `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` |
+
 ## Readiness gate
 
 This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks, with the parity artifact revalidated against the current Branch2 baseline. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
