@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
-**Date:** 2026-08-19
+**Date:** 2026-08-22
 **Purpose:** Provide one deterministic release-readiness checkpoint for the completed modularization state without executing protected application behavior.
 
 ## Contract
@@ -18,12 +18,12 @@ The pre-existing `forwardMessage` caller remains the only documented unresolved 
 | Check | Expected behavior | Result |
 |---|---|---|
 | Branch safety | Current branch is Branch2; main ref is unchanged; worktree and remote are cleanly aligned | PASS |
-| Source inventory | 216 JavaScript modules, 18 CSS files, and 205 feature modules remain present | PASS |
-| HTML integration | 217 external scripts plus one inline application script and the CDN script remain balanced | PASS |
-| Script order | Core/modules precede inline code; smart-ranking, nova-init, and like-effects remain the final three | PASS |
-| Protected boundaries | Fragile DM, Reels, Calls, Stories, Notes, push, recording, diagnostics, and particle markers remain inline | PASS |
+| Source inventory | 217 JavaScript modules, 18 CSS files, and 206 feature modules remain present | PASS |
+| HTML integration | 219 total script tags remain balanced: 218 external scripts plus one inline application script, including the CDN reference | PASS |
+| Script order | Core/modules precede inline code; the post-inline owner tail remains ordered from smart-ranking and nova-init through the approved owners and like-effects | PASS |
+| Protected boundaries | Eight approved owner groups are external classic scripts with anonymous `window` assignments; the remaining fragile DM, Reels, Calls, recording, diagnostics, reaction, and Note submission boundaries remain inline and gated | PASS |
 | PWA surface | Manifest and service worker remain available and referenced | PASS |
-| Documentation pairing | 261 Markdown docs and 262 harnesses exist, with 259 standard contract docs, 258 standard contract harnesses, and four mapped non-standard harness artifacts | PASS |
+| Documentation pairing | 262 Markdown docs and 263 harnesses exist, with 259 standard contract docs, 258 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
 | Known seam | `forwardMessage` is the only unresolved inline handler target | PASS |
 
 The harness is static and documentation-only. It does not authenticate, call Supabase, register a service worker, open media, send messages, mutate accounts, or execute any protected application function.

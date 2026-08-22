@@ -3096,4 +3096,12 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Updated `docs/high-risk-extraction-gate-contract-harness.js` to 217 source modules and eight approved protected owners.
 - Added explicit external ownership and ordering checks for `src/features/note-deletion-owner.js`.
-- Remaining unapproved protected systems remain blocked at 12; all required high-risk coverage and main-branch safety checks remain enforced.
+- Remaining unapproved protected systems remain blocked at 11; all required high-risk coverage and main-branch safety checks remain enforced.
+
+
+## 2026-08-22 — Note deletion final compatibility synchronization
+- Synchronized Branch2 contract prose and harnesses after moving `deleteMyNote()` to `src/features/note-deletion-owner.js` as one anonymous `window.deleteMyNote = async function(...)` owner.
+- Corrected the high-risk gate and readiness matrix to report 8 approved protected signatures out of 19, with direct extraction blocked for the mathematically correct 11 remaining systems.
+- Recorded measured inventories: 217 source JavaScript modules, 206 feature modules, 219 total script tags, 218 external script tags, 218 audited index-plus-source JavaScript files, 235 extracted JS/CSS files, 238 local HTML references, and 243 inline declarations.
+- Focused high-risk, readiness, reversible-proof, acceptance, window-assignment, source-boundary, lifecycle, asset, module-reference, HTML-integrity, storage, and Push harnesses passed; authenticated smoke stayed read-only with no real account/data mutation.
+- Branch2 only; `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`. A clean full regression gate remains required before publication.

@@ -10,6 +10,7 @@ const docs = path.join(repo, 'docs');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 
 const coverage = [
@@ -45,6 +46,9 @@ for (const [marker, base] of coverage) {
   } else if (marker === 'function renderStoryElements()') {
     assert(!html.includes(marker), 'approved Story renderer must be absent from inline HTML');
     assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story renderer must have one owner');
+  } else if (marker === 'async function deleteMyNote()') {
+    assert(!html.includes(marker), 'approved Note deletion owner must be absent from inline HTML');
+    assert.strictEqual((noteDeletionModule.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note deletion owner must have one owner');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
@@ -59,6 +63,8 @@ const trailing = [
   '<script src="src/features/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
   '<script src="src/features/note-viewer-owners.js"></script>',
+  '<script src="src/features/note-deletion-owner.js"></script>',
+  '<script src="src/features/story-editor-owners.js"></script>',
   '<script src="src/features/like-effects.js"></script>'
 ].map(marker => html.indexOf(marker));
 assert(trailing.every(position => position >= 0), 'required trailing scripts are present');
@@ -67,4 +73,4 @@ assert.strictEqual((noteModule.match(/window\.(?:viewNote|removeMyNoteFromViewer
 
 console.log('PROTECTED_CONTRACT_COVERAGE_HARNESS=PASS');
 console.log(`PROTECTED_SEAMS=${coverage.length}`);
-console.log('APPROVED_WINDOW_OWNERS=6_PARTICLE_DELETION_PUSH_AND_NOTE_VIEWER');
+console.log('APPROVED_WINDOW_OWNERS=8_PARTICLE_DELETION_PUSH_NOTE_DELETION_AND_STORY');

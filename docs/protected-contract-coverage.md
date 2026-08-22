@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
-**Date:** 2026-08-18
+**Date:** 2026-08-22
 **Purpose:** Prove that every remaining protected inline declaration has a matching contract document and standalone mocked harness before any future migration decision.
 
 ## Coverage map
@@ -21,21 +21,21 @@
 | WebRTC peer connection | `calls-webrtc-contract` | PASS |
 | Notes submission/deletion/reactions/reactors | `note-viewer-contract` | PASS |
 
-The 19 protected declarations are intentionally mapped to 11 focused contract families because several declarations share one protected subsystem boundary. Every mapping has both a Markdown contract and a standalone `*-harness.js` file in `docs/`. Particle, deletion-fallback, Push settings, and Note viewer are the six approved window-assigned production owners; the other 13 protected declarations remain inline and gated.
+The 19 protected declarations are intentionally mapped to 11 focused contract families because several declarations share one protected subsystem boundary. Every mapping has both a Markdown contract and a standalone `*-harness.js` file in `docs/`. Particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story rendering comprise the eight approved window-assigned production owners; the other 11 protected declarations remain inline and gated.
 
 ## Harness coverage
 
-`docs/protected-contract-coverage-harness.js` statically checks that the 13 unapproved protected declaration markers remain in `index.html`, that the six approved particle, deletion-fallback, Push settings, and Note viewer owners are represented by window-assigned modules, that each mapped contract and harness file exists, and that the required trailing script order remains intact.
+`docs/protected-contract-coverage-harness.js` statically checks that the 11 unapproved protected declaration markers remain in `index.html`, that the eight approved particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story rendering owners are represented by window-assigned modules, that each mapped contract and harness file exists, and that the required trailing script order remains intact.
 
 The harness is documentation-only. It does not extract, rewrite, execute, or mutate any protected production system.
 
 ## Safe boundary
 
-The 13 unapproved protected implementations remain inline and unchanged. Only the particle, deletion-fallback, Push settings, and Note viewer owners have moved under their approved window-assigned contracts. No DMs, Reels, Calls/WebRTC, Stories, polls, Notes submission/reaction, recording, authentication, or account production code was moved in this checkpoint.
+The 11 unapproved protected implementations remain inline and unchanged. Only the particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story rendering owners have moved under their approved window-assigned contracts. No DMs, Reels, Calls/WebRTC, Notes submission/reaction, recording, authentication, or account production code was moved in this checkpoint.
 
 ## Validation
 
-The standalone coverage harness passed with `PROTECTED_SEAMS=19` and six approved window owners. The complete repository validation chain must pass before this inventory and harness are published to `docs/`.
+The standalone coverage harness passed with `PROTECTED_SEAMS=19` and eight approved window owners, leaving 11 protected systems gated from direct extraction. The complete repository validation chain must pass before this inventory and harness are published to `docs/`.
 
 ## References
 
