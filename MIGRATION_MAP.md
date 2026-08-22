@@ -2741,3 +2741,6 @@ The full gate observed 235 unique static local asset references after adding the
 
 ### Push settings module-reference compatibility correction — Branch2
 The full gate found `module-script-reference-contract-harness.js` still expected 213 extracted modules and the former five-script tail. Updated only its deterministic count to 214 and its required tail to `nova-init → spawn-like-particles → sync-local-deletion-fallback → push-settings → like-effects`.
+
+### Push settings object-URL inventory compatibility correction — Branch2
+The full gate observed 215 audited files in the object-URL lifecycle harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; all object-URL creation, revocation, download cleanup, compression cleanup, and preview ownership assertions remain unchanged.
