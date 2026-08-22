@@ -2546,3 +2546,7 @@ Extended the existing particle behavior harness with an injected reference adapt
 ### Particle pre-approval gate preparation — Branch2
 
 Added a bounded pre-approval table for the particle candidate. Current inline baseline, test-only adapter comparison, and browser mock restoration are PASS; after-split production parity and rollback-after-split proof remain NOT RUN. The approval decision stays NOT READY, with all protected production ownership and extraction blocks unchanged.
+
+### Particle reversible-proof procedure preparation — Branch2
+
+Added a rollback-first runbook for the particle candidate. It records baseline capture, test-only comparison, browser mock restoration, gated after-split parity, rollback-after-split proof, and the locked stop rule. The procedure is prepared but not executed; no production split, browser permission, like action, or source-owner change occurred.

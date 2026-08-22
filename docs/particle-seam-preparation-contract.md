@@ -61,6 +61,18 @@ The particle candidate may not enter production-split execution until every gate
 | Rollback-after-split proof | NOT RUN | Revert to the prior Branch2 commit and rerun the protected checks |
 | Approval decision | NOT READY | Keep `PROOF_STATUS=REMAINING` and `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` |
 
+## Reversible proof procedure
+
+The following procedure is defined for a future proof run and is **not executed by this checkpoint**. It must be performed on `Branch2` with no login, permission request, like action, database write, media access, or account mutation.
+
+| Step | Required control | Current status |
+|---|---|---|
+| Baseline capture | Record the candidate commit, script counts, inline owner count, required particle markers, and zero protected `src/` matches | Prepared; current baseline revalidated |
+| Mock comparison | Run the deterministic browser mock and test-only injected adapter comparison with all temporary globals restored in `finally` | PASS |
+| Candidate proof | If and only if approved later, compare before/after marker, load-order, DOM, timing, cleanup, and owner snapshots | NOT RUN |
+| Rollback | Restore the prior Branch2 commit and rerun the baseline and mock checks; never force-push or alter `main` | NOT RUN |
+| Stop rule | Any mismatch, unexpected side effect, or failed restoration aborts the candidate and keeps extraction blocked | LOCKED |
+
 ## Readiness gate
 
 This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks, with the parity artifact revalidated against the current Branch2 baseline. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
