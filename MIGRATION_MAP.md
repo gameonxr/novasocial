@@ -2891,3 +2891,6 @@ The Note viewer split left the original 19-signature coverage map intact while a
 
 ### Story editor renderer seam preparation — Branch2
 Selected the protected `renderStoryElements()` boundary as the next contained candidate. Added mapping-only `story-editor-seam-preparation-contract.md` and its static harness. The renderer, drag/delete-zone handlers, Story editor state, and `publishStoryEditor()` remain inline and unchanged; no browser, storage, authentication, upload, publishing, or account mutation was performed. Preparation harness passed with `PRODUCTION_SPLIT=0` and `BROWSER_SIDE_EFFECTS=0`.
+
+### Story editor preparation readiness-count correction — Branch2
+The Story editor seam-preparation pair increased the published inventory by one contract and one harness. Updated the final-readiness contract and harness to the observed totals: 215 source JS files, 18 CSS files, 204 feature modules, 216 external scripts plus one inline script, 261 Markdown documents/harnesses, 259 standard contracts, and 258 standard contract harnesses.
