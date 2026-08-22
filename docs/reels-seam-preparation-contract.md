@@ -19,13 +19,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Reels rendering, swipe handlers, persistent-container ownership, and video windowing remain inline. The existing deterministic Reels contract harness proves behavior, but it is not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof covering tab switching, saved-position restore, swipe settling, playback, and source release.
+This is a **mapping-only checkpoint**. Reels rendering, swipe handlers, persistent-container ownership, and video windowing remain inline. Two non-destructive browser-context mock artifacts now cover the empty state and query-error fallback. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, covering tab switching, saved-position restore, swipe settling, playback, and source release.
 
 The first implementation step must be test-only or adapter-only and must preserve the current `renderReels()` and `_applyReelsVideoWindowing()` owners until the complete seam harness passes.
 
 ## Harness coverage
 
-`docs/reels-seam-preparation-contract-harness.js` scans `index.html` and confirms persistent-container, saved-index, inner-transform, source-window, swipe, playback, and navigation markers, the existing Reels behavior contract and harness, protected inline signatures, and zero matching protected signatures in `src/`. It does not render Reels, open media, execute touch events, or move production code.
+`docs/reels-seam-preparation-contract-harness.js` scans `index.html` and confirms persistent-container, saved-index, inner-transform, source-window, swipe, playback, and navigation markers, the existing Reels behavior contract and harness, the two passing non-destructive browser mock artifacts, protected inline signatures, and zero matching protected signatures in `src/`. It does not render Reels, open media, execute touch events, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -34,6 +34,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Video window | Current−1 through current+3 markers remain | PASS |
 | Swipe settle | Dynamic count, easing, and `isSettling` remain | PASS |
 | Playback | Windowing and resume hooks remain | PASS |
+| Browser mock inventory | Empty-state and query-error fallback artifacts are present with PASS markers | PASS |
 | Production split | None | PASS |
 
 ## References
@@ -42,5 +43,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 2. [`reels-persistent-contract-harness.js`](./reels-persistent-contract-harness.js)
 3. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
 4. [`index.html`](../index.html)
-5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+5. [`reels-empty-state-browser-proof-evidence.txt`](./reels-empty-state-browser-proof-evidence.txt)
+6. [`reels-query-error-fallback-browser-proof-evidence.txt`](./reels-query-error-fallback-browser-proof-evidence.txt)
+7. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
