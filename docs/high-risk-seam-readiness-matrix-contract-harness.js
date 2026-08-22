@@ -38,6 +38,7 @@ for (const signature of protectedSignatures) {
 }
 assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF'), 'global high-risk gate must remain blocked until seam proof');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
+assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Contract and harness are present; browser proof is not yet established'), 'matrix must record browser proof as remaining');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');

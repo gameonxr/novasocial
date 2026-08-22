@@ -2518,3 +2518,7 @@ Aligned `docs/voice-recording-seam-preparation-contract.md` and its harness with
 ### Particle browser-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/particle-seam-preparation-contract.md` and its harness with the two existing non-destructive proofs: the browser particle mock and parity/rollback verification. The harness now requires both evidence files and PASS markers. These artifacts establish mock and rollback readiness only, not before/after production-split proof; `spawnLikeParticles()` remains inline.
+
+### Repository-wide protected seam inventory alignment checkpoint — Branch2
+
+Audited all nine protected seam-preparation contracts and confirmed each explicitly binds its corresponding browser-proof inventory. Updated the high-risk readiness matrix and harness to lock this repository-wide invariant. The 33 artifacts remain non-destructive mock/rollback evidence only; all 19 protected owners remain inline and direct extraction remains blocked.
