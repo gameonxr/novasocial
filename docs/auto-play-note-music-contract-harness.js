@@ -5,6 +5,7 @@ const path = require('path');
 const repo = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auto-play-note-music.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const noteOwners = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 
 for (const marker of [
   'function autoPlayNoteMusic(url, startSec)',
@@ -22,7 +23,7 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Auto-play note music marker missing: ${marker}`);
 }
-assert(html.includes('autoPlayNoteMusic(note.music_preview_url, note.music_start_sec||0)'), 'Note viewer must retain the autoplay controller call');
+assert(`${html}\n${noteOwners}`.includes('autoPlayNoteMusic(note.music_preview_url, note.music_start_sec||0)'), 'Note viewer must retain the autoplay controller call');
 assert(!source.includes('fetch('), 'Auto-play note music must not own network requests');
 assert(!source.includes('localStorage'), 'Auto-play note music must not own persistence');
 assert.strictEqual((source.match(/function autoPlayNoteMusic\(/g) || []).length, 1, 'Auto-play note music must have one module owner');

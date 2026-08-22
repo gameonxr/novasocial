@@ -2798,3 +2798,6 @@ The Note preparation harness correctly found both baseline hashes but required o
 
 ### Note viewer controlled split checkpoint — Branch2
 After synthetic seam parity, login-gated browser proof, exact owner hashes, and detached rollback PASS, moved only `viewNote()` and `removeMyNoteFromViewer()` from `index.html` into `src/features/note-viewer-owners.js` as anonymous `window` assignments. Inserted the classic script before `like-effects.js`; preserved HTML `onclick` globals and kept `deleteMediaProduction()` outside the split. No real account, Note, reaction, reply, audio, Supabase, media, storage, or destructive action occurred. Final production contract/harness publication follows from the resulting commit.
+
+### Note viewer autoplay call-site compatibility correction — Branch2
+The full gate found the autoplay harness still searched `index.html` for the Note viewer’s controller call after extraction. Updated only the audited call-site surface to include `note-viewer-owners.js`; autoplay cleanup, preload, metadata, offset, icon, loop, no-network, and no-persistence invariants remain unchanged.
