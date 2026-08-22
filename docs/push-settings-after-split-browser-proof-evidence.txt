@@ -1,0 +1,13 @@
+NovaSocial Branch2 Push settings after-split browser proof
+Date: 2026-08-22
+URL: http://127.0.0.1:4173/index.html?push-split=18778c4
+
+RESULT=PASS
+LOGIN_GATE_VISIBLE=PASS
+MODULE_BEFORE_LIKE_EFFECTS=PASS
+GLOBAL_OWNERS_AVAILABLE=PASS
+
+The production preview loaded the extracted `src/features/push-settings.js` before `src/features/like-effects.js`. Both `window.enablePushFromSettings` and `window.resetPushFromSettings` were available. With temporary removal of `window.PushManager` and temporary toast/settings-refresh mocks, both owners emitted only `toast:Push notifications not supported on this browser`. All temporary globals were restored in a `finally` block.
+
+SAFE_NO_SIDE_EFFECTS=PASS
+No permission prompt, service-worker registration, push subscription, account, database, VAPID, settings, or other real user action occurred.

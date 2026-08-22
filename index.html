@@ -7046,40 +7046,7 @@ async function addMemberToGroup(cid,uid){
  * Requests browser permission, then subscribes if granted, then refreshes
  * the Settings modal so the status updates to ON.
  */
-async function enablePushFromSettings(){
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-    toast('Push notifications not supported on this browser');
-    return;
-  }
-  if (Notification.permission === 'denied') {
-    toast('Permission blocked — please enable in your browser site settings');
-    return;
-  }
-  if (Notification.permission === 'granted') {
-    // Already granted — just make sure subscription is fresh
-    toast('Already enabled — refreshing subscription...');
-    await subscribeToPushNotifications();
-    showSettingsNotifications();  // refresh modal to show updated status
-    return;
-  }
-  // Permission is 'default' — ask
-  toast('Requesting permission...');
-  try {
-    const permission = await Notification.requestPermission();
-    if (permission === 'granted') {
-      toast('Notifications enabled 🔔');
-      await subscribeToPushNotifications();
-    } else if (permission === 'denied') {
-      toast('Permission denied — you can change this in browser settings later');
-    } else {
-      toast('Permission dismissed — tap again to retry');
-    }
-  } catch(e) {
-    console.error('[Push] Settings enable failed:', e);
-    toast('Could not enable notifications 😕');
-  }
-  showSettingsNotifications();  // refresh modal to show updated status
-}
+
 
 /**
  * Called from Settings → Notifications → "Reset Push Notifications" button.
@@ -7087,24 +7054,7 @@ async function enablePushFromSettings(){
  * + DB row delete + fresh subscribe with the current VAPID key. Useful when
  * the VAPID key has changed and old subscriptions are invalid.
  */
-async function resetPushFromSettings(){
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-    toast('Push notifications not supported on this browser');
-    return;
-  }
-  if (Notification.permission !== 'granted') {
-    toast('Please enable push notifications first (tap the row above)');
-    return;
-  }
-  toast('Resetting push subscription...');
-  const success = await forceResubscribePush();
-  if (success) {
-    toast('Push subscription reset ✅');
-  } else {
-    toast('Reset failed — check console 😕');
-  }
-  showSettingsNotifications();  // refresh modal
-}
+
 
 // ═══════════════════════════════════════════════════════════════════════
 // 🛡️ ADMIN PANEL — Complete moderation system with notifications
@@ -11130,6 +11080,7 @@ async function checkUserActiveNote(userId){
 <script src="src/features/nova-init.js"></script>
 <script src="src/features/spawn-like-particles.js"></script>
 <script src="src/features/sync-local-deletion-fallback.js"></script>
+<script src="src/features/push-settings.js"></script>
 <script src="src/features/like-effects.js"></script>
 </body>
 </html>
