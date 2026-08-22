@@ -2957,3 +2957,6 @@ Updated the object-URL lifecycle harness from 216 to 217 audited files after add
 
 ### Story editor particle-gate compatibility correction — Branch2
 Updated the particle production split harness’s shared protected-marker approval set to include the extracted Story renderer. Existing particle owner hash, browser smoke, caller handoff, and rollback proofs remain unchanged.
+
+### Story editor protected-coverage compatibility correction — Branch2
+Updated the protected-contract coverage harness to validate `renderStoryElements()` through its single external `window` owner and to keep the original 19-signature coverage map unchanged.

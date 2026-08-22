@@ -10,6 +10,7 @@ const docs = path.join(repo, 'docs');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -41,6 +42,9 @@ for (const [marker, base] of coverage) {
     assert(!html.includes(marker), `approved Push owner must be absent from inline HTML: ${marker}`);
     const ownerName = marker.includes('enablePushFromSettings') ? 'enablePushFromSettings' : 'resetPushFromSettings';
     assert(pushModule.includes(`window.${ownerName} = async function(`), `approved Push owner missing from src: ${marker}`);
+  } else if (marker === 'function renderStoryElements()') {
+    assert(!html.includes(marker), 'approved Story renderer must be absent from inline HTML');
+    assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story renderer must have one owner');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
