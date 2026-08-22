@@ -2609,3 +2609,6 @@ Updated `index-html-tag-integrity-contract-harness.js` from 213 to 214 total/clo
 
 ### Particle split inline-declaration count correction — Branch2
 Updated `inline-declaration-closure-contract-harness.js` from 251 to 250 inline function declarations. The decrease is the intentional removal of the named inline `spawnLikeParticles` declaration; the harness still locks all 19 protected names, requiring the remaining 18 inline and preserving the unresolved `forwardMessage` seam.
+
+### Particle split interval-audit count correction — Branch2
+Updated `interval-lifecycle-contract-harness.js` from 212 to 213 audited files so its interval lifecycle scan includes `index.html` plus all 212 extracted JavaScript modules. Interval registration, cleanup, managed handles, and no-runtime-start checks remain unchanged.
