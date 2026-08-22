@@ -2828,3 +2828,6 @@ The full gate observed 215 extracted JavaScript modules after adding the Note ow
 
 ### Note viewer extracted-file hygiene compatibility correction — Branch2
 The full gate observed 250 extracted source files after adding `note-viewer-owners.js`, while the hygiene harness expected 249. Updated only that deterministic total; empty-file and trailing-whitespace protections remain unchanged.
+
+### Note viewer high-risk-gate compatibility correction — Branch2
+The full gate observed 215 extracted JavaScript modules and six approved moved signatures after the Note split, while the high-risk gate still expected 214 and four. Updated only the module total, approved Note owner set, Note module ownership, and order checks; the remaining protected systems stay blocked.
