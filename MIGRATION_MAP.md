@@ -2690,3 +2690,6 @@ Updated `source-boundary-hygiene-contract-harness.js` from 230 to 231 JS/CSS fil
 
 ### Deletion-fallback storage-key audit-count correction — Branch2
 Updated `storage-key-surface-contract-harness.js` from 213 to 214 audited files so its localStorage scan includes the new deletion-fallback module. The 29-key allowlist, zero sessionStorage references, and dynamic sticker family checks remain unchanged.
+
+### Deletion-fallback window-assignment correction — Branch2
+Updated `window-assignment-surface-contract-harness.js` to include `syncLocalDeletionFallback`, raising the intentional assignment inventory from 193 to 194 and audited files from 213 to 214. All established window names remain present with no unexpected or missing assignments.
