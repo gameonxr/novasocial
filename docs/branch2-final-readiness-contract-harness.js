@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 214, '214 extracted JavaScript modules must remain');
+assert.strictEqual(jsFiles.length, 215, '215 extracted JavaScript modules must remain');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 203, '203 feature modules must remain');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 216, 'HTML must retain 216 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 216, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 215, 'HTML must retain 215 external script tags');
+assert.strictEqual(featureFiles.length, 204, '204 feature modules must remain');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 217, 'HTML must retain 217 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 217, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 216, 'HTML must retain 216 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -46,12 +46,16 @@ assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/feature
 assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/push-settings.js'), 'sync-local-deletion-fallback must precede push-settings');
-assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/like-effects.js'), 'push-settings must precede like-effects');
+assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/note-viewer-owners.js'), 'push-settings must precede note-viewer-owners');
+assert(html.indexOf('src/features/note-viewer-owners.js') < html.indexOf('src/features/like-effects.js'), 'note-viewer-owners must precede like-effects');
 assert(html.includes('src/features/push-settings.js'), 'push-settings module must remain referenced');
+assert(html.includes('src/features/note-viewer-owners.js'), 'note-viewer-owners module must remain referenced');
 
 for (const marker of [
   'async function enablePushFromSettings()',
   'async function resetPushFromSettings()',
+  'async function viewNote(noteId){',
+  'async function removeMyNoteFromViewer(noteId){',
   'async function renderDMs()',
   'async function renderReels()',
   'function createPeerConnection(callId, remoteUserId) {',
@@ -70,12 +74,13 @@ for (const marker of [
   'async function refreshPollResults(',
   'async function loadStoryPollState(',
 ]) {
-  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()';
+  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){';
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 assert(!html.includes('function spawnLikeParticles(el){'), 'approved particle owner must be absent from inline HTML');
 assert(!html.includes('async function syncLocalDeletionFallback()'), 'approved deletion-fallback owner must be absent from inline HTML');
 assert(!html.includes('async function enablePushFromSettings()'), 'approved Push enable owner must be absent from inline HTML');
@@ -86,6 +91,8 @@ assert(deletionModule.includes('window.syncLocalDeletionFallback = async functio
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback module must have one owner');
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable module must have one owner');
 assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset module must have one owner');
+assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note view module must have one owner');
+assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal module must have one owner');
 
 assert(fs.existsSync(path.join(repo, 'manifest.json')), 'manifest must remain present');
 assert(fs.existsSync(path.join(repo, 'sw.js')), 'service worker must remain present');

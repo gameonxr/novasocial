@@ -2801,3 +2801,6 @@ After synthetic seam parity, login-gated browser proof, exact owner hashes, and 
 
 ### Note viewer autoplay call-site compatibility correction — Branch2
 The full gate found the autoplay harness still searched `index.html` for the Note viewer’s controller call after extraction. Updated only the audited call-site surface to include `note-viewer-owners.js`; autoplay cleanup, preload, metadata, offset, icon, loop, no-network, and no-persistence invariants remain unchanged.
+
+### Note viewer final-readiness compatibility correction — Branch2
+The full gate found final readiness still encoded the pre-Note 214-JS/203-feature and 216/216/215-script totals. Updated only those deterministic totals, Note module order/reference, and approved-owner checks for `viewNote` and `removeMyNoteFromViewer`; remaining protected systems remain gated.
