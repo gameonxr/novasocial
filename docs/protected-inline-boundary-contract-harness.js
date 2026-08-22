@@ -9,6 +9,8 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 
 const protectedMarkers = [
   'function maybeShowPushPermissionBanner()',
@@ -43,6 +45,13 @@ for (const marker of protectedMarkers) {
   } else if (marker === 'function renderStoryElements()') {
     assert(!html.includes(marker), 'approved Story marker must be absent from inline HTML');
     assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story module owner must be present exactly once');
+  } else if (marker === 'async function viewNote(' || marker === 'function removeMyNoteFromViewer(') {
+    const ownerName = marker.includes('viewNote') ? 'viewNote' : 'removeMyNoteFromViewer';
+    assert(!html.includes(marker), `approved Note viewer marker must be absent from inline HTML: ${marker}`);
+    assert(noteViewerModule.includes(`window.${ownerName} = async function(`), `approved Note viewer module owner must be present: ${marker}`);
+  } else if (marker === 'async function deleteMyNote()') {
+    assert(!html.includes(marker), 'approved Note deletion marker must be absent from inline HTML');
+    assert(noteDeletionModule.includes('window.deleteMyNote = async function(){'), 'approved Note deletion module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }
@@ -54,6 +63,9 @@ const scriptMarkers = [
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
+  '<script src="src/features/note-viewer-owners.js"></script>',
+  '<script src="src/features/note-deletion-owner.js"></script>',
+  '<script src="src/features/story-editor-owners.js"></script>',
   '<script src="src/features/like-effects.js"></script>'
 ];
 const positions = scriptMarkers.map(marker => html.indexOf(marker));
