@@ -1,0 +1,13 @@
+NovaSocial Branch2 Notes removal-success browser-proof evidence
+Date: 2026-08-22
+Branch: Branch2
+Commit under test: c7d95622f8ac37c5952866101d1de936fb7e7aec
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic removeMyNoteFromViewer() success mock. db.from was replaced with a synthetic quick_notes select/delete chain returning non-cloud artwork; toast, closeNoteViewer, loadNotesBar, and deleteMediaProduction were temporarily stubbed. No real note, media, database, account, or network action occurred.
+
+Observed result: The protected function targeted `quick_notes` select of `music_artwork` and `id=note-success`, then targeted `quick_notes` delete with `id=note-success`, emitted `Note removed`, delegated closeNoteViewer and loadNotesBar, and made zero media-deletion calls because the synthetic artwork was not cloud-hosted.
+
+Result: NON_DESTRUCTIVE_NOTES_REMOVAL_SUCCESS_BROWSER_MOCK=PASS
+
+Interpretation: The protected Notes removal-success path is browser-context verified without real data or media mutation. This does not authorize extracting removeMyNoteFromViewer() or the protected Notes lifecycle; full before/after and rollback proof remains incomplete.
