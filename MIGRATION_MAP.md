@@ -2873,3 +2873,6 @@ The full gate observed 216 audited files after adding the Note owner module, whi
 
 ### Note viewer reversible-proof compatibility correction — Branch2
 The full gate found the reversible-proof inventory still described four-owner completion and omitted Note from the matrix before/after evidence row. Updated only the matrix inventory and harness requirements to include Note viewer, six approved signatures, four proof groups, and 13 remaining gated systems.
+
+### Note viewer source-boundary compatibility correction — Branch2
+The full gate observed 233 extracted JS/CSS files after adding `note-viewer-owners.js`, while source-boundary hygiene expected 232. Updated only that deterministic total; UTF-8, CRLF, NUL-byte, and embedded script/style boundary checks remain unchanged.
