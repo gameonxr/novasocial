@@ -2945,3 +2945,6 @@ Moving `renderStoryElements()` to the external owner reduced inline application 
 
 ### Story editor interval-audit file-count correction — Branch2
 Updated the interval-lifecycle harness from 216 to 217 audited files (`index.html` plus 216 source modules) after adding the Story editor owner; interval creation and cleanup totals remain unchanged.
+
+### Story editor asset-reference inventory correction — Branch2
+The extracted Story renderer adds one local JavaScript reference, raising the static local asset-reference inventory from 236 to 237. Updated the asset-reference harness; resolution and missing-asset checks remain unchanged.
