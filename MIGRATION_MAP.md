@@ -2996,3 +2996,6 @@ Updated the reversible-browser-proof protected-owner loop to classify `renderSto
 
 ### Story editor source-boundary inventory correction — Branch2
 Updated source-boundary hygiene from 233 to 234 scanned JS/CSS files after adding the Story editor owner; embedded script/style and line-ending safeguards remain unchanged.
+
+### Story editor storage-key audit file-count correction — Branch2
+Updated the storage-key-surface harness from 216 to 217 audited files after adding the Story editor owner; the literal localStorage allowlist and sessionStorage safety checks remain unchanged.
