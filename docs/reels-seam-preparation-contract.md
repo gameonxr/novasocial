@@ -19,13 +19,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Reels rendering, swipe handlers, persistent-container ownership, and video windowing remain inline. Two non-destructive browser-context mock artifacts now cover the empty state and query-error fallback. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, covering tab switching, saved-position restore, swipe settling, playback, and source release.
+This is a **mapping-only checkpoint**. Reels rendering, swipe handlers, persistent-container ownership, and video windowing remain inline. Two non-destructive browser-context mock artifacts cover the empty state and query-error fallback, while the behavior harness now exposes a test-only injected park/restore/window/settle/resume dispatcher. These artifacts prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs protected before/after marker parity and reversible browser proof for the production boundary itself, covering tab switching, saved-position restore, swipe settling, playback, and source release.
 
 The first implementation step must be test-only or adapter-only and must preserve the current `renderReels()` and `_applyReelsVideoWindowing()` owners until the complete seam harness passes. The preparation harness also compares the exact two protected owner bodies with `origin/main`; any hash drift is a stop condition.
 
 ## Harness coverage
 
-`docs/reels-seam-preparation-contract-harness.js` scans `index.html` and confirms persistent-container, saved-index, inner-transform, source-window, swipe, playback, and navigation markers, the existing Reels behavior contract and harness, the two passing non-destructive browser mock artifacts, protected inline signatures, and zero matching protected signatures in `src/`. It does not render Reels, open media, execute touch events, or move production code.
+`docs/reels-seam-preparation-contract-harness.js` scans `index.html` and confirms persistent-container, saved-index, inner-transform, source-window, swipe, playback, and navigation markers, the existing Reels behavior contract and harness, the two passing non-destructive browser mock artifacts, the injected seam-proof marker, protected inline signatures, and zero matching protected signatures in `src/`. It does not render Reels, open media, execute touch events, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -35,6 +35,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Swipe settle | Dynamic count, easing, and `isSettling` remain | PASS |
 | Playback | Windowing and resume hooks remain | PASS |
 | Browser mock inventory | Empty-state and query-error fallback artifacts are present with PASS markers | PASS |
+| Injected seam proof | Park, restore, window, settle, and resume dependencies dispatch explicitly in test-only mocks | PASS |
 | Production split | None; both Reels owners remain inline | PASS |
 | Exact owner no-drift comparison | Current protected owner bodies match `origin/main` | PASS |
 

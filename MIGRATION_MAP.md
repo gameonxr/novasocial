@@ -3185,3 +3185,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/calls-webrtc-seam-preparation-contract-harness.js` to require the test-only `createInjectedCallsSeam` proof and its peer-create, signaling, and teardown dispatch markers.
 - Updated `docs/calls-webrtc-seam-preparation-contract.md` to document the injected seam inventory while retaining all call/WebRTC production owners inline and direct extraction blocked.
 - Aggregate and Calls/WebRTC behavior harnesses pass with mocks only. No runtime owner, script tag, WebRTC peer, media device, signaling, account, or database behavior changed.
+
+## 2026-08-22 — Aggregate Reels injected-proof inventory synchronization
+- Strengthened `docs/reels-seam-preparation-contract-harness.js` to require the test-only `createInjectedReelsSeam` proof and its park, restore, video-window, settle, and resume dispatch markers.
+- Updated `docs/reels-seam-preparation-contract.md` to document the injected seam inventory while retaining `renderReels()` and `_applyReelsVideoWindowing()` inline, with exact origin/main no-drift protection and direct extraction blocked.
+- Aggregate and persistent Reels harnesses pass with mocks only. No runtime owner, script tag, media playback, touch event, account, or database behavior changed.
