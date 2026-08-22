@@ -7,6 +7,7 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 const browserProofFiles = [
   'stories-empty-data-browser-proof-evidence.txt',
   'stories-image-setup-browser-proof-evidence.txt'
@@ -18,7 +19,6 @@ for (const file of browserProofFiles) {
 }
 const requiredHtmlMarkers = [
   'function openSV(startIdx)',
-  'function renderStoryElements()',
   'async function voteStoryPoll(storyId, pollIdx, options, optIdx, cardEl)',
   'async function refreshPollResults(storyId, pollIdx, options, cardEl, pickedIdxs)',
   'async function loadStoryPollState(storyId, pollIdx, options, cardEl)',
@@ -37,6 +37,8 @@ const requiredHtmlMarkers = [
 for (const marker of requiredHtmlMarkers) {
   assert(html.includes(marker), `Stories seam marker must remain inline: ${marker}`);
 }
+assert(!html.includes('function renderStoryElements()'), 'completed Story editor renderer must be absent from inline HTML');
+assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'completed Story editor renderer owner must occur once');
 const requiredContracts = [
   'story-viewer-contract.md',
   'story-viewer-contract-harness.js',
@@ -56,7 +58,6 @@ for (const file of requiredContracts) {
 }
 const protectedSignatures = [
   'function openSV(startIdx)',
-  'function renderStoryElements()',
   'async function voteStoryPoll(storyId, pollIdx, options, optIdx, cardEl)',
   'async function refreshPollResults(storyId, pollIdx, options, cardEl, pickedIdxs)',
   'async function loadStoryPollState(storyId, pollIdx, options, cardEl)'
