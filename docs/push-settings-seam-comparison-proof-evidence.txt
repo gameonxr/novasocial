@@ -36,3 +36,12 @@ SAFE_NO_SIDE_EFFECTS=PASS
 PRODUCTION_SPLIT=0
 DIRECT_EXTRACTION=BLOCKED_UNTIL_PROOF
 REMAINING_REQUIRED_PROOF=PROTECTED_MARKER_PARITY_ADAPTER_BOUNDARY_LOGOUT_RACE_SUBSCRIPTION_ERROR_REVERSIBLE_BROWSER_SMOKE_ROLLBACK_FULL_REGRESSION
+
+Production-preview browser smoke: PASS
+URL: http://127.0.0.1:4173/index.html?push-seam=066ce81
+The login gate remained visible and both inline owners were available on window. Temporary window.PushManager removal plus temporary toast/settings-refresh mocks caused both owners to emit only the expected unsupported toast; no permission request, subscription, service-worker, account, database, or settings action occurred. All temporary globals were restored in a finally block.
+
+BROWSER_CONTEXT_SMOKE=PASS
+LOGIN_GATE_VISIBLE=PASS
+GLOBAL_OWNER_AVAILABILITY=PASS
+SAFE_NO_SIDE_EFFECTS=PASS

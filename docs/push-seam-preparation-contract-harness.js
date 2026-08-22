@@ -36,6 +36,9 @@ assert(fs.existsSync(comparisonEvidencePath), 'Push settings comparison evidence
 const comparisonEvidence = fs.readFileSync(comparisonEvidencePath, 'utf8');
 assert(comparisonEvidence.includes('COMPARISON_RESULT=PASS'), 'Push settings comparison evidence must pass');
 assert(comparisonEvidence.includes('ADAPTER_PARITY=PASS'), 'Push settings adapter parity evidence must pass');
+assert(comparisonEvidence.includes('BROWSER_CONTEXT_SMOKE=PASS'), 'Push browser-context smoke must pass');
+assert(comparisonEvidence.includes('LOGIN_GATE_VISIBLE=PASS'), 'Push browser smoke must preserve login gate');
+assert(comparisonEvidence.includes('GLOBAL_OWNER_AVAILABILITY=PASS'), 'Push browser smoke must preserve global owners');
 assert(comparisonEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Push settings comparison must remain side-effect safe');
 
 for (const ownerName of ['enablePushFromSettings', 'resetPushFromSettings']) {
