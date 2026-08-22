@@ -2960,3 +2960,6 @@ Updated the particle production split harness’s shared protected-marker approv
 
 ### Story editor protected-coverage compatibility correction — Branch2
 Updated the protected-contract coverage harness to validate `renderStoryElements()` through its single external `window` owner and to keep the original 19-signature coverage map unchanged.
+
+### Story editor inline-boundary compatibility correction — Branch2
+Updated the protected-inline-boundary harness to validate the extracted Story renderer through `src/features/story-editor-owners.js` and retain all other protected markers inline.

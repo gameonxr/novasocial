@@ -8,6 +8,7 @@ const repo = '/home/ubuntu/novasocial';
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 
 const protectedMarkers = [
   'function maybeShowPushPermissionBanner()',
@@ -39,6 +40,9 @@ for (const marker of protectedMarkers) {
     const ownerName = marker.includes('enablePushFromSettings') ? 'enablePushFromSettings' : 'resetPushFromSettings';
     assert(!html.includes(marker), `approved Push marker must be absent from inline HTML: ${marker}`);
     assert(pushModule.includes(`window.${ownerName} = async function(`), `approved Push module owner must be present: ${marker}`);
+  } else if (marker === 'function renderStoryElements()') {
+    assert(!html.includes(marker), 'approved Story marker must be absent from inline HTML');
+    assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story module owner must be present exactly once');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }
