@@ -2870,3 +2870,6 @@ The full gate found the Push production harness still expected 216/216/215 scrip
 
 ### Note viewer realtime-audit compatibility correction — Branch2
 The full gate observed 216 audited files after adding the Note owner module, while realtime subscription lifecycle expected 215. Updated only that deterministic count; all ten channels, subscribe chains, managed slots, cleanup calls, and distinct PushManager handling remain unchanged.
+
+### Note viewer reversible-proof compatibility correction — Branch2
+The full gate found the reversible-proof inventory still described four-owner completion and omitted Note from the matrix before/after evidence row. Updated only the matrix inventory and harness requirements to include Note viewer, six approved signatures, four proof groups, and 13 remaining gated systems.

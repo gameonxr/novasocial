@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, and Push settings before/after browser proofs are PASS, while browser proof remains outstanding for 15 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, and Note viewer before/after browser proofs are PASS, while browser proof remains outstanding for 13 unapproved systems'), 'matrix must continue to mark remaining browser proof');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 4/19 signatures moved'), 'matrix must report the four moved protected signatures');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 15 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('Protected production splits | 6/19 signatures moved'), 'matrix must report the six moved protected signatures');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 13 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',
@@ -122,6 +122,10 @@ assert(fs.existsSync(path.join(docsDir, 'notes-removal-success-browser-proof-evi
 assert(fs.readFileSync(path.join(docsDir, 'notes-removal-success-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_REMOVAL_SUCCESS_BROWSER_MOCK=PASS'), 'Notes removal-success browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'notes-removal-cloud-artwork-browser-proof-evidence.txt')), 'Notes cloud-artwork removal browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'notes-removal-cloud-artwork-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_NOTES_REMOVAL_CLOUD_ARTWORK_BROWSER_MOCK=PASS'), 'Notes cloud-artwork removal browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'note-viewer-after-split-browser-proof-evidence.txt')), 'Note viewer after-split browser evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'note-viewer-after-split-browser-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'Note viewer after-split browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'note-viewer-parity-rollback-evidence.txt')), 'Note viewer rollback evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'note-viewer-parity-rollback-evidence.txt'), 'utf8').includes('ROLLBACK_RESULT=PASS'), 'Note viewer rollback evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt')), 'deletion-fallback browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_DELETION_FALLBACK_ERROR_BROWSER_MOCK=PASS'), 'deletion-fallback browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-valid-queue-browser-proof-evidence.txt')), 'deletion-fallback valid-queue browser-proof evidence must remain present');
@@ -151,12 +155,14 @@ assert(source.includes('window.spawnLikeParticles = function(el){'), 'approved p
 assert(source.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback owner must remain available through a window assignment');
 assert(source.includes('window.enablePushFromSettings = async function('), 'approved Push enable owner must remain available through a window assignment');
 assert(source.includes('window.resetPushFromSettings = async function('), 'approved Push reset owner must remain available through a window assignment');
+assert(source.includes('window.viewNote = async function('), 'approved Note view owner must remain available through a window assignment');
+assert(source.includes('window.removeMyNoteFromViewer = async function('), 'approved Note removal owner must remain available through a window assignment');
 
 assert(!source.includes('reversibleBrowserProofPassed'), 'no speculative browser-proof pass flag may be introduced');
 assert(!source.includes('productionSplitApproved'), 'no speculative production-split approval flag may be introduced');
 
 console.log('REVERSIBLE_BROWSER_PROOF_CONTRACT_HARNESS=PASS');
 console.log('PROOF_STATUS=APPROVED_SPLITS_PASS_REMAINING_PROTECTED_SYSTEMS_GATED');
-console.log('PROTECTED_SPLITS=4_OF_19');
+console.log('PROTECTED_SPLITS=6_OF_19');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');
-console.log('PRODUCTION_CHANGE=4_APPROVED_SIGNATURES');
+console.log('PRODUCTION_CHANGE=6_APPROVED_SIGNATURES');
