@@ -2966,3 +2966,6 @@ Updated the protected-inline-boundary harness to validate the extracted Story re
 
 ### Story editor protected-inline parity correction — Branch2
 Updated Branch2 parity accounting to include `renderStoryElements()` among approved extracted owners and added a single-owner assertion for `story-editor-owners.js`; origin/main parity requirements remain unchanged.
+
+### Story editor protected-acceptance correction — Branch2
+Updated protected-split acceptance to record seven of 19 signatures moved, approve the external Story renderer owner, and validate its single window assignment. Remaining 12 high-risk systems stay blocked pending their own proofs.

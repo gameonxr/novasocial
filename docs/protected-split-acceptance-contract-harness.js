@@ -14,8 +14,9 @@ const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 6/19 signatures moved'), 'matrix must record the six moved protected signatures');
+assert(matrix.includes('Protected production splits | 7/19 signatures moved'), 'matrix must record the seven moved protected signatures');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('browser proof remains outstanding for 13 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
@@ -61,7 +62,7 @@ const protectedSignatures = [
 ];
 assert.strictEqual(protectedSignatures.length, 19, 'acceptance gate must cover all 19 protected signatures');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'function renderStoryElements()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected signature must not be duplicated by declaration: ${signature}`);
 }
@@ -73,6 +74,7 @@ assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async
 assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset owner must occur exactly once');
 assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note view owner must occur exactly once');
 assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal owner must occur exactly once');
+assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story renderer owner must occur exactly once');
 assert(fs.existsSync(path.join(docsDir, 'note-viewer-after-split-browser-proof-evidence.txt')), 'Note after-split browser proof must exist');
 assert(fs.existsSync(path.join(docsDir, 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must exist');
 
