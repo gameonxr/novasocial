@@ -3064,3 +3064,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Updated `docs/cross-module-function-collision-contract-harness.js` to audit 218 files after adding `note-deletion-owner.js`.
 - Recorded the measured top-level function inventory of 711 unique names after moving the `deleteMyNote()` declaration out of inline HTML.
 - Duplicate-name invariant remains PASS.
+
+## 2026-08-22 — Note deletion lexical-audit compatibility correction
+
+- Updated `docs/cross-module-lexical-collision-contract-harness.js` to audit 218 files (`index.html` plus 217 extracted scripts) after the Note deletion module was added.
+- The top-level lexical declaration inventory remains 117 with zero duplicate names.
