@@ -3086,3 +3086,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Updated `docs/event-listener-boundary-contract-harness.js` to the 217-source-module post-Note-deletion inventory.
 - Preserved the measured 74 extracted listener registrations, 28 inline registrations, zero cleanup registrations, and five service-worker registrations.
+
+## 2026-08-22 — Note deletion extracted-file hygiene correction
+
+- Updated `docs/extracted-file-hygiene-contract-harness.js` to the measured 252 files under `src/` after adding `note-deletion-owner.js`.
+- Empty-file and trailing-whitespace invariants remain PASS.
