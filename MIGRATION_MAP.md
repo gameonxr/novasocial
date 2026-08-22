@@ -2816,3 +2816,6 @@ The full gate observed 216 audited files and 713 unique top-level function names
 
 ### Note viewer lexical-collision compatibility correction — Branch2
 The full gate observed 216 audited JavaScript files after adding `note-viewer-owners.js`, while the lexical-collision harness expected 215. Updated only that deterministic count; the 117-name and zero-duplicate lexical invariants remain unchanged.
+
+### Note viewer deletion-contract compatibility correction — Branch2
+The full gate found the deletion-fallback acceptance harness still encoded 216/216/215 script totals and four approved protected signatures. Updated only the shared totals to 217/217/216 and the approved set to include the two Note owners; deletion-fallback hash, startup handoff, browser, and rollback invariants remain unchanged.
