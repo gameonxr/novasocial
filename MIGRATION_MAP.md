@@ -2780,3 +2780,6 @@ The full gate observed 232 extracted JavaScript/CSS files after adding `push-set
 
 ### Push settings storage-key audit compatibility correction — Branch2
 The full gate observed 215 audited files in the storage-key surface harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; the 29-key allowlist and zero-session-storage invariant remain unchanged.
+
+### Push settings window-assignment compatibility correction — Branch2
+The full gate found the window-assignment surface harness still expected 214 audited files and 194 assignments. Updated only its allowlist/counts to include `enablePushFromSettings` and `resetPushFromSettings`, producing 215 files, 196 assignments, and the same no-unexpected-name invariant.
