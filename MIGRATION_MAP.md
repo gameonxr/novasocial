@@ -2975,3 +2975,6 @@ Synchronized the high-risk readiness matrix from the Note-only checkpoint to the
 
 ### Story editor remaining browser-proof count correction — Branch2
 Updated the seam-readiness matrix harness to expect browser proof outstanding for 12 unapproved systems after the Story editor split, matching the synchronized matrix and high-risk gate.
+
+### Story editor acceptance remaining-system correction — Branch2
+Updated acceptance checks to require browser proof and blocked direct extraction for the current 12 unapproved protected systems, matching the Story editor readiness matrix and high-risk gate.
