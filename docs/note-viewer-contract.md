@@ -27,8 +27,9 @@ The viewer distinguishes own and other Notes. An own Note exposes viewer-count/r
 | Removal success cleanup | Close viewer and reload Notes Bar | PASS |
 | Removal failure | Show failure feedback and still close/reload | PASS |
 | Synthetic seam adapter parity | Exact event parity for own/other/expired/music/removal branches; no real side effects | PASS |
+| Injected interaction dispatch | Viewer and removal dependencies dispatch explicitly in order; cleanup/reload outcomes remain intact | PASS |
 
-The harness is deterministic and uses mocked Note/state events only. The preparation seam comparison additionally proves exact parity across five synthetic scenarios. It does not invoke real DOM, audio, Supabase, account data, Note, reaction, reply, or media-deletion actions.
+The harness is deterministic and uses mocked Note/state events only. The preparation seam comparison additionally proves exact parity across five synthetic scenarios. The injected interaction dispatcher is test-only and is not loaded by `index.html`. It does not invoke real DOM, audio, Supabase, account data, Note, reaction, reply, or media-deletion actions.
 
 ## Safe boundary
 

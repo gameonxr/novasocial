@@ -35,6 +35,21 @@ async function mockViewNote({ note, currentUserId = 'me', viewCount = 0, reactio
   return { events, overlay: true, isOwn };
 }
 
+function createInjectedNotesInteractionSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    view(input) {
+      calls.push('view');
+      return deps.view(input);
+    },
+    remove(input) {
+      calls.push('remove');
+      return deps.remove(input);
+    },
+  };
+}
+
 async function mockRemoveMyNote({ note, deleteFails = false, artworkCleanup = false }) {
   const events = ['audio.pause'];
   if (deleteFails) {
@@ -67,5 +82,12 @@ async function mockRemoveMyNote({ note, deleteFails = false, artworkCleanup = fa
   const failed = await mockRemoveMyNote({ note: { id: 'n1' }, deleteFails: true });
   assert(!failed.removed && failed.events.includes('toast:remove-failed') && failed.events.includes('viewer.close'), 'Removal failure must show feedback and still close viewer');
 
-  console.log(JSON.stringify({ passed: true, ownNote, otherNote, expired, removed, failed, seamEvidence: 'PASS', productionSplit: 0 }, null, 2));
+  const seam = createInjectedNotesInteractionSeam({ view: mockViewNote, remove: mockRemoveMyNote });
+  const injectedView = await seam.view({ note: { id: 'n3', user_id: 'other', text: 'Injected' } });
+  const injectedRemove = await seam.remove({ note: { id: 'n3' }, artworkCleanup: true });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['view', 'remove']), 'Injected Notes seam must dispatch viewer and removal owners explicitly');
+  assert(!injectedView.isOwn && injectedView.events.includes('other-controls:reply/reaction'), 'Injected viewer seam must preserve other-note controls');
+  assert(injectedRemove.removed && injectedRemove.events.includes('cloudinary.cleanup:note') && injectedRemove.events.includes('notes-bar.reload'), 'Injected removal seam must preserve cleanup and Notes Bar reload');
+
+  console.log(JSON.stringify({ passed: true, ownNote, otherNote, expired, removed, failed, seam: { calls: seam.calls, injectedView, injectedRemove }, seamEvidence: 'PASS', productionSplit: 0 }, null, 2));
 })();

@@ -3140,3 +3140,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Push permission preparation with an injected dispatcher around mocked capability/permission evaluation and permission-request handling; `maybeShowPushPermissionBanner()`, `silentPushResubscribeIfGranted()`, `enablePushFromSettings()`, and `resetPushFromSettings()` remain inline.
 - Verified explicit evaluator/request dispatch order, unsupported/granted/denied/dismissed/logged-out guards, subscription delegation, enabled/defer feedback, and banner removal using mocks only.
 - Updated `docs/push-permission-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no browser permission or subscription action was performed, and Push permission production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Notes interaction test-only injected seam proof
+- Advanced Notes interaction preparation with an injected dispatcher around mocked viewer and own-note removal flows; the already-approved `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` external boundaries remain unchanged.
+- Verified explicit viewer/removal dispatch order, own/other controls, expiry handling, audio pause, deletion, Cloudinary artwork cleanup, failure feedback, viewer closure, and Notes Bar reload using mocks only.
+- Updated `docs/note-viewer-contract.md` to record the test-only boundary. No runtime owner or script tag was added, no live reaction/viewer/deletion action was performed, and the remaining Notes interaction owners stay gated pending independent production proof.
