@@ -2834,3 +2834,6 @@ The full gate observed 215 extracted JavaScript modules and six approved moved s
 
 ### Note viewer readiness-matrix compatibility correction — Branch2
 The full gate found the readiness-matrix harness still expected 15 unapproved systems after the two Note owners moved. Updated only that remaining-system assertion to 13; the matrix now requires Note contract, after-split browser, rollback evidence, owner assignments, and order while retaining the block on all remaining systems.
+
+### Note viewer index-tag compatibility correction — Branch2
+The full gate observed 217 opening/closing script tags and 216 external script tags after adding `note-viewer-owners.js`, while index-tag integrity expected 216/216/215. Updated only those deterministic totals; doctype, HTML structure, and one-inline-script invariants remain unchanged.
