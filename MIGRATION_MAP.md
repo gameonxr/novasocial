@@ -2822,3 +2822,6 @@ The full gate found the deletion-fallback acceptance harness still encoded 216/2
 
 ### Note viewer dependency-order compatibility correction — Branch2
 The full gate found the dependency harness’s five-script tail still expected `nova-init.js` and omitted `note-viewer-owners.js`. Updated only the deterministic expected tail to spawn-like-particles, deletion-fallback, Push settings, Note owners, and like-effects; classic loading constraints remain unchanged.
+
+### Note viewer event-listener audit compatibility correction — Branch2
+The full gate observed 215 extracted JavaScript modules after adding the Note owner module, while the event-listener harness expected 214. Updated only that deterministic module count; listener registration and cleanup invariants remain unchanged.
