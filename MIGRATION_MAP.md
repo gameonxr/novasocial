@@ -2600,3 +2600,6 @@ Updated `dependency-loading-order-contract-harness.js` so its final-tail asserti
 
 ### Particle split event-listener audit-count correction — Branch2
 Updated `event-listener-boundary-contract-harness.js` from 211 to 212 extracted JavaScript modules so its listener audit includes the new particle module. The audited add/remove listener totals and service-worker listener inventory remain unchanged.
+
+### Particle split source-hygiene count correction — Branch2
+Updated `extracted-file-hygiene-contract-harness.js` from 246 to 247 source files so its tree inventory includes the new particle JavaScript module. Empty-file and trailing-whitespace checks remain unchanged and passing.
