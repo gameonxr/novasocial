@@ -3037,3 +3037,9 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Added explicit `note-deletion-owner.js` load-order and anonymous-owner assertions.
 - Added `note-deletion-browser-parity-harness.js` to the documented non-standard harness allowlist.
 - Focused Note deletion parity, Notes seam, Note behavior, syntax, and whitespace checks remained PASS.
+
+## 2026-08-22 — Note deletion readiness order correction
+
+- Updated final-readiness load-order assertions to compare final script-tag occurrences, avoiding earlier inline reference text.
+- Runtime order remains `push-settings.js` → `note-viewer-owners.js` → `note-deletion-owner.js` → `story-editor-owners.js` → `like-effects.js`.
+- The correction is limited to assertion targeting; runtime script order is unchanged.
