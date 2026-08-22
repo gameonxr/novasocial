@@ -2663,3 +2663,6 @@ The new anonymous `window.syncLocalDeletionFallback` module removes one addition
 
 ### Deletion-fallback lexical-collision audit-count correction — Branch2
 Updated `cross-module-lexical-collision-contract-harness.js` from 213 to 214 audited files so its scan includes the new deletion-fallback module. The top-level lexical declaration inventory and zero-duplicate guarantee remain unchanged.
+
+### Deletion-fallback dependency-order correction — Branch2
+Updated `dependency-loading-order-contract-harness.js` from the particle-only three-script tail to the verified five-script tail: `smart-ranking.js`, `nova-init.js`, `spawn-like-particles.js`, `sync-local-deletion-fallback.js`, and `like-effects.js`. Classic-script and stylesheet ordering invariants remain unchanged.

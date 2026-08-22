@@ -27,8 +27,8 @@ assert(localScripts.slice(0, 9).every(item => item.src.startsWith('src/core/')),
 assert(localScripts.slice(9, 11).every(item => item.src.startsWith('src/components/')), 'components must follow core scripts');
 assert(localScripts.slice(11).some(item => item.src.startsWith('src/features/')), 'features must follow shared components');
 assert(appInlineIndex > 0, 'inline application script must exist after extracted scripts');
-const trailing = scripts.slice(-3).map(item => item.src);
-assert.deepStrictEqual(trailing, ['src/features/nova-init.js', 'src/features/spawn-like-particles.js', 'src/features/like-effects.js'], 'final three scripts must preserve required order');
+const trailing = scripts.slice(-5).map(item => item.src);
+assert.deepStrictEqual(trailing, ['src/features/smart-ranking.js', 'src/features/nova-init.js', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/like-effects.js'], 'final five scripts must preserve required order after two protected splits');
 for (const item of scripts) {
   if (item.src && item.src.startsWith('src/')) assert(!/\btype\s*=|\bdefer\b|\basync\b/i.test(item.attrs), `local script must remain classic: ${item.src}`);
 }
