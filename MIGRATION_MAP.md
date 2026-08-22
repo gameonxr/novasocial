@@ -2654,3 +2654,9 @@ Updated `branch2-only-safety-contract-harness.js` to permit the latest audited d
 
 ### Deletion-fallback clipboard audit-count correction — Branch2
 Updated `clipboard-interaction-contract-harness.js` from 213 to 214 audited files so its scan includes `index.html` plus 213 extracted JavaScript modules. Clipboard call counts, legacy fallback, and all copy-surface boundaries remain unchanged.
+
+### Deletion-fallback function-collision audit-count correction — Branch2
+Updated `cross-module-function-collision-contract-harness.js` from 213 to 214 audited files so its scan includes the new deletion-fallback module. The stable 718 top-level function inventory and zero-duplicate-name assertion remain unchanged.
+
+### Deletion-fallback function-inventory correction — Branch2
+The new anonymous `window.syncLocalDeletionFallback` module removes one additional top-level named declaration, so `cross-module-function-collision-contract-harness.js` now expects the intentional 718→717 function-name inventory change after the two approved protected splits. Duplicate-name detection remains zero.
