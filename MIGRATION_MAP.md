@@ -2879,3 +2879,6 @@ The full gate observed 233 extracted JS/CSS files after adding `note-viewer-owne
 
 ### Note viewer static-ID compatibility correction — Branch2
 The full gate observed 162 static HTML IDs after moving Note viewer markup-related owner code, while the static-ID harness expected 166. Updated only the total and unique-ID expectations; duplicate-ID and protected Calls/DMs/Reels checks remain unchanged.
+
+### Note viewer storage-key audit compatibility correction — Branch2
+The full gate observed 216 audited files after adding the Note owner module, while storage-key surface expected 215. Updated only that deterministic count; the 29-key localStorage allowlist, zero sessionStorage references, and dynamic sticker family remain unchanged.
