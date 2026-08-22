@@ -2486,3 +2486,7 @@ Aligned `docs/protected-split-acceptance-contract.md` with the current inventory
 ### Deletion-fallback browser-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/deletion-fallback-seam-preparation-contract.md` and its harness with the three existing non-destructive browser-context proofs: malformed-storage failure, valid-queue replay, and empty-queue handling. The harness now requires all three evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; `syncLocalDeletionFallback()` and `deleteMediaProduction()` remain inline.
+
+### Notes browser-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/notes-seam-preparation-contract.md` and its harness with the six existing non-destructive browser-context proofs: empty validation, music-backed insert, update failure, removal failure, removal success, and Cloudinary-artwork removal. The harness now requires all six evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; protected Notes owners remain inline.

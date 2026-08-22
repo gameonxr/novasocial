@@ -8,6 +8,19 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const notesBar = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-bar.js'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const browserProofFiles = [
+  'notes-browser-proof-evidence.txt',
+  'notes-music-insert-browser-proof-evidence.txt',
+  'notes-update-failure-browser-proof-evidence.txt',
+  'notes-removal-failure-browser-proof-evidence.txt',
+  'notes-removal-success-browser-proof-evidence.txt',
+  'notes-removal-cloud-artwork-browser-proof-evidence.txt'
+];
+for (const file of browserProofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `Notes browser proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Notes browser proof must contain PASS: ${file}`);
+}
 const requiredHtmlMarkers = [
   'async function viewNote(noteId)',
   'async function removeMyNoteFromViewer(noteId)',
@@ -35,6 +48,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-contract-harness.js'))
 console.log('NOTES_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=BAR_VIEWER_REMOVAL_AUDIO_REACTIONS_MEDIA_REFRESH');
 console.log('PROTECTED_NOTES_SIGNATURES=4');
+console.log('BROWSER_MOCK_EVIDENCE=6_PASS');
 console.log('EXTRACTED_PROTECTED_NOTES_SIGNATURES=0');
 console.log('EXTRACTED_NOTES_BAR_HELPERS=2');
 console.log('PRODUCTION_SPLIT=0');

@@ -19,13 +19,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Note viewer, removal, reaction, audio, and cleanup implementations remain inline. Existing Note viewer and Notes Bar harnesses prove behavior, but they are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof covering own/other viewer controls, music playback, expiry, deletion success/failure, and Notes Bar reload.
+This is a **mapping-only checkpoint**. Note viewer, removal, reaction, audio, and cleanup implementations remain inline. Six non-destructive browser-context mock artifacts now cover empty validation, music-backed insertion, update failure, removal failure, removal success, and Cloudinary-artwork removal. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, including own/other viewer controls, expiry, and Notes Bar reload.
 
 The first implementation step must be test-only or adapter-only and must preserve the current `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` owners until the complete seam harness passes.
 
 ## Harness coverage
 
-`docs/notes-seam-preparation-contract-harness.js` scans `index.html` and extracted Notes Bar code to confirm viewer/removal/audio/reaction/media/refresh markers, existing Notes behavior contracts and harnesses, protected inline signatures, and zero matching protected signatures in `src/`. It does not open audio, query Supabase, delete notes, or move production code.
+`docs/notes-seam-preparation-contract-harness.js` scans `index.html` and extracted Notes Bar code to confirm viewer/removal/audio/reaction/media/refresh markers, existing Notes behavior contracts and harnesses, the six passing non-destructive browser mock artifacts, protected inline signatures, and zero matching protected signatures in `src/`. It does not open audio, query Supabase, delete notes, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -34,6 +34,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Audio state | `_noteViewAudio` remains protected | PASS |
 | Viewer/reaction data | `quick_note_views` and reactions remain protected | PASS |
 | Cleanup | Cloudinary artwork cleanup marker remains | PASS |
+| Browser mock inventory | Six Notes artifacts cover validation, insert, update failure, removal failure/success, and cloud-artwork cleanup | PASS |
 | Production split | None | PASS |
 
 ## References
@@ -43,5 +44,11 @@ The first implementation step must be test-only or adapter-only and must preserv
 3. [`notes-bar.js`](../src/features/notes-bar.js)
 4. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
 5. [`index.html`](../index.html)
-6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+6. [`notes-browser-proof-evidence.txt`](./notes-browser-proof-evidence.txt)
+7. [`notes-music-insert-browser-proof-evidence.txt`](./notes-music-insert-browser-proof-evidence.txt)
+8. [`notes-update-failure-browser-proof-evidence.txt`](./notes-update-failure-browser-proof-evidence.txt)
+9. [`notes-removal-failure-browser-proof-evidence.txt`](./notes-removal-failure-browser-proof-evidence.txt)
+10. [`notes-removal-success-browser-proof-evidence.txt`](./notes-removal-success-browser-proof-evidence.txt)
+11. [`notes-removal-cloud-artwork-browser-proof-evidence.txt`](./notes-removal-cloud-artwork-browser-proof-evidence.txt)
+12. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
