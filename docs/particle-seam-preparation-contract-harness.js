@@ -54,6 +54,10 @@ const seamContract = fs.readFileSync(path.join(repo, 'docs', 'particle-seam-prep
 assert(seamContract.includes('Particle is the first candidate for any future protected-split proof'), 'particle candidate selection must remain explicit');
 assert(seamContract.includes('it must not move `spawnLikeParticles()`'), 'particle candidate must remain test-only');
 assert(seamContract.includes('Approval status | Not approved'), 'particle production split must remain unapproved');
+assert(seamContract.includes('The explicit **test-only adapter boundary** is:'), 'particle test-only adapter boundary must remain explicit');
+assert(seamContract.includes('must not be imported by `index.html`'), 'particle adapter must not enter production HTML');
+assert(seamContract.includes('## Test-only adapter comparison checklist'), 'particle comparison checklist must remain present');
+assert(seamContract.includes('Approval gate | Comparison remains unapproved'), 'particle comparison approval gate must remain locked');
 assert(owner.includes('if(!el) return;'), 'future seam must preserve null-target no-op');
 assert(owner.includes('for(let i=0; i<12; i++)'), 'future seam must preserve twelve-particle count');
 assert(owner.includes('el.getBoundingClientRect()'), 'future seam must preserve live target geometry');

@@ -12,6 +12,8 @@ The inline `spawnLikeParticles(el)` function in `index.html` remains the sole pr
 
 A future adapter may accept a target element plus injected dependencies for geometry access, particle creation, body insertion, randomness, timer scheduling, and cleanup. The adapter must preserve the current owner’s null-target no-op and must not own like persistence, post state, authentication, navigation, or database writes.
 
+The explicit **test-only adapter boundary** is: `target` plus injected `geometry`, `createElement`, `appendToBody`, `random`, `setTimeout`, and `remove` dependencies in; particle element mutations and scheduled cleanup observations out. This boundary is a comparison seam only. It must not be imported by `index.html`, assigned to `window.spawnLikeParticles`, or used as a second production owner before before/after proof approval.
+
 | Boundary | Required invariant | Proof input |
 |---|---|---|
 | Target guard | Missing target creates no particles and schedules no timers | `null` target mock |
@@ -24,7 +26,7 @@ A future adapter may accept a target element plus injected dependencies for geom
 
 ## Candidate selection
 
-Particle is the first candidate for any future protected-split proof because its owner is isolated from database writes, authentication, navigation, microphone/camera access, subscriptions, and realtime state. The next permitted checkpoint is test-only seam preparation plus before/after static snapshot design; it must not move `spawnLikeParticles()` or introduce a second production owner.
+Particle is the first candidate for any future protected-split proof because its owner is isolated from database writes, authentication, navigation, microphone/camera access, subscriptions, and realtime state. The next permitted checkpoint is test-only seam preparation plus before/after static snapshot design using the explicit adapter boundary below; it must not move `spawnLikeParticles()` or introduce a second production owner.
 
 | Candidate control | Required status |
 |---|---|
@@ -33,6 +35,16 @@ Particle is the first candidate for any future protected-split proof because its
 | Production owner | `index.html` inline `spawnLikeParticles(el)` remains sole owner |
 | Approval status | Not approved; browser proof and before/after production parity remain required |
 | Stop condition | Any marker, timing, cleanup, or DOM difference stops the candidate |
+
+## Test-only adapter comparison checklist
+
+| Comparison | Required observation |
+|---|---|
+| Owner isolation | The inline `spawnLikeParticles(el)` definition remains exactly once in `index.html`; no adapter is imported by production HTML |
+| Dependency injection | Geometry, element creation, body insertion, randomness, timer scheduling, and cleanup are supplied by the test boundary only |
+| Behavioral parity | Null-target guard, twelve-particle count, target-center geometry, palette/vector mutations, and 800 ms cleanup match the inline contract |
+| Side-effect exclusion | No like persistence, database, authentication, navigation, realtime, or media API calls occur |
+| Approval gate | Comparison remains unapproved until reversible browser proof and before/after production marker parity pass |
 
 ## Readiness gate
 
