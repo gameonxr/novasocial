@@ -2506,3 +2506,7 @@ Aligned `docs/dms-seam-preparation-contract.md` and its harness with the three e
 ### Reels browser-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/reels-seam-preparation-contract.md` and its harness with the two existing non-destructive browser-context proofs: empty-state handling and query-error fallback. The harness now requires both evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; Reels rendering, persistent-container, and video-window owners remain inline.
+
+### Calls/WebRTC browser-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/calls-webrtc-seam-preparation-contract.md` and its harness with the four existing call-specific non-destructive browser-context proofs: mocked WebRTC setup and missing-video, successful, and failed Picture-in-Picture branches. Voice permission and recording proofs remain covered by their separate seam contracts. The harness now requires all four evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; Calls/WebRTC owners remain inline.
