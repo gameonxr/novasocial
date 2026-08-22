@@ -2681,3 +2681,6 @@ Updated `local-html-asset-reference-contract-harness.js` from 233 to 234 static 
 
 ### Deletion-fallback object-URL audit-count correction — Branch2
 Updated `object-url-lifecycle-contract-harness.js` from 213 to 214 audited files so its object-URL lifecycle scan includes the new deletion-fallback module. Creation, revocation, download, compression, and preview ownership checks remain unchanged.
+
+### Deletion-fallback realtime audit-count correction — Branch2
+Updated `realtime-subscription-lifecycle-contract-harness.js` from 213 to 214 audited files so its realtime scan includes the new deletion-fallback module. Channel registrations, cleanup calls, subscription chains, and PushManager separation remain unchanged.
