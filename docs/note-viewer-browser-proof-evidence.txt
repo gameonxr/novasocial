@@ -1,0 +1,18 @@
+# Note viewer browser-context proof evidence
+
+Date: 2026-08-22
+Branch: Branch2
+URL: http://127.0.0.1:4173/index.html?note-seam=bcb554f
+
+LOGIN_GATE_VISIBLE=PASS
+VIEW_NOTE_GLOBAL=PASS
+REMOVE_MY_NOTE_GLOBAL=PASS
+DEDICATED_OWNER_MODULE_ABSENT=PASS
+EXISTING_CLOSE_NOTE_HELPER_ALLOWED=PASS
+REAL_ACTIONS_INVOKED=0
+SAFE_NO_SIDE_EFFECTS=PASS
+PRODUCTION_SPLIT=0
+
+The production preview remained at the login gate. The smoke inspected global availability and script presence only; it did not invoke `viewNote()` or `removeMyNoteFromViewer()`, did not enter credentials, and performed no real Note, reaction, reply, audio, Supabase, media, storage, or account action.
+
+RESULT=PASS

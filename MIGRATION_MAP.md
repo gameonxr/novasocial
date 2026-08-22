@@ -2786,3 +2786,6 @@ The full gate found the window-assignment surface harness still expected 214 aud
 
 ### Note viewer seam preparation checkpoint — Branch2
 Prepared a deterministic synthetic adapter parity proof for the protected `viewNote()` and `removeMyNoteFromViewer()` owners. Five branches pass: own Note with music/count/reaction, other-user Note, expired Note, removal success with cleanup boundary, and removal failure with close/reload. No real data, media, storage, account, Supabase, or destructive action occurred. Production split remains blocked (`PRODUCTION_SPLIT=0`); browser-context parity, exact owner hashes, and detached rollback proof remain required.
+
+### Note viewer browser-context preparation checkpoint — Branch2
+Established a production-preview smoke at the login gate. `viewNote` and `removeMyNoteFromViewer` remained globally available inline, no dedicated Note owner module was loaded, and zero real actions were invoked. Existing `close-note-viewer.js` remains an allowed helper. Browser proof passed with no credentials, Note, reaction, reply, audio, Supabase, media, storage, or account action. Production split remains blocked (`PRODUCTION_SPLIT=0`); exact owner hashes and detached rollback proof remain required.

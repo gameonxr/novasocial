@@ -6,7 +6,11 @@ function assert(condition, message) {
 }
 
 const evidence = fs.readFileSync(path.join(__dirname, 'note-viewer-seam-comparison-proof-evidence.txt'), 'utf8');
+const browserEvidence = fs.readFileSync(path.join(__dirname, 'note-viewer-browser-proof-evidence.txt'), 'utf8');
 assert(evidence.includes('NOTE_VIEWER_ADAPTER_PARITY=PASS'), 'Note adapter parity evidence must pass');
+assert(browserEvidence.includes('LOGIN_GATE_VISIBLE=PASS'), 'Note browser login-gate evidence must pass');
+assert(browserEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note browser proof must remain side-effect safe');
+assert(browserEvidence.includes('PRODUCTION_SPLIT=0'), 'Note browser proof must remain preparation-only');
 assert(evidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note proof must remain side-effect safe');
 assert(evidence.includes('PRODUCTION_SPLIT=0'), 'Note production split must remain blocked');
 
