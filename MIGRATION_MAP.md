@@ -2918,3 +2918,6 @@ Added `story-editor-browser-parity-harness.js` to the final-readiness non-standa
 
 ### Story editor Branch2 safety-harness correction — Branch2
 Updated Branch2-only safety checks so the approved Story renderer is validated through `src/features/story-editor-owners.js` rather than required as an inline marker. Remaining DMs, Reels, Calls, and Story viewer protected markers remain inline; main remains immutable.
+
+### Story editor repository-wide baseline corrections — Branch2
+Synchronized the remaining post-Note harness baselines after adding the Story editor owner: script tags, external scripts, source-module audits, lexical/clipboard audits, event-listener inventory, and extracted-file hygiene. No additional runtime behavior changed.
