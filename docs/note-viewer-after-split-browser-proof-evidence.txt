@@ -1,0 +1,16 @@
+# Note viewer after-split browser proof evidence
+
+Date: 2026-08-22
+Branch: Branch2
+URL: http://127.0.0.1:4173/index.html?note-split=f5ab718
+
+LOGIN_GATE_VISIBLE=PASS
+NOTE_MODULE_LOADED_ONCE=PASS
+NOTE_MODULE_BEFORE_LIKE_EFFECTS=PASS
+VIEW_NOTE_GLOBAL=PASS
+REMOVE_MY_NOTE_GLOBAL=PASS
+REAL_ACTIONS_INVOKED=0
+SAFE_NO_SIDE_EFFECTS=PASS
+RESULT=PASS
+
+The production preview remained at the login gate. The smoke inspected script order and global availability only; it did not invoke Note actions, enter credentials, or perform any Note, reaction, reply, audio, Supabase, media, storage, or account operation.

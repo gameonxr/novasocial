@@ -2795,3 +2795,6 @@ Captured and published canonical inline baselines: `viewNote` SHA-256 `3ed4f0ff2
 
 ### Note viewer hash-evidence label correction — Branch2
 The Note preparation harness correctly found both baseline hashes but required owner-prefixed marker labels. Added `viewNote_SHA256` and `removeMyNoteFromViewer_SHA256` aliases for deterministic evidence matching; hash values and production split state remain unchanged.
+
+### Note viewer controlled split checkpoint — Branch2
+After synthetic seam parity, login-gated browser proof, exact owner hashes, and detached rollback PASS, moved only `viewNote()` and `removeMyNoteFromViewer()` from `index.html` into `src/features/note-viewer-owners.js` as anonymous `window` assignments. Inserted the classic script before `like-effects.js`; preserved HTML `onclick` globals and kept `deleteMediaProduction()` outside the split. No real account, Note, reaction, reply, audio, Supabase, media, storage, or destructive action occurred. Final production contract/harness publication follows from the resulting commit.

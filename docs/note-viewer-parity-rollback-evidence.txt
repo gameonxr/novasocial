@@ -1,0 +1,23 @@
+# Note viewer parity and rollback proof evidence
+
+Date: 2026-08-22
+Branch: Branch2
+Baseline published tip: `f5ab7180aba3a88e6ebff32cce338c476f9d642c`
+
+BASELINE_INDEX_SHA256=e084589b311b4c67199ce22efcb2b2e3f3fb98f2d45419dba2a0d8fb87055daf
+TEMP_SPLIT_COMMIT=eabf0eb9bdacda5b07c6498414e5f5bed0b0d4ec
+TEMP_SPLIT_INDEX_SHA256=b4d3ffce468636368fa3b2b25a8f8ccc8c758267ced0f4c7be1da84c00724561
+ROLLBACK_INDEX_SHA256=e084589b311b4c67199ce22efcb2b2e3f3fb98f2d45419dba2a0d8fb87055daf
+
+INLINE_OWNERS_RESTORED=PASS
+DEDICATED_MODULE_ABSENT_AFTER_ROLLBACK=PASS
+PARTICLE_DELETION_PUSH_SPLITS_UNTOUCHED=PASS
+ROLLBACK_RESULT=PASS
+
+The temporary worktree removed both Note owners, inserted a classic-script window-assigned module, syntax-checked it, committed the temporary split, reverted it, and verified exact index restoration. Branch2 and origin/main were not modified by the temporary proof.
+
+REAL_DATA_ACTIONS=0
+REAL_MEDIA_ACTIONS=0
+REAL_STORAGE_MUTATIONS=0
+REAL_ACCOUNT_ACTIONS=0
+RESULT=PASS

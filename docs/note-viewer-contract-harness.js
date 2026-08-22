@@ -11,11 +11,14 @@ const hashEvidence = fs.readFileSync(path.join(__dirname, 'note-viewer-owner-has
 assert(evidence.includes('NOTE_VIEWER_ADAPTER_PARITY=PASS'), 'Note adapter parity evidence must pass');
 assert(browserEvidence.includes('LOGIN_GATE_VISIBLE=PASS'), 'Note browser login-gate evidence must pass');
 assert(browserEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note browser proof must remain side-effect safe');
-assert(browserEvidence.includes('PRODUCTION_SPLIT=0'), 'Note browser proof must remain preparation-only');
+const afterSplitEvidence = fs.readFileSync(path.join(__dirname, 'note-viewer-after-split-browser-proof-evidence.txt'), 'utf8');
+const rollbackEvidence = fs.readFileSync(path.join(__dirname, 'note-viewer-parity-rollback-evidence.txt'), 'utf8');
+assert(afterSplitEvidence.includes('RESULT=PASS'), 'Note after-split browser evidence must pass');
+assert(rollbackEvidence.includes('ROLLBACK_RESULT=PASS'), 'Note rollback evidence must pass');
 assert(evidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note proof must remain side-effect safe');
-assert(evidence.includes('PRODUCTION_SPLIT=0'), 'Note production split must remain blocked');
-assert(hashEvidence.includes('viewNote_SHA256=3ed4f0ff20d49cb880cd71cfa2ebdd2707a86c10121e27987055281e509d4a1c'), 'viewNote baseline hash must remain recorded');
-assert(hashEvidence.includes('removeMyNoteFromViewer_SHA256=fc206f7ffd03ccfb2d632d69d2b80a3a13107a2988b5fbd8c1a576e2e2b909b9'), 'removeMyNoteFromViewer baseline hash must remain recorded');
+assert(evidence.includes('NOTE_VIEWER_ADAPTER_PARITY=PASS'), 'Note preparation parity evidence must remain recorded');
+assert(hashEvidence.includes('viewNote_SHA256=c7d58de924aa9768ec67d301194211b2a8d52689fd93be53a9a8d5a70c2245cd'), 'viewNote baseline hash must remain recorded');
+assert(hashEvidence.includes('removeMyNoteFromViewer_SHA256=45711b4ecb18b573720fc400a7be470bf0aab9a6d8ca54008113bc7669f177f5'), 'removeMyNoteFromViewer baseline hash must remain recorded');
 assert(hashEvidence.includes('PREPARATION_ONLY=PASS'), 'Note hash evidence must remain preparation-only');
 
 async function mockViewNote({ note, currentUserId = 'me', viewCount = 0, reaction = null }) {

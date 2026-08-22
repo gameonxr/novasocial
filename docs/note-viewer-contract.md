@@ -32,15 +32,17 @@ The harness is deterministic and uses mocked Note/state events only. The prepara
 
 ## Safe boundary
 
-The protected `viewNote()`, `removeMyNoteFromViewer()`, Note viewer controls, and database/media-deletion behavior remain inline and unchanged. No Note viewer or removal production code was moved or rewritten in this checkpoint.
+The protected `viewNote()` and `removeMyNoteFromViewer()` owners are now assigned anonymously to `window` in `src/features/note-viewer-owners.js`, preserving HTML `onclick` compatibility. Note viewer controls and database/media-deletion behavior remain unchanged; `deleteMediaProduction()` remains outside this split as a negative boundary.
 
 ## Validation
 
-The standalone harness passed. The complete repository validation chain also passed, including all JavaScript syntax checks, HTML/script integration checks, every `/tmp/validate_*.py` contract validator, inline application-script syntax validation, whitespace checks, protected-function markers, script load order, Branch2 verification, and confirmation that `origin/main` remained unchanged.
+The standalone harness passed before and after extraction. The complete repository validation chain also passed after the controlled split, including JavaScript syntax checks, HTML/script integration checks, protected-function markers, script load order, browser-context proof, detached rollback proof, whitespace checks, Branch2 verification, and confirmation that `origin/main` remained unchanged.
 
 ## References
 
 1. [`index.html` Note viewer/removal implementation](../index.html)
 2. [`CRITICAL_CONTEXT.md`](../../upload/CRITICAL_CONTEXT.md)
 3. [`note-viewer-seam-comparison-proof-evidence.txt`](./note-viewer-seam-comparison-proof-evidence.txt)
-4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+4. [`note-viewer-after-split-browser-proof-evidence.txt`](./note-viewer-after-split-browser-proof-evidence.txt)
+5. [`note-viewer-parity-rollback-evidence.txt`](./note-viewer-parity-rollback-evidence.txt)
+6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
