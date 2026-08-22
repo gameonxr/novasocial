@@ -22,7 +22,7 @@ while ((match = pattern.exec(html))) {
 const unique = [...new Map(refs.map(item => [item.ref, item])).values()];
 const missing = unique.filter(item => !fs.existsSync(path.join(repo, item.relative))).map(item => item.ref).sort();
 
-assert.strictEqual(unique.length, 235, 'static local asset-reference inventory must remain stable after the three approved protected owner groups');
+assert.strictEqual(unique.length, 236, 'static local asset-reference inventory must remain stable after the four approved protected owner groups');
 assert.deepStrictEqual(missing, [], 'every static local asset reference must resolve');
 assert(fs.existsSync(path.join(repo, 'manifest.json')), 'root manifest must remain available');
 assert(fs.existsSync(path.join(repo, 'sw.js')), 'service worker must remain available');

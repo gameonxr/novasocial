@@ -2846,3 +2846,6 @@ The full gate observed 154 unique HTML onclick handlers after moving five Note-o
 
 ### Note viewer interval-audit compatibility correction — Branch2
 The full gate observed 216 audited files after adding the Note owner module, while interval lifecycle expected 215. Updated only that deterministic count; interval registration, cleanup, managed handles, and zero-runtime-start assertions remain unchanged.
+
+### Note viewer local-asset compatibility correction — Branch2
+The full gate observed 236 unique static local asset references after adding the Note owner script, while the asset harness expected 235. Updated only that deterministic total; missing-reference, manifest, and service-worker checks remain unchanged.
