@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 247, 'all 247 extracted source files must remain present after particle split');
+assert.strictEqual(files.length, 248, 'all 248 extracted source files must remain present after deletion-fallback split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {

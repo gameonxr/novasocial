@@ -2666,3 +2666,6 @@ Updated `cross-module-lexical-collision-contract-harness.js` from 213 to 214 aud
 
 ### Deletion-fallback dependency-order correction — Branch2
 Updated `dependency-loading-order-contract-harness.js` from the particle-only three-script tail to the verified five-script tail: `smart-ranking.js`, `nova-init.js`, `spawn-like-particles.js`, `sync-local-deletion-fallback.js`, and `like-effects.js`. Classic-script and stylesheet ordering invariants remain unchanged.
+
+### Deletion-fallback extracted-file hygiene correction — Branch2
+Updated `extracted-file-hygiene-contract-harness.js` from 247 to 248 source files so it includes `sync-local-deletion-fallback.js`. Empty-file and trailing-whitespace checks remain unchanged.
