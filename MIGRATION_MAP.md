@@ -3145,3 +3145,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Notes interaction preparation with an injected dispatcher around mocked viewer and own-note removal flows; the already-approved `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` external boundaries remain unchanged.
 - Verified explicit viewer/removal dispatch order, own/other controls, expiry handling, audio pause, deletion, Cloudinary artwork cleanup, failure feedback, viewer closure, and Notes Bar reload using mocks only.
 - Updated `docs/note-viewer-contract.md` to record the test-only boundary. No runtime owner or script tag was added, no live reaction/viewer/deletion action was performed, and the remaining Notes interaction owners stay gated pending independent production proof.
+
+## 2026-08-22 — Story reply/reaction test-only injected seam proof
+- Advanced Story interaction preparation with an injected dispatcher around mocked reply and reaction flows; `sendStoryReply()` and `reactToStory()` remain inline.
+- Verified explicit reply/reaction dispatch order, conversation reuse/creation, parallel member insert, message `throwOnError`, blocked and generic failures, 40-character notification truncation, nonfatal notification failure, and reaction success/failure using mocks only.
+- Updated `docs/story-reply-reaction-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live reply/reaction action was performed, and Story interaction production extraction remains blocked pending independent browser proof and rollback gates.

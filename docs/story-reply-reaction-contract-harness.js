@@ -23,6 +23,21 @@ async function mockSendStoryReply({ existingConversation = null, conversationCre
   return { events, sent: true, conversationId };
 }
 
+function createInjectedStoryInteractionSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    reply(input) {
+      calls.push('reply');
+      return deps.reply(input);
+    },
+    reaction(input) {
+      calls.push('reaction');
+      return deps.reaction(input);
+    },
+  };
+}
+
 async function mockReactToStory({ replyFails = false, notificationFails = false }) {
   const events = [];
   if (replyFails) return { events: ['reply.failed'], reacted: false };
@@ -55,5 +70,12 @@ async function mockReactToStory({ replyFails = false, notificationFails = false 
   assert(reactionNotifFailure.reacted && reactionNotifFailure.events.includes('notification.failed.nonfatal'), 'Reaction notification failure must remain nonfatal');
   assert(!reactionReplyFailure.reacted && !reactionReplyFailure.events.includes('toast:Reaction sent'), 'Reaction reply failure must stop before success toast');
 
-  console.log(JSON.stringify({ passed: true, reused, created, blocked, failed, createFailed, notifFailure, reaction, reactionNotifFailure, reactionReplyFailure }, null, 2));
+  const seam = createInjectedStoryInteractionSeam({ reply: mockSendStoryReply, reaction: mockReactToStory });
+  const injectedReply = await seam.reply({ existingConversation: 'c-injected' });
+  const injectedReaction = await seam.reaction({});
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['reply', 'reaction']), 'Injected Story interaction seam must dispatch reply and reaction owners explicitly');
+  assert(injectedReply.sent && injectedReply.events.includes('message.insert.throwOnError:c-injected:📸 Replied to story: A thoughtful story reply that is intentionally longer than forty characters for truncation.'), 'Injected reply seam must preserve message insertion');
+  assert(injectedReaction.reacted && injectedReaction.events.includes('toast:Reaction sent'), 'Injected reaction seam must preserve success feedback');
+
+  console.log(JSON.stringify({ passed: true, reused, created, blocked, failed, createFailed, notifFailure, reaction, reactionNotifFailure, reactionReplyFailure, seam: { calls: seam.calls, injectedReply, injectedReaction } }, null, 2));
 })();

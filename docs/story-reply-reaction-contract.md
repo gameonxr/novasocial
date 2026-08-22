@@ -29,8 +29,9 @@ The message body is prefixed with `📸 Replied to story: ` and is inserted thro
 | Reaction success | Delegate reply and show success toast | PASS |
 | Reaction notification failure | Keep reaction success nonfatal | PASS |
 | Reply failure during reaction | Stop before reaction success toast | PASS |
+| Injected interaction dispatch | Reply and reaction dependencies dispatch explicitly in order; success/failure outcomes remain intact | PASS |
 
-The harness is deterministic and uses mocked conversations, members, message, notification, and toast events only. It does not invoke real DOM, Supabase, authentication, messages, notifications, Stories, or account actions.
+The harness is deterministic and uses mocked conversations, members, message, notification, and toast events only. Its injected interaction dispatcher is test-only and is not loaded by `index.html`. It does not invoke real DOM, Supabase, authentication, messages, notifications, Stories, or account actions.
 
 ## Safe boundary
 
