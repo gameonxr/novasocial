@@ -2900,3 +2900,6 @@ Extracted the protected `renderStoryElements()` owner from `index.html` into `sr
 
 ### Story editor final readiness correction — Branch2
 After publishing the Story renderer owner, final readiness observed 216 source JavaScript modules. Updated the readiness harness and contract from the pre-split 215 count; all script, feature, documentation, collision, and protected-owner totals remain synchronized.
+
+### Story editor feature-inventory correction — Branch2
+The final readiness gate observed 205 feature modules after publishing `story-editor-owners.js`. Updated the readiness harness and contract from the pre-split 204 count; no runtime behavior changed.
