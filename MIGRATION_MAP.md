@@ -2819,3 +2819,6 @@ The full gate observed 216 audited JavaScript files after adding `note-viewer-ow
 
 ### Note viewer deletion-contract compatibility correction — Branch2
 The full gate found the deletion-fallback acceptance harness still encoded 216/216/215 script totals and four approved protected signatures. Updated only the shared totals to 217/217/216 and the approved set to include the two Note owners; deletion-fallback hash, startup handoff, browser, and rollback invariants remain unchanged.
+
+### Note viewer dependency-order compatibility correction — Branch2
+The full gate found the dependency harness’s five-script tail still expected `nova-init.js` and omitted `note-viewer-owners.js`. Updated only the deterministic expected tail to spawn-like-particles, deletion-fallback, Push settings, Note owners, and like-effects; classic loading constraints remain unchanged.
