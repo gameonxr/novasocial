@@ -2978,3 +2978,6 @@ Updated the seam-readiness matrix harness to expect browser proof outstanding fo
 
 ### Story editor acceptance remaining-system correction — Branch2
 Updated acceptance checks to require browser proof and blocked direct extraction for the current 12 unapproved protected systems, matching the Story editor readiness matrix and high-risk gate.
+
+### Story editor high-risk gate contract correction — Branch2
+Synchronized the high-risk extraction contract to the Story editor checkpoint: seven approved exceptions, 12 remaining protected systems, and Story editor included in the completed production moves. Direct extraction remains blocked for all remaining systems.
