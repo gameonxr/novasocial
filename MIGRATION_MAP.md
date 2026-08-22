@@ -2732,3 +2732,6 @@ The full gate found `index-html-tag-integrity-contract-harness.js` still expecte
 
 ### Push settings inline-declaration compatibility correction — Branch2
 The full gate observed 247 inline application function declarations after extracting the two Push settings owners, while the closure harness still expected 249. Updated only that deterministic total and excluded the two approved Push owners from the remaining-inline protected-name assertion; all 15 unapproved protected declarations remain required inline.
+
+### Push settings interval-audit compatibility correction — Branch2
+The full gate observed 215 audited files in the interval lifecycle harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; all interval registration, cleanup, and no-runtime-start assertions remain unchanged.
