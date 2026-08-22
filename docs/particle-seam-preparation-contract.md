@@ -20,14 +20,15 @@ A future adapter may accept a target element plus injected dependencies for geom
 | DOM insertion | Every particle uses `.particle` and is appended to `document.body` | Mock body and element factory |
 | Cleanup | Every particle schedules 800 ms removal and removes itself | Captured timer callbacks |
 | Integration | Like persistence remains outside the seam | No database or like handler calls |
+| Proof inventory | Browser particle mock and parity/rollback artifacts remain present with PASS markers | Existing evidence |
 
 ## Readiness gate
 
-This is a seam-preparation checkpoint only. Before any production split, the project still requires before/after protected-marker parity, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
+This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
 
 ## Harness coverage
 
-`docs/particle-seam-preparation-contract-harness.js` statically verifies the inline owner, exact protected boundaries, existing particle contract/harness, deterministic mock requirements, proposed adapter inputs, and zero extracted protected particle owners. It does not create DOM nodes, invoke animations, trigger likes, or modify production code.
+`docs/particle-seam-preparation-contract-harness.js` statically verifies the inline owner, exact protected boundaries, existing particle contract/harness, the two passing non-destructive proof artifacts, deterministic mock requirements, proposed adapter inputs, and zero extracted protected particle owners. It does not create DOM nodes, invoke animations, trigger likes, or modify production code.
 
 ## References
 
@@ -36,5 +37,7 @@ This is a seam-preparation checkpoint only. Before any production split, the pro
 3. [`spawn-like-particles-contract-harness.js`](./spawn-like-particles-contract-harness.js)
 4. [`high-risk-extraction-gate-contract.md`](./high-risk-extraction-gate-contract.md)
 5. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
-6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+6. [`particle-browser-proof-evidence.txt`](./particle-browser-proof-evidence.txt)
+7. [`particle-parity-rollback-evidence.txt`](./particle-parity-rollback-evidence.txt)
+8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

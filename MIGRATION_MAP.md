@@ -2514,3 +2514,7 @@ Aligned `docs/calls-webrtc-seam-preparation-contract.md` and its harness with th
 ### Voice-recording browser-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/voice-recording-seam-preparation-contract.md` and its harness with the three existing non-destructive browser-context proofs: microphone permission denial, recording start/stop, and recording failure. The harness now requires all three evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; the `toggleRecording()` owner remains inline.
+
+### Particle browser-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/particle-seam-preparation-contract.md` and its harness with the two existing non-destructive proofs: the browser particle mock and parity/rollback verification. The harness now requires both evidence files and PASS markers. These artifacts establish mock and rollback readiness only, not before/after production-split proof; `spawnLikeParticles()` remains inline.

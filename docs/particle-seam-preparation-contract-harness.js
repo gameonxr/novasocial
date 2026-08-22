@@ -15,6 +15,15 @@ function collect(dir) {
 }
 collect(srcDir);
 const extracted = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
+const proofFiles = [
+  'particle-browser-proof-evidence.txt',
+  'particle-parity-rollback-evidence.txt'
+];
+for (const file of proofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `Particle proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Particle proof must contain PASS: ${file}`);
+}
 
 const ownerStart = html.indexOf('function spawnLikeParticles(el){');
 const ownerEnd = html.indexOf('\n// Override toggleLike', ownerStart);
@@ -50,6 +59,7 @@ assert(!owner.includes('signInWithPassword'), 'particle owner must remain indepe
 console.log('PARTICLE_SEAM_PREPARATION_CONTRACT_HARNESS=PASS');
 console.log('PROTECTED_OWNER_INLINE=YES');
 console.log('DETERMINISTIC_MOCK_BOUNDARY=DOM_GEOMETRY_BODY_RANDOM_TIMER_CLEANUP');
+console.log('PROOF_ARTIFACTS=2_PASS');
 console.log('REVERSIBLE_BROWSER_PROOF=REMAINING');
 console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');
 console.log('PRODUCTION_SPLIT=0');
