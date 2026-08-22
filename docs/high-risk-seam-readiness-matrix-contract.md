@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Make protected-feature split readiness measurable while recording the single verified particle production split and preserving safeguards for the remaining systems.
+**Purpose:** Make protected-feature split readiness measurable while recording the two verified particle and deletion-fallback production splits and preserving safeguards for the remaining systems.
 
 ## Current matrix
 
@@ -12,7 +12,7 @@
 | Protected inline signatures | 17/19 unapproved signatures retained exactly once; particle and deletion-fallback are represented by approved window owners | Baseline and second split complete |
 | Protected signatures in `src/` | 2 approved owners (`spawnLikeParticles`, `syncLocalDeletionFallback`); 17 unapproved owners absent | Only the two verified owners have moved |
 | High-risk gate | Present and passing | Global guard complete |
-| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; 33 protected browser-proof mock artifacts plus particle and deletion-fallback comparison/after-split artifacts carry PASS markers | Feature-specific seam maps and deterministic mock boundaries exist; particle and deletion fallback are production-split approved, while the other 17 remain gated |
+| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; 33 protected browser-proof mock artifacts plus Push exact-owner comparison and particle/deletion-fallback comparison/after-split artifacts carry PASS markers | Feature-specific seam maps and deterministic mock boundaries exist; particle and deletion fallback are production-split approved, while the other 17 remain gated |
 | Adapter/seam contract | Account/bootstrap contract present | One cross-cutting adapter seam is documented; it is not production-extracted |
 | Adapter harness | Account/bootstrap mock harness present | Test-only proof exists for the bootstrap seam |
 | Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS | Particle is approved and complete |

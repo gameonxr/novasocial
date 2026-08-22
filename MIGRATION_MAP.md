@@ -2699,3 +2699,6 @@ Executed rollback in a detached temporary worktree from split commit `97515805ab
 
 ### Readiness-count compatibility correction — Branch2
 The newly published deletion parity/rollback artifact is `.txt`, not Markdown or a harness. Final-readiness expectations were therefore corrected back to the deterministic published totals: 259 Markdown documents, 259 harness files, 257 standard contracts, and 256 standard contract harnesses. No source or protected-owner scope changed.
+
+### Push settings seam preparation — Branch2
+Selected Push settings as the next preparation-only candidate because its two protected owners have the narrowest existing boundary and strongest mock coverage among remaining systems. Added exact-owner synthetic comparison evidence for 11 capability/permission/subscription/reset/refresh/error branches; enable hash `711adee3890de37d7bf56f2e51355447861f86f89ed550183b7f5aea7997d520`, reset hash `0bc93e5da2655a6027bc4cb01e87eacb333a46426e5f60a2b4f208a09c543a4b`, and current script counts 215/215/214. No production owner moved: both handlers remain inline, service-worker/VAPID/DB/subscription ownership remains outside the seam, and direct extraction remains blocked pending marker parity, adapter, logout-race, subscription-error, reversible-browser, rollback, and full-gate proofs.

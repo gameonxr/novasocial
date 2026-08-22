@@ -31,6 +31,11 @@ for (const file of browserProofFiles) {
   assert(fs.existsSync(evidencePath), `Push browser proof must exist: ${file}`);
   assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Push browser proof must contain PASS: ${file}`);
 }
+const comparisonEvidencePath = path.join(repo, 'docs', 'push-settings-seam-comparison-proof-evidence.txt');
+assert(fs.existsSync(comparisonEvidencePath), 'Push settings comparison evidence must exist');
+const comparisonEvidence = fs.readFileSync(comparisonEvidencePath, 'utf8');
+assert(comparisonEvidence.includes('COMPARISON_RESULT=PASS'), 'Push settings comparison evidence must pass');
+assert(comparisonEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Push settings comparison must remain side-effect safe');
 
 for (const ownerName of ['enablePushFromSettings', 'resetPushFromSettings']) {
   assert.strictEqual((html.match(new RegExp(`async function ${ownerName}\\s*\\(`, 'g')) || []).length, 1, `${ownerName} must remain exactly once inline`);
@@ -66,6 +71,7 @@ assert(!extracted.includes('VAPID_PUBLIC_KEY ='), 'seam preparation must not int
 console.log('PUSH_SEAM_PREPARATION_CONTRACT_HARNESS=PASS');
 console.log('PROTECTED_OWNERS_INLINE=ENABLE_RESET');
 console.log('BROWSER_MOCK_EVIDENCE=9_PASS');
+console.log('INLINE_COMPARISON_EVIDENCE=PASS');
 console.log('DETERMINISTIC_MOCK_BOUNDARY=CAPABILITY_PERMISSION_SUBSCRIBE_RESET_REFRESH_ERROR');
 console.log('REVERSIBLE_BROWSER_PROOF=REMAINING');
 console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');

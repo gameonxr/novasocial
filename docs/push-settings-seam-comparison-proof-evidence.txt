@@ -1,0 +1,35 @@
+NovaSocial Branch2 Push settings seam comparison evidence
+Date: 2026-08-22
+Branch: Branch2
+Scope: preparation-only comparison of the exact inline owners; no production extraction
+
+Owners and baseline parity anchors
+ENABLE_OWNER_SHA256=711adee3890de37d7bf56f2e51355447861f86f89ed550183b7f5aea7997d520
+ENABLE_OWNER_BYTES=1309
+RESET_OWNER_SHA256=0bc93e5da2655a6027bc4cb01e87eacb333a46426e5f60a2b4f208a09c543a4b
+RESET_OWNER_BYTES=591
+SCRIPT_COUNTS=215/215/214
+INLINE_OWNER_COUNT=2
+SOURCE_PUSH_OWNER_COUNT=0
+
+Synthetic comparison result: PASS
+A disposable Node VM executed the exact `enablePushFromSettings()` and `resetPushFromSettings()` inline bodies against injected mocks for capability, permission, permission request, subscription, force-resubscribe, toast, settings refresh, and console dependencies. No browser permission prompt, service-worker registration, push subscription, account state, database, VAPID key, or settings mutation was used.
+
+Scenario event-order results
+- Unsupported enable: unsupported toast; no subscription.
+- Denied enable: blocked-permission toast; no subscription.
+- Granted enable: already-enabled toast, subscribe, settings refresh.
+- Prompt granted: request, enabled toast, subscribe, settings refresh.
+- Prompt denied: request, denied toast, settings refresh.
+- Prompt dismissed: request, dismissed toast, settings refresh.
+- Permission request failure: request, failure toast, settings refresh.
+- Unsupported reset: unsupported toast; no force-resubscribe.
+- Non-granted reset: enable-first toast; no force-resubscribe.
+- Reset success: reset toast, force-resubscribe, success toast, settings refresh.
+- Reset failure: reset toast, force-resubscribe, failure toast, settings refresh.
+
+COMPARISON_RESULT=PASS
+SAFE_NO_SIDE_EFFECTS=PASS
+PRODUCTION_SPLIT=0
+DIRECT_EXTRACTION=BLOCKED_UNTIL_PROOF
+REMAINING_REQUIRED_PROOF=PROTECTED_MARKER_PARITY_ADAPTER_BOUNDARY_LOGOUT_RACE_SUBSCRIPTION_ERROR_REVERSIBLE_BROWSER_SMOKE_ROLLBACK_FULL_REGRESSION
