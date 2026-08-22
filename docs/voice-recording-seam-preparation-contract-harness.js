@@ -7,6 +7,16 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const browserProofFiles = [
+  'voice-browser-proof-evidence.txt',
+  'recording-start-stop-browser-proof-evidence.txt',
+  'recording-failure-browser-proof-evidence.txt'
+];
+for (const file of browserProofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `Voice recording browser proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Voice recording browser proof must contain PASS: ${file}`);
+}
 const requiredHtmlMarkers = [
   'async function toggleRecording(cid)',
   'mediaRecorder',
@@ -38,5 +48,6 @@ assert(html.includes('realtime'), 'Voice delivery must remain owned by the exist
 console.log('VOICE_RECORDING_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=RECORDER_CAPTURE_UPLOAD_INSERT_REALTIME_CLEANUP');
 console.log('PROTECTED_RECORDING_SIGNATURES=1');
+console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
 console.log('EXTRACTED_PROTECTED_RECORDING_SIGNATURES=0');
 console.log('PRODUCTION_SPLIT=0');

@@ -18,13 +18,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. The protected `toggleRecording()` implementation, MediaRecorder callbacks, upload/message insert path, realtime delivery, and `_segmentAudio` Notes-audio state remain inline and unchanged. The existing Voice Recording contract and harness prove behavior, but they are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof covering permission denial, start/stop, short recordings, successful upload, blocked recipients, generic failures, and track cleanup.
+This is a **mapping-only checkpoint**. The protected `toggleRecording()` implementation, MediaRecorder callbacks, upload/message insert path, realtime delivery, and `_segmentAudio` Notes-audio state remain inline and unchanged. Three non-destructive browser-context mock artifacts now cover permission denial, recording start/stop, and recording failure. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, covering short recordings, successful upload, blocked recipients, generic failures, and track cleanup.
 
 The first implementation step must be test-only or adapter-only and must preserve the inline `toggleRecording()` owner until the complete seam harness passes. No WebSocket upload owner was inferred from the current DM recorder implementation; any future socket-based transport must be documented separately rather than introduced speculatively.
 
 ## Harness coverage
 
-`docs/voice-recording-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm the recorder state, MediaRecorder, permission, upload, insert, cleanup, realtime, and `_segmentAudio` markers, the existing Voice Recording behavior contract/harness, and zero `toggleRecording()` production splits. It does not access a microphone, construct a MediaRecorder, upload media, insert messages, or mutate account data.
+`docs/voice-recording-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm the recorder state, MediaRecorder, permission, upload, insert, cleanup, realtime, and `_segmentAudio` markers, the existing Voice Recording behavior contract/harness, the three passing non-destructive browser mock artifacts, and zero `toggleRecording()` production splits. It does not access a microphone, construct a MediaRecorder, upload media, insert messages, or mutate account data.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -33,6 +33,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Upload path | Audio upload and `.throwOnError()` boundary remain protected | PASS |
 | Cleanup/errors | Minimum-size, track-stop, and failure paths remain documented | PASS |
 | Cross-feature state | `_segmentAudio` remains separate from DM recorder state | PASS |
+| Browser mock inventory | Permission-denied, start/stop, and recording-failure artifacts are present with PASS markers | PASS |
 | Production split | None | PASS |
 
 ## References
@@ -41,5 +42,8 @@ The first implementation step must be test-only or adapter-only and must preserv
 2. [`voice-recording-contract-harness.js`](./voice-recording-contract-harness.js)
 3. [`visibility-audio-lifecycle-contract.md`](./visibility-audio-lifecycle-contract.md)
 4. [`index.html`](../index.html)
-5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+5. [`voice-browser-proof-evidence.txt`](./voice-browser-proof-evidence.txt)
+6. [`recording-start-stop-browser-proof-evidence.txt`](./recording-start-stop-browser-proof-evidence.txt)
+7. [`recording-failure-browser-proof-evidence.txt`](./recording-failure-browser-proof-evidence.txt)
+8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
