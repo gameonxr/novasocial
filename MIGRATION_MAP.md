@@ -3002,3 +3002,6 @@ Updated the storage-key-surface harness from 216 to 217 audited files after addi
 
 ### Story editor Stories-seam compatibility correction — Branch2
 Updated the Stories seam-preparation harness so the completed `renderStoryElements()` owner is validated in `story-editor-owners.js` rather than required inline. Story viewer, poll, persistence, and publishing markers remain protected inline.
+
+### Story editor window-assignment audit correction — Branch2
+Updated the window-assignment surface harness to 217 audited files and 198 explicit assignments for the seven approved protected owners, including the Story renderer and Note viewer owners.
