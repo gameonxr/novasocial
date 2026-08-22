@@ -1,0 +1,9 @@
+STORY_EDITOR_ROLLBACK_EVIDENCE=PASS
+BRANCH=Branch2
+PROOF_MODE=detached textual rollback plan; no production rollback applied
+ORIGINAL_OWNER=function renderStoryElements(){ inline index.html slice 2745-2885 before extraction
+EXTRACTED_OWNER=src/features/story-editor-owners.js window.renderStoryElements
+ROLLBACK_STEPS=remove story-editor-owners.js; remove its script tag; restore original inline renderStoryElements slice at the marker before showDeleteZone
+SEAM_ASSERTION=single window.renderStoryElements assignment and zero inline function declaration after split
+SIDE_EFFECTS=none; no authentication, storage, media, network, publish, or account mutation
+PARITY_ASSERTIONS=container clear; one child per element; stable data-id; text content; dblclick wiring
