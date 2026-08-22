@@ -43,7 +43,7 @@ assert.strictEqual(html.split('src/features/spawn-like-particles.js').length - 1
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'particle module must load before global caller');
 assert(source.includes('spawnLikeParticles(el);'), 'global caller handoff must remain present');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'function renderStoryElements()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(' || signature === 'function removeMyNoteFromViewer(' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected inline signature count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected named signature must not be duplicated in src: ${signature}`);
 }
@@ -77,4 +77,4 @@ console.log('BEFORE_AFTER_STATIC_PARITY=PASS');
 console.log('CANONICAL_OWNER_HASH=PASS');
 console.log('PRODUCTION_BROWSER_SMOKE=PASS');
 console.log('ROLLBACK_COMMIT_RELATIONSHIP=PASS');
-console.log('PROTECTED_SPLITS=4_OF_19');
+console.log('PROTECTED_SPLITS=8_OF_19');
