@@ -2849,3 +2849,6 @@ The full gate observed 216 audited files after adding the Note owner module, whi
 
 ### Note viewer local-asset compatibility correction — Branch2
 The full gate observed 236 unique static local asset references after adding the Note owner script, while the asset harness expected 235. Updated only that deterministic total; missing-reference, manifest, and service-worker checks remain unchanged.
+
+### Note viewer module-reference compatibility correction — Branch2
+The full gate observed 215 referenced extracted modules after adding `note-viewer-owners.js`, while the module-reference harness expected 214. Updated only that deterministic count and the required trailing order to include the Note module before `like-effects.js`; missing/duplicate reference checks remain unchanged.
