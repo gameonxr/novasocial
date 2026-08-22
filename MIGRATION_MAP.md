@@ -2789,3 +2789,9 @@ Prepared a deterministic synthetic adapter parity proof for the protected `viewN
 
 ### Note viewer browser-context preparation checkpoint — Branch2
 Established a production-preview smoke at the login gate. `viewNote` and `removeMyNoteFromViewer` remained globally available inline, no dedicated Note owner module was loaded, and zero real actions were invoked. Existing `close-note-viewer.js` remains an allowed helper. Browser proof passed with no credentials, Note, reaction, reply, audio, Supabase, media, storage, or account action. Production split remains blocked (`PRODUCTION_SPLIT=0`); exact owner hashes and detached rollback proof remain required.
+
+### Note viewer owner-hash preparation checkpoint — Branch2
+Captured and published canonical inline baselines: `viewNote` SHA-256 `3ed4f0ff20d49cb880cd71cfa2ebdd2707a86c10121e27987055281e509d4a1c` (6467 bytes) and `removeMyNoteFromViewer` SHA-256 `fc206f7ffd03ccfb2d632d69d2b80a3a13107a2988b5fbd8c1a576e2e2b909b9` (729 bytes). The Note harness now requires these baselines plus seam and browser PASS evidence. Production split remains zero; rollback proof is still required.
+
+### Note viewer hash-evidence label correction — Branch2
+The Note preparation harness correctly found both baseline hashes but required owner-prefixed marker labels. Added `viewNote_SHA256` and `removeMyNoteFromViewer_SHA256` aliases for deterministic evidence matching; hash values and production split state remain unchanged.

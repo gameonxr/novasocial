@@ -7,12 +7,16 @@ function assert(condition, message) {
 
 const evidence = fs.readFileSync(path.join(__dirname, 'note-viewer-seam-comparison-proof-evidence.txt'), 'utf8');
 const browserEvidence = fs.readFileSync(path.join(__dirname, 'note-viewer-browser-proof-evidence.txt'), 'utf8');
+const hashEvidence = fs.readFileSync(path.join(__dirname, 'note-viewer-owner-hash-baseline.txt'), 'utf8');
 assert(evidence.includes('NOTE_VIEWER_ADAPTER_PARITY=PASS'), 'Note adapter parity evidence must pass');
 assert(browserEvidence.includes('LOGIN_GATE_VISIBLE=PASS'), 'Note browser login-gate evidence must pass');
 assert(browserEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note browser proof must remain side-effect safe');
 assert(browserEvidence.includes('PRODUCTION_SPLIT=0'), 'Note browser proof must remain preparation-only');
 assert(evidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note proof must remain side-effect safe');
 assert(evidence.includes('PRODUCTION_SPLIT=0'), 'Note production split must remain blocked');
+assert(hashEvidence.includes('viewNote_SHA256=3ed4f0ff20d49cb880cd71cfa2ebdd2707a86c10121e27987055281e509d4a1c'), 'viewNote baseline hash must remain recorded');
+assert(hashEvidence.includes('removeMyNoteFromViewer_SHA256=fc206f7ffd03ccfb2d632d69d2b80a3a13107a2988b5fbd8c1a576e2e2b909b9'), 'removeMyNoteFromViewer baseline hash must remain recorded');
+assert(hashEvidence.includes('PREPARATION_ONLY=PASS'), 'Note hash evidence must remain preparation-only');
 
 async function mockViewNote({ note, currentUserId = 'me', viewCount = 0, reaction = null }) {
   const events = [];
