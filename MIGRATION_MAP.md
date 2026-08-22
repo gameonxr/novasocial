@@ -2906,3 +2906,6 @@ The final readiness gate observed 205 feature modules after publishing `story-ed
 
 ### Story editor HTML inventory correction — Branch2
 The final readiness gate measured 218 total script tags and 217 external tags after loading the Story owner (including the existing CDN script). Updated the readiness harness and contract from the prior 217/216 baseline; script balance and inline application boundary remain intact.
+
+### Story editor approved-marker gate correction — Branch2
+Updated final-readiness marker accounting so the extracted `renderStoryElements()` signature is treated as the seventh approved protected owner and is required to be absent from inline HTML, matching the high-risk and seam harnesses.
