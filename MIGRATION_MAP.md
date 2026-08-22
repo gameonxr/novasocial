@@ -2927,3 +2927,6 @@ Updated the shared deletion-fallback production harness so the extracted `render
 
 ### Story editor listener-inventory correction — Branch2
 The extracted renderer contributes six listener registrations, so the event-listener boundary harness now expects 74 extracted-module registrations instead of the pre-Story 68 baseline. Inline and service-worker listener assertions remain unchanged.
+
+### Story editor inline-listener balance correction — Branch2
+Moving six renderer listeners out of `index.html` reduced inline `addEventListener` occurrences from 34 to 28 while increasing extracted registrations to 74. Updated the event-listener contract and harness; cleanup and service-worker counts remain unchanged.

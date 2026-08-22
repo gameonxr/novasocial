@@ -17,8 +17,8 @@ The contract is intentionally observational. It protects against an accidental b
 
 | Surface | Expected registration count | Cleanup registrations | Result |
 |---|---:|---:|---|
-| Extracted `src/**/*.js` | 68 `addEventListener` occurrences | 0 `removeEventListener` occurrences | PASS |
-| `index.html` | 34 `addEventListener` occurrences | 0 `removeEventListener` occurrences | PASS |
+| Extracted `src/**/*.js` | 74 `addEventListener` occurrences after Story editor split | 0 `removeEventListener` occurrences | PASS |
+| `index.html` | 28 `addEventListener` occurrences after Story editor split | 0 `removeEventListener` occurrences | PASS |
 | `sw.js` | 5 `addEventListener` occurrences | Not applicable | PASS |
 
 ## Safe boundary
