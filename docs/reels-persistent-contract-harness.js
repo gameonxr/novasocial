@@ -54,6 +54,33 @@ function mockVideoWindow({ currentIndex, videos }) {
   return { events, result };
 }
 
+function createInjectedReelsSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    parkReels(input) {
+      calls.push('park');
+      return deps.parkReels(input);
+    },
+    restoreReels(input) {
+      calls.push('restore');
+      return deps.restoreReels(input);
+    },
+    applyVideoWindow(input) {
+      calls.push('window');
+      return deps.applyVideoWindow(input);
+    },
+    settleTouch(input) {
+      calls.push('settle');
+      return deps.settleTouch(input);
+    },
+    resumeVideo(input) {
+      calls.push('resume');
+      return deps.resumeVideo(input);
+    },
+  };
+}
+
 function mockTouchSettle({ currentIndex, reelCount, isSettling, newIndex }) {
   const events = [];
   const pct = reelCount > 0 ? 100 / reelCount : 0;
@@ -109,5 +136,22 @@ function mockTouchSettle({ currentIndex, reelCount, isSettling, newIndex }) {
   assert(settle.transition.includes('0.24s cubic-bezier(0.22, 1, 0.36, 1)'), 'Swipe settle easing and duration must remain unchanged');
   assert(settle.isSettling === true, 'Swipe must mark settle animation in flight');
 
-  console.log(JSON.stringify({ passed: true, parked, restored, windowed, settle }, null, 2));
+  const seam = createInjectedReelsSeam({
+    parkReels: mockParkReels,
+    restoreReels: mockRestoreReels,
+    applyVideoWindow: mockVideoWindow,
+    settleTouch: mockTouchSettle,
+    resumeVideo: ({ id, muted }) => ({ events: [`resume:${id}:${muted}`], resumed: true }),
+  });
+  const injectedPark = seam.parkReels({ savedIndex: 2 });
+  const injectedRestore = seam.restoreReels({ savedIndex: 2, reelCount: 5 });
+  const injectedWindow = seam.applyVideoWindow({ currentIndex: 2, videos });
+  const injectedSettle = seam.settleTouch({ currentIndex: 2, reelCount: 5, isSettling: true, newIndex: 3 });
+  const injectedResume = seam.resumeVideo({ id: 'rv-2', muted: true });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['park', 'restore', 'window', 'settle', 'resume']), 'Injected Reels seam must dispatch dependencies in explicit ownership order');
+  assert(injectedPark.savedReelIndex === 2 && injectedRestore.inner.transform === 'translateY(-40%)', 'Injected park/restore dependencies must preserve state invariants');
+  assert(injectedWindow.result.find(v => v.index === 6).src === '', 'Injected window dependency must preserve source release');
+  assert(injectedSettle.isSettling === true && injectedResume.resumed === true, 'Injected settle/resume dependencies must preserve lifecycle outcomes');
+
+  console.log(JSON.stringify({ passed: true, parked, restored, windowed, settle, seam: { calls: seam.calls, injectedResume } }, null, 2));
 })();

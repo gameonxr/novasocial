@@ -3110,3 +3110,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Reels as the next protected candidate through test-only preparation; `renderReels()` and `_applyReelsVideoWindowing()` remain inline and no production owner was moved.
 - Added an exact owner-body comparison against `origin/main`; persistent DOM, saved-position, live-count transform, current−1 through current+3 media window, swipe settling, playback, and navigation invariants remain covered.
 - `docs/reels-seam-preparation-contract-harness.js` passed with `OWNER_NO_DRIFT=PASS`, `EXTRACTED_REELS_SIGNATURES=0`, and `PRODUCTION_SPLIT=0`. Reels production extraction remains blocked until its independent adapter seam, before/after browser proof, rollback evidence, and clean full gate are complete.
+
+## 2026-08-22 — Reels test-only injected seam proof
+- Extended the deterministic Reels persistent harness with an injected dispatcher for park, restore, media-window application, swipe settling, and video resume dependencies.
+- Verified explicit dispatch order and preserved state, source-release, settling, and resume outcomes using mocks only; no runtime adapter, `index.html` script tag, or `window` owner was added.
+- Updated `docs/reels-persistent-contract.md` to record the test-only boundary. Reels production extraction remains blocked; the proof passed with `INJECTED_SEAM_DISPATCH=PASS` and `PRODUCTION_CODE_TOUCHED=0`.

@@ -30,8 +30,9 @@ Swipe handlers calculate the reel percentage dynamically from the live `#rinner`
 | Dynamic swipe math | Use live reel count for percentage | PASS |
 | Overlapping swipe | Force-complete prior settle before new drag | PASS |
 | Settle animation | Preserve duration/easing and in-flight settle state | PASS |
+| Injected seam dispatch | Park, restore, window, settle, and resume dependencies dispatch in explicit order | PASS |
 
-The harness is deterministic and uses mocked objects/events only. It does not invoke real DOM, video, browser animation, media playback, authentication, or navigation behavior.
+The harness is deterministic and uses mocked objects/events only. It does not invoke real DOM, video, browser animation, media playback, authentication, or navigation behavior. Its injected seam dispatcher is test-only: it demonstrates dependency ownership and ordering without being loaded by `index.html` or assigning any runtime `window` owner.
 
 ## Safe boundary
 
