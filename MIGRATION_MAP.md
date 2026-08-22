@@ -2936,3 +2936,6 @@ Updated the high-risk seam-readiness matrix harness to account for 216 source Ja
 
 ### Story editor remaining-system gate-output correction — Branch2
 Updated the seam-readiness matrix harness to recognize the high-risk gate’s current explicit status, `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_12_PROTECTED_SYSTEMS`, after the seventh approved owner split.
+
+### Story editor index-tag integrity correction — Branch2
+Updated the index HTML tag-integrity harness to the post-Story totals: 218 total script tags, 218 closing tags, and 217 external tags with one inline application script.
