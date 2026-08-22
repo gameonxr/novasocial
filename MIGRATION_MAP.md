@@ -2855,3 +2855,6 @@ The full gate observed 215 referenced extracted modules after adding `note-viewe
 
 ### Note viewer seam-harness compatibility correction — Branch2
 The full gate found the Notes seam-preparation harness still required `viewNote` and `removeMyNoteFromViewer` inline and reported zero extracted protected Notes signatures. Updated only those checks to the approved `note-viewer-owners.js` window assignments and completed status; `submitNote` and `deleteMyNote` remain inline and gated.
+
+### Note viewer object-URL audit compatibility correction — Branch2
+The full gate observed 216 audited files after adding the Note owner module, while object-URL lifecycle expected 215. Updated only that deterministic count; object-URL creation, revocation, download cleanup, compression cleanup, and preview ownership invariants remain unchanged.
