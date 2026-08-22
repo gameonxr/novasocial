@@ -2684,3 +2684,6 @@ Updated `object-url-lifecycle-contract-harness.js` from 213 to 214 audited files
 
 ### Deletion-fallback realtime audit-count correction — Branch2
 Updated `realtime-subscription-lifecycle-contract-harness.js` from 213 to 214 audited files so its realtime scan includes the new deletion-fallback module. Channel registrations, cleanup calls, subscription chains, and PushManager separation remain unchanged.
+
+### Deletion-fallback source-boundary inventory correction — Branch2
+Updated `source-boundary-hygiene-contract-harness.js` from 230 to 231 JS/CSS files so its hygiene scan includes the new deletion-fallback module. UTF-8 roundtrip, NUL-byte, CRLF, and embedded script/style boundary checks remain unchanged.
