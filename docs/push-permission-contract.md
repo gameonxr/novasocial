@@ -13,11 +13,11 @@ When the user explicitly requests permission, a granted result produces the enab
 
 ## Mock harness result
 
-`/tmp/push_permission_contract_harness.js` validates unsupported, granted, denied, dismissed, logged-out, and promptable states plus granted/denied permission-request outcomes. The deterministic harness passed without invoking real Notification, Service Worker, PushManager, subscription, database, or account APIs.
+`/tmp/push_permission_contract_harness.js` validates unsupported, granted, denied, dismissed, logged-out, and promptable states plus granted/denied permission-request outcomes. The deterministic harness passed without invoking real Notification, Service Worker, PushManager, subscription, database, or account APIs. Its injected evaluator/request seam is test-only and is not loaded by `index.html`; production permission and subscription owners remain inline.
 
 ## Safe boundary
 
-The protected `enablePushFromSettings` and `resetPushFromSettings` handlers remain inline. No Push subscription mutation, service-worker code, auth lifecycle, or production permission behavior was moved or rewritten. A future Push refactor requires permission-state, subscription-error, service-worker, and logout-race tests before implementation changes.
+The protected `maybeShowPushPermissionBanner()` and `silentPushResubscribeIfGranted()` owners, along with the `enablePushFromSettings` and `resetPushFromSettings` handlers, remain inline. No Push subscription mutation, service-worker code, auth lifecycle, or production permission behavior was moved or rewritten. A future Push refactor requires permission-state, subscription-error, service-worker, and logout-race tests before implementation changes.
 
 ## References
 

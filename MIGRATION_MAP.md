@@ -3135,3 +3135,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Story poll preparation with an injected dispatcher around mocked vote, result-refresh, and prior-state-load dependencies; `voteStoryPoll()`, `refreshPollResults()`, and `loadStoryPollState()` remain inline.
 - Verified explicit vote/results/state-load dispatch order, single and multi-vote state, best-effort persistence, valid-index counting, fallback results, prior-state restoration, and silent failure behavior using mocks only.
 - Updated `docs/story-poll-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live poll action was performed, and Story poll production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Push permission test-only injected seam proof
+- Advanced Push permission preparation with an injected dispatcher around mocked capability/permission evaluation and permission-request handling; `maybeShowPushPermissionBanner()`, `silentPushResubscribeIfGranted()`, `enablePushFromSettings()`, and `resetPushFromSettings()` remain inline.
+- Verified explicit evaluator/request dispatch order, unsupported/granted/denied/dismissed/logged-out guards, subscription delegation, enabled/defer feedback, and banner removal using mocks only.
+- Updated `docs/push-permission-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no browser permission or subscription action was performed, and Push permission production extraction remains blocked pending independent browser proof and rollback gates.

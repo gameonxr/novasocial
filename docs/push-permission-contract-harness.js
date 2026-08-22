@@ -5,6 +5,21 @@ function evaluatePushState({ supported, permission, dismissed, mePresent }) {
   return { banner, resubscribe, reason: banner ? 'promptable' : resubscribe ? 'granted' : permission };
 }
 
+function createInjectedPushPermissionSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    evaluate(input) {
+      calls.push('evaluate');
+      return deps.evaluate(input);
+    },
+    request(input) {
+      calls.push('request');
+      return deps.request(input);
+    },
+  };
+}
+
 async function mockedPermissionRequest(permissionResult) {
   const events = ['permission.request'];
   if (permissionResult === 'granted') {
@@ -39,5 +54,15 @@ if (!defaultPromptable.banner || defaultPromptable.resubscribe) throw new Error(
   if (JSON.stringify(deniedRequest) !== JSON.stringify(['permission.request','toast.defer','banner.remove'])) {
     throw new Error('Denied request contract mismatch');
   }
-  console.log(JSON.stringify({ passed: true, states: { unsupported, granted, denied, dismissed, loggedOutBeforeDelay, defaultPromptable }, grantedRequest, deniedRequest }, null, 2));
+
+  const seam = createInjectedPushPermissionSeam({ evaluate: evaluatePushState, request: mockedPermissionRequest });
+  const injectedState = seam.evaluate({ supported: true, permission: 'granted', dismissed: false, mePresent: true });
+  const injectedRequest = await seam.request('granted');
+  if (JSON.stringify(seam.calls) !== JSON.stringify(['evaluate', 'request'])) {
+    throw new Error('Injected Push permission seam dispatch mismatch');
+  }
+  if (!injectedState.resubscribe || !injectedRequest.includes('push.subscribe') || !injectedRequest.includes('banner.remove')) {
+    throw new Error('Injected Push permission seam outcome mismatch');
+  }
+  console.log(JSON.stringify({ passed: true, states: { unsupported, granted, denied, dismissed, loggedOutBeforeDelay, defaultPromptable }, grantedRequest, deniedRequest, seam: { calls: seam.calls, injectedState, injectedRequest } }, null, 2));
 })();
