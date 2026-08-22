@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
 **Date:** 2026-08-18
-**Purpose:** Record the protected Note viewer and own-note removal invariants as a standalone contract before any future refactor.
+**Purpose:** Record the protected Note viewer, own-note removal, and Note deletion invariants across the completed Branch2 extraction boundaries.
 
 ## Contract
 
@@ -32,11 +32,11 @@ The harness is deterministic and uses mocked Note/state events only. The prepara
 
 ## Safe boundary
 
-The protected `viewNote()` and `removeMyNoteFromViewer()` owners are now assigned anonymously to `window` in `src/features/note-viewer-owners.js`, preserving HTML `onclick` compatibility. Note viewer controls and database/media-deletion behavior remain unchanged; `deleteMediaProduction()` remains outside this split as a negative boundary.
+The protected `viewNote()` and `removeMyNoteFromViewer()` owners remain assigned anonymously to `window` in `src/features/note-viewer-owners.js`, and `deleteMyNote()` is assigned anonymously to `window` in `src/features/note-deletion-owner.js`, preserving HTML `onclick` compatibility. Note viewer controls and database/media-deletion behavior remain unchanged; `deleteMediaProduction()` remains outside the owner split as a negative boundary.
 
 ## Validation
 
-The standalone harness passed before and after extraction. The complete repository validation chain also passed after the controlled split, including JavaScript syntax checks, HTML/script integration checks, protected-function markers, script load order, browser-context proof, detached rollback proof, whitespace checks, Branch2 verification, and confirmation that `origin/main` remained unchanged.
+The standalone harnesses passed before and after extraction. The complete repository validation chain passed after the controlled splits, including JavaScript syntax checks, HTML/script integration checks, protected-function markers, script load order, synthetic browser-context proof, detached rollback proof, whitespace checks, Branch2 verification, and confirmation that `origin/main` remained unchanged.
 
 ## References
 
@@ -45,4 +45,6 @@ The standalone harness passed before and after extraction. The complete reposito
 3. [`note-viewer-seam-comparison-proof-evidence.txt`](./note-viewer-seam-comparison-proof-evidence.txt)
 4. [`note-viewer-after-split-browser-proof-evidence.txt`](./note-viewer-after-split-browser-proof-evidence.txt)
 5. [`note-viewer-parity-rollback-evidence.txt`](./note-viewer-parity-rollback-evidence.txt)
-6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+6. [`note-deletion-browser-parity-harness.js`](./note-deletion-browser-parity-harness.js)
+7. [`note-deletion-parity-rollback-evidence.txt`](./note-deletion-parity-rollback-evidence.txt)
+8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

@@ -3019,3 +3019,14 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - No messages, likes, comments, follows, uploads, downloads, account switches, or storage mutations were performed.
 - Corrected stale emitted labels in `docs/high-risk-seam-readiness-matrix-contract-harness.js` to report seven approved protected signatures, Story editor browser-proof coverage, 12 remaining protected systems, and the current blocked direct-extraction state.
 - Focused readiness matrix harness: PASS; `git diff --check`: PASS.
+
+## 2026-08-22 — Note deletion owner split
+
+- Extracted the protected inline `deleteMyNote()` owner from `index.html` into `src/features/note-deletion-owner.js`.
+- Preserved HTML-handler compatibility through exactly one anonymous `window.deleteMyNote` assignment.
+- Added the ordered classic script after `note-viewer-owners.js` and before `story-editor-owners.js`.
+- Added synthetic success/failure parity proof in `docs/note-deletion-browser-parity-harness.js`; database and media operations are mocked only.
+- Added detached rollback evidence in `docs/note-deletion-parity-rollback-evidence.txt`.
+- Updated the Note contract and Notes seam harness to recognize three approved external Note owners while retaining submission, reactions, audio, and cleanup boundaries.
+- Focused syntax, Notes seam, Note behavior, parity, and whitespace checks: PASS.
+- Post-change authenticated browser shell reload: PASS; no real Note deletion, media cleanup, account, message, like, comment, follow, upload, or storage action was performed.

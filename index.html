@@ -10720,24 +10720,6 @@ async function submitNote(){
   }catch(e){ console.log('%c[NOTE] CAUGHT ERROR:', 'color:red;font-weight:bold', e); toast('Failed: '+e.message); }
 }
 
-async function deleteMyNote(){
-  if(!_myActiveNote) return;
-  try {
-    // Capture music_artwork URL before delete (agar koi cached hai)
-    const oldArtwork = _myActiveNote.music_artwork || null;
-    await db.from('quick_notes').delete().eq('id', _myActiveNote.id);
-    // Cleanup music artwork if it was a Cloudinary-hosted asset (rare but possible)
-    if(oldArtwork && oldArtwork.includes('cloudinary.com')) {
-      await deleteMediaProduction(oldArtwork, 'note', 'user_delete');
-    }
-    toast('Note removed');
-  } catch(e) {
-    console.error('Note delete error:', e);
-    toast('❌ Note delete failed');
-  }
-  closeModal();
-  loadNotesBar();
-}
 
 // 📝 Premium full-screen Note Viewer with inline reply
 
@@ -10845,6 +10827,7 @@ async function checkUserActiveNote(userId){
 <script src="src/features/sync-local-deletion-fallback.js"></script>
 <script src="src/features/push-settings.js"></script>
 <script src="src/features/note-viewer-owners.js"></script>
+<script src="src/features/note-deletion-owner.js"></script>
 <script src="src/features/story-editor-owners.js"></script>
 <script src="src/features/like-effects.js"></script>
 </body>

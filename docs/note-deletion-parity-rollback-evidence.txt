@@ -1,0 +1,8 @@
+NOTE_DELETION_ROLLBACK_EVIDENCE=PASS
+
+Split target: inline `async function deleteMyNote(){...}` in `index.html`.
+External owner: `src/features/note-deletion-owner.js` assigned through `window.deleteMyNote`.
+Rollback procedure: restore the exact pre-split `deleteMyNote()` declaration at its original Note section boundary, remove the single `src/features/note-deletion-owner.js` script tag, and remove the external module file. No database, media, account, or browser state is required.
+Detached checks: the pre-split declaration is uniquely identified; the post-split declaration is absent from `index.html`; the external owner occurs exactly once; the script tag occurs exactly once and after `note-viewer-owners.js`; the synthetic success/failure parity harness passes.
+
+No real Note deletion, Cloudinary cleanup, Supabase mutation, or account action was performed.
