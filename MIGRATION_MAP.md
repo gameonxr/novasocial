@@ -2774,3 +2774,6 @@ The full gate found the reversible-browser-proof harness still encoded the two-s
 
 ### Push settings reversible-owner compatibility correction — Branch2
 The reversible-proof harness still expected Push owners inline and reported proof status as remaining. Updated only its approved-owner inline counts, Push window-assignment checks, and summary to the verified 4/19 state; remaining protected systems stay blocked.
+
+### Push settings source-boundary compatibility correction — Branch2
+The full gate observed 232 extracted JavaScript/CSS files after adding `push-settings.js`, while the source-boundary harness expected 231. Updated only that deterministic aggregate count; encoding, CRLF, NUL-byte, and embedded-boundary protections remain unchanged.
