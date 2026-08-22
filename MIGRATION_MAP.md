@@ -2720,3 +2720,6 @@ Published Push settings production contract, after-split browser evidence, parit
 
 ### Push settings function-inventory compatibility correction — Branch2
 The post-split collision audit deterministically reports 715 top-level function names rather than the prior 717 because the two named Push settings declarations are now anonymous `window` assignments. Updated only the collision harness expectation and description; duplicate-name, lexical, listener, and protected-boundary checks remain unchanged.
+
+### Push settings loading-order compatibility correction — Branch2
+The dependency-loading audit initially retained the prior two-split five-script expectation. Updated it to the actual post-Push tail `nova-init → spawn-like-particles → sync-local-deletion-fallback → push-settings → like-effects`; no runtime order was changed.
