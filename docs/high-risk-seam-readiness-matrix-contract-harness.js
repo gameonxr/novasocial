@@ -60,7 +60,7 @@ assert(matrix.includes('Note viewer candidate | SPLIT_COMPLETE'), 'matrix must r
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-contract.md')), 'Note viewer contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-proof-evidence.txt')), 'Note after-split browser proof must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
-assert(matrix.includes('browser proof remains outstanding for 13 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('browser proof remains outstanding for 12 unapproved systems'), 'matrix must record remaining browser proof');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-contract.md')), 'account/bootstrap seam contract must remain present');

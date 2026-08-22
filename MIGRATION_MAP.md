@@ -2972,3 +2972,6 @@ Updated protected-split acceptance to record seven of 19 signatures moved, appro
 
 ### Story editor readiness-matrix documentation correction — Branch2
 Synchronized the high-risk readiness matrix from the Note-only checkpoint to the published Story editor checkpoint: seven approved owners, 12 remaining protected systems, Story browser/rollback evidence, and the `renderStoryElements` global handoff.
+
+### Story editor remaining browser-proof count correction — Branch2
+Updated the seam-readiness matrix harness to expect browser proof outstanding for 12 unapproved systems after the Story editor split, matching the synchronized matrix and high-risk gate.
