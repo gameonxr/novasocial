@@ -2597,3 +2597,6 @@ Updated `cross-module-lexical-collision-contract-harness.js` from 212 to 213 aud
 
 ### Particle split dependency-order correction — Branch2
 Updated `dependency-loading-order-contract-harness.js` so its final-tail assertion reflects the intentional post-split order: `nova-init.js`, `spawn-like-particles.js`, then `like-effects.js`. Core/component ordering, classic-script attributes, stylesheet count, and CDN-first loading remain unchanged.
+
+### Particle split event-listener audit-count correction — Branch2
+Updated `event-listener-boundary-contract-harness.js` from 211 to 212 extracted JavaScript modules so its listener audit includes the new particle module. The audited add/remove listener totals and service-worker listener inventory remain unchanged.
