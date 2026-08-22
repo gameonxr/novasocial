@@ -2867,3 +2867,6 @@ The full gate found the high-risk extraction contract still described three appr
 
 ### Note viewer Push-contract compatibility correction — Branch2
 The full gate found the Push production harness still expected 216/216/215 scripts and four approved splits after the Note module was added. Updated only those shared totals to 217/217/216 and six approved signatures; Push hashes, boundaries, browser proof, and rollback checks remain unchanged.
+
+### Note viewer realtime-audit compatibility correction — Branch2
+The full gate observed 216 audited files after adding the Note owner module, while realtime subscription lifecycle expected 215. Updated only that deterministic count; all ten channels, subscribe chains, managed slots, cleanup calls, and distinct PushManager handling remain unchanged.
