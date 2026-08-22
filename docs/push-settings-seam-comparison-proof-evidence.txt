@@ -23,6 +23,7 @@ Scenario event-order results
 - Prompt denied: request, denied toast, settings refresh.
 - Prompt dismissed: request, dismissed toast, settings refresh.
 - Permission request failure: request, failure toast, settings refresh.
+- Granted enable with delegated subscription failure: already-enabled toast, subscribe rejection, no settings refresh; the owner does not swallow the existing helper error.
 - Unsupported reset: unsupported toast; no force-resubscribe.
 - Non-granted reset: enable-first toast; no force-resubscribe.
 - Reset success: reset toast, force-resubscribe, success toast, settings refresh.
