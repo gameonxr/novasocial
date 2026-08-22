@@ -3048,3 +3048,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Updated final-readiness documentation accounting to include the committed `docs/browser-smoke-baseline-2026-08-22.md` record.
 - Current documentation inventory is 262 Markdown files, with the browser smoke record explicitly listed as a non-contract document exception.
+
+## 2026-08-22 — Note deletion classic-script inventory correction
+
+- Synchronized `docs/classic-script-compatibility-contract-harness.js` to the post-Note-deletion inventory of 219 classic script tags and 217 extracted JavaScript files.
+- No module syntax, async/defer attributes, or runtime ordering were changed.
