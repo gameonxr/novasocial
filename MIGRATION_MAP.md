@@ -2759,3 +2759,9 @@ The full gate found the protected parity harness still expected Push declaration
 
 ### Push settings protected-acceptance compatibility correction — Branch2
 The full gate found the protected-split acceptance harness still encoded the two-split/17-remaining state. Updated only its matrix/gate wording, approved-owner set, Push module checks, and summary to the verified 4/19 state; all 15 unapproved protected systems remain blocked.
+
+### Push settings seam-harness completion correction — Branch2
+The full gate found the Push seam-preparation harness still asserted inline ownership and production split zero. Updated only its owner, evidence, and status assertions to the verified completed split: 11 PASS artifacts, window-assigned owners, after-split parity PASS, rollback PASS, and production split complete for Push settings only.
+
+### Push settings seam-marker compatibility correction — Branch2
+The Push seam harness found `showSettingsNotifications()` had moved correctly with the extracted owner, but the marker loop searched HTML only. Updated only the marker surface to combine HTML and `push-settings.js`; production ownership and all side-effect guards remain unchanged.

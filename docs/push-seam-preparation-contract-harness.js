@@ -24,7 +24,9 @@ const browserProofFiles = [
   'push-default-dismissed-browser-proof-evidence.txt',
   'push-request-failure-browser-proof-evidence.txt',
   'push-reset-failure-browser-proof-evidence.txt',
-  'push-reset-success-browser-proof-evidence.txt'
+  'push-reset-success-browser-proof-evidence.txt',
+  'push-settings-after-split-browser-proof-evidence.txt',
+  'push-settings-parity-rollback-evidence.txt'
 ];
 for (const file of browserProofFiles) {
   const evidencePath = path.join(repo, 'docs', file);
@@ -34,6 +36,8 @@ for (const file of browserProofFiles) {
 const comparisonEvidencePath = path.join(repo, 'docs', 'push-settings-seam-comparison-proof-evidence.txt');
 assert(fs.existsSync(comparisonEvidencePath), 'Push settings comparison evidence must exist');
 const comparisonEvidence = fs.readFileSync(comparisonEvidencePath, 'utf8');
+const productionEvidence = fs.readFileSync(path.join(repo, 'docs', 'push-settings-parity-rollback-evidence.txt'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 assert(comparisonEvidence.includes('COMPARISON_RESULT=PASS'), 'Push settings comparison evidence must pass');
 assert(comparisonEvidence.includes('ADAPTER_PARITY=PASS'), 'Push settings adapter parity evidence must pass');
 assert(comparisonEvidence.includes('BROWSER_CONTEXT_SMOKE=PASS'), 'Push browser-context smoke must pass');
@@ -42,10 +46,14 @@ assert(comparisonEvidence.includes('GLOBAL_OWNER_AVAILABILITY=PASS'), 'Push brow
 assert(comparisonEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Push settings comparison must remain side-effect safe');
 
 for (const ownerName of ['enablePushFromSettings', 'resetPushFromSettings']) {
-  assert.strictEqual((html.match(new RegExp(`async function ${ownerName}\\s*\\(`, 'g')) || []).length, 1, `${ownerName} must remain exactly once inline`);
-  assert(!new RegExp(`(?:async\\s+)?function\\s+${ownerName}\\s*\\(`).test(extracted), `${ownerName} must not be extracted into src`);
+  assert.strictEqual((html.match(new RegExp(`async function ${ownerName}\\s*\\(`, 'g')) || []).length, 0, `${ownerName} inline owner must be absent after split`);
+  assert.strictEqual((pushModule.match(new RegExp(`window\\.${ownerName}\\s*=\\s*async function\\(`, 'g')) || []).length, 1, `${ownerName} must be window-assigned exactly once`);
+  assert(!new RegExp(`(?:async\\s+)?function\\s+${ownerName}\\s*\\(`).test(extracted), `${ownerName} must not be duplicated by named declaration in src`);
 }
+assert(productionEvidence.includes('After-split parity result: PASS'), 'Push after-split parity must pass');
+assert(productionEvidence.includes('Rollback result: PASS'), 'Push rollback must pass');
 
+const pushSurface = `${html}\n${pushModule}`;
 for (const marker of [
   "if (!('serviceWorker' in navigator) || !('PushManager' in window))",
   "Notification.permission === 'denied'",
@@ -62,7 +70,7 @@ for (const marker of [
   "toast('Push subscription reset ✅')",
   "toast('Reset failed — check console 😕')"
 ]) {
-  assert(html.includes(marker), `Push seam marker missing: ${marker}`);
+  assert(pushSurface.includes(marker), `Push seam marker missing: ${marker}`);
 }
 assert(fs.existsSync(path.join(repo, 'docs', 'push-permission-contract.md')), 'push behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'push-permission-contract-harness.js')), 'push behavior harness must remain present');
@@ -73,10 +81,10 @@ assert(!extracted.includes('async function resetPushFromSettings'), 'src must no
 assert(!extracted.includes('VAPID_PUBLIC_KEY ='), 'seam preparation must not introduce a speculative VAPID owner');
 
 console.log('PUSH_SEAM_PREPARATION_CONTRACT_HARNESS=PASS');
-console.log('PROTECTED_OWNERS_INLINE=ENABLE_RESET');
-console.log('BROWSER_MOCK_EVIDENCE=9_PASS');
+console.log('PROTECTED_OWNERS_INLINE=NONE');
+console.log('BROWSER_MOCK_EVIDENCE=11_PASS');
 console.log('INLINE_COMPARISON_EVIDENCE=PASS');
 console.log('DETERMINISTIC_MOCK_BOUNDARY=CAPABILITY_PERMISSION_SUBSCRIBE_RESET_REFRESH_ERROR');
-console.log('REVERSIBLE_BROWSER_PROOF=REMAINING');
-console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');
-console.log('PRODUCTION_SPLIT=0');
+console.log('REVERSIBLE_BROWSER_PROOF=PASS');
+console.log('DIRECT_EXTRACTION=COMPLETE_FOR_PUSH_SETTINGS_ONLY');
+console.log('PRODUCTION_SPLIT=COMPLETE');
