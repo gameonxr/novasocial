@@ -3058,3 +3058,9 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Updated `docs/clipboard-interaction-contract-harness.js` from the Story baseline to audit 218 files (`index.html` plus 217 extracted JavaScript modules) after the Note deletion owner was added.
 - Clipboard write, legacy fallback, and copy-surface invariants remain unchanged.
+
+## 2026-08-22 — Note deletion collision-audit compatibility correction
+
+- Updated `docs/cross-module-function-collision-contract-harness.js` to audit 218 files after adding `note-deletion-owner.js`.
+- Recorded the measured top-level function inventory of 711 unique names after moving the `deleteMyNote()` declaration out of inline HTML.
+- Duplicate-name invariant remains PASS.
