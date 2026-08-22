@@ -2570,3 +2570,6 @@ Added a static test-only check that the extracted `like-effects.js` caller prese
 ### Particle exact-owner baseline anchor — Branch2
 
 Recorded the SHA-256 anchor for the current inline `spawnLikeParticles(el)` body: `44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57`. The anchor supports a future exact before/after comparison; it is read-only baseline evidence and does not authorize a split.
+
+### Particle disposable browser-context comparison proof — Branch2
+Recorded a fresh disposable browser-context proof for the particle owner and test-only injected adapter. The browser result is PASS: identical twelve-particle snapshots, twelve 800 ms cleanup delays, null-target guard parity, harmless cleanup replay, and full restoration of temporary globals. The proof was non-destructive and performed no login, permission, like, database, account, subscription, or media action. After-split production parity and rollback-after-split proof remain NOT RUN; the production owner remains inline and extraction remains blocked.

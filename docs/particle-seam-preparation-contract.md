@@ -22,7 +22,7 @@ The explicit **test-only adapter boundary** is: `target` plus injected `geometry
 | DOM insertion | Every particle uses `.particle` and is appended to `document.body` | Mock body and element factory |
 | Cleanup | Every particle schedules 800 ms removal and removes itself | Captured timer callbacks |
 | Integration | Like persistence remains outside the seam | No database or like handler calls |
-| Proof inventory | Browser particle mock, parity/rollback, and current baseline revalidation remain present with PASS markers | Existing evidence |
+| Proof inventory | Browser particle mock, disposable browser comparison, parity/rollback, and current baseline revalidation remain present with PASS markers | Existing evidence |
 
 ## Candidate selection
 
@@ -59,6 +59,7 @@ The particle candidate may not enter production-split execution until every gate
 | Current inline baseline | PASS | 213/213/212 script counts, one inline owner, required markers, zero protected source matches, and owner hash `44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57` |
 | Test-only adapter comparison | PASS | Deterministic observations and cleanup delays match the inline owner |
 | Browser mock restoration | PASS | Temporary DOM/timer APIs restore and existing particle browser proof remains PASS |
+| Disposable browser-context comparison | PASS | Inline owner and test-only adapter snapshots, cleanup delays, null-target guard, replay, and global restoration match |
 | After-split production parity | NOT RUN | Before/after marker, load-order, behavior, and source-ownership comparison |
 | Rollback-after-split proof | NOT RUN | Revert to the prior Branch2 commit and rerun the protected checks |
 | Approval decision | NOT READY | Keep `PROOF_STATUS=REMAINING` and `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` |
@@ -77,11 +78,11 @@ The following procedure is defined for a future proof run and is **not executed 
 
 ## Readiness gate
 
-This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks, with the parity artifact revalidated against the current Branch2 baseline. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
+This is a seam-preparation checkpoint only. Three non-destructive proof artifacts now cover the browser particle mock, disposable browser comparison, and parity/rollback checks, with the parity artifact revalidated against the current Branch2 baseline. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
 
 ## Harness coverage
 
-`docs/particle-seam-preparation-contract-harness.js` statically verifies the inline owner, exact protected boundaries, existing particle contract/harness, the two passing non-destructive proof artifacts, deterministic mock requirements, proposed adapter inputs, the test-only comparison checklist, and zero extracted protected particle owners. The existing behavior harness executes the injected reference adapter comparison, harmless cleanup-callback replay, and injected append-failure branch with deterministic DOM/timer dependencies; it does not create production modules, trigger likes, or modify production code.
+`docs/particle-seam-preparation-contract-harness.js` statically verifies the inline owner, exact protected boundaries, existing particle contract/harness, the three passing non-destructive proof artifacts, deterministic mock requirements, proposed adapter inputs, the test-only comparison checklist, and zero extracted protected particle owners. The existing behavior harness executes the injected reference adapter comparison, harmless cleanup-callback replay, and injected append-failure branch with deterministic DOM/timer dependencies; it does not create production modules, trigger likes, or modify production code.
 
 ## References
 
@@ -91,6 +92,7 @@ This is a seam-preparation checkpoint only. Two non-destructive proof artifacts 
 4. [`high-risk-extraction-gate-contract.md`](./high-risk-extraction-gate-contract.md)
 5. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
 6. [`particle-browser-proof-evidence.txt`](./particle-browser-proof-evidence.txt)
-7. [`particle-parity-rollback-evidence.txt`](./particle-parity-rollback-evidence.txt)
-8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+7. [`particle-browser-comparison-proof-evidence.txt`](./particle-browser-comparison-proof-evidence.txt)
+8. [`particle-parity-rollback-evidence.txt`](./particle-parity-rollback-evidence.txt)
+9. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

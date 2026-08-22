@@ -1,0 +1,30 @@
+# Particle Browser Comparison Proof Evidence
+
+**Repository:** `gameonxr/novasocial`  
+**Branch:** `Branch2` only  
+**Execution:** Disposable local browser context at `http://127.0.0.1:4174/index.html`  
+**Scope:** Test-only comparison; no production app load, login, permissions, likes, database, account, subscription, or media action.
+
+## Result
+
+RESULT=PASS
+COMPARISON=true
+RESTORATION=true
+BEFORE_CLEANUP=true
+AFTER_CLEANUP=true
+AFTER_CLEANUP_REPLAY_SAFE=true
+OWNER_SHA256=44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57
+
+## Observed parity
+
+The inline owner and the test-only injected adapter both produced twelve `.particle` nodes for the fixed target rectangle `{ left: 100, top: 200, width: 20, height: 40 }`. The snapshots matched exactly for center placement (`left=106px`, `top=216px`), palette sequence, radial `--tx`/`--ty` values, and twelve captured cleanup delays of `800` milliseconds.
+
+The null-target guard produced no particles and no timers in both paths. Captured cleanup callbacks removed every synthetic particle, and replaying the adapter cleanup callbacks remained harmless. The proof restored the saved browser globals in a `finally` block; the final restoration assertion was true.
+
+## Safety boundary
+
+This was a disposable browser-context proof only. It used local synthetic nodes, deterministic geometry, deterministic randomness, captured timers, and injected cleanup. It did not request permissions, access media, call a peer, mutate subscriptions, send a message, create or delete data, trigger a like, or modify the production app.
+
+## Approval meaning
+
+This evidence satisfies the previously missing browser-context comparison prerequisite. It does **not** by itself prove after-split production parity or rollback-after-split availability; those remain required after the controlled production extraction.
