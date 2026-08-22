@@ -2717,3 +2717,6 @@ After deterministic seam comparison, injected-adapter parity, login-gated browse
 
 ### Push settings production acceptance publication — Branch2
 Published Push settings production contract, after-split browser evidence, parity/rollback evidence, and acceptance harness. The third protected owner group is complete: `enablePushFromSettings` and `resetPushFromSettings` moved to `src/features/push-settings.js` as `window` assignments, exact hashes remain preserved, static/browser/rollback proofs are PASS, and the complete Branch2 regression gate is being rerun at this checkpoint. The protected inventory is now 4/19 approved owners with 15 remaining inline; DMs, Reels, Calls/WebRTC, Stories, Notes, and recording remain blocked and untouched.
+
+### Push settings function-inventory compatibility correction — Branch2
+The post-split collision audit deterministically reports 715 top-level function names rather than the prior 717 because the two named Push settings declarations are now anonymous `window` assignments. Updated only the collision harness expectation and description; duplicate-name, lexical, listener, and protected-boundary checks remain unchanged.

@@ -27,7 +27,7 @@ for (const file of files) {
 }
 const duplicates = [...seen.entries()].filter(([, locations]) => locations.length > 1);
 assert.strictEqual(files.length, 215, 'index.html plus 214 extracted scripts must be audited after Push settings split');
-assert.strictEqual(seen.size, 717, 'top-level function inventory must remain stable after the two approved protected splits');
+assert.strictEqual(seen.size, 715, 'top-level function inventory must remain stable after the three approved protected owner groups');
 assert.deepStrictEqual(duplicates, [], 'classic scripts must not duplicate top-level function names');
 
 console.log('CROSS_MODULE_FUNCTION_COLLISION_HARNESS=PASS');
