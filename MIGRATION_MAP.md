@@ -2621,3 +2621,6 @@ Updated `modularization-completeness-contract-harness.js` to recognize the appro
 
 ### Particle split module-reference correction — Branch2
 Updated `module-script-reference-contract-harness.js` from 211 to 212 modules and added the approved particle module to its required trailing order. Every extracted module remains referenced exactly once, core modules remain before inline application code, and protected DM/Reels owners remain inline.
+
+### Particle split object-URL audit-count correction — Branch2
+Updated `object-url-lifecycle-contract-harness.js` from 212 to 213 audited files so its object-URL lifecycle scan includes the new particle module. Object-URL creation/revocation totals and all download/compression/preview cleanup checks remain unchanged.
