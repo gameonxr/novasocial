@@ -2837,3 +2837,6 @@ The full gate found the readiness-matrix harness still expected 15 unapproved sy
 
 ### Note viewer index-tag compatibility correction — Branch2
 The full gate observed 217 opening/closing script tags and 216 external script tags after adding `note-viewer-owners.js`, while index-tag integrity expected 216/216/215. Updated only those deterministic totals; doctype, HTML structure, and one-inline-script invariants remain unchanged.
+
+### Note viewer inline-declaration compatibility correction — Branch2
+The full gate observed 245 inline application function declarations after removing the two Note owners, while the closure harness expected 247. Updated only that total and added `viewNote`/`removeMyNoteFromViewer` to the approved extracted-owner set; the remaining 13 protected declarations and unresolved `forwardMessage` seam remain enforced.
