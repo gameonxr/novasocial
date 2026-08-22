@@ -2987,3 +2987,6 @@ Updated Push settings production checks to the post-Story HTML inventory: 218 op
 
 ### Story editor realtime-audit file-count correction — Branch2
 Updated the realtime-subscription lifecycle harness from 216 to 217 audited files (`index.html` plus 216 source modules) after the Story editor owner was added; channel and cleanup inventories remain unchanged.
+
+### Story editor reversible-browser-proof checkpoint correction — Branch2
+Updated reversible-browser-proof assertions to include Story editor before/after evidence, seven moved protected signatures, and 12 remaining systems; all proof-artifact and seam-inventory checks remain enforced.

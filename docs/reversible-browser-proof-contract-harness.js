@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, and Note viewer before/after browser proofs are PASS, while browser proof remains outstanding for 13 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, Note viewer, and Story editor before/after browser proofs are PASS, while browser proof remains outstanding for 12 unapproved systems'), 'matrix must continue to mark remaining browser proof');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 6/19 signatures moved'), 'matrix must report the six moved protected signatures');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 13 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('Protected production splits | 7/19 signatures moved'), 'matrix must report the seven moved protected signatures');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 12 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',
