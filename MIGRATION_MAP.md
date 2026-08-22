@@ -3008,3 +3008,6 @@ Updated the window-assignment surface harness to 217 audited files and 198 expli
 
 ### Story editor window-assignment count correction — Branch2
 The complete assignment inventory measured 199 explicit `window.* =` assignments after adding the Story renderer owner. Updated the surface harness from 198 to 199; the exact allowlist and seven approved-owner assignments remain enforced.
+
+### Story editor window-assignment allowlist correction — Branch2
+Added the approved `renderStoryElements` global to the exact window-assignment allowlist. The measured surface remains 199 assignments across 217 audited files; no unapproved global names are permitted.
