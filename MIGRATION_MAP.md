@@ -2618,3 +2618,6 @@ Updated `local-html-asset-reference-contract-harness.js` from 232 to 233 unique 
 
 ### Particle split modularization-completeness correction — Branch2
 Updated `modularization-completeness-contract-harness.js` to recognize the approved particle module and its required `nova-init → spawn-like-particles → like-effects` order, while continuing to require DMs, Reels, and WebRTC owners inline. Styles, core scripts, and shared components remain unchanged.
+
+### Particle split module-reference correction — Branch2
+Updated `module-script-reference-contract-harness.js` from 211 to 212 modules and added the approved particle module to its required trailing order. Every extracted module remains referenced exactly once, core modules remain before inline application code, and protected DM/Reels owners remain inline.

@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleDirs = ['src/core', 'src/components', 'src/features'];
 const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
 
-assert.strictEqual(modules.length, 211, 'all 211 extracted JavaScript modules must remain present');
+assert.strictEqual(modules.length, 212, 'all 212 extracted JavaScript modules must remain present after particle split');
 
 const missing = [];
 const duplicates = [];
@@ -26,8 +26,9 @@ const corePositions = modules.filter(modulePath => modulePath.startsWith('src/co
 const inlinePosition = html.indexOf('<script>');
 assert(corePositions.every(position => position >= 0 && position < inlinePosition), 'all core modules must load before inline application code');
 
-const trailing = ['smart-ranking.js', 'nova-init.js', 'like-effects.js'].map(name => html.lastIndexOf(`<script src="src/features/${name}"></script>`));
-assert(trailing[0] < trailing[1] && trailing[1] < trailing[2], 'required trailing script order must remain unchanged');
+const trailing = ['smart-ranking.js', 'nova-init.js', 'spawn-like-particles.js', 'like-effects.js'].map(name => html.lastIndexOf(`<script src="src/features/${name}"></script>`));
+assert(trailing.every(position => position >= 0), 'required trailing script references must remain present');
+assert(trailing[0] < trailing[1] && trailing[1] < trailing[2] && trailing[2] < trailing[3], 'required trailing script order must remain unchanged');
 assert(html.includes('function renderDMs('), 'protected DM renderer must remain inline');
 assert(html.includes('function renderReels('), 'protected Reels renderer must remain inline');
 
