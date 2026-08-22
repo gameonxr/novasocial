@@ -26,7 +26,7 @@ for (const file of files) {
   });
 }
 const duplicates = [...seen.entries()].filter(([, locations]) => locations.length > 1);
-assert.strictEqual(files.length, 214, 'index.html plus 213 extracted scripts must be audited after deletion-fallback split');
+assert.strictEqual(files.length, 215, 'index.html plus 214 extracted scripts must be audited after Push settings split');
 assert.strictEqual(seen.size, 717, 'top-level function inventory must remain stable after the two approved protected splits');
 assert.deepStrictEqual(duplicates, [], 'classic scripts must not duplicate top-level function names');
 

@@ -1,0 +1,22 @@
+NovaSocial Branch2 Push settings parity and rollback evidence
+Date: 2026-08-22
+Branch: Branch2
+Pre-split parent: 18778c497f211a6706567ee4fbaf46ae815dcc27
+Production split commit: 43ab6a476fa4b0b7853475d09a94241702d7e452
+Protected main ref: ef418007c9b9a797488b4825be5f0c807da22369
+
+Canonical owner hashes
+ENABLE_OWNER_SHA256=711adee3890de37d7bf56f2e51355447861f86f89ed550183b7f5aea7997d520
+RESET_OWNER_SHA256=0bc93e5da2655a6027bc4cb01e87eacb333a46426e5f60a2b4f208a09c543a4b
+
+After-split parity result: PASS
+The production split changes script counts from 215/215/214 to 216/216/215. Both inline Push settings declarations are absent; `src/features/push-settings.js` has exactly one `window.enablePushFromSettings` owner and one `window.resetPushFromSettings` owner; the module loads before `src/features/like-effects.js`; and the login-gated production-preview browser smoke preserved global availability and unsupported capability guards with all temporary globals restored.
+
+Rollback result: PASS
+In a detached temporary worktree based on the pre-split checkpoint, the equivalent split produced temporary commit `8da2a0ec4958dfae1a8f435bfa8f35796a041d20`. Reverting that temporary split produced rollback commit `8c38dab084fc4083b9259cbd1828633283107e26`; rollback restored both inline owners, the exact canonical hashes above, script counts 215/215/214, and no `src/features/push-settings.js`, while leaving the prior particle and deletion-fallback splits intact. The temporary worktree was removed. Branch2 and origin/Branch2 remained at the pre-split checkpoint during the proof; origin/main remained unchanged.
+
+STATIC_AFTER_SPLIT=PASS
+BROWSER_AFTER_SPLIT=PASS
+SAFE_NO_SIDE_EFFECTS=PASS
+PROTECTED_SPLITS=4_OF_19
+DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS

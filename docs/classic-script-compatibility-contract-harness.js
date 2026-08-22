@@ -26,11 +26,11 @@ for (const file of extractedFiles.sort()) {
   });
 }
 
-assert.strictEqual(scriptTags.length, 215, 'index.html must retain 215 script tags after deletion-fallback split');
+assert.strictEqual(scriptTags.length, 216, 'index.html must retain 216 script tags after Push settings split');
 assert.deepStrictEqual(moduleTags, [], 'classic script architecture must not contain type=module tags');
 assert.deepStrictEqual(asyncTags, [], 'classic script order must not contain defer or async attributes');
 assert.deepStrictEqual(moduleSyntax, [], 'extracted classic scripts must not contain top-level import/export syntax');
-assert.strictEqual(extractedFiles.length, 213, 'src must retain 213 extracted JavaScript files after deletion-fallback split');
+assert.strictEqual(extractedFiles.length, 214, 'src must retain 214 extracted JavaScript files after Push settings split');
 
 console.log('CLASSIC_SCRIPT_COMPATIBILITY_HARNESS=PASS');
 console.log(`SCRIPT_TAGS=${scriptTags.length}`);

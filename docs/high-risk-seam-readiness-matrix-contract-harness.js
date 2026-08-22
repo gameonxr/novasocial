@@ -31,16 +31,19 @@ const protectedSignatures = [
   'async function syncLocalDeletionFallback()'
 ];
 
-assert.strictEqual(sourceFiles.length, 213, '213 extracted JavaScript modules must remain present');
+assert.strictEqual(sourceFiles.length, 214, '214 extracted JavaScript modules must remain present');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle owner must occur once');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback owner must occur once');
+assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable owner must occur once');
+assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset owner must occur once');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
 assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
@@ -54,12 +57,14 @@ assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-contract.md')), 'account/bootstrap seam contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-adapter-harness.js')), 'account/bootstrap adapter harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'protected-inline-parity-contract-harness.js')), 'protected parity harness must remain present');
+assert(fs.existsSync(path.join(repo, 'docs', 'push-settings-production-split-contract.md')), 'Push production contract must remain present');
+assert(fs.existsSync(path.join(repo, 'docs', 'push-settings-parity-rollback-evidence.txt')), 'Push rollback evidence must remain present');
 
 console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
 console.log('PROTECTED_SIGNATURES=19');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=2_APPROVED_PARTICLE_AND_DELETION_FALLBACK');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=4_APPROVED_PARTICLE_DELETION_FALLBACK_AND_PUSH_SETTINGS');
 console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
 console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
-console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_AND_DELETION_PASS_REMAINING_17');
+console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_DELETION_AND_PUSH_PASS_REMAINING_15');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');

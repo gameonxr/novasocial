@@ -44,11 +44,13 @@ const requiredCoverage = [
   'calls-webrtc-contract-harness.js',
   'voice-recording-contract.md',
   'voice-recording-contract-harness.js',
+  'push-settings-production-split-contract.md',
+  'push-settings-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 213, '213 extracted JavaScript modules must remain present');
+assert.strictEqual(sourceFiles.length, 214, '214 extracted JavaScript modules must remain present');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
@@ -58,6 +60,9 @@ assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'ap
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle window owner must occur once');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback window owner must exist');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback window owner must occur once');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable window owner must occur once');
+assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset window owner must occur once');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
 for (const file of requiredCoverage) {
@@ -68,7 +73,7 @@ assert(fs.existsSync(path.join(docsDir, 'account-bootstrap-adapter-harness.js'))
 
 console.log('HIGH_RISK_EXTRACTION_GATE_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('EXTRACTED_PROTECTED_SIGNATURES=2_APPROVED_PARTICLE_AND_DELETION_FALLBACK');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=4_APPROVED_PARTICLE_DELETION_FALLBACK_AND_PUSH_SETTINGS');
 console.log(`REQUIRED_COVERAGE_FILES=${requiredCoverage.length + 2}`);
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');
 console.log('BRANCH2_ONLY=PASS');

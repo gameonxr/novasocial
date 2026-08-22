@@ -21,17 +21,17 @@
 | WebRTC peer connection | `calls-webrtc-contract` | PASS |
 | Notes submission/deletion/reactions/reactors | `note-viewer-contract` | PASS |
 
-The 19 protected declarations are intentionally mapped to 11 focused contract families because several declarations share one protected subsystem boundary. Every mapping has both a Markdown contract and a standalone `*-harness.js` file in `docs/`.
+The 19 protected declarations are intentionally mapped to 11 focused contract families because several declarations share one protected subsystem boundary. Every mapping has both a Markdown contract and a standalone `*-harness.js` file in `docs/`. Particle, deletion-fallback, and Push settings are the four approved window-assigned production owners; the other 15 declarations remain inline and gated.
 
 ## Harness coverage
 
-`docs/protected-contract-coverage-harness.js` statically checks that all 19 protected declaration markers remain in `index.html`, that each mapped contract and harness file exists, and that the required trailing script order remains `smart-ranking.js`, `nova-init.js`, then `like-effects.js`.
+`docs/protected-contract-coverage-harness.js` statically checks that the 15 unapproved protected declaration markers remain in `index.html`, that the four approved particle, deletion-fallback, and Push settings owners are represented by window-assigned modules, that each mapped contract and harness file exists, and that the required trailing script order remains intact.
 
 The harness is documentation-only. It does not extract, rewrite, execute, or mutate any protected production system.
 
 ## Safe boundary
 
-All 19 protected implementations remain inline and unchanged. No DMs, Reels, Calls/WebRTC, Stories, polls, Notes, push, recording, particle, authentication, or account production code was moved or modified in this checkpoint.
+The 15 unapproved protected implementations remain inline and unchanged. Only the particle, deletion-fallback, and Push settings owners have moved under their approved window-assigned contracts. No DMs, Reels, Calls/WebRTC, Stories, polls, Notes, recording, authentication, or account production code was moved in this checkpoint.
 
 ## Validation
 
