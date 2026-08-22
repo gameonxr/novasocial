@@ -3115,3 +3115,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Extended the deterministic Reels persistent harness with an injected dispatcher for park, restore, media-window application, swipe settling, and video resume dependencies.
 - Verified explicit dispatch order and preserved state, source-release, settling, and resume outcomes using mocks only; no runtime adapter, `index.html` script tag, or `window` owner was added.
 - Updated `docs/reels-persistent-contract.md` to record the test-only boundary. Reels production extraction remains blocked; the proof passed with `INJECTED_SEAM_DISPATCH=PASS` and `PRODUCTION_CODE_TOUCHED=0`.
+
+## 2026-08-22 — DMs test-only injected seam proof
+- Advanced DMs preparation with an injected dispatcher around primary render and in-place refresh dependencies; `renderDMs()`, `_refreshDmsInPlace()`, `openChat()`, and related realtime owners remain inline.
+- Verified explicit primary-render/in-place-refresh dispatch order, parallel base fetch, dependent member fetch, no-account/tab/chat guards, navigation aborts, targeted DOM patching, cache timing, and scroll preservation using mocks only.
+- Updated `docs/dms-realtime-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live chat/message action was performed, and DMs production extraction remains blocked pending independent browser proof and rollback gates.

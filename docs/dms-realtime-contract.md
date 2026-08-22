@@ -30,8 +30,9 @@ The primary render captures `_renderGeneration` and refuses to overwrite the scr
 | Navigation during other-member fetch | Abort without DOM/cache patches | PASS |
 | Scroll state | `scrollTop` remains unchanged during refresh | PASS |
 | Main screen replacement | Never occurs in background refresh | PASS |
+| Injected seam dispatch | Primary render and in-place refresh owners dispatch explicitly; guard exits before fetching | PASS |
 
-The harness is deterministic and uses mocked promises/events only. It does not invoke Supabase, DOM APIs, authentication, navigation, or real chat/message operations.
+The harness is deterministic and uses mocked promises/events only. It does not invoke Supabase, DOM APIs, authentication, navigation, or real chat/message operations. Its injected seam dispatcher is test-only and is not loaded by `index.html`; production DMs owners remain inline.
 
 ## Safe boundary
 

@@ -18,6 +18,21 @@ async function mockPrimaryRender({ delays = { mem: 8, unread: 2, notes: 5 } } = 
   return { events, values: [mem, unread, notes] };
 }
 
+function createInjectedDmsSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    async primaryRender(input) {
+      calls.push('primary-render');
+      return deps.primaryRender(input);
+    },
+    async inPlaceRefresh(input) {
+      calls.push('in-place-refresh');
+      return deps.inPlaceRefresh(input);
+    },
+  };
+}
+
 async function mockRefreshDmsInPlace({
   meId = 'me',
   curTab = 'dms',
@@ -85,5 +100,16 @@ async function mockRefreshDmsInPlace({
   assert(leftDuringMembers.result === false, 'Refresh must abort if the user leaves DMs during member fetch');
   assert(!leftDuringMembers.events.some(e => e.includes('.patch') || e.startsWith('item.') || e.startsWith('cache.save')), 'No DOM/cache patch after tab change during member fetch');
 
-  console.log(JSON.stringify({ passed: true, primary, patched, noAccount, wrongTab, chatOpen, leftDuringBaseFetch, leftDuringMembers }, null, 2));
+  const seam = createInjectedDmsSeam({
+    primaryRender: mockPrimaryRender,
+    inPlaceRefresh: mockRefreshDmsInPlace,
+  });
+  const injectedPrimary = await seam.primaryRender();
+  const injectedRefresh = await seam.inPlaceRefresh();
+  const injectedGuard = await seam.inPlaceRefresh({ meId: null });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['primary-render', 'in-place-refresh', 'in-place-refresh']), 'Injected DMs seam must dispatch primary and refresh owners explicitly');
+  assert(injectedPrimary.events.includes('screen.replace') && injectedRefresh.events.includes('cache.save:dms'), 'Injected DMs seam must preserve primary render and refresh outcomes');
+  assert(injectedGuard.result === false && injectedGuard.events.length === 0, 'Injected DMs guard must remain non-destructive before data fetch');
+
+  console.log(JSON.stringify({ passed: true, primary, patched, noAccount, wrongTab, chatOpen, leftDuringBaseFetch, leftDuringMembers, seam: { calls: seam.calls, injectedGuard } }, null, 2));
 })();
