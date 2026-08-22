@@ -7,6 +7,7 @@ const path = require('path');
 const repo = '/home/ubuntu/novasocial';
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const docs = path.join(repo, 'docs');
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -31,7 +32,12 @@ const coverage = [
 ];
 
 for (const [marker, base] of coverage) {
-  assert(html.includes(marker), `protected production marker missing: ${marker}`);
+  if (marker === 'function spawnLikeParticles(') {
+    assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle production owner missing from src');
+    assert(!html.includes(marker), 'approved particle owner must be absent from inline HTML');
+  } else {
+    assert(html.includes(marker), `protected production marker missing: ${marker}`);
+  }
   assert(fs.existsSync(path.join(docs, `${base}.md`)), `contract missing for ${marker}: ${base}.md`);
   assert(fs.existsSync(path.join(docs, `${base}-harness.js`)), `harness missing for ${marker}: ${base}-harness.js`);
 }
@@ -39,10 +45,11 @@ for (const [marker, base] of coverage) {
 const trailing = [
   '<script src="src/features/smart-ranking.js"></script>',
   '<script src="src/features/nova-init.js"></script>',
+  '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/like-effects.js"></script>'
 ].map(marker => html.indexOf(marker));
 assert(trailing.every(position => position >= 0), 'required trailing scripts are present');
-assert(trailing[0] < trailing[1] && trailing[1] < trailing[2], 'required trailing script order is preserved');
+assert(trailing[0] < trailing[1] && trailing[1] < trailing[2] && trailing[2] < trailing[3], 'required trailing script order is preserved');
 
 console.log('PROTECTED_CONTRACT_COVERAGE_HARNESS=PASS');
 console.log(`PROTECTED_SEAMS=${coverage.length}`);

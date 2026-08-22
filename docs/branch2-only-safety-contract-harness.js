@@ -17,7 +17,12 @@ assert.strictEqual(git('rev-parse', 'HEAD'), git('rev-parse', 'origin/Branch2'),
 
 const latestFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD').split('\n').filter(Boolean);
 assert(latestFiles.length > 0, 'latest checkpoint must contain files');
-assert(latestFiles.every(file => file === 'MIGRATION_MAP.md' || file.startsWith('docs/')), 'latest checkpoint must be documentation-only');
+const allowedParticleSplitFiles = new Set(['MIGRATION_MAP.md', 'index.html', 'src/features/spawn-like-particles.js']);
+assert(latestFiles.every(file => file.startsWith('docs/') || allowedParticleSplitFiles.has(file)), 'latest checkpoint must contain only docs and the approved particle split files');
+if (latestFiles.includes('index.html') || latestFiles.includes('src/features/spawn-like-particles.js')) {
+  assert(latestFiles.includes('index.html'), 'particle split checkpoint must include index.html');
+  assert(latestFiles.includes('src/features/spawn-like-particles.js'), 'particle split checkpoint must include the particle module');
+}
 
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 for (const marker of [
@@ -25,7 +30,6 @@ for (const marker of [
   'function renderReels(',
   'function createPeerConnection(',
   'function openSV(',
-  'function spawnLikeParticles(',
   'function renderStoryElements(',
   'async function syncLocalDeletionFallback('
 ]) {
@@ -34,5 +38,5 @@ for (const marker of [
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=DOCS_ONLY');
+console.log('LATEST_CHECKPOINT=PARTICLE_SPLIT_OR_DOCS');
 console.log('MAIN_REF_UNCHANGED=YES');

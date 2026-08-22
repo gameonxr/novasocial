@@ -28,6 +28,8 @@ async function runHarness() {
   const originalDocument = global.document;
   const originalSetTimeout = global.setTimeout;
   const originalMathRandom = Math.random;
+  const originalWindow = global.window;
+  const originalSpawnLikeParticles = global.spawnLikeParticles;
 
   const particles = [];
   const timers = [];
@@ -47,12 +49,13 @@ async function runHarness() {
   Math.random = () => 0.5;
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
-    const start = source.indexOf('function spawnLikeParticles(el){');
-    const end = source.indexOf('\n// Override toggleLike', start);
-    assert(start >= 0 && end > start, 'particle-effect boundary must remain present and ordered');
-    const fnSource = source.slice(start, end);
-    eval(`${fnSource}; global.spawnLikeParticles = spawnLikeParticles;`);
+    const html = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const moduleSource = fs.readFileSync('/home/ubuntu/novasocial/src/features/spawn-like-particles.js', 'utf8');
+    assert(!html.includes('function spawnLikeParticles(el){'), 'inline particle owner must be removed after production split');
+    assert(moduleSource.includes('window.spawnLikeParticles = function(el){'), 'production particle module must assign the global owner');
+    global.window = global;
+    eval(moduleSource);
+    assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'window-assigned production owner must be available globally');
 
     // Null target is a safe no-op.
     global.spawnLikeParticles(null);
@@ -70,7 +73,7 @@ async function runHarness() {
     assert.strictEqual(particles[6].style.background, '#E1306C', 'palette repeats deterministically');
     assert(particles.every(p => typeof p.style['--tx'] === 'string' && typeof p.style['--ty'] === 'string'), 'each particle receives transform vectors');
 
-    const inlineSnapshot = particles.map(p => ({
+    const productionSnapshot = particles.map(p => ({
       className: p.className,
       left: p.style.left,
       top: p.style.top,
@@ -78,11 +81,11 @@ async function runHarness() {
       tx: p.style['--tx'],
       ty: p.style['--ty']
     }));
-    const inlineDelays = timers.map(timer => timer.delay);
+    const productionDelays = timers.map(timer => timer.delay);
     timers.forEach(timer => timer.callback());
     assert(particles.every(p => p.removeCalled), 'all cleanup callbacks remove their particle');
 
-    // Test-only injected adapter comparison; no production module is imported or assigned to window.
+    // Test-only injected adapter comparison against the loaded production module.
     const adapterParticles = [];
     const adapterTimers = [];
     const adapter = createTestOnlyParticleAdapter({
@@ -111,8 +114,8 @@ async function runHarness() {
       background: p.style.background,
       tx: p.style['--tx'],
       ty: p.style['--ty']
-    })), inlineSnapshot, 'test-only adapter observations match inline owner');
-    assert.deepStrictEqual(adapterTimers.map(timer => timer.delay), inlineDelays, 'test-only adapter cleanup delays match inline owner');
+    })), productionSnapshot, 'test-only adapter observations match production owner');
+    assert.deepStrictEqual(adapterTimers.map(timer => timer.delay), productionDelays, 'test-only adapter cleanup delays match production owner');
     adapterTimers.forEach(timer => timer.callback());
     assert(adapterParticles.every(p => p.removeCalled), 'test-only adapter cleanup removes every particle');
     adapterTimers.forEach(timer => timer.callback());
@@ -137,7 +140,7 @@ async function runHarness() {
     });
     assert.throws(() => failureAdapter(target), /append-boundary-failure/, 'test-only failure boundary must surface the injected append error');
     assert.strictEqual(failureParticles.length, 1, 'failure branch stops at the injected append boundary');
-    assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'inline owner remains the only runtime owner under test');
+    assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'window-assigned production owner remains available under test');
     const likeEffects = fs.readFileSync('/home/ubuntu/novasocial/src/features/like-effects.js', 'utf8');
     assert(likeEffects.includes('spawnLikeParticles(el);'), 'like-effects caller must preserve the global particle handoff');
     assert(!likeEffects.includes('particle-adapter'), 'like-effects caller must not import a second particle owner');
@@ -151,6 +154,9 @@ async function runHarness() {
     global.document = originalDocument;
     global.setTimeout = originalSetTimeout;
     Math.random = originalMathRandom;
+    global.window = originalWindow;
+    if (typeof originalSpawnLikeParticles === 'undefined') delete global.spawnLikeParticles;
+    else global.spawnLikeParticles = originalSpawnLikeParticles;
   }
 }
 

@@ -2,11 +2,11 @@
 
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
-**Purpose:** Provide one deterministic acceptance decision for any future protected production split without authorizing a split in the current checkpoint.
+**Purpose:** Provide one deterministic acceptance decision for protected production splits, authorizing only the fully verified particle checkpoint and keeping all other protected systems gated.
 
 ## Current decision
 
-**NOT READY — protected production splits remain blocked.** The repository has protected-marker parity, behavioral baselines, feature seam maps, deterministic mock harnesses, and a reversible-browser-proof checklist. Thirty-three deterministic, non-destructive browser-context mock artifacts are inventoried and passing across the protected systems, but browser proof has not yet been established for a before/after production split. Therefore, no protected production owner may move from `index.html` into `src/`.
+**READY FOR PARTICLE ONLY — the remaining 18 protected production splits remain blocked.** The repository has protected-marker parity, behavioral baselines, feature seam maps, deterministic mock harnesses, and a reversible-browser-proof checklist. Thirty-three deterministic, non-destructive browser-context mock artifacts plus the particle comparison and after-split browser proofs are passing. The particle owner completed the first controlled production split with exact canonical hash parity, preserved global caller compatibility, clean startup, and rollback availability. No other protected production owner may move from `index.html` into `src/` until its own gate passes.
 
 ## Acceptance conditions
 
@@ -15,13 +15,13 @@ A future protected split may be considered only when every condition below is tr
 | Condition | Required state | Current state |
 |---|---|---|
 | Branch safety | Change is isolated to `Branch2`; `main` is untouched | PASS |
-| Baseline parity | Protected marker and load-order parity are captured before and after | Required before split |
-| Seam map | DOM, state, timing, dependency, and global ownership are documented | Present for mapped systems |
-| Deterministic proof | Mock harness covers normal, failure, cleanup, and race paths | Present for mapped systems |
-| Browser proof | Reversible browser smoke test passes without irreversible actions | NOT ESTABLISHED for a production split; 33 non-destructive mock artifacts pass |
-| Rollback | Prior commit can be restored and all gates rerun cleanly | Required before split |
-| Regression | Full repository gate passes from a clean worktree | Required at every checkpoint |
-| Production move | Only the selected owner moves, with no speculative cleanup | 0/19 moved |
+| Baseline parity | Protected marker and load-order parity are captured before and after | PASS for particle |
+| Seam map | DOM, state, timing, dependency, and global ownership are documented | PASS for particle; present for remaining mapped systems |
+| Deterministic proof | Mock harness covers normal, failure, cleanup, and race paths | PASS for particle; present for remaining mapped systems |
+| Browser proof | Reversible browser smoke test passes without irreversible actions | PASS for particle; not established for remaining systems |
+| Rollback | Prior commit can be restored and all gates rerun cleanly | PASS for particle |
+| Regression | Full repository gate passes from a clean worktree | PASS for particle checkpoint |
+| Production move | Only the selected owner moves, with no speculative cleanup | 1/19 moved: particle only |
 
 ## Stop conditions
 
@@ -29,7 +29,7 @@ Stop and revert the candidate checkpoint if any protected marker changes unexpec
 
 ## Harness coverage
 
-`docs/protected-split-acceptance-contract-harness.js` verifies the current NOT-READY decision, the 19 protected inline signatures, the blocked direct-extraction policy, the required seam and browser-proof artifacts, zero protected owners in `src/`, and the absence of a speculative approval flag. The separate reversible-browser-proof harness inventories the 33 passing non-destructive mock artifacts. Neither harness executes irreversible browser actions or approves a production split.
+`docs/protected-split-acceptance-contract-harness.js` verifies the particle-only READY decision, the 18 remaining protected inline signatures, the approved particle window owner, the blocked direct-extraction policy for the remaining systems, the required seam and browser-proof artifacts, and the absence of a speculative approval flag. The separate reversible-browser-proof harness inventories the 33 passing non-destructive mock artifacts plus particle comparison and after-split evidence. Neither harness executes irreversible browser actions.
 
 ## References
 

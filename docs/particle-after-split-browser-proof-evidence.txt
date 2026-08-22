@@ -1,0 +1,32 @@
+# Particle After-Split Production Browser Proof Evidence
+
+**Repository:** `gameonxr/novasocial`  
+**Branch:** `Branch2` only  
+**Preview:** `http://127.0.0.1:4173/index.html?particle-split=cc72374e`  
+**Scope:** Fresh production-preview browser context; login gate only, no form interaction.
+
+## Startup and ownership result
+
+RESULT=PASS
+PARTICLE_SCRIPT_LOADED=true
+LIKE_EFFECTS_SCRIPT_LOADED=true
+MODULE_BEFORE_CALLER=true
+WINDOW_SPAWN_LIKE_PARTICLES_TYPE=function
+LOGIN_GATE_VISIBLE=true
+SIDE_EFFECTS_TRIGGERED=false
+
+The cache-busted production preview loaded `src/features/spawn-like-particles.js` before `src/features/like-effects.js`. The global `window.spawnLikeParticles` surface was a function at startup, and the login gate remained visible. No authentication, permission, account, subscription, database, media, or protected user flow was invoked.
+
+## Production smoke result
+
+PRODUCTION_PARTICLE_SMOKE=PASS
+CREATED_PARTICLES=12
+EXPECTED_PARTICLES=12
+REMAINING_AFTER_850MS=0
+EXPECTED_REMAINING=0
+
+A synthetic geometry-only target was passed to the loaded production global. The actual production module appended exactly twelve `.particle` nodes and, after waiting longer than the contract’s 800 ms cleanup delay, left zero additional particle nodes. The test used only local DOM and timer behavior; it did not trigger a like or any irreversible action.
+
+## Static parity attached
+
+The controlled after-state verifier also passed with 214 opening/closing script tags, 213 external scripts, one module link, module-before-caller order, zero inline particle owners, zero protected source signature matches, a clean JS file without trailing whitespace, and canonical owner SHA-256 `44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57` matching the pre-split `cc72374` baseline.

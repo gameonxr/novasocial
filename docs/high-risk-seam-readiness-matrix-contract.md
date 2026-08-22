@@ -3,31 +3,31 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Make the remaining protected-feature split setup measurable without moving protected production code.
+**Purpose:** Make protected-feature split readiness measurable while recording the single verified particle production split and preserving safeguards for the remaining systems.
 
 ## Current matrix
 
 | Readiness layer | Current state | Split implication |
 |---|---:|---|
-| Protected inline signatures | 19/19 retained exactly once | Baseline complete |
-| Protected signatures in `src/` | 0 | No protected production code has moved |
+| Protected inline signatures | 18/19 unapproved signatures retained exactly once; particle is represented by one approved window owner | Baseline and first split complete |
+| Protected signatures in `src/` | 1 approved particle owner; 18 unapproved owners absent | Only particle production code has moved |
 | High-risk gate | Present and passing | Global guard complete |
-| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; 33 protected browser-proof evidence artifacts carry PASS markers | Feature-specific seam maps, deterministic mock boundaries, and non-destructive browser evidence exist, but they are not production-split approval |
+| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; 33 protected browser-proof mock artifacts plus particle comparison and after-split artifacts carry PASS markers | Feature-specific seam maps and deterministic mock boundaries exist; particle is production-split approved, while the other 18 remain gated |
 | Adapter/seam contract | Account/bootstrap contract present | One cross-cutting adapter seam is documented; it is not production-extracted |
 | Adapter harness | Account/bootstrap mock harness present | Test-only proof exists for the bootstrap seam |
-| Particle candidate | Test-only adapter comparison and rollback-first procedure prepared; after-split parity and rollback-after-split are NOT RUN | Candidate is not approved; direct extraction remains blocked |
-| Reversible browser proof | Contract and harness are present; browser proof is not yet established for a protected split. Thirty-three non-destructive browser-context mock artifacts are inventoried and passing, but none is before/after proof for a production split | Required before the first production move |
-| Protected production splits | 0/19 signatures moved | Direct extraction remains blocked |
+| Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS | Particle is approved and complete; next candidate requires its own gate |
+| Reversible browser proof | Contract and harness are present; particle before/after browser proof is PASS, while browser proof remains outstanding for 18 unapproved systems. Thirty-three non-destructive browser-context mock artifacts plus particle comparison and after-split artifacts are inventoried and passing | Required independently before each remaining production move |
+| Protected production splits | 1/19 signatures moved: particle only | Direct extraction remains blocked for the 18 unapproved systems |
 
 ## Contract decision
 
-The setup is **baseline-complete but split-not-ready** for protected systems. The repository now inventories 33 passing non-destructive browser-context mock artifacts across the protected systems, and all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. These mocks do not establish before/after production-split proof. The next required work is per-feature seam preparation, not direct extraction. For one selected system at a time, the project must add a dependency/DOM/timing/global map, explicit adapter boundary, deterministic mock harness, before/after marker parity, and reversible browser proof. Only then may a minimal production extraction be attempted on `Branch2`.
+The setup is **particle-split-complete but not ready for the remaining protected systems**. The repository inventories 33 passing non-destructive browser-context mock artifacts across the protected systems, plus particle comparison and after-split browser evidence; all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. Particle passed the full before/after and rollback sequence. Each remaining protected system must independently add or complete its dependency/DOM/timing/global map, explicit adapter boundary, deterministic mock harness, before/after marker parity, reversible browser proof, and complete Branch2 regression gate before a minimal production extraction is attempted.
 
-The account/bootstrap seam is the current documented adapter reference. Particle is the first low-risk protected candidate, but its comparison and rollback-first procedure are prepared only; after-split parity and rollback-after-split proof remain unrun. This does not authorize moving particle, DMs, Reels, Calls/WebRTC, Stories, Notes, Push, recording, or deletion-fallback code.
+The account/bootstrap seam remains the documented adapter reference. Particle was the first low-risk protected candidate and is now `SPLIT_COMPLETE` after passing comparison, production browser smoke, exact owner-hash parity, and rollback checks. This does not authorize moving DMs, Reels, Calls/WebRTC, Stories, Notes, Push, recording, or deletion-fallback code; each remains subject to its own gate.
 
 ## Non-goals
 
-This checkpoint does not alter `index.html`, `src/`, load order, protected globals, realtime ownership, media behavior, authentication, or browser state. It does not claim that any protected feature is ready for production extraction.
+This checkpoint alters only the particle production owner location and its script load order; it preserves the `window.spawnLikeParticles` global handoff and does not alter realtime ownership, media behavior, authentication, or browser state. It does not claim that any remaining protected feature is ready for production extraction.
 
 ## References
 

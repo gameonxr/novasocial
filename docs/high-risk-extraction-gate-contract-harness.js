@@ -46,11 +46,16 @@ const requiredCoverage = [
   'voice-recording-contract-harness.js',
 ];
 
-assert.strictEqual(sourceFiles.length, 211, '211 extracted JavaScript modules must remain present');
+assert.strictEqual(sourceFiles.length, 212, '212 extracted JavaScript modules must remain present');
 for (const signature of protectedSignatures) {
-  assert.strictEqual(html.split(signature).length - 1, 1, `protected marker must remain exactly once inline: ${signature}`);
-  assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be extracted: ${signature}`);
+  const particle = signature === 'function spawnLikeParticles(el){';
+  assert.strictEqual(html.split(signature).length - 1, particle ? 0 : 1, `protected marker count mismatch: ${signature}`);
+  assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle window owner must exist');
+assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle window owner must occur once');
+assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'approved particle module must load before caller');
 for (const file of requiredCoverage) {
   assert(fs.existsSync(path.join(docsDir, file)), `required high-risk coverage file missing: ${file}`);
 }
@@ -59,7 +64,7 @@ assert(fs.existsSync(path.join(docsDir, 'account-bootstrap-adapter-harness.js'))
 
 console.log('HIGH_RISK_EXTRACTION_GATE_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('EXTRACTED_PROTECTED_SIGNATURES=0');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=1_APPROVED_PARTICLE');
 console.log(`REQUIRED_COVERAGE_FILES=${requiredCoverage.length + 2}`);
-console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');
 console.log('BRANCH2_ONLY=PASS');

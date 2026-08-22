@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 211, '211 extracted JavaScript modules must remain');
+assert.strictEqual(jsFiles.length, 212, '212 extracted JavaScript modules must remain');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 200, '200 feature modules must remain');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 213, 'HTML must retain 213 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 213, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 212, 'HTML must retain 212 external script tags');
+assert.strictEqual(featureFiles.length, 201, '201 feature modules must remain');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 214, 'HTML must retain 214 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 214, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 213, 'HTML must retain 213 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -43,14 +43,14 @@ for (const script of ['src/features/smart-ranking.js', 'src/features/nova-init.j
   assert(html.indexOf(script) > inlineStart, `${script} must remain after inline application code`);
 }
 assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/features/nova-init.js'), 'smart-ranking must precede nova-init');
-assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/like-effects.js'), 'nova-init must precede like-effects');
+assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
+assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'spawn-like-particles must precede like-effects');
 
 for (const marker of [
   'async function renderDMs()',
   'async function renderReels()',
   'function createPeerConnection(callId, remoteUserId) {',
   'function openSV(startIdx){',
-  'function spawnLikeParticles(el){',
   'async function syncLocalDeletionFallback()',
   'async function toggleRecording(cid)',
   'async function enablePushFromSettings()',
@@ -67,6 +67,10 @@ for (const marker of [
 ]) {
   assert(html.includes(marker), `protected inline marker missing: ${marker}`);
 }
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+assert(!html.includes('function spawnLikeParticles(el){'), 'approved particle owner must be absent from inline HTML');
+assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
+assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle module must have one owner');
 
 assert(fs.existsSync(path.join(repo, 'manifest.json')), 'manifest must remain present');
 assert(fs.existsSync(path.join(repo, 'sw.js')), 'service worker must remain present');
@@ -83,10 +87,10 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 257, '257 documentation Markdown files must be published');
-assert.strictEqual(allHarnesses.length, 257, '257 harness files must be published');
-assert.strictEqual(contractFiles.length, 255, '255 standard contract documents must be published');
-assert.strictEqual(harnessFiles.length, 254, '254 standard contract harnesses must be published');
+assert.strictEqual(allDocs.length, 258, '258 documentation Markdown files must be published');
+assert.strictEqual(allHarnesses.length, 258, '258 harness files must be published');
+assert.strictEqual(contractFiles.length, 256, '256 standard contract documents must be published');
+assert.strictEqual(harnessFiles.length, 255, '255 standard contract harnesses must be published');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'protected-contract-coverage-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
