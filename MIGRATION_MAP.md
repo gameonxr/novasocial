@@ -2478,3 +2478,7 @@ Added `docs/notes-removal-cloud-artwork-browser-proof-evidence.txt` and updated 
 ### Protected browser-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/high-risk-seam-readiness-matrix-contract.md` with the current evidence inventory: 33 protected browser-proof evidence artifacts carry PASS markers across the deterministic, non-destructive mock scenarios. The matrix explicitly preserves the distinction that these mocks are not before/after production-split proof. All 19 protected signatures remain exactly once inline, zero protected owners are in `src/`, and direct extraction remains blocked.
+
+### Protected split acceptance inventory alignment checkpoint — Branch2
+
+Aligned `docs/protected-split-acceptance-contract.md` with the current inventory of 33 passing deterministic, non-destructive browser-context mock artifacts. The acceptance decision remains NOT READY because none of these mocks is before/after proof for a production split; all 19 protected signatures remain inline, zero protected owners are in `src/`, and direct extraction remains blocked.

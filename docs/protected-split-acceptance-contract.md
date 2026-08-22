@@ -6,7 +6,7 @@
 
 ## Current decision
 
-**NOT READY — protected production splits remain blocked.** The repository has protected-marker parity, behavioral baselines, feature seam maps, deterministic mock harnesses, and a reversible-browser-proof checklist. However, browser proof has not yet been established for a protected split, so no protected production owner may move from `index.html` into `src/`.
+**NOT READY — protected production splits remain blocked.** The repository has protected-marker parity, behavioral baselines, feature seam maps, deterministic mock harnesses, and a reversible-browser-proof checklist. Thirty-three deterministic, non-destructive browser-context mock artifacts are inventoried and passing across the protected systems, but browser proof has not yet been established for a before/after production split. Therefore, no protected production owner may move from `index.html` into `src/`.
 
 ## Acceptance conditions
 
@@ -18,7 +18,7 @@ A future protected split may be considered only when every condition below is tr
 | Baseline parity | Protected marker and load-order parity are captured before and after | Required before split |
 | Seam map | DOM, state, timing, dependency, and global ownership are documented | Present for mapped systems |
 | Deterministic proof | Mock harness covers normal, failure, cleanup, and race paths | Present for mapped systems |
-| Browser proof | Reversible browser smoke test passes without irreversible actions | NOT ESTABLISHED |
+| Browser proof | Reversible browser smoke test passes without irreversible actions | NOT ESTABLISHED for a production split; 33 non-destructive mock artifacts pass |
 | Rollback | Prior commit can be restored and all gates rerun cleanly | Required before split |
 | Regression | Full repository gate passes from a clean worktree | Required at every checkpoint |
 | Production move | Only the selected owner moves, with no speculative cleanup | 0/19 moved |
@@ -29,7 +29,7 @@ Stop and revert the candidate checkpoint if any protected marker changes unexpec
 
 ## Harness coverage
 
-`docs/protected-split-acceptance-contract-harness.js` verifies the current NOT-READY decision, the 19 protected inline signatures, the blocked direct-extraction policy, the required seam and browser-proof artifacts, zero protected owners in `src/`, and the absence of a speculative approval flag. It does not execute browser actions or approve a production split.
+`docs/protected-split-acceptance-contract-harness.js` verifies the current NOT-READY decision, the 19 protected inline signatures, the blocked direct-extraction policy, the required seam and browser-proof artifacts, zero protected owners in `src/`, and the absence of a speculative approval flag. The separate reversible-browser-proof harness inventories the 33 passing non-destructive mock artifacts. Neither harness executes irreversible browser actions or approves a production split.
 
 ## References
 
