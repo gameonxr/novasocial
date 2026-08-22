@@ -3069,3 +3069,9 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Updated `docs/cross-module-lexical-collision-contract-harness.js` to audit 218 files (`index.html` plus 217 extracted scripts) after the Note deletion module was added.
 - The top-level lexical declaration inventory remains 117 with zero duplicate names.
+
+## 2026-08-22 — Note deletion deletion-fallback compatibility correction
+
+- Synchronized `docs/deletion-fallback-production-split-contract-harness.js` to 219 total, 219 closing, and 218 external script tags after adding `note-deletion-owner.js`.
+- Added `async function deleteMyNote()` to the approved protected-owner set and updated the checkpoint to 8 of 19 moved signatures.
+- Existing deletion-fallback hash, global handoff, browser smoke, and rollback assertions remain unchanged.
