@@ -2981,3 +2981,6 @@ Updated acceptance checks to require browser proof and blocked direct extraction
 
 ### Story editor high-risk gate contract correction — Branch2
 Synchronized the high-risk extraction contract to the Story editor checkpoint: seven approved exceptions, 12 remaining protected systems, and Story editor included in the completed production moves. Direct extraction remains blocked for all remaining systems.
+
+### Story editor Push-gate script inventory correction — Branch2
+Updated Push settings production checks to the post-Story HTML inventory: 218 opening tags, 218 closing tags, and 217 external script tags. Push owner ordering and non-ownership boundaries remain unchanged.
