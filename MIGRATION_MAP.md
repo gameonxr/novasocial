@@ -2858,3 +2858,9 @@ The full gate found the Notes seam-preparation harness still required `viewNote`
 
 ### Note viewer object-URL audit compatibility correction — Branch2
 The full gate observed 216 audited files after adding the Note owner module, while object-URL lifecycle expected 215. Updated only that deterministic count; object-URL creation, revocation, download cleanup, compression cleanup, and preview ownership invariants remain unchanged.
+
+### Note viewer protected-acceptance compatibility correction — Branch2
+The full gate found the protected-split acceptance harness still described four approved signatures and 15 remaining systems. Updated only its matrix/gate/output expectations to six approved signatures and 13 remaining systems, added the Note contract and proof artifacts, and preserved the block on all other protected systems.
+
+### Note viewer high-risk contract compatibility correction — Branch2
+The full gate found the high-risk extraction contract still described three approved groups and 15 remaining systems. Updated only its documentation to record particle, deletion fallback, Push settings, and Note viewer as the four verified exceptions, with 13 remaining systems explicitly blocked; no additional production owner was authorized.

@@ -3,11 +3,11 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the three verified particle, deletion-fallback, and Push-settings exceptions.
+**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the four verified particle, deletion-fallback, Push-settings, and Note-viewer exceptions.
 
 ## Current decision
 
-The protected DM, Reels, Calls/WebRTC, Stories, Notes, and recording systems remain inline in the current migration and are **not direct-extraction candidates yet**. The particle, deletion-fallback, and Push-settings owners are the approved exceptions: each production move passed seam, browser, static parity, and rollback checks. Existing parity and behavior contracts do not authorize moving any other protected code.
+The protected DM, Reels, Calls/WebRTC, Stories, and recording systems remain inline in the current migration and are **not direct-extraction candidates yet**. The particle, deletion-fallback, Push-settings, and Note-viewer owners are the approved exceptions: each production move passed seam, browser, static parity, and rollback checks. Existing parity and behavior contracts do not authorize moving any other protected code.
 
 ## Required gate before any high-risk split
 
@@ -17,18 +17,18 @@ The first implementation step is therefore a **seam/adapter**, not a blind copy 
 
 ## Harness coverage
 
-`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 15 unapproved protected marker inventory remains inline and absent from `src/`, that the approved particle, deletion-fallback, and Push-settings owners are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
+`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 13 unapproved protected marker inventory remains inline and absent from `src/`, that the approved particle, deletion-fallback, Push-settings, and Note-viewer owners are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
 
 | Gate condition | Current status | Result |
 |---|---|---|
-| Protected systems remain inline | 15 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; particle, deletion fallback, and Push settings are represented by approved window owners | PASS |
+| Protected systems remain inline | 13 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; particle, deletion fallback, Push settings, and Note viewer are represented by approved window owners | PASS |
 | Baseline behavior coverage | Existing protected contract/harness families are present, including particle and deletion-fallback after-split evidence | PASS |
-| Seam-first policy | Direct extraction remains explicitly blocked for the 15 unapproved systems until adapter and proof work passes | PASS |
+| Seam-first policy | Direct extraction remains explicitly blocked for the 13 unapproved systems until adapter and proof work passes | PASS |
 | Branch safety | Gate is documentation-only and applies to `Branch2` | PASS |
 
 ## Safe boundary
 
-The production logic changes in the completed checkpoints are limited to the isolated particle owner, deletion-fallback owner, and Push-settings owner moves. Each passed subsystem-specific seam plans, reversible browser proofs, static parity, and rollback checks. All other high-risk systems remain inline and deferred until their own gates pass.
+The production logic changes in the completed checkpoints are limited to the isolated particle owner, deletion-fallback owner, Push-settings owner, and Note-viewer owner moves. Each passed subsystem-specific seam plans, reversible browser proofs, static parity, and rollback checks. All other high-risk systems remain inline and deferred until their own gates pass.
 
 ## References
 
