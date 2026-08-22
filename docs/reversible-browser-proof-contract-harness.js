@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle before/after browser proof is PASS, while browser proof remains outstanding for 18 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle and deletion-fallback before/after browser proofs are PASS, while browser proof remains outstanding for 17 unapproved systems'), 'matrix must continue to mark remaining browser proof');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 1/19 signatures moved'), 'matrix must report the completed particle production split');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 18 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('Protected production splits | 2/19 signatures moved'), 'matrix must report the two completed protected splits');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 17 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',
@@ -54,6 +54,10 @@ assert(fs.readFileSync(path.join(docsDir, 'particle-browser-proof-evidence.txt')
 assert(fs.existsSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt')), 'particle parity and rollback evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('After-split parity result: PASS'), 'particle after-split parity evidence must remain PASS');
 assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('Rollback result: PASS'), 'particle rollback evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-comparison-proof-evidence.txt')), 'deletion-fallback comparison browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-browser-comparison-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'deletion-fallback comparison browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-after-split-browser-proof-evidence.txt')), 'deletion-fallback after-split browser-proof evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-after-split-browser-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'deletion-fallback after-split browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'voice-browser-proof-evidence.txt')), 'voice browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'voice-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_VOICE_PERMISSION_DENIED_BROWSER_MOCK=PASS'), 'voice permission-denied browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'recording-start-stop-browser-proof-evidence.txt')), 'recording start-stop browser-proof evidence must remain present');
@@ -133,17 +137,18 @@ for (const signature of [
   'function renderStoryElements()',
   'async function syncLocalDeletionFallback()'
 ]) {
-  const expectedInlineCount = signature === 'function spawnLikeParticles(el){' ? 0 : 1;
+  const expectedInlineCount = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' ? 0 : 1;
   assert.strictEqual(html.split(signature).length - 1, expectedInlineCount, `protected owner count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected owner must remain outside src by declaration: ${signature}`);
 }
 assert(source.includes('window.spawnLikeParticles = function(el){'), 'approved particle owner must remain available through a window assignment');
+assert(source.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback owner must remain available through a window assignment');
 
 assert(!source.includes('reversibleBrowserProofPassed'), 'no speculative browser-proof pass flag may be introduced');
 assert(!source.includes('productionSplitApproved'), 'no speculative production-split approval flag may be introduced');
 
 console.log('REVERSIBLE_BROWSER_PROOF_CONTRACT_HARNESS=PASS');
 console.log('PROOF_STATUS=REMAINING');
-console.log('PROTECTED_SPLITS=1_OF_19');
+console.log('PROTECTED_SPLITS=2_OF_19');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');
-console.log('PRODUCTION_CHANGE=1_PARTICLE');
+console.log('PRODUCTION_CHANGE=2_APPROVED_SPLITS');

@@ -7,6 +7,7 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'particle-production-split-contract.md'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
@@ -41,8 +42,8 @@ assert.strictEqual(html.split('src/features/spawn-like-particles.js').length - 1
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'particle module must load before global caller');
 assert(source.includes('spawnLikeParticles(el);'), 'global caller handoff must remain present');
 for (const signature of protectedSignatures) {
-  const particle = signature === 'function spawnLikeParticles(el){';
-  assert.strictEqual(html.split(signature).length - 1, particle ? 0 : 1, `protected inline signature count mismatch: ${signature}`);
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()';
+  assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected inline signature count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected named signature must not be duplicated in src: ${signature}`);
 }
 const baselineHtml = execFileSync('git', ['-C', repo, 'show', 'cc72374:index.html'], { encoding: 'utf8' });
@@ -54,6 +55,7 @@ const canonicalOwner = moduleText.slice(moduleStart).replace('window.spawnLikePa
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 assert.strictEqual(hash(canonicalOwner), hash(baselineOwner), 'canonical extracted owner must match the pre-split owner hash');
 assert.strictEqual(hash(canonicalOwner), '44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57', 'canonical owner hash must match recorded baseline');
+assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'deletion-fallback approved owner must remain present');
 for (const file of [
   'particle-browser-comparison-proof-evidence.txt',
   'particle-after-split-browser-proof-evidence.txt',
@@ -72,4 +74,4 @@ console.log('BEFORE_AFTER_STATIC_PARITY=PASS');
 console.log('CANONICAL_OWNER_HASH=PASS');
 console.log('PRODUCTION_BROWSER_SMOKE=PASS');
 console.log('ROLLBACK_COMMIT_RELATIONSHIP=PASS');
-console.log('PROTECTED_SPLITS=1_OF_19');
+console.log('PROTECTED_SPLITS=2_OF_19');

@@ -1,0 +1,22 @@
+NovaSocial deletion-fallback after-split production browser evidence
+Date: 2026-08-22
+Branch: Branch2
+URL: http://127.0.0.1:4173/index.html?deletion-split=7a026d0
+Environment: production preview only; login gate remained visible; synthetic temporary storage and deletion function were used; no real localStorage, account, Supabase, Cloudinary, permission, media, or database action occurred.
+
+RESULT=PASS
+MODULE_LOADED=true
+MODULE_BEFORE_CALLER=true
+LOGIN_GATE_VISIBLE=true
+SMOKE_ERROR=null
+CALL_COUNT=3
+QUEUE_REMOVED=true
+TEMPORARY_STORAGE_RESTORED=true
+
+The loaded `window.syncLocalDeletionFallback` module replayed three synthetic queue items in stored order:
+
+1. `https://synthetic/one`, source `post`, reason `user_delete`.
+2. `https://synthetic/two`, source `story`, reason `expired`.
+3. `https://synthetic/three`, source `note`, reason `user_delete`.
+
+The smoke trace recorded one queue read, three deletion delegations, and one queue removal. The temporary `localStorage` and `deleteMediaProduction` overrides were restored in the same browser context. The production page remained at the login gate throughout.

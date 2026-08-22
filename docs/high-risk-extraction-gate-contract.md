@@ -7,7 +7,7 @@
 
 ## Current decision
 
-The protected DM, Reels, Calls/WebRTC, Stories, Notes, push, recording, and related navigation systems remain inline in the current migration and are **not direct-extraction candidates yet**. The isolated particle owner is the sole approved exception: its production move passed seam, browser, static parity, and rollback checks. Existing parity and behavior contracts do not authorize moving any other protected code.
+The protected DM, Reels, Calls/WebRTC, Stories, Notes, push, recording, and related navigation systems remain inline in the current migration and are **not direct-extraction candidates yet**. The isolated particle and deletion-fallback owners are the only approved exceptions: both production moves passed seam, browser, static parity, and rollback checks. Existing parity and behavior contracts do not authorize moving any other protected code.
 
 ## Required gate before any high-risk split
 
@@ -17,18 +17,18 @@ The first implementation step is therefore a **seam/adapter**, not a blind copy 
 
 ## Harness coverage
 
-`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 18 unapproved protected marker inventory remains inline and absent from `src/`, that the approved particle owner is window-assigned exactly once with its source module linked before its caller, and that all systems remain covered by the existing contract families. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
+`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 17 unapproved protected marker inventory remains inline and absent from `src/`, that the approved particle and deletion-fallback owners are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
 
 | Gate condition | Current status | Result |
 |---|---|---|
-| Protected systems remain inline | 18 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; particle is represented by one approved window owner | PASS |
-| Baseline behavior coverage | Existing protected contract/harness families are present, including particle after-split evidence | PASS |
-| Seam-first policy | Direct extraction remains explicitly blocked for the 18 unapproved systems until adapter and proof work passes | PASS |
+| Protected systems remain inline | 17 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; particle and deletion fallback are represented by approved window owners | PASS |
+| Baseline behavior coverage | Existing protected contract/harness families are present, including particle and deletion-fallback after-split evidence | PASS |
+| Seam-first policy | Direct extraction remains explicitly blocked for the 17 unapproved systems until adapter and proof work passes | PASS |
 | Branch safety | Gate is documentation-only and applies to `Branch2` | PASS |
 
 ## Safe boundary
 
-The only production logic changed in this checkpoint is the isolated particle owner move, which passed its subsystem-specific seam plan, reversible browser proof, static parity, and rollback checks. All other high-risk systems remain inline and deferred until their own gates pass.
+The production logic changes in the completed checkpoints are limited to the isolated particle owner and deletion-fallback owner moves. Both passed subsystem-specific seam plans, reversible browser proofs, static parity, and rollback checks. All other high-risk systems remain inline and deferred until their own gates pass.
 
 ## References
 

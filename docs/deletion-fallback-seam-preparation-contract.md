@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Prepare and prove a reversible seam for local deletion fallback synchronization without executing a production split until its independent parity and rollback gates pass.
+**Purpose:** Record the reversible seam and completed production split for local deletion fallback synchronization without broadening extraction to other protected systems.
 
 ## Preparation map
 
@@ -18,9 +18,9 @@
 
 ## Gate status
 
-This is a **seam-preparation checkpoint**. `syncLocalDeletionFallback()`, `deleteMediaProduction()`, local-storage access, queue replay, and startup trigger implementations remain inline and unchanged. Four non-destructive browser-context proof artifacts now cover malformed-storage failure, valid-queue replay, empty-queue handling, and disposable inline-versus-adapter comparison; they prove reversible mock behavior and comparison parity only and are not permission to extract production code. Before a split, the project still needs protected before/after marker parity and reversible browser proof for the production split itself, including queue removal timing, storage failures, and startup invocation.
+This is a **split-complete checkpoint**. `syncLocalDeletionFallback()` now resides in `src/features/sync-local-deletion-fallback.js` as the sole `window.syncLocalDeletionFallback` owner, while `deleteMediaProduction()` remains inline and the startup caller remains unchanged. Five non-destructive browser-context proof artifacts cover malformed-storage failure, valid-queue replay, empty-queue handling, disposable inline-versus-adapter comparison, and the after-split production smoke. The production split passed protected before/after parity, exact owner hash, load order, queue removal timing, storage-failure behavior, startup invocation, and rollback proof.
 
-The first implementation step must be test-only or adapter-only and must preserve both `syncLocalDeletionFallback()` and `deleteMediaProduction()` owners until the complete seam harness passes.
+The production owner move was performed only after the test-only adapter comparison passed. The module preserves the global startup handoff and delegates media cleanup to the existing inline `deleteMediaProduction()` boundary.
 
 ## Harness coverage
 
@@ -28,12 +28,12 @@ The first implementation step must be test-only or adapter-only and must preserv
 
 | Check | Expected behavior | Result |
 |---|---:|---|
-| Fallback owner | `syncLocalDeletionFallback()` remains inline | PASS |
+| Fallback owner | `src/features/sync-local-deletion-fallback.js` assigns one `window.syncLocalDeletionFallback` owner | PASS |
 | Queue behavior | Queue key, stored order, item isolation, and finalization markers remain protected | PASS |
 | Failure guards | Outer catch/logging and startup guard remain present | PASS |
 | Media boundary | `deleteMediaProduction()` remains the cleanup owner | PASS |
-| Browser mock inventory | Malformed-storage, valid-queue, empty-queue, and disposable comparison artifacts are present with PASS markers | PASS |
-| Production split | None | PASS |
+| Browser mock inventory | Malformed-storage, valid-queue, empty-queue, disposable comparison, and after-split production artifacts are present with PASS markers | PASS |
+| Production split | Complete; module loads before `like-effects.js`, global startup handoff is preserved, and rollback is proven | PASS |
 
 ## References
 
@@ -44,5 +44,6 @@ The first implementation step must be test-only or adapter-only and must preserv
 5. [`deletion-fallback-valid-queue-browser-proof-evidence.txt`](./deletion-fallback-valid-queue-browser-proof-evidence.txt)
 6. [`deletion-fallback-empty-queue-browser-proof-evidence.txt`](./deletion-fallback-empty-queue-browser-proof-evidence.txt)
 7. [`deletion-fallback-browser-comparison-proof-evidence.txt`](./deletion-fallback-browser-comparison-proof-evidence.txt)
-8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+8. [`deletion-fallback-after-split-browser-proof-evidence.txt`](./deletion-fallback-after-split-browser-proof-evidence.txt)
+9. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -31,21 +31,24 @@ const protectedSignatures = [
   'async function syncLocalDeletionFallback()'
 ];
 
-assert.strictEqual(sourceFiles.length, 212, '212 extracted JavaScript modules must remain present');
+assert.strictEqual(sourceFiles.length, 213, '213 extracted JavaScript modules must remain present');
 for (const signature of protectedSignatures) {
-  const particle = signature === 'function spawnLikeParticles(el){';
-  assert.strictEqual(html.split(signature).length - 1, particle ? 0 : 1, `protected signature count mismatch: ${signature}`);
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()';
+  assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle owner must occur once');
-assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'particle module must load before caller');
+assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback owner must occur once');
+assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
+assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
 assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS'), 'matrix must record particle split completion');
-assert(matrix.includes('Particle is approved and complete; next candidate requires its own gate'), 'matrix must preserve the next-candidate gate');
-assert(matrix.includes('Contract and harness are present; particle before/after browser proof is PASS, while browser proof remains outstanding for 18 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE; test-only comparison, after-split production smoke, exact owner hash, and rollback-after-split are PASS'), 'matrix must record deletion-fallback split completion');
+assert(matrix.includes('browser proof remains outstanding for 17 unapproved systems'), 'matrix must record remaining browser proof');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-contract.md')), 'account/bootstrap seam contract must remain present');
@@ -54,8 +57,9 @@ assert(fs.existsSync(path.join(repo, 'docs', 'protected-inline-parity-contract-h
 
 console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
 console.log('PROTECTED_SIGNATURES=19');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=1_APPROVED_PARTICLE');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=2_APPROVED_PARTICLE_AND_DELETION_FALLBACK');
 console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
-console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_PASS_REMAINING_18');
+console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
+console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_AND_DELETION_PASS_REMAINING_17');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');

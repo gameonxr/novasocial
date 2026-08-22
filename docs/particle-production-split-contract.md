@@ -27,7 +27,7 @@ The inline `spawnLikeParticles(el)` owner was moved from `index.html` into `src/
 
 The split was published as commit `07b81feccb59b5779439f0ff9169e3430a51835b`, whose parent is the pre-split evidence checkpoint `cc72374b89313f667a91310a820bc306c419e1d3`. Both commits are available in the Branch2 history, the worktree is clean, and `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`. The split is therefore revertible without a force-push or any change to main.
 
-The rollback proof was executed in a detached temporary worktree by reverting the split commit; the exact inline baseline owner/hash/counts were restored and the rollback baseline proof passed. The published split’s production checks and complete Branch2 regression gate pass; this contract does not authorize moving any of the remaining 18 protected systems.
+The rollback proof was executed in a detached temporary worktree by reverting the split commit; the exact inline baseline owner/hash/counts were restored and the rollback baseline proof passed. The published split’s production checks and complete Branch2 regression gate pass; this contract does not authorize moving any of the remaining 17 protected systems.
 
 ## Evidence
 

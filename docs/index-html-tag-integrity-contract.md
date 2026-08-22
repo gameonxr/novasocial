@@ -7,7 +7,7 @@
 
 ## Contract
 
-`index.html` must retain balanced script tags and a single inline application script boundary. The current modularized page contains 212 extracted/external script references plus one remaining inline application script, for 213 total script tags. The document, body, and HTML root elements must each open and close exactly once.
+`index.html` must retain balanced script tags and a single inline application script boundary. The current modularized page contains 214 extracted/external script references plus one remaining inline application script, for 215 total script tags after the deletion-fallback split. The document, body, and HTML root elements must each open and close exactly once.
 
 ## Harness coverage
 
@@ -16,9 +16,9 @@
 | Check | Expected behavior | Result |
 |---|---|---|
 | HTML5 doctype | Present | PASS |
-| Script tags | 213 opening tags | PASS |
-| Script closures | 213 closing tags | PASS |
-| Integrated scripts | 212 `src` tags | PASS |
+| Script tags | 215 opening tags | PASS |
+| Script closures | 215 closing tags | PASS |
+| Integrated scripts | 214 `src` tags | PASS |
 | Inline boundary | One inline application script | PASS |
 | Body boundary | One opening and one closing body tag | PASS |
 | HTML boundary | One opening and one closing html tag | PASS |
@@ -28,11 +28,11 @@ The harness is structural and documentation-only. It does not execute authentica
 
 ## Safe boundary
 
-No production code was changed in this checkpoint. The audit confirms HTML integration integrity without moving, rewriting, or modifying protected systems.
+The deletion-fallback production split is limited to its module script reference and removal of the original inline owner. The audit confirms HTML integration integrity without altering the remaining protected systems.
 
 ## Validation
 
-The standalone harness passed with `SCRIPT_TAGS=213`, `SCRIPT_CLOSURES=213`, `EXTERNAL_SCRIPT_TAGS=212`, and `INLINE_SCRIPT_TAGS=1`. The complete repository validation chain must pass before this contract and harness are published to `docs/`.
+The standalone harness passed with `SCRIPT_TAGS=215`, `SCRIPT_CLOSURES=215`, `EXTERNAL_SCRIPT_TAGS=214`, and `INLINE_SCRIPT_TAGS=1`. The complete repository validation chain must pass before this contract and harness are published to `docs/`.
 
 ## References
 
