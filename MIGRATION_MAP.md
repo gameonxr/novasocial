@@ -2888,3 +2888,6 @@ The full gate observed 216 audited files and 198 explicit window assignments aft
 
 ### Note viewer protected-coverage inventory correction — Branch2
 The Note viewer split left the original 19-signature coverage map intact while adding two approved window-assigned owners. Updated the coverage inventory and harness to record six approved owners, 13 remaining protected declarations, Note module ownership, and the updated trailing script order; all remaining protected systems stay inline and gated.
+
+### Story editor renderer seam preparation — Branch2
+Selected the protected `renderStoryElements()` boundary as the next contained candidate. Added mapping-only `story-editor-seam-preparation-contract.md` and its static harness. The renderer, drag/delete-zone handlers, Story editor state, and `publishStoryEditor()` remain inline and unchanged; no browser, storage, authentication, upload, publishing, or account mutation was performed. Preparation harness passed with `PRODUCTION_SPLIT=0` and `BROWSER_SIDE_EFFECTS=0`.
