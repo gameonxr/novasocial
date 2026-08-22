@@ -2672,3 +2672,6 @@ Updated `extracted-file-hygiene-contract-harness.js` from 247 to 248 source file
 
 ### Deletion-fallback inline-declaration correction — Branch2
 Updated `inline-declaration-closure-contract-harness.js` from 250 to 249 inline function declarations and excluded both `spawnLikeParticles` and `syncLocalDeletionFallback` from the remaining-inline protected set. The 17 unapproved declarations and unresolved `forwardMessage` seam remain enforced.
+
+### Deletion-fallback interval audit-count correction — Branch2
+Updated `interval-lifecycle-contract-harness.js` from 213 to 214 audited files so its timer lifecycle scan includes the new deletion-fallback module. Interval registration, cleanup, and Nova Universe timer invariants remain unchanged.
