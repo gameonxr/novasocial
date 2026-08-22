@@ -38,7 +38,7 @@ const protectedSignatures = [
   'async function syncLocalDeletionFallback()',
 ];
 
-const approvedBranch2Splits = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'function renderStoryElements()']);
+const approvedBranch2Splits = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()']);
 for (const signature of protectedSignatures) {
   const expectedBranch2Count = approvedBranch2Splits.has(signature) ? 0 : 1;
   assert.strictEqual(branch2Html.split(signature).length - 1, expectedBranch2Count, `Branch2 protected signature count mismatch: ${signature}`);
@@ -62,5 +62,5 @@ assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*functio
 
 console.log('PROTECTED_INLINE_PARITY_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('BRANCH2_AND_MAIN_MATCH=PASS_WITH_FOUR_APPROVED_OWNER_SIGNATURES');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=4_APPROVED_PARTICLE_DELETION_FALLBACK_AND_PUSH_SETTINGS');
+console.log('BRANCH2_AND_MAIN_MATCH=PASS_WITH_EIGHT_APPROVED_OWNER_SIGNATURES');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=8_APPROVED_PARTICLE_DELETION_PUSH_NOTE_VIEWER_NOTE_DELETION_AND_STORY');
