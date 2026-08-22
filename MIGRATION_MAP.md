@@ -2993,3 +2993,6 @@ Updated reversible-browser-proof assertions to include Story editor before/after
 
 ### Story editor reversible-owner parity correction — Branch2
 Updated the reversible-browser-proof protected-owner loop to classify `renderStoryElements()` as an approved external owner and verify its `window` assignment. Remaining protected owners remain inline and blocked.
+
+### Story editor source-boundary inventory correction — Branch2
+Updated source-boundary hygiene from 233 to 234 scanned JS/CSS files after adding the Story editor owner; embedded script/style and line-ending safeguards remain unchanged.
