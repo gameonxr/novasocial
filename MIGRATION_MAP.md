@@ -2603,3 +2603,6 @@ Updated `event-listener-boundary-contract-harness.js` from 211 to 212 extracted 
 
 ### Particle split source-hygiene count correction — Branch2
 Updated `extracted-file-hygiene-contract-harness.js` from 246 to 247 source files so its tree inventory includes the new particle JavaScript module. Empty-file and trailing-whitespace checks remain unchanged and passing.
+
+### Particle split index-tag integrity count correction — Branch2
+Updated `index-html-tag-integrity-contract-harness.js` from 213 to 214 total/closed script tags and from 212 to 213 external script tags. The one-inline-script, doctype, HTML/body, and protected DMs/Reels checks remain unchanged.
