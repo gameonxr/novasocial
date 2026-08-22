@@ -2735,3 +2735,6 @@ The full gate observed 247 inline application function declarations after extrac
 
 ### Push settings interval-audit compatibility correction — Branch2
 The full gate observed 215 audited files in the interval lifecycle harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; all interval registration, cleanup, and no-runtime-start assertions remain unchanged.
+
+### Push settings local-asset inventory compatibility correction — Branch2
+The full gate observed 235 unique static local asset references after adding the Push settings script, while the asset harness expected 234. Updated only that deterministic inventory count; missing-reference and manifest/service-worker protections remain unchanged.
