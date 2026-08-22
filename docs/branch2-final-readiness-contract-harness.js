@@ -33,9 +33,9 @@ assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'orig
 assert.strictEqual(jsFiles.length, 216, '216 extracted JavaScript modules must remain');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
 assert.strictEqual(featureFiles.length, 205, '205 feature modules must remain');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 217, 'HTML must retain 217 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 217, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 216, 'HTML must retain 216 external script tags');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 218, 'HTML must retain 218 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 218, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 217, 'HTML must retain 217 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');

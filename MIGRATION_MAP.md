@@ -2903,3 +2903,6 @@ After publishing the Story renderer owner, final readiness observed 216 source J
 
 ### Story editor feature-inventory correction — Branch2
 The final readiness gate observed 205 feature modules after publishing `story-editor-owners.js`. Updated the readiness harness and contract from the pre-split 204 count; no runtime behavior changed.
+
+### Story editor HTML inventory correction — Branch2
+The final readiness gate measured 218 total script tags and 217 external tags after loading the Story owner (including the existing CDN script). Updated the readiness harness and contract from the prior 217/216 baseline; script balance and inline application boundary remain intact.
