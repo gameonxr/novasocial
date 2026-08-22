@@ -2843,3 +2843,6 @@ The full gate observed 245 inline application function declarations after removi
 
 ### Note viewer onclick-surface compatibility correction — Branch2
 The full gate observed 154 unique HTML onclick handlers after moving five Note-owner call sites with the two owners, while the harness expected 159. Updated only that deterministic inventory count; global assignment resolution, the unresolved `forwardMessage` seam, and protected DM/message boundaries remain unchanged.
+
+### Note viewer interval-audit compatibility correction — Branch2
+The full gate observed 216 audited files after adding the Note owner module, while interval lifecycle expected 215. Updated only that deterministic count; interval registration, cleanup, managed handles, and zero-runtime-start assertions remain unchanged.
