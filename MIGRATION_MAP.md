@@ -2651,3 +2651,6 @@ Captured pre-split owner hash `f267467785faea7ef3b8cc0c50a15764fd3bd13759a852b20
 
 ### Deletion-fallback Branch2 safety-policy correction — Branch2
 Updated `branch2-only-safety-contract-harness.js` to permit the latest audited deletion-fallback split checkpoint alongside the existing particle split, validate `window.syncLocalDeletionFallback` in its module, and retain all remaining protected inline checks. No unapproved production file is permitted by the allowlist.
+
+### Deletion-fallback clipboard audit-count correction — Branch2
+Updated `clipboard-interaction-contract-harness.js` from 213 to 214 audited files so its scan includes `index.html` plus 213 extracted JavaScript modules. Clipboard call counts, legacy fallback, and all copy-surface boundaries remain unchanged.
