@@ -35,8 +35,9 @@ Viewer gestures pause media on touch start. A downward vertical swipe greater th
 | Horizontal swipes | Move users beyond ±50px thresholds | PASS |
 | Small gesture | Resume playback | PASS |
 | Close cleanup | Clear timer, stop media, remove overlays, hide viewer | PASS |
+| Injected playback dispatch | Group, render, navigate, swipe, and close dependencies dispatch explicitly in order | PASS |
 
-The harness is deterministic and uses mocked data/events only. It does not invoke real DOM, video, timers, database, authentication, navigation, or Story actions.
+The harness is deterministic and uses mocked data/events only. Its injected playback dispatcher is test-only and is not loaded by `index.html`. It does not invoke real DOM, video, timers, database, authentication, navigation, or Story actions.
 
 ## Safe boundary
 

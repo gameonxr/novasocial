@@ -60,6 +60,33 @@ function navigate(state, direction) {
   return { ...state, bucketIdx, storyIdx, closed: false, events: [...events, `render:${bucketIdx}:${storyIdx}`] };
 }
 
+function createInjectedStoryPlaybackSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    group(input) {
+      calls.push('group');
+      return deps.group(input);
+    },
+    render(input) {
+      calls.push('render');
+      return deps.render(input);
+    },
+    navigate(input, direction) {
+      calls.push('navigate');
+      return deps.navigate(input, direction);
+    },
+    swipe(input) {
+      calls.push('swipe');
+      return deps.swipe(input);
+    },
+    close(input) {
+      calls.push('close');
+      return deps.close(input);
+    },
+  };
+}
+
 function handleSwipe({ deltaX, deltaY, ownStory }) {
   if (Math.abs(deltaY) > Math.abs(deltaX)) {
     if (deltaY > 100) return 'close';
@@ -108,5 +135,22 @@ function handleSwipe({ deltaX, deltaY, ownStory }) {
 
   const closeEvents = ['timer.clear', 'video.pause', 'video.src.remove', 'video.load', 'pause-all-videos', 'overlay.remove', 'viewer.hide'];
   assert(closeEvents.includes('timer.clear') && closeEvents.includes('video.src.remove') && closeEvents.includes('viewer.hide'), 'closeSV must clean timer, media, overlays, and viewer visibility');
-  console.log(JSON.stringify({ passed: true, grouped, imageRender, videoRender, nextWithinUser, prevAcrossUser, nextUser, prevUserClamped, end, swipeResults: { down: handleSwipe({ deltaX: 0, deltaY: 140, ownStory: false }), up: handleSwipe({ deltaX: 0, deltaY: -140, ownStory: true }), left: handleSwipe({ deltaX: -80, deltaY: 10, ownStory: false }), right: handleSwipe({ deltaX: 80, deltaY: 10, ownStory: false }), small: handleSwipe({ deltaX: 20, deltaY: 10, ownStory: false }) }, closeEvents }, null, 2));
+
+  const seam = createInjectedStoryPlaybackSeam({
+    group: (input) => groupStories(input.data, input.startIdx),
+    render: renderStory,
+    navigate,
+    swipe: handleSwipe,
+    close: () => closeEvents,
+  });
+  const injectedGrouped = seam.group({ data, startIdx: 0 });
+  const injectedRender = seam.render({ story: data[0], storyIdx: 0, bucketLength: 2, events: [] });
+  const injectedNavigation = seam.navigate({ buckets: injectedGrouped.buckets, bucketIdx: 0, storyIdx: 1 }, 'next');
+  const injectedSwipe = seam.swipe({ deltaX: 0, deltaY: 140, ownStory: false });
+  const injectedClose = seam.close();
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['group', 'render', 'navigate', 'swipe', 'close']), 'Injected Story playback seam must dispatch lifecycle owners explicitly');
+  assert(injectedGrouped.buckets.length === 2 && injectedRender.events.includes('image.append') && injectedNavigation.bucketIdx === 1, 'Injected playback seam must preserve grouping, rendering, and navigation');
+  assert(injectedSwipe === 'close' && injectedClose.includes('viewer.hide'), 'Injected playback seam must preserve gesture close and media cleanup outcomes');
+
+  console.log(JSON.stringify({ passed: true, grouped, imageRender, videoRender, nextWithinUser, prevAcrossUser, nextUser, prevUserClamped, end, swipeResults: { down: handleSwipe({ deltaX: 0, deltaY: 140, ownStory: false }), up: handleSwipe({ deltaX: 0, deltaY: -140, ownStory: true }), left: handleSwipe({ deltaX: -80, deltaY: 10, ownStory: false }), right: handleSwipe({ deltaX: 80, deltaY: 10, ownStory: false }), small: handleSwipe({ deltaX: 20, deltaY: 10, ownStory: false }) }, closeEvents, seam: { calls: seam.calls, injectedSwipe, injectedClose } }, null, 2));
 })();

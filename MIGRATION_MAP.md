@@ -3155,3 +3155,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Story viewers-list preparation with an injected dispatcher around the mocked viewers modal flow; `showStoryViewers()` remains inline.
 - Verified explicit modal dispatch, playback pause, timer/video cleanup, loading/empty/error states, viewer-row rendering, modal resume, Story close, and profile navigation using mocks only.
 - Updated `docs/story-viewers-list-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live viewer/profile action was performed, and Story viewers-list production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Story playback/navigation test-only injected seam proof
+- Advanced Story playback preparation with an injected dispatcher around mocked grouping, rendering, navigation, gesture, and close dependencies; `openSV()`, `renderSV()`, `nextSV()`, `prevSV()`, user navigation, `stopSVPlayback()`, and `closeSV()` remain inline.
+- Verified explicit lifecycle dispatch order, user-bucket grouping, image/video media paths, boundary navigation, gesture thresholds, and timer/media/overlay cleanup using mocks only.
+- Updated `docs/story-viewer-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live Story action was performed, and Story playback production extraction remains blocked pending independent browser proof and rollback gates.
