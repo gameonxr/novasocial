@@ -2840,3 +2840,6 @@ The full gate observed 217 opening/closing script tags and 216 external script t
 
 ### Note viewer inline-declaration compatibility correction — Branch2
 The full gate observed 245 inline application function declarations after removing the two Note owners, while the closure harness expected 247. Updated only that total and added `viewNote`/`removeMyNoteFromViewer` to the approved extracted-owner set; the remaining 13 protected declarations and unresolved `forwardMessage` seam remain enforced.
+
+### Note viewer onclick-surface compatibility correction — Branch2
+The full gate observed 154 unique HTML onclick handlers after moving five Note-owner call sites with the two owners, while the harness expected 159. Updated only that deterministic inventory count; global assignment resolution, the unresolved `forwardMessage` seam, and protected DM/message boundaries remain unchanged.
