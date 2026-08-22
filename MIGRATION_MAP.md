@@ -2765,3 +2765,6 @@ The full gate found the Push seam-preparation harness still asserted inline owne
 
 ### Push settings seam-marker compatibility correction — Branch2
 The Push seam harness found `showSettingsNotifications()` had moved correctly with the extracted owner, but the marker loop searched HTML only. Updated only the marker surface to combine HTML and `push-settings.js`; production ownership and all side-effect guards remain unchanged.
+
+### Push settings realtime-audit compatibility correction — Branch2
+The full gate observed 215 audited files in the realtime subscription lifecycle harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; all channel registration and cleanup assertions remain unchanged.

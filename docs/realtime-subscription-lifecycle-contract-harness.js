@@ -17,7 +17,7 @@ const managedSlots = [
   '_groupCallState.participantsSub', 'window.notifsSub', 'window._selfProfileSub', 'window._notesSub',
 ];
 
-assert.strictEqual(files.length, 214, 'index.html plus 213 extracted modules must be audited after deletion-fallback split');
+assert.strictEqual(files.length, 215, 'index.html plus 214 extracted modules must be audited after Push settings split');
 assert.strictEqual((source.match(/\.channel\(/g) || []).length, 10, '10 Supabase realtime channels must remain registered');
 assert.strictEqual((source.match(/removeChannel\(/g) || []).length, 21, '21 existing cleanup calls must remain present');
 for (const name of channelNames) {
