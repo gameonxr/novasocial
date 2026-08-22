@@ -2804,3 +2804,6 @@ The full gate found the autoplay harness still searched `index.html` for the Not
 
 ### Note viewer final-readiness compatibility correction — Branch2
 The full gate found final readiness still encoded the pre-Note 214-JS/203-feature and 216/216/215-script totals. Updated only those deterministic totals, Note module order/reference, and approved-owner checks for `viewNote` and `removeMyNoteFromViewer`; remaining protected systems remain gated.
+
+### Note viewer classic-script compatibility correction — Branch2
+The full gate found classic-script compatibility still expected 216 script tags and 214 extracted JavaScript files after the Note owner module was added. Updated only those deterministic totals to 217 and 215; classic-script, no-module-syntax, and no-async/defer invariants remain unchanged.
