@@ -2630,3 +2630,6 @@ Updated `realtime-subscription-lifecycle-contract-harness.js` from 212 to 213 au
 
 ### Particle split source-boundary count correction — Branch2
 Updated `source-boundary-hygiene-contract-harness.js` from 229 to 230 JS/CSS files so its boundary scan includes the new particle module. UTF-8, CRLF, NUL-byte, and embedded script/style boundary checks remain unchanged.
+
+### Particle split storage-key audit-count correction — Branch2
+Updated `storage-key-surface-contract-harness.js` from 212 to 213 audited files so its storage-key scan includes the new particle module. The 29-key localStorage allowlist, zero sessionStorage references, and dynamic sticker family checks remain unchanged.
