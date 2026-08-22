@@ -2579,3 +2579,6 @@ Moved the protected `spawnLikeParticles` owner from `index.html` into `src/featu
 
 ### Particle production-split contract pair — Branch2
 Added `docs/particle-production-split-contract.md` and `docs/particle-production-split-contract-harness.js` to make the first protected production move independently auditable. The pair records the 213→214 script-count transition, 212→213 external-script transition, zero inline particle declarations, one window-assigned owner, canonical hash parity, production browser smoke PASS, and the published split commit/parent relationship. The remaining 18 protected systems stay blocked by the high-risk gate.
+
+### Particle split compatibility-count correction — Branch2
+Updated `classic-script-compatibility-contract-harness.js` for the intentional particle module addition: 214 classic script tags and 212 extracted JavaScript files. No module syntax, async/defer attributes, or classic-script behavior changed; the correction preserves the classic loader invariants after the verified particle split.

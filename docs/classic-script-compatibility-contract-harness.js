@@ -26,11 +26,11 @@ for (const file of extractedFiles.sort()) {
   });
 }
 
-assert.strictEqual(scriptTags.length, 213, 'index.html must retain 213 script tags');
+assert.strictEqual(scriptTags.length, 214, 'index.html must retain 214 script tags');
 assert.deepStrictEqual(moduleTags, [], 'classic script architecture must not contain type=module tags');
 assert.deepStrictEqual(asyncTags, [], 'classic script order must not contain defer or async attributes');
 assert.deepStrictEqual(moduleSyntax, [], 'extracted classic scripts must not contain top-level import/export syntax');
-assert.strictEqual(extractedFiles.length, 211, 'src must retain 211 extracted JavaScript files');
+assert.strictEqual(extractedFiles.length, 212, 'src must retain 212 extracted JavaScript files');
 
 console.log('CLASSIC_SCRIPT_COMPATIBILITY_HARNESS=PASS');
 console.log(`SCRIPT_TAGS=${scriptTags.length}`);
