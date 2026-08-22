@@ -2810,3 +2810,6 @@ The full gate found classic-script compatibility still expected 216 script tags 
 
 ### Note viewer clipboard-audit compatibility correction — Branch2
 The full gate observed 216 audited files in the clipboard interaction harness after adding `note-viewer-owners.js`, while it expected 215. Updated only that deterministic file count; all clipboard write and legacy fallback invariants remain unchanged.
+
+### Note viewer collision-audit compatibility correction — Branch2
+The full gate observed 216 audited files and 713 unique top-level function names after moving the two Note owners. Updated only those deterministic collision-harness totals; the zero-duplicate invariant remains unchanged.
