@@ -9,6 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const docs = path.join(repo, 'docs');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -53,10 +54,13 @@ const trailing = [
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
+  '<script src="src/features/note-viewer-owners.js"></script>',
   '<script src="src/features/like-effects.js"></script>'
 ].map(marker => html.indexOf(marker));
 assert(trailing.every(position => position >= 0), 'required trailing scripts are present');
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order is preserved');
+assert.strictEqual((noteModule.match(/window\.(?:viewNote|removeMyNoteFromViewer)\s*=\s*async function\(/g) || []).length, 2, 'approved Note viewer owners must be present exactly twice');
 
 console.log('PROTECTED_CONTRACT_COVERAGE_HARNESS=PASS');
 console.log(`PROTECTED_SEAMS=${coverage.length}`);
+console.log('APPROVED_WINDOW_OWNERS=6_PARTICLE_DELETION_PUSH_AND_NOTE_VIEWER');

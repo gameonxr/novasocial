@@ -21,21 +21,21 @@
 | WebRTC peer connection | `calls-webrtc-contract` | PASS |
 | Notes submission/deletion/reactions/reactors | `note-viewer-contract` | PASS |
 
-The 19 protected declarations are intentionally mapped to 11 focused contract families because several declarations share one protected subsystem boundary. Every mapping has both a Markdown contract and a standalone `*-harness.js` file in `docs/`. Particle, deletion-fallback, and Push settings are the four approved window-assigned production owners; the other 15 declarations remain inline and gated.
+The 19 protected declarations are intentionally mapped to 11 focused contract families because several declarations share one protected subsystem boundary. Every mapping has both a Markdown contract and a standalone `*-harness.js` file in `docs/`. Particle, deletion-fallback, Push settings, and Note viewer are the six approved window-assigned production owners; the other 13 protected declarations remain inline and gated.
 
 ## Harness coverage
 
-`docs/protected-contract-coverage-harness.js` statically checks that the 15 unapproved protected declaration markers remain in `index.html`, that the four approved particle, deletion-fallback, and Push settings owners are represented by window-assigned modules, that each mapped contract and harness file exists, and that the required trailing script order remains intact.
+`docs/protected-contract-coverage-harness.js` statically checks that the 13 unapproved protected declaration markers remain in `index.html`, that the six approved particle, deletion-fallback, Push settings, and Note viewer owners are represented by window-assigned modules, that each mapped contract and harness file exists, and that the required trailing script order remains intact.
 
 The harness is documentation-only. It does not extract, rewrite, execute, or mutate any protected production system.
 
 ## Safe boundary
 
-The 15 unapproved protected implementations remain inline and unchanged. Only the particle, deletion-fallback, and Push settings owners have moved under their approved window-assigned contracts. No DMs, Reels, Calls/WebRTC, Stories, polls, Notes, recording, authentication, or account production code was moved in this checkpoint.
+The 13 unapproved protected implementations remain inline and unchanged. Only the particle, deletion-fallback, Push settings, and Note viewer owners have moved under their approved window-assigned contracts. No DMs, Reels, Calls/WebRTC, Stories, polls, Notes submission/reaction, recording, authentication, or account production code was moved in this checkpoint.
 
 ## Validation
 
-The standalone coverage harness passed with `PROTECTED_SEAMS=19`. The complete repository validation chain must pass before this inventory and harness are published to `docs/`.
+The standalone coverage harness passed with `PROTECTED_SEAMS=19` and six approved window owners. The complete repository validation chain must pass before this inventory and harness are published to `docs/`.
 
 ## References
 

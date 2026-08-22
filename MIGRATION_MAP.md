@@ -2885,3 +2885,6 @@ The full gate observed 216 audited files after adding the Note owner module, whi
 
 ### Note viewer window-assignment compatibility correction — Branch2
 The full gate observed 216 audited files and 198 explicit window assignments after adding the two Note owners, while the harness expected 215 and 196. Added only `viewNote` and `removeMyNoteFromViewer` to the established allowlist and updated those deterministic totals; unexpected/missing-name protections remain unchanged.
+
+### Note viewer protected-coverage inventory correction — Branch2
+The Note viewer split left the original 19-signature coverage map intact while adding two approved window-assigned owners. Updated the coverage inventory and harness to record six approved owners, 13 remaining protected declarations, Note module ownership, and the updated trailing script order; all remaining protected systems stay inline and gated.
