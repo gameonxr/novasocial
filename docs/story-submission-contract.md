@@ -30,8 +30,9 @@ After a successful insert, follower and explicit mention notifications are best-
 | Story available after insert | Close modal and open viewer | PASS |
 | No Story available after insert | Close modal and return Home | PASS |
 | Upload failure | Restore button and show failure | PASS |
+| Injected submission dispatch | Submission dependency dispatches explicitly and preserves success, viewer, and reset outcomes | PASS |
 
-The harness is deterministic and uses mocked Story/editor/media/database events only. It does not invoke real DOM, canvas, media upload, Supabase, notifications, account, or Story actions.
+The harness is deterministic and uses mocked Story/editor/media/database events only. Its injected submission dispatcher is test-only and is not loaded by `index.html`. It does not invoke real DOM, canvas, media upload, Supabase, notifications, account, or Story actions.
 
 ## Safe boundary
 

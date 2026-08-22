@@ -3160,3 +3160,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Story playback preparation with an injected dispatcher around mocked grouping, rendering, navigation, gesture, and close dependencies; `openSV()`, `renderSV()`, `nextSV()`, `prevSV()`, user navigation, `stopSVPlayback()`, and `closeSV()` remain inline.
 - Verified explicit lifecycle dispatch order, user-bucket grouping, image/video media paths, boundary navigation, gesture thresholds, and timer/media/overlay cleanup using mocks only.
 - Updated `docs/story-viewer-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live Story action was performed, and Story playback production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Story submission test-only injected seam proof
+- Advanced Story submission preparation with an injected dispatcher around the mocked validation, media, upload, persistence, notification, and viewer/home flow; `submitStory()` remains inline.
+- Verified explicit submission dispatch, ban and empty-input guards, 50-second video limit, image/text canvas paths, video overlay retry, progress, upload failure reset, nonfatal notification failure, cache invalidation, modal close, and viewer/home outcomes using mocks only.
+- Updated `docs/story-submission-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live upload/publish/notification action was performed, and Story submission production extraction remains blocked pending independent browser proof and rollback gates.

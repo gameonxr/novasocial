@@ -2,6 +2,17 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function createInjectedStorySubmissionSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    submit(input) {
+      calls.push('submit');
+      return deps.submit(input);
+    },
+  };
+}
+
 async function mockSubmitStory({ banned = false, hasFile = true, hasText = false, mediaType = 'image', duration = 0, uploadFails = false, overlayInsertFails = false, notificationFails = false, viewerHasStory = true }) {
   const events = [];
   const state = { disabled: false, button: 'Share Story', uploaded: false, modalClosed: false };
@@ -60,5 +71,12 @@ async function mockSubmitStory({ banned = false, hasFile = true, hasText = false
   const uploadFailure = await mockSubmitStory({ hasFile: true, uploadFails: true });
   assert(uploadFailure.events.includes('toast:upload-failed') && uploadFailure.state.button === 'Share Story' && !uploadFailure.state.disabled, 'Upload failure must reset button and show failure feedback');
 
-  console.log(JSON.stringify({ passed: true, banned, empty, longVideo, imageText, textOnly, videoOverlayRetry, notifFailure, uploadFailure }, null, 2));
+  const seam = createInjectedStorySubmissionSeam({ submit: mockSubmitStory });
+  const injectedSuccess = await seam.submit({ hasFile: true, hasText: true, mediaType: 'image', viewerHasStory: true });
+  const injectedFailure = await seam.submit({ hasFile: true, uploadFails: true });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['submit', 'submit']), 'Injected Story submission seam must dispatch submit owner explicitly for each request');
+  assert(injectedSuccess.state.modalClosed && injectedSuccess.events.includes('stories.insert') && injectedSuccess.events.includes('viewer.open'), 'Injected submission seam must preserve successful persistence and viewer outcomes');
+  assert(!injectedFailure.state.disabled && injectedFailure.events.includes('upload.failed'), 'Injected submission seam must preserve upload failure reset');
+
+  console.log(JSON.stringify({ passed: true, banned, empty, longVideo, imageText, textOnly, videoOverlayRetry, notifFailure, uploadFailure, seam: { calls: seam.calls, injectedSuccess, injectedFailure } }, null, 2));
 })();
