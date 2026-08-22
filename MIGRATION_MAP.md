@@ -2942,3 +2942,6 @@ Updated the index HTML tag-integrity harness to the post-Story totals: 218 total
 
 ### Story editor inline-declaration correction — Branch2
 Moving `renderStoryElements()` to the external owner reduced inline application function declarations from 245 to 244. Updated the inline-declaration harness for seven approved owners; the protected set remains 19 unique names and all 12 remaining protected declarations stay inline.
+
+### Story editor interval-audit file-count correction — Branch2
+Updated the interval-lifecycle harness from 216 to 217 audited files (`index.html` plus 216 source modules) after adding the Story editor owner; interval creation and cleanup totals remain unchanged.
