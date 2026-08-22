@@ -42,11 +42,15 @@ assert.strictEqual(sourceText.includes('async function _refreshDmsInPlace()'), f
 assert.strictEqual(sourceText.includes('function openChat('), false, 'openChat must not be extracted');
 assert(fs.existsSync(path.join(repo, 'docs', 'dms-realtime-contract.md')), 'DMs behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'dms-realtime-contract-harness.js')), 'DMs behavior harness must remain present');
+const dmsHarness = fs.readFileSync(path.join(repo, 'docs', 'dms-realtime-contract-harness.js'), 'utf8');
+assert(dmsHarness.includes('createInjectedDmsSeam'), 'DMs injected seam proof must remain present');
+assert(dmsHarness.includes('primary-render') && dmsHarness.includes('in-place-refresh'), 'DMs injected seam dispatch markers must remain present');
 
 console.log('DMS_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=RENDER_REFRESH_DATA_STATE_DOM_CACHE_SCROLL_NAVIGATION');
 console.log('PROTECTED_DM_SIGNATURES=3');
 console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
+console.log('INJECTED_SEAM_PROOF=PASS');
 console.log('EXTRACTED_DM_SIGNATURES=0');
 console.log('NON_DESTRUCTIVE_REFRESH=PASS');
 console.log('PRODUCTION_SPLIT=0');

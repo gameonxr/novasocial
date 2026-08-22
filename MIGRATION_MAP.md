@@ -3175,3 +3175,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/stories-seam-preparation-contract-harness.js` to verify six test-only injected Story seam proof markers covering playback, polls, viewers-list, reply/reaction, submission, and deletion.
 - Updated `docs/stories-seam-preparation-contract.md` to document the six-proof inventory while retaining all Story production owners inline and direct extraction blocked.
 - Aggregate and six Story behavior harnesses pass with mocks only. No runtime owner, script tag, media, database, account, publishing, deletion, or navigation behavior changed.
+
+## 2026-08-22 — Aggregate DMs injected-proof inventory synchronization
+- Strengthened `docs/dms-seam-preparation-contract-harness.js` to require the test-only `createInjectedDmsSeam` proof and its primary-render/in-place-refresh dispatch markers.
+- Updated `docs/dms-seam-preparation-contract.md` to document the injected seam inventory while retaining `renderDMs()`, `_refreshDmsInPlace()`, and `openChat()` inline and direct extraction blocked.
+- Aggregate and realtime DMs harnesses pass with mocks only. No runtime owner, script tag, chat, message, realtime, account, or database behavior changed.
