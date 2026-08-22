@@ -11,3 +11,8 @@ Rollback result: PASS
 The current commit object and its parent commit are available. The previous Branch2 checkpoint is 2c9b813dea1fd9d2a355cb22312025d4ee0bf56d. The current tree is clean, local HEAD matches origin/Branch2, and origin/main remains the protected untouched ref.
 
 Safety: This was read-only Git/source verification. No checkout, reset, force-push, browser action, account mutation, protected behavior, or production code change was performed.
+
+Latest baseline revalidation — 2026-08-22
+The current Branch2 commit f04dc1a17b6376c3801e028fc481381c64c933a7 was rechecked read-only. Script counts remain 213 opening tags, 213 closing tags, and 212 external scripts. The particle owner remains exactly once inline, with the null-target guard, twelve-particle loop, live geometry lookup, and 800 ms cleanup markers present; zero protected particle-owner matches exist in src/.
+
+Interpretation: This confirms the current inline production baseline remains suitable for a future comparison. It is not before/after production-split proof, does not authorize extraction, and does not change the existing PROOF_STATUS=REMAINING or DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF policy.

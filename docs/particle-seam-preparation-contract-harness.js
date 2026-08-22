@@ -58,6 +58,9 @@ assert(seamContract.includes('The explicit **test-only adapter boundary** is:'),
 assert(seamContract.includes('must not be imported by `index.html`'), 'particle adapter must not enter production HTML');
 assert(seamContract.includes('## Test-only adapter comparison checklist'), 'particle comparison checklist must remain present');
 assert(seamContract.includes('Approval gate | Comparison remains unapproved'), 'particle comparison approval gate must remain locked');
+const parityEvidence = fs.readFileSync(path.join(repo, 'docs', 'particle-parity-rollback-evidence.txt'), 'utf8');
+assert(parityEvidence.includes('Latest baseline revalidation — 2026-08-22'), 'particle current baseline revalidation must remain recorded');
+assert(parityEvidence.includes('It is not before/after production-split proof'), 'particle baseline revalidation must not be treated as split proof');
 assert(owner.includes('if(!el) return;'), 'future seam must preserve null-target no-op');
 assert(owner.includes('for(let i=0; i<12; i++)'), 'future seam must preserve twelve-particle count');
 assert(owner.includes('el.getBoundingClientRect()'), 'future seam must preserve live target geometry');

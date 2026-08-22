@@ -22,7 +22,7 @@ The explicit **test-only adapter boundary** is: `target` plus injected `geometry
 | DOM insertion | Every particle uses `.particle` and is appended to `document.body` | Mock body and element factory |
 | Cleanup | Every particle schedules 800 ms removal and removes itself | Captured timer callbacks |
 | Integration | Like persistence remains outside the seam | No database or like handler calls |
-| Proof inventory | Browser particle mock and parity/rollback artifacts remain present with PASS markers | Existing evidence |
+| Proof inventory | Browser particle mock, parity/rollback, and current baseline revalidation remain present with PASS markers | Existing evidence |
 
 ## Candidate selection
 
@@ -48,7 +48,7 @@ Particle is the first candidate for any future protected-split proof because its
 
 ## Readiness gate
 
-This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
+This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks, with the parity artifact revalidated against the current Branch2 baseline. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.
 
 ## Harness coverage
 

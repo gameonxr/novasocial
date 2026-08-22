@@ -2534,3 +2534,7 @@ Selected the isolated particle owner as the first low-risk candidate for any fut
 ### Particle test-only adapter-boundary preparation — Branch2
 
 Defined the particle comparison seam as a test-only boundary with injected geometry, element creation, body insertion, randomness, timer, and cleanup dependencies. Added a parity checklist for owner isolation, dependency injection, behavior preservation, side-effect exclusion, and explicit approval gating. No adapter entered production HTML and no protected owner moved; production-split proof remains required.
+
+### Particle current-baseline revalidation — Branch2
+
+Revalidated the inline particle production baseline read-only at commit `f04dc1a17b6376c3801e028fc481381c64c933a7`: 213 script tags, 213 closing tags, 212 external scripts, one inline particle owner, required null/geometry/count/cleanup markers, and zero protected particle-owner matches in `src/`. This is baseline suitability evidence only, not before/after production-split proof; extraction remains blocked.
