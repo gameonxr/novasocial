@@ -48,9 +48,9 @@ const requiredCoverage = [
   'push-settings-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 216, '216 extracted JavaScript modules must remain present');
+assert.strictEqual(sourceFiles.length, 217, '217 extracted JavaScript modules must remain present after Note deletion split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'function renderStoryElements()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
@@ -62,16 +62,19 @@ assert(deletionModule.includes('window.syncLocalDeletionFallback = async functio
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback window owner must occur once');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable window owner must occur once');
 assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset window owner must occur once');
 assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note view window owner must occur once');
 assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal window owner must occur once');
+assert.strictEqual((noteDeletionModule.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note deletion window owner must occur once');
 assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story renderer window owner must occur once');
 assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
 assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
 assert(html.lastIndexOf('src/features/push-settings.js') < html.lastIndexOf('src/features/note-viewer-owners.js'), 'Push module must load before Note module');
-assert(html.lastIndexOf('src/features/note-viewer-owners.js') < html.lastIndexOf('src/features/story-editor-owners.js'), 'Note module must load before Story module');
+assert(html.lastIndexOf('src/features/note-viewer-owners.js') < html.lastIndexOf('src/features/note-deletion-owner.js'), 'Note viewer module must load before Note deletion module');
+assert(html.lastIndexOf('src/features/note-deletion-owner.js') < html.lastIndexOf('src/features/story-editor-owners.js'), 'Note deletion module must load before Story module');
 assert(html.lastIndexOf('src/features/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'Story module must load before caller');
 for (const file of requiredCoverage) {
   assert(fs.existsSync(path.join(docsDir, file)), `required high-risk coverage file missing: ${file}`);
@@ -81,7 +84,7 @@ assert(fs.existsSync(path.join(docsDir, 'account-bootstrap-adapter-harness.js'))
 
 console.log('HIGH_RISK_EXTRACTION_GATE_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('EXTRACTED_PROTECTED_SIGNATURES=7_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_AND_STORY_EDITOR');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=8_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_AND_STORY_EDITOR');
 console.log(`REQUIRED_COVERAGE_FILES=${requiredCoverage.length + 2}`);
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_12_PROTECTED_SYSTEMS');
 console.log('BRANCH2_ONLY=PASS');

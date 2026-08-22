@@ -3091,3 +3091,9 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Updated `docs/extracted-file-hygiene-contract-harness.js` to the measured 252 files under `src/` after adding `note-deletion-owner.js`.
 - Empty-file and trailing-whitespace invariants remain PASS.
+
+## 2026-08-22 — Note deletion high-risk gate compatibility correction
+
+- Updated `docs/high-risk-extraction-gate-contract-harness.js` to 217 source modules and eight approved protected owners.
+- Added explicit external ownership and ordering checks for `src/features/note-deletion-owner.js`.
+- Remaining unapproved protected systems remain blocked at 12; all required high-risk coverage and main-branch safety checks remain enforced.
