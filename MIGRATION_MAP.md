@@ -2612,3 +2612,6 @@ Updated `inline-declaration-closure-contract-harness.js` from 251 to 250 inline 
 
 ### Particle split interval-audit count correction — Branch2
 Updated `interval-lifecycle-contract-harness.js` from 212 to 213 audited files so its interval lifecycle scan includes `index.html` plus all 212 extracted JavaScript modules. Interval registration, cleanup, managed handles, and no-runtime-start checks remain unchanged.
+
+### Particle split local-asset inventory correction — Branch2
+Updated `local-html-asset-reference-contract-harness.js` from 232 to 233 unique static local references to include `src/features/spawn-like-particles.js`. All references still resolve, and manifest/service-worker availability remains unchanged.
