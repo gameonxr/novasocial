@@ -92,6 +92,25 @@ async function handleSignal(state, peer, signal) {
   }
 }
 
+function createInjectedCallsSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    createPeer(state) {
+      calls.push('peer-create');
+      return deps.createPeer(state);
+    },
+    handleSignal(state, peer, signal) {
+      calls.push(`signal:${signal.type}`);
+      return deps.handleSignal(state, peer, signal);
+    },
+    end(state) {
+      calls.push('end-call');
+      return deps.end(state);
+    },
+  };
+}
+
 function endCall(state) {
   if (!state.active && !state.callId) return;
   if (state.timerInterval) { state.timerInterval = null; state.events.push('timer.clear'); }
@@ -151,5 +170,21 @@ function endCall(state) {
   await flushPendingIceCandidates(failedFlushState, failedFlushPeer);
   assert(failedFlushState.pending.length === 0 && failedFlushState.events.includes('ice.error:bad'), 'ICE flush must drain queue even when a candidate fails');
 
-  console.log(JSON.stringify({ passed: true, state, failedFlushState }, null, 2));
+  const seamState = {
+    meId: 'me', active: true, callId: 'seam-call', callType: 'audio', localTracks: [],
+    pending: [], remoteStream: null, peer: null, timerInterval: null, reconnectTimeout: null,
+    signalSub: null, statusSub: null, events: [],
+  };
+  const seam = createInjectedCallsSeam({
+    createPeer: createPeerConnectionMock,
+    handleSignal,
+    end: endCall,
+  });
+  const seamPeer = seam.createPeer(seamState);
+  await seam.handleSignal(seamState, seamPeer, { senderId: 'me', type: 'ice-candidate', data: { id: 'ignored-seam' } });
+  seam.end(seamState);
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['peer-create', 'signal:ice-candidate', 'end-call']), 'Injected Calls seam must dispatch peer, signal, and teardown owners explicitly');
+  assert(seamState.active === false && seamState.callId === null, 'Injected teardown must preserve terminal call state');
+
+  console.log(JSON.stringify({ passed: true, state, failedFlushState, seam: { calls: seam.calls, state: seamState } }, null, 2));
 })();

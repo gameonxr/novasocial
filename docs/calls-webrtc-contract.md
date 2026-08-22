@@ -34,8 +34,9 @@ A remote track stores the remote stream, attaches it to the audio/video elements
 | Connected state | Clear reconnect timeout | PASS |
 | ICE failure | Drain queue despite individual candidate failure | PASS |
 | End cleanup | Timer, peer, tracks, channels, state, UI, ringtone, monitor cleanup | PASS |
+| Injected seam dispatch | Peer creation, signal handling, and teardown dispatch explicitly in order | PASS |
 
-The harness is deterministic and uses mocked peer/state objects only. It does not invoke real WebRTC, media devices, Supabase, browser audio/video, authentication, or call operations.
+The harness is deterministic and uses mocked peer/state objects only. It does not invoke real WebRTC, media devices, Supabase, browser audio/video, authentication, or call operations. Its injected seam dispatcher is test-only and is not loaded by `index.html`; the protected `createPeerConnection()` and `endCall()` owners remain inline.
 
 ## Safe boundary
 

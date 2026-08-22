@@ -3120,3 +3120,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced DMs preparation with an injected dispatcher around primary render and in-place refresh dependencies; `renderDMs()`, `_refreshDmsInPlace()`, `openChat()`, and related realtime owners remain inline.
 - Verified explicit primary-render/in-place-refresh dispatch order, parallel base fetch, dependent member fetch, no-account/tab/chat guards, navigation aborts, targeted DOM patching, cache timing, and scroll preservation using mocks only.
 - Updated `docs/dms-realtime-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live chat/message action was performed, and DMs production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Calls/WebRTC test-only injected seam proof
+- Advanced Calls/WebRTC preparation with an injected dispatcher around mocked peer creation, signaling, and teardown; `createPeerConnection()` and `endCall()` remain inline.
+- Verified explicit peer/signal/end dispatch order, own-signal filtering, ICE queue drain behavior, terminal state reset, media-track cleanup, channels, timers, ringtone, and network-monitor cleanup using mocks only.
+- Updated `docs/calls-webrtc-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no real WebRTC/media/signaling action was performed, and Calls/WebRTC production extraction remains blocked pending independent browser proof and rollback gates.
