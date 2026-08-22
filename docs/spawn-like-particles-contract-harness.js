@@ -138,11 +138,15 @@ async function runHarness() {
     assert.throws(() => failureAdapter(target), /append-boundary-failure/, 'test-only failure boundary must surface the injected append error');
     assert.strictEqual(failureParticles.length, 1, 'failure branch stops at the injected append boundary');
     assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'inline owner remains the only runtime owner under test');
+    const likeEffects = fs.readFileSync('/home/ubuntu/novasocial/src/features/like-effects.js', 'utf8');
+    assert(likeEffects.includes('spawnLikeParticles(el);'), 'like-effects caller must preserve the global particle handoff');
+    assert(!likeEffects.includes('particle-adapter'), 'like-effects caller must not import a second particle owner');
 
     console.log('SPAWN_LIKE_PARTICLES_HARNESS=PASS');
     console.log('TEST_ONLY_ADAPTER_COMPARISON=PASS');
     console.log('CLEANUP_REPLAY=PASS');
     console.log('FAILURE_BOUNDARY=PASS');
+    console.log('WINDOW_CALLER_COMPATIBILITY=PASS');
   } finally {
     global.document = originalDocument;
     global.setTimeout = originalSetTimeout;

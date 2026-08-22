@@ -2562,3 +2562,7 @@ Extended the test-only particle comparison with captured cleanup-callback replay
 ### Particle injected-failure boundary checkpoint — Branch2
 
 Added a test-only append-boundary failure branch to the particle comparison harness. The injected body-append error surfaces before timer scheduling, the branch stops at the failure boundary, and the inline runtime owner remains unchanged. No production adapter or source move was introduced.
+
+### Particle global-caller compatibility checkpoint — Branch2
+
+Added a static test-only check that the extracted `like-effects.js` caller preserves the global `spawnLikeParticles(el)` handoff and does not import a second particle owner. The inline owner remains exactly once in `index.html`; no production behavior or source ownership changed.

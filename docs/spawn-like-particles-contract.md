@@ -24,8 +24,9 @@ The effect is purely visual. It does not change likes, posts, database state, na
 | Palette | Colors are assigned and repeat deterministically | PASS |
 | Transform | Every particle receives radial vectors | PASS |
 | Cleanup | Every particle schedules 800 ms removal and removes itself | PASS |
+| Window caller compatibility | The extracted like-effects caller continues to invoke the global `spawnLikeParticles(el)` contract without importing a second owner | PASS |
 
-The harness uses mocked DOM geometry, body insertion, timers, and randomness only. It does not invoke real likes, database writes, navigation, authentication, or account actions.
+The harness uses mocked DOM geometry, body insertion, timers, and randomness only. It also statically checks that the extracted like-effects caller keeps the global `spawnLikeParticles(el)` handoff. It does not invoke real likes, database writes, navigation, authentication, or account actions.
 
 ## Safe boundary
 
