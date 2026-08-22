@@ -147,7 +147,7 @@ for (const signature of [
   'function renderStoryElements()',
   'async function syncLocalDeletionFallback()'
 ]) {
-  const expectedInlineCount = ['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()'].includes(signature) ? 0 : 1;
+  const expectedInlineCount = ['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'function renderStoryElements()'].includes(signature) ? 0 : 1;
   assert.strictEqual(html.split(signature).length - 1, expectedInlineCount, `protected owner count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected owner must remain outside src by declaration: ${signature}`);
 }
@@ -157,6 +157,7 @@ assert(source.includes('window.enablePushFromSettings = async function('), 'appr
 assert(source.includes('window.resetPushFromSettings = async function('), 'approved Push reset owner must remain available through a window assignment');
 assert(source.includes('window.viewNote = async function('), 'approved Note view owner must remain available through a window assignment');
 assert(source.includes('window.removeMyNoteFromViewer = async function('), 'approved Note removal owner must remain available through a window assignment');
+assert(source.includes('window.renderStoryElements = function(){'), 'approved Story renderer owner must remain available through a window assignment');
 
 assert(!source.includes('reversibleBrowserProofPassed'), 'no speculative browser-proof pass flag may be introduced');
 assert(!source.includes('productionSplitApproved'), 'no speculative production-split approval flag may be introduced');

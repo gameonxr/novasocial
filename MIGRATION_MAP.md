@@ -2990,3 +2990,6 @@ Updated the realtime-subscription lifecycle harness from 216 to 217 audited file
 
 ### Story editor reversible-browser-proof checkpoint correction — Branch2
 Updated reversible-browser-proof assertions to include Story editor before/after evidence, seven moved protected signatures, and 12 remaining systems; all proof-artifact and seam-inventory checks remain enforced.
+
+### Story editor reversible-owner parity correction — Branch2
+Updated the reversible-browser-proof protected-owner loop to classify `renderStoryElements()` as an approved external owner and verify its `window` assignment. Remaining protected owners remain inline and blocked.
