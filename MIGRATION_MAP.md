@@ -2753,3 +2753,6 @@ The full gate found the protected coverage harness still required Push owners in
 
 ### Push settings inline-boundary compatibility correction — Branch2
 The full gate found the protected inline-boundary harness still required Push owners inline and omitted the deletion-fallback/Push trailing references. Updated only its approved module-owner checks and trailing order list; all other protected owners remain inline and guarded.
+
+### Push settings protected-parity compatibility correction — Branch2
+The full gate found the protected parity harness still expected Push declarations in Branch2 and reported only two approved splits. Updated only its approved set, Push module-owner checks, load order, and summary; origin/main remains required to retain one inline signature for every protected owner.
