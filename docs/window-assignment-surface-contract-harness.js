@@ -20,7 +20,7 @@ const expectedNames = [
   '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'loadMoodFeed',
   'loadMoreFeedPosts', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'replyToId', 'replyToText',
-  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'toggleLike', 'typingSub',
+  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'toggleLike', 'typingSub',
 ].sort();
 
 function collectSourceFiles(dir, files = []) {
@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 215, 'index.html plus 214 extracted modules must be audited after the three approved protected owner groups');
-assert.strictEqual(matches.length, 196, 'application surface must retain 196 explicit window assignments after the three approved protected owner groups');
+assert.strictEqual(files.length, 216, 'index.html plus 215 extracted modules must be audited after the four approved protected owner groups');
+assert.strictEqual(matches.length, 198, 'application surface must retain 198 explicit window assignments after the four approved protected owner groups');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');

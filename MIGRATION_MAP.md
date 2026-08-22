@@ -2882,3 +2882,6 @@ The full gate observed 162 static HTML IDs after moving Note viewer markup-relat
 
 ### Note viewer storage-key audit compatibility correction — Branch2
 The full gate observed 216 audited files after adding the Note owner module, while storage-key surface expected 215. Updated only that deterministic count; the 29-key localStorage allowlist, zero sessionStorage references, and dynamic sticker family remain unchanged.
+
+### Note viewer window-assignment compatibility correction — Branch2
+The full gate observed 216 audited files and 198 explicit window assignments after adding the two Note owners, while the harness expected 215 and 196. Added only `viewNote` and `removeMyNoteFromViewer` to the established allowlist and updated those deterministic totals; unexpected/missing-name protections remain unchanged.
