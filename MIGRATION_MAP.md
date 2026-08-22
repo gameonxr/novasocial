@@ -2852,3 +2852,6 @@ The full gate observed 236 unique static local asset references after adding the
 
 ### Note viewer module-reference compatibility correction — Branch2
 The full gate observed 215 referenced extracted modules after adding `note-viewer-owners.js`, while the module-reference harness expected 214. Updated only that deterministic count and the required trailing order to include the Note module before `like-effects.js`; missing/duplicate reference checks remain unchanged.
+
+### Note viewer seam-harness compatibility correction — Branch2
+The full gate found the Notes seam-preparation harness still required `viewNote` and `removeMyNoteFromViewer` inline and reported zero extracted protected Notes signatures. Updated only those checks to the approved `note-viewer-owners.js` window assignments and completed status; `submitNote` and `deleteMyNote` remain inline and gated.
