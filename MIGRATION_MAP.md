@@ -2963,3 +2963,6 @@ Updated the protected-contract coverage harness to validate `renderStoryElements
 
 ### Story editor inline-boundary compatibility correction — Branch2
 Updated the protected-inline-boundary harness to validate the extracted Story renderer through `src/features/story-editor-owners.js` and retain all other protected markers inline.
+
+### Story editor protected-inline parity correction — Branch2
+Updated Branch2 parity accounting to include `renderStoryElements()` among approved extracted owners and added a single-owner assertion for `story-editor-owners.js`; origin/main parity requirements remain unchanged.
