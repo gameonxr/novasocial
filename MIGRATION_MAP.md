@@ -2538,3 +2538,7 @@ Defined the particle comparison seam as a test-only boundary with injected geome
 ### Particle current-baseline revalidation — Branch2
 
 Revalidated the inline particle production baseline read-only at commit `f04dc1a17b6376c3801e028fc481381c64c933a7`: 213 script tags, 213 closing tags, 212 external scripts, one inline particle owner, required null/geometry/count/cleanup markers, and zero protected particle-owner matches in `src/`. This is baseline suitability evidence only, not before/after production-split proof; extraction remains blocked.
+
+### Particle test-only comparison harness checkpoint — Branch2
+
+Extended the existing particle behavior harness with an injected reference adapter used only in test context. Deterministic observations match the inline owner for the null-target guard, 12-particle output, target-center geometry, palette/vector mutations, 800 ms cleanup delays, and cleanup callbacks. The inline owner remains the only runtime owner; no production adapter, browser import, or extraction was added.
