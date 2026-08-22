@@ -2756,3 +2756,6 @@ The full gate found the protected inline-boundary harness still required Push ow
 
 ### Push settings protected-parity compatibility correction — Branch2
 The full gate found the protected parity harness still expected Push declarations in Branch2 and reported only two approved splits. Updated only its approved set, Push module-owner checks, load order, and summary; origin/main remains required to retain one inline signature for every protected owner.
+
+### Push settings protected-acceptance compatibility correction — Branch2
+The full gate found the protected-split acceptance harness still encoded the two-split/17-remaining state. Updated only its matrix/gate wording, approved-owner set, Push module checks, and summary to the verified 4/19 state; all 15 unapproved protected systems remain blocked.
