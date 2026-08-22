@@ -2474,3 +2474,7 @@ Added `docs/notes-removal-success-browser-proof-evidence.txt` and updated `docs/
 ### Notes cloud-artwork removal browser-proof checkpoint — Branch2
 
 Added `docs/notes-removal-cloud-artwork-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic Cloudinary artwork URL exercised the protected `removeMyNoteFromViewer()` cleanup branch. The proof verified quick_notes select/delete targeting, exactly one controlled deleteMediaProduction delegation with the expected URL/type/reason, success feedback, viewer close and Notes Bar reload delegation, and restoration of all temporary boundaries. No real note, media, database, account action, or production code change occurred; the Notes owner remains inline.
+
+### Protected browser-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/high-risk-seam-readiness-matrix-contract.md` with the current evidence inventory: 33 protected browser-proof evidence artifacts carry PASS markers across the deterministic, non-destructive mock scenarios. The matrix explicitly preserves the distinction that these mocks are not before/after production-split proof. All 19 protected signatures remain exactly once inline, zero protected owners are in `src/`, and direct extraction remains blocked.
