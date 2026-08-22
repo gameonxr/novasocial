@@ -22,6 +22,18 @@ A future adapter may accept a target element plus injected dependencies for geom
 | Integration | Like persistence remains outside the seam | No database or like handler calls |
 | Proof inventory | Browser particle mock and parity/rollback artifacts remain present with PASS markers | Existing evidence |
 
+## Candidate selection
+
+Particle is the first candidate for any future protected-split proof because its owner is isolated from database writes, authentication, navigation, microphone/camera access, subscriptions, and realtime state. The next permitted checkpoint is test-only seam preparation plus before/after static snapshot design; it must not move `spawnLikeParticles()` or introduce a second production owner.
+
+| Candidate control | Required status |
+|---|---|
+| Risk scope | Visual DOM/timer effect only; no persistence or account side effects |
+| Preparation boundary | Injected geometry, element factory, body insertion, randomness, timer, and cleanup dependencies in test-only design |
+| Production owner | `index.html` inline `spawnLikeParticles(el)` remains sole owner |
+| Approval status | Not approved; browser proof and before/after production parity remain required |
+| Stop condition | Any marker, timing, cleanup, or DOM difference stops the candidate |
+
 ## Readiness gate
 
 This is a seam-preparation checkpoint only. Two non-destructive proof artifacts now cover the browser particle mock and parity/rollback checks. They establish reversible mock behavior and rollback readiness only; they are not before/after production-split proof. Before any production split, the project still requires before/after protected-marker parity for the selected adapter, a reversible browser smoke test attached to the like flow, a small Branch2-only implementation checkpoint, and the complete regression gate. Until then, `spawnLikeParticles()` must remain inline and the global `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` policy remains active.

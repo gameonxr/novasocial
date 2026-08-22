@@ -50,6 +50,10 @@ assert.strictEqual((html.match(/function spawnLikeParticles\(el\)\{/g) || []).le
 assert(!/function\s+spawnLikeParticles\s*\(/.test(extracted), 'protected particle owner must not be extracted into src');
 assert(owner.includes('document.body.appendChild(p)'), 'future seam must preserve body insertion');
 assert(owner.includes('setTimeout(()=>p.remove(), 800)'), 'future seam must preserve 800 ms cleanup');
+const seamContract = fs.readFileSync(path.join(repo, 'docs', 'particle-seam-preparation-contract.md'), 'utf8');
+assert(seamContract.includes('Particle is the first candidate for any future protected-split proof'), 'particle candidate selection must remain explicit');
+assert(seamContract.includes('it must not move `spawnLikeParticles()`'), 'particle candidate must remain test-only');
+assert(seamContract.includes('Approval status | Not approved'), 'particle production split must remain unapproved');
 assert(owner.includes('if(!el) return;'), 'future seam must preserve null-target no-op');
 assert(owner.includes('for(let i=0; i<12; i++)'), 'future seam must preserve twelve-particle count');
 assert(owner.includes('el.getBoundingClientRect()'), 'future seam must preserve live target geometry');

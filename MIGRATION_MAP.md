@@ -2526,3 +2526,7 @@ Audited all nine protected seam-preparation contracts and confirmed each explici
 ### Consolidated reversible-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/reversible-browser-proof-contract.md` and its harness with the repository-wide result that all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. The 33 artifacts remain mock, parity, and rollback prerequisites only; `PROOF_STATUS=REMAINING`, `PROTECTED_SPLITS=0_OF_19`, and direct extraction blocking remain unchanged.
+
+### Particle candidate-selection seam-proof preparation — Branch2
+
+Selected the isolated particle owner as the first low-risk candidate for any future protected-split proof. Added a bounded candidate-selection checklist covering visual-only risk scope, injected test-only dependencies, sole inline production ownership, explicit unapproved status, and stop-on-difference conditions. No production owner moved; `PROOF_STATUS=REMAINING`, `PROTECTED_SPLITS=0_OF_19`, and direct extraction blocking remain unchanged.
