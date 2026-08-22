@@ -1,0 +1,21 @@
+NovaSocial Branch2 deletion-fallback parity and rollback evidence
+Date: 2026-08-22
+Branch: Branch2
+Pre-split parent: 7a026d0dfb15f21da55700df644b1bc6bf205d9b
+Production split commit: 97515805ab2ec8beb5470d48659e86b7efcafa1d
+Latest published validation tip: 0a49c4848952b1ab2a6f5cd5a4cb273555276af2
+Protected main ref: ef418007c9b9a797488b4825be5f0c807da22369
+
+Baseline owner hash: PASS
+OWNER_SHA256=f267467785faea7ef3b8cc0c50a15764fd3bd13759a852b20e050a7887338786
+The hash covers the inline `syncLocalDeletionFallback()` owner from its declaration through the line before `const FILTERS = [` at the captured pre-split baseline. The extracted module’s canonical owner body matches this hash exactly.
+
+After-split parity result: PASS
+The production split changes the script counts from 214 opening/214 closing/213 external tags to 215 opening/215 closing/214 external tags. The inline deletion-fallback declaration count changes from one to zero; `src/features/sync-local-deletion-fallback.js` contains one `window.syncLocalDeletionFallback` owner; the module loads before `src/features/like-effects.js`; the startup caller remains unchanged; all other unapproved protected signatures remain inline; and the production browser smoke replays three synthetic queue items in order, removes the synthetic queue, and restores the temporary storage mock.
+
+Rollback result: PASS
+A detached temporary worktree was created at production split commit `97515805ab2ec8beb5470d48659e86b7efcafa1d`. Reverting that commit produced temporary revert commit `c30c3b8f247eb1ac9810ed8b082e14c1ddd1731f`; the rollback baseline proof passed with OWNER_SHA256 equal to the recorded anchor, SCRIPT_COUNTS=214/214/213, INLINE_DELETION_OWNER=1, DELETION_MODULE_PRESENT=0, and PARTICLE_SPLIT_RETAINED=YES. The temporary worktree was removed afterward. Branch2 and origin/Branch2 remained at `0a49c4848952b1ab2a6f5cd5a4cb273555276af2`, and origin/main remained `ef418007c9b9a797488b4825be5f0c807da22369`.
+
+Safety: This was read-only source/Git verification in a detached temporary worktree. No checkout, reset, force-push, browser action, account mutation, permission request, real storage access, media deletion, database mutation, or main-branch action was performed.
+
+Interpretation: The deletion-fallback production split is fully parity- and rollback-verified. `PROOF_STATUS=REMAINING`, `PROTECTED_SPLITS=2_OF_19`, and `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS` remain active for the other 17 protected systems.

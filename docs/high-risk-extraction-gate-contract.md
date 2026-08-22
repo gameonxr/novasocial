@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the single verified particle exception.
+**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the two verified particle and deletion-fallback exceptions.
 
 ## Current decision
 

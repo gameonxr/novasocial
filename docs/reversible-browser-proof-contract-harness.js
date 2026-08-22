@@ -58,6 +58,8 @@ assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-browser-comparison-pr
 assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-browser-comparison-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'deletion-fallback comparison browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-after-split-browser-proof-evidence.txt')), 'deletion-fallback after-split browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-after-split-browser-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'deletion-fallback after-split browser evidence must remain PASS');
+assert(fs.existsSync(path.join(docsDir, 'deletion-fallback-parity-rollback-evidence.txt')), 'deletion-fallback parity/rollback evidence must remain present');
+assert(fs.readFileSync(path.join(docsDir, 'deletion-fallback-parity-rollback-evidence.txt'), 'utf8').includes('Rollback result: PASS'), 'deletion-fallback rollback evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'voice-browser-proof-evidence.txt')), 'voice browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'voice-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_VOICE_PERMISSION_DENIED_BROWSER_MOCK=PASS'), 'voice permission-denied browser evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'recording-start-stop-browser-proof-evidence.txt')), 'recording start-stop browser-proof evidence must remain present');

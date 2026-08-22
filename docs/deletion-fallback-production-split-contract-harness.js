@@ -50,6 +50,10 @@ assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.index
 assert(html.includes('syncLocalDeletionFallback().catch(() => {})'), 'startup global handoff must remain');
 assert(fs.readFileSync(path.join(repo, 'docs', 'deletion-fallback-browser-comparison-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'comparison proof must pass');
 assert(fs.readFileSync(path.join(repo, 'docs', 'deletion-fallback-after-split-browser-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'after-split browser proof must pass');
+const rollbackEvidence = fs.readFileSync(path.join(repo, 'docs', 'deletion-fallback-parity-rollback-evidence.txt'), 'utf8');
+assert(rollbackEvidence.includes('After-split parity result: PASS'), 'deletion-fallback after-split parity evidence must pass');
+assert(rollbackEvidence.includes('Rollback result: PASS'), 'deletion-fallback rollback evidence must pass');
+assert(rollbackEvidence.includes('OWNER_SHA256=f267467785faea7ef3b8cc0c50a15764fd3bd13759a852b20e050a7887338786'), 'deletion-fallback rollback evidence must preserve owner hash');
 for (const signature of protectedSignatures) {
   assert.strictEqual(html.split(signature).length - 1, approved.has(signature) ? 0 : 1, `protected inline count mismatch: ${signature}`);
 }
@@ -61,4 +65,4 @@ console.log('CANONICAL_OWNER_HASH=PASS');
 console.log('PRODUCTION_BROWSER_SMOKE=PASS');
 console.log('GLOBAL_CALLER_HANDOFF=PASS');
 console.log('PROTECTED_SPLITS=2_OF_19');
-console.log('ROLLBACK_PROOF=REQUIRED_NEXT_PHASE');
+console.log('ROLLBACK_PROOF=PASS');

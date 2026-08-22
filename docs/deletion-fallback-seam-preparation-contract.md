@@ -24,7 +24,7 @@ The production owner move was performed only after the test-only adapter compari
 
 ## Harness coverage
 
-`docs/deletion-fallback-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm the fallback queue, storage, ordering, per-item isolation, finalization, startup guard, and media-deletion markers, the existing behavior contract/harness, the three passing non-destructive browser mock artifacts, and zero protected fallback production splits. It does not read real local storage, call Supabase or Cloudinary, replay deletion, or mutate account data.
+`docs/deletion-fallback-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm the fallback queue, storage, ordering, per-item isolation, finalization, startup guard, and media-deletion markers, the existing behavior contract/harness, six passing non-destructive browser proof artifacts, the completed module owner, and preserved startup handoff. It does not read real local storage, call Supabase or Cloudinary, replay deletion, or mutate account data.
 
 | Check | Expected behavior | Result |
 |---|---:|---|

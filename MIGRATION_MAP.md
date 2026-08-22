@@ -2693,3 +2693,6 @@ Updated `storage-key-surface-contract-harness.js` from 213 to 214 audited files 
 
 ### Deletion-fallback window-assignment correction — Branch2
 Updated `window-assignment-surface-contract-harness.js` to include `syncLocalDeletionFallback`, raising the intentional assignment inventory from 193 to 194 and audited files from 213 to 214. All established window names remain present with no unexpected or missing assignments.
+
+### Deletion-fallback rollback-after-split proof — Branch2
+Executed rollback in a detached temporary worktree from split commit `97515805ab2ec8beb5470d48659e86b7efcafa1d`; revert commit `c30c3b8f247eb1ac9810ed8b082e14c1ddd1731f` restored the pre-split inline owner, exact SHA-256 `f267467785faea7ef3b8cc0c50a15764fd3bd13759a852b20e050a7887338786`, script counts 214/214/213, and no deletion-fallback module while retaining the particle split. Updated deletion parity/rollback evidence, production contract/harness, seam harness, and consolidated browser-proof harness. The two-split state remains limited to Branch2; origin/main is unchanged.

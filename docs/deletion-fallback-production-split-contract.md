@@ -25,8 +25,8 @@ The inline `syncLocalDeletionFallback()` owner was moved from `index.html` into 
 
 ## Rollback acceptance
 
-The split checkpoint is revertible to the pre-split Branch2 commit `7a026d0dfb15f21da55700df644b1bc6bf205d9b`. The rollback proof must restore the inline owner, exact canonical hash, 214/214/213 script counts, and no deletion-fallback module in a detached temporary worktree. `origin/main` must remain `ef418007c9b9a797488b4825be5f0c807da22369`.
+The split was published as commit `97515805ab2ec8beb5470d48659e86b7efcafa1d`, whose parent is the pre-split Branch2 commit `7a026d0dfb15f21da55700df644b1bc6bf205d9b`. A detached temporary worktree reverted the split as commit `c30c3b8f247eb1ac9810ed8b082e14c1ddd1731f`; the rollback proof restored the inline owner, exact canonical hash, 214/214/213 script counts, and no deletion-fallback module while retaining the particle split. `origin/main` remained `ef418007c9b9a797488b4825be5f0c807da22369`.
 
 ## Evidence
 
-The associated evidence files are `deletion-fallback-browser-comparison-proof-evidence.txt` and `deletion-fallback-after-split-browser-proof-evidence.txt`. The associated seam and behavior harnesses are `deletion-fallback-seam-preparation-contract-harness.js` and `local-deletion-fallback-contract-harness.js`. The rollback proof must be recorded in `deletion-fallback-parity-rollback-evidence.txt` after the split checkpoint is published.
+The associated evidence files are `deletion-fallback-browser-comparison-proof-evidence.txt`, `deletion-fallback-after-split-browser-proof-evidence.txt`, and `deletion-fallback-parity-rollback-evidence.txt`. The associated seam and behavior harnesses are `deletion-fallback-seam-preparation-contract-harness.js` and `local-deletion-fallback-contract-harness.js`. The rollback-after-split proof is complete and recorded in `deletion-fallback-parity-rollback-evidence.txt`.
