@@ -2864,3 +2864,6 @@ The full gate found the protected-split acceptance harness still described four 
 
 ### Note viewer high-risk contract compatibility correction — Branch2
 The full gate found the high-risk extraction contract still described three approved groups and 15 remaining systems. Updated only its documentation to record particle, deletion fallback, Push settings, and Note viewer as the four verified exceptions, with 13 remaining systems explicitly blocked; no additional production owner was authorized.
+
+### Note viewer Push-contract compatibility correction — Branch2
+The full gate found the Push production harness still expected 216/216/215 scripts and four approved splits after the Note module was added. Updated only those shared totals to 217/217/216 and six approved signatures; Push hashes, boundaries, browser proof, and rollback checks remain unchanged.

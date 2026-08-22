@@ -37,9 +37,9 @@ for (const owner of ['enablePushFromSettings', 'resetPushFromSettings']) {
 }
 assert.strictEqual((moduleText.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'enable Push window owner must occur once');
 assert.strictEqual((moduleText.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'reset Push window owner must occur once');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 216, '216 opening script tags required');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 216, '216 closing script tags required');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 215, '215 external script tags required');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 217, '217 opening script tags required');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 217, '217 closing script tags required');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 216, '216 external script tags required');
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/like-effects.js'), 'Push module must load before like-effects');
 assert(html.includes('navigator.serviceWorker.register(\'/sw.js\')'), 'service-worker registration must remain in app boundary');
 assert(!moduleText.includes('VAPID_PUBLIC_KEY'), 'Push module must not own VAPID configuration');
@@ -52,4 +52,4 @@ console.log('CANONICAL_OWNER_HASHES=PASS');
 console.log('STATIC_AFTER_SPLIT=PASS');
 console.log('BROWSER_AFTER_SPLIT=PASS');
 console.log('ROLLBACK_PROOF=PASS');
-console.log('PROTECTED_SPLITS=4_OF_19');
+console.log('PROTECTED_SPLITS=6_OF_19');
