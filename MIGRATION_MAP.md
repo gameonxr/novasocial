@@ -2744,3 +2744,6 @@ The full gate found `module-script-reference-contract-harness.js` still expected
 
 ### Push settings object-URL inventory compatibility correction — Branch2
 The full gate observed 215 audited files in the object-URL lifecycle harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; all object-URL creation, revocation, download cleanup, compression cleanup, and preview ownership assertions remain unchanged.
+
+### Push settings cross-split particle-gate compatibility correction — Branch2
+The full gate found the particle production harness still assumed only particle/deletion-fallback were approved. Updated only its approved-owner set and summary to include the two Push settings window owners, while preserving particle hash, rollback, browser, and global-caller checks.
