@@ -3170,3 +3170,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Story deletion preparation with an injected dispatcher around mocked owned-story deletion and session-once expiry cleanup; `deleteStory()` and `cleanupExpiredStories()` remain inline.
 - Verified explicit delete/expiry dispatch order, confirmation and ownership guards, all-settled related cleanup, media cleanup, cache invalidation, viewer/Home navigation, 100-row expiry batching, session-once behavior, and noncritical failures using mocks only.
 - Updated `docs/story-deletion-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live Story deletion or media action was performed, and Story deletion production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Aggregate Stories injected-proof inventory synchronization
+- Strengthened `docs/stories-seam-preparation-contract-harness.js` to verify six test-only injected Story seam proof markers covering playback, polls, viewers-list, reply/reaction, submission, and deletion.
+- Updated `docs/stories-seam-preparation-contract.md` to document the six-proof inventory while retaining all Story production owners inline and direct extraction blocked.
+- Aggregate and six Story behavior harnesses pass with mocks only. No runtime owner, script tag, media, database, account, publishing, deletion, or navigation behavior changed.

@@ -56,6 +56,18 @@ const requiredContracts = [
 for (const file of requiredContracts) {
   assert(fs.existsSync(path.join(repo, 'docs', file)), `Existing Story contract/harness must remain present: ${file}`);
 }
+const injectedProofs = [
+  ['story-viewer-contract-harness.js', 'createInjectedStoryPlaybackSeam'],
+  ['story-poll-contract-harness.js', 'createInjectedStoryPollSeam'],
+  ['story-viewers-list-contract-harness.js', 'createInjectedStoryViewersSeam'],
+  ['story-reply-reaction-contract-harness.js', 'createInjectedStoryInteractionSeam'],
+  ['story-submission-contract-harness.js', 'createInjectedStorySubmissionSeam'],
+  ['story-deletion-contract-harness.js', 'createInjectedStoryDeletionSeam'],
+];
+for (const [file, marker] of injectedProofs) {
+  const text = fs.readFileSync(path.join(repo, 'docs', file), 'utf8');
+  assert(text.includes(marker), `Story injected seam proof must remain present: ${file}`);
+}
 const protectedSignatures = [
   'function openSV(startIdx)',
   'async function voteStoryPoll(storyId, pollIdx, options, optIdx, cardEl)',
@@ -74,5 +86,6 @@ console.log('STORIES_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=VIEWER_PLAYBACK_VIEWERS_POLL_REPLIES_SUBMISSION_DELETION');
 console.log('PROTECTED_STORY_SIGNATURES=5');
 console.log('BROWSER_MOCK_EVIDENCE=2_PASS');
+console.log('INJECTED_SEAM_PROOFS=6_PASS');
 console.log('EXTRACTED_PROTECTED_STORY_SIGNATURES=0');
 console.log('PRODUCTION_SPLIT=0');

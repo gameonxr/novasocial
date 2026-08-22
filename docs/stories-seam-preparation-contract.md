@@ -19,13 +19,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Story viewer, playback, viewers-list, poll, reply/reaction, submission, and deletion implementations remain inline. Two non-destructive browser-context mock artifacts now cover empty-data guarding and synthetic-image setup. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, covering bucket transitions, media lifecycle, gestures, owner viewers, poll persistence/fallback, replies/reactions, and cleanup.
+This is a **mapping-only checkpoint**. Story viewer, playback, viewers-list, poll, reply/reaction, submission, and deletion implementations remain inline. Two non-destructive browser-context mock artifacts cover empty-data guarding and synthetic-image setup, while six deterministic test-only injected seam proofs cover playback, poll, viewers-list, reply/reaction, submission, and deletion dispatch. These artifacts prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs protected before/after marker parity and reversible browser proof for the production boundary itself, covering bucket transitions, media lifecycle, gestures, owner viewers, poll persistence/fallback, replies/reactions, submission, deletion, and cleanup.
 
 The first implementation step must be test-only or adapter-only and must preserve `openSV()`, `renderStoryElements()`, `voteStoryPoll()`, `refreshPollResults()`, and `loadStoryPollState()` owners until the complete seam harness passes.
 
 ## Harness coverage
 
-`docs/stories-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm protected Story signatures and dependency markers, the existing Story behavior contracts/harnesses, the two passing non-destructive browser mock artifacts, and zero matching protected signatures in extracted modules. It does not open media, query Supabase, mutate polls, navigate profiles, or move production code.
+`docs/stories-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm protected Story signatures and dependency markers, the existing Story behavior contracts/harnesses, the two passing non-destructive browser mock artifacts, all six injected seam-proof markers, and zero matching protected signatures in extracted modules. It does not open media, query Supabase, mutate polls, navigate profiles, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -34,6 +34,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Playback/viewers | Media, timer, owner-viewers, and modal markers remain present | PASS |
 | Existing behavior locks | Viewer, poll, viewers-list, reply/reaction, submission, deletion contracts remain present | PASS |
 | Browser mock inventory | Empty-data and synthetic-image setup artifacts are present with PASS markers | PASS |
+| Injected seam inventory | Six Story behavior harnesses expose test-only injected dispatch proofs | PASS |
 | Production split | None | PASS |
 
 ## References
