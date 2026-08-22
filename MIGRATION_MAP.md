@@ -3011,3 +3011,11 @@ The complete assignment inventory measured 199 explicit `window.* =` assignments
 
 ### Story editor window-assignment allowlist correction — Branch2
 Added the approved `renderStoryElements` global to the exact window-assignment allowlist. The measured surface remains 199 assignments across 217 audited files; no unapproved global names are permitted.
+
+## 2026-08-22 — Authenticated read-only browser baseline and readiness-summary correction
+
+- Branch2-only safe browser smoke baseline recorded in `docs/browser-smoke-baseline-2026-08-22.md`.
+- Verified authenticated shell rendering and non-destructive navigation for For You, Following, Trending, Explore, Reels, DMs, Profile, and account-switcher open/close.
+- No messages, likes, comments, follows, uploads, downloads, account switches, or storage mutations were performed.
+- Corrected stale emitted labels in `docs/high-risk-seam-readiness-matrix-contract-harness.js` to report seven approved protected signatures, Story editor browser-proof coverage, 12 remaining protected systems, and the current blocked direct-extraction state.
+- Focused readiness matrix harness: PASS; `git diff --check`: PASS.
