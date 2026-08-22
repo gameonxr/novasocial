@@ -3150,3 +3150,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Story interaction preparation with an injected dispatcher around mocked reply and reaction flows; `sendStoryReply()` and `reactToStory()` remain inline.
 - Verified explicit reply/reaction dispatch order, conversation reuse/creation, parallel member insert, message `throwOnError`, blocked and generic failures, 40-character notification truncation, nonfatal notification failure, and reaction success/failure using mocks only.
 - Updated `docs/story-reply-reaction-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live reply/reaction action was performed, and Story interaction production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Story viewers-list test-only injected seam proof
+- Advanced Story viewers-list preparation with an injected dispatcher around the mocked viewers modal flow; `showStoryViewers()` remains inline.
+- Verified explicit modal dispatch, playback pause, timer/video cleanup, loading/empty/error states, viewer-row rendering, modal resume, Story close, and profile navigation using mocks only.
+- Updated `docs/story-viewers-list-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live viewer/profile action was performed, and Story viewers-list production extraction remains blocked pending independent browser proof and rollback gates.

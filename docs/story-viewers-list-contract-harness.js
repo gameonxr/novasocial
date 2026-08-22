@@ -2,6 +2,17 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function createInjectedStoryViewersSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    show(input) {
+      calls.push('show-viewers');
+      return deps.show(input);
+    },
+  };
+}
+
 async function mockShowStoryViewers({ viewers = [], queryFails = false, clickViewer = false }) {
   const events = ['story.pause', 'timer.clear', 'videos.pause', 'modal.create', 'body.loading'];
   if (queryFails) return { events: [...events, 'query.failed'], resumed: false, rows: [] };
@@ -28,5 +39,10 @@ async function mockShowStoryViewers({ viewers = [], queryFails = false, clickVie
   assert(failed.rows.length === 0 && failed.events.includes('query.failed') && !failed.resumed, 'Viewer query failure must remain in paused modal state without fake rows');
   assert(profile.events.includes('modal.remove:u1') && profile.events.includes('story.close') && profile.events.includes('profile.open:u1') && !profile.resumed, 'Clicking a viewer must remove modal, close Story viewer, and open profile');
 
-  console.log(JSON.stringify({ passed: true, viewers, empty, failed, profile }, null, 2));
+  const seam = createInjectedStoryViewersSeam({ show: mockShowStoryViewers });
+  const injected = await seam.show({ viewers: [{ id: 'u3', username: 'three' }] });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['show-viewers']), 'Injected Story viewers seam must dispatch the modal owner explicitly');
+  assert(injected.resumed && injected.rows.length === 1 && injected.events.includes('modal.resume-on-close'), 'Injected viewers seam must preserve render and resume outcomes');
+
+  console.log(JSON.stringify({ passed: true, viewers, empty, failed, profile, seam: { calls: seam.calls, injected } }, null, 2));
 })();

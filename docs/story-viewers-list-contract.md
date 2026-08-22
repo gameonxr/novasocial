@@ -24,8 +24,9 @@ An empty or missing viewer result renders the explicit `No views yet.` state. Ex
 | Query failure | Remain non-destructive without fake rows | PASS |
 | Modal close/backdrop | Resume Story playback | PASS |
 | Viewer row click | Remove modal, close Story, open profile | PASS |
+| Injected modal dispatch | Viewers-list dependency dispatches explicitly and preserves row rendering/resume behavior | PASS |
 
-The harness is deterministic and uses mocked playback, timer, query, modal, and navigation events only. It does not invoke real DOM, Supabase, Story playback, authentication, profiles, or account actions.
+The harness is deterministic and uses mocked playback, timer, query, modal, and navigation events only. Its injected modal dispatcher is test-only and is not loaded by `index.html`. It does not invoke real DOM, Supabase, Story playback, authentication, profiles, or account actions.
 
 ## Safe boundary
 
