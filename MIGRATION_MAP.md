@@ -2675,3 +2675,6 @@ Updated `inline-declaration-closure-contract-harness.js` from 250 to 249 inline 
 
 ### Deletion-fallback interval audit-count correction — Branch2
 Updated `interval-lifecycle-contract-harness.js` from 213 to 214 audited files so its timer lifecycle scan includes the new deletion-fallback module. Interval registration, cleanup, and Nova Universe timer invariants remain unchanged.
+
+### Deletion-fallback local-asset inventory correction — Branch2
+Updated `local-html-asset-reference-contract-harness.js` from 233 to 234 static local references so it includes `src/features/sync-local-deletion-fallback.js`. Reference resolution, manifest, and service-worker checks remain unchanged.
