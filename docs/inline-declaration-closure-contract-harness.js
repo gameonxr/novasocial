@@ -15,8 +15,8 @@ const protectedNames = [
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
   'voteStoryPoll','refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 250, 'inline application script must retain 250 function declarations after particle split');
-const remainingInlineProtectedNames = protectedNames.filter(name => name !== 'spawnLikeParticles');
+assert.strictEqual(declarations.length, 249, 'inline application script must retain 249 function declarations after the two approved protected splits');
+const remainingInlineProtectedNames = protectedNames.filter(name => name !== 'spawnLikeParticles' && name !== 'syncLocalDeletionFallback');
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 19, 'protected declaration set must contain 19 unique names');
 const source = fs.readdirSync(path.join(repo, 'src'), { recursive: true }).filter(file => String(file).endsWith('.js'));

@@ -2669,3 +2669,6 @@ Updated `dependency-loading-order-contract-harness.js` from the particle-only th
 
 ### Deletion-fallback extracted-file hygiene correction — Branch2
 Updated `extracted-file-hygiene-contract-harness.js` from 247 to 248 source files so it includes `sync-local-deletion-fallback.js`. Empty-file and trailing-whitespace checks remain unchanged.
+
+### Deletion-fallback inline-declaration correction — Branch2
+Updated `inline-declaration-closure-contract-harness.js` from 250 to 249 inline function declarations and excluded both `spawnLikeParticles` and `syncLocalDeletionFallback` from the remaining-inline protected set. The 17 unapproved declarations and unresolved `forwardMessage` seam remain enforced.
