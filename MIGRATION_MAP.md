@@ -2678,3 +2678,6 @@ Updated `interval-lifecycle-contract-harness.js` from 213 to 214 audited files s
 
 ### Deletion-fallback local-asset inventory correction — Branch2
 Updated `local-html-asset-reference-contract-harness.js` from 233 to 234 static local references so it includes `src/features/sync-local-deletion-fallback.js`. Reference resolution, manifest, and service-worker checks remain unchanged.
+
+### Deletion-fallback object-URL audit-count correction — Branch2
+Updated `object-url-lifecycle-contract-harness.js` from 213 to 214 audited files so its object-URL lifecycle scan includes the new deletion-fallback module. Creation, revocation, download, compression, and preview ownership checks remain unchanged.
