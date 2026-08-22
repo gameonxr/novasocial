@@ -2939,3 +2939,6 @@ Updated the seam-readiness matrix harness to recognize the high-risk gate’s cu
 
 ### Story editor index-tag integrity correction — Branch2
 Updated the index HTML tag-integrity harness to the post-Story totals: 218 total script tags, 218 closing tags, and 217 external tags with one inline application script.
+
+### Story editor inline-declaration correction — Branch2
+Moving `renderStoryElements()` to the external owner reduced inline application function declarations from 245 to 244. Updated the inline-declaration harness for seven approved owners; the protected set remains 19 unique names and all 12 remaining protected declarations stay inline.
