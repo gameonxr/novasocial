@@ -2624,3 +2624,6 @@ Updated `module-script-reference-contract-harness.js` from 211 to 212 modules an
 
 ### Particle split object-URL audit-count correction — Branch2
 Updated `object-url-lifecycle-contract-harness.js` from 212 to 213 audited files so its object-URL lifecycle scan includes the new particle module. Object-URL creation/revocation totals and all download/compression/preview cleanup checks remain unchanged.
+
+### Particle split realtime-audit count correction — Branch2
+Updated `realtime-subscription-lifecycle-contract-harness.js` from 212 to 213 audited files so its realtime lifecycle scan includes the new particle module. Channel registration, cleanup, subscription-chain, managed-slot, and PushManager-separation checks remain unchanged.
