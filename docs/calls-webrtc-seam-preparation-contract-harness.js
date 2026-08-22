@@ -40,11 +40,15 @@ assert.strictEqual(sourceText.includes('function createPeerConnection(callId, re
 assert.strictEqual(sourceText.includes('async function endCall(updateDB)'), false, 'endCall must not be extracted');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract.md')), 'Calls/WebRTC behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract-harness.js')), 'Calls/WebRTC behavior harness must remain present');
+const callsHarness = fs.readFileSync(path.join(repo, 'docs', 'calls-webrtc-contract-harness.js'), 'utf8');
+assert(callsHarness.includes('createInjectedCallsSeam'), 'Calls/WebRTC injected seam proof must remain present');
+assert(callsHarness.includes('peer-create') && callsHarness.includes('signal:ice-candidate') && callsHarness.includes('end-call'), 'Calls/WebRTC injected seam dispatch markers must remain present');
 
 console.log('CALLS_WEBRTC_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=STATE_SIGNALING_PEER_MEDIA_ICE_DOM_TIMERS_CLEANUP');
 console.log('PROTECTED_CALL_SIGNATURES=2');
 console.log('BROWSER_MOCK_EVIDENCE=4_PASS');
+console.log('INJECTED_SEAM_PROOF=PASS');
 console.log('EXTRACTED_CALL_SIGNATURES=0');
 console.log('RECONNECT_TIMEOUT_MS=8000');
 console.log('PRODUCTION_SPLIT=0');

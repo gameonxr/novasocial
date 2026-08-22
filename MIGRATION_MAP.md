@@ -3180,3 +3180,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/dms-seam-preparation-contract-harness.js` to require the test-only `createInjectedDmsSeam` proof and its primary-render/in-place-refresh dispatch markers.
 - Updated `docs/dms-seam-preparation-contract.md` to document the injected seam inventory while retaining `renderDMs()`, `_refreshDmsInPlace()`, and `openChat()` inline and direct extraction blocked.
 - Aggregate and realtime DMs harnesses pass with mocks only. No runtime owner, script tag, chat, message, realtime, account, or database behavior changed.
+
+## 2026-08-22 — Aggregate Calls/WebRTC injected-proof inventory synchronization
+- Strengthened `docs/calls-webrtc-seam-preparation-contract-harness.js` to require the test-only `createInjectedCallsSeam` proof and its peer-create, signaling, and teardown dispatch markers.
+- Updated `docs/calls-webrtc-seam-preparation-contract.md` to document the injected seam inventory while retaining all call/WebRTC production owners inline and direct extraction blocked.
+- Aggregate and Calls/WebRTC behavior harnesses pass with mocks only. No runtime owner, script tag, WebRTC peer, media device, signaling, account, or database behavior changed.
