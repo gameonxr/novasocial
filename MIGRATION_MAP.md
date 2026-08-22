@@ -2687,3 +2687,6 @@ Updated `realtime-subscription-lifecycle-contract-harness.js` from 213 to 214 au
 
 ### Deletion-fallback source-boundary inventory correction — Branch2
 Updated `source-boundary-hygiene-contract-harness.js` from 230 to 231 JS/CSS files so its hygiene scan includes the new deletion-fallback module. UTF-8 roundtrip, NUL-byte, CRLF, and embedded script/style boundary checks remain unchanged.
+
+### Deletion-fallback storage-key audit-count correction — Branch2
+Updated `storage-key-surface-contract-harness.js` from 213 to 214 audited files so its localStorage scan includes the new deletion-fallback module. The 29-key allowlist, zero sessionStorage references, and dynamic sticker family checks remain unchanged.
