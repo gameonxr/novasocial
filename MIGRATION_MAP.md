@@ -2729,3 +2729,6 @@ The full gate observed 249 extracted `src/` files after adding `push-settings.js
 
 ### Push settings index-tag compatibility correction — Branch2
 The full gate found `index-html-tag-integrity-contract-harness.js` still expected 215/215/214 script counts. Updated only its deterministic assertions and summary to 216 opening, 216 closing, and 215 external tags; HTML structure and one-inline-script invariants remain unchanged.
+
+### Push settings inline-declaration compatibility correction — Branch2
+The full gate observed 247 inline application function declarations after extracting the two Push settings owners, while the closure harness still expected 249. Updated only that deterministic total and excluded the two approved Push owners from the remaining-inline protected-name assertion; all 15 unapproved protected declarations remain required inline.
