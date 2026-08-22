@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Prepare, but do not execute, a reversible seam for local deletion fallback synchronization.
+**Purpose:** Prepare and prove a reversible seam for local deletion fallback synchronization without executing a production split until its independent parity and rollback gates pass.
 
 ## Preparation map
 
@@ -18,7 +18,7 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. `syncLocalDeletionFallback()`, `deleteMediaProduction()`, local-storage access, queue replay, and startup trigger implementations remain inline and unchanged. Three non-destructive browser-context mock artifacts now cover malformed-storage failure, valid-queue replay, and empty-queue handling; they prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, including queue removal timing, storage failures, and startup invocation.
+This is a **seam-preparation checkpoint**. `syncLocalDeletionFallback()`, `deleteMediaProduction()`, local-storage access, queue replay, and startup trigger implementations remain inline and unchanged. Four non-destructive browser-context proof artifacts now cover malformed-storage failure, valid-queue replay, empty-queue handling, and disposable inline-versus-adapter comparison; they prove reversible mock behavior and comparison parity only and are not permission to extract production code. Before a split, the project still needs protected before/after marker parity and reversible browser proof for the production split itself, including queue removal timing, storage failures, and startup invocation.
 
 The first implementation step must be test-only or adapter-only and must preserve both `syncLocalDeletionFallback()` and `deleteMediaProduction()` owners until the complete seam harness passes.
 
@@ -32,7 +32,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Queue behavior | Queue key, stored order, item isolation, and finalization markers remain protected | PASS |
 | Failure guards | Outer catch/logging and startup guard remain present | PASS |
 | Media boundary | `deleteMediaProduction()` remains the cleanup owner | PASS |
-| Browser mock inventory | Malformed-storage, valid-queue, and empty-queue artifacts are present with PASS markers | PASS |
+| Browser mock inventory | Malformed-storage, valid-queue, empty-queue, and disposable comparison artifacts are present with PASS markers | PASS |
 | Production split | None | PASS |
 
 ## References
@@ -43,5 +43,6 @@ The first implementation step must be test-only or adapter-only and must preserv
 4. [`deletion-fallback-browser-proof-evidence.txt`](./deletion-fallback-browser-proof-evidence.txt)
 5. [`deletion-fallback-valid-queue-browser-proof-evidence.txt`](./deletion-fallback-valid-queue-browser-proof-evidence.txt)
 6. [`deletion-fallback-empty-queue-browser-proof-evidence.txt`](./deletion-fallback-empty-queue-browser-proof-evidence.txt)
-7. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+7. [`deletion-fallback-browser-comparison-proof-evidence.txt`](./deletion-fallback-browser-comparison-proof-evidence.txt)
+8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -2642,3 +2642,6 @@ Executed rollback proof in a detached temporary worktree from split commit `07b8
 
 ### Particle consolidated-proof evidence correction — Branch2
 Updated `reversible-browser-proof-contract-harness.js` to require the completed particle `After-split parity result: PASS` marker and report `PRODUCTION_CHANGE=1_PARTICLE`, while retaining `PROOF_STATUS=REMAINING` and the block for the other 18 protected systems.
+
+### Deletion-fallback seam comparison preparation — Branch2
+Added `docs/deletion-fallback-browser-comparison-proof-evidence.txt` from a disposable browser context. The exact inline queue-sync semantics and a test-only injected adapter match for empty, valid ordered replay, partial item failure, malformed JSON, and storage-read failure; temporary proof state restores and the startup guard remains non-throwing. Updated `deletion-fallback-seam-preparation-contract.md` and its harness to require four PASS proof artifacts. Production owners `syncLocalDeletionFallback()` and `deleteMediaProduction()` remain inline; no production split is authorized yet.

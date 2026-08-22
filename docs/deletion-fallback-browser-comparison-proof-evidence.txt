@@ -1,0 +1,19 @@
+NovaSocial deletion-fallback disposable browser comparison evidence
+Date: 2026-08-22
+Branch: Branch2
+Environment: disposable browser context on local proof page; no production app, login, localStorage, Supabase, Cloudinary, permission, media, account, or database access.
+
+RESULT=PASS
+COMPARISON=true
+RESTORATION=true
+STARTUP_GUARD=true
+
+The exact inline deletion-fallback semantics and a test-only injected adapter produced identical snapshots for five deterministic cases:
+
+1. Empty queue: no events, no deletion calls, and no queue removal.
+2. Valid three-item queue: stored order preserved (`https://cdn/one`, `https://cdn/two`, `https://cdn/three`), queue finalized after replay, and all calls retained their source/reason metadata.
+3. Partial item failure: the second item emitted `delete.error`, the third item still replayed successfully, and queue finalization still occurred.
+4. Malformed storage JSON: one silent sync error, no deletion calls, and no queue removal.
+5. Storage read failure: one silent sync error, no deletion calls, and no queue removal.
+
+Each before/after snapshot was byte-identical. Temporary proof sentinel state was restored, and the production startup guard remained absent in the disposable page, confirming that this was a test-only comparison. No irreversible browser action or production state mutation was performed.

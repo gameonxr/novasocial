@@ -10,7 +10,8 @@ const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join
 const browserProofFiles = [
   'deletion-fallback-browser-proof-evidence.txt',
   'deletion-fallback-valid-queue-browser-proof-evidence.txt',
-  'deletion-fallback-empty-queue-browser-proof-evidence.txt'
+  'deletion-fallback-empty-queue-browser-proof-evidence.txt',
+  'deletion-fallback-browser-comparison-proof-evidence.txt'
 ];
 for (const file of browserProofFiles) {
   const evidencePath = path.join(repo, 'docs', file);
@@ -42,6 +43,6 @@ assert(html.includes('syncLocalDeletionFallback().catch(() => {})'), 'Startup mu
 console.log('DELETION_FALLBACK_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=QUEUE_READ_ORDERED_REPLAY_ITEM_ISOLATION_FINALIZATION_MEDIA_STARTUP');
 console.log('PROTECTED_DELETION_SIGNATURES=2');
-console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
+console.log('BROWSER_MOCK_EVIDENCE=4_PASS');
 console.log('EXTRACTED_PROTECTED_DELETION_SIGNATURES=0');
 console.log('PRODUCTION_SPLIT=0');
