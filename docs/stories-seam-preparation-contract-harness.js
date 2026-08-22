@@ -7,6 +7,15 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const browserProofFiles = [
+  'stories-empty-data-browser-proof-evidence.txt',
+  'stories-image-setup-browser-proof-evidence.txt'
+];
+for (const file of browserProofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `Stories browser proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `Stories browser proof must contain PASS: ${file}`);
+}
 const requiredHtmlMarkers = [
   'function openSV(startIdx)',
   'function renderStoryElements()',
@@ -63,5 +72,6 @@ assert(html.includes('pauseAllVideos()'), 'Story viewers modal must retain media
 console.log('STORIES_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=VIEWER_PLAYBACK_VIEWERS_POLL_REPLIES_SUBMISSION_DELETION');
 console.log('PROTECTED_STORY_SIGNATURES=5');
+console.log('BROWSER_MOCK_EVIDENCE=2_PASS');
 console.log('EXTRACTED_PROTECTED_STORY_SIGNATURES=0');
 console.log('PRODUCTION_SPLIT=0');

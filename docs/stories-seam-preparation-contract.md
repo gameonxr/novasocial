@@ -19,13 +19,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Story viewer, playback, viewers-list, poll, reply/reaction, submission, and deletion implementations remain inline. Existing Story contracts and harnesses prove behavior, but they are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof covering bucket transitions, media lifecycle, gestures, owner viewers, poll persistence/fallback, replies/reactions, and cleanup.
+This is a **mapping-only checkpoint**. Story viewer, playback, viewers-list, poll, reply/reaction, submission, and deletion implementations remain inline. Two non-destructive browser-context mock artifacts now cover empty-data guarding and synthetic-image setup. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, covering bucket transitions, media lifecycle, gestures, owner viewers, poll persistence/fallback, replies/reactions, and cleanup.
 
 The first implementation step must be test-only or adapter-only and must preserve `openSV()`, `renderStoryElements()`, `voteStoryPoll()`, `refreshPollResults()`, and `loadStoryPollState()` owners until the complete seam harness passes.
 
 ## Harness coverage
 
-`docs/stories-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm protected Story signatures and dependency markers, the existing Story behavior contracts/harnesses, and zero matching protected signatures in extracted modules. It does not open media, query Supabase, mutate polls, navigate profiles, or move production code.
+`docs/stories-seam-preparation-contract-harness.js` scans `index.html` and `src/` to confirm protected Story signatures and dependency markers, the existing Story behavior contracts/harnesses, the two passing non-destructive browser mock artifacts, and zero matching protected signatures in extracted modules. It does not open media, query Supabase, mutate polls, navigate profiles, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -33,6 +33,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Poll owners | Poll vote/result/state functions remain inline | PASS |
 | Playback/viewers | Media, timer, owner-viewers, and modal markers remain present | PASS |
 | Existing behavior locks | Viewer, poll, viewers-list, reply/reaction, submission, deletion contracts remain present | PASS |
+| Browser mock inventory | Empty-data and synthetic-image setup artifacts are present with PASS markers | PASS |
 | Production split | None | PASS |
 
 ## References
@@ -44,5 +45,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 5. [`story-submission-contract.md`](./story-submission-contract.md)
 6. [`story-deletion-contract.md`](./story-deletion-contract.md)
 7. [`index.html`](../index.html)
-8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+8. [`stories-empty-data-browser-proof-evidence.txt`](./stories-empty-data-browser-proof-evidence.txt)
+9. [`stories-image-setup-browser-proof-evidence.txt`](./stories-image-setup-browser-proof-evidence.txt)
+10. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
