@@ -2969,3 +2969,6 @@ Updated Branch2 parity accounting to include `renderStoryElements()` among appro
 
 ### Story editor protected-acceptance correction — Branch2
 Updated protected-split acceptance to record seven of 19 signatures moved, approve the external Story renderer owner, and validate its single window assignment. Remaining 12 high-risk systems stay blocked pending their own proofs.
+
+### Story editor readiness-matrix documentation correction — Branch2
+Synchronized the high-risk readiness matrix from the Note-only checkpoint to the published Story editor checkpoint: seven approved owners, 12 remaining protected systems, Story browser/rollback evidence, and the `renderStoryElements` global handoff.
