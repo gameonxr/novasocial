@@ -60,6 +60,7 @@ assert(seamContract.includes('## Test-only adapter comparison checklist'), 'part
 assert(seamContract.includes('Approval gate | Comparison remains unapproved'), 'particle comparison approval gate must remain locked');
 assert(seamContract.includes('Comparison harness | Test-only reference adapter observations match inline owner observations and cleanup delays | PASS'), 'particle comparison harness result must remain recorded');
 assert(seamContract.includes('Cleanup replay | Replaying captured cleanup callbacks is harmless and leaves every test particle removed | PASS'), 'particle cleanup replay result must remain recorded');
+assert(seamContract.includes('Failure boundary | An injected body-append failure surfaces before timer scheduling and does not change the inline owner | PASS'), 'particle failure boundary result must remain recorded');
 assert(seamContract.includes('## Pre-approval gate'), 'particle pre-approval gate must remain present');
 assert(seamContract.includes('After-split production parity | NOT RUN'), 'particle after-split parity must remain unrun');
 assert(seamContract.includes('Rollback-after-split proof | NOT RUN'), 'particle rollback-after-split proof must remain unrun');

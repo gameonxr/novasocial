@@ -2558,3 +2558,7 @@ Updated the high-risk readiness matrix and harness to record the particle candid
 ### Particle cleanup-replay proof-preparation checkpoint — Branch2
 
 Extended the test-only particle comparison with captured cleanup-callback replay. The branch confirms replay is harmless and every test particle remains removed, while the inline production owner and all extraction gates remain unchanged.
+
+### Particle injected-failure boundary checkpoint — Branch2
+
+Added a test-only append-boundary failure branch to the particle comparison harness. The injected body-append error surfaces before timer scheduling, the branch stops at the failure boundary, and the inline runtime owner remains unchanged. No production adapter or source move was introduced.

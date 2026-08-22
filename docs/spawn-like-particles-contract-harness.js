@@ -117,11 +117,32 @@ async function runHarness() {
     assert(adapterParticles.every(p => p.removeCalled), 'test-only adapter cleanup removes every particle');
     adapterTimers.forEach(timer => timer.callback());
     assert(adapterParticles.every(p => p.removeCalled), 'cleanup callback replay remains harmless');
+
+    // Test-only injected failure branch; production globals and owner remain untouched.
+    const failureParticles = [];
+    const failureAdapter = createTestOnlyParticleAdapter({
+      geometry: target => target.getBoundingClientRect(),
+      createElement: () => ({
+        className: '',
+        style: { setProperty() {} },
+        remove() {}
+      }),
+      appendToBody: particle => {
+        failureParticles.push(particle);
+        throw new Error('append-boundary-failure');
+      },
+      random: () => 0.5,
+      setTimeout: () => { throw new Error('timer-must-not-run-after-append-failure'); },
+      remove: particle => particle.remove()
+    });
+    assert.throws(() => failureAdapter(target), /append-boundary-failure/, 'test-only failure boundary must surface the injected append error');
+    assert.strictEqual(failureParticles.length, 1, 'failure branch stops at the injected append boundary');
     assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'inline owner remains the only runtime owner under test');
 
     console.log('SPAWN_LIKE_PARTICLES_HARNESS=PASS');
     console.log('TEST_ONLY_ADAPTER_COMPARISON=PASS');
     console.log('CLEANUP_REPLAY=PASS');
+    console.log('FAILURE_BOUNDARY=PASS');
   } finally {
     global.document = originalDocument;
     global.setTimeout = originalSetTimeout;
