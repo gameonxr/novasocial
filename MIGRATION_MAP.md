@@ -2951,3 +2951,6 @@ The extracted Story renderer adds one local JavaScript reference, raising the st
 
 ### Story editor module-reference inventory correction — Branch2
 Updated the module-script-reference harness from 215 to 216 extracted JavaScript modules after adding `src/features/story-editor-owners.js`; missing and duplicate script-reference checks remain unchanged.
+
+### Story editor object-URL audit file-count correction — Branch2
+Updated the object-URL lifecycle harness from 216 to 217 audited files after adding the Story editor owner; object-URL creation and revocation counts remain unchanged.
