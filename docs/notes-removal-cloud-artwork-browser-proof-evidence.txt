@@ -1,0 +1,13 @@
+NovaSocial Branch2 Notes removal cloud-artwork browser-proof evidence
+Date: 2026-08-22
+Branch: Branch2
+Commit under test: f13cf495437dcac622764566549f1661e4618744
+Preview: http://127.0.0.1:4173/index.html
+
+Scope: Fresh browser-context deterministic removeMyNoteFromViewer() cloud-artwork branch. db.from was replaced with a synthetic quick_notes select/delete chain returning a Cloudinary artwork URL; toast, closeNoteViewer, loadNotesBar, and deleteMediaProduction were temporarily stubbed. No real note, media, database, account, or network action occurred.
+
+Observed result: The protected function targeted the synthetic quick_notes select/delete path for `id=note-cloud`, delegated exactly once to deleteMediaProduction with the Cloudinary URL, `note`, and `user_delete`, emitted `Note removed`, and delegated closeNoteViewer and loadNotesBar. All temporary boundaries were restored in finally.
+
+Result: NON_DESTRUCTIVE_NOTES_REMOVAL_CLOUD_ARTWORK_BROWSER_MOCK=PASS
+
+Interpretation: The protected Notes cloud-artwork cleanup branch is browser-context verified with a reversible media-deletion boundary. This does not authorize extracting removeMyNoteFromViewer() or the protected Notes lifecycle; full before/after and rollback proof remains incomplete.

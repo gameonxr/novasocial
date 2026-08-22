@@ -2470,3 +2470,7 @@ Added `docs/calls-pip-failure-browser-proof-evidence.txt` and updated `docs/reve
 ### Notes removal-success browser-proof checkpoint — Branch2
 
 Added `docs/notes-removal-success-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic note exercised the protected `removeMyNoteFromViewer()` success path. The proof verified quick_notes select/delete targeting, success feedback, viewer close and Notes Bar reload delegation, zero media-deletion calls for non-cloud artwork, and restoration of all temporary boundaries. No real note, media, database, account action, or production code change occurred; the Notes owner remains inline.
+
+### Notes cloud-artwork removal browser-proof checkpoint — Branch2
+
+Added `docs/notes-removal-cloud-artwork-browser-proof-evidence.txt` and updated `docs/reversible-browser-proof-contract.md` plus its harness. In a fresh browser context, a deterministic synthetic Cloudinary artwork URL exercised the protected `removeMyNoteFromViewer()` cleanup branch. The proof verified quick_notes select/delete targeting, exactly one controlled deleteMediaProduction delegation with the expected URL/type/reason, success feedback, viewer close and Notes Bar reload delegation, and restoration of all temporary boundaries. No real note, media, database, account action, or production code change occurred; the Notes owner remains inline.
