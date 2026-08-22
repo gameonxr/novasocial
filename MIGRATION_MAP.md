@@ -2897,3 +2897,6 @@ The Story editor seam-preparation pair increased the published inventory by one 
 
 ### Story editor renderer production split — Branch2
 Extracted the protected `renderStoryElements()` owner from `index.html` into `src/features/story-editor-owners.js` using one anonymous `window.renderStoryElements` assignment. Preserved the original renderer body, element-type branches, text double-tap wiring, drag bounds, delete-zone behavior, and rerender semantics. Story editor state, delete-zone helpers, drawing/music/undo state, and `publishStoryEditor()` remain inline. Synthetic DOM parity, existing behavior harness, seam harness, and detached rollback evidence passed with zero real account/storage/media actions. Updated protected coverage, high-risk owner counts (7 approved, 12 remaining), script-order assertions, readiness counts, and collision inventory.
+
+### Story editor final readiness correction — Branch2
+After publishing the Story renderer owner, final readiness observed 216 source JavaScript modules. Updated the readiness harness and contract from the pre-split 215 count; all script, feature, documentation, collision, and protected-owner totals remain synchronized.

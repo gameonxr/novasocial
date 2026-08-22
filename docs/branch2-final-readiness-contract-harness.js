@@ -30,7 +30,7 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 215, '215 extracted JavaScript modules must remain');
+assert.strictEqual(jsFiles.length, 216, '216 extracted JavaScript modules must remain');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
 assert.strictEqual(featureFiles.length, 204, '204 feature modules must remain');
 assert.strictEqual((html.match(/<script\b/gi) || []).length, 217, 'HTML must retain 217 script tags');
