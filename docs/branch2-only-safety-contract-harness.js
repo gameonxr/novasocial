@@ -31,15 +31,16 @@ for (const marker of [
   'function renderDMs(',
   'function renderReels(',
   'function createPeerConnection(',
-  'function openSV(',
-  'function renderStoryElements()'
+  'function openSV('
 ]) {
   assert(html.includes(marker), `protected inline marker missing: ${marker}`);
 }
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module owner must remain present');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+assert(storyModule.includes('window.renderStoryElements = function(){'), 'approved Story renderer module owner must remain present');
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=PARTICLE_DELETION_AND_PUSH_SPLIT_OR_DOCS');
+console.log('LATEST_CHECKPOINT=STORY_EDITOR_RENDERER_SPLIT');
 console.log('MAIN_REF_UNCHANGED=YES');

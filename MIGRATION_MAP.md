@@ -2915,3 +2915,6 @@ The final readiness gate measured 262 total harness files because the standalone
 
 ### Story editor non-standard harness mapping correction — Branch2
 Added `story-editor-browser-parity-harness.js` to the final-readiness non-standard harness allowlist. This preserves explicit artifact pairing while keeping the standalone synthetic browser proof separate from `*-contract-harness.js` standard contracts.
+
+### Story editor Branch2 safety-harness correction — Branch2
+Updated Branch2-only safety checks so the approved Story renderer is validated through `src/features/story-editor-owners.js` rather than required as an inline marker. Remaining DMs, Reels, Calls, and Story viewer protected markers remain inline; main remains immutable.
