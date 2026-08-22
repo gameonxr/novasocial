@@ -2831,3 +2831,6 @@ The full gate observed 250 extracted source files after adding `note-viewer-owne
 
 ### Note viewer high-risk-gate compatibility correction — Branch2
 The full gate observed 215 extracted JavaScript modules and six approved moved signatures after the Note split, while the high-risk gate still expected 214 and four. Updated only the module total, approved Note owner set, Note module ownership, and order checks; the remaining protected systems stay blocked.
+
+### Note viewer readiness-matrix compatibility correction — Branch2
+The full gate found the readiness-matrix harness still expected 15 unapproved systems after the two Note owners moved. Updated only that remaining-system assertion to 13; the matrix now requires Note contract, after-split browser, rollback evidence, owner assignments, and order while retaining the block on all remaining systems.
