@@ -1,22 +1,24 @@
-NovaSocial Branch2 protected parity and rollback evidence
-Date: 2026-08-21
+NovaSocial Branch2 particle production-split parity and rollback evidence
+Date: 2026-08-22
 Branch: Branch2
-Published commit: 969b61ae1a7c4c3c7c01bf2dd6c326e9ca3c1406
+Pre-split parent: cc72374b89313f667a91310a820bc306c419e1d3
+Production split commit: 07b81feccb59b5779439f0ff9169e3430a51835b
+Latest published Branch2 validation tip: 2a1551fcabff5b29d8d850f5275e318737aa404f
 Protected main ref: ef418007c9b9a797488b4825be5f0c807da22369
 
-Parity result: PASS
-The current published tree matches the captured baseline for 213 script tags, 213 closing tags, 212 external scripts, all 19 protected marker counts exactly once, required trailing script order, and zero protected owner matches in src/. The baseline and after snapshots are byte-for-byte equivalent for the recorded checks.
+Baseline owner hash: PASS
+OWNER_SHA256=44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57
+The baseline hash covers the inline `spawnLikeParticles(el)` owner body from its declaration through the line before `// Override toggleLike`. The extracted module’s canonical owner body matches this hash exactly.
+
+After-split parity result: PASS
+The production split changes the script counts from 213 opening/213 closing/212 external tags to 214 opening/214 closing/213 external tags. The inline particle declaration count changes from one to zero; `src/features/spawn-like-particles.js` contains one anonymous `window.spawnLikeParticles` assignment; the module loads before `src/features/like-effects.js`; the global caller remains unchanged; all other protected inline signatures remain exactly once; and the production browser smoke creates twelve synthetic particles that are all removed after 850 ms.
+
+Static proof result: PASS
+The particle seam, behavior, consolidated browser-proof, protected-split acceptance, high-risk matrix, module-reference, classic-script, source-boundary, and full Branch2 regression harnesses pass at the published validation tip. The readiness totals are DOCUMENTS=258, HARNESS_FILES=258, STANDARD_CONTRACTS=256, STANDARD_HARNESSES=255, SOURCE_JS=212, SOURCE_CSS=18, and PROTECTED_SPLITS=1_OF_19.
 
 Rollback result: PASS
-The current commit object and its parent commit are available. The previous Branch2 checkpoint is 2c9b813dea1fd9d2a355cb22312025d4ee0bf56d. The current tree is clean, local HEAD matches origin/Branch2, and origin/main remains the protected untouched ref.
+A detached temporary worktree was created at the production split commit `07b81feccb59b5779439f0ff9169e3430a51835b7`. Reverting that commit produced temporary revert commit `4e86318d6925a32636eea38205ff2edceed12068`; the rollback baseline proof passed with OWNER_SHA256 equal to the recorded anchor, SCRIPT_COUNTS=213/213/212, INLINE_OWNER=1, and PARTICLE_MODULE_PRESENT=0. The temporary worktree was removed afterward. Branch2 and origin/Branch2 remained at `2a1551fcabff5b29d8d850f5275e318737aa404f`, and origin/main remained `ef418007c9b9a797488b4825be5f0c807da22369`.
 
-Safety: This was read-only Git/source verification. No checkout, reset, force-push, browser action, account mutation, protected behavior, or production code change was performed.
+Safety: This was read-only source/Git verification in a detached temporary worktree. No checkout, reset, force-push, browser action, account mutation, protected behavior, permission request, or production state change was performed on Branch2 or main.
 
-Latest baseline revalidation — 2026-08-22
-The current Branch2 commit f04dc1a17b6376c3801e028fc481381c64c933a7 was rechecked read-only. Script counts remain 213 opening tags, 213 closing tags, and 212 external scripts. The particle owner remains exactly once inline, with the null-target guard, twelve-particle loop, live geometry lookup, and 800 ms cleanup markers present; zero protected particle-owner matches exist in src/.
-
-Interpretation: This confirms the current inline production baseline remains suitable for a future comparison. It is not before/after production-split proof, does not authorize extraction, and does not change the existing PROOF_STATUS=REMAINING or DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF policy.
-
-Current inline owner baseline hash
-OWNER_SHA256=44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57
-The hash covers the inline `spawnLikeParticles(el)` owner body from its declaration through the line before `// Override toggleLike` at the current Branch2 baseline. It is a read-only comparison anchor, not evidence of a production split.
+Interpretation: The particle production split is fully parity- and rollback-verified. `PROOF_STATUS=REMAINING` and `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS` remain active for the other 18 protected systems.

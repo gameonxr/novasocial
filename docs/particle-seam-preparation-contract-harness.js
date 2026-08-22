@@ -74,8 +74,10 @@ assert(seamContract.includes('Candidate proof | Compare before/after marker, loa
 assert(seamContract.includes('Rollback | Verify the split commit is revertible'), 'particle rollback control must remain explicit');
 assert(seamContract.includes('Stop rule | Any mismatch'), 'particle stop rule must remain locked');
 const parityEvidence = fs.readFileSync(path.join(repo, 'docs', 'particle-parity-rollback-evidence.txt'), 'utf8');
-assert(parityEvidence.includes('Latest baseline revalidation — 2026-08-22'), 'particle current baseline revalidation must remain recorded');
-assert(parityEvidence.includes('It is not before/after production-split proof'), 'particle baseline revalidation must not be treated as split proof');
+assert(parityEvidence.includes('Date: 2026-08-22'), 'particle current baseline revalidation date must remain recorded');
+assert(parityEvidence.includes('After-split parity result: PASS'), 'particle after-split parity must be recorded');
+assert(parityEvidence.includes('Rollback result: PASS'), 'particle rollback result must be recorded');
+assert(parityEvidence.includes('PROOF_STATUS=REMAINING'), 'remaining protected proof status must stay active');
 assert(parityEvidence.includes('OWNER_SHA256=44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57'), 'particle owner baseline hash must remain recorded');
 assert(owner.includes('if(!el) return;'), 'future seam must preserve null-target no-op');
 assert(owner.includes('for(let i=0; i<12; i++)'), 'future seam must preserve twelve-particle count');
