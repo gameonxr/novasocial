@@ -17,11 +17,12 @@ assert.strictEqual(git('rev-parse', 'HEAD'), git('rev-parse', 'origin/Branch2'),
 
 const latestFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD').split('\n').filter(Boolean);
 assert(latestFiles.length > 0, 'latest checkpoint must contain files');
-const allowedParticleSplitFiles = new Set(['MIGRATION_MAP.md', 'index.html', 'src/features/spawn-like-particles.js']);
-assert(latestFiles.every(file => file.startsWith('docs/') || allowedParticleSplitFiles.has(file)), 'latest checkpoint must contain only docs and the approved particle split files');
-if (latestFiles.includes('index.html') || latestFiles.includes('src/features/spawn-like-particles.js')) {
-  assert(latestFiles.includes('index.html'), 'particle split checkpoint must include index.html');
-  assert(latestFiles.includes('src/features/spawn-like-particles.js'), 'particle split checkpoint must include the particle module');
+const allowedProtectedSplitFiles = new Set(['MIGRATION_MAP.md', 'index.html', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js']);
+assert(latestFiles.every(file => file.startsWith('docs/') || allowedProtectedSplitFiles.has(file)), 'latest checkpoint must contain only docs and the two approved protected split files');
+if (latestFiles.includes('index.html') || latestFiles.includes('src/features/spawn-like-particles.js') || latestFiles.includes('src/features/sync-local-deletion-fallback.js')) {
+  assert(latestFiles.includes('index.html'), 'protected split checkpoint must include index.html');
+  assert(latestFiles.includes('src/features/spawn-like-particles.js'), 'protected split checkpoint must include the particle module');
+  assert(latestFiles.includes('src/features/sync-local-deletion-fallback.js'), 'protected split checkpoint must include the deletion-fallback module');
 }
 
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
@@ -30,13 +31,14 @@ for (const marker of [
   'function renderReels(',
   'function createPeerConnection(',
   'function openSV(',
-  'function renderStoryElements(',
-  'async function syncLocalDeletionFallback('
+  'function renderStoryElements()'
 ]) {
-  assert(html.includes(marker), `protected marker missing: ${marker}`);
+  assert(html.includes(marker), `protected inline marker missing: ${marker}`);
 }
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
+assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module owner must remain present');
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=PARTICLE_SPLIT_OR_DOCS');
+console.log('LATEST_CHECKPOINT=PARTICLE_AND_DELETION_SPLIT_OR_DOCS');
 console.log('MAIN_REF_UNCHANGED=YES');
