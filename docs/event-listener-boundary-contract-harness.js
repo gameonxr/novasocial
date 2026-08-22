@@ -22,10 +22,10 @@ const indexText = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const serviceWorkerText = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 const listenerFiles = sourceFiles.filter((file) => fs.readFileSync(file, 'utf8').includes('addEventListener'));
 
-assert.strictEqual(sourceFiles.length, 216, '216 extracted JavaScript modules must remain present after Story editor split');
-assert.strictEqual(count(sourceText, 'addEventListener'), 74, 'extracted modules must retain the audited 74 listener registrations after Story editor split');
+assert.strictEqual(sourceFiles.length, 217, '217 extracted JavaScript modules must remain present after Note deletion split');
+assert.strictEqual(count(sourceText, 'addEventListener'), 74, 'extracted modules must retain the audited 74 listener registrations after Note deletion split');
 assert.strictEqual(count(sourceText, 'removeEventListener'), 0, 'the audit must not silently introduce cleanup registrations in extracted modules');
-assert.strictEqual(count(indexText, 'addEventListener'), 28, 'index.html must retain the audited 28 listener registrations after Story editor split');
+assert.strictEqual(count(indexText, 'addEventListener'), 28, 'index.html must retain the audited 28 listener registrations after Note deletion split');
 assert.strictEqual(count(indexText, 'removeEventListener'), 0, 'index.html must retain zero cleanup registrations');
 assert.strictEqual(count(serviceWorkerText, 'addEventListener'), 5, 'service worker must retain its five lifecycle/event registrations');
 assert(listenerFiles.length > 0, 'extracted listener inventory must not be empty');
@@ -33,9 +33,9 @@ assert(listenerFiles.length > 0, 'extracted listener inventory must not be empty
 console.log('EVENT_LISTENER_BOUNDARY_HARNESS=PASS');
 console.log(`SRC_MODULES=${sourceFiles.length}`);
 console.log(`SRC_LISTENER_FILES=${listenerFiles.length}`);
-console.log('SRC_ADD_EVENT_LISTENERS=68');
+console.log('SRC_ADD_EVENT_LISTENERS=74');
 console.log('SRC_REMOVE_EVENT_LISTENERS=0');
-console.log('INDEX_ADD_EVENT_LISTENERS=34');
+console.log('INDEX_ADD_EVENT_LISTENERS=28');
 console.log('INDEX_REMOVE_EVENT_LISTENERS=0');
 console.log('SERVICE_WORKER_ADD_EVENT_LISTENERS=5');
 console.log('CLEANUP_REFACTOR=NOT_SPECIFIED');

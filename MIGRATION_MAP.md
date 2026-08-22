@@ -3081,3 +3081,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Updated `docs/dependency-loading-order-contract-harness.js` to validate the seven-script tail after adding `note-deletion-owner.js`.
 - Required order is now particle → deletion-fallback → Push → Note viewer → Note deletion → Story editor → like-effects.
 - All local scripts remain classic and ordered after core/components and the Supabase dependency.
+
+## 2026-08-22 — Note deletion event-listener inventory correction
+
+- Updated `docs/event-listener-boundary-contract-harness.js` to the 217-source-module post-Note-deletion inventory.
+- Preserved the measured 74 extracted listener registrations, 28 inline registrations, zero cleanup registrations, and five service-worker registrations.
