@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 216, '216 extracted JavaScript modules must remain');
+assert.strictEqual(jsFiles.length, 217, '217 extracted JavaScript modules must remain after Note deletion split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 205, '205 feature modules must remain');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 218, 'HTML must retain 218 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 218, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 217, 'HTML must retain 217 external script tags');
+assert.strictEqual(featureFiles.length, 206, '206 feature modules must remain after Note deletion split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 219, 'HTML must retain 219 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 219, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 218, 'HTML must retain 218 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -47,14 +47,18 @@ assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/sp
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/push-settings.js'), 'sync-local-deletion-fallback must precede push-settings');
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/note-viewer-owners.js'), 'push-settings must precede note-viewer-owners');
-assert(html.indexOf('src/features/note-viewer-owners.js') < html.indexOf('src/features/like-effects.js'), 'note-viewer-owners must precede like-effects');
+assert(html.indexOf('src/features/note-viewer-owners.js') < html.indexOf('src/features/note-deletion-owner.js'), 'note-viewer-owners must precede note-deletion-owner');
+assert(html.indexOf('src/features/note-deletion-owner.js') < html.indexOf('src/features/story-editor-owners.js'), 'note-deletion-owner must precede story-editor-owners');
+assert(html.indexOf('src/features/story-editor-owners.js') < html.indexOf('src/features/like-effects.js'), 'story-editor-owners must precede like-effects');
 assert(html.includes('src/features/push-settings.js'), 'push-settings module must remain referenced');
 assert(html.includes('src/features/note-viewer-owners.js'), 'note-viewer-owners module must remain referenced');
+assert(html.includes('src/features/note-deletion-owner.js'), 'note-deletion-owner module must remain referenced');
 
 for (const marker of [
   'async function enablePushFromSettings()',
   'async function resetPushFromSettings()',
   'async function viewNote(noteId){',
+  'async function deleteMyNote()',
   'async function removeMyNoteFromViewer(noteId){',
   'async function renderDMs()',
   'async function renderReels()',
@@ -65,7 +69,6 @@ for (const marker of [
   'async function enablePushFromSettings()',
   'async function resetPushFromSettings()',
   'async function submitNote()',
-  'async function deleteMyNote()',
   'function submitNativeEmojiReaction(',
   'function reactToNote(',
   'async function loadNoteReactorsList(',
@@ -74,13 +77,14 @@ for (const marker of [
   'async function refreshPollResults(',
   'async function loadStoryPollState(',
 ]) {
-  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'function renderStoryElements()';
+  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()';
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 assert(!html.includes('function spawnLikeParticles(el){'), 'approved particle owner must be absent from inline HTML');
 assert(!html.includes('async function syncLocalDeletionFallback()'), 'approved deletion-fallback owner must be absent from inline HTML');
 assert(!html.includes('async function enablePushFromSettings()'), 'approved Push enable owner must be absent from inline HTML');
@@ -93,6 +97,7 @@ assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async
 assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset module must have one owner');
 assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note view module must have one owner');
 assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal module must have one owner');
+assert.strictEqual((noteDeletionModule.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note deletion module must have one owner');
 
 assert(fs.existsSync(path.join(repo, 'manifest.json')), 'manifest must remain present');
 assert(fs.existsSync(path.join(repo, 'sw.js')), 'service worker must remain present');
@@ -110,11 +115,11 @@ const unresolved = handlers.filter(name => {
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
 assert.strictEqual(allDocs.length, 261, '261 documentation Markdown files must be published');
-assert.strictEqual(allHarnesses.length, 262, '262 harness files must be published');
+assert.strictEqual(allHarnesses.length, 263, '263 harness files must be published after Note deletion proof');
 assert.strictEqual(contractFiles.length, 259, '259 standard contract documents must be published');
 assert.strictEqual(harnessFiles.length, 258, '258 standard contract harnesses must be published');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
-assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
+assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
   if (mappedLegacyContracts.has(contract)) continue;
   const stem = contract.replace(/-contract\.md$/, '');
