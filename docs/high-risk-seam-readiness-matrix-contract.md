@@ -15,6 +15,7 @@
 | Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; 33 protected browser-proof evidence artifacts carry PASS markers | Feature-specific seam maps, deterministic mock boundaries, and non-destructive browser evidence exist, but they are not production-split approval |
 | Adapter/seam contract | Account/bootstrap contract present | One cross-cutting adapter seam is documented; it is not production-extracted |
 | Adapter harness | Account/bootstrap mock harness present | Test-only proof exists for the bootstrap seam |
+| Particle candidate | Test-only adapter comparison and rollback-first procedure prepared; after-split parity and rollback-after-split are NOT RUN | Candidate is not approved; direct extraction remains blocked |
 | Reversible browser proof | Contract and harness are present; browser proof is not yet established for a protected split. Thirty-three non-destructive browser-context mock artifacts are inventoried and passing, but none is before/after proof for a production split | Required before the first production move |
 | Protected production splits | 0/19 signatures moved | Direct extraction remains blocked |
 
@@ -22,7 +23,7 @@
 
 The setup is **baseline-complete but split-not-ready** for protected systems. The repository now inventories 33 passing non-destructive browser-context mock artifacts across the protected systems, and all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. These mocks do not establish before/after production-split proof. The next required work is per-feature seam preparation, not direct extraction. For one selected system at a time, the project must add a dependency/DOM/timing/global map, explicit adapter boundary, deterministic mock harness, before/after marker parity, and reversible browser proof. Only then may a minimal production extraction be attempted on `Branch2`.
 
-The account/bootstrap seam is the current documented adapter reference. It does not authorize moving DMs, Reels, Calls/WebRTC, Stories, Notes, Push, recording, or deletion-fallback code.
+The account/bootstrap seam is the current documented adapter reference. Particle is the first low-risk protected candidate, but its comparison and rollback-first procedure are prepared only; after-split parity and rollback-after-split proof remain unrun. This does not authorize moving particle, DMs, Reels, Calls/WebRTC, Stories, Notes, Push, recording, or deletion-fallback code.
 
 ## Non-goals
 

@@ -2550,3 +2550,7 @@ Added a bounded pre-approval table for the particle candidate. Current inline ba
 ### Particle reversible-proof procedure preparation — Branch2
 
 Added a rollback-first runbook for the particle candidate. It records baseline capture, test-only comparison, browser mock restoration, gated after-split parity, rollback-after-split proof, and the locked stop rule. The procedure is prepared but not executed; no production split, browser permission, like action, or source-owner change occurred.
+
+### Particle candidate matrix approval lock — Branch2
+
+Updated the high-risk readiness matrix and harness to record the particle candidate as prepared but not approved. Test-only comparison, baseline, and mock restoration prerequisites pass; after-split production parity and rollback-after-split proof remain NOT RUN. The global extraction block and all protected inline owners remain unchanged.

@@ -39,6 +39,8 @@ for (const signature of protectedSignatures) {
 assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF'), 'global high-risk gate must remain blocked until seam proof');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
+assert(matrix.includes('Particle candidate | Test-only adapter comparison and rollback-first procedure prepared; after-split parity and rollback-after-split are NOT RUN'), 'matrix must record particle candidate status');
+assert(matrix.includes('Candidate is not approved; direct extraction remains blocked'), 'matrix must preserve particle candidate approval block');
 assert(matrix.includes('Contract and harness are present; browser proof is not yet established'), 'matrix must record browser proof as remaining');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');
@@ -50,5 +52,6 @@ console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
 console.log('PROTECTED_SIGNATURES=19');
 console.log('EXTRACTED_PROTECTED_SIGNATURES=0');
 console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
+console.log('PARTICLE_CANDIDATE=PREPARED_NOT_APPROVED');
 console.log('REVERSIBLE_BROWSER_PROOF=REMAINING');
 console.log('DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF');
