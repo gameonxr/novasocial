@@ -2636,3 +2636,9 @@ Updated `storage-key-surface-contract-harness.js` from 212 to 213 audited files 
 
 ### Particle split window-assignment correction — Branch2
 Updated `window-assignment-surface-contract-harness.js` to include the intentional `window.spawnLikeParticles` global handoff, raising the explicit assignment count from 192 to 193 and the audited-file total from 212 to 213. All prior window names remain allowlisted with no unexpected or missing names.
+
+### Particle rollback-after-split proof — Branch2
+Executed rollback proof in a detached temporary worktree from split commit `07b81feccb59b5779439f0ff9169e3430a51835b7`. Revert commit `4e86318d6925a32636eea38205ff2edceed12068` restored the pre-split inline owner, exact SHA-256 `44952efebe4daed59f18b3367561cc604b0cce3ea9d9092d1ff41d0bb541fb57`, script counts 213/213/212, and no particle module. Branch2/main refs remained untouched. Updated `particle-parity-rollback-evidence.txt`, `particle-production-split-contract.md`, and the seam harness to record PASS. The complete post-split regression gate is required after this evidence commit.
+
+### Particle consolidated-proof evidence correction — Branch2
+Updated `reversible-browser-proof-contract-harness.js` to require the completed particle `After-split parity result: PASS` marker and report `PRODUCTION_CHANGE=1_PARTICLE`, while retaining `PROOF_STATUS=REMAINING` and the block for the other 18 protected systems.

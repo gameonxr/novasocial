@@ -52,7 +52,7 @@ assert(fs.existsSync(path.join(docsDir, 'particle-after-split-browser-proof-evid
 assert(fs.readFileSync(path.join(docsDir, 'particle-after-split-browser-proof-evidence.txt'), 'utf8').includes('PRODUCTION_PARTICLE_SMOKE=PASS'), 'particle after-split browser evidence must remain PASS');
 assert(fs.readFileSync(path.join(docsDir, 'particle-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_PARTICLE_BROWSER_MOCK=PASS'), 'particle browser mock evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt')), 'particle parity and rollback evidence must remain present');
-assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('Parity result: PASS'), 'particle parity evidence must remain PASS');
+assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('After-split parity result: PASS'), 'particle after-split parity evidence must remain PASS');
 assert(fs.readFileSync(path.join(docsDir, 'particle-parity-rollback-evidence.txt'), 'utf8').includes('Rollback result: PASS'), 'particle rollback evidence must remain PASS');
 assert(fs.existsSync(path.join(docsDir, 'voice-browser-proof-evidence.txt')), 'voice browser-proof evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'voice-browser-proof-evidence.txt'), 'utf8').includes('NON_DESTRUCTIVE_VOICE_PERMISSION_DENIED_BROWSER_MOCK=PASS'), 'voice permission-denied browser evidence must remain PASS');
@@ -146,4 +146,4 @@ console.log('REVERSIBLE_BROWSER_PROOF_CONTRACT_HARNESS=PASS');
 console.log('PROOF_STATUS=REMAINING');
 console.log('PROTECTED_SPLITS=1_OF_19');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS');
-console.log('PRODUCTION_CHANGE=0');
+console.log('PRODUCTION_CHANGE=1_PARTICLE');
