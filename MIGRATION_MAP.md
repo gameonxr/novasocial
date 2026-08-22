@@ -2627,3 +2627,6 @@ Updated `object-url-lifecycle-contract-harness.js` from 212 to 213 audited files
 
 ### Particle split realtime-audit count correction — Branch2
 Updated `realtime-subscription-lifecycle-contract-harness.js` from 212 to 213 audited files so its realtime lifecycle scan includes the new particle module. Channel registration, cleanup, subscription-chain, managed-slot, and PushManager-separation checks remain unchanged.
+
+### Particle split source-boundary count correction — Branch2
+Updated `source-boundary-hygiene-contract-harness.js` from 229 to 230 JS/CSS files so its boundary scan includes the new particle module. UTF-8, CRLF, NUL-byte, and embedded script/style boundary checks remain unchanged.
