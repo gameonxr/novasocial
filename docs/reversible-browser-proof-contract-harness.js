@@ -12,6 +12,7 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
 assert(matrix.includes('Reversible browser proof | Contract and harness are present; browser proof is not yet established for a protected split'), 'matrix must continue to mark browser proof as remaining');
+assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
 assert(matrix.includes('Protected production splits | 0/19 signatures moved'), 'matrix must continue to report zero protected production splits');
 assert(gate.includes('Direct extraction is explicitly blocked until adapter and proof work passes'), 'direct extraction gate must remain blocked');
 

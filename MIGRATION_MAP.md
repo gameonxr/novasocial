@@ -2522,3 +2522,7 @@ Aligned `docs/particle-seam-preparation-contract.md` and its harness with the tw
 ### Repository-wide protected seam inventory alignment checkpoint — Branch2
 
 Audited all nine protected seam-preparation contracts and confirmed each explicitly binds its corresponding browser-proof inventory. Updated the high-risk readiness matrix and harness to lock this repository-wide invariant. The 33 artifacts remain non-destructive mock/rollback evidence only; all 19 protected owners remain inline and direct extraction remains blocked.
+
+### Consolidated reversible-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/reversible-browser-proof-contract.md` and its harness with the repository-wide result that all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. The 33 artifacts remain mock, parity, and rollback prerequisites only; `PROOF_STATUS=REMAINING`, `PROTECTED_SPLITS=0_OF_19`, and direct extraction blocking remain unchanged.
