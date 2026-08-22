@@ -3105,3 +3105,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Recorded measured inventories: 217 source JavaScript modules, 206 feature modules, 219 total script tags, 218 external script tags, 218 audited index-plus-source JavaScript files, 235 extracted JS/CSS files, 238 local HTML references, and 243 inline declarations.
 - Focused high-risk, readiness, reversible-proof, acceptance, window-assignment, source-boundary, lifecycle, asset, module-reference, HTML-integrity, storage, and Push harnesses passed; authenticated smoke stayed read-only with no real account/data mutation.
 - Branch2 only; `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`. A clean full regression gate remains required before publication.
+
+## 2026-08-22 — Reels preparation-only no-drift checkpoint
+- Advanced Reels as the next protected candidate through test-only preparation; `renderReels()` and `_applyReelsVideoWindowing()` remain inline and no production owner was moved.
+- Added an exact owner-body comparison against `origin/main`; persistent DOM, saved-position, live-count transform, current−1 through current+3 media window, swipe settling, playback, and navigation invariants remain covered.
+- `docs/reels-seam-preparation-contract-harness.js` passed with `OWNER_NO_DRIFT=PASS`, `EXTRACTED_REELS_SIGNATURES=0`, and `PRODUCTION_SPLIT=0`. Reels production extraction remains blocked until its independent adapter seam, before/after browser proof, rollback evidence, and clean full gate are complete.
