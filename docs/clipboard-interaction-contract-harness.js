@@ -13,7 +13,7 @@ const postActions = fs.readFileSync(path.join(repo, 'src', 'features', 'post-act
 const settings = fs.readFileSync(path.join(repo, 'src', 'features', 'settings.js'), 'utf8');
 const profile = fs.readFileSync(path.join(repo, 'src', 'features', 'profile-view.js'), 'utf8');
 
-assert.strictEqual(files.length, 217, 'index.html plus 216 extracted modules must be audited after Story editor split');
+assert.strictEqual(files.length, 218, 'index.html plus 217 extracted modules must be audited after Note deletion split');
 assert.strictEqual((source.match(/navigator\.clipboard\.writeText\(/g) || []).length, 7, 'seven clipboard writeText calls must remain');
 assert.strictEqual((source.match(/document\.execCommand\(['"]copy['"]\)/g) || []).length, 1, 'one legacy copy fallback must remain');
 assert(messages.includes('async function copyMsg(id, text)'), 'message copy helper must remain');

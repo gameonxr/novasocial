@@ -3053,3 +3053,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 - Synchronized `docs/classic-script-compatibility-contract-harness.js` to the post-Note-deletion inventory of 219 classic script tags and 217 extracted JavaScript files.
 - No module syntax, async/defer attributes, or runtime ordering were changed.
+
+## 2026-08-22 — Note deletion clipboard-audit compatibility correction
+
+- Updated `docs/clipboard-interaction-contract-harness.js` from the Story baseline to audit 218 files (`index.html` plus 217 extracted JavaScript modules) after the Note deletion owner was added.
+- Clipboard write, legacy fallback, and copy-surface invariants remain unchanged.
