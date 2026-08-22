@@ -2723,3 +2723,6 @@ The post-split collision audit deterministically reports 715 top-level function 
 
 ### Push settings loading-order compatibility correction — Branch2
 The dependency-loading audit initially retained the prior two-split five-script expectation. Updated it to the actual post-Push tail `nova-init → spawn-like-particles → sync-local-deletion-fallback → push-settings → like-effects`; no runtime order was changed.
+
+### Push settings source-file hygiene compatibility correction — Branch2
+The full gate observed 249 extracted `src/` files after adding `push-settings.js`, while the hygiene harness still expected 248. Updated only that deterministic count and retained empty-file and trailing-whitespace protections.
