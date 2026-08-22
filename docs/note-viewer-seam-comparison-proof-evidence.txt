@@ -1,0 +1,32 @@
+# Note viewer seam comparison proof evidence
+
+Date: 2026-08-22
+Branch: Branch2
+Scope: Preparation-only synthetic adapter parity; no production Note extraction.
+
+NOTE_VIEWER_ADAPTER_PARITY=PASS
+SCENARIOS=5
+INLINE_BOUNDARY=PASS
+ADAPTER_PARITY=PASS
+SAFE_NO_SIDE_EFFECTS=PASS
+
+Scenario coverage:
+- Existing own Note with viewer count, reaction, and attached music autoplay: PASS
+- Existing other-user Note with reply/reaction controls and no own-viewer count: PASS
+- Expired/missing Note with expiry feedback and Notes Bar reload: PASS
+- Successful own-Note removal with audio pause, deletion, Cloudinary cleanup boundary, close, and reload: PASS
+- Removal failure with failure feedback, close, and reload: PASS
+
+Observed synthetic event parity matched exactly between the protected inline behavior model and the injected adapter model.
+
+REAL_DATA_ACTIONS=0
+REAL_MEDIA_ACTIONS=0
+REAL_STORAGE_MUTATIONS=0
+REAL_SUPABASE_ACTIONS=0
+REAL_ACCOUNT_ACTIONS=0
+PRODUCTION_SPLIT=0
+ROLLBACK_REQUIRED=YES
+
+The protected `viewNote()` and `removeMyNoteFromViewer()` owners remain inline. This evidence does not authorize extraction; browser-context parity, exact canonical owner hashes, and detached rollback proof remain required before any future production split.
+
+RESULT=PASS

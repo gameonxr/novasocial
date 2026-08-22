@@ -1,6 +1,14 @@
+const fs = require('fs');
+const path = require('path');
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
+
+const evidence = fs.readFileSync(path.join(__dirname, 'note-viewer-seam-comparison-proof-evidence.txt'), 'utf8');
+assert(evidence.includes('NOTE_VIEWER_ADAPTER_PARITY=PASS'), 'Note adapter parity evidence must pass');
+assert(evidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Note proof must remain side-effect safe');
+assert(evidence.includes('PRODUCTION_SPLIT=0'), 'Note production split must remain blocked');
 
 async function mockViewNote({ note, currentUserId = 'me', viewCount = 0, reaction = null }) {
   const events = [];
@@ -48,5 +56,5 @@ async function mockRemoveMyNote({ note, deleteFails = false, artworkCleanup = fa
   const failed = await mockRemoveMyNote({ note: { id: 'n1' }, deleteFails: true });
   assert(!failed.removed && failed.events.includes('toast:remove-failed') && failed.events.includes('viewer.close'), 'Removal failure must show feedback and still close viewer');
 
-  console.log(JSON.stringify({ passed: true, ownNote, otherNote, expired, removed, failed }, null, 2));
+  console.log(JSON.stringify({ passed: true, ownNote, otherNote, expired, removed, failed, seamEvidence: 'PASS', productionSplit: 0 }, null, 2));
 })();

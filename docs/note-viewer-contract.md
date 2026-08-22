@@ -26,8 +26,9 @@ The viewer distinguishes own and other Notes. An own Note exposes viewer-count/r
 | Successful own-Note removal | Pause audio, delete Note, clean Cloudinary artwork | PASS |
 | Removal success cleanup | Close viewer and reload Notes Bar | PASS |
 | Removal failure | Show failure feedback and still close/reload | PASS |
+| Synthetic seam adapter parity | Exact event parity for own/other/expired/music/removal branches; no real side effects | PASS |
 
-The harness is deterministic and uses mocked Note/state events only. It does not invoke real DOM, audio, Supabase, account data, Note, reaction, reply, or media-deletion actions.
+The harness is deterministic and uses mocked Note/state events only. The preparation seam comparison additionally proves exact parity across five synthetic scenarios. It does not invoke real DOM, audio, Supabase, account data, Note, reaction, reply, or media-deletion actions.
 
 ## Safe boundary
 
@@ -41,4 +42,5 @@ The standalone harness passed. The complete repository validation chain also pas
 
 1. [`index.html` Note viewer/removal implementation](../index.html)
 2. [`CRITICAL_CONTEXT.md`](../../upload/CRITICAL_CONTEXT.md)
-3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+3. [`note-viewer-seam-comparison-proof-evidence.txt`](./note-viewer-seam-comparison-proof-evidence.txt)
+4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

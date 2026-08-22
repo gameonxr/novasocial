@@ -2783,3 +2783,6 @@ The full gate observed 215 audited files in the storage-key surface harness afte
 
 ### Push settings window-assignment compatibility correction — Branch2
 The full gate found the window-assignment surface harness still expected 214 audited files and 194 assignments. Updated only its allowlist/counts to include `enablePushFromSettings` and `resetPushFromSettings`, producing 215 files, 196 assignments, and the same no-unexpected-name invariant.
+
+### Note viewer seam preparation checkpoint — Branch2
+Prepared a deterministic synthetic adapter parity proof for the protected `viewNote()` and `removeMyNoteFromViewer()` owners. Five branches pass: own Note with music/count/reaction, other-user Note, expired Note, removal success with cleanup boundary, and removal failure with close/reload. No real data, media, storage, account, Supabase, or destructive action occurred. Production split remains blocked (`PRODUCTION_SPLIT=0`); browser-context parity, exact owner hashes, and detached rollback proof remain required.
