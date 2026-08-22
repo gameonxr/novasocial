@@ -26,8 +26,9 @@ Upload or message-insert failures still stop every microphone track. A `MESSAGIN
 | Blocked recipient | Show messaging-blocked feedback and stop stream | PASS |
 | Generic upload/insert failure | Show failure feedback and stop stream | PASS |
 | Cleanup | Restore idle state and stop tracks | PASS |
+| Injected seam dispatch | Recorder flow dispatches explicitly and preserves success, blocked, and cleanup outcomes | PASS |
 
-The harness is deterministic and uses mocked recorder, blob, upload, database, button, and stream events only. It does not invoke real microphone, MediaRecorder, DOM, Supabase, authentication, or message actions.
+The harness is deterministic and uses mocked recorder, blob, upload, database, button, and stream events only. It does not invoke real microphone, MediaRecorder, DOM, Supabase, authentication, or message actions. Its injected seam dispatcher is test-only and is not loaded by `index.html`; the protected `toggleRecording()` owner remains inline.
 
 ## Safe boundary
 

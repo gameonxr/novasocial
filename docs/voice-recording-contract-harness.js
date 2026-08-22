@@ -2,6 +2,17 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function createInjectedVoiceSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    run(input) {
+      calls.push('recorder-flow');
+      return deps.run(input);
+    },
+  };
+}
+
 async function mockVoiceFlow({ hasMic = true, blobSize = 1000, uploadFails = false, blocked = false }) {
   const events = [];
   const state = { recording: false, button: 'mic', streamStopped: false };
@@ -52,5 +63,12 @@ async function mockVoiceFlow({ hasMic = true, blobSize = 1000, uploadFails = fal
   const failed = await mockVoiceFlow({ blobSize: 1000, uploadFails: true });
   assert(failed.events.includes('toast:Voice message failed') && failed.state.streamStopped, 'Upload failure must show generic failure and stop stream');
 
-  console.log(JSON.stringify({ passed: true, denied, short, success, blocked, failed }, null, 2));
+  const seam = createInjectedVoiceSeam({ run: mockVoiceFlow });
+  const injectedSuccess = await seam.run({ blobSize: 1000 });
+  const injectedBlocked = await seam.run({ blobSize: 1000, blocked: true });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['recorder-flow', 'recorder-flow']), 'Injected voice seam must dispatch recorder flow explicitly for each request');
+  assert(injectedSuccess.events.includes('upload:chat') && injectedSuccess.state.streamStopped, 'Injected success flow must preserve upload and track cleanup');
+  assert(injectedBlocked.events.includes("toast:You can't send messages to this user") && injectedBlocked.state.streamStopped, 'Injected blocked flow must preserve recipient feedback and cleanup');
+
+  console.log(JSON.stringify({ passed: true, denied, short, success, blocked, failed, seam: { calls: seam.calls, injectedSuccess, injectedBlocked } }, null, 2));
 })();

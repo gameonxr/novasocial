@@ -3125,3 +3125,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Calls/WebRTC preparation with an injected dispatcher around mocked peer creation, signaling, and teardown; `createPeerConnection()` and `endCall()` remain inline.
 - Verified explicit peer/signal/end dispatch order, own-signal filtering, ICE queue drain behavior, terminal state reset, media-track cleanup, channels, timers, ringtone, and network-monitor cleanup using mocks only.
 - Updated `docs/calls-webrtc-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no real WebRTC/media/signaling action was performed, and Calls/WebRTC production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Voice recording test-only injected seam proof
+- Advanced voice-recording preparation with an injected dispatcher around the mocked recorder flow; `toggleRecording()` and the DM voice-message path remain inline.
+- Verified explicit recorder-flow dispatch, microphone denial, start/stop state, short-recording rejection, upload success, blocked-recipient feedback, generic failure handling, and microphone-track cleanup using mocks only.
+- Updated `docs/voice-recording-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no microphone/upload/message action was performed, and voice-recording production extraction remains blocked pending independent browser proof and rollback gates.
