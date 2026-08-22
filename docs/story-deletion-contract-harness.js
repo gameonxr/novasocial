@@ -15,6 +15,21 @@ async function mockDeleteStory({ confirmed = true, story = null, currentUserId =
   return { events, deleted: true };
 }
 
+function createInjectedStoryDeletionSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    deleteStory(input) {
+      calls.push('delete-story');
+      return deps.deleteStory(input);
+    },
+    cleanupExpired(input) {
+      calls.push('cleanup-expired');
+      return deps.cleanupExpired(input);
+    },
+  };
+}
+
 async function mockCleanupExpired({ alreadyCleaned = false, expired = [], queryFails = false }) {
   const events = [];
   if (alreadyCleaned) return { events: ['session-once.skip'], cleaned: false };
@@ -53,5 +68,12 @@ async function mockCleanupExpired({ alreadyCleaned = false, expired = [], queryF
   assert(!onceSkip.cleaned && onceSkip.events.includes('session-once.skip'), 'Expired cleanup must run only once per session');
   assert(!queryFailure.cleaned && queryFailure.events.includes('cleanup.error.noncritical'), 'Expired query failure must remain noncritical');
 
-  console.log(JSON.stringify({ passed: true, cancelled, missing, notOwner, deleted, relatedFailure, rowFailure, cleanup, empty, onceSkip, queryFailure }, null, 2));
+  const seam = createInjectedStoryDeletionSeam({ deleteStory: mockDeleteStory, cleanupExpired: mockCleanupExpired });
+  const injectedDelete = await seam.deleteStory({ story: { user_id: 'me' }, mediaUrl: 'https://cdn/injected' });
+  const injectedCleanup = await seam.cleanupExpired({ expired: [{ id: 's-injected', media_url: null }] });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['delete-story', 'cleanup-expired']), 'Injected Story deletion seam must dispatch delete and expiry-cleanup owners explicitly');
+  assert(injectedDelete.deleted && injectedDelete.events.includes('media.cleanup:story:user_delete') && injectedDelete.events.includes('home-cache.invalidate'), 'Injected deletion seam must preserve media cleanup and cache invalidation');
+  assert(injectedCleanup.cleaned && injectedCleanup.events.includes('stories.delete:1'), 'Injected expiry seam must preserve bounded cleanup');
+
+  console.log(JSON.stringify({ passed: true, cancelled, missing, notOwner, deleted, relatedFailure, rowFailure, cleanup, empty, onceSkip, queryFailure, seam: { calls: seam.calls, injectedDelete, injectedCleanup } }, null, 2));
 })();

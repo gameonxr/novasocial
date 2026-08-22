@@ -29,8 +29,9 @@ The owned Story row is then deleted with the current-user ownership filter. If m
 | Empty expired result | Noncritical no-op | PASS |
 | Session-once repeat | Skip second cleanup | PASS |
 | Expiry query failure | Remain noncritical | PASS |
+| Injected deletion dispatch | Delete and expiry-cleanup dependencies dispatch explicitly and preserve media/cache outcomes | PASS |
 
-The harness is deterministic and uses mocked confirmation, Story, database, media, cache, and navigation events only. It does not invoke real DOM, Supabase, Cloudinary, authentication, Stories, or deletion actions.
+The harness is deterministic and uses mocked confirmation, Story, database, media, cache, and navigation events only. Its injected deletion dispatcher is test-only and is not loaded by `index.html`. It does not invoke real DOM, Supabase, Cloudinary, authentication, Stories, or deletion actions.
 
 ## Safe boundary
 

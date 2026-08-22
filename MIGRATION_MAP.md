@@ -3165,3 +3165,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced Story submission preparation with an injected dispatcher around the mocked validation, media, upload, persistence, notification, and viewer/home flow; `submitStory()` remains inline.
 - Verified explicit submission dispatch, ban and empty-input guards, 50-second video limit, image/text canvas paths, video overlay retry, progress, upload failure reset, nonfatal notification failure, cache invalidation, modal close, and viewer/home outcomes using mocks only.
 - Updated `docs/story-submission-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live upload/publish/notification action was performed, and Story submission production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Story deletion test-only injected seam proof
+- Advanced Story deletion preparation with an injected dispatcher around mocked owned-story deletion and session-once expiry cleanup; `deleteStory()` and `cleanupExpiredStories()` remain inline.
+- Verified explicit delete/expiry dispatch order, confirmation and ownership guards, all-settled related cleanup, media cleanup, cache invalidation, viewer/Home navigation, 100-row expiry batching, session-once behavior, and noncritical failures using mocks only.
+- Updated `docs/story-deletion-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live Story deletion or media action was performed, and Story deletion production extraction remains blocked pending independent browser proof and rollback gates.
