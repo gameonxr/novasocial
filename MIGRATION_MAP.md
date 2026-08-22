@@ -2813,3 +2813,6 @@ The full gate observed 216 audited files in the clipboard interaction harness af
 
 ### Note viewer collision-audit compatibility correction — Branch2
 The full gate observed 216 audited files and 713 unique top-level function names after moving the two Note owners. Updated only those deterministic collision-harness totals; the zero-duplicate invariant remains unchanged.
+
+### Note viewer lexical-collision compatibility correction — Branch2
+The full gate observed 216 audited JavaScript files after adding `note-viewer-owners.js`, while the lexical-collision harness expected 215. Updated only that deterministic count; the 117-name and zero-duplicate lexical invariants remain unchanged.
