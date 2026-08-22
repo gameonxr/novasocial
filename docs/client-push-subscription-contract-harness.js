@@ -8,13 +8,16 @@ const normalStart = html.indexOf('async function subscribeToPushNotifications()'
 const forceStart = html.indexOf('async function forceResubscribePush()');
 const settingsStart = html.indexOf('async function enablePushFromSettings()');
 const resetStart = html.indexOf('async function resetPushFromSettings()');
+const settingsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 assert(normalStart >= 0 && forceStart > normalStart, 'normal push helper must precede force helper');
-assert(forceStart >= 0 && settingsStart > forceStart, 'force helper must precede settings integration');
-assert(settingsStart >= 0 && resetStart > settingsStart, 'enable helper must precede reset helper');
+assert(forceStart >= 0, 'force helper must remain in the inline application boundary');
+assert(html.indexOf('src/features/push-settings.js') > forceStart, 'force helper must precede settings module');
+assert(settingsModule.indexOf('window.enablePushFromSettings') >= 0, 'enable settings owner must remain in the module');
+assert(settingsModule.indexOf('window.resetPushFromSettings') > settingsModule.indexOf('window.enablePushFromSettings'), 'enable owner must precede reset owner');
 const normal = html.slice(normalStart, forceStart);
-const force = html.slice(forceStart, settingsStart);
-const settings = html.slice(settingsStart, resetStart);
-const reset = html.slice(resetStart, html.indexOf('// ═══════════════════════════════════════════════════════════════════════', resetStart));
+const force = html.slice(forceStart, html.indexOf('\n/**', forceStart));
+const settings = settingsStart >= 0 ? html.slice(settingsStart, resetStart) : settingsModule;
+const reset = resetStart >= 0 ? html.slice(resetStart, html.indexOf('// ═══════════════════════════════════════════════════════════════════════', resetStart)) : settingsModule;
 
 assert(normal.includes("if (!('serviceWorker' in navigator) || !('PushManager' in window))"), 'normal helper must guard unsupported browsers');
 assert(normal.includes('if (!ME?.id)'), 'normal helper must guard missing logged-in user');
