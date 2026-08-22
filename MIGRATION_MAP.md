@@ -3005,3 +3005,6 @@ Updated the Stories seam-preparation harness so the completed `renderStoryElemen
 
 ### Story editor window-assignment audit correction — Branch2
 Updated the window-assignment surface harness to 217 audited files and 198 explicit assignments for the seven approved protected owners, including the Story renderer and Note viewer owners.
+
+### Story editor window-assignment count correction — Branch2
+The complete assignment inventory measured 199 explicit `window.* =` assignments after adding the Story renderer owner. Updated the surface harness from 198 to 199; the exact allowlist and seven approved-owner assignments remain enforced.

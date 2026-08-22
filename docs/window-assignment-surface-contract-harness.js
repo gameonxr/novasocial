@@ -40,7 +40,7 @@ const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
 assert.strictEqual(files.length, 217, 'index.html plus 216 extracted modules must be audited after the seven approved protected owner groups');
-assert.strictEqual(matches.length, 198, 'application surface must retain 198 explicit window assignments after the seven approved protected owner groups');
+assert.strictEqual(matches.length, 199, 'application surface must retain 199 explicit window assignments after the seven approved protected owner groups');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
