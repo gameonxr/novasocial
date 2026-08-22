@@ -44,6 +44,25 @@ function mockResults({ options, votes = null, picked = [], multi = false }) {
   return { counts, total, percentages, meta };
 }
 
+function createInjectedStoryPollSeam(deps) {
+  const calls = [];
+  return {
+    calls,
+    vote(input) {
+      calls.push('vote');
+      return deps.vote(input);
+    },
+    results(input) {
+      calls.push('results');
+      return deps.results(input);
+    },
+    loadState(input) {
+      calls.push('load-state');
+      return deps.loadState(input);
+    },
+  };
+}
+
 function mockLoadState({ options, myVotes = null, dbFails = false }) {
   if (dbFails || !myVotes || myVotes.length === 0) return { voted: '0', picked: [], events: dbFails ? ['state.load.failed.silent'] : [] };
   const picked = myVotes.map(vote => vote.option_idx).filter(index => index >= 0 && index < options.length);
@@ -82,5 +101,16 @@ function mockLoadState({ options, myVotes = null, dbFails = false }) {
   assert(noState.voted === '0' && noState.picked.length === 0, 'No prior votes must leave card unvoted');
   assert(failedState.voted === '0' && failedState.events.includes('state.load.failed.silent'), 'State-load table failure must be silent');
 
-  console.log(JSON.stringify({ passed: true, single, singleRepeat, multiAdd, multiRemove, multiClear, failedPersist, results, fallback, emptyResults, restored, noState, failedState }, null, 2));
+  const seam = createInjectedStoryPollSeam({
+    vote: mockVote,
+    results: mockResults,
+    loadState: mockLoadState,
+  });
+  const injectedVote = seam.vote({ options, optIdx: 1 });
+  const injectedResults = seam.results({ options, votes: [{ option_idx: 1 }], picked: [1] });
+  const injectedState = seam.loadState({ options, myVotes: [{ option_idx: 1 }] });
+  assert(JSON.stringify(seam.calls) === JSON.stringify(['vote', 'results', 'load-state']), 'Injected Story poll seam must dispatch vote, results, and state-load owners explicitly');
+  assert(injectedVote.state.picked.join(',') === '1' && injectedResults.total === 1 && injectedState.picked.join(',') === '1', 'Injected Story poll seam must preserve state, result, and restoration outcomes');
+
+  console.log(JSON.stringify({ passed: true, single, singleRepeat, multiAdd, multiRemove, multiClear, failedPersist, results, fallback, emptyResults, restored, noState, failedState, seam: { calls: seam.calls, injectedVote, injectedResults, injectedState } }, null, 2));
 })();

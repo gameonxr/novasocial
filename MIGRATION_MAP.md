@@ -3130,3 +3130,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Advanced voice-recording preparation with an injected dispatcher around the mocked recorder flow; `toggleRecording()` and the DM voice-message path remain inline.
 - Verified explicit recorder-flow dispatch, microphone denial, start/stop state, short-recording rejection, upload success, blocked-recipient feedback, generic failure handling, and microphone-track cleanup using mocks only.
 - Updated `docs/voice-recording-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no microphone/upload/message action was performed, and voice-recording production extraction remains blocked pending independent browser proof and rollback gates.
+
+## 2026-08-22 — Story poll test-only injected seam proof
+- Advanced Story poll preparation with an injected dispatcher around mocked vote, result-refresh, and prior-state-load dependencies; `voteStoryPoll()`, `refreshPollResults()`, and `loadStoryPollState()` remain inline.
+- Verified explicit vote/results/state-load dispatch order, single and multi-vote state, best-effort persistence, valid-index counting, fallback results, prior-state restoration, and silent failure behavior using mocks only.
+- Updated `docs/story-poll-contract.md` to record the test-only boundary. No runtime adapter or script tag was added, no live poll action was performed, and Story poll production extraction remains blocked pending independent browser proof and rollback gates.

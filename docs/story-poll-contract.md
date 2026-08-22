@@ -30,8 +30,9 @@ Vote persistence is best-effort. If the vote table is unavailable or the upsert/
 | Empty result | Show zero percentages and prompt | PASS |
 | Prior-state restoration | Restore valid votes and refresh | PASS |
 | Missing/failed state load | Leave card unvoted and fail silently | PASS |
+| Injected seam dispatch | Vote, result, and state-load dependencies dispatch explicitly in order | PASS |
 
-The harness is deterministic and uses mocked poll/card state only. It does not invoke real DOM, Supabase, Story viewer, authentication, or poll actions.
+The harness is deterministic and uses mocked poll/card state only. It does not invoke real DOM, Supabase, Story viewer, authentication, or poll actions. Its injected seam dispatcher is test-only and is not loaded by `index.html`; the protected poll owners remain inline.
 
 ## Safe boundary
 
