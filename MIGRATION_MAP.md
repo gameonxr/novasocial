@@ -2984,3 +2984,6 @@ Synchronized the high-risk extraction contract to the Story editor checkpoint: s
 
 ### Story editor Push-gate script inventory correction — Branch2
 Updated Push settings production checks to the post-Story HTML inventory: 218 opening tags, 218 closing tags, and 217 external script tags. Push owner ordering and non-ownership boundaries remain unchanged.
+
+### Story editor realtime-audit file-count correction — Branch2
+Updated the realtime-subscription lifecycle harness from 216 to 217 audited files (`index.html` plus 216 source modules) after the Story editor owner was added; channel and cleanup inventories remain unchanged.
