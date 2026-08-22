@@ -3043,3 +3043,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Updated final-readiness load-order assertions to compare final script-tag occurrences, avoiding earlier inline reference text.
 - Runtime order remains `push-settings.js` → `note-viewer-owners.js` → `note-deletion-owner.js` → `story-editor-owners.js` → `like-effects.js`.
 - The correction is limited to assertion targeting; runtime script order is unchanged.
+
+## 2026-08-22 — Note deletion documentation inventory correction
+
+- Updated final-readiness documentation accounting to include the committed `docs/browser-smoke-baseline-2026-08-22.md` record.
+- Current documentation inventory is 262 Markdown files, with the browser smoke record explicitly listed as a non-contract document exception.
