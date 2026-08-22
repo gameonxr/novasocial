@@ -2594,3 +2594,6 @@ Updated `cross-module-function-collision-contract-harness.js` from 719 to 718 to
 
 ### Particle split lexical-audit count correction — Branch2
 Updated `cross-module-lexical-collision-contract-harness.js` from 212 to 213 audited files so its lexical scan includes `index.html` plus all 212 extracted JavaScript modules. The top-level lexical inventory and zero-duplicate assertion remain unchanged; this is a count-only correction after the particle module addition.
+
+### Particle split dependency-order correction — Branch2
+Updated `dependency-loading-order-contract-harness.js` so its final-tail assertion reflects the intentional post-split order: `nova-init.js`, `spawn-like-particles.js`, then `like-effects.js`. Core/component ordering, classic-script attributes, stylesheet count, and CDN-first loading remain unchanged.
