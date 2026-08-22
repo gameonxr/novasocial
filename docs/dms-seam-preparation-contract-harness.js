@@ -7,6 +7,16 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const browserProofFiles = [
+  'dms-empty-state-browser-proof-evidence.txt',
+  'dms-refresh-no-account-browser-proof-evidence.txt',
+  'dms-refresh-current-tab-browser-proof-evidence.txt'
+];
+for (const file of browserProofFiles) {
+  const evidencePath = path.join(repo, 'docs', file);
+  assert(fs.existsSync(evidencePath), `DMs browser proof must exist: ${file}`);
+  assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `DMs browser proof must contain PASS: ${file}`);
+}
 const requiredMarkers = [
   'async function renderDMs()',
   'async function _refreshDmsInPlace()',
@@ -36,6 +46,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'dms-realtime-contract-harness.js')
 console.log('DMS_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=RENDER_REFRESH_DATA_STATE_DOM_CACHE_SCROLL_NAVIGATION');
 console.log('PROTECTED_DM_SIGNATURES=3');
+console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
 console.log('EXTRACTED_DM_SIGNATURES=0');
 console.log('NON_DESTRUCTIVE_REFRESH=PASS');
 console.log('PRODUCTION_SPLIT=0');

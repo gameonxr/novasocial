@@ -2498,3 +2498,7 @@ Aligned `docs/push-seam-preparation-contract.md` and its harness with the nine e
 ### Stories browser-proof inventory alignment checkpoint — Branch2
 
 Aligned `docs/stories-seam-preparation-contract.md` and its harness with the two existing non-destructive browser-context proofs: empty-data guarding and synthetic-image setup. The harness now requires both evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; Story viewer, rendering, and poll owners remain inline.
+
+### DMs browser-proof inventory alignment checkpoint — Branch2
+
+Aligned `docs/dms-seam-preparation-contract.md` and its harness with the three existing non-destructive browser-context proofs: empty state, no-account refresh guard, and current-tab refresh guard. The harness now requires all three evidence files and PASS markers. These artifacts remain mock-only evidence and do not authorize a production split; DMs render, refresh, and chat owners remain inline.

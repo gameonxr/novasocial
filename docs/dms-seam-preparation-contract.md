@@ -20,13 +20,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. DMs rendering and realtime code remains inline. The existing deterministic DMs contract harness proves behavior, but it is not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof covering chat-open, background refresh, scroll retention, and navigation races.
+This is a **mapping-only checkpoint**. DMs rendering and realtime code remains inline. Three non-destructive browser-context mock artifacts now cover the empty state, no-account refresh guard, and current-tab refresh guard. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, covering chat-open, scroll retention, navigation races, and realtime behavior.
 
 The first implementation step must be test-only or adapter-only and must preserve the current `renderDMs()` and `_refreshDmsInPlace()` owners until the complete seam harness passes.
 
 ## Harness coverage
 
-`docs/dms-seam-preparation-contract-harness.js` scans `index.html` and confirms the dependency/query/DOM/cache/scroll/navigation markers, the existing DMs behavior contract and harness, protected inline signatures, and zero matching protected signatures in `src/`. It does not query Supabase, open a chat, mutate messages, or move production code.
+`docs/dms-seam-preparation-contract-harness.js` scans `index.html` and confirms the dependency/query/DOM/cache/scroll/navigation markers, the existing DMs behavior contract and harness, the three passing non-destructive browser mock artifacts, protected inline signatures, and zero matching protected signatures in `src/`. It does not query Supabase, open a chat, mutate messages, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -35,6 +35,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Generation race | `_renderGeneration` checks remain | PASS |
 | DOM preservation | `#screen`, `#notes-bar`, `scrollTop`, and `data-cid` markers remain | PASS |
 | Data boundary | Conversations/unread/member query markers remain | PASS |
+| Browser mock inventory | Empty-state, no-account guard, and current-tab guard artifacts are present with PASS markers | PASS |
 | Production split | None | PASS |
 
 ## References
@@ -43,5 +44,8 @@ The first implementation step must be test-only or adapter-only and must preserv
 2. [`dms-realtime-contract-harness.js`](./dms-realtime-contract-harness.js)
 3. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
 4. [`index.html`](../index.html)
-5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+5. [`dms-empty-state-browser-proof-evidence.txt`](./dms-empty-state-browser-proof-evidence.txt)
+6. [`dms-refresh-no-account-browser-proof-evidence.txt`](./dms-refresh-no-account-browser-proof-evidence.txt)
+7. [`dms-refresh-current-tab-browser-proof-evidence.txt`](./dms-refresh-current-tab-browser-proof-evidence.txt)
+8. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
