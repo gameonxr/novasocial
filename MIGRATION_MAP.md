@@ -2585,3 +2585,9 @@ Updated `classic-script-compatibility-contract-harness.js` for the intentional p
 
 ### Particle split audit-count correction — Branch2
 Updated `clipboard-interaction-contract-harness.js` from 212 to 213 audited files to include `index.html` plus the new 212-file JavaScript source tree. Clipboard call counts and fallback behavior remain unchanged; this is a count-only compatibility correction after the particle module addition.
+
+### Particle split collision-audit count correction — Branch2
+Updated `cross-module-function-collision-contract-harness.js` from 212 to 213 audited files so its collision scan includes `index.html` plus all 212 extracted JavaScript modules. The top-level function inventory remains 719 with zero duplicate names; this is a count-only correction after the particle module addition.
+
+### Particle split top-level-function inventory correction — Branch2
+Updated `cross-module-function-collision-contract-harness.js` from 719 to 718 top-level named functions. The one-function decrease is intentional: the extracted production owner is an anonymous function assigned to `window.spawnLikeParticles`, while duplicate-name detection remains zero and all global caller behavior is preserved.
