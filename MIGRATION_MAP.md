@@ -2924,3 +2924,6 @@ Synchronized the remaining post-Note harness baselines after adding the Story ed
 
 ### Story editor deletion-fallback compatibility correction — Branch2
 Updated the shared deletion-fallback production harness so the extracted `renderStoryElements()` marker is included in the approved-owner set. Existing deletion-fallback hash, rollback, browser proof, and protected-marker checks remain unchanged.
+
+### Story editor listener-inventory correction — Branch2
+The extracted renderer contributes six listener registrations, so the event-listener boundary harness now expects 74 extracted-module registrations instead of the pre-Story 68 baseline. Inline and service-worker listener assertions remain unchanged.
