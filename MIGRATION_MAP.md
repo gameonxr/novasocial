@@ -2768,3 +2768,9 @@ The Push seam harness found `showSettingsNotifications()` had moved correctly wi
 
 ### Push settings realtime-audit compatibility correction — Branch2
 The full gate observed 215 audited files in the realtime subscription lifecycle harness after adding `push-settings.js`, while it expected 214. Updated only that deterministic file count; all channel registration and cleanup assertions remain unchanged.
+
+### Push settings reversible-proof compatibility correction — Branch2
+The full gate found the reversible-browser-proof harness still encoded the two-split/17-remaining state. Updated only its matrix/gate assertions and added Push after-split plus parity/rollback evidence checks; remaining protected systems stay proof-gated.
+
+### Push settings reversible-owner compatibility correction — Branch2
+The reversible-proof harness still expected Push owners inline and reported proof status as remaining. Updated only its approved-owner inline counts, Push window-assignment checks, and summary to the verified 4/19 state; remaining protected systems stay blocked.
