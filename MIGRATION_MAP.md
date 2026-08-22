@@ -2933,3 +2933,6 @@ Moving six renderer listeners out of `index.html` reduced inline `addEventListen
 
 ### Story editor seam-readiness matrix correction — Branch2
 Updated the high-risk seam-readiness matrix harness to account for 216 source JavaScript modules and to classify `renderStoryElements()` as the approved Story editor owner. The protected inventory remains 19 signatures with 12 remaining unapproved systems.
+
+### Story editor remaining-system gate-output correction — Branch2
+Updated the seam-readiness matrix harness to recognize the high-risk gate’s current explicit status, `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_12_PROTECTED_SYSTEMS`, after the seventh approved owner split.

@@ -51,7 +51,7 @@ assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g)
 assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal owner must occur once');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
+assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_12_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS'), 'matrix must record particle split completion');
