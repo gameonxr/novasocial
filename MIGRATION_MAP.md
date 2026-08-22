@@ -2912,3 +2912,6 @@ Updated final-readiness marker accounting so the extracted `renderStoryElements(
 
 ### Story editor browser-proof harness inventory correction — Branch2
 The final readiness gate measured 262 total harness files because the standalone synthetic browser parity harness is intentionally non-standard (`*-browser-parity-harness.js`), while standard contract harnesses remain 258. Updated readiness counts and documentation pairing language accordingly.
+
+### Story editor non-standard harness mapping correction — Branch2
+Added `story-editor-browser-parity-harness.js` to the final-readiness non-standard harness allowlist. This preserves explicit artifact pairing while keeping the standalone synthetic browser proof separate from `*-contract-harness.js` standard contracts.
