@@ -13,7 +13,7 @@ INLINE_OWNER_COUNT=2
 SOURCE_PUSH_OWNER_COUNT=0
 
 Synthetic comparison result: PASS
-A disposable Node VM executed the exact `enablePushFromSettings()` and `resetPushFromSettings()` inline bodies against injected mocks for capability, permission, permission request, subscription, force-resubscribe, toast, settings refresh, and console dependencies. No browser permission prompt, service-worker registration, push subscription, account state, database, VAPID key, or settings mutation was used.
+A disposable Node VM executed the exact `enablePushFromSettings()` and `resetPushFromSettings()` inline bodies against injected mocks for capability, permission, permission request, subscription, force-resubscribe, toast, settings refresh, and console dependencies. A separate injected-dependency adapter implementation was then compared against those exact inline owners across all 12 branches, including event order and delegated subscription-error propagation. No browser permission prompt, service-worker registration, push subscription, account state, database, VAPID key, or settings mutation was used.
 
 Scenario event-order results
 - Unsupported enable: unsupported toast; no subscription.
@@ -30,6 +30,8 @@ Scenario event-order results
 - Reset failure: reset toast, force-resubscribe, failure toast, settings refresh.
 
 COMPARISON_RESULT=PASS
+ADAPTER_PARITY=PASS
+ADAPTER_SCOPE=CAPABILITY_PERMISSION_SUBSCRIBE_FORCE_RESUBSCRIBE_TOAST_SETTINGS_REFRESH
 SAFE_NO_SIDE_EFFECTS=PASS
 PRODUCTION_SPLIT=0
 DIRECT_EXTRACTION=BLOCKED_UNTIL_PROOF

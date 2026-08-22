@@ -35,6 +35,7 @@ const comparisonEvidencePath = path.join(repo, 'docs', 'push-settings-seam-compa
 assert(fs.existsSync(comparisonEvidencePath), 'Push settings comparison evidence must exist');
 const comparisonEvidence = fs.readFileSync(comparisonEvidencePath, 'utf8');
 assert(comparisonEvidence.includes('COMPARISON_RESULT=PASS'), 'Push settings comparison evidence must pass');
+assert(comparisonEvidence.includes('ADAPTER_PARITY=PASS'), 'Push settings adapter parity evidence must pass');
 assert(comparisonEvidence.includes('SAFE_NO_SIDE_EFFECTS=PASS'), 'Push settings comparison must remain side-effect safe');
 
 for (const ownerName of ['enablePushFromSettings', 'resetPushFromSettings']) {

@@ -2705,3 +2705,6 @@ Selected Push settings as the next preparation-only candidate because its two pr
 
 ### Push settings delegated-error proof — Branch2
 Extended the disposable exact-owner comparison to cover a granted enable path where the existing subscription helper rejects. The proof passes with the enable toast and delegated subscribe event only, preserving the owner’s existing rejection behavior and confirming no settings refresh occurs after the delegated error. No browser permission, service worker, subscription, account, database, VAPID, or settings action was performed; both Push owners remain inline and `PRODUCTION_SPLIT=0`.
+
+### Push settings injected-adapter parity — Branch2
+Compared a test-only injected dependency adapter against the exact inline `enablePushFromSettings()` and `resetPushFromSettings()` owners across 12 meaningful branches. Event ordering and error propagation matched, including delegated subscription failure; capability, permission, subscribe, force-resubscribe, toast, and settings-refresh ownership stayed explicit. No production code moved and no browser/account/service-worker/subscription/database/settings action occurred. Push remains `PRODUCTION_SPLIT=0` and `DIRECT_EXTRACTION=BLOCKED_UNTIL_SEAM_PROOF` pending protected marker parity, reversible browser smoke, rollback proof, and final regression approval.
