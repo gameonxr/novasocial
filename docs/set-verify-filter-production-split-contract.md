@@ -21,8 +21,8 @@ The candidate owns no database query, verification status update, identity-proof
 | Injected seam | Four filters plus missing-control behavior pass deterministically | PASS |
 | Browser proof | Detached synthetic DOM only; no live admin action or query | PASS |
 | Rollback | Pre-split Branch2 SHA and restoration procedure pinned | PASS |
-| Production split | Anonymous classic global owner linked after its caller dependencies | Pending |
-| Focused gates | Candidate and neighboring admin verification harnesses pass after split | Pending |
+| Production split | Anonymous classic global owner linked after its caller dependencies | PASS |
+| Focused gates | Candidate and neighboring admin verification harnesses pass after split | PASS |
 | Full regression | Clean pushed Branch2 tip after split | Pending |
 
 ## Safe boundary

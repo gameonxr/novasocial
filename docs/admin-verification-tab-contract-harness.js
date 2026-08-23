@@ -47,7 +47,8 @@ async function runHarness() {
     const end = source.indexOf('\nasync function adminApproveVerify(', start);
     assert(start >= 0 && end > start, 'verification tab function boundary must remain present and ordered');
     const functionBlock = source.slice(start, end);
-    eval(`let _verifyFilter = 'pending'; ${functionBlock}; global.adminTabVerify = adminTabVerify; global.setVerifyFilter = setVerifyFilter; global.loadVerifyList = loadVerifyList;`);
+    const filterModule = fs.readFileSync('/home/ubuntu/novasocial/src/features/set-verify-filter-owner.js', 'utf8');
+    eval(`let _verifyFilter = 'pending'; const window = global; ${functionBlock}; ${filterModule}; global.adminTabVerify = adminTabVerify; global.setVerifyFilter = window.setVerifyFilter; global.loadVerifyList = loadVerifyList;`);
 
     const request = {
       id: 'v1', user_id: 'u1', full_name: '<Applicant>', category: 'creator', reason: 'Reason <unsafe>',

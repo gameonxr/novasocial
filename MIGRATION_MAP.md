@@ -3643,3 +3643,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Audited `setVerifyFilter(f)` as a contained admin UI-only owner: it updates `_verifyFilter`, styles four detached `vf-*` controls, resets unselected controls, and delegates one `loadVerifyList()` reload.
 - Preserved `adminTabVerify`, `loadVerifyList`, identity-proof rendering, approve/reject handlers, notifications, moderation, and account boundaries inline and unchanged. Exact immutable `origin/main` owner parity passed with SHA-256 `ba13b4efd91ff679b2c7e5ac88fe3e67321beebd671cd1ca5845a8a8cfc15eda`; detached synthetic browser proof and neighboring verification harness passed.
 - Pinned rollback baseline `788655c7ef91eaf9c93f66f6d4f01d83c679d4f5` and created the candidate contract, preparation harness, and rollback evidence. No production split has been applied.
+
+## 2026-08-23 — Verification filter production split
+- Extracted only `setVerifyFilter(f)` into `src/features/set-verify-filter-owner.js` as one anonymous classic `window.setVerifyFilter` owner and linked it after the reports-filter owner and before refresh-counts.
+- Exact normalized owner parity, four-filter synthetic seam behavior, missing-control tolerance, detached after-split browser proof, and neighboring admin-verification behavior pass. Verification reads, identity-proof rendering, approve/reject actions, notifications, moderation, and account boundaries remain inline and unchanged.
