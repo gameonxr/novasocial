@@ -4110,3 +4110,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `adminTabContent(content)` boundary rejection
 - Audited the next marker-clean admin renderer. It creates Posts/Comments/Stories controls and delegates to `loadAdminContent(type)`, which reads content tables, enriches authors through profile lookups, and exposes admin content-management actions.
 - The admin content contract explicitly keeps content reads, author enrichment, moderation, and deletion/recovery behavior inline. This is a protected moderation/content-data surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `adminTabVerify(content)` boundary rejection
+- Audited the next marker-clean admin renderer. It creates verification filters, renders identity-proof links and applicant profiles, and exposes approve/reject controls for pending verification requests.
+- The verification contract explicitly keeps identity-proof handling, verification-status RPCs, notifications, authorization, and account-state updates inline. This is a protected moderation/account surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
