@@ -34,7 +34,7 @@ assert.strictEqual(jsFiles.length, 226, '226 extracted JavaScript modules must r
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
 assert.strictEqual(featureFiles.length, 215, '215 feature modules must remain after confirmCropPreview split');
 assert.strictEqual((html.match(/<script\b/gi) || []).length, 228, 'HTML must retain 228 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 227, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 228, 'HTML script tags must remain balanced');
 assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 226, 'HTML must retain 226 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
