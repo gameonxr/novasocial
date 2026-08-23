@@ -3923,3 +3923,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` preparation accepted
 - Audited the next contained UI-only candidate with exact normalized origin parity/hash `668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4`, one existing Done-control caller, no pre-existing owner module, no stateful boundary tokens, and detached synthetic success/missing-input/conversion-error proof; production split remains pending.
+
+## 2026-08-23 — `confirmCropPreview()` production split
+- Moved only the exact local crop-preview owner to `src/features/confirm-crop-preview-owner.js` as anonymous `window.confirmCropPreview = async function() { ... }`, removed only its inline declaration, and linked one classic external script after the invalidate-cache owner and before the verification owner; one Done-control caller remains unchanged, detached after-split proof passes, and protected systems remain intact.

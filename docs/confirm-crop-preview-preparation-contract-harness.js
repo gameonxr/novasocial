@@ -42,7 +42,10 @@ function extractFunction(text) {
 function normalize(text) { return text.replace(/\s+/g, ' ').trim(); }
 function sha256(text) { return crypto.createHash('sha256').update(text).digest('hex'); }
 
-const currentOwner = extractFunction(html);
+const ownerModulePath = path.join(repo, 'src', 'features', 'confirm-crop-preview-owner.js');
+const hasInlineOwner = (html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length === 1;
+const externalOwnerSource = fs.readFileSync(ownerModulePath, 'utf8');
+const currentOwner = hasInlineOwner ? extractFunction(html) : extractFunction(externalOwnerSource.replace('window.confirmCropPreview = async function()', signature));
 const originOwner = extractFunction(originHtml);
 const normalizedCurrent = normalize(currentOwner);
 const normalizedOrigin = normalize(originOwner);
@@ -52,10 +55,10 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current candidate must preserve normalized origin/main parity');
 assert.strictEqual(sha256(normalizedOrigin), '668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4', 'normalized origin hash must match the pinned candidate audit');
-assert.strictEqual(sourceFiles.length, 225, 'preparation baseline must retain 225 extracted JavaScript modules');
-assert.strictEqual((html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length, 1, 'candidate must have exactly one inline owner before split');
+assert.strictEqual(sourceFiles.length, hasInlineOwner ? 225 : 226, 'source module count must match the pre/post-split candidate state');
+assert.strictEqual((html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length, hasInlineOwner ? 1 : 0, 'candidate inline owner count must match the current pre/post-split state');
 assert.strictEqual((html.match(/onclick="confirmCropPreview\(\)"/g) || []).length, 1, 'candidate must retain exactly one existing Done control caller');
-assert.strictEqual(fs.existsSync(path.join(repo, 'src', 'features', 'confirm-crop-preview-owner.js')), false, 'candidate owner module must not exist before split');
+assert.strictEqual(fs.existsSync(ownerModulePath), !hasInlineOwner, 'candidate external owner presence must match the current pre/post-split state');
 assert.deepStrictEqual(statefulTokens.filter(token => new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(body)), [], 'candidate must contain no stateful operation tokens');
 for (const required of ['document.getElementById', 'canvas', 'drawImage', 'toBlob', 'new File', 'closeCropPreview', 'onConfirm']) {
   assert(body.includes(required), `candidate must retain ${required}`);
@@ -134,7 +137,7 @@ async function runCase({ missing = false, failBlob = false }) {
   console.log('STATEFUL_BOUNDARIES=ABSENT');
   console.log('INJECTED_SEAM=PASS');
   console.log('CROP_BRANCHES=SUCCESS_MISSING_INPUT_CONVERSION_ERROR');
-  console.log('PRODUCTION_MODULE=ABSENT_PRE_SPLIT');
+  console.log(`PRODUCTION_MODULE=${hasInlineOwner ? 'ABSENT_PRE_SPLIT' : 'EXTERNAL_OWNER'}`);
   console.log('DETACHED_BROWSER_SCOPE=PASS');
 })().catch(error => {
   console.error(error.stack || error);

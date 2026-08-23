@@ -1,0 +1,20 @@
+DATE=2026-08-23
+BROWSER_SCOPE=Sandbox detached local synthetic DOM/canvas/File VM documents only
+APPLICATION_LOADED=false
+ACCOUNT_SESSION=false
+LIVE_NOVASOCIAL_LOADED=false
+
+RESULT=PASS
+EXTERNAL_SCRIPT_LOADS=1_PER_SYNTHETIC_DOCUMENT
+SUCCESS_BRANCH=PASS
+MISSING_INPUT_BRANCH=PASS
+CONVERSION_ERROR_BRANCH=PASS
+DATABASE_CALLS=0
+NETWORK_CALLS=0
+NAVIGATION_MUTATIONS=0
+ACCOUNT_MUTATIONS=0
+BROWSER_STORAGE_MUTATIONS=0
+DETACHED_ONLY=true
+OWNER_INVOKED=true
+
+Boundary: The proof evaluated only the external crop-preview owner against synthetic crop viewport/image elements, a synthetic canvas, and a synthetic File implementation. It did not load NovaSocial, login state, live data, upload services, database, network, navigation, browser storage, account controls, or protected systems.
