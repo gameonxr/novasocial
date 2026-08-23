@@ -3267,3 +3267,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reels dependency-order baseline correction
 - Updated the dependency-loading-order harness to validate the final eight classic scripts, including `reels-video-windowing.js` between the Story editor owner and `like-effects.js`.
 - Verified 220 total scripts, 18 stylesheets, classic-only attributes, and preserved module order; no runtime or live-data behavior changed.
+
+## 2026-08-23 — Reels extracted-file hygiene baseline correction
+- Updated the extracted-file hygiene baseline from 252 to 253 source files for the verified Reels windowing-helper module; empty-file and trailing-whitespace checks remain passing.
+- No additional production owner was moved and the remaining high-risk extraction block remains unchanged.

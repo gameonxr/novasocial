@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 252, 'all 252 extracted source files must remain present after Note deletion split');
+assert.strictEqual(files.length, 253, 'all 253 extracted source files must remain present after Reels windowing helper split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {
