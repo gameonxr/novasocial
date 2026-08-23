@@ -3473,3 +3473,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts focused completion
 - Reran the production-split candidate harness plus profile-count refresh, follower-count, follow-toggle, and follow-list neighboring harnesses from the clean split tip; all pass, with the follow mutation remaining unchanged and outside the extracted boundary. Full regression is the only remaining gate.
+
+## 2026-08-23 — Refresh profile counts admin-harness baseline correction
+- Updated the admin-filter production harness to 223 balanced script tags and 222 external scripts after adding the refresh-profile-counts owner; appeal reload and approve/reject mutation boundaries remain protected and passing.
