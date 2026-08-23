@@ -26,7 +26,7 @@ for (const file of extractedFiles.sort()) {
   });
 }
 
-assert.strictEqual(scriptTags.length, 227, 'index.html must retain 227 script tags after invalidateTabCache split');
+assert.strictEqual(scriptTags.length, 228, 'index.html must retain 228 script tags after confirmCropPreview split');
 assert.deepStrictEqual(moduleTags, [], 'classic script architecture must not contain type=module tags');
 assert.deepStrictEqual(asyncTags, [], 'classic script order must not contain defer or async attributes');
 assert.deepStrictEqual(moduleSyntax, [], 'extracted classic scripts must not contain top-level import/export syntax');

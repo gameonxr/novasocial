@@ -3956,3 +3956,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness contract-harness baseline correction
 - Synchronized final-readiness auditing to 268 standard contract harnesses after publishing the crop-preview preparation harness; no protected boundary or unrelated production behavior changed.
+
+## 2026-08-23 — `confirmCropPreview()` classic-script tag baseline correction
+- Synchronized classic-script compatibility auditing to 228 HTML script tags after adding the crop-preview owner; module/defer/async prohibitions remain unchanged.
