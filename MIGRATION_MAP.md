@@ -3953,3 +3953,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness contract-document baseline correction
 - Synchronized final-readiness auditing to 269 standard contract documents after publishing the crop-preview preparation contract; no protected boundary or unrelated production behavior changed.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness contract-harness baseline correction
+- Synchronized final-readiness auditing to 268 standard contract harnesses after publishing the crop-preview preparation harness; no protected boundary or unrelated production behavior changed.
