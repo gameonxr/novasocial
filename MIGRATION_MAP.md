@@ -3787,3 +3787,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` object-URL audit baseline correction
 - Synchronized object-URL lifecycle auditing to 225 combined files (index plus 224 extracted modules) after adding the story-viewer mute owner; 14 creation calls, eight revocations, download cleanup, compression cleanup, and preview ownership remain passing.
+
+## 2026-08-23 — `toggleSVMute()` Push-settings audit baseline correction
+- Synchronized Push-settings production-contract script accounting to 226 opening tags, 226 closing tags, and 225 external scripts after adding the story-viewer mute owner; Push ownership, permission, service-worker, candidate, and protected checks remain passing.
