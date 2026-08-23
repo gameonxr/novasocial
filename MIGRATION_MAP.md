@@ -3455,3 +3455,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter source-boundary baseline correction
 - Updated source-boundary hygiene from 237 to 238 extracted JS/CSS files after adding the admin-filter owner; CRLF, embedded-script, embedded-style, and comment-stripped style guards remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter storage-audit baseline correction
+- Updated storage-key surface auditing from 220 to 221 files after the admin-filter addition; the 29-key localStorage allowlist, zero sessionStorage references, and dynamic sticker-family guard remain unchanged and passing.

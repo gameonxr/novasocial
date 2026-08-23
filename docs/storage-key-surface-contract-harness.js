@@ -19,7 +19,7 @@ const actualKeys = [...new Set(matches)].sort();
 const unexpected = actualKeys.filter((key) => !expectedKeys.includes(key));
 const missing = expectedKeys.filter((key) => !actualKeys.includes(key));
 
-assert.strictEqual(files.length, 220, 'index.html plus 219 extracted modules must be audited after Notes reactor-list split');
+assert.strictEqual(files.length, 221, 'index.html plus 220 extracted modules must be audited after admin appeals filter split');
 assert.strictEqual((source.match(/sessionStorage\./g) || []).length, 0, 'sessionStorage must remain unused');
 assert.strictEqual(actualKeys.length, 29, '29 literal localStorage keys must remain');
 assert.deepStrictEqual(unexpected, [], 'no unexpected literal localStorage keys may appear');
