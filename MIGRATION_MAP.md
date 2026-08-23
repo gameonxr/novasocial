@@ -3668,3 +3668,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter lexical-collision baseline correction
 - Synchronized the cross-module lexical-collision audit to 224 audited files after adding the verification-filter owner. The 117 top-level lexical-name inventory and zero-duplicate invariant remain unchanged and passing.
+
+## 2026-08-23 — Verification filter deletion-fallback baseline correction
+- Synchronized the approved deletion-fallback split harness to 225 balanced script tags and 224 external scripts after adding the verification-filter owner. Deletion-fallback parity, rollback proof, protected accounting, and cleanup boundaries remain unchanged and passing.
