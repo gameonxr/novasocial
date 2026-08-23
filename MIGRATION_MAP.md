@@ -3899,3 +3899,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` tab-cache harness compatibility correction
 - Updated the tab-cache contract harness to evaluate either the pre-split inline owner or the post-split anonymous external owner in the same classic-script lexical scope; behavioral cache restoration/invalidation coverage remains passing without changing production behavior.
+
+## 2026-08-23 — `invalidateTabCache(tab)` window-surface baseline correction
+- Synchronized window-assignment auditing to 226 combined files, 208 explicit assignments, and 109 unique names, admitting the single new anonymous `invalidateTabCache` surface while preserving the existing allowlist and protected checks.
