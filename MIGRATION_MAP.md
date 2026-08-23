@@ -3530,3 +3530,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list reporting correction
 - Replaced the stale hardcoded `sourceModules=219` report with the measured 221-module value in the Notes reactor-list harness; parity, seam, rollback, and protected-boundary assertions remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts object-URL baseline correction
+- Updated object-URL lifecycle auditing from 221 to 222 files after adding the refresh-counts module; all 14 create calls, 8 revoke calls, and download/compression/preview cleanup guards remain passing.
