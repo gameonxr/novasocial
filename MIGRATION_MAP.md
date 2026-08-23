@@ -3631,3 +3631,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter storage-key baseline correction
 - Synchronized storage-key surface auditing to 223 files after adding the reports-filter owner. The 29-key localStorage allowlist, zero sessionStorage references, dynamic sticker family, and all storage boundaries remain unchanged and passing.
+
+## 2026-08-23 — Reports filter window-owner allowlist correction
+- Added the newly externalized `setReportsFilter` owner to the exact window-assignment allowlist and synchronized the explicit assignment total to 205. The 223-file audit, no-unexpected-name invariant, and all existing global owners remain passing.
