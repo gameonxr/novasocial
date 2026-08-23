@@ -3980,3 +3980,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` event-listener baseline correction
 - Synchronized event-listener boundary auditing to 226 extracted JavaScript modules after adding the crop-preview owner; listener and cleanup-registration invariants remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` extracted-file hygiene baseline correction
+- Synchronized extracted-file hygiene auditing to 261 total source files after adding the crop-preview owner; empty-file, trailing-whitespace, and embedded-script checks remain passing.

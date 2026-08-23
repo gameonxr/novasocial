@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 260, 'all 260 extracted source files must remain present after invalidateTabCache split');
+assert.strictEqual(files.length, 261, 'all 261 extracted source files must remain present after confirmCropPreview split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {
