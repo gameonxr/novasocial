@@ -3370,3 +3370,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list Push-harness baseline correction
 - Synchronized the Push production harness to 221 balanced script tags, 220 external scripts, and 9 approved protected signatures after the Notes reactor-list addition; existing Push parity, browser, rollback, and side-effect guards remain passing.
+
+## 2026-08-23 — Notes reactor-list realtime-audit baseline correction
+- Updated the realtime-subscription lifecycle audit from 219 to 220 audited files (`index.html` plus 219 extracted modules) after the reactor-list module addition; channel registration, subscribe-chain, and cleanup counts remain passing.
