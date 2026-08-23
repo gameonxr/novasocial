@@ -3769,3 +3769,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` index-tag integrity baseline correction
 - Synchronized index HTML tag-integrity auditing to 226 script tags, 226 closures, and 225 external scripts after adding the anonymous story-viewer mute owner; the one-inline-script and protected DMs/Reels boundaries remain passing.
+
+## 2026-08-23 — `toggleSVMute()` inline-declaration baseline correction
+- Synchronized inline application declaration auditing to 236 named function declarations after removing the `toggleSVMute()` inline owner; the 19-name protected set, unresolved `forwardMessage` seam, candidate, and protected checks remain passing.
