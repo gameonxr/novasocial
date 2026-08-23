@@ -3757,3 +3757,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` footer-order baseline correction
 - Updated dependency-order auditing for the twelve-script footer tail, adding `toggle-sv-mute-owner.js` between the reports and verification filter owners while preserving Push, refresh, Notes, Reels, and like-effects order.
+
+## 2026-08-23 — `toggleSVMute()` event-listener baseline correction
+- Synchronized event-listener boundary auditing to 224 extracted JavaScript modules after adding the story-viewer mute owner; listener registration/cleanup counts and service-worker boundaries remain unchanged and passing.
