@@ -3986,3 +3986,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` high-risk seam-matrix baseline correction
 - Synchronized the protected seam-readiness matrix to 226 extracted JavaScript modules after adding the crop-preview owner; all protected signatures and blocked-boundary assertions remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` index tag-integrity baselines
+- Synchronized index tag-integrity assertions to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; one inline application script and HTML element balance remain intact.
