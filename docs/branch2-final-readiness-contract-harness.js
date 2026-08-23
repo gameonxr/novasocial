@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 222, '222 extracted JavaScript modules must remain after reports filter split');
+assert.strictEqual(jsFiles.length, 223, '223 extracted JavaScript modules must remain after verification filter split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 211, '211 feature modules must remain after reports filter split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 224, 'HTML must retain 224 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 224, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 223, 'HTML must retain 223 external script tags');
+assert.strictEqual(featureFiles.length, 212, '212 feature modules must remain after verification filter split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 225, 'HTML must retain 225 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 225, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 224, 'HTML must retain 224 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -117,10 +117,10 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 266, '266 documentation Markdown files must be published after reports filter production split');
-assert.strictEqual(allHarnesses.length, 267, '267 harness files must be published after reports filter production split');
-assert.strictEqual(contractFiles.length, 263, '263 standard contract documents must be published');
-assert.strictEqual(harnessFiles.length, 262, '262 standard contract harnesses must be published');
+assert.strictEqual(allDocs.length, 267, '267 documentation Markdown files must be published after verification filter production split');
+assert.strictEqual(allHarnesses.length, 268, '268 harness files must be published after verification filter production split');
+assert.strictEqual(contractFiles.length, 264, '264 standard contract documents must be published');
+assert.strictEqual(harnessFiles.length, 263, '263 standard contract harnesses must be published');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
