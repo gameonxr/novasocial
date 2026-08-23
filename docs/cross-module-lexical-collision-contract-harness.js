@@ -27,7 +27,7 @@ for (const file of files) {
   });
 }
 const duplicates = [...seen.entries()].filter(([, locations]) => locations.length > 1);
-assert.strictEqual(files.length, 221, 'index.html plus 220 extracted scripts must be audited after admin appeals filter split');
+assert.strictEqual(files.length, 222, 'index.html plus 221 extracted scripts must be audited after refresh profile counts split');
 assert.strictEqual(seen.size, 117, 'top-level lexical declaration inventory must remain stable');
 assert.deepStrictEqual(duplicates, [], 'classic scripts must not duplicate top-level const/let names');
 

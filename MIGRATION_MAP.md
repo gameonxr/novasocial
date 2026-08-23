@@ -3488,3 +3488,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts named-function inventory correction
 - Corrected cross-module named top-level function inventory from 708 to 707 because the moved `refreshProfileCounts` owner is intentionally anonymous as `window.refreshProfileCounts`; the 222-file audit and zero-duplicate invariant remain passing.
+
+## 2026-08-23 — Refresh profile counts lexical-audit baseline correction
+- Updated cross-module lexical-collision auditing from 221 to 222 files after adding the refresh-counts module; the 117 lexical-name inventory and zero-duplicate invariant remain unchanged and passing.
