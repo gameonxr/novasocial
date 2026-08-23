@@ -11,4 +11,5 @@ SPLIT_COMMIT=a1ae4be9e9b90f48a19df1b1a6e0f4ea08b04ef
 ROLLBACK_PROCEDURE=git revert a1ae4be9e9b90f48a19df1b1a6e0f4ea08b04ef; git push origin Branch2
 ROLLBACK_SCOPE=Restore index.html inline setVerifyFilter owner and remove only the external owner script/linkage; preserve verification reads, identity-proof rendering, approval/rejection actions, and all protected boundaries.
 PRODUCTION_SPLIT=PASS
-FULL_REGRESSION=PENDING
+FULL_REGRESSION=PASS
+VERIFIED_FULL_GATE_TIP=e2160c4344f7539ba0396a6c219fa389668abec6

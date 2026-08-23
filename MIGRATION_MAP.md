@@ -3725,3 +3725,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter window-surface baseline correction
 - Added `setVerifyFilter` to the explicit window-assignment allowlist and synchronized the audited inventory to 224 files and 206 assignments (107 unique names); no unexpected or missing globals were introduced.
+
+## 2026-08-23 — `setVerifyFilter(f)` production checkpoint complete
+- Finalized the contained UI-only verification-filter extraction on `Branch2`: anonymous classic `window.setVerifyFilter` owner, exact normalized origin parity, detached synthetic browser proof, focused candidate and neighboring verification gates, deterministic baseline synchronization, rollback evidence, and first exhaustive gate PASS at `e2160c4344f7539ba0396a6c219fa389668abec6`.
+- Protected high-risk accounting remains unchanged at 19 signatures, 9 approved extracted owners, and 10 blocked systems; no live browser mutation or high-risk boundary was altered.
