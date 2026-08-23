@@ -4022,3 +4022,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` set-verify-filter baselines
 - Synchronized set-verify-filter production auditing to 226 extracted modules, 228 script tags, 228 closures, and 227 external scripts after adding the crop-preview owner; verification controls, parity, and read-only boundaries remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` source-boundary baseline correction
+- Synchronized source-boundary hygiene auditing to 244 extracted JavaScript/CSS files after adding the crop-preview owner; executable/style boundary and violation checks remain passing.
