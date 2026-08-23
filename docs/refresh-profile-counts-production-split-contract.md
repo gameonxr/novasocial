@@ -25,8 +25,8 @@ The companion harness defines an injected read/render seam for both profile-coun
 | Independent seam | Injected two-query/read-render cases pass | PASS |
 | Browser proof | Detached synthetic profile-count DOM proof with no live follow action | PASS |
 | Rollback | Pre-split Branch2 commit and revert procedure pinned | PASS |
-| Focused gates | Candidate preparation harness and neighboring profile/follow audits | Pending after production split |
-| Full regression | Clean pushed Branch2 tip after any approved split | Not started |
+| Focused gates | Candidate production harness and neighboring profile/follow audits | PASS |
+| Full regression | Clean pushed Branch2 tip after the approved split | Pending |
 
 ## Production decision
 

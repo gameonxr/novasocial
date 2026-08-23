@@ -3470,3 +3470,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts split rollback record
 - Pinned `b4e5f02` as the refresh-profile-counts split commit in the rollback evidence, with the after-split external-owner/browser proof recorded; focused neighboring harness rerun and full regression remain the only open validation steps.
+
+## 2026-08-23 — Refresh profile counts focused completion
+- Reran the production-split candidate harness plus profile-count refresh, follower-count, follow-toggle, and follow-list neighboring harnesses from the clean split tip; all pass, with the follow mutation remaining unchanged and outside the extracted boundary. Full regression is the only remaining gate.

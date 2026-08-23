@@ -29,5 +29,5 @@ Production split record:
 - After-split normalized owner parity: PASS
 - After-split external owner and inline-owner absence: PASS
 - After-split detached browser proof: PASS
-- Focused neighboring profile/follow harnesses: PASS before production commit; rerun pending after this record update
+- Focused neighboring profile/follow harnesses after production commit: PASS
 - Full regression: pending from the clean pushed split tip
