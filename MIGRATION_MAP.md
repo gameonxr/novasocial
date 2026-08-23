@@ -4034,3 +4034,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` production documentation package
 - Added the final production-split contract, matching parity/rollback harness, and rollback evidence for the completed crop-preview owner split; first exhaustive gate is PASS at `5610775e465fe84e4c1c39bcde09399d264d66a1`, with the final docs-tip gate intentionally pending.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness Markdown baseline
+- Synchronized final-readiness documentation inventory to 273 Markdown files after publishing the crop-preview production contract; harness and standard-contract inventories remain unchanged.

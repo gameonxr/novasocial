@@ -117,7 +117,7 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 272, '272 documentation Markdown files must be published after confirmCropPreview production split');
+assert.strictEqual(allDocs.length, 273, '273 documentation Markdown files must be published after confirmCropPreview production split');
 assert.strictEqual(allHarnesses.length, 273, '273 harness files must be published after confirmCropPreview production split');
 assert.strictEqual(contractFiles.length, 269, '269 standard contract documents must be published');
 assert.strictEqual(harnessFiles.length, 268, '268 standard contract harnesses must be published');
