@@ -3497,3 +3497,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts dependency-order baseline correction
 - Updated dependency-loading order to audit the actual eleven-script footer sequence after adding `refresh-profile-counts-owner.js` between the admin-filter and Notes owners; stylesheet, core/component, and classic-script ordering guards remain passing.
+
+## 2026-08-23 — Refresh profile counts event-listener baseline correction
+- Updated event-listener boundary auditing from 220 to 221 extracted modules after adding the refresh-counts owner; all listener-registration, cleanup, index, and service-worker counts remain unchanged and passing.
