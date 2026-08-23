@@ -13,8 +13,9 @@ PRODUCTION_SPLIT_COMMIT=0b5f8f069a42730e482915fcf6f3955f77d8aceb
 PRODUCTION_SPLIT=PASS
 FIRST_FULL_REGRESSION_TIP=5cc09bf6e1c8cb178601d6ef2157b872bd51eca9
 FIRST_FULL_REGRESSION=PASS
-FINAL_DOCS_FULL_REGRESSION=PENDING
+FINAL_DOCS_FULL_REGRESSION=PASS
+FINAL_DOCS_FULL_REGRESSION_TIP=efe458b021a2fd56647b0b7c719be893c4f557fe
 
 ROLLBACK_PROCEDURE=Production rollback is git revert 0b5f8f069a42730e482915fcf6f3955f77d8aceb on Branch2 followed by git push origin Branch2.
 ROLLBACK_SCOPE=Restore index.html inline toggleSVMute owner and remove only the external owner script/linkage; preserve story-viewer rendering, story-view persistence, playback lifecycle, poll handlers, navigation, deletion, and all protected boundaries.
-FULL_REGRESSION=PASS_AT_FIRST_GATE; FINAL_DOCS_FULL_REGRESSION=PENDING
+FULL_REGRESSION=PASS_AT_FIRST_GATE; FINAL_DOCS_FULL_REGRESSION=PASS

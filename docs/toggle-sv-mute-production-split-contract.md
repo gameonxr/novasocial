@@ -19,7 +19,7 @@ The production module is [`src/features/toggle-sv-mute-owner.js`](../src/feature
 | Detached browser proof | Local synthetic DOM only; zero database, network, navigation, or account mutations | PASS |
 | Protected boundary | 19 signatures retained; nine approved systems remain covered; ten high-risk systems remain blocked | PASS |
 | First exhaustive regression | Clean Branch2 gate passed at `5cc09bf6e1c8cb178601d6ef2157b872bd51eca9` before final documentation commit | PASS |
-| Final documentation tip regression | Required after this contract/rollback synchronization | PENDING |
+| Final documentation tip regression | Clean exhaustive gate from final docs tip `efe458b021a2fd56647b0b7c719be893c4f557fe` | PASS |
 
 ## Rollback
 

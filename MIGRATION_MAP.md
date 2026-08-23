@@ -3812,3 +3812,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` final docs-tip baseline correction
 - Synchronized final-readiness documentation accounting at the completed checkpoint tip to 269 Markdown documents, 270 harness files, 266 standard contract documents, and 265 paired contract harnesses; candidate, protected, pairing, and reference checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` checkpoint complete
+- Final contract and rollback evidence now record PASS for the first exhaustive gate at `5cc09bf6e1c8cb178601d6ef2157b872bd51eca9` and the final docs-tip gate at `efe458b021a2fd56647b0b7c719be893c4f557fe`. The candidate remains a single anonymous classic `window.toggleSVMute` owner with detached synthetic browser proof, exact normalized parity, and zero live side effects.
+- Final completion commit is intentionally followed by one more clean exhaustive Branch2 gate; only after that gate passes is this checkpoint considered closed. Protected accounting remains 19 signatures, nine approved extracted systems, and ten blocked high-risk systems.

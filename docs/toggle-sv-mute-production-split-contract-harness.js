@@ -45,7 +45,9 @@ assert(rollback.includes('NORMALIZED_ORIGIN_OWNER_SHA256=edb16d31659caa52d9136da
 assert(rollback.includes('PREPARATION_BASELINE_SHA=921b89ff07ce8169092e4847484728553b0ed0e9'), 'rollback evidence must retain preparation baseline');
 assert(productionCommit.startsWith('0b5f8f0'), `production split commit must remain 0b5f8f0, found ${productionCommit}`);
 assert(rollback.includes('PRODUCTION_SPLIT_COMMIT=0b5f8f0'), 'rollback evidence must pin production split commit');
-assert(rollback.includes('FULL_REGRESSION=PASS'), 'rollback evidence must record full regression PASS');
+assert(rollback.includes('FULL_REGRESSION=PASS'), 'rollback evidence must record first full regression PASS');
+assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION=PASS'), 'rollback evidence must record final docs-tip regression PASS');
+assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION_TIP=efe458b021a2fd56647b0b7c719be893c4f557fe'), 'rollback evidence must pin final docs-tip regression SHA');
 
 function runSeam({ withVideo }) {
   const events = [];
@@ -79,4 +81,5 @@ console.log('DETACHED_BROWSER_PROOF=PASS');
 console.log('INJECTED_SEAM=PASS');
 console.log('ROLLBACK_EVIDENCE=PASS');
 console.log('FIRST_FULL_REGRESSION=PASS');
+console.log('FINAL_DOCS_FULL_REGRESSION=PASS');
 console.log('PRODUCTION_SPLIT=COMPLETE');
