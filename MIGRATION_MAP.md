@@ -4094,3 +4094,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `loadAdminTab(tab)` boundary rejection
 - Audited the next marker-clean admin entry point. It changes `curAdminTab`, owns loading/error DOM, and dispatches to dashboard, users, content, reports, verification, appeals, approvals, team, audit, and deleted-post flows.
 - Admin contracts keep authorization, moderation, metrics, account, and database boundaries inline; this dispatcher is not a contained UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `adminTabUsers(content)` boundary rejection
+- Audited the next marker-clean admin renderer. It renders user profiles, ban/message-ban status, metrics, and controls for ban, message-ban, promotion, and demotion.
+- The admin-panel contract explicitly keeps user, moderation, account, and tab renderers inline; this is a protected admin-management surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
