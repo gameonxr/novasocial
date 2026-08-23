@@ -3638,3 +3638,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reports filter production checkpoint complete
 - Finalized the contained `setReportsFilter` production split after `HARNESS_COUNT=267` and `BRANCH2_FULL_REGRESSION_GATE=PASS` at pre-documentation tip `8ea39bb`.
 - Synchronized the contract Full regression row and rollback evidence to PASS. Scope remains UI-only: report reads, report actions, notifications, moderation, and all 19 protected-signature boundaries are unchanged; protected accounting remains 9 approved / 10 blocked.
+
+## 2026-08-23 — Verification filter preparation package
+- Audited `setVerifyFilter(f)` as a contained admin UI-only owner: it updates `_verifyFilter`, styles four detached `vf-*` controls, resets unselected controls, and delegates one `loadVerifyList()` reload.
+- Preserved `adminTabVerify`, `loadVerifyList`, identity-proof rendering, approve/reject handlers, notifications, moderation, and account boundaries inline and unchanged. Exact immutable `origin/main` owner parity passed with SHA-256 `ba13b4efd91ff679b2c7e5ac88fe3e67321beebd671cd1ca5845a8a8cfc15eda`; detached synthetic browser proof and neighboring verification harness passed.
+- Pinned rollback baseline `788655c7ef91eaf9c93f66f6d4f01d83c679d4f5` and created the candidate contract, preparation harness, and rollback evidence. No production split has been applied.

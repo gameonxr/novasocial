@@ -1,0 +1,13 @@
+SET_VERIFY_FILTER_PARITY_ROLLBACK_EVIDENCE=PASS
+DATE=2026-08-23
+BRANCH=Branch2
+PRE_SPLIT_BRANCH2_SHA=788655c7ef91eaf9c93f66f6d4f01d83c679d4f5
+ORIGIN_MAIN_IMMUTABLE_SHA=ef418007c9b9a797488b4825be5f0c807da22369
+CANDIDATE_OWNER_SHA256=ba13b4efd91ff679b2c7e5ac88fe3e67321beebd671cd1ca5845a8a8cfc15eda
+NORMALIZED_ORIGIN_PARITY=PASS
+PRE_SPLIT_BROWSER_PROOF=PASS
+PREPARATION_HARNESS=PASS
+ROLLBACK_PROCEDURE=git revert <split-commit>; git push origin Branch2
+ROLLBACK_SCOPE=Restore index.html inline setVerifyFilter owner and remove only the external owner script/linkage; preserve verification reads, identity-proof rendering, approval/rejection actions, and all protected boundaries.
+PRODUCTION_SPLIT=PENDING
+FULL_REGRESSION=PENDING
