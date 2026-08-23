@@ -3610,3 +3610,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter module-reference baseline correction
 - Synchronized module-script reference auditing to 222 extracted JavaScript modules after adding the reports-filter owner. Missing-module, duplicate-load, core-order, trailing-order, and protected inline reference checks remain passing.
+
+## 2026-08-23 — Reports filter Notes-reactor baseline correction
+- Synchronized the Notes reactor-list production harness to 222 source modules after adding the reports-filter owner. Notes owner parity, ordering, injected read-only seam, rollback evidence, and all protected-system accounting remain unchanged and passing.
