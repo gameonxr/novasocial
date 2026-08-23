@@ -3736,3 +3736,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` final-readiness baseline correction
 - Synchronized Branch2 final-readiness accounting after the `toggleSVMute()` split to 224 JavaScript modules, 213 feature modules, 226 balanced script tags, and 225 external scripts; clean-branch, ordering, immutable-main, candidate, and protected assertions remain passing.
+
+## 2026-08-23 — `toggleSVMute()` documentation baseline correction
+- Synchronized final-readiness documentation accounting after the `toggleSVMute()` preparation/split package to 268 Markdown documents, 269 harness files, 265 standard contract documents, and 264 paired contract harnesses; candidate, verification, and protected checks remain passing.
