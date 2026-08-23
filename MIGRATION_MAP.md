@@ -4031,3 +4031,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` window-surface baselines
 - Synchronized window-assignment auditing to 227 combined scripts and 209 explicit assignments after adding the anonymous crop-preview owner; admitted `confirmCropPreview` to the sorted allowlist, yielding 110 unique names with no unexpected or missing entries.
+
+## 2026-08-23 — `confirmCropPreview()` production documentation package
+- Added the final production-split contract, matching parity/rollback harness, and rollback evidence for the completed crop-preview owner split; first exhaustive gate is PASS at `5610775e465fe84e4c1c39bcde09399d264d66a1`, with the final docs-tip gate intentionally pending.

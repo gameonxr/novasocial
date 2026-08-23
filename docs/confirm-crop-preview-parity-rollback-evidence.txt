@@ -1,0 +1,30 @@
+DATE=2026-08-23
+REPOSITORY=gameonxr/novasocial
+BRANCH=Branch2
+
+PREPARATION_BASELINE_SHA=69dc14197a600ef39446f18d21ab04b1140899cb
+ORIGIN_MAIN_IMMUTABLE_SHA=ef418007c9b9a797488b4825be5f0c807da22369
+NORMALIZED_ORIGIN_OWNER_SHA256=668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4
+CALLER_BOUNDARY=ONE_EXISTING_DONE_CONTROL_CALLER
+STATEFUL_BOUNDARIES=ABSENT
+
+PRODUCTION_MODULE=src/features/confirm-crop-preview-owner.js
+PRODUCTION_SPLIT_COMMIT=74664d31bf280d8e7d638ff8e0a850b96c306de4
+PRODUCTION_SPLIT=COMPLETE
+EXTERNAL_OWNER=ONE_ANONYMOUS_WINDOW_ASSIGNMENT
+INLINE_OWNER=ABSENT
+DETACHED_PREPARATION_PROOF=PASS
+DETACHED_AFTER_SPLIT_PROOF=PASS
+
+FIRST_FULL_REGRESSION_TIP=5610775e465fe84e4c1c39bcde09399d264d66a1
+FIRST_FULL_REGRESSION=PASS
+FIRST_FULL_REGRESSION_HARNESS_COUNT=273
+
+FINAL_DOCS_FULL_REGRESSION=PENDING
+FINAL_DOCS_FULL_REGRESSION_TIP=PENDING
+
+ROLLBACK_COMMAND=git revert 74664d31bf280d8e7d638ff8e0a850b96c306de4
+ROLLBACK_SCOPE=Restore the named inline confirmCropPreview owner and remove only the external crop-preview owner linkage; preserve crop state, preview close behavior, upload ownership, account/profile state, story/editor systems, messaging, calls, navigation, and all protected high-risk boundaries.
+ROLLBACK_VERIFICATION=Run the focused candidate/protected contracts and the clean exhaustive Branch2 gate after rollback.
+
+Boundary: All browser evidence was detached and synthetic. No NovaSocial application load, login session, live data, upload service, database, network endpoint, browser storage, account control, or stateful navigation was used.
