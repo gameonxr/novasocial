@@ -32,7 +32,7 @@ for (const file of files.sort()) {
   if (/<\/?style\b/i.test(commentStripped)) violations.push(`${file}:embedded-style-boundary`);
 }
 
-assert.strictEqual(files.length, 239, 'src must contain 239 extracted JS/CSS files after the refresh profile counts split');
+assert.strictEqual(files.length, 240, 'src must contain 240 extracted JS/CSS files after the reports filter split');
 assert.strictEqual(allowedUtilsStyleTags, 0, 'no executable/template style container tags may remain after comments are removed');
 assert.deepStrictEqual(violations, [], `source-boundary violations: ${violations.join(', ')}`);
 

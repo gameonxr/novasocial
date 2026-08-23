@@ -3625,3 +3625,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter refresh-counts harness baseline correction
 - Synchronized the completed refresh-profile-counts production harness to 222 extracted JavaScript modules after the later reports-filter owner split. Exact origin parity, contained read-only boundary, detached browser evidence, seam coverage, and rollback evidence remain passing.
+
+## 2026-08-23 — Reports filter source-boundary baseline correction
+- Synchronized source-boundary hygiene to 240 extracted JavaScript/CSS files after adding the reports-filter owner. UTF-8 round-trip, NUL-byte, line-ending, and embedded script/style boundary checks remain passing.
