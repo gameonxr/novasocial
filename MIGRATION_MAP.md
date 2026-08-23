@@ -3748,3 +3748,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` collision function-count correction
 - Synchronized cross-module collision auditing to the actual 704 top-level named functions after removing the inline `toggleSVMute()` declaration; zero duplicate names and all candidate/protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` lexical-collision baseline correction
+- Synchronized cross-module lexical-collision auditing to 225 files (index plus 224 extracted scripts) after adding the story-viewer mute owner; the 117-name inventory and zero-duplicate lexical boundary remain passing.
