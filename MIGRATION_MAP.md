@@ -3542,3 +3542,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts source-boundary baseline correction
 - Updated source-boundary hygiene from 238 to 239 scanned JS/CSS files after adding the refresh-counts module; encoding, embedded-boundary, comment-stripping, and trailing-whitespace guards remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts storage-audit baseline correction
+- Updated storage-key surface auditing from 221 to 222 files after adding the refresh-counts module; 29 literal keys, zero sessionStorage use, dynamic sticker-family representation, and allowlist checks remain unchanged and passing.
