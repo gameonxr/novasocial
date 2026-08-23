@@ -3860,3 +3860,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` seam-readiness matrix baseline correction
 - Synchronized the high-risk seam-readiness matrix to 225 extracted JavaScript modules after adding the external cache invalidator; all protected signature, artifact, blocked-system, candidate, verification, and extraction-gate checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` index-integrity baseline correction
+- Synchronized index HTML tag-integrity accounting to 227 opening tags, 227 closing tags, and 226 external scripts after adding the cache invalidator; one-inline and structural HTML checks remain passing.
