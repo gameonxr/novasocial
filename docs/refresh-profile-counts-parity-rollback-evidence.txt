@@ -1,0 +1,25 @@
+NovaSocial refreshProfileCounts candidate parity and rollback evidence
+Date: 2026-08-23
+Branch: Branch2
+Origin/main: ef418007c9b9a797488b4825be5f0c807da22369
+
+Preparation baseline:
+- Pre-split Branch2 commit: 13bdd7266774023ea93ea891ba067e9dd506f86f
+- Candidate owner: inline async function refreshProfileCounts(userId)
+- OWNER_SHA256=3dfa3058a22aff24830574aa139cc8083e159639bc751cd08f6c29a1df91e6a2
+- Exact origin/main owner parity: PASS
+- Independent injected seam: PASS
+- Read-only detached browser proof: PASS
+- Production module before split: absent
+- Production external script reference before split: absent
+
+Rollback procedure if a future production split is approved and a focused or full gate fails:
+1. From /home/ubuntu/novasocial on Branch2, run `git revert <refresh-profile-counts-split-commit>`.
+2. Confirm the inline refreshProfileCounts owner is restored and remove only the candidate external script reference.
+3. Run `git diff --check` and the candidate harness in preparation/rollback mode.
+4. Run the complete `/tmp/branch2-full-regression-gate.sh` from a clean pushed tip.
+5. Confirm Branch2 matches origin/Branch2 and origin/main remains ef418007c9b9a797488b4825be5f0c807da22369.
+
+No-live-mutation record:
+- Browser proof used detached synthetic DOM only.
+- No live account, profile, follow, reaction, message, storage, database, notification, upload, permission, or navigation action was performed.

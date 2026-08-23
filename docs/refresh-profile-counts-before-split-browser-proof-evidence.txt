@@ -1,0 +1,20 @@
+NovaSocial refreshProfileCounts candidate — before-split browser proof
+Date: 2026-08-23
+URL: http://127.0.0.1:4173/?refresh_profile_counts_gate=20260823
+
+Safety boundary:
+- Browser page loaded only for shell availability.
+- Proof used detached synthetic DOM elements created with document.createElement; no elements were appended to the live document.
+- The live refreshProfileCounts owner was inspected by type only and was not invoked.
+- No live profile, follow, account, storage, database, notification, messaging, reaction, upload, permission, or navigation action occurred.
+
+Result: PASS
+- ownerType=function
+- ownerInvoked=false
+- detachedOnly=true
+- normal: followers=F12, following=F7
+- targetOnly: followers=F4, following unchanged
+- followingOnly: followers unchanged, following=F9
+- missingDom: tolerated with no attached DOM
+- queryFailureSwallowed=true
+- event trace contained only synthetic query, detached DOM, and swallowed-error markers
