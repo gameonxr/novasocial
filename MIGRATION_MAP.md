@@ -4082,3 +4082,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `submitNativeEmojiReaction(noteId)` boundary rejection
 - Audited the remaining marker-clean emoji-picker wrapper. It reads `#native-emoji-inp`, removes the picker panel, and delegates directly to `reactToNote(noteId, emoji, null)`, so its caller path enters Notes reaction mutation and cannot be isolated as a UI-only owner.
 - Existing `note-reactors-list` ownership is read-only and explicitly excludes reaction submission, note deletion, audio lifecycle, and Notes Bar refresh. No production code changed; no protected boundary was weakened.
+
+## 2026-08-23 — `_saveTabToCache(tab)` boundary rejection
+- Audited the next marker-clean cache helper. It saves scroll position, conditionally snapshots `#screen.innerHTML`, preserves the valid DMs list when chat is active, and excludes the Reels persistent-container path. Its paired `_tryRestoreFromCache()` owns Reels container reattachment, overflow/scroll reset, transform restoration, video windowing, and playback.
+- The tab-cache contract explicitly excludes `_saveTabToCache` and `_tryRestoreFromCache`; extracting either would cross protected DMs/chat, Reels persistence, tab navigation, and lifecycle semantics. No production code changed and no protected boundary was weakened.
