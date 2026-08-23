@@ -1,0 +1,15 @@
+DATE=2026-08-23
+BRANCH=Branch2
+PREPARATION_BASELINE_SHA=921b89ff07ce8169092e4847484728553b0ed0e9
+ORIGIN_MAIN_IMMUTABLE_SHA=ef418007c9b9a797488b4825be5f0c807da22369
+NORMALIZED_ORIGIN_OWNER_SHA256=edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d
+NORMALIZED_OWNER_PARITY=PASS
+CALLER_BOUNDARY=ONE_STORY_VIEWER_MUTE_CONTROL
+PREPARATION_HARNESS=PASS
+DETACHED_BROWSER_PROOF=PASS
+SAFE_NO_SIDE_EFFECTS=PASS
+PRODUCTION_MODULE=ABSENT_PRE_SPLIT
+
+ROLLBACK_PROCEDURE=Discard candidate-only preparation artifacts if not proceeding; production rollback, if later split, is git revert <split-commit> followed by git push origin Branch2.
+ROLLBACK_SCOPE=Restore index.html inline toggleSVMute owner and remove only the external owner script/linkage; preserve story-viewer rendering, story-view persistence, playback lifecycle, poll handlers, navigation, deletion, and all protected boundaries.
+FULL_REGRESSION=NOT_APPLICABLE_PRE_SPLIT

@@ -3729,3 +3729,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `setVerifyFilter(f)` production checkpoint complete
 - Finalized the contained UI-only verification-filter extraction on `Branch2`: anonymous classic `window.setVerifyFilter` owner, exact normalized origin parity, detached synthetic browser proof, focused candidate and neighboring verification gates, deterministic baseline synchronization, rollback evidence, and first exhaustive gate PASS at `e2160c4344f7539ba0396a6c219fa389668abec6`.
 - Protected high-risk accounting remains unchanged at 19 signatures, 9 approved extracted owners, and 10 blocked systems; no live browser mutation or high-risk boundary was altered.
+
+## 2026-08-23 — `toggleSVMute()` preparation checkpoint
+- Selected `toggleSVMute()` as the next contained UI/audio-only candidate after the completed verification-filter checkpoint. Preparation evidence pins normalized origin parity (`edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d`), one story-viewer mute caller, deterministic injected seam coverage, detached synthetic browser proof, and a clean pre-split baseline at `921b89ff07ce8169092e4847484728553b0ed0e9`.
+- No production split was performed in this preparation checkpoint; story loading, rendering, persistence, playback lifecycle, polls, navigation, deletion, and all protected boundaries remain unchanged.

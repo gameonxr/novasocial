@@ -1,0 +1,19 @@
+DATE=2026-08-23
+BRANCH=Branch2
+URL=file:///tmp/toggle-sv-mute-detached-proof.html
+SCOPE=DETACHED_SYNTHETIC_DOM_ONLY
+PRODUCTION_APP_LOADED=NO
+LIVE_ACCOUNT=NO
+
+RESULT=PASS
+WITH_VIDEO=muted_state_true_video_muted_true_render_once
+ROUND_TRIP=muted_state_false_video_muted_false_render_once_each_direction
+WITHOUT_VIDEO=state_toggles_true_render_once_no_video_exception
+DETACHED_ONLY=true
+DATABASE_CALLS=0
+NETWORK_CALLS=0
+NAVIGATION_CALLS=0
+ACCOUNT_MUTATIONS=0
+
+Console proof object:
+{"accountMutations":0,"databaseCalls":0,"detachedOnly":true,"navigationCalls":0,"networkCalls":0,"passed":true,"roundTrip":{"events":["render:true","render:false"],"muted":false,"videoMuted":false},"withVideo":{"events":["render:true"],"muted":true,"videoMuted":true},"withoutVideo":{"events":["render:true","render:false","render:true"],"muted":true}}
