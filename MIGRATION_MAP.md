@@ -3992,3 +3992,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` inline-declaration baseline correction
 - Synchronized inline-declaration closure auditing to 234 function declarations after removing the named crop-preview owner; the 19-signature protected set and closure checks remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` interval-lifecycle baseline correction
+- Synchronized interval-lifecycle auditing to 227 combined files after adding the crop-preview owner; seven registrations, ten cleanup calls, and managed interval handles remain unchanged.
