@@ -3509,3 +3509,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts readiness-matrix baseline correction
 - Updated readiness-matrix auditing from 220 to 221 extracted modules after the refresh-counts owner addition; protected ownership, evidence, and the 10-system direct-extraction block remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts index-integrity baseline correction
+- Updated index HTML integrity totals to 223 balanced script tags and 222 external scripts after adding the refresh-counts owner; the single-inline-script, doctype, body/html closure, and protected renderer checks remain passing.

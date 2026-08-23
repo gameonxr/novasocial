@@ -10,9 +10,9 @@ function count(pattern) {
 }
 
 assert(html.trimStart().toLowerCase().startsWith('<!doctype html>'), 'index.html must retain its HTML5 doctype');
-assert.strictEqual(count(/<script\b/gi), 222, 'index.html must retain 222 script tags after admin appeals filter split');
-assert.strictEqual(count(/<\/script>/gi), 222, 'every script tag must be closed after admin appeals filter split');
-assert.strictEqual(count(/<script\s+src=/gi), 221, '221 extracted/external script tags must remain integrated');
+assert.strictEqual(count(/<script\b/gi), 223, 'index.html must retain 223 script tags after refresh profile counts split');
+assert.strictEqual(count(/<\/script>/gi), 223, 'every script tag must be closed after refresh profile counts split');
+assert.strictEqual(count(/<script\s+src=/gi), 222, '222 extracted/external script tags must remain integrated');
 assert.strictEqual(count(/<script(?:\s[^>]*)?>/gi) - count(/<script\s+src=/gi), 1, 'one inline application script must remain');
 assert.strictEqual(count(/<body\b/gi), 1, 'one body element must remain');
 assert.strictEqual(count(/<\/body>/gi), 1, 'body element must close once');
@@ -22,7 +22,7 @@ assert(html.includes('function renderDMs('), 'protected DMs renderer must remain
 assert(html.includes('function renderReels('), 'protected Reels renderer must remain inline');
 
 console.log('INDEX_HTML_TAG_INTEGRITY_HARNESS=PASS');
-console.log('SCRIPT_TAGS=222');
-console.log('SCRIPT_CLOSURES=222');
-console.log('EXTERNAL_SCRIPT_TAGS=221');
+console.log('SCRIPT_TAGS=223');
+console.log('SCRIPT_CLOSURES=223');
+console.log('EXTERNAL_SCRIPT_TAGS=222');
 console.log('INLINE_SCRIPT_TAGS=1');
