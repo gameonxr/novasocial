@@ -8,8 +8,13 @@ CALLER_BOUNDARY=ONE_STORY_VIEWER_MUTE_CONTROL
 PREPARATION_HARNESS=PASS
 DETACHED_BROWSER_PROOF=PASS
 SAFE_NO_SIDE_EFFECTS=PASS
-PRODUCTION_MODULE=ABSENT_PRE_SPLIT
+PRODUCTION_MODULE=src/features/toggle-sv-mute-owner.js
+PRODUCTION_SPLIT_COMMIT=0b5f8f069a42730e482915fcf6f3955f77d8aceb
+PRODUCTION_SPLIT=PASS
+FIRST_FULL_REGRESSION_TIP=5cc09bf6e1c8cb178601d6ef2157b872bd51eca9
+FIRST_FULL_REGRESSION=PASS
+FINAL_DOCS_FULL_REGRESSION=PENDING
 
-ROLLBACK_PROCEDURE=Discard candidate-only preparation artifacts if not proceeding; production rollback, if later split, is git revert <split-commit> followed by git push origin Branch2.
+ROLLBACK_PROCEDURE=Production rollback is git revert 0b5f8f069a42730e482915fcf6f3955f77d8aceb on Branch2 followed by git push origin Branch2.
 ROLLBACK_SCOPE=Restore index.html inline toggleSVMute owner and remove only the external owner script/linkage; preserve story-viewer rendering, story-view persistence, playback lifecycle, poll handlers, navigation, deletion, and all protected boundaries.
-FULL_REGRESSION=NOT_APPLICABLE_PRE_SPLIT
+FULL_REGRESSION=PASS_AT_FIRST_GATE; FINAL_DOCS_FULL_REGRESSION=PENDING
