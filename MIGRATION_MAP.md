@@ -3568,3 +3568,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter classic-script baseline correction
 - Synchronized classic-script compatibility to 224 balanced HTML script tags and 222 extracted JavaScript files after the reports-filter owner split. No module syntax, `defer`, or `async` attributes were introduced; the external owner remains an anonymous classic global.
+
+## 2026-08-23 — Reports filter clipboard baseline correction
+- Synchronized the clipboard-interaction audit to 223 files (`index.html` plus 222 extracted modules) after the contained reports-filter split. Clipboard write counts, legacy fallback coverage, and all copy-surface boundaries remain unchanged and passing.
