@@ -3760,3 +3760,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` event-listener baseline correction
 - Synchronized event-listener boundary auditing to 224 extracted JavaScript modules after adding the story-viewer mute owner; listener registration/cleanup counts and service-worker boundaries remain unchanged and passing.
+
+## 2026-08-23 — `toggleSVMute()` source-file hygiene baseline correction
+- Synchronized extracted-file hygiene auditing to 259 source files after adding the story-viewer mute owner; empty-file and trailing-whitespace checks remain passing.
