@@ -3343,3 +3343,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list inline-handler baseline correction
 - Updated the inline-handler surface audit from 154 to 153 handler names after the approved Notes reactor-list split; the unresolved `forwardMessage` seam and protected DM/message-menu markers remain unchanged and passing.
+
+## 2026-08-23 — Notes reactor-list interval-audit baseline correction
+- Updated the interval-lifecycle audit from 219 to 220 audited files (`index.html` plus 219 extracted modules) after the reactor-list module addition; interval creation and cleanup counts remain unchanged and passing.
