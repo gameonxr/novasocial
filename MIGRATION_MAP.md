@@ -3914,3 +3914,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` final-readiness contract baseline correction
 - Synchronized final-readiness auditing to 268 standard contract documents after publishing the invalidate-cache production contract; no production behavior or protected boundary changed.
+
+## 2026-08-23 — `invalidateTabCache(tab)` final-readiness contract-harness baseline correction
+- Synchronized final-readiness auditing to 267 standard contract harnesses after publishing the invalidate-cache production harness; no production behavior or protected boundary changed.
