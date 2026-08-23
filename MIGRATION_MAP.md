@@ -3533,3 +3533,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts object-URL baseline correction
 - Updated object-URL lifecycle auditing from 221 to 222 files after adding the refresh-counts module; all 14 create calls, 8 revoke calls, and download/compression/preview cleanup guards remain passing.
+
+## 2026-08-23 — Refresh profile counts Push-harness baseline correction
+- Updated the Push production harness to 223 balanced script tags and 222 external scripts after adding the refresh-counts owner; Push permission, subscription, service-worker, rollback, and side-effect guards remain unchanged and passing.
