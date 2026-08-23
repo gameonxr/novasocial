@@ -3355,3 +3355,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list object-URL audit baseline correction
 - Updated the object-URL lifecycle audit from 219 to 220 audited files (`index.html` plus 219 extracted modules) after the reactor-list module addition; object-URL creation/revocation and cleanup checks remain passing.
+
+## 2026-08-23 — Notes reactor-list particle-harness baseline correction
+- Synchronized the particle production-split harness so the already-approved Notes reactor-list owner is excluded from the remaining inline-marker expectation; particle parity, browser proof, rollback, and caller-handoff checks remain passing.
