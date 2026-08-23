@@ -38,7 +38,7 @@ const protectedSignatures = [
   'async function syncLocalDeletionFallback()',
 ];
 
-const approvedBranch2Splits = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()']);
+const approvedBranch2Splits = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(']);
 for (const signature of protectedSignatures) {
   const expectedBranch2Count = approvedBranch2Splits.has(signature) ? 0 : 1;
   assert.strictEqual(branch2Html.split(signature).length - 1, expectedBranch2Count, `Branch2 protected signature count mismatch: ${signature}`);

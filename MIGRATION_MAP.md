@@ -3364,3 +3364,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list inline-boundary coverage correction
 - Updated protected inline-boundary coverage to validate the external Notes reactor-list owner and its footer order; all other unapproved markers remain required inline and contract documentation coverage remains passing.
+
+## 2026-08-23 — Notes reactor-list inline-parity coverage correction
+- Updated protected inline-parity to treat `loadNoteReactorsList()` as the ninth approved Branch2 split while retaining exact origin/main one-marker parity and zero declaration duplication in extracted modules.
