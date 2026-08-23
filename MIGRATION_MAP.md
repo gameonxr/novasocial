@@ -3932,3 +3932,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness JavaScript baseline correction
 - Synchronized final-readiness auditing to 226 extracted JavaScript modules after adding the crop-preview owner; no protected boundary or unrelated production behavior changed.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness feature baseline correction
+- Synchronized final-readiness auditing to 215 feature modules after adding the crop-preview owner; no protected boundary or unrelated production behavior changed.
