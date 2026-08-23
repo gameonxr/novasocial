@@ -19,7 +19,7 @@ const expectedNames = [
   '_tttTurn', '_userProfilePosts', '_userProfileReels', '_vanishMode', '_videoFullDuration',
   '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'loadMoodFeed',
-  'loadMoreFeedPosts', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'replyToId', 'replyToText',
+  'loadMoreFeedPosts', 'loadNoteReactorsList', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'replyToId', 'replyToText',
   'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', '_applyReelsVideoWindowing', 'toggleLike', 'typingSub',
 ].sort();
 

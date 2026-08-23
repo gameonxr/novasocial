@@ -3379,3 +3379,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list storage-surface baseline correction
 - Updated storage-key surface auditing from 219 to 220 files (`index.html` plus 219 extracted modules) after the reactor-list addition; the 29-key localStorage allowlist, zero sessionStorage references, and dynamic sticker-family guard remain passing.
+
+## 2026-08-23 — Notes reactor-list window-global allowlist correction
+- Added the approved `loadNoteReactorsList` classic-script global to the window-assignment audit allowlist; the surface now validates 220 audited files and 202 explicit assignments without permitting unrelated names.
