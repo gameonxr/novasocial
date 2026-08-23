@@ -3352,3 +3352,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list module-reference baseline correction
 - Updated module-script reference integrity to 219 extracted modules and expanded the required trailing order to include `note-reactors-list-owner.js` before Note viewer, Reels helper, and caller scripts; missing and duplicate reference checks pass.
+
+## 2026-08-23 — Notes reactor-list object-URL audit baseline correction
+- Updated the object-URL lifecycle audit from 219 to 220 audited files (`index.html` plus 219 extracted modules) after the reactor-list module addition; object-URL creation/revocation and cleanup checks remain passing.
