@@ -3577,3 +3577,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter lexical-audit baseline correction
 - Synchronized the cross-module lexical-collision audit to 223 audited files after the reports-filter owner split. The 117 top-level lexical names and zero-duplicate invariant remain unchanged and passing.
+
+## 2026-08-23 — Reports filter deletion-fallback baseline correction
+- Synchronized deletion-fallback post-split script totals to 224 balanced HTML script tags and 223 external scripts after the reports-filter owner split. Deletion-fallback parity, rollback proof, browser-safe evidence, protected owner inventory, and startup handoff remain unchanged and passing.
