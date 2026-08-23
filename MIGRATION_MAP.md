@@ -4066,3 +4066,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `jumpToMessage(mid)` preparation-only audit
 - Audited the read-only message-navigation helper with exact normalized origin parity and SHA-256 `e06fcf2f2e397bb122255d982e07e35a1686641a22f6d46306f0072bd81eb073`; it has one dynamic search-result caller and no database, network, browser-storage, account, upload, permission, navigation, or message-mutation tokens.
 - Added the preparation contract, deterministic seam harness, detached target/missing browser proof, and parity/rollback evidence. The candidate remains inline because it operates on protected in-chat message DOM; `searchMessages()`, `doSearchMessages()`, DMs rendering, pagination, swipe state, `showMsgMenu()`, actions, and the unresolved `forwardMessage` seam remain unchanged. Production split is not started.
+
+## 2026-08-23 — `jumpToMessage(mid)` final-readiness Markdown baseline correction
+- Updated final-readiness Markdown inventory from 273 to 274 after adding the jump-to-message preparation contract; no production behavior or protected boundary changed.
