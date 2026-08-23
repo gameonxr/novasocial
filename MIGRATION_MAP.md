@@ -3616,3 +3616,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter object-URL baseline correction
 - Synchronized object-URL lifecycle auditing to 223 audited files after the reports-filter split. Object-URL creation/revocation totals, download cleanup, compression cleanup, and preview ownership remain unchanged and passing.
+
+## 2026-08-23 — Reports filter Push-settings baseline correction
+- Synchronized the Push-settings production-split harness to 224 balanced script tags and 223 external scripts after adding the reports-filter owner. Push permission, subscribe/reset, browser-safe evidence, rollback proof, and protected-owner accounting remain unchanged and passing.

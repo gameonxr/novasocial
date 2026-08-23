@@ -37,9 +37,9 @@ for (const owner of ['enablePushFromSettings', 'resetPushFromSettings']) {
 }
 assert.strictEqual((moduleText.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'enable Push window owner must occur once');
 assert.strictEqual((moduleText.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'reset Push window owner must occur once');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 223, '223 opening script tags required after refresh profile counts split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 223, '223 closing script tags required after refresh profile counts split');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 222, '222 external script tags required after refresh profile counts split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 224, '224 opening script tags required after reports filter split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 224, '224 closing script tags required after reports filter split');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 223, '223 external script tags required after reports filter split');
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/like-effects.js'), 'Push module must load before like-effects');
 assert(html.includes('navigator.serviceWorker.register(\'/sw.js\')'), 'service-worker registration must remain in app boundary');
 assert(!moduleText.includes('VAPID_PUBLIC_KEY'), 'Push module must not own VAPID configuration');
