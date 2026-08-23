@@ -4013,3 +4013,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` Push-settings tag baselines
 - Synchronized Push-settings production auditing to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; Push safety and protected split assertions remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` realtime lifecycle baseline correction
+- Synchronized realtime-subscription lifecycle auditing to 227 combined scripts after adding the crop-preview owner; channel, cleanup, and managed-slot invariants remain unchanged.
