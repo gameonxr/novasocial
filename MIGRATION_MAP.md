@@ -3205,3 +3205,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Corrected the emitted `protected-inline-parity-contract-harness.js` summary to name all eight currently approved owners: particle, deletion fallback, Push settings, Note viewer, Note deletion, and Story editor.
 - Historical particle checkpoint labels remain unchanged because they describe the earlier particle-only gate; the current high-risk gates continue to report 8 approved and 11 remaining blocked.
 - No application/runtime behavior changed; this is a documentation/harness-only synchronization on `Branch2`.
+
+## 2026-08-23 — Particle current blocked-state label synchronization
+- Corrected the particle preparation harness’s global `DIRECT_EXTRACTION` output from an unnumbered historical label to the current `REMAINING_11_PROTECTED_SYSTEMS` checkpoint.
+- Preserved the particle-only historical browser-proof label because it records the earlier particle checkpoint rather than the current global count.
+- No application/runtime behavior changed; this is a documentation/harness-only correction on `Branch2`.
