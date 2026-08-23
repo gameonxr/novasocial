@@ -3361,3 +3361,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list protected-contract coverage correction
 - Updated protected-contract coverage to validate the dedicated Notes reactor-list contract, one anonymous external owner, and footer order; the 19-signature inventory remains intact with 9 approved owners and 10 remaining blocked systems.
+
+## 2026-08-23 — Notes reactor-list inline-boundary coverage correction
+- Updated protected inline-boundary coverage to validate the external Notes reactor-list owner and its footer order; all other unapproved markers remain required inline and contract documentation coverage remains passing.

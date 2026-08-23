@@ -11,6 +11,7 @@ const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-sett
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
+const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 
 const protectedMarkers = [
   'function maybeShowPushPermissionBanner()',
@@ -52,6 +53,9 @@ for (const marker of protectedMarkers) {
   } else if (marker === 'async function deleteMyNote()') {
     assert(!html.includes(marker), 'approved Note deletion marker must be absent from inline HTML');
     assert(noteDeletionModule.includes('window.deleteMyNote = async function(){'), 'approved Note deletion module owner must be present');
+  } else if (marker === 'async function loadNoteReactorsList(') {
+    assert(!html.includes(marker), 'approved Notes reactor-list marker must be absent from inline HTML');
+    assert(reactorListModule.includes('window.loadNoteReactorsList = async function('), 'approved Notes reactor-list module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }
@@ -63,6 +67,7 @@ const scriptMarkers = [
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
+  '<script src="src/features/note-reactors-list-owner.js"></script>',
   '<script src="src/features/note-viewer-owners.js"></script>',
   '<script src="src/features/note-deletion-owner.js"></script>',
   '<script src="src/features/story-editor-owners.js"></script>',
