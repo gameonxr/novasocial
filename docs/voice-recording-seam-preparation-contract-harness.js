@@ -37,6 +37,9 @@ for (const marker of requiredHtmlMarkers) {
 }
 assert(fs.existsSync(path.join(repo, 'docs', 'voice-recording-contract.md')), 'Voice Recording behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'voice-recording-contract-harness.js')), 'Voice Recording behavior harness must remain present');
+const voiceHarness = fs.readFileSync(path.join(repo, 'docs', 'voice-recording-contract-harness.js'), 'utf8');
+assert(voiceHarness.includes('createInjectedVoiceSeam'), 'Voice recording injected seam proof must remain present');
+assert(voiceHarness.includes("calls.push('recorder-flow')"), 'Voice recording injected seam dispatch marker must remain present');
 assert.strictEqual(sourceText.includes('async function toggleRecording(cid)'), false, 'toggleRecording must not be extracted');
 assert(html.includes('audioChunks=[]'), 'Recorder chunk state must remain inline');
 assert(html.includes('new Blob(audioChunks,{type:\'audio/webm\'})') || html.includes('new Blob(audioChunks, {type:\'audio/webm\'})'), 'Recorder must retain webm assembly boundary');
@@ -49,5 +52,6 @@ console.log('VOICE_RECORDING_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=RECORDER_CAPTURE_UPLOAD_INSERT_REALTIME_CLEANUP');
 console.log('PROTECTED_RECORDING_SIGNATURES=1');
 console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
+console.log('INJECTED_SEAM_PROOF=PASS');
 console.log('EXTRACTED_PROTECTED_RECORDING_SIGNATURES=0');
 console.log('PRODUCTION_SPLIT=0');

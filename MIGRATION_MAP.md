@@ -3190,3 +3190,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/reels-seam-preparation-contract-harness.js` to require the test-only `createInjectedReelsSeam` proof and its park, restore, video-window, settle, and resume dispatch markers.
 - Updated `docs/reels-seam-preparation-contract.md` to document the injected seam inventory while retaining `renderReels()` and `_applyReelsVideoWindowing()` inline, with exact origin/main no-drift protection and direct extraction blocked.
 - Aggregate and persistent Reels harnesses pass with mocks only. No runtime owner, script tag, media playback, touch event, account, or database behavior changed.
+
+## 2026-08-22 — Aggregate voice-recording injected-proof inventory synchronization
+- Strengthened `docs/voice-recording-seam-preparation-contract-harness.js` to require the test-only `createInjectedVoiceSeam` proof and its recorder-flow dispatch marker.
+- Updated `docs/voice-recording-seam-preparation-contract.md` to document the injected seam inventory while retaining `toggleRecording()` and the complete recorder/upload/message lifecycle inline and direct extraction blocked.
+- Aggregate and voice-recording behavior harnesses pass with mocks only. No runtime owner, script tag, microphone, MediaRecorder, upload, message, account, or database behavior changed.
