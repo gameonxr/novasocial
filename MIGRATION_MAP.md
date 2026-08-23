@@ -3258,3 +3258,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Updated repository-wide compatibility, tag-integrity, module-reference, collision, lifecycle, storage, realtime, Push, and window-assignment harness baselines for the single added classic Reels helper module.
 - Verified the resulting counts: 218 extracted JavaScript modules, 220 balanced script tags, 219 external script tags, 219 audited files, 710 top-level function names, and 201 explicit `window.*` assignments; affected harnesses pass.
 - No production owner beyond the contained Reels windowing helper was moved, and the 11 protected-system extraction block remains active.
+
+## 2026-08-23 — Reels helper full-regression baseline completion
+- Updated the remaining production-split and final compatibility harness baselines for the additional Reels classic-script owner: 220 balanced script tags, 219 external script tags, 218 extracted JavaScript modules, 219 audited files, 710 top-level function names, and 201 explicit window assignments.
+- Re-ran the Reels, deletion-fallback, Push settings, collision, lifecycle, storage, realtime, module-reference, and classic-script checks; all affected focused gates pass.
+- This baseline correction changes no runtime behavior beyond the already-gated Reels windowing-helper owner and does not authorize the full Reels renderer or any other remaining high-risk system.
