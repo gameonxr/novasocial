@@ -3977,3 +3977,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` footer-order baseline correction
 - Synchronized dependency-order auditing to the actual final twelve scripts, beginning with `set-reports-filter-owner.js` and placing `confirm-crop-preview-owner.js` after invalidate-cache and before verification; classic ordering remains valid.
+
+## 2026-08-23 — `confirmCropPreview()` event-listener baseline correction
+- Synchronized event-listener boundary auditing to 226 extracted JavaScript modules after adding the crop-preview owner; listener and cleanup-registration invariants remain unchanged.
