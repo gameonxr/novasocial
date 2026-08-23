@@ -3686,3 +3686,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter seam-readiness baseline correction
 - Synchronized the high-risk seam-readiness matrix to 223 extracted JavaScript modules after adding the verification-filter owner. The 19-signature matrix, nine approved owners, ten blocked systems, and all protected readiness assertions remain unchanged and passing.
+
+## 2026-08-23 — Verification filter index-integrity baseline correction
+- Synchronized index-HTML tag integrity to 225 opening tags, 225 closures, and 224 external scripts after adding the verification-filter owner. The single inline application script, HTML structure, and protected DMs/Reels boundaries remain unchanged and passing.
