@@ -4078,3 +4078,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `jumpToMessage(mid)` standard-contract-harness baseline correction
 - Updated final-readiness standard contract-harness inventory from 269 to 270 after adding the jump-to-message preparation harness; no production behavior or protected boundary changed.
+
+## 2026-08-23 — `submitNativeEmojiReaction(noteId)` boundary rejection
+- Audited the remaining marker-clean emoji-picker wrapper. It reads `#native-emoji-inp`, removes the picker panel, and delegates directly to `reactToNote(noteId, emoji, null)`, so its caller path enters Notes reaction mutation and cannot be isolated as a UI-only owner.
+- Existing `note-reactors-list` ownership is read-only and explicitly excludes reaction submission, note deletion, audio lifecycle, and Notes Bar refresh. No production code changed; no protected boundary was weakened.
