@@ -3622,3 +3622,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter realtime baseline correction
 - Synchronized realtime-subscription lifecycle auditing to 223 files after adding the reports-filter owner. Ten channel registrations, 21 cleanup calls, managed slots, and distinct PushManager cleanup remain unchanged and passing.
+
+## 2026-08-23 — Reports filter refresh-counts harness baseline correction
+- Synchronized the completed refresh-profile-counts production harness to 222 extracted JavaScript modules after the later reports-filter owner split. Exact origin parity, contained read-only boundary, detached browser evidence, seam coverage, and rollback evidence remain passing.
