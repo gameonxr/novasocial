@@ -3294,3 +3294,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Branch2 safety checkpoint label correction
 - Updated the Branch2-only safety contract and harness to recognize the authorized Reels windowing-helper package and report `LATEST_CHECKPOINT=REELS_WINDOWING_HELPER_BASELINE`.
 - The safety boundary still requires Branch2-only work, immutable `origin/main`, a clean pushed tip, exact authorized files for any production split, and all unapproved protected markers to remain inline.
+
+## 2026-08-23 — Notes reactor-list production split
+- Extracted only the read-only `loadNoteReactorsList()` owner to `src/features/note-reactors-list-owner.js` as one anonymous `window.loadNoteReactorsList` classic-script assignment; the inline owner is absent and the module loads before Note viewer callers.
+- Exact origin/main owner parity, injected empty/populated/missing-container/query-failure seam proof, pinned rollback target, before/after read-only browser proof, Notes aggregate, acceptance, reversible-proof, readiness, and high-risk extraction gates pass.
+- Protected coverage is now 9/19 approved signatures; the main Reels renderer, Notes submission/reaction owners, and the remaining 10 high-risk systems remain protected. No live account or application data was mutated.

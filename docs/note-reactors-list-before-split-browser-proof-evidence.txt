@@ -1,0 +1,12 @@
+Notes reactor-list before-split browser proof — 2026-08-23
+
+URL: http://127.0.0.1:4173/?notesGate=before20260823
+Title: NovaSocial
+
+BROWSER_CONTEXT_SHELL=PASS
+AUTHENTICATED_FOR_YOU_SHELL=PASS
+INLINE_REACTOR_OWNER_EXPECTED=PASS
+NO_STATEFUL_CONTROL_CLICKED=PASS
+SAFE_NO_MUTATION=PASS
+
+The cache-busted local preview rendered the authenticated NovaSocial shell and For You feed before the Notes reactor-list split. No Notes viewer, reaction, profile, media, message, follow, upload, download, permission, storage, or database mutation was invoked.

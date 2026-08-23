@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Prepare, but do not execute, a reversible seam for the protected Notes system.
+**Purpose:** Record the contained, reversible reactor-list split for the protected Notes system while preserving the remaining interaction owners.
 
 ## Preparation map
 
@@ -19,9 +19,9 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Note viewer, removal, reaction, audio, and cleanup implementations remain inline except for the already-approved external `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` owners. Six non-destructive browser-context mock artifacts cover empty validation, music-backed insertion, update failure, removal failure, removal success, and Cloudinary-artwork removal, while the behavior harness exposes a test-only injected viewer/removal dispatcher. These artifacts prove reversible mock behavior only and are not permission to extract the remaining Notes interaction owners. Before another split, the project still needs protected before/after marker parity and reversible browser proof for that production boundary itself, including own/other viewer controls, expiry, reactions, audio, and Notes Bar reload.
+This is a **contained production checkpoint**. Note viewer, removal, reaction submission, audio, cleanup, and Notes Bar refresh implementations remain inline except for the already-approved external `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` owners. The read-only `loadNoteReactorsList()` owner is now externalized to `src/features/note-reactors-list-owner.js` after exact parity, an injected query/container/avatar seam proof, pinned rollback evidence, and before/after read-only browser proof passed. Six non-destructive browser-context mock artifacts continue to cover validation, music-backed insertion, update failure, removal failure, removal success, and Cloudinary-artwork removal; these do not authorize extracting the remaining Notes interaction owners.
 
-The first implementation step must be test-only or adapter-only and must preserve the current `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` owners until the complete seam harness passes.
+The remaining `viewNote()`, `removeMyNoteFromViewer()`, `deleteMyNote()`, reaction-submission, audio, cleanup, and Notes Bar owners must stay inline until their own independent gates pass. The completed reactor-list move was allowed only after exact origin/main parity, injected seam proof, read-only browser proof, rollback evidence, and focused validation passed.
 
 ## Harness coverage
 
@@ -32,11 +32,11 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Viewer owner | `viewNote()` remains inline | PASS |
 | Removal owner | `removeMyNoteFromViewer()` and `deleteMyNote()` remain inline | PASS |
 | Audio state | `_noteViewAudio` remains protected | PASS |
-| Viewer/reaction data | `quick_note_views` and reactions remain protected | PASS |
+| Viewer/reaction data | `quick_note_views` remain protected; reactor-list owner is split with its own gate | PASS |
 | Cleanup | Cloudinary artwork cleanup marker remains | PASS |
 | Browser mock inventory | Six Notes artifacts cover validation, insert, update failure, removal failure/success, and cloud-artwork cleanup | PASS |
 | Injected seam proof | Viewer and removal dependencies dispatch explicitly in test-only mocks | PASS |
-| Production split | None | PASS |
+| Production split | `loadNoteReactorsList()` split complete; remaining Notes interaction owners remain inline | PASS |
 
 ## References
 
@@ -51,5 +51,10 @@ The first implementation step must be test-only or adapter-only and must preserv
 9. [`notes-removal-failure-browser-proof-evidence.txt`](./notes-removal-failure-browser-proof-evidence.txt)
 10. [`notes-removal-success-browser-proof-evidence.txt`](./notes-removal-success-browser-proof-evidence.txt)
 11. [`notes-removal-cloud-artwork-browser-proof-evidence.txt`](./notes-removal-cloud-artwork-browser-proof-evidence.txt)
-12. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+12. [`note-reactors-list-production-split-contract.md`](./note-reactors-list-production-split-contract.md)
+13. [`note-reactors-list-production-split-contract-harness.js`](./note-reactors-list-production-split-contract-harness.js)
+14. [`note-reactors-list-parity-rollback-evidence.txt`](./note-reactors-list-parity-rollback-evidence.txt)
+15. [`note-reactors-list-before-split-browser-proof-evidence.txt`](./note-reactors-list-before-split-browser-proof-evidence.txt)
+16. [`note-reactors-list-after-split-browser-proof-evidence.txt`](./note-reactors-list-after-split-browser-proof-evidence.txt)
+17. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

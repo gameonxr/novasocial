@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story editor before/after browser proofs are PASS, while browser proof remains outstanding for 11 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing helper, and Notes reactor-list before/after browser proofs are PASS, while browser proof remains outstanding for 10 unapproved systems'), 'matrix must continue to mark remaining browser proof');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 8/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must report the eight moved protected signatures and supporting Reels helper');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 11 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('Protected production splits | 9/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must report the nine moved protected signatures and supporting Reels helper');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 10 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',
@@ -168,6 +168,6 @@ assert(!source.includes('productionSplitApproved'), 'no speculative production-s
 
 console.log('REVERSIBLE_BROWSER_PROOF_CONTRACT_HARNESS=PASS');
 console.log('PROOF_STATUS=APPROVED_SPLITS_PASS_REMAINING_PROTECTED_SYSTEMS_GATED');
-console.log('PROTECTED_SPLITS=8_OF_19');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS');
-console.log('PRODUCTION_CHANGE=8_APPROVED_SIGNATURES');
+console.log('PROTECTED_SPLITS=9_OF_19');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS');
+console.log('PRODUCTION_CHANGE=9_APPROVED_SIGNATURES');

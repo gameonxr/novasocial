@@ -17,11 +17,11 @@ const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-view
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 8/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the eight moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 9/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the nine moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
-assert(matrix.includes('browser proof remains outstanding for 11 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 11 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
+assert(matrix.includes('browser proof remains outstanding for 10 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 10 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract.md')), 'browser-proof contract must exist');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract-harness.js')), 'browser-proof harness must exist');
 
@@ -63,7 +63,7 @@ const protectedSignatures = [
 ];
 assert.strictEqual(protectedSignatures.length, 19, 'acceptance gate must cover all 19 protected signatures');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   assert(!source.includes(signature), `protected signature must not be duplicated by declaration: ${signature}`);
 }
@@ -87,9 +87,9 @@ assert(!source.includes('browserProofPassed'), 'no speculative browser proof fla
 assert(!source.includes('productionSplitApproved'), 'no speculative production approval flag may exist');
 
 console.log('PROTECTED_SPLIT_ACCEPTANCE_CONTRACT_HARNESS=PASS');
-console.log('DECISION=READY_FOR_NEXT_PROTECTED_CANDIDATE_AFTER_EIGHT_APPROVED_SPLITS');
+console.log('DECISION=READY_FOR_NEXT_PROTECTED_CANDIDATE_AFTER_NINE_APPROVED_SPLITS');
 console.log('PROTECTED_SIGNATURES=19');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=8_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_AND_STORY_EDITOR');
-console.log('BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_AND_STORY_PASS_REMAINING_11');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS');
-console.log('PRODUCTION_CHANGE=8_APPROVED_SIGNATURES');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=9_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
+console.log('BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_REMAINING_10');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS');
+console.log('PRODUCTION_CHANGE=9_APPROVED_SIGNATURES');

@@ -1,0 +1,24 @@
+Notes reactor-list after-split browser proof — 2026-08-23
+
+URL: http://127.0.0.1:4173/?notesGate=after20260823
+Title: NovaSocial
+
+BROWSER_CONTEXT_SHELL=PASS
+AUTHENTICATED_FOR_YOU_SHELL=PASS
+EXTERNAL_OWNER_PROOF_PENDING=PASS
+NO_STATEFUL_CONTROL_CLICKED=PASS
+SAFE_NO_MUTATION=PASS
+
+The cache-busted local preview rendered the authenticated NovaSocial shell and For You feed after adding the Notes reactor-list classic module. No Notes viewer, reaction, profile, media, message, follow, upload, download, permission, storage, or database mutation was invoked.
+
+Runtime after-split probe:
+
+EXTERNAL_OWNER_TYPE=function
+INLINE_EXECUTABLE_OWNER=false
+OUTCOME=empty-rendered
+SENTINEL_ID=__notes_reactors_gate_sentinel__
+ERROR=null
+SAFE_READ_ONLY_SENTINEL=true
+NO_STATEFUL_CONTROL=true
+
+The external owner loaded and rendered the empty reactor-list state into a temporary local DOM container for a synthetic sentinel ID. The container was removed afterward. The probe invoked no stateful control and produced no database mutation.

@@ -33,9 +33,9 @@ const protectedSignatures = [
   'async function removeMyNoteFromViewer(noteId)'
 ];
 
-assert.strictEqual(sourceFiles.length, 218, '218 extracted JavaScript modules must remain present after Reels windowing helper split');
+assert.strictEqual(sourceFiles.length, 219, '219 extracted JavaScript modules must remain present after Notes reactor-list split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()';
+  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
@@ -44,6 +44,7 @@ const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
+const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle owner must occur once');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback owner must occur once');
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable owner must occur once');
@@ -51,9 +52,14 @@ assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async 
 assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note view owner must occur once');
 assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal owner must occur once');
 assert.strictEqual((noteDeletionModule.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note deletion owner must occur once');
+assert.strictEqual((reactorListModule.match(/window\.loadNoteReactorsList\s*=\s*async function\(noteId\)\s*\{/g) || []).length, 1, 'approved Notes reactor-list owner must occur once');
+assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-production-split-contract.md')), 'Notes reactor-list contract must remain present');
+assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-production-split-contract-harness.js')), 'Notes reactor-list harness must remain present');
+assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback-evidence.txt')), 'Notes reactor-list rollback evidence must remain present');
+assert(fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_OWNER_TYPE=function'), 'Notes reactor-list browser proof must remain passing');
 assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
 assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
+assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS'), 'matrix must record particle split completion');
@@ -80,7 +86,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-pr
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
-assert(matrix.includes('browser proof remains outstanding for 11 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('browser proof remains outstanding for 10 unapproved systems'), 'matrix must record remaining browser proof');
 assert(matrix.includes('one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the supporting Reels helper split');
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected'), 'matrix must keep the Reels renderer boundary protected');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
@@ -91,7 +97,8 @@ const remainingAuthorizationRows = [
   'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
-  'Notes submission, reactions, and reactor list | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Notes submission and reaction submission | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Notes reactor list | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; submission/reaction owners remain protected',
   'Push permission and silent resubscribe helpers | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
 ];
 for (const row of remainingAuthorizationRows) {
@@ -107,10 +114,10 @@ assert(fs.existsSync(path.join(repo, 'docs', 'push-settings-parity-rollback-evid
 
 console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
 console.log('PROTECTED_SIGNATURES=19');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=8_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_AND_STORY_EDITOR');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=9_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
 console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
 console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
-console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_AND_STORY_PASS_REMAINING_11');
+console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_REMAINING_10');
 console.log('AGGREGATE_PREPARATION_INJECTED_PROOFS=7_PASS');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS');
