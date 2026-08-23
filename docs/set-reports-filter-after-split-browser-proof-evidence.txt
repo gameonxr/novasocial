@@ -1,0 +1,22 @@
+SET_REPORTS_FILTER_AFTER_SPLIT_BROWSER_PROOF=PASS
+DATE=2026-08-23
+BRANCH=Branch2
+URL=http://127.0.0.1:4173/?reports_filter_gate=20260823-after
+SCOPE=Read-only local shell inspection with detached synthetic DOM only; no admin panel opened and no live query, storage, account, navigation, notification, report, moderation, message, follow, reaction, upload, download, permission, or state-changing action performed.
+EXTERNAL_OWNER_TYPE=function
+EXTERNAL_SCRIPT_COUNT=1
+EXTERNAL_OWNER_ANONYMOUS=true
+INLINE_NAMED_OWNER_COUNT=0
+FILTER_CASES=pending,resolved,dismissed,all
+SELECTED_STYLING=PASS
+UNSELECTED_STYLING=PASS
+RELOAD_DELEGATION=ONE_PER_FILTER
+MISSING_CONTROL_TOLERANCE=PASS
+MISSING_CONTROL_STATE=all
+MISSING_CONTROL_RELOADS=1
+STATE_RESTORED=true
+LIVE_CONTROLS_INVOKED=false
+LIVE_QUERIES_INVOKED=false
+LIVE_DOM_MUTATED=false
+BROWSER_SHELL=NovaSocial
+EVIDENCE_SOURCE=/home/ubuntu/console_outputs/exec_result_2026-08-23_06-46-51_325.txt

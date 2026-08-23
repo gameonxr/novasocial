@@ -50,7 +50,8 @@ async function runHarness() {
     const end = source.indexOf('\nasync function adminResolveReport(', start);
     assert(start >= 0 && end > start, 'reports tab function boundary must remain present and ordered');
     const functionBlock = source.slice(start, end);
-    eval(`let _reportsFilter = 'pending'; ${functionBlock}; global.adminTabReports = adminTabReports; global.setReportsFilter = setReportsFilter; global.loadReportsList = loadReportsList;`);
+    const moduleOwner = fs.readFileSync('/home/ubuntu/novasocial/src/features/set-reports-filter-owner.js', 'utf8');
+    eval(`let _reportsFilter = 'pending'; const window = global; ${functionBlock}; ${moduleOwner}; global.adminTabReports = adminTabReports; global.setReportsFilter = window.setReportsFilter; global.loadReportsList = loadReportsList;`);
 
     const reports = [{
       id: 'r1', target_type: 'post', target_id: 'p1', reason: "spam <reason>", details: 'details <x>',

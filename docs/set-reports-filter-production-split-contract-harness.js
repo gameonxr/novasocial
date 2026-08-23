@@ -6,23 +6,31 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const indexPath = path.join(repo, 'index.html');
+const modulePath = path.join(repo, 'src', 'features', 'set-reports-filter-owner.js');
 const source = fs.readFileSync(indexPath, 'utf8');
+const moduleSource = fs.readFileSync(modulePath, 'utf8');
 const originMain = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
 
 function extractOwner(text) {
-  const match = text.match(/function setReportsFilter\(f\)\{[\s\S]*?\n\}/);
-  assert(match, 'setReportsFilter owner must exist');
-  return match[0];
+  const named = text.match(/function setReportsFilter\(f\)\{[\s\S]*?\n\}/);
+  if (named) return named[0].replace(/^function setReportsFilter/, 'function');
+  const anonymous = text.match(/window\.setReportsFilter\s*=\s*(function\(f\)\{[\s\S]*?\n\})/);
+  assert(anonymous, 'setReportsFilter owner must exist');
+  return anonymous[1];
 }
 
 function normalize(text) {
   return text.replace(/\s+/g, ' ').trim();
 }
 
-const owner = extractOwner(source);
+const owner = extractOwner(moduleSource);
 const originOwner = extractOwner(originMain);
-assert.strictEqual(normalize(owner), normalize(originOwner), 'candidate owner must retain exact normalized origin/main parity');
-assert.strictEqual((source.match(/function setReportsFilter\(/g) || []).length, 1, 'inline candidate owner must exist exactly once before split');
+const originNamedOwner = originMain.match(/function setReportsFilter\(f\)\{[\s\S]*?\n\}/);
+assert(originNamedOwner, 'origin/main setReportsFilter owner must exist');
+assert.strictEqual(normalize(owner), normalize(originOwner), 'external owner must retain exact normalized origin/main parity');
+assert.strictEqual((source.match(/function setReportsFilter\(/g) || []).length, 0, 'named inline candidate owner must be absent after split');
+assert.strictEqual((moduleSource.match(/window\.setReportsFilter = function\(/g) || []).length, 1, 'external owner must be one anonymous window assignment');
+assert.strictEqual((source.match(/<script src="src\/features\/set-reports-filter-owner\.js"><\/script>/g) || []).length, 1, 'external owner script must be linked exactly once');
 assert(!owner.includes('.insert('), 'candidate owner must not insert data');
 assert(!owner.includes('.delete('), 'candidate owner must not delete data');
 assert(!owner.includes('.update('), 'candidate owner must not update database rows');
@@ -30,7 +38,7 @@ assert(!owner.includes('window.location'), 'candidate owner must not navigate');
 assert(owner.includes('_reportsFilter=f'), 'candidate owner must update existing filter state');
 assert(owner.includes("document.getElementById('rf-'+x)"), 'candidate owner must address existing reports filter controls');
 assert(owner.includes('loadReportsList()'), 'candidate owner must delegate to existing reports loader');
-assert.strictEqual(crypto.createHash('sha256').update(normalize(originOwner)).digest('hex'), 'ee2638326b5e3f692744c61f92f040cec15da399ac15612a56de4c75825ee05e', 'candidate owner parity hash must remain pinned');
+assert.strictEqual(crypto.createHash('sha256').update(normalize(originNamedOwner[0])).digest('hex'), 'ee2638326b5e3f692744c61f92f040cec15da399ac15612a56de4c75825ee05e', 'origin/main owner hash must remain pinned');
 
 function createInjectedReportsFilterSeam({ state, getElementById, reload }) {
   return function setReportsFilterInjected(filter) {
@@ -92,11 +100,11 @@ runSeam().then(result => {
   console.log('INJECTED_SEAM=FILTERS_STYLING_MISSING_CONTROL_RELOAD_PASS');
   console.log(`FILTER_CASES=${result.cases.length}`);
   console.log('STATEFUL_BOUNDARIES=ABSENT');
-  console.log('INLINE_OWNER=ONE_NAMED_DECLARATION');
-  console.log('EXTERNAL_OWNER=NOT_YET_LINKED');
+  console.log('INLINE_OWNER=ABSENT');
+  console.log('EXTERNAL_OWNER=ONE_ANONYMOUS_WINDOW_ASSIGNMENT');
   console.log('READ_ONLY_BROWSER_PROOF=PASS');
   console.log('ROLLBACK_EVIDENCE=PINNED');
-  console.log('PRODUCTION_SPLIT=PENDING');
+  console.log('PRODUCTION_SPLIT=COMPLETE');
 }).catch(error => {
   console.error(error.stack || error);
   process.exitCode = 1;
