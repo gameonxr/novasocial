@@ -3619,3 +3619,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter Push-settings baseline correction
 - Synchronized the Push-settings production-split harness to 224 balanced script tags and 223 external scripts after adding the reports-filter owner. Push permission, subscribe/reset, browser-safe evidence, rollback proof, and protected-owner accounting remain unchanged and passing.
+
+## 2026-08-23 — Reports filter realtime baseline correction
+- Synchronized realtime-subscription lifecycle auditing to 223 files after adding the reports-filter owner. Ten channel registrations, 21 cleanup calls, managed slots, and distinct PushManager cleanup remain unchanged and passing.
