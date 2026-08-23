@@ -3754,3 +3754,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` deletion-fallback audit baseline correction
 - Synchronized deletion-fallback post-split script accounting to 226 opening tags, 226 closing tags, and 225 external scripts after adding the story-viewer mute owner; existing deletion-fallback parity, browser, rollback, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` footer-order baseline correction
+- Updated dependency-order auditing for the twelve-script footer tail, adding `toggle-sv-mute-owner.js` between the reports and verification filter owners while preserving Push, refresh, Notes, Reels, and like-effects order.
