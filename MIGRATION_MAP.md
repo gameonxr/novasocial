@@ -3518,3 +3518,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts interval-audit baseline correction
 - Updated interval-lifecycle auditing from 221 to 222 files after adding the refresh-counts module; seven interval registrations, ten cleanup calls, and all managed timer handles remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts local-asset baseline correction
+- Updated local HTML asset-reference auditing from 241 to 242 unique references after adding the refresh-counts script; zero missing references and manifest/service-worker guards remain passing.
