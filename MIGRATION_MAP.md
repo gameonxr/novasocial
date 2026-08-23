@@ -3200,3 +3200,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/notes-seam-preparation-contract-harness.js` to require the test-only `createInjectedNotesInteractionSeam` proof and its viewer/removal dispatch markers.
 - Updated `docs/notes-seam-preparation-contract.md` to document the injected interaction inventory while retaining the approved external viewer/removal/deletion owners and remaining Notes interaction owners behind the extraction gate.
 - Aggregate, Note viewer, and Note deletion parity harnesses pass with mocks only. No runtime owner, script tag, audio, media, account, reaction, or database behavior changed.
+
+## 2026-08-23 — Protected parity current-owner summary synchronization
+- Corrected the emitted `protected-inline-parity-contract-harness.js` summary to name all eight currently approved owners: particle, deletion fallback, Push settings, Note viewer, Note deletion, and Story editor.
+- Historical particle checkpoint labels remain unchanged because they describe the earlier particle-only gate; the current high-risk gates continue to report 8 approved and 11 remaining blocked.
+- No application/runtime behavior changed; this is a documentation/harness-only synchronization on `Branch2`.
