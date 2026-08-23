@@ -3965,3 +3965,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` clipboard baseline correction
 - Synchronized clipboard auditing to 227 combined files (`index.html` plus 226 extracted JavaScript modules) after adding the crop-preview owner; clipboard behavior and safety assertions remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` collision-name baseline correction
+- Synchronized collision auditing to 702 top-level named functions after removing the inline named crop-preview owner; zero duplicate names remain and the anonymous external global compatibility surface is unchanged.
