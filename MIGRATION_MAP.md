@@ -4098,3 +4098,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `adminTabUsers(content)` boundary rejection
 - Audited the next marker-clean admin renderer. It renders user profiles, ban/message-ban status, metrics, and controls for ban, message-ban, promotion, and demotion.
 - The admin-panel contract explicitly keeps user, moderation, account, and tab renderers inline; this is a protected admin-management surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `adminTabReports(content)` boundary rejection
+- Audited the next marker-clean admin renderer. It creates pending/resolved/dismissed/all report filters and delegates to `loadReportsList()`, whose protected path reads reports and enriches post, reel, comment, message, story, and user targets through parallel database lookups.
+- The admin reports contract explicitly keeps report filtering, enrichment, report-detail, resolve/dismiss, notification, and moderation handlers inline. This is a protected moderation/data renderer rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
