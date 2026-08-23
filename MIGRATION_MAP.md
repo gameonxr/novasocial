@@ -3920,3 +3920,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` checkpoint documentation closed
 - Closed the production contract and rollback evidence with normalized parity/hash, exact eight-caller boundary, one anonymous external owner, both detached proofs, split commit `00cf7328`, first exhaustive PASS tip `f9fdb8f`, and final documentation-tip PASS tip `fccb890`; the final completion gate remains required from this status-doc tip.
+
+## 2026-08-23 — `confirmCropPreview()` preparation accepted
+- Audited the next contained UI-only candidate with exact normalized origin parity/hash `668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4`, one existing Done-control caller, no pre-existing owner module, no stateful boundary tokens, and detached synthetic success/missing-input/conversion-error proof; production split remains pending.
