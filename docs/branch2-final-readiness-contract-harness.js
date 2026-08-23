@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 217, '217 extracted JavaScript modules must remain after Note deletion split');
+assert.strictEqual(jsFiles.length, 218, '218 extracted JavaScript modules must remain after Reels windowing helper split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 206, '206 feature modules must remain after Note deletion split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 219, 'HTML must retain 219 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 219, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 218, 'HTML must retain 218 external script tags');
+assert.strictEqual(featureFiles.length, 207, '207 feature modules must remain after Reels windowing helper split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 220, 'HTML must retain 220 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 220, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 219, 'HTML must retain 219 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
