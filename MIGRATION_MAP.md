@@ -3781,3 +3781,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` module-reference baseline correction
 - Synchronized module-script reference auditing to 224 extracted JavaScript modules after adding the story-viewer mute owner; missing/duplicate module checks, core order, trailing order, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` Notes reactor-list audit baseline correction
+- Synchronized Notes reactor-list production-contract accounting to 224 source modules after adding the story-viewer mute owner; exact reactor-list parity, order, behavior seam, candidate, and protected checks remain passing.
