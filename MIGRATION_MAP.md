@@ -3422,3 +3422,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter high-risk-audit baseline correction
 - Updated the authoritative high-risk extraction audit from 219 to 220 extracted JavaScript modules after the contained admin-filter split; 19 protected signatures, 9 approved owners, 10 remaining blocked systems, and all protected-owner evidence remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter readiness-matrix baseline correction
+- Updated the readiness-matrix audit from 219 to 220 extracted modules after the admin-filter addition; protected signature ownership, reactor-list evidence, and the 10-system direct-extraction block remain unchanged and passing.
