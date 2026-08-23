@@ -3974,3 +3974,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` deletion-fallback tag baselines
 - Synchronized deletion-fallback production auditing to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; deletion fallback and protected systems remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` footer-order baseline correction
+- Synchronized dependency-order auditing to the actual final twelve scripts, beginning with `set-reports-filter-owner.js` and placing `confirm-crop-preview-owner.js` after invalidate-cache and before verification; classic ordering remains valid.
