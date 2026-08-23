@@ -3524,3 +3524,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts module-reference baseline correction
 - Updated module-script reference auditing from 220 to 221 modules after adding the refresh-counts owner; one-reference, no-duplicate, core-order, and protected-module checks remain passing.
+
+## 2026-08-23 — Refresh profile counts Notes-reactor audit baseline correction
+- Updated the Notes reactor-list candidate audit from 220 to 221 source modules after adding the refresh-counts owner; reactor-list parity, script order, and injected read-only seam checks remain passing.
