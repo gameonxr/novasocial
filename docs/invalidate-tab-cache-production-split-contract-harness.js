@@ -50,7 +50,8 @@ assert(productionCommit.startsWith('00cf7328'), `production split commit must re
 assert(rollback.includes('PRODUCTION_SPLIT_COMMIT=00cf7328b17cee2d2a48f2d8f3bd9343c9987ac8'), 'rollback evidence must pin production split commit');
 assert(rollback.includes('FIRST_FULL_REGRESSION_TIP=f9fdb8fe49c186ab0f7151375a3600303c099e4b'), 'rollback evidence must pin first exhaustive gate tip');
 assert(rollback.includes('FIRST_FULL_REGRESSION=PASS'), 'rollback evidence must record first exhaustive gate PASS');
-assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION=PENDING'), 'final documentation-tip gate must remain explicitly pending until it passes');
+assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION=PASS'), 'rollback evidence must record final documentation-tip regression PASS');
+assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION_TIP=fccb8907360b2de0142f9b88ead6c80e9ce46776'), 'rollback evidence must pin final documentation-tip regression SHA');
 assert(!/<script\b[^>]*\b(?:type|defer|async)\s*=/i.test(html), 'all application scripts must remain classic without type, defer, or async attributes');
 
 function runCacheSeam() {
@@ -78,5 +79,6 @@ console.log('INJECTED_SEAM=PASS');
 console.log(`CACHE_KEYS_AFTER_SEAM=${Object.keys(seam).join(',')}`);
 console.log('ROLLBACK_EVIDENCE=PASS');
 console.log('FIRST_FULL_REGRESSION=PASS');
-console.log('FINAL_DOCS_FULL_REGRESSION=PENDING');
+console.log('FINAL_DOCS_FULL_REGRESSION=PASS');
+console.log('FINAL_DOCS_FULL_REGRESSION_TIP=fccb8907360b2de0142f9b88ead6c80e9ce46776');
 console.log('PRODUCTION_SPLIT=COMPLETE');

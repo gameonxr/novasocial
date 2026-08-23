@@ -23,7 +23,7 @@ The production owner is preserved as an anonymous classic global assignment in [
 | Production split | Inline named owner removed; one external anonymous global owner linked in dependency order | PASS |
 | Focused regression | Candidate, tab-cache, verification, admin, and high-risk contracts pass | PASS |
 | First exhaustive regression | Clean pushed Branch2 gate passed at `f9fdb8fe49c186ab0f715137a3600303c099e4b` (`HARNESS_COUNT=271`) | PASS |
-| Final documentation-tip regression | Required after this contract, harness, rollback, and ledger synchronization | PENDING |
+| Final documentation-tip regression | Clean pushed Branch2 gate passed at `fccb8907360b2de0142f9b88ead6c80e9ce46776` (`HARNESS_COUNT=272`) | PASS |
 
 ## Independent seam
 

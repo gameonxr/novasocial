@@ -3917,3 +3917,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` final-readiness contract-harness baseline correction
 - Synchronized final-readiness auditing to 267 standard contract harnesses after publishing the invalidate-cache production harness; no production behavior or protected boundary changed.
+
+## 2026-08-23 — `invalidateTabCache(tab)` checkpoint documentation closed
+- Closed the production contract and rollback evidence with normalized parity/hash, exact eight-caller boundary, one anonymous external owner, both detached proofs, split commit `00cf7328`, first exhaustive PASS tip `f9fdb8f`, and final documentation-tip PASS tip `fccb890`; the final completion gate remains required from this status-doc tip.
