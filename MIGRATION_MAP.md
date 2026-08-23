@@ -3833,3 +3833,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` documentation baseline correction
 - Synchronized final-readiness accounting to 270 Markdown files, 271 harness files, 267 standard contract documents, and 266 paired contract harnesses after adding the invalidate-cache preparation and proof artifacts; candidate, verification, protected, reference, and pairing checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` classic-script baseline correction
+- Synchronized classic-script compatibility accounting to 227 script tags and 225 extracted JavaScript files after adding the in-memory cache owner; module/defer/async prohibitions and candidate/protected checks remain passing.
