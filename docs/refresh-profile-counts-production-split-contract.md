@@ -26,11 +26,11 @@ The companion harness defines an injected read/render seam for both profile-coun
 | Browser proof | Detached synthetic profile-count DOM proof with no live follow action | PASS |
 | Rollback | Pre-split Branch2 commit and revert procedure pinned | PASS |
 | Focused gates | Candidate production harness and neighboring profile/follow audits | PASS |
-| Full regression | Clean pushed Branch2 tip after the approved split | Pending |
+| Full regression | Clean pushed Branch2 tip after the approved split | PASS |
 
 ## Production decision
 
-No production extraction is authorized by this preparation document alone. A production split may proceed only after exact owner parity, independent seam evidence, read-only browser proof, rollback evidence, focused gates, and a clean full Branch2 regression package are complete. The adjacent follow mutation and all protected high-risk systems remain blocked.
+The refresh-profile-counts production split is complete: exact owner parity, independent seam evidence, read-only browser proof, rollback evidence, focused neighboring gates, and a clean full Branch2 regression package all pass. The adjacent follow mutation and all protected high-risk systems remain blocked.
 
 ## Browser safety boundary
 

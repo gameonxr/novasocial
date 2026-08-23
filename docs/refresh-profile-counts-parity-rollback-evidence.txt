@@ -30,4 +30,6 @@ Production split record:
 - After-split external owner and inline-owner absence: PASS
 - After-split detached browser proof: PASS
 - Focused neighboring profile/follow harnesses after production commit: PASS
-- Full regression: pending from the clean pushed split tip
+- Full regression: PASS from the clean pushed split tip
+- Gate log: `/tmp/branch2-full-regression-after-refresh-counts-window-fix.log`
+- Canonical marker: `BRANCH2_FULL_REGRESSION_GATE=PASS`

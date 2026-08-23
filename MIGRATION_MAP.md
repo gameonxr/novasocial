@@ -3548,3 +3548,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts window-surface baseline correction
 - Added only `refreshProfileCounts` to the explicit `window.*` allowlist and synchronized the audit to 222 files and 204 assignments; exact-name equality and all established global-owner protections remain passing.
+
+## 2026-08-23 — Refresh profile counts production gate complete
+- The contained read-only `refreshProfileCounts(userId)` owner is fully gated on Branch2: exact normalized origin/main parity, anonymous classic global handoff, detached before/after browser proof, injected query/render seam, rollback evidence, focused profile/follow neighbors, and clean exhaustive regression all pass. The follow mutation and all remaining 10 protected systems remain blocked.
