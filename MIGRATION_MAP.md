@@ -4016,3 +4016,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` realtime lifecycle baseline correction
 - Synchronized realtime-subscription lifecycle auditing to 227 combined scripts after adding the crop-preview owner; channel, cleanup, and managed-slot invariants remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` refresh-counts baseline correction
+- Synchronized refresh-profile-counts production auditing to 226 extracted JavaScript modules after adding the crop-preview owner; read-only query, ordering, and side-effect boundaries remain unchanged.
