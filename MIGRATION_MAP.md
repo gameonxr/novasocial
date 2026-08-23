@@ -3313,3 +3313,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list classic-script baseline correction
 - Updated classic-script compatibility totals from 220/218 to 221 script tags and 219 extracted JavaScript files for the approved Notes reactor-list module; module syntax and async/defer prohibitions remain passing.
+
+## 2026-08-23 — Notes reactor-list clipboard audit baseline correction
+- Updated the clipboard interaction audit from 219 to 220 total files (`index.html` plus 219 extracted modules) after the approved Notes reactor-list addition; clipboard call and fallback counts remain unchanged.
