@@ -3998,3 +3998,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` invalidate-cache contract baselines
 - Synchronized invalidate-cache production auditing to 226 extracted modules, 228 classic script tags, 228 closures, and 227 external scripts after adding the crop-preview owner; cache parity, callers, rollback, and protected boundaries remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` local asset-reference baseline correction
+- Synchronized local HTML asset-reference auditing to 247 unique references after adding the crop-preview owner; all references still resolve and root assets remain present.
