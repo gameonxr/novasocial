@@ -118,7 +118,7 @@ const unresolved = handlers.filter(name => {
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
 assert.strictEqual(allDocs.length, 271, '271 documentation Markdown files must be published after invalidateTabCache production split');
-assert.strictEqual(allHarnesses.length, 271, '271 harness files must be published after invalidateTabCache production split');
+assert.strictEqual(allHarnesses.length, 272, '272 harness files must be published after invalidateTabCache production split');
 assert.strictEqual(contractFiles.length, 267, '267 standard contract documents must be published');
 assert.strictEqual(harnessFiles.length, 266, '266 standard contract harnesses must be published');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
