@@ -3857,3 +3857,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` extracted-file hygiene baseline correction
 - Synchronized extracted-file hygiene auditing to 260 source files after adding the external cache invalidator; empty-file, encoding, line-ending, trailing-whitespace, candidate, verification, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` seam-readiness matrix baseline correction
+- Synchronized the high-risk seam-readiness matrix to 225 extracted JavaScript modules after adding the external cache invalidator; all protected signature, artifact, blocked-system, candidate, verification, and extraction-gate checks remain passing.
