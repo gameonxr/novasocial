@@ -13,7 +13,7 @@ const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n')
 
 assert(matrix.includes('Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story editor before/after browser proofs are PASS, while browser proof remains outstanding for 11 unapproved systems'), 'matrix must continue to mark remaining browser proof');
 assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 8/19 signatures moved'), 'matrix must report the eight moved protected signatures');
+assert(matrix.includes('Protected production splits | 8/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must report the eight moved protected signatures and supporting Reels helper');
 assert(gate.includes('Direct extraction remains explicitly blocked for the 11 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [

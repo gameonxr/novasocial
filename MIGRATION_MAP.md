@@ -3282,3 +3282,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reels protected-acceptance wording baseline correction
 - Updated the protected-split acceptance harness to recognize the authoritative matrix wording for eight approved protected signatures plus the separately gated Reels windowing helper.
 - Acceptance, high-risk extraction, and readiness-matrix harnesses pass; direct extraction remains blocked for the 11 unapproved protected systems.
+
+## 2026-08-23 — Reels reversible-browser-proof baseline correction
+- Updated the reversible-browser-proof harness to recognize the current eight protected-owner groups plus the separately gated Reels windowing helper.
+- Re-ran reversible browser proof, Reels candidate, and readiness gates; all pass, with direct extraction still blocked for the other 11 protected systems.
