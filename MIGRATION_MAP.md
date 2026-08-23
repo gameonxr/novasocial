@@ -3890,3 +3890,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` refresh-counts baseline correction
 - Synchronized the refresh-profile-counts production contract to 225 extracted JavaScript modules after adding the cache invalidator owner; read-only profile-count behavior, owner ordering, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` source-boundary hygiene baseline correction
+- Synchronized source-boundary hygiene auditing to 243 extracted JS/CSS files after adding the cache invalidator owner; embedded-tag checks, candidate, and protected checks remain passing.
