@@ -26,8 +26,8 @@ for (const file of files) {
   });
 }
 const duplicates = [...seen.entries()].filter(([, locations]) => locations.length > 1);
-assert.strictEqual(files.length, 220, 'index.html plus 219 extracted scripts must be audited after Notes reactor-list split');
-assert.strictEqual(seen.size, 709, 'top-level function inventory must remain stable after the Notes reactor-list split');
+assert.strictEqual(files.length, 221, 'index.html plus 220 extracted scripts must be audited after admin appeals filter split');
+assert.strictEqual(seen.size, 708, 'top-level function inventory must remain stable after the admin appeals filter split');
 assert.deepStrictEqual(duplicates, [], 'classic scripts must not duplicate top-level function names');
 
 console.log('CROSS_MODULE_FUNCTION_COLLISION_HARNESS=PASS');
