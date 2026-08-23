@@ -3704,3 +3704,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter Notes reactor-list baseline correction
 - Synchronized the Notes reactor-list production contract to the 223-file source JavaScript inventory after adding the verification-filter owner; exact owner parity, script order, behavior seam, and protected-system gate remain passing.
+
+## 2026-08-23 — Verification filter object-URL audit baseline correction
+- Synchronized object-URL lifecycle auditing to 224 files (index plus 223 extracted JavaScript modules) after adding the verification-filter owner; object-URL creation/revocation and cleanup invariants remain passing.
