@@ -3210,3 +3210,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Corrected the particle preparation harness’s global `DIRECT_EXTRACTION` output from an unnumbered historical label to the current `REMAINING_11_PROTECTED_SYSTEMS` checkpoint.
 - Preserved the particle-only historical browser-proof label because it records the earlier particle checkpoint rather than the current global count.
 - No application/runtime behavior changed; this is a documentation/harness-only correction on `Branch2`.
+
+## 2026-08-23 — Global aggregate preparation proof inventory
+- Strengthened `docs/high-risk-seam-readiness-matrix-contract-harness.js` to enforce six aggregate test-only injected seam inventories for DMs, Reels, Calls/WebRTC, voice recording, Notes, and Stories.
+- Updated `docs/high-risk-seam-readiness-matrix-contract.md` to record the six passing aggregate inventories while retaining the 8/19 approved split checkpoint and 11-system direct-extraction block.
+- No application/runtime behavior changed; no live account, media, realtime, permission, upload, message, or deletion action was performed.

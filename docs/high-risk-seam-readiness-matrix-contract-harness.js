@@ -60,6 +60,18 @@ assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only compariso
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE; test-only comparison, after-split production smoke, exact owner hash, and rollback-after-split are PASS'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('Note viewer candidate | SPLIT_COMPLETE'), 'matrix must record Note viewer split completion');
 assert(matrix.includes('Note deletion candidate | SPLIT_COMPLETE'), 'matrix must record Note deletion split completion');
+const aggregatePreparationProofs = [
+  ['docs/dms-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
+  ['docs/reels-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
+  ['docs/calls-webrtc-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
+  ['docs/voice-recording-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
+  ['docs/notes-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
+  ['docs/stories-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOFS=6_PASS'],
+];
+for (const [file, marker] of aggregatePreparationProofs) {
+  const text = fs.readFileSync(path.join(repo, file), 'utf8');
+  assert(text.includes(marker), `aggregate preparation proof must remain passing: ${file}`);
+}
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-contract.md')), 'Note viewer contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-proof-evidence.txt')), 'Note after-split browser proof must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
@@ -81,4 +93,5 @@ console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
 console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
 console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_AND_STORY_PASS_REMAINING_11');
+console.log('AGGREGATE_PREPARATION_INJECTED_PROOFS=6_PASS');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS');
