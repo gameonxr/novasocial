@@ -3695,3 +3695,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter interval baseline correction
 - Synchronized interval-lifecycle auditing to 224 audited JavaScript files after adding the verification-filter owner. The seven interval registrations, ten cleanup calls, six managed handles, and Nova Universe interval remain unchanged and passing.
+
+## 2026-08-23 — Verification filter local-asset baseline correction
+- Synchronized static local HTML asset-reference auditing to 244 unique local references after adding the verification-filter script. All references resolve and manifest/service-worker root assets remain present.
