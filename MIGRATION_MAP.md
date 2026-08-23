@@ -3902,3 +3902,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` window-surface baseline correction
 - Synchronized window-assignment auditing to 226 combined files, 208 explicit assignments, and 109 unique names, admitting the single new anonymous `invalidateTabCache` surface while preserving the existing allowlist and protected checks.
+
+## 2026-08-23 — `invalidateTabCache(tab)` production contract package
+- Recorded the production split contract and matching harness with normalized origin parity/hash, eight callers, one anonymous external owner, one external script in footer order, stateful-boundary exclusions, both detached proofs, rollback procedure, split commit `00cf7328`, and first exhaustive PASS tip `f9fdb8f`; final documentation-tip regression remains pending until its gate passes.

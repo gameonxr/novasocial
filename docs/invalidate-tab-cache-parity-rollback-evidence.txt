@@ -8,9 +8,13 @@ CALLER_BOUNDARY=EIGHT_CACHE_INVALIDATION_CALLERS
 PREPARATION_HARNESS=PASS
 DETACHED_BROWSER_PROOF=PASS
 SAFE_NO_SIDE_EFFECTS=PASS
-PRODUCTION_MODULE=ABSENT_PRE_SPLIT
-PRODUCTION_SPLIT=PENDING
-FULL_REGRESSION=PENDING
+PRODUCTION_MODULE=src/features/invalidate-tab-cache-owner.js
+PRODUCTION_SPLIT_COMMIT=00cf7328b17cee2d2a48f2d8f3bd9343c9987ac8
+PRODUCTION_SPLIT=PASS
+FIRST_FULL_REGRESSION_TIP=f9fdb8fe49c186ab0f7151375a3600303c099e4b
+FIRST_FULL_REGRESSION=PASS
+FINAL_DOCS_FULL_REGRESSION=PENDING
 
-ROLLBACK_PROCEDURE=Preparation-only candidate; discard the uncommitted preparation package if not proceeding. If production split is approved, rollback must revert its dedicated split commit on Branch2 and restore the inline owner plus remove only the external owner linkage.
-ROLLBACK_SCOPE=Preserve _saveTabToCache, _tryRestoreFromCache, invalidateAllTabCache, goBack, tab navigation, Reels persistence, account switching, admin systems, story/editor systems, messaging, calling, and all protected boundaries.
+ROLLBACK_PROCEDURE=Production rollback is git revert 00cf7328b17cee2d2a48f2d8f3bd9343c9987ac8 on Branch2 followed by git push origin Branch2.
+ROLLBACK_SCOPE=Restore index.html inline invalidateTabCache owner and remove only the external owner script/linkage; preserve _saveTabToCache, _tryRestoreFromCache, invalidateAllTabCache, tab navigation, Reels persistence, account switching, admin systems, story/editor systems, messaging, calling, and all protected boundaries.
+FULL_REGRESSION=PASS_AT_FIRST_GATE; FINAL_DOCS_FULL_REGRESSION=PENDING
