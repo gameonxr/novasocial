@@ -3848,3 +3848,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` deletion-fallback baseline correction
 - Synchronized deletion-fallback production-contract script accounting to 227 opening tags, 227 closing tags, and 226 external scripts after adding the in-memory cache owner; protected deletion safeguards and candidate checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` footer-order baseline correction
+- Updated the dependency-loading contract’s twelve-script tail to include `invalidate-tab-cache-owner.js` between the mute and verification owners, with `push-settings.js` moving just outside that tail; classic ordering and protected boundaries remain passing.
