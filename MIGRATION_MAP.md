@@ -3419,3 +3419,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter extracted-file hygiene baseline correction
 - Updated extracted-file hygiene from 254 to 255 source files after adding the admin-filter module; empty-file and trailing-whitespace checks remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter high-risk-audit baseline correction
+- Updated the authoritative high-risk extraction audit from 219 to 220 extracted JavaScript modules after the contained admin-filter split; 19 protected signatures, 9 approved owners, 10 remaining blocked systems, and all protected-owner evidence remain unchanged and passing.
