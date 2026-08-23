@@ -3905,3 +3905,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` production contract package
 - Recorded the production split contract and matching harness with normalized origin parity/hash, eight callers, one anonymous external owner, one external script in footer order, stateful-boundary exclusions, both detached proofs, rollback procedure, split commit `00cf7328`, and first exhaustive PASS tip `f9fdb8f`; final documentation-tip regression remains pending until its gate passes.
+
+## 2026-08-23 — `invalidateTabCache(tab)` final-readiness Markdown baseline correction
+- Synchronized final-readiness auditing to 271 Markdown documents after publishing the invalidate-cache production contract; no contract behavior or protected boundary changed.
