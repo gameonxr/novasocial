@@ -3527,3 +3527,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts Notes-reactor audit baseline correction
 - Updated the Notes reactor-list candidate audit from 220 to 221 source modules after adding the refresh-counts owner; reactor-list parity, script order, and injected read-only seam checks remain passing.
+
+## 2026-08-23 — Notes reactor-list reporting correction
+- Replaced the stale hardcoded `sourceModules=219` report with the measured 221-module value in the Notes reactor-list harness; parity, seam, rollback, and protected-boundary assertions remain unchanged and passing.

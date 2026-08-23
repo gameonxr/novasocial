@@ -9,6 +9,7 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const sourceModules = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean).length;
 
 function extractOwner(text, signature) {
   const start = text.indexOf(signature);
@@ -37,7 +38,7 @@ assert.strictEqual((html.match(/async function loadNoteReactorsList\(noteId\)\{/
 assert.strictEqual((html.match(/src\/features\/note-reactors-list-owner\.js/g) || []).length, 1, 'Notes reactor-list module must be linked exactly once');
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'reactor-list module must load after Push settings');
 assert(html.indexOf('src/features/note-reactors-list-owner.js') < html.indexOf('src/features/note-viewer-owners.js'), 'reactor-list module must load before Note viewer callers');
-assert.strictEqual(execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean).length, 221, 'source module count must include the Notes reactor-list owner, admin filter owner, and refresh counts owner');
+assert.strictEqual(sourceModules, 221, 'source module count must include the Notes reactor-list owner, admin filter owner, and refresh counts owner');
 
 function createInjectedNotesReactorListSeam(deps) {
   return {
@@ -95,7 +96,7 @@ function createInjectedNotesReactorListSeam(deps) {
   console.log(JSON.stringify({
     passed: true,
     parity: { originOwnerLength: originOwner.length, normalizedModuleLength: normalizedModule.length, exact: true },
-    static: { inlineOwnerAbsent: true, moduleOwnerCount: 1, scriptOrder: true, sourceModules: 219 },
+    static: { inlineOwnerAbsent: true, moduleOwnerCount: 1, scriptOrder: true, sourceModules },
     seam: { calls, empty, single, populated, missing, queryFailure: 'propagated' },
     safeNoMutation: true,
     productionSplit: 1,
