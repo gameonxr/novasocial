@@ -3802,3 +3802,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` storage-key audit baseline correction
 - Synchronized storage-key surface auditing to 225 combined files (index plus 224 extracted modules) after adding the story-viewer mute owner; the 29-key allowlist, zero session-storage references, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` window-surface baseline correction
+- Synchronized explicit window-surface auditing to 225 audited files, 207 assignments, and the new unique `toggleSVMute` global; the established allowlist, candidate, and protected checks remain passing.
