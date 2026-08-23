@@ -3866,3 +3866,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` inline-declaration baseline correction
 - Synchronized inline-declaration closure accounting to 235 application-script function declarations after removing the cache invalidator owner; protected declaration set and candidate checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` interval audit baseline correction
+- Synchronized interval-lifecycle auditing to 226 combined files after adding the external cache invalidator; seven interval registrations, ten cleanup calls, managed handles, candidate, verification, and protected checks remain passing.
