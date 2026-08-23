@@ -3863,3 +3863,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` index-integrity baseline correction
 - Synchronized index HTML tag-integrity accounting to 227 opening tags, 227 closing tags, and 226 external scripts after adding the cache invalidator; one-inline and structural HTML checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` inline-declaration baseline correction
+- Synchronized inline-declaration closure accounting to 235 application-script function declarations after removing the cache invalidator owner; protected declaration set and candidate checks remain passing.
