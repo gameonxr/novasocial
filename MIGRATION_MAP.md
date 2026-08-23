@@ -3598,3 +3598,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter index-tag baseline correction
 - Synchronized index-HTML tag integrity to 224 script tags, 224 closures, and 223 external script tags after the reports-filter owner split. The single inline application script, HTML structure, and protected DMs/Reels inline boundaries remain unchanged and passing.
+
+## 2026-08-23 — Reports filter inline-declaration baseline correction
+- Synchronized inline-declaration closure to 238 remaining named function declarations after moving `setReportsFilter` to its anonymous external owner. The 19-name protected declaration inventory and unresolved `forwardMessage` seam remain unchanged and passing.
