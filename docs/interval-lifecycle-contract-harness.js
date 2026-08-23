@@ -15,7 +15,7 @@ const managed = [
   { handle: 'window._liveInterval', create: 'window._liveInterval = setInterval', cleanup: 'clearInterval(window._liveInterval)' },
 ];
 
-assert.strictEqual(files.length, 220, 'index.html plus 219 extracted modules must be audited after Notes reactor-list split');
+assert.strictEqual(files.length, 221, 'index.html plus 220 extracted modules must be audited after admin appeals filter split');
 assert.strictEqual((source.match(/setInterval\(/g) || []).length, 7, 'seven interval registrations must remain');
 assert.strictEqual((source.match(/clearInterval\(/g) || []).length, 10, 'ten interval cleanup calls must remain');
 for (const item of managed) {

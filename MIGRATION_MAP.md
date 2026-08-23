@@ -3431,3 +3431,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter inline-declaration baseline correction
 - Updated inline declaration closure from 241 to 240 named function declarations after moving `setAppealsFilter` to its anonymous external owner; all 19 protected-name checks and the unresolved `forwardMessage` caller-only seam remain passing.
+
+## 2026-08-23 — Admin appeals filter interval-audit baseline correction
+- Updated interval-lifecycle auditing from 220 to 221 extracted modules after the admin-filter addition; interval creation, cleanup, managed handles, and Nova Universe timer guards remain unchanged and passing.
