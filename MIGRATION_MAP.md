@@ -3845,3 +3845,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` function inventory correction
 - Synchronized cross-module top-level named-function auditing to 703 after removing the inline cache invalidator owner; the 226-file audit and zero-duplicate function boundary remain unchanged and passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` deletion-fallback baseline correction
+- Synchronized deletion-fallback production-contract script accounting to 227 opening tags, 227 closing tags, and 226 external scripts after adding the in-memory cache owner; protected deletion safeguards and candidate checks remain passing.
