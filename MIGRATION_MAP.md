@@ -3571,3 +3571,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter clipboard baseline correction
 - Synchronized the clipboard-interaction audit to 223 files (`index.html` plus 222 extracted modules) after the contained reports-filter split. Clipboard write counts, legacy fallback coverage, and all copy-surface boundaries remain unchanged and passing.
+
+## 2026-08-23 — Reports filter collision-audit baseline correction
+- Synchronized the cross-module function-collision audit to 223 audited files and 706 unique top-level function names after moving `setReportsFilter` to its anonymous external owner. Duplicate-name count remains zero and no function-boundary behavior changed.
