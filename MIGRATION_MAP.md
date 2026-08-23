@@ -3416,3 +3416,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter event-listener baseline correction
 - Updated event-listener boundary auditing from 219 to 220 extracted modules after the admin-filter addition; listener registration, cleanup, index, and service-worker counts remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter extracted-file hygiene baseline correction
+- Updated extracted-file hygiene from 254 to 255 source files after adding the admin-filter module; empty-file and trailing-whitespace checks remain unchanged and passing.

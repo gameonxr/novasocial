@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 254, 'all 254 extracted source files must remain present after Notes reactor-list split');
+assert.strictEqual(files.length, 255, 'all 255 extracted source files must remain present after admin appeals filter split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {
