@@ -3482,3 +3482,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts classic-script baseline correction
 - Updated classic-script compatibility totals to 223 balanced script tags and 221 extracted JavaScript files after adding the refresh-counts owner; module, defer/async, and import/export prohibitions remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts clipboard-audit baseline correction
+- Updated clipboard interaction auditing from 221 to 222 files after adding the refresh-counts module; seven clipboard writes, one legacy fallback, and all copy-surface guards remain unchanged and passing.
