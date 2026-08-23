@@ -38,7 +38,10 @@ async function runHarness() {
     const end = source.indexOf('\nfunction destroyReelsPersistentContainer()', start);
     assert(start >= 0 && end > start, 'tab-cache boundary must remain present and ordered');
     const block = source.slice(start, end);
-    eval(`${block}; global._saveTabToCache = _saveTabToCache; global._tryRestoreFromCache = _tryRestoreFromCache; global.invalidateTabCache = invalidateTabCache; global.invalidateAllTabCache = invalidateAllTabCache;`);
+    const hasInlineInvalidator = /function invalidateTabCache\(tab\)\s*\{/.test(block);
+    const externalInvalidator = hasInlineInvalidator ? '' : fs.readFileSync('/home/ubuntu/novasocial/src/features/invalidate-tab-cache-owner.js', 'utf8');
+    const invalidatorBinding = hasInlineInvalidator ? 'invalidateTabCache' : 'window.invalidateTabCache';
+    eval(`${block}; ${externalInvalidator}; global._saveTabToCache = _saveTabToCache; global._tryRestoreFromCache = _tryRestoreFromCache; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = invalidateAllTabCache;`);
 
     // Enabled non-Reels tabs save HTML and scroll position.
     Date.now = () => 100000;

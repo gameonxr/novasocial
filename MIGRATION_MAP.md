@@ -3896,3 +3896,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` storage-key surface baseline correction
 - Synchronized storage-key surface auditing to 226 combined files after adding the cache invalidator owner; the 29-key localStorage allowlist, zero sessionStorage use, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` tab-cache harness compatibility correction
+- Updated the tab-cache contract harness to evaluate either the pre-split inline owner or the post-split anonymous external owner in the same classic-script lexical scope; behavioral cache restoration/invalidation coverage remains passing without changing production behavior.
