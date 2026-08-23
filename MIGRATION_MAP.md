@@ -3286,3 +3286,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reels reversible-browser-proof baseline correction
 - Updated the reversible-browser-proof harness to recognize the current eight protected-owner groups plus the separately gated Reels windowing helper.
 - Re-ran reversible browser proof, Reels candidate, and readiness gates; all pass, with direct extraction still blocked for the other 11 protected systems.
+
+## 2026-08-23 — Reels source-boundary hygiene baseline correction
+- Updated the source-boundary hygiene baseline from 235 to 236 extracted JavaScript/CSS files for the Reels windowing-helper module; UTF-8, NUL-byte, CRLF, embedded-script, embedded-style, and violation checks remain passing.
+- No additional runtime owner or live account/data action was introduced.
