@@ -3601,3 +3601,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter inline-declaration baseline correction
 - Synchronized inline-declaration closure to 238 remaining named function declarations after moving `setReportsFilter` to its anonymous external owner. The 19-name protected declaration inventory and unresolved `forwardMessage` seam remain unchanged and passing.
+
+## 2026-08-23 — Reports filter interval-audit baseline correction
+- Synchronized interval-lifecycle auditing to 223 files (`index.html` plus 222 extracted modules) after the reports-filter owner split. Seven interval registrations, ten cleanup calls, and all managed timer handles remain unchanged and passing.
