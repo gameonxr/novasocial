@@ -3230,3 +3230,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Rechecked the pushed `Branch2` tip, protected-signature matrix, aggregate injected-proof inventory, and full-gate output after the deadline-focused work.
 - Confirmed that the eight approved owners remain the only production splits and that all 11 remaining protected owners still require independent before/after browser proof, rollback evidence, parity, and readiness approval.
 - Preserved production behavior and made no speculative owner move; current aggregate preparation proofs remain passing and `origin/main` remains immutable.
+
+## 2026-08-23 — Fresh remaining-system preparation audit
+- Re-ran the DMs, Reels, Calls/WebRTC, voice-recording, Stories, Notes, and Push-permission preparation harnesses without browser or live-data side effects.
+- All seven preparation inventories passed, including injected seam proofs; DMs (3), Reels (2), Calls/WebRTC (2), voice recording (1), Stories (5), and Notes (4) protected signatures remain unextracted, while approved Note owners remain complete.
+- No candidate has the required independent production package yet, so direct extraction remains blocked for the 11 remaining protected systems.
