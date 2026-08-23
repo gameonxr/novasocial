@@ -3398,3 +3398,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter classic-script baseline correction
 - Updated classic-script compatibility totals to 222 balanced script tags and 220 extracted JavaScript files after adding the admin-filter owner; module/defer/async/import/export prohibitions remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter clipboard-audit baseline correction
+- Updated clipboard interaction auditing from 220 to 221 files (`index.html` plus 220 extracted modules) after the admin-filter addition; seven clipboard writes and the single legacy copy fallback remain unchanged and passing.
