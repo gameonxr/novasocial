@@ -4058,3 +4058,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Story Editor UI-helper audit after `confirmCropPreview()`
 - Audited the standalone DOM-only `hideDeleteZone()` helper as the next apparent UI candidate; its body only removes `#se-delete-zone` and has no database, network, storage, account, messaging, upload, navigation, permission, or mutation boundary.
 - Rejected extraction because the Story Editor seam contract explicitly keeps drag, delete-zone, and editor-state ownership inline; no production behavior or protected boundary changed.
+
+## 2026-08-23 — Story Editor launcher audit during autonomous continuation
+- Audited `showCreateStory()` as the next remaining UI-heavy candidate; it constructs the full Story Editor DOM, initializes the drawing canvas, resets editor state, installs editor controls, and delegates to protected Story Editor tools.
+- Rejected extraction as non-contained because constructor, drawing, drag/delete-zone, editor-state, music, addon, and publishing boundaries remain explicitly protected; no production behavior or protected boundary changed.
