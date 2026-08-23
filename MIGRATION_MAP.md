@@ -3809,3 +3809,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `toggleSVMute()` production split checkpoint
 - Extracted only the contained story-viewer mute owner into `src/features/toggle-sv-mute-owner.js` as an anonymous classic global, removed the named inline owner, and linked the module once between the reports and verification filter owners. The exact owner hash is `edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d`; detached synthetic browser proof and candidate/protected focused checks pass.
 - The first clean exhaustive Branch2 gate passed at `5cc09bf6e1c8cb178601d6ef2157b872bd51eca9`; final contract and rollback documentation are now synchronized, with one required final exhaustive gate still pending from the docs tip.
+
+## 2026-08-23 — `toggleSVMute()` final docs-tip baseline correction
+- Synchronized final-readiness documentation accounting at the completed checkpoint tip to 269 Markdown documents, 270 harness files, 266 standard contract documents, and 265 paired contract harnesses; candidate, protected, pairing, and reference checks remain passing.
