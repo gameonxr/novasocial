@@ -4054,3 +4054,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Next contained UI-only candidate audit after `confirmCropPreview()`
 - Audited `destroyReelsPersistentContainer()` against immutable `origin/main`: exact normalized parity, owner hash `4bdbdc65d45a33503ce5087871a28474de606a0b4ece8cf9823fd59e6548a4df`, no pre-existing feature owner, no stateful markers in the body, and DOM plus `_savedReelIndex` dependencies.
 - Rejected this candidate for the current cycle because the Reels persistence contract explicitly keeps persistent-container ownership inline and its callers sit in account-scoped reset and post create/delete flows; no production behavior or protected boundary changed.
+
+## 2026-08-23 — Story Editor UI-helper audit after `confirmCropPreview()`
+- Audited the standalone DOM-only `hideDeleteZone()` helper as the next apparent UI candidate; its body only removes `#se-delete-zone` and has no database, network, storage, account, messaging, upload, navigation, permission, or mutation boundary.
+- Rejected extraction because the Story Editor seam contract explicitly keeps drag, delete-zone, and editor-state ownership inline; no production behavior or protected boundary changed.
