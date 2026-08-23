@@ -3677,3 +3677,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter event-listener baseline correction
 - Synchronized event-listener boundary auditing to 223 extracted JavaScript modules after adding the verification-filter owner. The 74 extracted listener registrations, zero extracted cleanup registrations, 28 inline registrations, and five service-worker registrations remain unchanged and passing.
+
+## 2026-08-23 — Verification filter extracted-file hygiene baseline correction
+- Synchronized extracted-file hygiene to 258 source files after adding the verification-filter owner. Empty-file and trailing-whitespace checks remain unchanged and passing.

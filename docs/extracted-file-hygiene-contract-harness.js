@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 257, 'all 257 extracted source files must remain present after reports filter split');
+assert.strictEqual(files.length, 258, 'all 258 extracted source files must remain present after verification filter split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {
