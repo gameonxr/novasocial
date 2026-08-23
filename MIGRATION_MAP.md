@@ -3929,3 +3929,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` admin-appeals baseline correction
 - Synchronized the admin-appeals split contract to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; appeals behavior and protected boundaries remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness JavaScript baseline correction
+- Synchronized final-readiness auditing to 226 extracted JavaScript modules after adding the crop-preview owner; no protected boundary or unrelated production behavior changed.
