@@ -3382,3 +3382,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list window-global allowlist correction
 - Added the approved `loadNoteReactorsList` classic-script global to the window-assignment audit allowlist; the surface now validates 220 audited files and 202 explicit assignments without permitting unrelated names.
+
+## 2026-08-23 — Notes reactor-list authoritative reporting sync
+- Synchronized current protected-parity and contract-coverage reporting to 9 approved of 19 protected signatures with 10 remaining blocked systems, explicitly naming the read-only reactor-list owner; no protected behavior or extraction boundary was changed.
