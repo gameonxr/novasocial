@@ -18,7 +18,7 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 
-assert.strictEqual(handlers.length, 154, 'onclick handler inventory must reflect four approved extracted owner groups');
+assert.strictEqual(handlers.length, 153, 'onclick handler inventory must reflect the current Notes reactor-list split');
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented pre-existing forwardMessage seam may remain unresolved');
 assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain visible for future product decision');
 assert(html.includes('async function renderDMs()'), 'DM renderer must remain inline');

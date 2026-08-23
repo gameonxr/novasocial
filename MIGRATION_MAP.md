@@ -3340,3 +3340,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list inline-declaration baseline correction
 - Updated the inline declaration baseline from 242 to 241 and marked `loadNoteReactorsList` as an approved external owner; all other unapproved protected declarations remain inline and `forwardMessage` remains the only documented unresolved caller seam.
+
+## 2026-08-23 — Notes reactor-list inline-handler baseline correction
+- Updated the inline-handler surface audit from 154 to 153 handler names after the approved Notes reactor-list split; the unresolved `forwardMessage` seam and protected DM/message-menu markers remain unchanged and passing.
