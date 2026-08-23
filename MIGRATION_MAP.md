@@ -4075,3 +4075,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `jumpToMessage(mid)` standard-contract baseline correction
 - Updated final-readiness standard contract-document inventory from 270 to 271 after adding the jump-to-message preparation contract; no production behavior or protected boundary changed.
+
+## 2026-08-23 — `jumpToMessage(mid)` standard-contract-harness baseline correction
+- Updated final-readiness standard contract-harness inventory from 269 to 270 after adding the jump-to-message preparation harness; no production behavior or protected boundary changed.
