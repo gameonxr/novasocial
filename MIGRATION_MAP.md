@@ -3983,3 +3983,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` extracted-file hygiene baseline correction
 - Synchronized extracted-file hygiene auditing to 261 total source files after adding the crop-preview owner; empty-file, trailing-whitespace, and embedded-script checks remain passing.
+
+## 2026-08-23 — `confirmCropPreview()` high-risk seam-matrix baseline correction
+- Synchronized the protected seam-readiness matrix to 226 extracted JavaScript modules after adding the crop-preview owner; all protected signatures and blocked-boundary assertions remain unchanged.
