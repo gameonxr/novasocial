@@ -3446,3 +3446,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter object-URL baseline correction
 - Updated object-URL lifecycle auditing from 220 to 221 extracted modules after the admin-filter addition; 14 creation calls, 8 revocations, and all download/compression/preview cleanup guards remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter Push-harness baseline correction
+- Updated the Push production harness to 222 balanced script tags and 221 external scripts after the admin-filter owner addition; Push parity, rollback, browser, and side-effect guards remain passing.
