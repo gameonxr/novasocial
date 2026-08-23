@@ -3881,3 +3881,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` object-URL lifecycle baseline correction
 - Synchronized object-URL lifecycle auditing to 226 combined files after adding the cache invalidator owner; creation/revocation counts, download cleanup, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` Push script-tag baseline correction
+- Synchronized the Push settings production contract to 227 opening tags, 227 closing tags, and 226 external script tags after adding the cache invalidator owner; Push boundaries, candidate, and protected checks remain passing.
