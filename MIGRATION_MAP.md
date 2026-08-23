@@ -3959,3 +3959,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` classic-script tag baseline correction
 - Synchronized classic-script compatibility auditing to 228 HTML script tags after adding the crop-preview owner; module/defer/async prohibitions remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` classic extracted-file baseline correction
+- Synchronized classic-script compatibility auditing to 226 extracted JavaScript files after adding the crop-preview owner; classic syntax and attribute prohibitions remain unchanged.
