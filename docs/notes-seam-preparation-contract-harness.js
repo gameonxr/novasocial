@@ -48,11 +48,15 @@ assert.strictEqual(sourceText.includes('async function deleteMyNote()'), false, 
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-contract.md')), 'Note viewer behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-contract-harness.js')), 'Note viewer behavior harness must remain present');
+const noteHarness = fs.readFileSync(path.join(repo, 'docs', 'note-viewer-contract-harness.js'), 'utf8');
+assert(noteHarness.includes('createInjectedNotesInteractionSeam'), 'Notes injected seam proof must remain present');
+assert(noteHarness.includes("calls.push('view')") && noteHarness.includes("calls.push('remove')"), 'Notes injected seam dispatch markers must remain present');
 
 console.log('NOTES_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=BAR_VIEWER_REMOVAL_AUDIO_REACTIONS_MEDIA_REFRESH');
 console.log('PROTECTED_NOTES_SIGNATURES=4');
 console.log('BROWSER_MOCK_EVIDENCE=6_PASS');
+console.log('INJECTED_SEAM_PROOF=PASS');
 console.log('NOTE_DELETION_BROWSER_PARITY=PASS');
 console.log('EXTRACTED_PROTECTED_NOTES_SIGNATURES=3_APPROVED_NOTE_VIEWER_AND_DELETION_OWNERS');
 console.log('EXTRACTED_NOTES_BAR_HELPERS=2');

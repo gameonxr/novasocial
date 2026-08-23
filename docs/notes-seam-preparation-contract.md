@@ -19,13 +19,13 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Note viewer, removal, reaction, audio, and cleanup implementations remain inline. Six non-destructive browser-context mock artifacts now cover empty validation, music-backed insertion, update failure, removal failure, removal success, and Cloudinary-artwork removal. They prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs an explicit adapter seam, protected before/after marker parity, and reversible browser proof for the production split itself, including own/other viewer controls, expiry, and Notes Bar reload.
+This is a **mapping-only checkpoint**. Note viewer, removal, reaction, audio, and cleanup implementations remain inline except for the already-approved external `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` owners. Six non-destructive browser-context mock artifacts cover empty validation, music-backed insertion, update failure, removal failure, removal success, and Cloudinary-artwork removal, while the behavior harness exposes a test-only injected viewer/removal dispatcher. These artifacts prove reversible mock behavior only and are not permission to extract the remaining Notes interaction owners. Before another split, the project still needs protected before/after marker parity and reversible browser proof for that production boundary itself, including own/other viewer controls, expiry, reactions, audio, and Notes Bar reload.
 
 The first implementation step must be test-only or adapter-only and must preserve the current `viewNote()`, `removeMyNoteFromViewer()`, and `deleteMyNote()` owners until the complete seam harness passes.
 
 ## Harness coverage
 
-`docs/notes-seam-preparation-contract-harness.js` scans `index.html` and extracted Notes Bar code to confirm viewer/removal/audio/reaction/media/refresh markers, existing Notes behavior contracts and harnesses, the six passing non-destructive browser mock artifacts, protected inline signatures, and zero matching protected signatures in `src/`. It does not open audio, query Supabase, delete notes, or move production code.
+`docs/notes-seam-preparation-contract-harness.js` scans `index.html` and extracted Notes Bar code to confirm viewer/removal/audio/reaction/media/refresh markers, existing Notes behavior contracts and harnesses, the six passing non-destructive browser mock artifacts, the injected seam-proof marker, approved external owners, protected remaining interaction signatures, and zero unintended matching protected signatures in `src/`. It does not open audio, query Supabase, delete notes, or move production code.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
@@ -35,6 +35,7 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Viewer/reaction data | `quick_note_views` and reactions remain protected | PASS |
 | Cleanup | Cloudinary artwork cleanup marker remains | PASS |
 | Browser mock inventory | Six Notes artifacts cover validation, insert, update failure, removal failure/success, and cloud-artwork cleanup | PASS |
+| Injected seam proof | Viewer and removal dependencies dispatch explicitly in test-only mocks | PASS |
 | Production split | None | PASS |
 
 ## References

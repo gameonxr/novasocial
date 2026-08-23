@@ -3195,3 +3195,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/voice-recording-seam-preparation-contract-harness.js` to require the test-only `createInjectedVoiceSeam` proof and its recorder-flow dispatch marker.
 - Updated `docs/voice-recording-seam-preparation-contract.md` to document the injected seam inventory while retaining `toggleRecording()` and the complete recorder/upload/message lifecycle inline and direct extraction blocked.
 - Aggregate and voice-recording behavior harnesses pass with mocks only. No runtime owner, script tag, microphone, MediaRecorder, upload, message, account, or database behavior changed.
+
+## 2026-08-22 — Aggregate Notes injected-proof inventory synchronization
+- Strengthened `docs/notes-seam-preparation-contract-harness.js` to require the test-only `createInjectedNotesInteractionSeam` proof and its viewer/removal dispatch markers.
+- Updated `docs/notes-seam-preparation-contract.md` to document the injected interaction inventory while retaining the approved external viewer/removal/deletion owners and remaining Notes interaction owners behind the extraction gate.
+- Aggregate, Note viewer, and Note deletion parity harnesses pass with mocks only. No runtime owner, script tag, audio, media, account, reaction, or database behavior changed.
