@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 218, '218 extracted JavaScript modules must remain after Reels windowing helper split');
+assert.strictEqual(jsFiles.length, 219, '219 extracted JavaScript modules must remain after Notes reactor-list split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 207, '207 feature modules must remain after Reels windowing helper split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 220, 'HTML must retain 220 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 220, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 219, 'HTML must retain 219 external script tags');
+assert.strictEqual(featureFiles.length, 208, '208 feature modules must remain after Notes reactor-list split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 221, 'HTML must retain 221 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 221, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 220, 'HTML must retain 220 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -46,7 +46,8 @@ assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/feature
 assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/push-settings.js'), 'sync-local-deletion-fallback must precede push-settings');
-assert(html.lastIndexOf('src/features/push-settings.js') < html.lastIndexOf('src/features/note-viewer-owners.js'), 'push-settings must precede note-viewer-owners');
+assert(html.lastIndexOf('src/features/push-settings.js') < html.lastIndexOf('src/features/note-reactors-list-owner.js'), 'push-settings must precede note-reactors-list-owner');
+assert(html.lastIndexOf('src/features/note-reactors-list-owner.js') < html.lastIndexOf('src/features/note-viewer-owners.js'), 'note-reactors-list-owner must precede note-viewer-owners');
 assert(html.lastIndexOf('src/features/note-viewer-owners.js') < html.lastIndexOf('src/features/note-deletion-owner.js'), 'note-viewer-owners must precede note-deletion-owner');
 assert(html.lastIndexOf('src/features/note-deletion-owner.js') < html.lastIndexOf('src/features/story-editor-owners.js'), 'note-deletion-owner must precede story-editor-owners');
 assert(html.lastIndexOf('src/features/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'story-editor-owners must precede like-effects');

@@ -3299,3 +3299,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Extracted only the read-only `loadNoteReactorsList()` owner to `src/features/note-reactors-list-owner.js` as one anonymous `window.loadNoteReactorsList` classic-script assignment; the inline owner is absent and the module loads before Note viewer callers.
 - Exact origin/main owner parity, injected empty/populated/missing-container/query-failure seam proof, pinned rollback target, before/after read-only browser proof, Notes aggregate, acceptance, reversible-proof, readiness, and high-risk extraction gates pass.
 - Protected coverage is now 9/19 approved signatures; the main Reels renderer, Notes submission/reaction owners, and the remaining 10 high-risk systems remain protected. No live account or application data was mutated.
+
+## 2026-08-23 — Notes reactor-list regression-baseline synchronization
+- Synchronized the global extraction/readiness, acceptance, reversible-proof, Notes, and final-readiness contracts to 9/19 approved protected signatures, 10 remaining blocked systems, 219 JavaScript modules, 208 feature modules, and 221 balanced script tags.
+- Candidate-specific parity, injected seam, rollback, before/after browser, and focused gates remain PASS; no live account or application data was mutated.
