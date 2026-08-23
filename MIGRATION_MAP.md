@@ -3766,3 +3766,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` seam-matrix baseline correction
 - Synchronized the protected seam-readiness matrix to 224 extracted JavaScript modules after adding the story-viewer mute owner; all 19 protected signatures, nine approved extracted systems, ten remaining blocked systems, and candidate checks remain unchanged and passing.
+
+## 2026-08-23 — `toggleSVMute()` index-tag integrity baseline correction
+- Synchronized index HTML tag-integrity auditing to 226 script tags, 226 closures, and 225 external scripts after adding the anonymous story-viewer mute owner; the one-inline-script and protected DMs/Reels boundaries remain passing.
