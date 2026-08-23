@@ -3836,3 +3836,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` classic-script baseline correction
 - Synchronized classic-script compatibility accounting to 227 script tags and 225 extracted JavaScript files after adding the in-memory cache owner; module/defer/async prohibitions and candidate/protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` clipboard audit baseline correction
+- Synchronized clipboard-interaction auditing to 226 combined files (index plus 225 extracted modules) after adding the in-memory cache owner; clipboard write/fallback/cleanup checks, candidate, verification, and protected checks remain passing.
