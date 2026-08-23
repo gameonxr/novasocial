@@ -3941,3 +3941,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness closing-tag baseline correction
 - Synchronized final-readiness auditing to 228 closing script tags after adding the crop-preview owner; tag balance and protected boundaries remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness external-script baseline correction
+- Synchronized final-readiness auditing to 227 external script tags after adding the crop-preview owner; classic ordering and protected boundaries remain unchanged.
