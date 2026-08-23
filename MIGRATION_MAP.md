@@ -3271,3 +3271,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reels extracted-file hygiene baseline correction
 - Updated the extracted-file hygiene baseline from 252 to 253 source files for the verified Reels windowing-helper module; empty-file and trailing-whitespace checks remain passing.
 - No additional production owner was moved and the remaining high-risk extraction block remains unchanged.
+
+## 2026-08-23 — Reels inline-declaration baseline correction
+- Updated the inline application declaration baseline from 243 to 242 after moving the contained Reels windowing helper; all remaining protected declarations stay inline and the unresolved `forwardMessage` caller-only seam remains enforced.

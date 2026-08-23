@@ -15,7 +15,7 @@ const protectedNames = [
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
   'voteStoryPoll','refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 243, 'inline application script must retain 243 function declarations after the eight approved protected owner groups');
+assert.strictEqual(declarations.length, 242, 'inline application script must retain 242 function declarations after the Reels windowing helper split');
 const remainingInlineProtectedNames = protectedNames.filter(name => !['spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 19, 'protected declaration set must contain 19 unique names');
