@@ -4069,3 +4069,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `jumpToMessage(mid)` final-readiness Markdown baseline correction
 - Updated final-readiness Markdown inventory from 273 to 274 after adding the jump-to-message preparation contract; no production behavior or protected boundary changed.
+
+## 2026-08-23 — `jumpToMessage(mid)` final-readiness harness baseline correction
+- Updated final-readiness harness inventory from 274 to 275 after adding the jump-to-message preparation harness; no production behavior or protected boundary changed.
