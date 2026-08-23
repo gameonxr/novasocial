@@ -3971,3 +3971,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` lexical-collision baseline correction
 - Synchronized lexical-collision auditing to 227 combined scripts after adding the crop-preview owner; the 117-name lexical inventory remains duplicate-free.
+
+## 2026-08-23 — `confirmCropPreview()` deletion-fallback tag baselines
+- Synchronized deletion-fallback production auditing to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; deletion fallback and protected systems remain unchanged.
