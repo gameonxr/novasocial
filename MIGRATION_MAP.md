@@ -3650,3 +3650,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter admin-appeals baseline correction
 - Synchronized the admin-appeals production harness to 225 balanced script tags and 224 external scripts after adding the verification-filter owner. Appeal reads, approve/reject actions, browser-safe evidence, and protected boundaries remain unchanged and passing.
+
+## 2026-08-23 — Verification filter rollback record synchronized
+- Updated the verification-filter rollback evidence with normalized owner hash `a22a86b644df9efe16c59b6bcf828b97752140b37309fec4fa3aee06ac6a6be6`, split commit `a1ae4be9e9b90f48a19df1b1a6e0f4ea08b04ef`, exact revert procedure, and `PRODUCTION_SPLIT=PASS`. Full regression remains pending until the exhaustive gate passes.
