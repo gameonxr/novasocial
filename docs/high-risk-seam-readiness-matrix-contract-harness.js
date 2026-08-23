@@ -81,6 +81,19 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-eviden
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
 assert(matrix.includes('browser proof remains outstanding for 11 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
+const remainingAuthorizationRows = [
+  'DMs and chat rendering | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Reels renderer and windowing | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Notes submission, reactions, and reactor list | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Push permission and silent resubscribe helpers | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+];
+for (const row of remainingAuthorizationRows) {
+  assert(matrix.includes(row), `remaining authorization row must remain explicitly blocked: ${row}`);
+}
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'account-bootstrap-contract.md')), 'account/bootstrap seam contract must remain present');

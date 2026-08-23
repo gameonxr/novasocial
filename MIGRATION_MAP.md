@@ -3235,3 +3235,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Re-ran the DMs, Reels, Calls/WebRTC, voice-recording, Stories, Notes, and Push-permission preparation harnesses without browser or live-data side effects.
 - All seven preparation inventories passed, including injected seam proofs; DMs (3), Reels (2), Calls/WebRTC (2), voice recording (1), Stories (5), and Notes (4) protected signatures remain unextracted, while approved Note owners remain complete.
 - No candidate has the required independent production package yet, so direct extraction remains blocked for the 11 remaining protected systems.
+
+## 2026-08-23 — Explicit remaining authorization-status matrix
+- Added a machine-checked readiness table for the seven remaining protected-system groups, separating injected seam preparation from independent before/after parity, safe browser proof, rollback artifact, and production decision.
+- Each remaining row now explicitly records `PASS` for preparation, `OUTSTANDING` for the three independent production gates, and `BLOCKED` for the production decision; no runtime owner or browser state changed.
+- Focused DMs, Reels, Calls/WebRTC, voice-recording, Stories, Notes, Push-permission, extraction-gate, and global readiness harnesses passed.
