@@ -3827,3 +3827,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` admin script baseline correction
 - Synchronized admin-appeals production-contract script accounting to 227 opening tags, 227 closing tags, and 226 external scripts after adding the in-memory cache owner; appeal mutation boundaries, candidate, verification, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` final-readiness baseline correction
+- Synchronized Branch2 final-readiness accounting to 225 extracted JavaScript modules, 214 feature modules, 227 opening/closing script tags, and 226 external scripts after the in-memory cache owner split; clean-worktree, candidate, verification, and protected checks remain passing.
