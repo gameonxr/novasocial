@@ -3392,3 +3392,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter split harness integration correction
 - Updated the existing admin-appeals tab harness to load the new external `window.setAppealsFilter` classic-script owner through its test-only global shim; candidate seam, admin appeals rendering, filter behavior, and mutation-owner isolation all pass.
+
+## 2026-08-23 — Admin appeals filter final-readiness baseline correction
+- Synchronized final-readiness totals for the admin-filter production split: 220 extracted JavaScript modules, 209 feature modules, 222 balanced script tags, 221 external scripts, 264 Markdown documents, 265 harness files, 261 standard contracts, and 260 standard contract harnesses. Added only the new footer-order and external-owner checks; all protected mutation markers remain enforced.

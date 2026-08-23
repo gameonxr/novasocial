@@ -30,12 +30,12 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 219, '219 extracted JavaScript modules must remain after Notes reactor-list split');
+assert.strictEqual(jsFiles.length, 220, '220 extracted JavaScript modules must remain after admin appeals filter split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 208, '208 feature modules must remain after Notes reactor-list split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 221, 'HTML must retain 221 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 221, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 220, 'HTML must retain 220 external script tags');
+assert.strictEqual(featureFiles.length, 209, '209 feature modules must remain after admin appeals filter split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 222, 'HTML must retain 222 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 222, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 221, 'HTML must retain 221 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -46,12 +46,14 @@ assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/feature
 assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
 assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/push-settings.js'), 'sync-local-deletion-fallback must precede push-settings');
-assert(html.lastIndexOf('src/features/push-settings.js') < html.lastIndexOf('src/features/note-reactors-list-owner.js'), 'push-settings must precede note-reactors-list-owner');
+assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/admin-appeals-filter-owner.js'), 'push-settings must precede admin-appeals-filter-owner');
+assert(html.indexOf('src/features/admin-appeals-filter-owner.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'admin-appeals-filter-owner must precede note-reactors-list-owner');
 assert(html.lastIndexOf('src/features/note-reactors-list-owner.js') < html.lastIndexOf('src/features/note-viewer-owners.js'), 'note-reactors-list-owner must precede note-viewer-owners');
 assert(html.lastIndexOf('src/features/note-viewer-owners.js') < html.lastIndexOf('src/features/note-deletion-owner.js'), 'note-viewer-owners must precede note-deletion-owner');
 assert(html.lastIndexOf('src/features/note-deletion-owner.js') < html.lastIndexOf('src/features/story-editor-owners.js'), 'note-deletion-owner must precede story-editor-owners');
 assert(html.lastIndexOf('src/features/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'story-editor-owners must precede like-effects');
 assert(html.includes('src/features/push-settings.js'), 'push-settings module must remain referenced');
+assert(html.includes('src/features/admin-appeals-filter-owner.js'), 'admin-appeals-filter-owner module must remain referenced');
 assert(html.includes('src/features/note-viewer-owners.js'), 'note-viewer-owners module must remain referenced');
 assert(html.includes('src/features/note-deletion-owner.js'), 'note-deletion-owner module must remain referenced');
 
@@ -115,10 +117,10 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 263, '263 documentation Markdown files must be published after Notes reactor-list production gate');
-assert.strictEqual(allHarnesses.length, 264, '264 harness files must be published after Notes reactor-list production gate');
-assert.strictEqual(contractFiles.length, 260, '260 standard contract documents must be published');
-assert.strictEqual(harnessFiles.length, 259, '259 standard contract harnesses must be published');
+assert.strictEqual(allDocs.length, 264, '264 documentation Markdown files must be published after admin appeals filter production split');
+assert.strictEqual(allHarnesses.length, 265, '265 harness files must be published after admin appeals filter production split');
+assert.strictEqual(contractFiles.length, 261, '261 standard contract documents must be published');
+assert.strictEqual(harnessFiles.length, 260, '260 standard contract harnesses must be published');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
