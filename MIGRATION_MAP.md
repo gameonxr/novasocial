@@ -3367,3 +3367,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list inline-parity coverage correction
 - Updated protected inline-parity to treat `loadNoteReactorsList()` as the ninth approved Branch2 split while retaining exact origin/main one-marker parity and zero declaration duplication in extracted modules.
+
+## 2026-08-23 — Notes reactor-list Push-harness baseline correction
+- Synchronized the Push production harness to 221 balanced script tags, 220 external scripts, and 9 approved protected signatures after the Notes reactor-list addition; existing Push parity, browser, rollback, and side-effect guards remain passing.
