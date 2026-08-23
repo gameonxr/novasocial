@@ -3310,3 +3310,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Notes reactor-list artifact-count synchronization
 - Updated final-readiness totals for the added Notes reactor-list contract pair: 263 Markdown documents, 264 harness files, 260 standard contracts, and 259 standard contract harnesses.
 - The Notes reactor-list candidate and global readiness gates remain PASS; remaining unapproved protected owners stay blocked and no live data was mutated.
+
+## 2026-08-23 — Notes reactor-list classic-script baseline correction
+- Updated classic-script compatibility totals from 220/218 to 221 script tags and 219 extracted JavaScript files for the approved Notes reactor-list module; module syntax and async/defer prohibitions remain passing.
