@@ -3322,3 +3322,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list lexical-audit baseline correction
 - Updated the cross-module lexical-collision audit from 219 to 220 audited files (`index.html` plus 219 extracted scripts) after the reactor-list module addition; lexical-name and duplicate-name checks remain passing.
+
+## 2026-08-23 — Notes reactor-list deletion-fallback baseline correction
+- Synchronized the existing deletion-fallback production harness to 221 balanced script tags, 220 external scripts, and 9 approved protected signatures after the read-only Notes reactor-list split; deletion-fallback parity, browser proof, and rollback checks remain passing.
