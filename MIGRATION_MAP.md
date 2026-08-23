@@ -3893,3 +3893,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` source-boundary hygiene baseline correction
 - Synchronized source-boundary hygiene auditing to 243 extracted JS/CSS files after adding the cache invalidator owner; embedded-tag checks, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` storage-key surface baseline correction
+- Synchronized storage-key surface auditing to 226 combined files after adding the cache invalidator owner; the 29-key localStorage allowlist, zero sessionStorage use, candidate, and protected checks remain passing.
