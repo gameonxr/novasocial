@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleDirs = ['src/core', 'src/components', 'src/features'];
 const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
 
-assert.strictEqual(modules.length, 225, 'all 225 extracted JavaScript modules must remain present after invalidateTabCache split');
+assert.strictEqual(modules.length, 226, 'all 226 extracted JavaScript modules must remain present after confirmCropPreview split');
 
 const missing = [];
 const duplicates = [];

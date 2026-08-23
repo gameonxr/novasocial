@@ -4001,3 +4001,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` local asset-reference baseline correction
 - Synchronized local HTML asset-reference auditing to 247 unique references after adding the crop-preview owner; all references still resolve and root assets remain present.
+
+## 2026-08-23 — `confirmCropPreview()` module-reference baseline correction
+- Synchronized module-script reference auditing to 226 extracted JavaScript modules after adding the crop-preview owner; one-to-one references and duplicate/missing checks remain passing.
