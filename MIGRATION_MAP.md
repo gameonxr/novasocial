@@ -3452,3 +3452,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter realtime-audit baseline correction
 - Updated realtime-subscription lifecycle auditing from 220 to 221 extracted modules after the admin-filter addition; channel registration, subscribe-chain, managed-slot, and cleanup counts remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter source-boundary baseline correction
+- Updated source-boundary hygiene from 237 to 238 extracted JS/CSS files after adding the admin-filter owner; CRLF, embedded-script, embedded-style, and comment-stripped style guards remain unchanged and passing.
