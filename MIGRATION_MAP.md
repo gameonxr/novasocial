@@ -3407,3 +3407,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter lexical-audit baseline correction
 - Updated cross-module lexical-collision auditing from 220 to 221 audited files after the admin-filter module addition; the 117 top-level lexical-name inventory and zero-duplicate invariant remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter deletion-fallback baseline correction
+- Synchronized the deletion-fallback production harness to 222 balanced script tags and 221 external scripts after the admin-filter owner addition; canonical owner parity, rollback evidence, browser proof, and protected inline guards remain passing.
