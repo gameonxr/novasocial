@@ -3839,3 +3839,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` clipboard audit baseline correction
 - Synchronized clipboard-interaction auditing to 226 combined files (index plus 225 extracted modules) after adding the in-memory cache owner; clipboard write/fallback/cleanup checks, candidate, verification, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` lexical-collision audit baseline correction
+- Synchronized cross-module lexical auditing to 226 combined scripts after adding the external cache invalidator; the 117-name inventory and zero-duplicate lexical boundary remain unchanged and passing.
