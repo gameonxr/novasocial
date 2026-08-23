@@ -3506,3 +3506,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts high-risk-audit baseline correction
 - Updated the authoritative high-risk extraction audit from 220 to 221 extracted JavaScript modules after the contained refresh-counts split; 19 protected signatures, 9 approved owners, and 10 remaining blocked systems remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts readiness-matrix baseline correction
+- Updated readiness-matrix auditing from 220 to 221 extracted modules after the refresh-counts owner addition; protected ownership, evidence, and the 10-system direct-extraction block remain unchanged and passing.
