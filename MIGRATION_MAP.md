@@ -3413,3 +3413,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter dependency-order baseline correction
 - Updated dependency-loading order to audit the actual ten-script footer sequence after adding `admin-appeals-filter-owner.js` between Push settings and Notes reactor-list owners; stylesheet, classic-script, and core/component ordering guards remain passing.
+
+## 2026-08-23 — Admin appeals filter event-listener baseline correction
+- Updated event-listener boundary auditing from 219 to 220 extracted modules after the admin-filter addition; listener registration, cleanup, index, and service-worker counts remain unchanged and passing.
