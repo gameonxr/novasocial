@@ -3604,3 +3604,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter interval-audit baseline correction
 - Synchronized interval-lifecycle auditing to 223 files (`index.html` plus 222 extracted modules) after the reports-filter owner split. Seven interval registrations, ten cleanup calls, and all managed timer handles remain unchanged and passing.
+
+## 2026-08-23 — Reports filter local-asset baseline correction
+- Synchronized the static local HTML asset-reference audit to 243 unique local references after adding the reports-filter script. All references still resolve, and manifest/service-worker availability remains passing.

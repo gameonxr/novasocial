@@ -22,7 +22,7 @@ while ((match = pattern.exec(html))) {
 const unique = [...new Map(refs.map(item => [item.ref, item])).values()];
 const missing = unique.filter(item => !fs.existsSync(path.join(repo, item.relative))).map(item => item.ref).sort();
 
-assert.strictEqual(unique.length, 242, 'static local asset-reference inventory must remain stable after the refresh profile counts split');
+assert.strictEqual(unique.length, 243, 'static local asset-reference inventory must remain stable after the reports filter split');
 assert.deepStrictEqual(missing, [], 'every static local asset reference must resolve');
 assert(fs.existsSync(path.join(repo, 'manifest.json')), 'root manifest must remain available');
 assert(fs.existsSync(path.join(repo, 'sw.js')), 'service worker must remain available');
