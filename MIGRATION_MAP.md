@@ -3395,3 +3395,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter final-readiness baseline correction
 - Synchronized final-readiness totals for the admin-filter production split: 220 extracted JavaScript modules, 209 feature modules, 222 balanced script tags, 221 external scripts, 264 Markdown documents, 265 harness files, 261 standard contracts, and 260 standard contract harnesses. Added only the new footer-order and external-owner checks; all protected mutation markers remain enforced.
+
+## 2026-08-23 — Admin appeals filter classic-script baseline correction
+- Updated classic-script compatibility totals to 222 balanced script tags and 220 extracted JavaScript files after adding the admin-filter owner; module/defer/async/import/export prohibitions remain unchanged and passing.
