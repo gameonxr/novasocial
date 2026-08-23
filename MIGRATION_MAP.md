@@ -3337,3 +3337,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list index-integrity baseline correction
 - Updated the index HTML integrity audit to 221 balanced script tags and 220 external scripts after the approved Notes reactor-list module addition; doctype, body/html closure, inline-script, and protected Reels/DM markers remain passing.
+
+## 2026-08-23 — Notes reactor-list inline-declaration baseline correction
+- Updated the inline declaration baseline from 242 to 241 and marked `loadNoteReactorsList` as an approved external owner; all other unapproved protected declarations remain inline and `forwardMessage` remains the only documented unresolved caller seam.
