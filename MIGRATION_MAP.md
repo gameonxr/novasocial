@@ -3551,3 +3551,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts production gate complete
 - The contained read-only `refreshProfileCounts(userId)` owner is fully gated on Branch2: exact normalized origin/main parity, anonymous classic global handoff, detached before/after browser proof, injected query/render seam, rollback evidence, focused profile/follow neighbors, and clean exhaustive regression all pass. The follow mutation and all remaining 10 protected systems remain blocked.
+
+## 2026-08-23 — Reports filter candidate preparation
+- Audited `setReportsFilter(filter)` as the next contained read-only candidate: exact normalized origin/main parity with SHA-256 `ee2638326b5e3f692744c61f92f040cec15da399ac15612a56de4c75825ee05e`, four existing filter-control callers, UI-only state/style updates, one reload delegation, detached synthetic-DOM proof, and pinned rollback baseline all pass. `adminTabReports()`, `loadReportsList()`, report detail, resolve/dismiss, notification, moderation, and account boundaries remain inline and unchanged.
+- Added the candidate contract, deterministic seam harness, detached before-split browser evidence, and rollback evidence. Production extraction remains pending.

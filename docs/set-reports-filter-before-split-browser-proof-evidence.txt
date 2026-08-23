@@ -1,0 +1,20 @@
+SET_REPORTS_FILTER_BEFORE_SPLIT_BROWSER_PROOF=PASS
+DATE=2026-08-23
+BRANCH=Branch2
+URL=http://127.0.0.1:4173/?reports_filter_gate=20260823
+SCOPE=Detached synthetic DOM only; no live admin controls, live database, storage, account, navigation, notification, report, moderation, message, follow, reaction, upload, download, permission, or mutation action.
+SENTINEL=__set_reports_filter_gate_sentinel__
+FILTER_CASES=pending,resolved,dismissed,all
+STATE_UPDATE=PASS
+SELECTED_STYLING=PASS
+UNSELECTED_STYLING=PASS
+RELOAD_DELEGATION=ONE_PER_FILTER
+MISSING_CONTROL_TOLERANCE=PASS
+MISSING_CONTROL_STATE=all
+MISSING_CONTROL_RELOADS=1
+LIVE_DOM_UNCHANGED=true
+LIVE_CONTROLS_INVOKED=false
+LIVE_QUERIES_INVOKED=false
+BROWSER_SHELL=NovaSocial
+EVIDENCE_SOURCE=/home/ubuntu/console_outputs/exec_result_2026-08-23_06-43-40_805.txt
+NOTE=Browser CSSOM normalized inline color/background values to rgb/rgba strings; selected and unselected styling matched the owner’s intended color map.
