@@ -3290,3 +3290,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reels source-boundary hygiene baseline correction
 - Updated the source-boundary hygiene baseline from 235 to 236 extracted JavaScript/CSS files for the Reels windowing-helper module; UTF-8, NUL-byte, CRLF, embedded-script, embedded-style, and violation checks remain passing.
 - No additional runtime owner or live account/data action was introduced.
+
+## 2026-08-23 — Branch2 safety checkpoint label correction
+- Updated the Branch2-only safety contract and harness to recognize the authorized Reels windowing-helper package and report `LATEST_CHECKPOINT=REELS_WINDOWING_HELPER_BASELINE`.
+- The safety boundary still requires Branch2-only work, immutable `origin/main`, a clean pushed tip, exact authorized files for any production split, and all unapproved protected markers to remain inline.
