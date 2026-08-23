@@ -3443,3 +3443,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter Notes-harness baseline correction
 - Updated the Notes reactor-list candidate harness to expect 220 source JavaScript modules, accounting for the new admin-filter owner while preserving exact Notes owner parity, script order, and injected seam assertions.
+
+## 2026-08-23 — Admin appeals filter object-URL baseline correction
+- Updated object-URL lifecycle auditing from 220 to 221 extracted modules after the admin-filter addition; 14 creation calls, 8 revocations, and all download/compression/preview cleanup guards remain unchanged and passing.
