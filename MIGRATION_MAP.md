@@ -3580,3 +3580,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter deletion-fallback baseline correction
 - Synchronized deletion-fallback post-split script totals to 224 balanced HTML script tags and 223 external scripts after the reports-filter owner split. Deletion-fallback parity, rollback proof, browser-safe evidence, protected owner inventory, and startup handoff remain unchanged and passing.
+
+## 2026-08-23 — Reports filter dependency-order baseline correction
+- Synchronized the dependency-loading-order audit’s final-eleven window after adding `set-reports-filter-owner.js`: the actual trailing sequence now begins with `sync-local-deletion-fallback.js`, followed by Push, admin appeals, reports filter, refresh counts, Notes owners, Story editor, Reels windowing, and like effects. Classic ordering and all upstream dependency constraints remain passing.
