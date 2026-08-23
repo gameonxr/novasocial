@@ -27,8 +27,8 @@ assert(localScripts.slice(0, 9).every(item => item.src.startsWith('src/core/')),
 assert(localScripts.slice(9, 11).every(item => item.src.startsWith('src/components/')), 'components must follow core scripts');
 assert(localScripts.slice(11).some(item => item.src.startsWith('src/features/')), 'features must follow shared components');
 assert(appInlineIndex > 0, 'inline application script must exist after extracted scripts');
-const trailing = scripts.slice(-9).map(item => item.src);
-assert.deepStrictEqual(trailing, ['src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/note-reactors-list-owner.js', 'src/features/note-viewer-owners.js', 'src/features/note-deletion-owner.js', 'src/features/story-editor-owners.js', 'src/features/reels-video-windowing.js', 'src/features/like-effects.js'], 'final nine scripts must preserve required order after the Notes reactor-list split');
+const trailing = scripts.slice(-10).map(item => item.src);
+assert.deepStrictEqual(trailing, ['src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/admin-appeals-filter-owner.js', 'src/features/note-reactors-list-owner.js', 'src/features/note-viewer-owners.js', 'src/features/note-deletion-owner.js', 'src/features/story-editor-owners.js', 'src/features/reels-video-windowing.js', 'src/features/like-effects.js'], 'final ten scripts must preserve required order after the admin appeals filter split');
 for (const item of scripts) {
   if (item.src && item.src.startsWith('src/')) assert(!/\btype\s*=|\bdefer\b|\basync\b/i.test(item.attrs), `local script must remain classic: ${item.src}`);
 }

@@ -3410,3 +3410,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter deletion-fallback baseline correction
 - Synchronized the deletion-fallback production harness to 222 balanced script tags and 221 external scripts after the admin-filter owner addition; canonical owner parity, rollback evidence, browser proof, and protected inline guards remain passing.
+
+## 2026-08-23 — Admin appeals filter dependency-order baseline correction
+- Updated dependency-loading order to audit the actual ten-script footer sequence after adding `admin-appeals-filter-owner.js` between Push settings and Notes reactor-list owners; stylesheet, classic-script, and core/component ordering guards remain passing.
