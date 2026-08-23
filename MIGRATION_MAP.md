@@ -3751,3 +3751,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` lexical-collision baseline correction
 - Synchronized cross-module lexical-collision auditing to 225 files (index plus 224 extracted scripts) after adding the story-viewer mute owner; the 117-name inventory and zero-duplicate lexical boundary remain passing.
+
+## 2026-08-23 — `toggleSVMute()` deletion-fallback audit baseline correction
+- Synchronized deletion-fallback post-split script accounting to 226 opening tags, 226 closing tags, and 225 external scripts after adding the story-viewer mute owner; existing deletion-fallback parity, browser, rollback, candidate, and protected checks remain passing.
