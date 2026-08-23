@@ -4010,3 +4010,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` object-URL lifecycle baseline correction
 - Synchronized object-URL lifecycle auditing to 227 combined scripts after adding the crop-preview owner; 14 creation calls, 8 revocation calls, and cleanup invariants remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` Push-settings tag baselines
+- Synchronized Push-settings production auditing to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; Push safety and protected split assertions remain unchanged.
