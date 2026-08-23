@@ -3607,3 +3607,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter local-asset baseline correction
 - Synchronized the static local HTML asset-reference audit to 243 unique local references after adding the reports-filter script. All references still resolve, and manifest/service-worker availability remains passing.
+
+## 2026-08-23 — Reports filter module-reference baseline correction
+- Synchronized module-script reference auditing to 222 extracted JavaScript modules after adding the reports-filter owner. Missing-module, duplicate-load, core-order, trailing-order, and protected inline reference checks remain passing.
