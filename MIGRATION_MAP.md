@@ -3595,3 +3595,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter high-risk matrix baseline correction
 - Synchronized the high-risk seam-readiness matrix to 222 extracted JavaScript modules after the reports-filter split. All protected seam inventories and readiness assertions remain unchanged; the remaining high-risk systems remain blocked.
+
+## 2026-08-23 — Reports filter index-tag baseline correction
+- Synchronized index-HTML tag integrity to 224 script tags, 224 closures, and 223 external script tags after the reports-filter owner split. The single inline application script, HTML structure, and protected DMs/Reels inline boundaries remain unchanged and passing.
