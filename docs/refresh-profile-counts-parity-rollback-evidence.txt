@@ -23,3 +23,11 @@ Rollback procedure if a future production split is approved and a focused or ful
 No-live-mutation record:
 - Browser proof used detached synthetic DOM only.
 - No live account, profile, follow, reaction, message, storage, database, notification, upload, permission, or navigation action was performed.
+
+Production split record:
+- Split commit: b4e5f02 (`refactor: extract refresh profile counts owner`)
+- After-split normalized owner parity: PASS
+- After-split external owner and inline-owner absence: PASS
+- After-split detached browser proof: PASS
+- Focused neighboring profile/follow harnesses: PASS before production commit; rerun pending after this record update
+- Full regression: pending from the clean pushed split tip

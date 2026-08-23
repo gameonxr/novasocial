@@ -3467,3 +3467,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts production split
 - Extracted only the contained read-only `refreshProfileCounts(userId)` owner to `src/features/refresh-profile-counts-owner.js` as anonymous `window.refreshProfileCounts = async function(userId){...}`. Exact normalized origin/main parity, detached before/after browser proof, injected two-query/read-render seam, rollback baseline, one caller, and no-mutation classification pass. The neighboring `toggleFollowProfile` mutation and all protected high-risk systems remain inline and blocked.
+
+## 2026-08-23 — Refresh profile counts split rollback record
+- Pinned `b4e5f02` as the refresh-profile-counts split commit in the rollback evidence, with the after-split external-owner/browser proof recorded; focused neighboring harness rerun and full regression remain the only open validation steps.
