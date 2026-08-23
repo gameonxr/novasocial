@@ -3947,3 +3947,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness Markdown baseline correction
 - Synchronized final-readiness auditing to 272 Markdown documents after publishing the crop-preview preparation contract; no protected boundary or unrelated production behavior changed.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness harness baseline correction
+- Synchronized final-readiness auditing to 273 harness files after publishing the crop-preview preparation harness; no protected boundary or unrelated production behavior changed.
