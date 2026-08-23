@@ -12,6 +12,7 @@ const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-sett
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -31,7 +32,7 @@ const coverage = [
   ['async function submitNote()', 'note-viewer-contract'],
   ['async function deleteMyNote()', 'note-viewer-contract'],
   ['function reactToNote(', 'note-viewer-contract'],
-  ['async function loadNoteReactorsList(', 'note-viewer-contract'],
+  ['async function loadNoteReactorsList(', 'note-reactors-list-production-split-contract'],
   ['function submitNativeEmojiReaction(', 'note-viewer-contract']
 ];
 
@@ -49,6 +50,9 @@ for (const [marker, base] of coverage) {
   } else if (marker === 'async function deleteMyNote()') {
     assert(!html.includes(marker), 'approved Note deletion owner must be absent from inline HTML');
     assert.strictEqual((noteDeletionModule.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note deletion owner must have one owner');
+  } else if (marker === 'async function loadNoteReactorsList(') {
+    assert(!html.includes(marker), 'approved Notes reactor-list owner must be absent from inline HTML');
+    assert.strictEqual((reactorListModule.match(/window\.loadNoteReactorsList\s*=\s*async function\(/g) || []).length, 1, 'approved Notes reactor-list owner must have one owner');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
@@ -62,6 +66,7 @@ const trailing = [
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
+  '<script src="src/features/note-reactors-list-owner.js"></script>',
   '<script src="src/features/note-viewer-owners.js"></script>',
   '<script src="src/features/note-deletion-owner.js"></script>',
   '<script src="src/features/story-editor-owners.js"></script>',
@@ -73,4 +78,4 @@ assert.strictEqual((noteModule.match(/window\.(?:viewNote|removeMyNoteFromViewer
 
 console.log('PROTECTED_CONTRACT_COVERAGE_HARNESS=PASS');
 console.log(`PROTECTED_SEAMS=${coverage.length}`);
-console.log('APPROVED_WINDOW_OWNERS=8_PARTICLE_DELETION_PUSH_NOTE_DELETION_AND_STORY');
+console.log('APPROVED_WINDOW_OWNERS=9_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_AND_REACTOR_LIST');

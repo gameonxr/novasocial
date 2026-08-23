@@ -3358,3 +3358,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list particle-harness baseline correction
 - Synchronized the particle production-split harness so the already-approved Notes reactor-list owner is excluded from the remaining inline-marker expectation; particle parity, browser proof, rollback, and caller-handoff checks remain passing.
+
+## 2026-08-23 — Notes reactor-list protected-contract coverage correction
+- Updated protected-contract coverage to validate the dedicated Notes reactor-list contract, one anonymous external owner, and footer order; the 19-signature inventory remains intact with 9 approved owners and 10 remaining blocked systems.
