@@ -3346,3 +3346,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list interval-audit baseline correction
 - Updated the interval-lifecycle audit from 219 to 220 audited files (`index.html` plus 219 extracted modules) after the reactor-list module addition; interval creation and cleanup counts remain unchanged and passing.
+
+## 2026-08-23 — Notes reactor-list local-asset baseline correction
+- Updated the static local HTML asset-reference inventory from 239 to 240 after adding the Notes reactor-list script tag; all references still resolve and no missing assets were introduced.
