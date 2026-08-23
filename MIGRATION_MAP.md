@@ -3763,3 +3763,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` source-file hygiene baseline correction
 - Synchronized extracted-file hygiene auditing to 259 source files after adding the story-viewer mute owner; empty-file and trailing-whitespace checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` seam-matrix baseline correction
+- Synchronized the protected seam-readiness matrix to 224 extracted JavaScript modules after adding the story-viewer mute owner; all 19 protected signatures, nine approved extracted systems, ten remaining blocked systems, and candidate checks remain unchanged and passing.
