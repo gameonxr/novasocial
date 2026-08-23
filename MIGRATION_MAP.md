@@ -3220,3 +3220,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Added the passing test-only `createInjectedPushPermissionSeam` proof to the global readiness matrix inventory, bringing the enforced injected-proof count to seven.
 - Updated the matrix prose to include Push permission while preserving the two approved Push settings owners and the 11-system direct-extraction block.
 - No browser permission prompt, subscription, account, service-worker, or runtime application behavior was invoked or changed.
+
+## 2026-08-23 — Safe authenticated shell smoke after global proof inventory
+- Reloaded the local Branch2 preview at `http://127.0.0.1:4173/` in the persisted authenticated browser session; NovaSocial title, feed, and read-only navigation shell rendered successfully.
+- Observed the Push banner controls but did not click Enable or dismiss; no permission prompt, subscription, message, reaction, follow, upload, download, account switch, deletion, or intentional storage/database mutation was performed.
+- This was a read-only smoke check after documentation/harness-only changes; no production runtime behavior changed. Evidence is retained at `/tmp/browser-smoke-2026-08-23-after-global-proof.txt`.
