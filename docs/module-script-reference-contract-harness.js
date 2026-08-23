@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleDirs = ['src/core', 'src/components', 'src/features'];
 const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
 
-assert.strictEqual(modules.length, 220, 'all 220 extracted JavaScript modules must remain present after admin appeals filter split');
+assert.strictEqual(modules.length, 221, 'all 221 extracted JavaScript modules must remain present after refresh profile counts split');
 
 const missing = [];
 const duplicates = [];

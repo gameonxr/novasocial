@@ -3521,3 +3521,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts local-asset baseline correction
 - Updated local HTML asset-reference auditing from 241 to 242 unique references after adding the refresh-counts script; zero missing references and manifest/service-worker guards remain passing.
+
+## 2026-08-23 — Refresh profile counts module-reference baseline correction
+- Updated module-script reference auditing from 220 to 221 modules after adding the refresh-counts owner; one-reference, no-duplicate, core-order, and protected-module checks remain passing.
