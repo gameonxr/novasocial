@@ -3404,3 +3404,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter named-function inventory correction
 - Corrected the cross-module named top-level function baseline from 709 to 708 because the moved owner is intentionally anonymous as `window.setAppealsFilter`; the 221-file audit and zero-duplicate invariant remain passing.
+
+## 2026-08-23 — Admin appeals filter lexical-audit baseline correction
+- Updated cross-module lexical-collision auditing from 220 to 221 audited files after the admin-filter module addition; the 117 top-level lexical-name inventory and zero-duplicate invariant remain unchanged and passing.
