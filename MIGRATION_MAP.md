@@ -4040,3 +4040,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness harness baseline
 - Synchronized final-readiness harness inventory to 274 files after publishing the crop-preview production harness; Markdown and standard contract inventories remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` standard-contract baseline
+- Synchronized final-readiness standard contract inventory to 270 documents after publishing the crop-preview production contract; standard contract harness inventory remains unchanged.
