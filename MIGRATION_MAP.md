@@ -3869,3 +3869,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` interval audit baseline correction
 - Synchronized interval-lifecycle auditing to 226 combined files after adding the external cache invalidator; seven interval registrations, ten cleanup calls, managed handles, candidate, verification, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` local asset-reference baseline correction
+- Synchronized static local HTML asset-reference auditing to 246 unique references after adding the cache invalidator owner and its committed proof artifacts; all references resolve and candidate/protected checks remain passing.
