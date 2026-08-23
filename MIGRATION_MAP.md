@@ -4004,3 +4004,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` module-reference baseline correction
 - Synchronized module-script reference auditing to 226 extracted JavaScript modules after adding the crop-preview owner; one-to-one references and duplicate/missing checks remain passing.
+
+## 2026-08-23 — `confirmCropPreview()` Notes reactor-list baseline correction
+- Synchronized Notes reactor-list production auditing to 226 source modules after adding the crop-preview owner; owner ordering, inline absence, and read-only seam checks remain passing.
