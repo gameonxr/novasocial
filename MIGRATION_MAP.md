@@ -3592,3 +3592,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter high-risk gate baseline correction
 - Synchronized the high-risk extraction gate to 222 extracted JavaScript modules after the contained reports-filter split. The protected inventory remains exactly 19 signatures with 9 approved owners and 10 blocked systems; no protected boundary was loosened.
+
+## 2026-08-23 — Reports filter high-risk matrix baseline correction
+- Synchronized the high-risk seam-readiness matrix to 222 extracted JavaScript modules after the reports-filter split. All protected seam inventories and readiness assertions remain unchanged; the remaining high-risk systems remain blocked.
