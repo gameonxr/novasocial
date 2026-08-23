@@ -3968,3 +3968,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` collision-name baseline correction
 - Synchronized collision auditing to 702 top-level named functions after removing the inline named crop-preview owner; zero duplicate names remain and the anonymous external global compatibility surface is unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` lexical-collision baseline correction
+- Synchronized lexical-collision auditing to 227 combined scripts after adding the crop-preview owner; the 117-name lexical inventory remains duplicate-free.
