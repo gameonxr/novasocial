@@ -3872,3 +3872,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` local asset-reference baseline correction
 - Synchronized static local HTML asset-reference auditing to 246 unique references after adding the cache invalidator owner and its committed proof artifacts; all references resolve and candidate/protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` module-reference baseline correction
+- Synchronized module-script reference auditing to 225 extracted JavaScript modules after adding the cache invalidator owner; one-to-one references and candidate/protected checks remain passing.
