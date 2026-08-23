@@ -3565,3 +3565,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter final-readiness baseline correction
 - Synchronized final readiness after the contained reports-filter split to 222 extracted JavaScript modules, 211 feature modules, 224 balanced script tags, 223 external scripts, 266 Markdown documents, 267 harness files, 263 standard contracts, and 262 contract harnesses. The protected owner inventory and unresolved documented seam remain unchanged.
+
+## 2026-08-23 — Reports filter classic-script baseline correction
+- Synchronized classic-script compatibility to 224 balanced HTML script tags and 222 extracted JavaScript files after the reports-filter owner split. No module syntax, `defer`, or `async` attributes were introduced; the external owner remains an anonymous classic global.
