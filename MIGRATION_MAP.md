@@ -3842,3 +3842,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` lexical-collision audit baseline correction
 - Synchronized cross-module lexical auditing to 226 combined scripts after adding the external cache invalidator; the 117-name inventory and zero-duplicate lexical boundary remain unchanged and passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` function inventory correction
+- Synchronized cross-module top-level named-function auditing to 703 after removing the inline cache invalidator owner; the 226-file audit and zero-duplicate function boundary remain unchanged and passing.
