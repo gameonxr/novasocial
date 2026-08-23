@@ -3303,3 +3303,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Notes reactor-list regression-baseline synchronization
 - Synchronized the global extraction/readiness, acceptance, reversible-proof, Notes, and final-readiness contracts to 9/19 approved protected signatures, 10 remaining blocked systems, 219 JavaScript modules, 208 feature modules, and 221 balanced script tags.
 - Candidate-specific parity, injected seam, rollback, before/after browser, and focused gates remain PASS; no live account or application data was mutated.
+
+## 2026-08-23 — Notes reactor-list final-readiness baseline correction
+- Updated final-readiness protected-marker and module/script baselines for the approved `loadNoteReactorsList()` owner; focused Notes, acceptance, reversible-proof, readiness, and extraction gates remain passing.
