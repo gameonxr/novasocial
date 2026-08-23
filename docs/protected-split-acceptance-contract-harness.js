@@ -17,7 +17,7 @@ const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-view
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 8/19 signatures moved'), 'matrix must record the eight moved protected signatures');
+assert(matrix.includes('Protected production splits | 8/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the eight moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('browser proof remains outstanding for 11 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');

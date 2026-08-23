@@ -3278,3 +3278,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reels local-asset inventory baseline correction
 - Updated the local HTML asset-reference inventory from 238 to 239 for the added Reels windowing script reference; all local references still resolve and root manifest/service-worker checks pass.
 - No additional runtime owner or live account/data action was introduced.
+
+## 2026-08-23 — Reels protected-acceptance wording baseline correction
+- Updated the protected-split acceptance harness to recognize the authoritative matrix wording for eight approved protected signatures plus the separately gated Reels windowing helper.
+- Acceptance, high-risk extraction, and readiness-matrix harnesses pass; direct extraction remains blocked for the 11 unapproved protected systems.
