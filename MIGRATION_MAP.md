@@ -3437,3 +3437,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter local-asset baseline correction
 - Updated static local HTML asset-reference auditing from 240 to 241 references after adding the admin-filter script; all references still resolve and manifest/service-worker availability remains passing.
+
+## 2026-08-23 — Admin appeals filter module-reference baseline correction
+- Updated module-script reference auditing from 219 to 220 extracted JavaScript modules after adding the admin-filter script; every module remains referenced exactly once, core ordering is preserved, and protected DMs/Reels renderers remain inline.
