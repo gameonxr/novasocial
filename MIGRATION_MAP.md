@@ -3778,3 +3778,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` local-asset baseline correction
 - Synchronized local HTML asset-reference auditing to 245 unique references after adding the story-viewer mute owner and its evidence links; all references resolve and root manifest/service-worker checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` module-reference baseline correction
+- Synchronized module-script reference auditing to 224 extracted JavaScript modules after adding the story-viewer mute owner; missing/duplicate module checks, core order, trailing order, candidate, and protected checks remain passing.
