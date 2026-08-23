@@ -3373,3 +3373,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list realtime-audit baseline correction
 - Updated the realtime-subscription lifecycle audit from 219 to 220 audited files (`index.html` plus 219 extracted modules) after the reactor-list module addition; channel registration, subscribe-chain, and cleanup counts remain passing.
+
+## 2026-08-23 — Notes reactor-list source-boundary baseline correction
+- Synchronized source-boundary hygiene to scan 237 extracted JS/CSS files after the reactor-list module addition; CRLF, embedded-script, embedded-style, and comment-stripped style guards remain unchanged and passing.
