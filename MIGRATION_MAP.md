@@ -3539,3 +3539,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts realtime-audit baseline correction
 - Updated realtime-subscription lifecycle auditing from 221 to 222 files after adding the refresh-counts owner; ten channel registrations, 21 cleanup calls, managed slots, and subscribe chains remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts source-boundary baseline correction
+- Updated source-boundary hygiene from 238 to 239 scanned JS/CSS files after adding the refresh-counts module; encoding, embedded-boundary, comment-stripping, and trailing-whitespace guards remain unchanged and passing.
