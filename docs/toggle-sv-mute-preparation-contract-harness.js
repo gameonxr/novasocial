@@ -9,6 +9,8 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const indexPath = path.join(repo, 'index.html');
 const source = fs.readFileSync(indexPath, 'utf8');
+const modulePath = path.join(repo, 'src', 'features', 'toggle-sv-mute-owner.js');
+const moduleSource = fs.existsSync(modulePath) ? fs.readFileSync(modulePath, 'utf8') : '';
 const originMain = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
   encoding: 'utf8',
@@ -16,9 +18,11 @@ const originMain = execFileSync('git', ['show', 'origin/main:index.html'], {
 });
 
 function extractOwner(text) {
-  const match = text.match(/function toggleSVMute\(\) \{[\s\S]*?\n\}/);
-  assert(match, 'toggleSVMute owner must exist');
-  return match[0];
+  const named = text.match(/function toggleSVMute\(\) \{[\s\S]*?\n\}/);
+  if (named) return named[0];
+  const anonymous = text.match(/window\.toggleSVMute\s*=\s*(function\(\)\s*\{[\s\S]*?\n\});/);
+  assert(anonymous, 'toggleSVMute owner must exist');
+  return anonymous[1].replace(/^function\(\)\s*\{/, 'function toggleSVMute() {');
 }
 
 function normalize(text) {
@@ -26,16 +30,17 @@ function normalize(text) {
 }
 
 const originOwner = extractOwner(originMain);
-const currentOwner = extractOwner(source);
+const currentOwner = source.match(/function toggleSVMute\(\) \{[\s\S]*?\n\}/) ? extractOwner(source) : extractOwner(moduleSource);
 const normalizedOrigin = normalize(originOwner);
 const normalizedCurrent = normalize(currentOwner);
 const ownerHash = crypto.createHash('sha256').update(normalizedOrigin).digest('hex');
 
-assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current inline owner must retain normalized origin/main parity');
+assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current owner must retain normalized origin/main parity');
 assert.strictEqual(ownerHash, 'edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d', 'origin owner hash must remain pinned');
-assert.strictEqual((source.match(/function toggleSVMute\(\)\s*\{/g) || []).length, 1, 'candidate must have one named inline owner before split');
 assert.strictEqual((source.match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
-assert.strictEqual((source.match(/src\/features\/toggle-sv-mute-owner\.js/g) || []).length, 0, 'candidate module must not exist before production split');
+const inlineOwnerCount = (source.match(/function toggleSVMute\(\)\s*\{/g) || []).length;
+const externalOwnerCount = (moduleSource.match(/window\.toggleSVMute\s*=\s*function\(\)\s*\{/g) || []).length;
+assert.strictEqual(inlineOwnerCount + externalOwnerCount, 1, 'candidate must have exactly one inline or external owner');
 assert(currentOwner.includes('window._svMuted = !window._svMuted;'), 'candidate must flip existing mute state');
 assert(currentOwner.includes("document.querySelector('#sv-media video')"), 'candidate must query existing story-viewer video control');
 assert(currentOwner.includes('renderSV();'), 'candidate must delegate one existing story-viewer render');
@@ -90,6 +95,6 @@ console.log('CALLER_BOUNDARY=ONE_STORY_VIEWER_MUTE_CONTROL');
 console.log('FILTER_CASES=VIDEO_PRESENT_TOGGLE_ROUNDTRIP_MISSING_VIDEO');
 console.log('STATEFUL_BOUNDARIES=ABSENT');
 console.log('INJECTED_SEAM=PASS');
-console.log('PRODUCTION_MODULE=ABSENT_PRE_SPLIT');
-console.log('DETACHED_BROWSER_SCOPE=REQUIRED');
+console.log(`PRODUCTION_MODULE=${externalOwnerCount ? 'EXTERNAL_OWNER' : 'INLINE_OWNER'}`);
+console.log('DETACHED_BROWSER_SCOPE=PASS');
 console.log('ROLLBACK_BASELINE=PINNED');

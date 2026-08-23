@@ -3778,12 +3778,6 @@ async function loadStoryPollState(storyId, pollIdx, options, cardEl){
 
 // (legacy voteStoryPoll_showResultsOnly removed — use refreshPollResults instead)
 
-function toggleSVMute() {
-  window._svMuted = !window._svMuted;
-  const vid = document.querySelector('#sv-media video');
-  if(vid) vid.muted = window._svMuted;
-  renderSV(); // Re-render to update icon
-}
 
 // Global Playback Stop (Fixes Audio Echo)
 function stopSVPlayback() {
@@ -10742,6 +10736,7 @@ async function checkUserActiveNote(userId){
 <script src="src/features/push-settings.js"></script>
 <script src="src/features/admin-appeals-filter-owner.js"></script>
 <script src="src/features/set-reports-filter-owner.js"></script>
+<script src="src/features/toggle-sv-mute-owner.js"></script>
 <script src="src/features/set-verify-filter-owner.js"></script>
 <script src="src/features/refresh-profile-counts-owner.js"></script>
 <script src="src/features/note-reactors-list-owner.js"></script>
