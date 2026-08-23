@@ -3674,3 +3674,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter dependency-order baseline correction
 - Synchronized the dependency-loading audit’s fixed trailing-eleven sequence after adding `set-verify-filter-owner.js`: `push-settings`, admin appeals, reports filter, verification filter, refresh-counts, Notes owners, Story editor, Reels windowing, and like effects remain in the required order.
+
+## 2026-08-23 — Verification filter event-listener baseline correction
+- Synchronized event-listener boundary auditing to 223 extracted JavaScript modules after adding the verification-filter owner. The 74 extracted listener registrations, zero extracted cleanup registrations, 28 inline registrations, and five service-worker registrations remain unchanged and passing.
