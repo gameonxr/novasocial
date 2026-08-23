@@ -3328,3 +3328,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list dependency-order baseline correction
 - Updated the dependency-order harness from the final eight to final nine scripts, placing `note-reactors-list-owner.js` after Push settings and before Note viewer callers; classic-script and stylesheet ordering checks remain passing.
+
+## 2026-08-23 — Notes reactor-list event-listener baseline correction
+- Updated the event-listener boundary audit from 218 to 219 extracted JavaScript modules after the Notes reactor-list split; listener registration and cleanup counts remain unchanged and passing.
