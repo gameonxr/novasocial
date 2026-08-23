@@ -81,8 +81,8 @@ assert(productionCommit.startsWith('74664d31'), `production split commit must re
 assert(rollback.includes('PRODUCTION_SPLIT_COMMIT=74664d31bf280d8e7d638ff8e0a850b96c306de4'), 'rollback evidence must pin production split commit');
 assert(rollback.includes('FIRST_FULL_REGRESSION_TIP=5610775e465fe84e4c1c39bcde09399d264d66a1'), 'rollback evidence must pin first exhaustive gate tip');
 assert(rollback.includes('FIRST_FULL_REGRESSION=PASS'), 'rollback evidence must record first exhaustive gate PASS');
-assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION=PENDING'), 'rollback evidence must remain pending until the docs-tip gate passes');
-assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION_TIP=PENDING'), 'rollback evidence must retain pending final docs-tip SHA');
+assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION=PASS'), 'rollback evidence must record the final docs-tip gate PASS');
+assert(rollback.includes('FINAL_DOCS_FULL_REGRESSION_TIP=cba72ee637723f98aae9ad6017698dab6ec640f3'), 'rollback evidence must pin the final docs-tip SHA');
 assert(!/<script\b[^>]*\b(?:type|defer|async)\s*=/i.test(html), 'all application scripts must remain classic without type, defer, or async attributes');
 
 function runCropSeam() {
@@ -133,6 +133,7 @@ runCropSeam().then((result) => {
   console.log('INJECTED_SEAM=PASS');
   console.log('ROLLBACK_EVIDENCE=PASS');
   console.log('FIRST_FULL_REGRESSION=PASS');
-  console.log('FINAL_DOCS_FULL_REGRESSION=PENDING');
+  console.log('FINAL_DOCS_FULL_REGRESSION=PASS');
+  console.log('FINAL_DOCS_FULL_REGRESSION_TIP=cba72ee637723f98aae9ad6017698dab6ec640f3');
   console.log('PRODUCTION_SPLIT=COMPLETE');
 }).catch((error) => { console.error(error); process.exitCode = 1; });

@@ -4046,3 +4046,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` standard-contract-harness baseline
 - Synchronized final-readiness standard contract-harness inventory to 269 after publishing the crop-preview production harness; all other published inventories remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` status documentation closed
+- Closed the production contract and rollback evidence with the docs-tip exhaustive PASS at `cba72ee637723f98aae9ad6017698dab6ec640f3` (`HARNESS_COUNT=274`); focused crop-preview, neighboring tab-cache, and protected-boundary checks also pass.
+- The mandated final completion gate remains required from this completion-documentation tip; protected accounting remains 19 signatures, 9 approved extracted owners, and 10 blocked high-risk systems.

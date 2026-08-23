@@ -20,8 +20,8 @@ FIRST_FULL_REGRESSION_TIP=5610775e465fe84e4c1c39bcde09399d264d66a1
 FIRST_FULL_REGRESSION=PASS
 FIRST_FULL_REGRESSION_HARNESS_COUNT=273
 
-FINAL_DOCS_FULL_REGRESSION=PENDING
-FINAL_DOCS_FULL_REGRESSION_TIP=PENDING
+FINAL_DOCS_FULL_REGRESSION=PASS
+FINAL_DOCS_FULL_REGRESSION_TIP=cba72ee637723f98aae9ad6017698dab6ec640f3
 
 ROLLBACK_COMMAND=git revert 74664d31bf280d8e7d638ff8e0a850b96c306de4
 ROLLBACK_SCOPE=Restore the named inline confirmCropPreview owner and remove only the external crop-preview owner linkage; preserve crop state, preview close behavior, upload ownership, account/profile state, story/editor systems, messaging, calls, navigation, and all protected high-risk boundaries.

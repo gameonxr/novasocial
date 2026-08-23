@@ -23,7 +23,7 @@ The production owner is preserved as an anonymous classic global assignment in [
 | Production split | Inline named owner removed; one external anonymous classic global owner linked in dependency order | PASS |
 | Focused regression | Candidate, neighboring owner, tab-cache, and protected contracts pass | PASS |
 | First exhaustive regression | Clean pushed Branch2 gate passed at `5610775e465fe84e4c1c39bcde09399d264d66a1` (`HARNESS_COUNT=273`) | PASS |
-| Final documentation-tip regression | Required after final contract package is committed; status remains pending until that gate passes | PENDING |
+| Final documentation-tip regression | Clean exhaustive Branch2 gate passed from the final contract package at `cba72ee637723f98aae9ad6017698dab6ec640f3` (`HARNESS_COUNT=274`) | PASS |
 
 ## Independent seam
 
@@ -46,4 +46,4 @@ The production split is reversible with `git revert 74664d31bf280d8e7d638ff8e0a8
 
 ## Documentation status
 
-This contract is intentionally created with the final documentation-tip gate marked **PENDING**. After this documentation package is committed and pushed, the clean exhaustive gate must pass from that tip. A later documentation-only commit will then change the pending markers to **PASS** and pin the docs-tip SHA, followed by the mandated final exhaustive gate from that completion tip.
+The final documentation-tip gate passed from the published contract package at `cba72ee637723f98aae9ad6017698dab6ec640f3` with `HARNESS_COUNT=274`. The production contract and rollback status are now closed; the mandated final clean exhaustive gate remains required from the completion-documentation tip before this checkpoint is considered complete.
