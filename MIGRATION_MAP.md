@@ -3589,3 +3589,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter extracted-file hygiene baseline correction
 - Synchronized extracted-file hygiene to 257 source files after adding the reports-filter owner module. Empty-file and trailing-whitespace checks remain passing; no unrelated source-file content changed.
+
+## 2026-08-23 — Reports filter high-risk gate baseline correction
+- Synchronized the high-risk extraction gate to 222 extracted JavaScript modules after the contained reports-filter split. The protected inventory remains exactly 19 signatures with 9 approved owners and 10 blocked systems; no protected boundary was loosened.
