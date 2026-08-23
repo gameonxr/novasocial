@@ -4019,3 +4019,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` refresh-counts baseline correction
 - Synchronized refresh-profile-counts production auditing to 226 extracted JavaScript modules after adding the crop-preview owner; read-only query, ordering, and side-effect boundaries remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` set-verify-filter baselines
+- Synchronized set-verify-filter production auditing to 226 extracted modules, 228 script tags, 228 closures, and 227 external scripts after adding the crop-preview owner; verification controls, parity, and read-only boundaries remain unchanged.
