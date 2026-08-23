@@ -3464,3 +3464,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts candidate preparation
 - Audited `refreshProfileCounts(userId)` as the next contained read-only candidate: exact origin/main owner parity, one existing caller, two parallel profile reads, DOM-only count rendering, silent query-failure boundary, no mutation/storage/navigation side effects, detached synthetic browser proof, and pinned rollback baseline all pass. Production extraction remains pending focused integration checks and a clean full regression.
+
+## 2026-08-23 — Refresh profile counts production split
+- Extracted only the contained read-only `refreshProfileCounts(userId)` owner to `src/features/refresh-profile-counts-owner.js` as anonymous `window.refreshProfileCounts = async function(userId){...}`. Exact normalized origin/main parity, detached before/after browser proof, injected two-query/read-render seam, rollback baseline, one caller, and no-mutation classification pass. The neighboring `toggleFollowProfile` mutation and all protected high-risk systems remain inline and blocked.

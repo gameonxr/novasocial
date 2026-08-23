@@ -1,0 +1,14 @@
+NovaSocial refreshProfileCounts candidate — after-split browser proof
+Date: 2026-08-23
+URL: http://127.0.0.1:4173/?refresh_profile_counts_gate=after-20260823
+
+Result: PASS
+The cache-busted static shell exposed `window.refreshProfileCounts` as a function through the external `src/features/refresh-profile-counts-owner.js` script. The inline script inventory contained zero occurrences of the named `refreshProfileCounts(userId)` owner, and the external owner script occurred once.
+
+A detached synthetic DOM proof rendered followers raw=18/text=F18 and following raw=6/text=F6 using synthetic query results. The event trace was limited to `query:synthetic`, `dom:followers`, and `dom:following`.
+
+Safety boundary:
+- ownerInvoked=false
+- detachedOnly=true
+- No live profile or follow control was touched.
+- No database, storage, notification, messaging, reaction, upload, permission, account, or navigation mutation occurred.

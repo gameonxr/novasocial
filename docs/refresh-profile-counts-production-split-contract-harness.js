@@ -7,30 +7,39 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const originHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-profile-counts-owner.js'), 'utf8');
 const ownerPattern = /async function refreshProfileCounts\(userId\) \{[\s\S]*?\n\}\n/;
+const moduleOwnerPattern = /window\.refreshProfileCounts = async function\(userId\) \{[\s\S]*?\n\};\n/;
 const originOwner = originHtml.match(ownerPattern)?.[0];
-const currentOwner = html.match(ownerPattern)?.[0];
+const moduleOwner = moduleText.match(moduleOwnerPattern)?.[0];
 assert(originOwner, 'origin/main refreshProfileCounts owner must exist');
-assert(currentOwner, 'current inline refreshProfileCounts owner must exist during preparation');
+assert(moduleOwner, 'external refreshProfileCounts owner must exist');
 const sha256 = (text) => crypto.createHash('sha256').update(text).digest('hex');
+const normalizeModuleOwner = moduleOwner.replace('window.refreshProfileCounts = async function(userId)', 'async function refreshProfileCounts(userId)').replace(/\};\n$/, '}\n');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const browserEvidence = fs.readFileSync(path.join(repo, 'docs', 'refresh-profile-counts-before-split-browser-proof-evidence.txt'), 'utf8');
+const afterBrowserEvidence = fs.readFileSync(path.join(repo, 'docs', 'refresh-profile-counts-after-split-browser-proof-evidence.txt'), 'utf8');
 const rollbackEvidence = fs.readFileSync(path.join(repo, 'docs', 'refresh-profile-counts-parity-rollback-evidence.txt'), 'utf8');
 const ownerCalls = (html.match(/await refreshProfileCounts\(userId\);/g) || []).length;
-const ownerBody = currentOwner.slice(currentOwner.indexOf('{') + 1, currentOwner.lastIndexOf('\n}'));
+const ownerBody = normalizeModuleOwner.slice(normalizeModuleOwner.indexOf('{') + 1, normalizeModuleOwner.lastIndexOf('\n}'));
 
-assert.strictEqual(currentOwner, originOwner, 'refreshProfileCounts owner must match origin/main exactly before extraction');
-assert.strictEqual(sha256(currentOwner), sha256(originOwner), 'refreshProfileCounts owner hash must match origin/main');
+assert.strictEqual(normalizeModuleOwner, originOwner, 'normalized external owner must match origin/main exactly');
+assert.strictEqual(sha256(normalizeModuleOwner), sha256(originOwner), 'normalized external owner hash must match origin/main');
 assert.strictEqual(ownerCalls, 1, 'refreshProfileCounts must retain one existing caller');
 assert.strictEqual((ownerBody.match(/db\.from\(['"]profiles['"]\)/g) || []).length, 2, 'owner must retain exactly two profiles reads');
 assert(ownerBody.includes('Promise.all'), 'owner must retain parallel profile reads');
 assert(!/\b(?:insert|update|upsert|delete|rpc)\s*\(/i.test(ownerBody), 'owner must contain no database mutation calls');
 assert(!/(?:localStorage|sessionStorage|navigator\.|location\.|fetch\(|notification|permission|subscribe|upload|navigate)/i.test(ownerBody), 'owner must contain no storage, messaging, permission, upload, or navigation side effects');
-assert(sourceFiles.length === 220, 'preparation baseline must audit the current 220 extracted JavaScript modules');
-assert(browserEvidence.includes('Result: PASS') && browserEvidence.includes('detachedOnly=true'), 'detached browser proof evidence must pass');
+assert.strictEqual(sourceFiles.length, 221, 'after-split audit must include 221 extracted JavaScript modules');
+assert.strictEqual((html.match(/async function refreshProfileCounts\(userId\)\s*\{/g) || []).length, 0, 'inline refreshProfileCounts owner must be absent');
+assert.strictEqual((moduleText.match(/window\.refreshProfileCounts\s*=\s*async function\(userId\)\s*\{/g) || []).length, 1, 'external refreshProfileCounts owner must occur once');
+assert.strictEqual((html.match(/src\/features\/refresh-profile-counts-owner\.js/g) || []).length, 1, 'refresh-profile-counts module must be linked exactly once');
+assert(html.indexOf('src/features/admin-appeals-filter-owner.js') < html.indexOf('src/features/refresh-profile-counts-owner.js'), 'refresh-counts module must load after admin-filter owner');
+assert(html.indexOf('src/features/refresh-profile-counts-owner.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'refresh-counts module must load before Notes reactor-list owner');
+assert(browserEvidence.includes('Result: PASS') && browserEvidence.includes('detachedOnly=true'), 'before-split detached browser proof evidence must pass');
+assert(afterBrowserEvidence.includes('Result: PASS') && afterBrowserEvidence.includes('ownerInvoked=false') && afterBrowserEvidence.includes('detachedOnly=true'), 'after-split detached browser proof evidence must pass');
 assert(rollbackEvidence.includes('OWNER_SHA256=3dfa3058a22aff24830574aa139cc8083e159639bc751cd08f6c29a1df91e6a2') && rollbackEvidence.includes('Exact origin/main owner parity: PASS'), 'rollback and parity evidence must pass');
-assert(!fs.existsSync(path.join(repo, 'src', 'features', 'refresh-profile-counts-owner.js')), 'production owner module must not exist before split authorization');
-assert(!html.includes('src/features/refresh-profile-counts-owner.js'), 'production script reference must not exist before split authorization');
+assert.strictEqual(moduleText.split('\n').map((line, index) => /[ \t]$/.test(line) ? index + 1 : null).filter(Boolean).length, 0, 'refresh-counts module must have no trailing whitespace');
 
 function createInjectedRefreshProfileCountsSeam(deps) {
   return async function refreshProfileCounts(userId) {
@@ -103,19 +112,19 @@ async function runCase(name, result, options = {}) {
 
   console.log(JSON.stringify({
     passed: true,
-    parity: { exact: true, ownerSha256: sha256(currentOwner) },
-    static: { sourceModules: sourceFiles.length, ownerCalls, inlineOwner: true, productionModule: false },
+    parity: { exact: true, ownerSha256: sha256(normalizeModuleOwner) },
+    static: { sourceModules: sourceFiles.length, ownerCalls, inlineOwner: false, externalOwner: true },
     seam: { cases: [normal, targetOnly, meOnly, missingDom, failed].map(({ name, events, target, me }) => ({ name, events, target, me })) },
     safeNoMutation: true,
-    productionSplit: 0,
+    productionSplit: 1,
   }, null, 2));
-  console.log('REFRESH_PROFILE_COUNTS_PREPARATION_HARNESS=PASS');
+  console.log('REFRESH_PROFILE_COUNTS_PRODUCTION_SPLIT_HARNESS=PASS');
   console.log('OWNER_BODY_PARITY=PASS');
   console.log('INJECTED_SEAM_PROOF=PASS');
   console.log('READ_ONLY_BOUNDARY=PASS');
   console.log('READ_ONLY_BROWSER_PROOF=PASS');
   console.log('ROLLBACK_EVIDENCE=PASS');
-  console.log('PRODUCTION_SPLIT=NOT_STARTED');
+  console.log('PRODUCTION_SPLIT=1_REFRESH_PROFILE_COUNTS_OWNER');
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;
