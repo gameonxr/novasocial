@@ -9,4 +9,6 @@ SPLIT_COMMIT=29488c3033a59e96a10b8799534e0f928f4f503d
 ROLLBACK_PROCEDURE=git revert 29488c3033a59e96a10b8799534e0f928f4f503d; git push origin Branch2
 ROLLBACK_SCOPE=Restore index.html inline setReportsFilter owner and remove only the external owner script/linkage; preserve neighboring report reads/actions and all protected boundaries.
 PRODUCTION_SPLIT=PASS
-FULL_REGRESSION=PENDING
+FULL_REGRESSION=PASS
+FULL_REGRESSION_GATE=BRANCH2_FULL_REGRESSION_GATE=PASS
+FULL_REGRESSION_VERIFIED_TIP=8ea39bb8e3da673e5d92bd90d807d9dde6a9473e

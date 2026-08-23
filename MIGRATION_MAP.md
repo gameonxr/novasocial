@@ -3634,3 +3634,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter window-owner allowlist correction
 - Added the newly externalized `setReportsFilter` owner to the exact window-assignment allowlist and synchronized the explicit assignment total to 205. The 223-file audit, no-unexpected-name invariant, and all existing global owners remain passing.
+
+## 2026-08-23 — Reports filter production checkpoint complete
+- Finalized the contained `setReportsFilter` production split after `HARNESS_COUNT=267` and `BRANCH2_FULL_REGRESSION_GATE=PASS` at pre-documentation tip `8ea39bb`.
+- Synchronized the contract Full regression row and rollback evidence to PASS. Scope remains UI-only: report reads, report actions, notifications, moderation, and all 19 protected-signature boundaries are unchanged; protected accounting remains 9 approved / 10 blocked.

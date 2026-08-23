@@ -23,7 +23,7 @@ The candidate owns no database query, report status update, notification, modera
 | Rollback | Pre-split Branch2 SHA and restoration procedure pinned | PASS |
 | Production split | Anonymous classic global owner linked after its caller dependencies | PASS |
 | Focused gates | Candidate and neighboring admin reports harnesses pass after split | PASS |
-| Full regression | Clean pushed Branch2 tip after split | Pending |
+| Full regression | Clean pushed Branch2 tip after split | PASS |
 
 ## Safe boundary
 
