@@ -3713,3 +3713,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter realtime audit baseline correction
 - Synchronized realtime-subscription lifecycle auditing to 224 files (index plus 223 extracted JavaScript modules) after adding the verification-filter owner; all 10 channel registrations, 21 cleanups, and protected PushManager distinction remain passing.
+
+## 2026-08-23 — Verification filter refresh-counts audit baseline correction
+- Synchronized refresh-profile-counts after-split auditing to 223 extracted JavaScript modules after adding the verification-filter owner; exact owner parity, read-only behavior, ordering, browser evidence, and rollback checks remain passing.
