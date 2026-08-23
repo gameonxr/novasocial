@@ -3698,3 +3698,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter local-asset baseline correction
 - Synchronized static local HTML asset-reference auditing to 244 unique local references after adding the verification-filter script. All references resolve and manifest/service-worker root assets remain present.
+
+## 2026-08-23 — Verification filter module-reference baseline correction
+- Synchronized module-script reference auditing to 223 extracted JavaScript modules after adding the verification-filter owner. All modules remain referenced exactly once, core-before-inline order remains enforced, and protected DMs/Reels boundaries remain unchanged.
