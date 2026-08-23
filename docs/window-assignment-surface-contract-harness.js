@@ -20,7 +20,7 @@ const expectedNames = [
   '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'loadMoodFeed',
   'loadMoreFeedPosts', 'loadNoteReactorsList', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'refreshProfileCounts', 'replyToId', 'replyToText',
-  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', '_applyReelsVideoWindowing', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter',
+  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', '_applyReelsVideoWindowing', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter', 'setVerifyFilter',
 ].sort();
 
 function collectSourceFiles(dir, files = []) {
@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 223, 'index.html plus 222 extracted modules must be audited after the reports filter owner and the nine approved protected owner groups plus the Reels windowing helper');
-assert.strictEqual(matches.length, 205, 'application surface must retain 205 explicit window assignments after the reports filter split');
+assert.strictEqual(files.length, 224, 'index.html plus 223 extracted modules must be audited after the verification filter owner and the nine approved protected owner groups plus the Reels windowing helper');
+assert.strictEqual(matches.length, 206, 'application surface must retain 206 explicit window assignments after the verification filter split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');

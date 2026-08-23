@@ -3722,3 +3722,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter storage audit baseline correction
 - Synchronized storage-key surface auditing to 224 files (index plus 223 extracted JavaScript modules) after adding the verification-filter owner; the 29-key literal allowlist, dynamic sticker family, and zero-session-storage boundary remain passing.
+
+## 2026-08-23 — Verification filter window-surface baseline correction
+- Added `setVerifyFilter` to the explicit window-assignment allowlist and synchronized the audited inventory to 224 files and 206 assignments (107 unique names); no unexpected or missing globals were introduced.
