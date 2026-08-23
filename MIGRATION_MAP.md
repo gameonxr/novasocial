@@ -4114,3 +4114,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `adminTabVerify(content)` boundary rejection
 - Audited the next marker-clean admin renderer. It creates verification filters, renders identity-proof links and applicant profiles, and exposes approve/reject controls for pending verification requests.
 - The verification contract explicitly keeps identity-proof handling, verification-status RPCs, notifications, authorization, and account-state updates inline. This is a protected moderation/account surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `adminTabApprovals(content)` boundary rejection
+- Audited the next marker-clean admin renderer. It reads pending `ban_approvals`, enriches moderator and target profiles, renders recommendation reasons, and exposes approve-ban and reject actions carrying approval and target identities.
+- The admin approvals contract keeps ban approval/rejection, secure ban RPCs, approval-record updates, notifications, authorization, and moderation state inline. This is a protected moderation/account surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
