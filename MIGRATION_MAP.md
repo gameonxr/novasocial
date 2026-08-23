@@ -3583,3 +3583,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter dependency-order baseline correction
 - Synchronized the dependency-loading-order audit’s final-eleven window after adding `set-reports-filter-owner.js`: the actual trailing sequence now begins with `sync-local-deletion-fallback.js`, followed by Push, admin appeals, reports filter, refresh counts, Notes owners, Story editor, Reels windowing, and like effects. Classic ordering and all upstream dependency constraints remain passing.
+
+## 2026-08-23 — Reports filter event-listener baseline correction
+- Synchronized the event-listener boundary audit to 222 extracted JavaScript modules after the reports-filter owner split. Listener registration totals, zero extracted cleanup registrations, index event boundaries, and service-worker lifecycle registrations remain unchanged and passing.
