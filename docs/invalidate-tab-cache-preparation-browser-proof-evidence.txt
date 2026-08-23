@@ -1,0 +1,19 @@
+DATE=2026-08-23
+BROWSER_SCOPE=Sandbox detached local synthetic HTML only
+APPLICATION_LOADED=false
+ACCOUNT_SESSION=false
+LIVE_NOVASOCIAL_LOADED=false
+
+RESULT=PASS
+TARGET_REMOVED=true
+MISSING_ENTRY_NOOP=true
+EVENTS=delete:profile,delete:missing
+REMAINING_KEYS=home,explore
+DATABASE_CALLS=0
+NETWORK_CALLS=0
+NAVIGATION_MUTATIONS=0
+ACCOUNT_MUTATIONS=0
+DETACHED_ONLY=true
+OWNER_INVOKED=true
+
+Boundary: The proof used an in-memory synthetic cache object and no NovaSocial application page, login state, live data, account control, database, network, navigation, or persistent-storage mutation.

@@ -3816,3 +3816,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `toggleSVMute()` checkpoint complete
 - Final contract and rollback evidence now record PASS for the first exhaustive gate at `5cc09bf6e1c8cb178601d6ef2157b872bd51eca9` and the final docs-tip gate at `efe458b021a2fd56647b0b7c719be893c4f557fe`. The candidate remains a single anonymous classic `window.toggleSVMute` owner with detached synthetic browser proof, exact normalized parity, and zero live side effects.
 - Final completion commit is intentionally followed by one more clean exhaustive Branch2 gate; only after that gate passes is this checkpoint considered closed. Protected accounting remains 19 signatures, nine approved extracted systems, and ten blocked high-risk systems.
+
+## 2026-08-23 — `invalidateTabCache(tab)` preparation checkpoint
+- Audited `invalidateTabCache(tab)` as a contained in-memory UI-cache invalidator with exact normalized origin parity (`19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127`), eight existing callers, no stateful side effects, and a passing injected seam.
+- Detached synthetic browser proof passes for target deletion and missing-entry no-op with zero database, network, navigation, or account mutations. Production split remains pending and protected boundaries remain unchanged.
