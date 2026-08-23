@@ -3656,3 +3656,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter final-readiness baseline correction
 - Synchronized final readiness to 223 JavaScript modules, 212 feature modules, 225 balanced script tags, 224 external scripts, and 267/268/264/263 documentation, harness, standard-contract, and standard-harness files after the verification-filter split. Clean-tree, immutable-main, classic-order, protected-boundary, and unresolved-seam assertions remain enforced.
+
+## 2026-08-23 — Verification filter classic-script baseline correction
+- Synchronized classic-script compatibility to 225 script tags and 223 extracted JavaScript files after adding the verification-filter owner. No module tags, async/defer attributes, or top-level import/export syntax were introduced.
