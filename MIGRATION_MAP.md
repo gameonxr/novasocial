@@ -3559,3 +3559,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Reports filter production split
 - Extracted only the contained UI-only `setReportsFilter(filter)` owner to `src/features/set-reports-filter-owner.js` as anonymous `window.setReportsFilter = function(f){...}` and linked it once after the admin-appeals filter owner. Exact normalized origin/main parity, detached before/after browser proof, four-filter injected seam, focused admin-reports harness, and zero inline owner declarations pass. `adminTabReports()`, `loadReportsList()`, report detail, resolve/dismiss, notification, moderation, and account boundaries remain inline and unchanged; full regression is pending.
 - Updated the admin-reports test harness to load the external owner through a test-only global shim; no production behavior or protected mutation boundary changed.
+
+## 2026-08-23 — Reports filter script-total baseline correction
+- Synchronized the existing admin-appeals production-split harness to the actual post-reports-filter totals: 224 balanced script tags and 223 external scripts. The admin-appeals owner boundary, exact parity, read-only seam, and mutation-owner protections remain unchanged and passing.
