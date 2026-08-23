@@ -3485,3 +3485,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts clipboard-audit baseline correction
 - Updated clipboard interaction auditing from 221 to 222 files after adding the refresh-counts module; seven clipboard writes, one legacy fallback, and all copy-surface guards remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts named-function inventory correction
+- Corrected cross-module named top-level function inventory from 708 to 707 because the moved `refreshProfileCounts` owner is intentionally anonymous as `window.refreshProfileCounts`; the 222-file audit and zero-duplicate invariant remain passing.
