@@ -3796,3 +3796,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` refresh-counts audit baseline correction
 - Synchronized refresh-profile-counts production-contract accounting to 224 extracted JavaScript modules after adding the story-viewer mute owner; exact owner parity, caller, read-only behavior, order, evidence, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` source-boundary baseline correction
+- Synchronized source-boundary hygiene auditing to 242 extracted JS/CSS files after adding the story-viewer mute owner; encoding, embedded-tag, style-container, candidate, and protected checks remain passing.
