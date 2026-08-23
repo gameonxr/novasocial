@@ -3647,3 +3647,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Verification filter production split
 - Extracted only `setVerifyFilter(f)` into `src/features/set-verify-filter-owner.js` as one anonymous classic `window.setVerifyFilter` owner and linked it after the reports-filter owner and before refresh-counts.
 - Exact normalized owner parity, four-filter synthetic seam behavior, missing-control tolerance, detached after-split browser proof, and neighboring admin-verification behavior pass. Verification reads, identity-proof rendering, approve/reject actions, notifications, moderation, and account boundaries remain inline and unchanged.
+
+## 2026-08-23 — Verification filter admin-appeals baseline correction
+- Synchronized the admin-appeals production harness to 225 balanced script tags and 224 external scripts after adding the verification-filter owner. Appeal reads, approve/reject actions, browser-safe evidence, and protected boundaries remain unchanged and passing.
