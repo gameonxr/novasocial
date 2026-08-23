@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleDirs = ['src/core', 'src/components', 'src/features'];
 const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
 
-assert.strictEqual(modules.length, 218, 'all 218 extracted JavaScript modules must remain present after Note deletion split');
+assert.strictEqual(modules.length, 219, 'all 219 extracted JavaScript modules must remain present after Notes reactor-list split');
 
 const missing = [];
 const duplicates = [];
@@ -26,7 +26,7 @@ const corePositions = modules.filter(modulePath => modulePath.startsWith('src/co
 const inlinePosition = html.indexOf('<script>');
 assert(corePositions.every(position => position >= 0 && position < inlinePosition), 'all core modules must load before inline application code');
 
-const trailing = ['nova-init.js', 'spawn-like-particles.js', 'sync-local-deletion-fallback.js', 'push-settings.js', 'note-viewer-owners.js', 'note-deletion-owner.js', 'story-editor-owners.js', 'like-effects.js'].map(name => html.lastIndexOf(`<script src="src/features/${name}"></script>`));
+const trailing = ['nova-init.js', 'spawn-like-particles.js', 'sync-local-deletion-fallback.js', 'push-settings.js', 'note-reactors-list-owner.js', 'note-viewer-owners.js', 'note-deletion-owner.js', 'story-editor-owners.js', 'reels-video-windowing.js', 'like-effects.js'].map(name => html.lastIndexOf(`<script src="src/features/${name}"></script>`));
 assert(trailing.every(position => position >= 0), 'required trailing script references must remain present');
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order must remain unchanged');
 assert(html.includes('function renderDMs('), 'protected DM renderer must remain inline');

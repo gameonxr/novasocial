@@ -3349,3 +3349,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list local-asset baseline correction
 - Updated the static local HTML asset-reference inventory from 239 to 240 after adding the Notes reactor-list script tag; all references still resolve and no missing assets were introduced.
+
+## 2026-08-23 — Notes reactor-list module-reference baseline correction
+- Updated module-script reference integrity to 219 extracted modules and expanded the required trailing order to include `note-reactors-list-owner.js` before Note viewer, Reels helper, and caller scripts; missing and duplicate reference checks pass.
