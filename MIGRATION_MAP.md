@@ -3628,3 +3628,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter source-boundary baseline correction
 - Synchronized source-boundary hygiene to 240 extracted JavaScript/CSS files after adding the reports-filter owner. UTF-8 round-trip, NUL-byte, line-ending, and embedded script/style boundary checks remain passing.
+
+## 2026-08-23 — Reports filter storage-key baseline correction
+- Synchronized storage-key surface auditing to 223 files after adding the reports-filter owner. The 29-key localStorage allowlist, zero sessionStorage references, dynamic sticker family, and all storage boundaries remain unchanged and passing.
