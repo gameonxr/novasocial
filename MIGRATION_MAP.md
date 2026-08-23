@@ -3574,3 +3574,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter collision-audit baseline correction
 - Synchronized the cross-module function-collision audit to 223 audited files and 706 unique top-level function names after moving `setReportsFilter` to its anonymous external owner. Duplicate-name count remains zero and no function-boundary behavior changed.
+
+## 2026-08-23 — Reports filter lexical-audit baseline correction
+- Synchronized the cross-module lexical-collision audit to 223 audited files after the reports-filter owner split. The 117 top-level lexical names and zero-duplicate invariant remain unchanged and passing.
