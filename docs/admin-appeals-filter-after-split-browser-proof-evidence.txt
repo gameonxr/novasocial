@@ -1,0 +1,13 @@
+ADMIN_APPEALS_FILTER_AFTER_SPLIT_BROWSER_PROOF=PASS
+DATE=2026-08-23
+BRANCH=Branch2
+URL=http://127.0.0.1:4173/?admin_appeals_filter_gate=20260823
+SCOPE=Read-only local shell inspection; no admin panel opened and no live query, storage, account, navigation, notification, report, appeal, message, follow, reaction, upload, download, permission, or state-changing action performed.
+EXTERNAL_OWNER_TYPE=function
+EXTERNAL_OWNER_ANONYMOUS=true
+OWNER_CONTAINS_RELOAD_DELEGATION=true
+SCRIPT_LOADED=true
+INLINE_NAMED_OWNER_COUNT=0
+STATEFUL_CONTROLS_INVOKED=false
+LIVE_QUERIES_INVOKED=false
+EVIDENCE_SOURCE=/home/ubuntu/console_outputs/exec_result_2026-08-23_05-58-09_425.txt

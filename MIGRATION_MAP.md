@@ -3389,3 +3389,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — Admin appeals filter candidate preparation
 - Selected `setAppealsFilter(f)` as the next contained read-only candidate: exact origin/main owner parity, SHA-256 `a3b2effec6514e6d5a6b951e7d0295e81064145714d70d46654fd442e8bcdef1`, no stateful boundary markers, four-filter injected seam, and detached synthetic-DOM browser proof all pass.
 - Added the candidate contract, preparation harness, pre-split browser proof, and pinned rollback evidence. Production code remains inline; `loadAppealsList()`, `adminApproveAppeal()`, and `adminRejectAppeal()` remain unchanged and protected from this preparation.
+
+## 2026-08-23 — Admin appeals filter split harness integration correction
+- Updated the existing admin-appeals tab harness to load the new external `window.setAppealsFilter` classic-script owner through its test-only global shim; candidate seam, admin appeals rendering, filter behavior, and mutation-owner isolation all pass.

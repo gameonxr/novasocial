@@ -47,7 +47,8 @@ async function runHarness() {
     const end = source.indexOf('\nasync function adminApproveAppeal(', start);
     assert(start >= 0 && end > start, 'appeals tab function boundary must remain present and ordered');
     const functionBlock = source.slice(start, end);
-    eval(`let _appealsFilter = 'pending'; ${functionBlock}; global.adminTabAppeals = adminTabAppeals; global.setAppealsFilter = setAppealsFilter; global.loadAppealsList = loadAppealsList;`);
+    const moduleOwner = fs.readFileSync('/home/ubuntu/novasocial/src/features/admin-appeals-filter-owner.js', 'utf8');
+    eval(`let _appealsFilter = 'pending'; const window = global; ${functionBlock}; ${moduleOwner}; global.adminTabAppeals = adminTabAppeals; global.setAppealsFilter = window.setAppealsFilter; global.loadAppealsList = loadAppealsList;`);
 
     const appeal = {
       id: 'a1', user_id: 'u1', appeal_reason: 'Please review <reason>', status: 'pending', admin_notes: null,

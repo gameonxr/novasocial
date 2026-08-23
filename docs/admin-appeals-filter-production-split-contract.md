@@ -6,9 +6,9 @@
 
 ## Decision
 
-The `setAppealsFilter(f)` owner is a contained read-only admin UI boundary. It updates the local `_appealsFilter` value, restyles the four existing appeal-filter controls, and delegates the resulting read to the existing `loadAppealsList()` owner. It does not insert, update, upsert, delete, call RPC, send notifications, upload, request permissions, mutate storage, navigate, or approve or reject an appeal.
+The `setAppealsFilter(f)` owner is a contained read-only admin UI boundary. This candidate has now been extracted under the required classic-script global contract. It updates the local `_appealsFilter` value, restyles the four existing appeal-filter controls, and delegates the resulting read to the existing `loadAppealsList()` owner. It does not insert, update, upsert, delete, call RPC, send notifications, upload, request permissions, mutate storage, navigate, or approve or reject an appeal.
 
-The larger admin appeals surface remains outside this candidate. In particular, `loadAppealsList()` remains the existing inline read owner, while `adminApproveAppeal()` and `adminRejectAppeal()` remain inline state-changing owners. The split, if later authorized by all gates, must preserve the classic-script global `window.setAppealsFilter` API and must not alter those neighboring owners.
+The larger admin appeals surface remains outside this candidate. In particular, `loadAppealsList()` remains the existing inline read owner, while `adminApproveAppeal()` and `adminRejectAppeal()` remain inline state-changing owners. The completed split preserves the classic-script global `window.setAppealsFilter` API and does not alter those neighboring owners.
 
 ## Independent seam
 
@@ -19,12 +19,12 @@ The candidate harness defines an injected filter seam with local state, filter-c
 | Gate | Required evidence | Status |
 |---|---|---|
 | Exact owner parity | Candidate body SHA-256 equals the `origin/main` baseline | PASS |
-| API compatibility | Inline owner remains during preparation; later split must expose one anonymous `window.setAppealsFilter` owner | Pending split |
-| Independent seam | Injected filter/style/reload proof passes all four filters and missing-control branch | Pending |
-| Read-only browser proof | Local synthetic admin-filter DOM proof with no live admin action | Pending |
-| Rollback | Pre-split Branch2 commit and revert procedure are pinned | Pending |
-| Focused gates | Candidate harness and affected static audits pass | Pending split |
-| Full regression | Clean pushed Branch2 tip passes the complete gate | Pending split |
+| API compatibility | Inline owner absent; one anonymous `window.setAppealsFilter` owner is loaded from the external classic script | PASS |
+| Independent seam | Injected filter/style/reload proof passes all four filters and missing-control branch | PASS |
+| Read-only browser proof | Local synthetic admin-filter DOM proof with no live admin action | PASS |
+| Rollback | Pre-split Branch2 commit and revert procedure are pinned | PASS |
+| Focused gates | Candidate harness and affected static audits pass | PASS |
+| Full regression | Clean pushed Branch2 tip passes the complete gate | Pending |
 
 ## Rollback
 
