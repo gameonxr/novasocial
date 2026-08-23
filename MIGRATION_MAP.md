@@ -3851,3 +3851,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` footer-order baseline correction
 - Updated the dependency-loading contract’s twelve-script tail to include `invalidate-tab-cache-owner.js` between the mute and verification owners, with `push-settings.js` moving just outside that tail; classic ordering and protected boundaries remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` event-listener audit baseline correction
+- Synchronized event-listener boundary auditing to 225 extracted JavaScript modules after adding the external cache invalidator; listener-registration, cleanup, candidate, verification, and protected checks remain passing.
