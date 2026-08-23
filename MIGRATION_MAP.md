@@ -3476,3 +3476,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts admin-harness baseline correction
 - Updated the admin-filter production harness to 223 balanced script tags and 222 external scripts after adding the refresh-profile-counts owner; appeal reload and approve/reject mutation boundaries remain protected and passing.
+
+## 2026-08-23 — Refresh profile counts final-readiness baseline correction
+- Synchronized final-readiness totals for the refresh-profile-counts split: 221 JavaScript modules, 210 feature modules, 223 balanced script tags, 222 external scripts, 265 Markdown documents, 266 harness files, 262 standard contracts, and 261 standard contract harnesses. Protected owner and unresolved-seam predicates remain unchanged.
