@@ -4028,3 +4028,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` storage-key baseline correction
 - Synchronized storage-key-surface auditing to 227 combined scripts after adding the crop-preview owner; the 29-key allowlist, zero sessionStorage use, and dynamic sticker family remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` window-surface baselines
+- Synchronized window-assignment auditing to 227 combined scripts and 209 explicit assignments after adding the anonymous crop-preview owner; admitted `confirmCropPreview` to the sorted allowlist, yielding 110 unique names with no unexpected or missing entries.

@@ -17,7 +17,7 @@ const expectedNames = [
   '_scheduleTime', '_segmentStartSec', '_selectedFilter', '_selfProfileSub', '_stickerCid',
   '_stickerUrls', '_storiesCleanedUp', '_storyFile', '_svMuted', '_svSlideDir', '_tttBoard',
   '_tttTurn', '_userProfilePosts', '_userProfileReels', '_vanishMode', '_videoFullDuration',
-  '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'currentMood',
+  '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'confirmCropPreview', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'invalidateTabCache', 'loadMoodFeed',
   'loadMoreFeedPosts', 'loadNoteReactorsList', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'refreshProfileCounts', 'replyToId', 'replyToText',
   'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', '_applyReelsVideoWindowing', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter', 'setVerifyFilter', 'toggleSVMute',
@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 226, 'index.html plus 225 extracted modules must be audited after the invalidateTabCache owner, the nine approved protected owner groups, and the Reels windowing helper');
-assert.strictEqual(matches.length, 208, 'application surface must retain 208 explicit window assignments after the invalidateTabCache split');
+assert.strictEqual(files.length, 227, 'index.html plus 226 extracted modules must be audited after the confirmCropPreview owner and the established owner groups');
+assert.strictEqual(matches.length, 209, 'application surface must retain 209 explicit window assignments after the confirmCropPreview split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
