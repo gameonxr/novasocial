@@ -3613,3 +3613,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter Notes-reactor baseline correction
 - Synchronized the Notes reactor-list production harness to 222 source modules after adding the reports-filter owner. Notes owner parity, ordering, injected read-only seam, rollback evidence, and all protected-system accounting remain unchanged and passing.
+
+## 2026-08-23 — Reports filter object-URL baseline correction
+- Synchronized object-URL lifecycle auditing to 223 audited files after the reports-filter split. Object-URL creation/revocation totals, download cleanup, compression cleanup, and preview ownership remain unchanged and passing.
