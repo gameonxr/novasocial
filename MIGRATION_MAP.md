@@ -3434,3 +3434,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter interval-audit baseline correction
 - Updated interval-lifecycle auditing from 220 to 221 extracted modules after the admin-filter addition; interval creation, cleanup, managed handles, and Nova Universe timer guards remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter local-asset baseline correction
+- Updated static local HTML asset-reference auditing from 240 to 241 references after adding the admin-filter script; all references still resolve and manifest/service-worker availability remains passing.
