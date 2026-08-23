@@ -3742,3 +3742,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` classic-script baseline correction
 - Synchronized classic-script compatibility accounting to 226 HTML script tags and 224 extracted JavaScript files after adding the anonymous toggle owner; module/defer/async syntax remains absent and candidate/protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` clipboard audit baseline correction
+- Synchronized clipboard-interaction auditing to 225 files (index plus 224 extracted JavaScript modules) after adding the story-viewer mute owner; clipboard write and fallback invariants remain passing.
