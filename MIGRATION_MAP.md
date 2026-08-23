@@ -3274,3 +3274,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reels inline-declaration baseline correction
 - Updated the inline application declaration baseline from 243 to 242 after moving the contained Reels windowing helper; all remaining protected declarations stay inline and the unresolved `forwardMessage` caller-only seam remains enforced.
+
+## 2026-08-23 — Reels local-asset inventory baseline correction
+- Updated the local HTML asset-reference inventory from 238 to 239 for the added Reels windowing script reference; all local references still resolve and root manifest/service-worker checks pass.
+- No additional runtime owner or live account/data action was introduced.
