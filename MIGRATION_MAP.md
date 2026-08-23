@@ -4050,3 +4050,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `confirmCropPreview()` status documentation closed
 - Closed the production contract and rollback evidence with the docs-tip exhaustive PASS at `cba72ee637723f98aae9ad6017698dab6ec640f3` (`HARNESS_COUNT=274`); focused crop-preview, neighboring tab-cache, and protected-boundary checks also pass.
 - The mandated final completion gate remains required from this completion-documentation tip; protected accounting remains 19 signatures, 9 approved extracted owners, and 10 blocked high-risk systems.
+
+## 2026-08-23 — Next contained UI-only candidate audit after `confirmCropPreview()`
+- Audited `destroyReelsPersistentContainer()` against immutable `origin/main`: exact normalized parity, owner hash `4bdbdc65d45a33503ce5087871a28474de606a0b4ece8cf9823fd59e6548a4df`, no pre-existing feature owner, no stateful markers in the body, and DOM plus `_savedReelIndex` dependencies.
+- Rejected this candidate for the current cycle because the Reels persistence contract explicitly keeps persistent-container ownership inline and its callers sit in account-scoped reset and post create/delete flows; no production behavior or protected boundary changed.
