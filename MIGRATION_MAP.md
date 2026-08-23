@@ -4025,3 +4025,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` source-boundary baseline correction
 - Synchronized source-boundary hygiene auditing to 244 extracted JavaScript/CSS files after adding the crop-preview owner; executable/style boundary and violation checks remain passing.
+
+## 2026-08-23 — `confirmCropPreview()` storage-key baseline correction
+- Synchronized storage-key-surface auditing to 227 combined scripts after adding the crop-preview owner; the 29-key allowlist, zero sessionStorage use, and dynamic sticker family remain unchanged.
