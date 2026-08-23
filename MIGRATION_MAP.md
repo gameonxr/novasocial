@@ -3562,3 +3562,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Reports filter script-total baseline correction
 - Synchronized the existing admin-appeals production-split harness to the actual post-reports-filter totals: 224 balanced script tags and 223 external scripts. The admin-appeals owner boundary, exact parity, read-only seam, and mutation-owner protections remain unchanged and passing.
+
+## 2026-08-23 — Reports filter final-readiness baseline correction
+- Synchronized final readiness after the contained reports-filter split to 222 extracted JavaScript modules, 211 feature modules, 224 balanced script tags, 223 external scripts, 266 Markdown documents, 267 harness files, 263 standard contracts, and 262 contract harnesses. The protected owner inventory and unresolved documented seam remain unchanged.
