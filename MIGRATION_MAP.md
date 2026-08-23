@@ -3331,3 +3331,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list event-listener baseline correction
 - Updated the event-listener boundary audit from 218 to 219 extracted JavaScript modules after the Notes reactor-list split; listener registration and cleanup counts remain unchanged and passing.
+
+## 2026-08-23 — Notes reactor-list extracted-file hygiene baseline correction
+- Updated extracted-file hygiene from 253 to 254 source files after the approved Notes reactor-list module addition; empty-file and trailing-whitespace checks remain passing.
