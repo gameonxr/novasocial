@@ -3515,3 +3515,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts inline-declaration baseline correction
 - Updated inline-declaration closure from 240 to 239 named declarations after moving `refreshProfileCounts` to an anonymous external owner; protected declaration coverage and unresolved-caller guards remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts interval-audit baseline correction
+- Updated interval-lifecycle auditing from 221 to 222 files after adding the refresh-counts module; seven interval registrations, ten cleanup calls, and all managed timer handles remain unchanged and passing.
