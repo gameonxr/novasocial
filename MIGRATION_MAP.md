@@ -3325,3 +3325,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list deletion-fallback baseline correction
 - Synchronized the existing deletion-fallback production harness to 221 balanced script tags, 220 external scripts, and 9 approved protected signatures after the read-only Notes reactor-list split; deletion-fallback parity, browser proof, and rollback checks remain passing.
+
+## 2026-08-23 — Notes reactor-list dependency-order baseline correction
+- Updated the dependency-order harness from the final eight to final nine scripts, placing `note-reactors-list-owner.js` after Push settings and before Note viewer callers; classic-script and stylesheet ordering checks remain passing.
