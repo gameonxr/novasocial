@@ -3503,3 +3503,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts extracted-file hygiene baseline correction
 - Updated extracted-file hygiene from 255 to 256 source files after adding the refresh-counts module; empty-file and trailing-whitespace checks remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts high-risk-audit baseline correction
+- Updated the authoritative high-risk extraction audit from 220 to 221 extracted JavaScript modules after the contained refresh-counts split; 19 protected signatures, 9 approved owners, and 10 remaining blocked systems remain unchanged and passing.
