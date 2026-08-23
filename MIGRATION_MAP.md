@@ -3671,3 +3671,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter deletion-fallback baseline correction
 - Synchronized the approved deletion-fallback split harness to 225 balanced script tags and 224 external scripts after adding the verification-filter owner. Deletion-fallback parity, rollback proof, protected accounting, and cleanup boundaries remain unchanged and passing.
+
+## 2026-08-23 — Verification filter dependency-order baseline correction
+- Synchronized the dependency-loading audit’s fixed trailing-eleven sequence after adding `set-verify-filter-owner.js`: `push-settings`, admin appeals, reports filter, verification filter, refresh-counts, Notes owners, Story editor, Reels windowing, and like effects remain in the required order.
