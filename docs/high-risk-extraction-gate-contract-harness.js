@@ -50,7 +50,7 @@ const requiredCoverage = [
   'note-reactors-list-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 222, '222 extracted JavaScript modules must remain present after reports filter split');
+assert.strictEqual(sourceFiles.length, 223, '223 extracted JavaScript modules must remain present after verification filter split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
