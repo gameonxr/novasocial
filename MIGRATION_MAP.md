@@ -3225,3 +3225,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Reloaded the local Branch2 preview at `http://127.0.0.1:4173/` in the persisted authenticated browser session; NovaSocial title, feed, and read-only navigation shell rendered successfully.
 - Observed the Push banner controls but did not click Enable or dismiss; no permission prompt, subscription, message, reaction, follow, upload, download, account switch, deletion, or intentional storage/database mutation was performed.
 - This was a read-only smoke check after documentation/harness-only changes; no production runtime behavior changed. Evidence is retained at `/tmp/browser-smoke-2026-08-23-after-global-proof.txt`.
+
+## 2026-08-23 — Remaining-owner eligibility re-audit
+- Rechecked the pushed `Branch2` tip, protected-signature matrix, aggregate injected-proof inventory, and full-gate output after the deadline-focused work.
+- Confirmed that the eight approved owners remain the only production splits and that all 11 remaining protected owners still require independent before/after browser proof, rollback evidence, parity, and readiness approval.
+- Preserved production behavior and made no speculative owner move; current aggregate preparation proofs remain passing and `origin/main` remains immutable.
