@@ -3878,3 +3878,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` Notes reactor-list baseline correction
 - Synchronized the Notes reactor-list production contract to 225 source modules after adding the cache invalidator owner; owner ordering, seam behavior, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` object-URL lifecycle baseline correction
+- Synchronized object-URL lifecycle auditing to 226 combined files after adding the cache invalidator owner; creation/revocation counts, download cleanup, candidate, and protected checks remain passing.
