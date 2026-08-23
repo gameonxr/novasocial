@@ -67,11 +67,14 @@ const aggregatePreparationProofs = [
   ['docs/voice-recording-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
   ['docs/notes-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOF=PASS'],
   ['docs/stories-seam-preparation-contract-harness.js', 'INJECTED_SEAM_PROOFS=6_PASS'],
+  ['docs/push-permission-contract-harness.js', 'createInjectedPushPermissionSeam'],
 ];
 for (const [file, marker] of aggregatePreparationProofs) {
   const text = fs.readFileSync(path.join(repo, file), 'utf8');
   assert(text.includes(marker), `aggregate preparation proof must remain passing: ${file}`);
 }
+const pushPermissionHarness = fs.readFileSync(path.join(repo, 'docs', 'push-permission-contract-harness.js'), 'utf8');
+assert(pushPermissionHarness.includes("JSON.stringify(seam.calls) !== JSON.stringify(['evaluate', 'request'])"), 'Push permission injected seam dispatch proof must remain explicit');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-contract.md')), 'Note viewer contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-proof-evidence.txt')), 'Note after-split browser proof must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
@@ -93,5 +96,5 @@ console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
 console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
 console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_AND_STORY_PASS_REMAINING_11');
-console.log('AGGREGATE_PREPARATION_INJECTED_PROOFS=6_PASS');
+console.log('AGGREGATE_PREPARATION_INJECTED_PROOFS=7_PASS');
 console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS');

@@ -3215,3 +3215,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Strengthened `docs/high-risk-seam-readiness-matrix-contract-harness.js` to enforce six aggregate test-only injected seam inventories for DMs, Reels, Calls/WebRTC, voice recording, Notes, and Stories.
 - Updated `docs/high-risk-seam-readiness-matrix-contract.md` to record the six passing aggregate inventories while retaining the 8/19 approved split checkpoint and 11-system direct-extraction block.
 - No application/runtime behavior changed; no live account, media, realtime, permission, upload, message, or deletion action was performed.
+
+## 2026-08-23 — Global Push permission injected-proof inventory
+- Added the passing test-only `createInjectedPushPermissionSeam` proof to the global readiness matrix inventory, bringing the enforced injected-proof count to seven.
+- Updated the matrix prose to include Push permission while preserving the two approved Push settings owners and the 11-system direct-extraction block.
+- No browser permission prompt, subscription, account, service-worker, or runtime application behavior was invoked or changed.
