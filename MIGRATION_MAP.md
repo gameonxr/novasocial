@@ -3425,3 +3425,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter readiness-matrix baseline correction
 - Updated the readiness-matrix audit from 219 to 220 extracted modules after the admin-filter addition; protected signature ownership, reactor-list evidence, and the 10-system direct-extraction block remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter index-integrity baseline correction
+- Updated index HTML integrity totals to 222 balanced script tags and 221 external scripts after adding the admin-filter owner; doctype, single-inline-app-script, body/html closure, and protected DMs/Reels markers remain unchanged and passing.
