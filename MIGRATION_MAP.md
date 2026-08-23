@@ -3319,3 +3319,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list function-inventory baseline correction
 - Updated the cross-module collision audit’s named-function inventory from 710 to 709 after moving the anonymous-window reactor-list owner; audited files remain 220 and duplicate-name checks pass.
+
+## 2026-08-23 — Notes reactor-list lexical-audit baseline correction
+- Updated the cross-module lexical-collision audit from 219 to 220 audited files (`index.html` plus 219 extracted scripts) after the reactor-list module addition; lexical-name and duplicate-name checks remain passing.
