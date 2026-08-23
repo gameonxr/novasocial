@@ -3494,3 +3494,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts deletion-fallback baseline correction
 - Synchronized deletion-fallback production totals to 223 balanced script tags and 222 external scripts after adding the refresh-counts owner; canonical deletion-fallback parity, rollback, browser, and protected-owner checks remain passing.
+
+## 2026-08-23 — Refresh profile counts dependency-order baseline correction
+- Updated dependency-loading order to audit the actual eleven-script footer sequence after adding `refresh-profile-counts-owner.js` between the admin-filter and Notes owners; stylesheet, core/component, and classic-script ordering guards remain passing.
