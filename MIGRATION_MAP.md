@@ -3824,3 +3824,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `invalidateTabCache(tab)` production split
 - Extracted only the exact in-memory UI-cache invalidator into `src/features/invalidate-tab-cache-owner.js` as anonymous classic global `window.invalidateTabCache`, removed its named inline owner, and linked the module once between the mute and verification owners. The normalized owner hash is `19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127`.
 - The eight existing callers, target/missing-entry injected seam, detached synthetic after-split browser proof, and candidate/protected focused checks pass. No live-account or live-mutation action was used; exhaustive regression remains pending.
+
+## 2026-08-23 — `invalidateTabCache(tab)` admin script baseline correction
+- Synchronized admin-appeals production-contract script accounting to 227 opening tags, 227 closing tags, and 226 external scripts after adding the in-memory cache owner; appeal mutation boundaries, candidate, verification, and protected checks remain passing.
