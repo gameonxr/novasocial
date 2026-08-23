@@ -3716,3 +3716,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter refresh-counts audit baseline correction
 - Synchronized refresh-profile-counts after-split auditing to 223 extracted JavaScript modules after adding the verification-filter owner; exact owner parity, read-only behavior, ordering, browser evidence, and rollback checks remain passing.
+
+## 2026-08-23 — Verification filter source-boundary baseline correction
+- Synchronized source-boundary hygiene auditing to 241 extracted JavaScript/CSS files after adding the verification-filter owner; UTF-8, line-ending, embedded-tag, and violation checks remain passing.
