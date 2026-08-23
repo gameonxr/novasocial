@@ -3944,3 +3944,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` final-readiness external-script baseline correction
 - Synchronized final-readiness auditing to 227 external script tags after adding the crop-preview owner; classic ordering and protected boundaries remain unchanged.
+
+## 2026-08-23 — `confirmCropPreview()` final-readiness Markdown baseline correction
+- Synchronized final-readiness auditing to 272 Markdown documents after publishing the crop-preview preparation contract; no protected boundary or unrelated production behavior changed.
