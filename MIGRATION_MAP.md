@@ -3689,3 +3689,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter index-integrity baseline correction
 - Synchronized index-HTML tag integrity to 225 opening tags, 225 closures, and 224 external scripts after adding the verification-filter owner. The single inline application script, HTML structure, and protected DMs/Reels boundaries remain unchanged and passing.
+
+## 2026-08-23 — Verification filter inline-declaration baseline correction
+- Synchronized inline-declaration auditing to 237 named function declarations after extracting `setVerifyFilter`. The 19-name protected set, remaining protected inline boundaries, and unresolved `forwardMessage` seam remain unchanged and passing.
