@@ -3926,3 +3926,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `confirmCropPreview()` production split
 - Moved only the exact local crop-preview owner to `src/features/confirm-crop-preview-owner.js` as anonymous `window.confirmCropPreview = async function() { ... }`, removed only its inline declaration, and linked one classic external script after the invalidate-cache owner and before the verification owner; one Done-control caller remains unchanged, detached after-split proof passes, and protected systems remain intact.
+
+## 2026-08-23 — `confirmCropPreview()` admin-appeals baseline correction
+- Synchronized the admin-appeals split contract to 228 opening tags, 228 closing tags, and 227 external script tags after adding the crop-preview owner; appeals behavior and protected boundaries remain unchanged.
