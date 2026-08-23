@@ -3334,3 +3334,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list extracted-file hygiene baseline correction
 - Updated extracted-file hygiene from 253 to 254 source files after the approved Notes reactor-list module addition; empty-file and trailing-whitespace checks remain passing.
+
+## 2026-08-23 — Notes reactor-list index-integrity baseline correction
+- Updated the index HTML integrity audit to 221 balanced script tags and 220 external scripts after the approved Notes reactor-list module addition; doctype, body/html closure, inline-script, and protected Reels/DM markers remain passing.
