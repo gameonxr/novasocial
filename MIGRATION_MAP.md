@@ -4090,3 +4090,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `showMsgMenuFromEl(event, element)` boundary rejection
 - Audited the remaining small message-menu adapter. It prevents the context menu, reads message dataset fields, and delegates directly to inline `showMsgMenu()`, whose action surface includes the documented unresolved `forwardMessage` seam plus reaction, pin, unsend, report, delete, storage, and message-info actions.
 - The inline-handler contract explicitly requires `showMsgMenu()` to remain inline; extracting the adapter would not create an independent UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `loadAdminTab(tab)` boundary rejection
+- Audited the next marker-clean admin entry point. It changes `curAdminTab`, owns loading/error DOM, and dispatches to dashboard, users, content, reports, verification, appeals, approvals, team, audit, and deleted-post flows.
+- Admin contracts keep authorization, moderation, metrics, account, and database boundaries inline; this dispatcher is not a contained UI-only owner. No production code changed and no protected boundary was weakened.
