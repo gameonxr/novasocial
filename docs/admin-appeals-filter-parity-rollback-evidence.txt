@@ -1,0 +1,21 @@
+ADMIN_APPEALS_FILTER_PARITY_ROLLBACK_EVIDENCE=PASS
+DATE=2026-08-23
+BRANCH=Branch2
+PRE_CANDIDATE_ROLLBACK_COMMIT=77391d49ab498b8c580859d1a2614bf37156e58b
+ORIGIN_MAIN=ef418007c9b9a797488b4825be5f0c807da22369
+OWNER_SIGNATURE=function setAppealsFilter(f){
+ORIGIN_OWNER_SHA256=a3b2effec6514e6d5a6b951e7d0295e81064145714d70d46654fd442e8bcdef1
+BRANCH2_OWNER_SHA256=a3b2effec6514e6d5a6b951e7d0295e81064145714d70d46654fd442e8bcdef1
+EXACT_ORIGIN_PARITY=PASS
+INDEPENDENT_SEAM=PASS
+READ_ONLY_BROWSER_PROOF=PASS
+PRODUCTION_SPLIT=NOT_YET_PERFORMED
+
+Rollback procedure if a future production split fails a focused or full gate:
+1. On Branch2 only, revert the candidate production-split commit.
+2. Restore the exact inline owner from PRE_CANDIDATE_ROLLBACK_COMMIT with `git show PRE_CANDIDATE_ROLLBACK_COMMIT:index.html` and preserve the existing classic-script global API.
+3. Remove only the candidate module and footer script reference introduced by the split.
+4. Run `git diff --check`, the candidate harness, affected static audits, and the complete `/tmp/branch2-full-regression-gate.sh` from a clean pushed tip.
+5. Do not alter origin/main or approve the neighboring admin appeal mutation owners.
+
+SAFETY_RECORD=No live admin data, database, storage, account, notification, report, appeal, message, follow, reaction, upload, download, permission, navigation, or state-changing control was touched.

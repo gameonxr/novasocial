@@ -1,0 +1,16 @@
+ADMIN_APPEALS_FILTER_BEFORE_SPLIT_BROWSER_PROOF=PASS
+DATE=2026-08-23
+BRANCH=Branch2
+URL=http://127.0.0.1:4173/
+SCOPE=Detached synthetic DOM only; no live admin controls, live database, storage, account, navigation, notification, report, appeal, message, follow, reaction, upload, download, permission, or mutation action.
+SENTINEL=__admin_appeals_filter_gate_sentinel__
+FILTER_CASES=pending,approved,rejected,all
+SELECTED_STYLING=PASS
+UNSELECTED_STYLING=PASS
+RELOAD_DELEGATION=ONE_PER_FILTER
+MISSING_CONTROL_TOLERANCE=PASS
+MISSING_CONTROL_STATE=rejected
+MISSING_CONTROL_RELOADS=1
+LIVE_DOM_UNCHANGED=true
+BROWSER_SHELL=NovaSocial
+EVIDENCE_SOURCE=/home/ubuntu/console_outputs/exec_result_2026-08-23_05-55-58_788.txt

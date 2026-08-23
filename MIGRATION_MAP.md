@@ -3385,3 +3385,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list authoritative reporting sync
 - Synchronized current protected-parity and contract-coverage reporting to 9 approved of 19 protected signatures with 10 remaining blocked systems, explicitly naming the read-only reactor-list owner; no protected behavior or extraction boundary was changed.
+
+## 2026-08-23 — Admin appeals filter candidate preparation
+- Selected `setAppealsFilter(f)` as the next contained read-only candidate: exact origin/main owner parity, SHA-256 `a3b2effec6514e6d5a6b951e7d0295e81064145714d70d46654fd442e8bcdef1`, no stateful boundary markers, four-filter injected seam, and detached synthetic-DOM browser proof all pass.
+- Added the candidate contract, preparation harness, pre-split browser proof, and pinned rollback evidence. Production code remains inline; `loadAppealsList()`, `adminApproveAppeal()`, and `adminRejectAppeal()` remain unchanged and protected from this preparation.
