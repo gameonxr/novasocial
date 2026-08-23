@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 219, 'index.html plus 218 extracted modules must be audited after the eight approved protected owner groups plus the Reels windowing helper');
-assert.strictEqual(matches.length, 201, 'application surface must retain 201 explicit window assignments after the Reels windowing helper split');
+assert.strictEqual(files.length, 220, 'index.html plus 219 extracted modules must be audited after the nine approved protected owner groups plus the Reels windowing helper');
+assert.strictEqual(matches.length, 201, 'application surface must retain 201 explicit window assignments after the Notes reactor-list split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
