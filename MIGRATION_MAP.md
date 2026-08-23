@@ -3428,3 +3428,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Admin appeals filter index-integrity baseline correction
 - Updated index HTML integrity totals to 222 balanced script tags and 221 external scripts after adding the admin-filter owner; doctype, single-inline-app-script, body/html closure, and protected DMs/Reels markers remain unchanged and passing.
+
+## 2026-08-23 — Admin appeals filter inline-declaration baseline correction
+- Updated inline declaration closure from 241 to 240 named function declarations after moving `setAppealsFilter` to its anonymous external owner; all 19 protected-name checks and the unresolved `forwardMessage` caller-only seam remain passing.
