@@ -3253,3 +3253,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Moved the helper to `src/features/reels-video-windowing.js` as exactly one anonymous `window._applyReelsVideoWindowing` classic-script owner and linked it after the inline application block and before its callers.
 - Candidate gate PASS: exact origin/main helper parity, injected seam proof, pinned rollback target, before/after read-only browser proof, persistent-container preservation, four loaded sources for the current-through-current+3 window, external-owner availability, zero executable inline windowing owner, focused gates, and no live side effects.
 - Updated the authoritative contracts and harnesses to distinguish the complete supporting helper from the still-protected full Reels renderer; the other 11 protected systems remain blocked pending their own independent packages.
+
+## 2026-08-23 — Reels split regression-baseline synchronization
+- Updated repository-wide compatibility, tag-integrity, module-reference, collision, lifecycle, storage, realtime, Push, and window-assignment harness baselines for the single added classic Reels helper module.
+- Verified the resulting counts: 218 extracted JavaScript modules, 220 balanced script tags, 219 external script tags, 219 audited files, 710 top-level function names, and 201 explicit `window.*` assignments; affected harnesses pass.
+- No production owner beyond the contained Reels windowing helper was moved, and the 11 protected-system extraction block remains active.
