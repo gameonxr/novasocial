@@ -3707,3 +3707,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Verification filter object-URL audit baseline correction
 - Synchronized object-URL lifecycle auditing to 224 files (index plus 223 extracted JavaScript modules) after adding the verification-filter owner; object-URL creation/revocation and cleanup invariants remain passing.
+
+## 2026-08-23 — Verification filter Push script baseline correction
+- Synchronized Push production-contract script totals to 225 opening tags, 225 closing tags, and 224 external scripts after adding the verification-filter owner; Push parity, browser proof, rollback, and protected-system checks remain passing.
