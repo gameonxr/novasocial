@@ -4122,3 +4122,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `adminTabMyApprovals(content)` boundary rejection
 - Audited the next marker-clean admin renderer. It filters `ban_approvals` by `ME.id`, reads moderator-owned recommendation history with target profiles, and renders status, reasons, admin notes, and review timestamps.
 - The admin approvals contract keeps moderator identity, approval records, account-related profile data, authorization, and moderation workflow boundaries inline. This is a protected admin/account seam rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `adminTabAudit(content)` boundary rejection
+- Audited the next marker-clean admin renderer. It reads up to 100 primary `audit_logs` entries, falls back to `admin_actions` when unavailable or empty, maps actor/target/security fields, and renders the audit source indicator and action history.
+- The admin audit contract explicitly keeps audit-log/admin-action reads, security history, moderation events, account actions, and server-side audit boundaries inline. This is a protected security/admin surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
