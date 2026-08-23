@@ -3739,3 +3739,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `toggleSVMute()` documentation baseline correction
 - Synchronized final-readiness documentation accounting after the `toggleSVMute()` preparation/split package to 268 Markdown documents, 269 harness files, 265 standard contract documents, and 264 paired contract harnesses; candidate, verification, and protected checks remain passing.
+
+## 2026-08-23 — `toggleSVMute()` classic-script baseline correction
+- Synchronized classic-script compatibility accounting to 226 HTML script tags and 224 extracted JavaScript files after adding the anonymous toggle owner; module/defer/async syntax remains absent and candidate/protected checks remain passing.
