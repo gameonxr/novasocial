@@ -1,0 +1,19 @@
+Reels before-split browser proof — 2026-08-23
+
+URL: http://127.0.0.1:4173/
+Route check: window.go('reels') completed through the local preview without clicking any stateful control.
+
+BROWSER_CONTEXT_SMOKE=PASS
+SHELL_TITLE=NovaSocial
+PERSISTENT_CONTAINER=PASS
+REELS_INNER=PASS
+VIDEO_COUNT=13
+LOADED_SOURCE_COUNT=4
+SAVED_INDEX=0
+INLINE_RENDER_OWNER=PASS
+INLINE_WINDOWING_OWNER=PASS
+
+Observed behavior: The Reels persistent container and inner track rendered. The current video window loaded four sources, matching the documented current-through-current+3 window. The saved index remained zero and both protected inline owners remained callable. No media control, like, comment, share, download, upload, message, follow, account switch, deletion, permission, poll, storage, or database mutation was performed.
+
+STATUS=BEFORE_SPLIT_READ_ONLY_PROOF
+PRODUCTION_APPROVAL=OUTSTANDING_PENDING_AFTER_SPLIT_PARITY_AND_ROLLBACK_CHECK

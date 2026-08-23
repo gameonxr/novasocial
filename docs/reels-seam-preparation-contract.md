@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Prepare, but do not execute, a reversible seam for the protected Reels system.
+**Purpose:** Record the contained, reversible windowing-helper split for the protected Reels system while preserving the larger renderer as an inline owner.
 
 ## Preparation map
 
@@ -19,9 +19,9 @@
 
 ## Gate status
 
-This is a **mapping-only checkpoint**. Reels rendering, swipe handlers, persistent-container ownership, and video windowing remain inline. Two non-destructive browser-context mock artifacts cover the empty state and query-error fallback, while the behavior harness now exposes a test-only injected park/restore/window/settle/resume dispatcher. These artifacts prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs protected before/after marker parity and reversible browser proof for the production boundary itself, covering tab switching, saved-position restore, swipe settling, playback, and source release.
+The contained `_applyReelsVideoWindowing()` helper is now split to `src/features/reels-video-windowing.js` as one anonymous `window._applyReelsVideoWindowing` owner. The larger `renderReels()` renderer, swipe handlers, persistent-container ownership, playback, and navigation remain inline. Two non-destructive browser-context mock artifacts cover the empty state and query-error fallback, and the behavior harness exposes a test-only injected park/restore/window/settle/resume dispatcher. The helper passed exact origin/main parity, a pinned rollback target, and before/after read-only browser proof; this does not authorize extracting the remaining renderer.
 
-The first implementation step must be test-only or adapter-only and must preserve the current `renderReels()` and `_applyReelsVideoWindowing()` owners until the complete seam harness passes. The preparation harness also compares the exact two protected owner bodies with `origin/main`; any hash drift is a stop condition.
+The remaining `renderReels()` implementation must stay inline until its own independent gate passes. The completed windowing-helper move was allowed only after the exact helper body matched `origin/main`, the pinned rollback target was recorded, the read-only before/after browser proof passed, and the candidate harness passed. The harness continues to compare the inline renderer against `origin/main`; any hash drift is a stop condition.
 
 ## Harness coverage
 
@@ -36,8 +36,10 @@ The first implementation step must be test-only or adapter-only and must preserv
 | Playback | Windowing and resume hooks remain | PASS |
 | Browser mock inventory | Empty-state and query-error fallback artifacts are present with PASS markers | PASS |
 | Injected seam proof | Park, restore, window, settle, and resume dependencies dispatch explicitly in test-only mocks | PASS |
-| Production split | None; both Reels owners remain inline | PASS |
-| Exact owner no-drift comparison | Current protected owner bodies match `origin/main` | PASS |
+| Production split | `_applyReelsVideoWindowing()` split complete; `renderReels()` remains inline | PASS |
+| Exact owner comparison | Extracted windowing helper matches `origin/main`; inline renderer remains no-drift | PASS |
+| Before/after browser proof | Read-only shell, external-owner, persistent-container, and four-source window proof | PASS |
+| Rollback evidence | Baseline commit and revert procedure pinned | PASS |
 
 ## References
 
@@ -47,5 +49,8 @@ The first implementation step must be test-only or adapter-only and must preserv
 4. [`index.html`](../index.html)
 5. [`reels-empty-state-browser-proof-evidence.txt`](./reels-empty-state-browser-proof-evidence.txt)
 6. [`reels-query-error-fallback-browser-proof-evidence.txt`](./reels-query-error-fallback-browser-proof-evidence.txt)
-7. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
+7. [`reels-before-split-browser-proof-evidence.txt`](./reels-before-split-browser-proof-evidence.txt)
+8. [`reels-after-split-browser-proof-evidence.txt`](./reels-after-split-browser-proof-evidence.txt)
+9. [`reels-parity-rollback-evidence.txt`](./reels-parity-rollback-evidence.txt)
+10. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

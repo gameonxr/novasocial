@@ -3,11 +3,11 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-22
-**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the eight verified particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, and Story-editor exceptions.
+**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the eight verified protected-owner groups plus the contained Reels windowing-helper exception.
 
 ## Current decision
 
-The protected DM, Reels, Calls/WebRTC, Story polls, and recording systems remain inline in the current migration and are **not direct-extraction candidates yet**. The particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, and Story-editor owners are the approved exceptions: each production move passed seam, browser or authenticated shell, static parity, and rollback checks. Existing parity and behavior contracts do not authorize moving any other protected code.
+The protected DM, the main Reels renderer, Calls/WebRTC, Story polls, and recording systems remain inline in the current migration and are **not direct-extraction candidates yet**. The particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, and Story-editor owners are the approved protected-owner exceptions; the contained Reels windowing helper is separately approved as a supporting owner. Each approved move passed seam, browser or authenticated shell, static parity, and rollback checks. Existing parity and behavior contracts do not authorize moving any other protected code.
 
 ## Required gate before any high-risk split
 
@@ -17,7 +17,7 @@ The first implementation step is therefore a **seam/adapter**, not a blind copy 
 
 ## Harness coverage
 
-`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 11 unapproved protected marker inventory remains inline and absent from `src/`, that the approved particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, and Story-editor owners are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
+`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 11 unapproved protected marker inventory remains inline and absent from `src/`, that the approved particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, and Story-editor owners plus the contained Reels windowing helper are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
 
 | Gate condition | Current status | Result |
 |---|---|---|
@@ -28,7 +28,7 @@ The first implementation step is therefore a **seam/adapter**, not a blind copy 
 
 ## Safe boundary
 
-The production logic changes in the completed checkpoints are limited to the isolated particle owner, deletion-fallback owner, Push-settings owner, Note-viewer owners, Note-deletion owner, and Story-editor renderer moves. Each passed subsystem-specific seam plans, reversible browser or authenticated shell proofs, static parity, and rollback checks. All other high-risk systems remain inline and deferred until their own gates pass.
+The production logic changes in the completed checkpoints are limited to the isolated particle owner, deletion-fallback owner, Push-settings owner, Note-viewer owners, Note-deletion owner, Story-editor renderer, and contained Reels windowing-helper move. Each passed subsystem-specific seam plans, reversible browser or authenticated shell proofs, static parity, and rollback checks. The main Reels renderer and all other high-risk systems remain inline and deferred until their own gates pass.
 
 ## References
 

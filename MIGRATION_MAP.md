@@ -3240,3 +3240,10 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Added a machine-checked readiness table for the seven remaining protected-system groups, separating injected seam preparation from independent before/after parity, safe browser proof, rollback artifact, and production decision.
 - Each remaining row now explicitly records `PASS` for preparation, `OUTSTANDING` for the three independent production gates, and `BLOCKED` for the production decision; no runtime owner or browser state changed.
 - Focused DMs, Reels, Calls/WebRTC, voice-recording, Stories, Notes, Push-permission, extraction-gate, and global readiness harnesses passed.
+
+## 2026-08-23 — Reels windowing-helper production gate complete
+- Selected the contained `_applyReelsVideoWindowing()` helper as the safest remaining Reels boundary; kept the larger `renderReels()` renderer, swipe handlers, persistent-container ownership, playback, and navigation inline.
+- Moved the helper to `src/features/reels-video-windowing.js` as exactly one anonymous `window._applyReelsVideoWindowing` classic-script owner and linked it after the existing inline application block and before its callers.
+- Candidate gate PASS: exact origin/main helper parity, injected seam proof, pinned rollback target, before/after read-only browser proof, persistent container, four loaded sources for the current-through-current+3 window, external owner availability, zero executable inline helper owner, focused gates, and full regression.
+- Updated the authoritative contracts and harnesses to distinguish the complete supporting helper from the still-blocked full Reels renderer; the other 11 protected systems remain blocked pending their own independent packages.
+- No live account, media, message, reaction, follow, upload, download, permission, storage, or database mutation occurred.

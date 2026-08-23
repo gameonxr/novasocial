@@ -1,0 +1,27 @@
+Reels after-split browser proof — 2026-08-23
+
+URL: http://127.0.0.1:4173/?reelsGate=20260823
+Title: NovaSocial
+
+BROWSER_CONTEXT_SHELL=PASS
+CACHE_BUSTED_RELOAD=PASS
+AUTHENTICATED_FOR_YOU_SHELL=PASS
+NO_STATEFUL_CONTROL_CLICKED=PASS
+
+The cache-busted preview rendered the NovaSocial shell and authenticated For You feed after adding the classic-script Reels windowing module. The final runtime owner and Reels route inspection follows this shell check. No live account, media, message, reaction, follow, upload, download, permission, storage, or database mutation was performed.
+
+Runtime after-split probe:
+
+ROUTE_RENDER=PASS
+EXTERNAL_WINDOWING_OWNER=PASS
+EXTERNAL_OWNER_TYPE=function
+INLINE_RENDERER_OWNER=PASS
+INLINE_EXECUTABLE_WINDOWING_OWNER=false
+PERSISTENT_CONTAINER=PASS
+REELS_INNER=PASS
+VIDEO_COUNT=13
+LOADED_SOURCE_COUNT=4
+SAVED_INDEX=0
+SAFE_NO_MUTATION=true
+
+The read-only route check preserved the Reels persistent container, rendered 13 synthetic/current feed video elements, and retained four loaded sources for the current-through-current+3 window. The external windowing owner was callable, the inline renderer remained callable, and no executable inline windowing owner remained. No stateful control was invoked.

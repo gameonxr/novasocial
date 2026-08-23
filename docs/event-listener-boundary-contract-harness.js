@@ -22,8 +22,8 @@ const indexText = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const serviceWorkerText = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 const listenerFiles = sourceFiles.filter((file) => fs.readFileSync(file, 'utf8').includes('addEventListener'));
 
-assert.strictEqual(sourceFiles.length, 217, '217 extracted JavaScript modules must remain present after Note deletion split');
-assert.strictEqual(count(sourceText, 'addEventListener'), 74, 'extracted modules must retain the audited 74 listener registrations after Note deletion split');
+assert.strictEqual(sourceFiles.length, 218, '218 extracted JavaScript modules must remain present after Reels windowing helper split');
+assert.strictEqual(count(sourceText, 'addEventListener'), 74, 'extracted modules must retain the audited 74 listener registrations after Reels windowing helper split');
 assert.strictEqual(count(sourceText, 'removeEventListener'), 0, 'the audit must not silently introduce cleanup registrations in extracted modules');
 assert.strictEqual(count(indexText, 'addEventListener'), 28, 'index.html must retain the audited 28 listener registrations after Note deletion split');
 assert.strictEqual(count(indexText, 'removeEventListener'), 0, 'index.html must retain zero cleanup registrations');

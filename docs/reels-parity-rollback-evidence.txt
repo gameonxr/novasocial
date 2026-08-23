@@ -1,0 +1,23 @@
+Reels candidate parity and rollback evidence — 2026-08-23
+
+CANDIDATE=Reels renderer plus _applyReelsVideoWindowing
+BASELINE_COMMIT=509bfe91e2aa03a83d7a66c57a535007f77d37d2
+BASELINE_COMMIT_SUBJECT=test: make remaining production gates explicit
+BRANCH=Branch2
+
+OWNER_BODY_PARITY=PASS
+CURRENT_OWNER_BASELINE_SHA256=a9202154984cd1a7fdf40f0020374a23dbff22ad78a7d76555c073469e42d76e
+ORIGIN_MAIN_OWNER_BASELINE_SHA256=a9202154984cd1a7fdf40f0020374a23dbff22ad78a7d76555c073469e42d76e
+BASELINE_INDEX_SHA256=6407952a06e80e0ff5b7e46efa3f3a8bde9104d0480ac32774bd36130f6eb15f
+
+PROTECTED_OWNERS=
+- function _applyReelsVideoWindowing(currentIndex)
+- async function renderReels()
+
+ROLLBACK_TARGET=509bfe91e2aa03a83d7a66c57a535007f77d37d2
+ROLLBACK_COMMAND=git revert <candidate-split-commit> && git push origin Branch2
+ROLLBACK_CHECK=Restore index.html and script load order from BASELINE_COMMIT, then rerun the Reels harness, protected-inline parity harness, extraction gate, and full regression.
+ROLLBACK_DATA_SAFETY=No live account, media, message, reaction, follow, upload, download, permission, storage, or database mutation is permitted during rollback.
+
+STATUS=PRE_SPLIT_EVIDENCE_ONLY
+PRODUCTION_APPROVAL=OUTSTANDING_PENDING_SAFE_BROWSER_PROOF_AND_CANDIDATE_AFTER_SPLIT_GATE

@@ -33,7 +33,7 @@ const protectedSignatures = [
   'async function removeMyNoteFromViewer(noteId)'
 ];
 
-assert.strictEqual(sourceFiles.length, 217, '217 extracted JavaScript modules must remain present after Note deletion split');
+assert.strictEqual(sourceFiles.length, 218, '218 extracted JavaScript modules must remain present after Reels windowing helper split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
@@ -81,10 +81,13 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-eviden
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
 assert(matrix.includes('browser proof remains outstanding for 11 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the supporting Reels helper split');
+assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected'), 'matrix must keep the Reels renderer boundary protected');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
 const remainingAuthorizationRows = [
   'DMs and chat rendering | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
-  'Reels renderer and windowing | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Reels renderer and swipe/navigation owners | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected',
   'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',

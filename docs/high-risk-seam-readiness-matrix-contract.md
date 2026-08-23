@@ -20,7 +20,7 @@
 | Note viewer candidate | SPLIT_COMPLETE; synthetic seam parity, login-gated browser proof, exact owner hashes, after-split browser smoke, and detached rollback are PASS | Note viewer is approved and complete |
 | Note deletion candidate | SPLIT_COMPLETE; synthetic success/failure parity, authenticated shell reload, anonymous-window owner proof, and detached rollback evidence are PASS | Note deletion is approved and complete |
 | Reversible browser proof | Contract and harness are present; particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story editor before/after browser proofs are PASS, while browser proof remains outstanding for 11 unapproved systems. Thirty-three non-destructive browser-context mock artifacts, seven injected seam-proof inventories including Push permission, and five comparison and after-split artifact groups are inventoried and passing | Required independently before each remaining production move |
-| Protected production splits | 8/19 signatures moved: particle, deletion fallback, the two Push settings owners, the two Note viewer owners, Note deletion, and the Story renderer | Direct extraction remains blocked for the 11 unapproved systems |
+| Protected production splits | 8/19 protected signatures moved; one additional supporting Reels windowing helper is split with its own gate | Direct extraction remains blocked for the 11 unapproved protected signatures |
 
 ## Remaining production authorization status
 
@@ -29,7 +29,8 @@ The preparation harnesses are intentionally stronger than a production authoriza
 | Remaining protected system | Injected seam preparation | Independent before/after parity | Safe browser proof | Rollback artifact | Production decision |
 |---|---|---|---|---|---|
 | DMs and chat rendering | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
-| Reels renderer and windowing | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
+| Reels renderer and swipe/navigation owners | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
+| Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected |
 | Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
 | Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
 | Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
@@ -38,7 +39,7 @@ The preparation harnesses are intentionally stronger than a production authoriza
 
 ## Contract decision
 
-The setup is **eight-owner-split-complete but not ready for the remaining protected systems**. The repository inventories 33 passing non-destructive browser-context mock artifacts across the protected systems, seven passing injected seam-proof inventories including Push permission, plus particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story editor comparison and after-split browser evidence; all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. Particle, deletion fallback, Push settings, Note viewer, Note deletion, and Story editor passed their full before/after and rollback sequences. Each remaining protected system must independently add or complete its dependency/DOM/timing/global map, explicit adapter boundary, deterministic mock harness, before/after marker parity, reversible browser proof, and complete Branch2 regression gate before a minimal production extraction is attempted.
+The setup is **eight protected-owner-split-complete with one additional Reels helper split, but not ready for the remaining protected systems**. The repository inventories 33 passing non-destructive browser-context mock artifacts across the protected systems, seven passing injected seam-proof inventories including Push permission, plus particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, and the contained Reels windowing-helper comparison and after-split browser evidence; all nine protected seam-preparation contracts explicitly bind their corresponding evidence inventories. Particle, deletion fallback, Push settings, Note viewer, Note deletion, and Story editor passed their full before/after and rollback sequences. Each remaining protected system must independently add or complete its dependency/DOM/timing/global map, explicit adapter boundary, deterministic mock harness, before/after marker parity, reversible browser proof, and complete Branch2 regression gate before a minimal production extraction is attempted.
 
 The account/bootstrap seam remains the documented adapter reference. Particle was the first low-risk protected candidate, deletion fallback the second, Push settings the third, Note viewer the fourth, Story editor the fifth, and Note deletion the sixth; all are now `SPLIT_COMPLETE` after passing comparison, production browser smoke or authenticated shell reload, owner/parity checks, and rollback evidence. This does not authorize moving DMs, Reels, Calls/WebRTC, Story polls, or recording code; each remains subject to its own gate.
 
