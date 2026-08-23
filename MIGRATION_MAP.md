@@ -3316,3 +3316,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Notes reactor-list clipboard audit baseline correction
 - Updated the clipboard interaction audit from 219 to 220 total files (`index.html` plus 219 extracted modules) after the approved Notes reactor-list addition; clipboard call and fallback counts remain unchanged.
+
+## 2026-08-23 — Notes reactor-list function-inventory baseline correction
+- Updated the cross-module collision audit’s named-function inventory from 710 to 709 after moving the anonymous-window reactor-list owner; audited files remain 220 and duplicate-name checks pass.
