@@ -3491,3 +3491,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — Refresh profile counts lexical-audit baseline correction
 - Updated cross-module lexical-collision auditing from 221 to 222 files after adding the refresh-counts module; the 117 lexical-name inventory and zero-duplicate invariant remain unchanged and passing.
+
+## 2026-08-23 — Refresh profile counts deletion-fallback baseline correction
+- Synchronized deletion-fallback production totals to 223 balanced script tags and 222 external scripts after adding the refresh-counts owner; canonical deletion-fallback parity, rollback, browser, and protected-owner checks remain passing.
