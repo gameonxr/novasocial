@@ -645,9 +645,6 @@ function _tryRestoreFromCache(tab) {
  * important data change ho, us tab ka cache clear karo taaki
  * agli baar fresh load ho
  */
-function invalidateTabCache(tab) {
-  delete _tabCache[tab];
-}
 
 function invalidateAllTabCache() {
   Object.keys(_tabCache).forEach(k => delete _tabCache[k]);
@@ -10737,6 +10734,7 @@ async function checkUserActiveNote(userId){
 <script src="src/features/admin-appeals-filter-owner.js"></script>
 <script src="src/features/set-reports-filter-owner.js"></script>
 <script src="src/features/toggle-sv-mute-owner.js"></script>
+<script src="src/features/invalidate-tab-cache-owner.js"></script>
 <script src="src/features/set-verify-filter-owner.js"></script>
 <script src="src/features/refresh-profile-counts-owner.js"></script>
 <script src="src/features/note-reactors-list-owner.js"></script>

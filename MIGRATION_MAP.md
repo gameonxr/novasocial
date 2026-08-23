@@ -3820,3 +3820,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `invalidateTabCache(tab)` preparation checkpoint
 - Audited `invalidateTabCache(tab)` as a contained in-memory UI-cache invalidator with exact normalized origin parity (`19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127`), eight existing callers, no stateful side effects, and a passing injected seam.
 - Detached synthetic browser proof passes for target deletion and missing-entry no-op with zero database, network, navigation, or account mutations. Production split remains pending and protected boundaries remain unchanged.
+
+## 2026-08-23 — `invalidateTabCache(tab)` production split
+- Extracted only the exact in-memory UI-cache invalidator into `src/features/invalidate-tab-cache-owner.js` as anonymous classic global `window.invalidateTabCache`, removed its named inline owner, and linked the module once between the mute and verification owners. The normalized owner hash is `19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127`.
+- The eight existing callers, target/missing-entry injected seam, detached synthetic after-split browser proof, and candidate/protected focused checks pass. No live-account or live-mutation action was used; exhaustive regression remains pending.

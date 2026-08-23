@@ -1,0 +1,19 @@
+DATE=2026-08-23
+BROWSER_SCOPE=Sandbox detached local synthetic HTML only
+APPLICATION_LOADED=false
+ACCOUNT_SESSION=false
+LIVE_NOVASOCIAL_LOADED=false
+
+RESULT=PASS
+EXTERNAL_SCRIPT_LOADS=1
+BEFORE_KEYS=home,profile
+AFTER_TARGET_KEYS=home
+AFTER_MISSING_KEYS=home
+DATABASE_CALLS=0
+NETWORK_CALLS=0
+NAVIGATION_MUTATIONS=0
+ACCOUNT_MUTATIONS=0
+DETACHED_ONLY=true
+OWNER_INVOKED=true
+
+Boundary: The proof loaded only the external invalidate-tab-cache owner against a synthetic in-memory cache. It did not load NovaSocial, login state, live data, account controls, database, network, navigation, or persistent-storage mutations.
