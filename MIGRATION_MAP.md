@@ -3887,3 +3887,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 
 ## 2026-08-23 — `invalidateTabCache(tab)` realtime lifecycle baseline correction
 - Synchronized realtime-subscription lifecycle auditing to 226 combined files after adding the cache invalidator owner; ten channel registrations, 21 cleanup calls, managed slots, candidate, and protected checks remain passing.
+
+## 2026-08-23 — `invalidateTabCache(tab)` refresh-counts baseline correction
+- Synchronized the refresh-profile-counts production contract to 225 extracted JavaScript modules after adding the cache invalidator owner; read-only profile-count behavior, owner ordering, candidate, and protected checks remain passing.
