@@ -4200,3 +4200,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — `setupPostsRealtime()` boundary rejection
 - Audited the adjacent realtime helper. Although its current body is intentionally a no-op, it conditionally removes the shared `postsSub` database channel and clears the global subscription reference to clean up channels left by older app versions.
 - The realtime lifecycle contract keeps shared channel ownership, database teardown, legacy-session cleanup, and global subscription state inline. This is a protected realtime cleanup boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+## 2026-08-24 — `openCropPreview()` boundary rejection
+- Audited the crop-preview entry owner. It validates image files and bypasses non-images, mutates shared `_cropState`, creates/revokes the crop modal lifecycle, creates an object URL, renders the viewport and controls, attaches image-load sizing, and wires drag/zoom/cancel/confirm callbacks.
+- The crop contract keeps shared crop state, object-URL lifecycle, modal DOM, image sizing, gesture math, upload callback ownership, and cleanup inline. This is the protected crop lifecycle owner rather than a safe standalone UI component. No production code changed and no protected boundary was weakened.
