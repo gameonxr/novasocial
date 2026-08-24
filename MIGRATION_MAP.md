@@ -4162,3 +4162,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — call bubble/menu boundary rejections
 - Audited `showCallBubble()`, `showCallMoreMenu()`, and the adjacent `showAddToCallMenu()` call-UI helpers. The bubble reads remote call state, creates call-bubble media/identity UI, owns touch drag listeners, and restores the call; the options menu invokes modal UI, minimize-call, and DMs navigation; the add-to-call menu remains part of the same protected call-modal surface.
 - The Calls/WebRTC seam contract explicitly keeps call bubble/screen DOM, touch/lifecycle transitions, navigation, modal helpers, and cleanup inline. These are protected call-UI boundaries rather than safe standalone owners. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `showCallHistory(otherUserId)` boundary rejection
+- Audited the next marker-clean call helper. It queries bilateral `calls` records with caller/callee profile joins, filters by `ME.id` and the other user, renders call status/type/duration/profile details, and exposes an `initiateCall()` action.
+- The Calls/WebRTC contract keeps account identity, call-history data, protected call UI, and call initiation inline. This is a protected account/call-data boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
