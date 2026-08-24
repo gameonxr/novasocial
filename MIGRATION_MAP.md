@@ -4166,3 +4166,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `showCallHistory(otherUserId)` boundary rejection
 - Audited the next marker-clean call helper. It queries bilateral `calls` records with caller/callee profile joins, filters by `ME.id` and the other user, renders call status/type/duration/profile details, and exposes an `initiateCall()` action.
 - The Calls/WebRTC contract keeps account identity, call-history data, protected call UI, and call initiation inline. This is a protected account/call-data boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `showCallScreen()` boundary rejection
+- Audited the next remaining call owner. It constructs the full call screen from `_callState`, creates remote/local audio-video elements, renders identity/status/timer/network UI, and wires minimize, PiP, camera, add-member, mute/video/speaker, more-menu, and end-call controls.
+- The Calls/WebRTC seam contract explicitly keeps call state, media elements, call controls, PiP, modal/navigation actions, timers, and teardown inline. This is the protected call-screen owner rather than a safe UI-only sub-component. No production code changed and no protected boundary was weakened.
