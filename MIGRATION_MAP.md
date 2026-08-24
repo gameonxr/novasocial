@@ -4230,3 +4230,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — `goBack()` navigation-history boundary rejection
 - Audited the smart-back owner. It invokes the navigation stack and browser history, falls back through chat/modal, Story viewer, action-sheet, and ban-screen teardown, and finally redirects non-home tabs through the main navigation owner.
 - The navigation, DMs, Story, account-security, overlay, history, and haptic contracts keep back-stack mutation, browser history, cross-feature teardown, and fallback routing inline. This is a protected cross-feature navigation boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+## 2026-08-24 — `initFabSystem()` boundary rejection
+- Audited the FAB initializer. It restores account/session-local FAB size and style from local storage, mutates the shared FAB DOM, applies style state, and starts the drag subsystem while global outside-click listeners manage its menus.
+- The UI state, storage-key, event-listener, and lifecycle contracts keep preference persistence, shared FAB state, drag setup, and menu teardown coordinated inline. This is a stateful UI lifecycle owner rather than a safe pure UI-only component. No production code changed and no protected boundary was weakened.
