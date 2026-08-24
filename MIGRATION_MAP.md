@@ -4142,3 +4142,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `addRemoteTileToGrid(userId, profile, stream)` boundary rejection
 - Audited the next marker-clean call helper. It creates a remote participant media tile from identity and stream inputs and attaches it to the group-call UI, directly serving remote WebRTC media presentation.
 - The Calls/WebRTC seam contract explicitly keeps remote streams, peer/media lifecycle, call DOM IDs, participant tiles, and cleanup inline. This is a protected remote-media boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `removeRemoteTile(userId)` boundary rejection
+- Audited the next marker-clean call helper. It removes a group-call media tile, deletes the participant audio analyser from `_groupCallState`, and updates the participant count.
+- The Calls/WebRTC contract keeps remote media DOM, analyser teardown, participant state, and group-call cleanup inline. This is a protected RTC participant-lifecycle boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
