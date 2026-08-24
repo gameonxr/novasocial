@@ -4146,3 +4146,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `removeRemoteTile(userId)` boundary rejection
 - Audited the next marker-clean call helper. It removes a group-call media tile, deletes the participant audio analyser from `_groupCallState`, and updates the participant count.
 - The Calls/WebRTC contract keeps remote media DOM, analyser teardown, participant state, and group-call cleanup inline. This is a protected RTC participant-lifecycle boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `updateParticipantCount()` boundary rejection
+- Audited the next marker-clean call helper. It reads the group-call tile grid and writes the active participant count into the protected call UI; its callers are remote-tile add/remove lifecycle paths.
+- The Calls/WebRTC seam contract keeps call DOM/UI transitions, participant tiles, and group-call lifecycle inline. Although the body is DOM-only, it is not an independently authorized UI owner. No production code changed and no protected boundary was weakened.
