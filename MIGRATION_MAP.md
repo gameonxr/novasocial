@@ -4158,3 +4158,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `minimizeCall()` / `restoreCall()` boundary rejection
 - Audited the next marker-clean call UI helpers. `minimizeCall()` gates on active call state, mutates `_callState.isMinimized`, hides the call screen, and creates the call bubble; `restoreCall()` clears minimized state, removes the bubble, and restores the call screen.
 - The Calls/WebRTC seam contract explicitly keeps call state, call bubble/screen IDs, DOM transitions, and lifecycle cleanup inline. These helpers are protected call-lifecycle/UI boundaries rather than safe standalone owners. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — call bubble/menu boundary rejections
+- Audited `showCallBubble()`, `showCallMoreMenu()`, and the adjacent `showAddToCallMenu()` call-UI helpers. The bubble reads remote call state, creates call-bubble media/identity UI, owns touch drag listeners, and restores the call; the options menu invokes modal UI, minimize-call, and DMs navigation; the add-to-call menu remains part of the same protected call-modal surface.
+- The Calls/WebRTC seam contract explicitly keeps call bubble/screen DOM, touch/lifecycle transitions, navigation, modal helpers, and cleanup inline. These are protected call-UI boundaries rather than safe standalone owners. No production code changed and no protected boundary was weakened.
