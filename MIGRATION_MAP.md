@@ -4215,3 +4215,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — saved-account session boundary rejection
 - Audited the multi-account session helpers. `saveAccountSession()` deduplicates and caps saved identities, persists access and refresh tokens plus profile metadata in `nova_accounts`, and `removeAccountSession()` mutates that persisted account list by identity.
 - The account-switching and storage contracts keep token persistence, identity selection, saved-session limits, and account removal inline. These are protected account/session-storage boundaries rather than safe UI-only owners. No production code changed and no protected boundary was weakened.
+## 2026-08-24 — `getSavedAccounts()` boundary confirmation
+- Confirmed the saved-account reader is already modularized in `src/features/get-saved-accounts.js`. It reads and parses the shared `nova_accounts` local-storage value, returns an empty list for missing/malformed data, and catches storage/parse failures.
+- Its account/session-storage contract keeps the shared persistence key, malformed-data recovery, and account identity boundary protected. No duplicate owner or production rewrite is authorized; no production code changed.
