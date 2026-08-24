@@ -3,16 +3,16 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Make protected-feature split readiness measurable while recording the eight verified particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story editor production splits and preserving safeguards for the remaining systems.
+**Purpose:** Make protected-feature split readiness measurable while recording the nine approved protected-owner signatures across the particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing-helper, and Notes reactor-list checkpoints, while preserving safeguards for the remaining systems.
 
 ## Current matrix
 
 | Readiness layer | Current state | Split implication |
 |---|---:|---|
-| Protected inline signatures | 11/19 unapproved signatures retained exactly once; particle, deletion-fallback, Push settings, Note viewer, Note deletion, and Story editor are represented by approved window owners | Baseline and sixth split complete |
-| Protected signatures in `src/` | 8 approved owners (`spawnLikeParticles`, `syncLocalDeletionFallback`, `enablePushFromSettings`, `resetPushFromSettings`, `viewNote`, `removeMyNoteFromViewer`, `deleteMyNote`, `renderStoryElements`); 11 unapproved owners absent | Only the eight verified owners have moved |
+| Protected inline signatures | 10/19 unapproved signatures retained exactly once; particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing-helper, and Notes reactor-list owners are represented by approved window owners | Nine protected-owner signatures approved; remaining systems stay blocked |
+| Protected signatures in `src/` | 9 approved owners (`spawnLikeParticles`, `syncLocalDeletionFallback`, `enablePushFromSettings`, `resetPushFromSettings`, `viewNote`, `removeMyNoteFromViewer`, `deleteMyNote`, `renderStoryElements`, `loadNoteReactorsList`); 10 unapproved owners absent | Only the nine verified owners have moved |
 | High-risk gate | Present and passing | Global guard complete |
-| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; six aggregate preparation harnesses plus the Push permission behavior harness now enforce their injected seam-proof markers; 33 protected browser-proof mock artifacts plus Push exact-owner comparison and particle/deletion-fallback/Note deletion comparison and after-split artifacts carry PASS markers | Feature-specific seam maps and deterministic mock boundaries exist; particle, deletion fallback, Push settings, Note viewer, Note deletion, and Story editor are production-split approved, while the other 11 remain gated |
+| Feature coverage contracts | DM, Reels, Calls/WebRTC, voice recording, Stories/Notes, Push, deletion fallback, and particle seam-preparation artifacts present; all nine protected seam contracts explicitly bind their listed mock inventories; six aggregate preparation harnesses plus the Push permission behavior harness now enforce their injected seam-proof markers; 33 protected browser-proof mock artifacts plus Push exact-owner comparison and particle/deletion-fallback/Note deletion comparison and after-split artifacts carry PASS markers | Feature-specific seam maps and deterministic mock boundaries exist; particle, deletion fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing helper, and Notes reactor list are production-split approved, while the other 10 remain gated |
 | Adapter/seam contract | Account/bootstrap contract present | One cross-cutting adapter seam is documented; it is not production-extracted |
 | Adapter harness | Account/bootstrap mock harness present | Test-only proof exists for the bootstrap seam |
 | Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS | Particle is approved and complete |

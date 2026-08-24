@@ -4179,3 +4179,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — particle readiness-marker correction
 - Preparation-harness inventory passed for all preparation contract harness files with zero failures. During that inventory, the particle seam harness was found to print the stale non-authoritative marker `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS`, while the authoritative high-risk matrix and protected accounting require 10 remaining blocked systems.
 - Corrected only that test-harness console marker to `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS`. No production code, protected owner, runtime behavior, or extraction accounting changed.
+## 2026-08-24 — readiness-contract accounting correction
+- Audited the authoritative high-risk readiness contract against the passing protected-inline and readiness-matrix harnesses. Its opening prose still described the earlier 8-approved/11-blocked checkpoint, while the current enforced accounting is 19 protected signatures, 9 approved extracted owners, and 10 remaining blocked systems.
+- Corrected only the stale current-state prose to list the nine approved owners, the ten unapproved owners, and the current split status. The authorization rows, protected stop rules, production code, and runtime behavior remain unchanged.
