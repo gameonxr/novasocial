@@ -4239,3 +4239,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — expired-story cleanup boundary confirmation
 - Confirmed the expired-story cleanup owner queries expired media-bearing stories, queues Cloudinary deletion through the protected media cleanup owner, and deletes the corresponding Story rows from the database with silent failure handling.
 - The Story lifecycle, storage, database, and destructive-cleanup contracts keep expiration selection, media deletion, row deletion, and failure policy inline. This is a protected destructive Story boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+## 2026-08-24 — active-account saved-session sync boundary rejection
+- Audited the account sync coordinator. It reads the authenticated session through `db.auth.getSession()`, checks the active `ME`/`PROF` identity, and persists the current account and access/refresh tokens through `saveAccountSession()`.
+- The account, authentication, token-storage, and session-switching contracts keep authenticated-session lookup, identity checks, and saved-session persistence inline. This is a protected account boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
