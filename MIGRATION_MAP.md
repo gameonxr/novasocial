@@ -4130,3 +4130,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `adminTabTeam(content)` boundary rejection
 - Audited the next marker-clean admin renderer. It gates the team surface by admin/super-admin role, loads staff profiles, renders role/status markers, and exposes role-management controls under the existing hierarchy.
 - The admin team-list contract explicitly keeps staff identity, role visibility, authorization, promotion, demotion, and account-management boundaries inline. This is a protected role-management surface rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `toggleCallVideo()` boundary rejection
+- Audited the next marker-clean call helper. It mutates `_callState.isVideoOff`, toggles local WebRTC video tracks, updates the call-control DOM, and emits camera state toasts.
+- The Calls/WebRTC seam contract explicitly keeps call state, peer/media tracks, DOM transitions, timers, signaling, and cleanup inline. This is a protected RTC/device boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
