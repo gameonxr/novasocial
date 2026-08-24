@@ -4176,3 +4176,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — `enableCallPiP()` boundary rejection
 - Audited the next marker-clean call helper. It reads the protected `nova-call-remote-video` element, exits an existing browser Picture-in-Picture session or requests Picture-in-Picture for the active remote call video, and reports device/browser support through call UI toasts.
 - The Calls/WebRTC seam contract explicitly keeps remote media elements, browser media presentation APIs, call lifecycle state, and call-screen behavior inline. This is a protected call-media/UI boundary rather than a safe standalone owner. No production code changed and no protected boundary was weakened.
+## 2026-08-24 — particle readiness-marker correction
+- Preparation-harness inventory passed for every `docs/*preparation-contract-harness.js` file with zero failures. During that inventory, the particle seam harness was found to print the stale non-authoritative marker `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_11_PROTECTED_SYSTEMS`, while the authoritative high-risk matrix and protected accounting require 10 remaining blocked systems.
+- Corrected only that test-harness console marker to `DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS`. No production code, protected owner, runtime behavior, or extraction accounting changed.
