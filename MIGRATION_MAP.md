@@ -4138,3 +4138,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `toggleCallSpeaker()` boundary rejection
 - Audited the next marker-clean call helper. It mutates `_callState.isSpeaker`, switches the remote-call audio output through `setSinkId()`, updates the speaker control DOM, and emits audio-device state toasts.
 - The Calls/WebRTC seam contract explicitly keeps call state, media/device APIs, DOM transitions, and cleanup inline. This is a protected RTC/audio-device boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `addRemoteTileToGrid(userId, profile, stream)` boundary rejection
+- Audited the next marker-clean call helper. It creates a remote participant media tile from identity and stream inputs and attaches it to the group-call UI, directly serving remote WebRTC media presentation.
+- The Calls/WebRTC seam contract explicitly keeps remote streams, peer/media lifecycle, call DOM IDs, participant tiles, and cleanup inline. This is a protected remote-media boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
