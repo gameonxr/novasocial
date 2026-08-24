@@ -4134,3 +4134,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `toggleCallVideo()` boundary rejection
 - Audited the next marker-clean call helper. It mutates `_callState.isVideoOff`, toggles local WebRTC video tracks, updates the call-control DOM, and emits camera state toasts.
 - The Calls/WebRTC seam contract explicitly keeps call state, peer/media tracks, DOM transitions, timers, signaling, and cleanup inline. This is a protected RTC/device boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `toggleCallSpeaker()` boundary rejection
+- Audited the next marker-clean call helper. It mutates `_callState.isSpeaker`, switches the remote-call audio output through `setSinkId()`, updates the speaker control DOM, and emits audio-device state toasts.
+- The Calls/WebRTC seam contract explicitly keeps call state, media/device APIs, DOM transitions, and cleanup inline. This is a protected RTC/audio-device boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
