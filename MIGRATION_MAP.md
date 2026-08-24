@@ -4203,3 +4203,6 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-24 — `openCropPreview()` boundary rejection
 - Audited the crop-preview entry owner. It validates image files and bypasses non-images, mutates shared `_cropState`, creates/revokes the crop modal lifecycle, creates an object URL, renders the viewport and controls, attaches image-load sizing, and wires drag/zoom/cancel/confirm callbacks.
 - The crop contract keeps shared crop state, object-URL lifecycle, modal DOM, image sizing, gesture math, upload callback ownership, and cleanup inline. This is the protected crop lifecycle owner rather than a safe standalone UI component. No production code changed and no protected boundary was weakened.
+## 2026-08-24 — `checkEmergencyLock()` boundary rejection
+- Audited the emergency-lock coordinator. It queries the `feature_flags` database table, conditionally opens the emergency-lock overlay, handles missing-table/failure behavior, clears any previous interval, and schedules a recurring 60-second server-backed recheck.
+- The security and interval-lifecycle contracts keep database feature-flag enforcement, failure policy, overlay triggering, and timer ownership inline. This is a protected security/lifecycle boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
