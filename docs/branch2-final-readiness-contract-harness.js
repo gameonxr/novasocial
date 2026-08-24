@@ -117,10 +117,10 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 279, '279 documentation Markdown files must be published after Settings Privacy renderer contract checkpoint');
-assert.strictEqual(allHarnesses.length, 280, '280 harness files must be published after Settings Privacy renderer contract checkpoint');
-assert.strictEqual(contractFiles.length, 276, '276 standard contract documents must be published after Settings Privacy renderer contract checkpoint');
-assert.strictEqual(harnessFiles.length, 275, '275 standard contract harnesses must be published after Settings Privacy renderer contract checkpoint');
+assert.strictEqual(allDocs.length, 280, '280 documentation Markdown files must be published after tab-cache invalidation contract checkpoint');
+assert.strictEqual(allHarnesses.length, 281, '281 harness files must be published after tab-cache invalidation contract checkpoint');
+assert.strictEqual(contractFiles.length, 277, '277 standard contract documents must be published after tab-cache invalidation contract checkpoint');
+assert.strictEqual(harnessFiles.length, 276, '276 standard contract harnesses must be published after tab-cache invalidation contract checkpoint');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
