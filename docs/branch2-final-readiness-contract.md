@@ -18,12 +18,12 @@ The pre-existing `forwardMessage` caller remains the only documented unresolved 
 | Check | Expected behavior | Result |
 |---|---|---|
 | Branch safety | Current branch is Branch2; main ref is unchanged; worktree and remote are cleanly aligned | PASS |
-| Source inventory | 217 JavaScript modules, 18 CSS files, and 206 feature modules remain present | PASS |
-| HTML integration | 219 total script tags remain balanced: 218 external scripts plus one inline application script, including the CDN reference | PASS |
+| Source inventory | 226 JavaScript modules, 18 CSS files, and 215 feature modules remain present | PASS |
+| HTML integration | 228 total script tags remain balanced: 227 external scripts plus one inline application script, including the CDN reference | PASS |
 | Script order | Core/modules precede inline code; the post-inline owner tail remains ordered from smart-ranking and nova-init through the approved owners and like-effects | PASS |
-| Protected boundaries | Eight approved owner groups are external classic scripts with anonymous `window` assignments; the remaining fragile DM, Reels, Calls, recording, diagnostics, reaction, and Note submission boundaries remain inline and gated | PASS |
+| Protected boundaries | Nine approved owner groups are external classic scripts with anonymous `window` assignments; the remaining fragile DM, Reels, Calls, recording, diagnostics, reaction, and Note submission boundaries remain inline and gated | PASS |
 | PWA surface | Manifest and service worker remain available and referenced | PASS |
-| Documentation pairing | 262 Markdown docs and 263 harnesses exist, with 259 standard contract docs, 258 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
+| Documentation pairing | 275 Markdown docs and 276 harnesses exist, with 272 standard contract docs, 271 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
 | Known seam | `forwardMessage` is the only unresolved inline handler target | PASS |
 
 The harness is static and documentation-only. It does not authenticate, call Supabase, register a service worker, open media, send messages, mutate accounts, or execute any protected application function.
