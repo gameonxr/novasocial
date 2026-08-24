@@ -4154,3 +4154,7 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 ## 2026-08-23 — `setupSpeakingIndicator(userId, stream)` boundary rejection
 - Audited the next marker-clean call helper. It creates or reuses a shared `AudioContext`, creates a `MediaStreamSource` and analyser for a remote stream, and drives speaking-state detection in the group-call UI.
 - The Calls/WebRTC contract keeps remote media streams, browser audio APIs, analyser lifecycle, participant state, and teardown inline. This is a protected RTC/audio-analysis boundary rather than a safe UI-only owner. No production code changed and no protected boundary was weakened.
+
+## 2026-08-23 — `minimizeCall()` / `restoreCall()` boundary rejection
+- Audited the next marker-clean call UI helpers. `minimizeCall()` gates on active call state, mutates `_callState.isMinimized`, hides the call screen, and creates the call bubble; `restoreCall()` clears minimized state, removes the bubble, and restores the call screen.
+- The Calls/WebRTC seam contract explicitly keeps call state, call bubble/screen IDs, DOM transitions, and lifecycle cleanup inline. These helpers are protected call-lifecycle/UI boundaries rather than safe standalone owners. No production code changed and no protected boundary was weakened.
