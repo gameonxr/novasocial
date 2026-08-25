@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
-**Date:** 2026-08-19
+**Date:** 2026-08-25
 **Purpose:** Ensure extracted source files remain clean standalone classic-script/stylesheets rather than carrying HTML boundaries or binary contamination.
 
 ## Contract
@@ -11,11 +11,11 @@ Every extracted JavaScript and CSS file under `src/` must be valid UTF-8 text wi
 
 ## Harness coverage
 
-`docs/source-boundary-hygiene-contract-harness.js` scans all 229 extracted JS/CSS files statically and asserts that each file satisfies the boundary rules. It does not execute application code or modify any file.
+`docs/source-boundary-hygiene-contract-harness.js` scans all 245 extracted JS/CSS files statically and asserts that each file satisfies the boundary rules. It does not execute application code or modify any file.
 
 | Check | Expected behavior | Result |
 |---|---|---|
-| Source inventory | 211 JavaScript and 18 CSS files are scanned | PASS |
+| Source inventory | 227 JavaScript and 18 CSS files are scanned | PASS |
 | UTF-8 text | Every extracted file decodes as UTF-8 | PASS |
 | Binary contamination | Zero NUL bytes | PASS |
 | Line endings | Zero CRLF line endings | PASS |
@@ -23,7 +23,7 @@ Every extracted JavaScript and CSS file under `src/` must be valid UTF-8 text wi
 
 ## Safe boundary
 
-No production logic is changed by this audit. It only validates the boundaries of already-extracted files.
+The audit validates the boundaries of the already-extracted files after the authorized jump-to-message owner addition; it does not modify protected runtime logic.
 
 ## References
 
