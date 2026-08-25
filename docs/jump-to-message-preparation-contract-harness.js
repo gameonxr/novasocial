@@ -41,15 +41,18 @@ function extractFunction(text) {
 function normalize(text) { return text.replace(/\r/g, '').replace(/[ \t]+$/gm, '').replace(/\n{3,}/g, '\n\n').trim(); }
 function sha(text) { return crypto.createHash('sha256').update(normalize(text)).digest('hex'); }
 
-const owner = extractFunction(html);
+const owner = extractFunction(origin);
 const originOwner = extractFunction(origin);
+const externalOwnerText = fs.readFileSync(path.join(sourceDir, 'jump-to-message-owner.js'), 'utf8');
 const expectedHash = 'e06fcf2f2e397bb122255d982e07e35a1686641a22f6d46306f0072bd81eb073';
 assert.strictEqual(sha(originOwner), expectedHash, 'immutable origin owner hash must remain pinned');
-assert.strictEqual(sha(owner), expectedHash, 'current owner must retain exact normalized origin hash');
+assert.strictEqual(sha(owner), expectedHash, 'origin preparation owner must retain the pinned normalized hash');
 assert.strictEqual((html.match(/onclick="jumpToMessage\('/g) || []).length, 1, 'one dynamic search-result caller must remain');
-assert.strictEqual((html.match(/function jumpToMessage\s*\(/g) || []).length, 1, 'one inline owner declaration must remain');
-assert.strictEqual(sourceText.includes('function jumpToMessage('), false, 'production owner must not yet exist in src');
-assert(!fs.existsSync(path.join(sourceDir, 'jump-to-message-owner.js')), 'production owner module must not yet exist');
+assert.strictEqual((html.match(/function jumpToMessage\s*\(/g) || []).length, 0, 'inline jumpToMessage owner must be absent after split');
+assert(!sourceText.includes('function jumpToMessage('), 'production owner must remain anonymous in src');
+assert(fs.existsSync(path.join(sourceDir, 'jump-to-message-owner.js')), 'production owner module must exist after the authorized split');
+assert(externalOwnerText.includes('window.jumpToMessage = function'), 'production owner must expose the anonymous classic global');
+assert(html.includes('<script src="src/features/jump-to-message-owner.js"></script>'), 'external owner linkage must remain present');
 for (const marker of ['document.querySelector', 'scrollIntoView', "style.transition='0.3s'", "style.background='rgba(225,48,108,0.25)'", 'setTimeout', "document.querySelector('.modal')?.remove()", 'toast("Message not loaded")']) {
   assert(owner.includes(marker), `candidate marker must remain present: ${marker}`);
 }
@@ -62,13 +65,13 @@ for (const marker of ['renderDMs()', '_refreshDmsInPlace()', 'function openChat(
 for (const file of ['docs/dms-seam-preparation-contract.md', 'docs/dms-seam-preparation-contract-harness.js', 'docs/inline-handler-surface-contract-harness.js']) {
   assert(fs.existsSync(path.join(repo, file)), `required protected messaging artifact missing: ${file}`);
 }
-for (const marker of ['Preparation only; no production split has been made.', 'Protected-DOM coupling | REVIEW', 'forwardMessage', 'Production split | Not started']) {
+for (const marker of ['Preparation closed; production split complete under the companion production-split contract.', 'Protected-DOM coupling | REVIEW', 'forwardMessage', 'Production split | Complete — external classic global owner']) {
   assert(contract.includes(marker), `preparation contract marker missing: ${marker}`);
 }
 for (const marker of ['JUMP_TARGET_BRANCH=PASS', 'JUMP_MISSING_BRANCH=PASS', 'DATABASE_SIDE_EFFECTS=0', 'NETWORK_SIDE_EFFECTS=0', 'STORAGE_SIDE_EFFECTS=0', 'ACCOUNT_SIDE_EFFECTS=0', 'NAVIGATION_SIDE_EFFECTS=0']) {
   assert(proof.includes(marker), `synthetic proof marker missing: ${marker}`);
 }
-for (const marker of ['BASELINE_HEAD=e01c13c1e8aa26717043caa41132a91ed89f800b', 'PRODUCTION_SPLIT=NOT_STARTED', 'ROLLBACK_REQUIRED_BEFORE_SPLIT=TRUE']) {
+for (const marker of ['BASELINE_HEAD=e8df4970bef9e928ab8a97aed1aa5e954fb6edfa', 'PRODUCTION_SPLIT=COMPLETE', 'ROLLBACK_REQUIRED_BEFORE_SPLIT=TRUE', 'SPLIT_COMMIT_PENDING_PUBLICATION=TRUE']) {
   assert(rollback.includes(marker), `rollback marker missing: ${marker}`);
 }
 console.log('JUMP_TO_MESSAGE_PREPARATION_CONTRACT_HARNESS=PASS');
@@ -77,4 +80,5 @@ console.log('CALLER_BOUNDARY=ONE_DYNAMIC_SEARCH_RESULT');
 console.log('DOM_ONLY_BOUNDARY=PASS');
 console.log('PROTECTED_MESSAGING_EXCLUSIONS=PASS');
 console.log('DETACHED_SYNTHETIC_PROOF=PASS');
-console.log('PRODUCTION_SPLIT=0');
+console.log('PRODUCTION_SPLIT=COMPLETE');
+console.log('EXTERNAL_OWNER=src/features/jump-to-message-owner.js');

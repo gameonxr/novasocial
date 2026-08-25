@@ -7,7 +7,7 @@
 
 ## Contract
 
-NovaSocial loads extracted scripts as classic scripts, so top-level function declarations are exposed in the shared page environment. Duplicate names across `index.html` and extracted modules could silently replace handlers depending on load order. The audit covers `index.html` plus all 226 extracted JavaScript modules and identifies 704 unique top-level function names after the authorized forwarding implementation.
+NovaSocial loads extracted scripts as classic scripts, so top-level function declarations are exposed in the shared page environment. Duplicate names across `index.html` and extracted modules could silently replace handlers depending on load order. The audit covers `index.html` plus all 227 extracted JavaScript modules and identifies 703 unique top-level function names after the authorized forwarding and jump-to-message changes.
 
 Every audited function name must occur only once across the complete classic-script surface. Protected functions remain inline; this audit detects collisions without moving or rewriting them.
 
@@ -17,8 +17,8 @@ Every audited function name must occur only once across the complete classic-scr
 
 | Check | Expected behavior | Result |
 |---|---|---|
-| Files audited | 227 total: index.html plus 226 modules | PASS |
-| Function inventory | 704 unique top-level function names | PASS |
+| Files audited | 228 total: index.html plus 227 modules | PASS |
+| Function inventory | 703 unique top-level function names | PASS |
 | Collision safety | Zero duplicate top-level function names | PASS |
 | Protected boundary | Existing inline systems remain in place | PASS |
 
@@ -30,7 +30,7 @@ The audit confirms global function-name safety after the authorized inline forwa
 
 ## Validation
 
-The standalone harness passed with `AUDITED_FILES=227`, `TOP_LEVEL_FUNCTION_NAMES=704`, and `DUPLICATE_NAMES=0`. The complete repository validation chain must pass after publication.
+The standalone harness passed with `AUDITED_FILES=228`, `TOP_LEVEL_FUNCTION_NAMES=703`, and `DUPLICATE_NAMES=0`. The complete repository validation chain must pass after publication.
 
 ## References
 

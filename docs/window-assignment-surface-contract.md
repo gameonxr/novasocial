@@ -7,20 +7,20 @@
 
 ## Contract
 
-NovaSocial intentionally uses a shared classic-script environment. The current application surface contains 213 explicit `window.<name> =` assignment occurrences spanning 111 unique names across `index.html` and the 226 extracted JavaScript modules. These assignments include UI state, subscriptions, timers, account state, navigation state, and HTML-handler compatibility functions; the authorized forwarding flow adds the `_forwardMessagePending` state slot.
+NovaSocial intentionally uses a shared classic-script environment. The current application surface contains 214 explicit `window.<name> =` assignment occurrences spanning 112 unique names across `index.html` and the 227 extracted JavaScript modules. These assignments include UI state, subscriptions, timers, account state, navigation state, and HTML-handler compatibility functions; the authorized forwarding flow adds `_forwardMessagePending`, and the safe jump-to-message split adds `jumpToMessage`.
 
 The contract freezes the current names and occurrence count without changing ownership or behavior. It does not prohibit ordinary local variables, reads from `window`, or intentional repeated writes to an existing state slot. It also does not claim that every global should be redesigned or cleaned up; any namespace refactor requires a separate compatibility review because protected DMs, Reels, Calls, Stories, Navigation, and account transitions depend on shared state.
 
 ## Harness coverage
 
-`docs/window-assignment-surface-contract-harness.js` scans only the application surface: `index.html` and `src/**/*.js`. It asserts the exact 111-name allowlist and 213 occurrence count, and reports unexpected additions or missing names. It excludes documentation, harnesses, `sw.js`, and generated artifacts. The harness is static and does not execute application code, authenticate, call Supabase, or mutate state.
+`docs/window-assignment-surface-contract-harness.js` scans only the application surface: `index.html` and `src/**/*.js`. It asserts the exact 112-name allowlist and 214 occurrence count, and reports unexpected additions or missing names. It excludes documentation, harnesses, `sw.js`, and generated artifacts. The harness is static and does not execute application code, authenticate, call Supabase, or mutate state.
 
 | Check | Expected behavior | Result |
 |---|---:|---|
-| Application files | `index.html` plus 226 extracted JavaScript modules | PASS |
-| Explicit assignments | 213 `window.<name> =` occurrences | PASS |
-| Unique assignment names | 111 names, all in the audited allowlist | PASS |
-| Protected behavior | Only the authorized forwarding state slot is added; protected owner names remain unchanged | PASS |
+| Application files | `index.html` plus 227 extracted JavaScript modules | PASS |
+| Explicit assignments | 214 `window.<name> =` occurrences | PASS |
+| Unique assignment names | 112 names, all in the audited allowlist | PASS |
+| Protected behavior | Only the authorized forwarding state and safe DOM-owner globals are added; protected owner names remain unchanged | PASS |
 
 ## Safe boundary
 

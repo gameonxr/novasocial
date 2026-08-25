@@ -4363,3 +4363,8 @@ Added the approved `renderStoryElements` global to the exact window-assignment a
 - Updated the window-assignment contract for the authorized `_forwardMessagePending` state slot: 213 explicit assignments across 111 names and 226 extracted modules. Protected function accounting remains unchanged.
 - Updated the event-listener contract for the two authorized forwarding selector listeners: `index.html` now has 30 `addEventListener` registrations, with zero cleanup registrations. No existing listener was refactored.
 - Updated the explicit-error-boundary contract for the two authorized forwarding guards: `index.html` now has 8 explicit `throw new Error` sites and the complete application total is 12, with no unexpected extracted boundaries.
+
+## 2026-08-25 — Authorized jump-to-message production split
+- Extracted the prepared DOM-only `jumpToMessage(mid)` owner to `src/features/jump-to-message-owner.js` as an anonymous classic `window.jumpToMessage` assignment. The exact normalized origin owner hash remains `e06fcf2f2e397bb122255d982e07e35a1686641a22f6d46306f0072bd81eb073`; the dynamic search-result caller remains unchanged.
+- Detached production-split proof passed for target and missing-message branches, script order, classic global exposure, zero database/network/storage/account/upload/navigation/live side effects, and protected-DM exclusions. Rollback is removal of the external owner linkage/module and reversion to the pinned inline owner.
+- Updated inventories to 227 JavaScript modules, 216 feature modules, 228 external scripts, 214 window assignments across 112 names, 235 inline declarations, and 703 unique top-level function names. Protected accounting remains 19 signatures, 9 approved extracted owners, and 10 blocked systems.

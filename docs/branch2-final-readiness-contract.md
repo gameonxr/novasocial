@@ -18,12 +18,12 @@ The pre-existing `forwardMessage` caller is now backed by the authorized bounded
 | Check | Expected behavior | Result |
 |---|---|---|
 | Branch safety | Current branch is Branch2; main ref is unchanged; worktree and remote are cleanly aligned | PASS |
-| Source inventory | 226 JavaScript modules, 18 CSS files, and 215 feature modules remain present | PASS |
-| HTML integration | 228 total script tags remain balanced: 227 external scripts plus one inline application script, including the CDN reference | PASS |
-| Script order | Core/modules precede inline code; the post-inline owner tail remains ordered from smart-ranking and nova-init through the approved owners and like-effects | PASS |
+| Source inventory | 227 JavaScript modules, 18 CSS files, and 216 feature modules remain present after the jump-to-message split | PASS |
+| HTML integration | 229 total script tags remain balanced: 228 external scripts plus one inline application script, including the CDN reference | PASS |
+| Script order | Core/modules precede inline code; the jump-to-message owner precedes the post-inline tail, which remains ordered from smart-ranking and nova-init through the approved owners and like-effects | PASS |
 | Protected boundaries | Nine approved owner groups are external classic scripts with anonymous `window` assignments; the remaining fragile DM, Reels, Calls, recording, diagnostics, reaction, and Note submission boundaries remain inline and gated | PASS |
 | PWA surface | Manifest and service worker remain available and referenced | PASS |
-| Documentation pairing | 295 Markdown docs and 296 harnesses exist, with 292 standard contract docs, 291 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
+| Documentation pairing | 296 Markdown docs and 297 harnesses exist, with 293 standard contract docs, 292 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
 | Forwarding seam | `forwardMessage` resolves to the authorized bounded inline implementation; origin/main remains caller-only | PASS |
 
 The harness is static and documentation-only. It does not authenticate, call Supabase, register a service worker, open media, send messages, mutate accounts, or execute any protected application function. The forwarding decision and production-parity harnesses are synthetic-only; they do not access live accounts or perform live mutations.

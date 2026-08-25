@@ -5335,16 +5335,6 @@ async function doSearchMessages(cid, q) {
   `).join('');
 }
 
-function jumpToMessage(mid){
-  const el=document.querySelector(`[data-msgid="${mid}"]`);
-  if(!el){ toast("Message not loaded"); return; }
-  el.scrollIntoView({behavior:'smooth',block:'center'});
-  el.style.transition='0.3s';
-  el.style.background='rgba(225,48,108,0.25)';
-  setTimeout(()=>{ el.style.background=''; },2000);
-  document.querySelector('.modal')?.remove();
-}
-
 // ── GROUP INFO (With Invite Link) ──────────────────────────────────────
 async function showGroupInfo(cid){
   const members=window._chatMembers||[];
@@ -10773,6 +10763,7 @@ async function checkUserActiveNote(userId){
 }
 
 </script>
+<script src="src/features/jump-to-message-owner.js"></script>
 <script src="src/features/smart-ranking.js"></script>
 <script src="src/features/nova-init.js"></script>
 <script src="src/features/spawn-like-particles.js"></script>

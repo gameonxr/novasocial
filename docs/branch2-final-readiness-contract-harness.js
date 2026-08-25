@@ -30,18 +30,19 @@ assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
 
-assert.strictEqual(jsFiles.length, 226, '226 extracted JavaScript modules must remain after confirmCropPreview split');
+assert.strictEqual(jsFiles.length, 227, '227 extracted JavaScript modules must remain after the jump-to-message split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 215, '215 feature modules must remain after confirmCropPreview split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 228, 'HTML must retain 228 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 228, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 227, 'HTML must retain 227 external script tags');
+assert.strictEqual(featureFiles.length, 216, '216 feature modules must remain after the jump-to-message split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 229, 'HTML must retain 229 script tags');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 229, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 228, 'HTML must retain 228 external script tags');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
-for (const script of ['src/features/smart-ranking.js', 'src/features/nova-init.js', 'src/features/like-effects.js']) {
+for (const script of ['src/features/jump-to-message-owner.js', 'src/features/smart-ranking.js', 'src/features/nova-init.js', 'src/features/like-effects.js']) {
   assert(html.indexOf(script) > inlineStart, `${script} must remain after inline application code`);
 }
+assert(html.indexOf('src/features/jump-to-message-owner.js') < html.indexOf('src/features/smart-ranking.js'), 'jump-to-message owner must precede the post-inline owner tail');
 assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/features/nova-init.js'), 'smart-ranking must precede nova-init');
 assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
@@ -119,10 +120,10 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 295, '295 documentation Markdown files must be published after the forward-message production parity contract checkpoint');
-assert.strictEqual(allHarnesses.length, 296, '296 harness files must be published after the forward-message production parity contract checkpoint');
-assert.strictEqual(contractFiles.length, 292, '292 standard contract documents must be published after the forward-message production parity contract checkpoint');
-assert.strictEqual(harnessFiles.length, 291, '291 standard contract harnesses must be published after the forward-message production parity contract checkpoint');
+assert.strictEqual(allDocs.length, 296, '296 documentation Markdown files must be published after the jump-to-message production split checkpoint');
+assert.strictEqual(allHarnesses.length, 297, '297 harness files must be published after the jump-to-message production split checkpoint');
+assert.strictEqual(contractFiles.length, 293, '293 standard contract documents must be published after the jump-to-message production split checkpoint');
+assert.strictEqual(harnessFiles.length, 292, '292 standard contract harnesses must be published after the jump-to-message production split checkpoint');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
