@@ -138,11 +138,11 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 306, '306 documentation Markdown files must be published after the protected-system dossier package');
-assert.strictEqual(allHarnesses.length, 307, '307 harness files must be published after the protected-system dossier package');
-assert.strictEqual(contractFiles.length, 303, '303 standard contract documents must be published after the protected-system dossier package');
-assert.strictEqual(harnessFiles.length, 302, '302 standard contract harnesses must be published after the protected-system dossier package');
-assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
+assert.strictEqual(allDocs.length, 308, '308 documentation Markdown files must be published after the Reels independent-proof package');
+assert.strictEqual(allHarnesses.length, 308, '308 harness files must be published after the Reels independent-proof package');
+assert.strictEqual(contractFiles.length, 304, '304 standard contract documents must be published after the Reels independent-proof package');
+assert.strictEqual(harnessFiles.length, 303, '303 standard contract harnesses must be published after the Reels independent-proof package');
+assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md', 'reels-renderer-navigation-independent-authorization-addendum.md'], 'nonstandard documentation exceptions must remain explicitly mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
   if (mappedLegacyContracts.has(contract)) continue;

@@ -1,0 +1,30 @@
+REELS_RENDERER_NAVIGATION_INDEPENDENT_PROOF_ROLLBACK_EVIDENCE=PINNED
+REPOSITORY=gameonxr/novasocial
+BRANCH=Branch2
+PRE_PROOF_BASELINE_COMMIT=15cbec0d69774ed2b35b8d0d808871204f225195
+PUBLISHED_BRANCH2_AT_BASELINE=15cbec0d69774ed2b35b8d0d808871204f225195
+IMMUTABLE_ORIGIN_MAIN=ef418007c9b9a797488b4825be5f0c807da22369
+CANDIDATE_OWNER=inline async function renderReels(){...}
+INLINE_BOUNDARY=index.html:4321-4682 at pre-proof baseline
+ORIGIN_OWNER_SHA256=db1f15428a4452e72b4a5223a5050151cb5deea0092b3a858afbd012b09653ca
+BRANCH2_OWNER_PARITY=EXACT_PASS
+PRODUCTION_SPLIT_AT_CHECKPOINT=0
+EXTERNAL_RENDERER_LINKAGE_ADDED=0
+
+AUTHORIZED_SCOPE=DETACHED_INDEPENDENT_PROOF_ONLY
+PRODUCTION_DECISION=BLOCKED
+LIVE_SIDE_EFFECTS=0
+
+ROLLBACK_PROCEDURE_NOT_EXECUTED=NO_PRODUCTION_SPLIT
+# If a future experimental split is attempted and must be reverted:
+# 1. git fetch origin Branch2
+# 2. git checkout Branch2
+# 3. git reset --hard 15cbec0d69774ed2b35b8d0d808871204f225195
+# 4. remove only the experimental external renderer linkage/module, if present in the experiment
+# 5. verify index.html renderReels owner hash equals db1f15428a4452e72b4a5223a5050151cb5deea0092b3a858afbd012b09653ca
+# 6. run: node docs/reels-renderer-navigation-independent-proof-contract-harness.js
+# 7. run the published full Branch2 regression gate after the worktree is clean and published
+
+POST_ROLLBACK_GATE=NOT_APPLICABLE_UNTIL_A_PRODUCTION_SPLIT_EXISTS
+ROLLBACK_SIDE_EFFECTS=0
+REAL_ACCOUNT_OR_BROWSER_ACTIONS=0
