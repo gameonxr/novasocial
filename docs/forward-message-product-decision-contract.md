@@ -2,11 +2,11 @@
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
 **Date:** 2026-08-25
-**Purpose:** Define the minimum conservative product decision and authorization boundary for the unresolved `forwardMessage` caller without changing protected DM production behavior.
+**Purpose:** Define the minimum conservative product decision and authorization boundary for the previously unresolved `forwardMessage` caller and record the bounded implementation now authorized on Branch2.
 
 ## Decision
 
-Forwarding is authorized for a future bounded implementation only as an explicit copy-to-existing-conversation action. The user selects one existing conversation visible to the current account; the action creates one new message in that destination conversation and does not create recipients, conversations, contacts, or permissions.
+Forwarding is authorized only as an explicit copy-to-existing-conversation action within the bounded implementation described here. The user selects one existing conversation visible to the current account; the action creates one new message in that destination conversation and does not create recipients, conversations, contacts, or permissions.
 
 The first implementation scope accepts the source message's text and supported existing media reference fields (`media_url`, `media_type`, and `shared_post_id` when present). It does not upload or transform media. The forwarded message is a new message with the current account as `sender_id` and the selected destination as `conversation_id`; source identity, source timestamp, source database id, reply threading, reactions, read state, and moderation state are not copied into the new message. The product may later add an explicit forward-attribution field, but this contract does not invent one.
 
@@ -16,11 +16,11 @@ The operation is non-optimistic: it performs policy validation, then one message
 
 ## Explicit authorization boundary
 
-This document authorizes only a future implementation and detached synthetic proof of the bounded semantics above. It does not authorize real login, account access, message sending, database or network mutation, media upload, browser navigation, realtime subscription changes, permission prompts, or production extraction from the protected DM inline owner. Any production implementation still requires exact parity against the current protected DM behavior, a focused browser-safe proof, rollback evidence, and the full Branch2 regression gate.
+This document authorizes only the bounded implementation described above, which remains inline in the protected DM owner and is not a production extraction. It does not authorize real login, account access, live testing, media upload, browser navigation, realtime subscription changes, permission prompts, group forwarding, schema migration, or any behavior outside this contract. The implementation requires exact parity against the decision harness, rollback evidence, and the full Branch2 regression gate; those validations are recorded by the companion production-parity contract.
 
 ## Harness coverage
 
-`docs/forward-message-product-decision-contract-harness.js` models the decision with plain synthetic objects and injected operations. It verifies destination eligibility, blocked-recipient rejection before insert, field allowlisting, new sender/destination assignment, source immutability, non-optimistic success ordering, insert-failure rollback behavior, and zero upload/realtime/navigation side effects. It does not define or install `window.forwardMessage`.
+`docs/forward-message-product-decision-contract-harness.js` models the decision with plain synthetic objects and injected operations. It verifies destination eligibility, blocked-recipient rejection before insert, field allowlisting, new sender/destination assignment, source immutability, non-optimistic success ordering, insert-failure rollback behavior, and zero upload/realtime/navigation side effects. The decision harness does not define or install `window.forwardMessage`; the separate production-parity harness exercises the actual inline implementation in a detached VM.
 
 | Scenario | Expected behavior | Result |
 |---|---|---|

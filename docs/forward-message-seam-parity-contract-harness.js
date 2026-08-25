@@ -13,14 +13,17 @@ function hasImplementation(html) {
 
 for (const [name, html] of [['Branch2', branch2Html], ['origin/main', mainHtml]]) {
   assert(html.includes('onclick="forwardMessage('), `${name} must retain the documented forwardMessage caller`);
-  assert(!hasImplementation(html), `${name} must not invent a forwardMessage implementation`);
   assert(html.includes('async function renderDMs()'), `${name} must retain inline renderDMs`);
   assert(html.includes('function showMsgMenu('), `${name} must retain inline showMsgMenu`);
 }
+assert(hasImplementation(branch2Html), 'Branch2 must contain the authorized inline forwardMessage implementation');
+assert(branch2Html.includes('async function completeForwardMessage('), 'Branch2 must contain the bounded completion helper');
+assert(!hasImplementation(mainHtml), 'origin/main must remain caller-only for forwardMessage');
 
 assert.strictEqual(branch2Html.match(/onclick="forwardMessage\(/g).length, mainHtml.match(/onclick="forwardMessage\(/g).length, 'Branch2 and main must retain the same forwardMessage caller count');
 
 console.log('FORWARD_MESSAGE_SEAM_PARITY_HARNESS=PASS');
 console.log(`BRANCH2_CALLERS=${branch2Html.match(/onclick="forwardMessage\(/g).length}`);
 console.log(`MAIN_CALLERS=${mainHtml.match(/onclick="forwardMessage\(/g).length}`);
-console.log('IMPLEMENTATIONS=0');
+console.log('BRANCH2_IMPLEMENTATION=AUTHORIZED_INLINE');
+console.log('MAIN_IMPLEMENTATION=0');

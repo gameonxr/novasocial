@@ -9,7 +9,7 @@
 
 The current `index.html` contains 159 unique direct `onclick` function targets. The handler inventory is checked against both `index.html` and all extracted JavaScript modules, allowing either a function declaration or an explicit global assignment to satisfy the availability requirement.
 
-The audit finds one pre-existing unresolved target: `forwardMessage`. Its caller remains inside the protected inline DM message-action menu, but no implementation exists in `index.html` or `src/`. This same unresolved caller exists on the untouched main reference. Because forwarding behavior has no recoverable implementation or specified product semantics, this checkpoint documents the seam without inventing behavior or modifying the protected DM system.
+The audit previously found one unresolved target, `forwardMessage`. Branch2 now resolves it with the authorized inline implementation, while the untouched main reference intentionally remains caller-only. The implementation is covered by the product-decision and production-parity contracts and stays inside the protected DM owner rather than being extracted.
 
 ## Harness coverage
 
@@ -20,19 +20,19 @@ The audit finds one pre-existing unresolved target: `forwardMessage`. Its caller
 | Direct onclick inventory | 159 unique targets detected | PASS |
 | Cross-source lookup | `index.html` and `src/**/*.js` searched | PASS |
 | Resolved handler surface | All available targets resolve to declarations or global assignments | PASS |
-| Known unresolved seam | Only `forwardMessage` remains unresolved | PASS |
+| Forward handler | `forwardMessage` resolves to the authorized Branch2 inline implementation | PASS |
 | Protected DM boundary | `renderDMs` and `showMsgMenu` remain inline | PASS |
-| Caller preservation | `forwardMessage` caller remains visible for a future product decision | PASS |
+| Caller preservation | `forwardMessage` caller remains visible and origin/main caller parity is preserved | PASS |
 
 The harness is static and documentation-only. It does not invoke authentication, Supabase, DMs, message actions, forwarding, navigation, or account mutations.
 
 ## Safe boundary
 
-No production code was changed. The protected DM implementation remains inline and unchanged. Implementing `forwardMessage` requires a separate product decision about recipient selection, payload shape, media/text behavior, and message persistence; no speculative implementation was added.
+The authorized `forwardMessage` implementation remains inline in the protected DM owner and is not extracted. Its recipient selection, payload allowlist, block policy, insert ordering, and failure behavior are defined by the companion product-decision and production-parity contracts; no group forwarding, schema migration, upload, or realtime behavior was added.
 
 ## Validation
 
-The standalone harness passed with `ONCLICK_HANDLERS=159` and `UNRESOLVED_DOCUMENTED_SEAMS=1`. The complete repository validation chain must pass before this contract and harness are published to `docs/`.
+The standalone harness passes with `ONCLICK_HANDLERS=159` and `UNRESOLVED_DOCUMENTED_SEAMS=0`. The complete repository validation chain must pass after publication.
 
 ## References
 

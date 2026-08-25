@@ -19,11 +19,14 @@ const unresolved = handlers.filter(name => {
 });
 
 assert.strictEqual(handlers.length, 153, 'onclick handler inventory must reflect the current Notes reactor-list split');
-assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented pre-existing forwardMessage seam may remain unresolved');
-assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain visible for future product decision');
+assert.deepStrictEqual(unresolved, [], 'all current inline handler targets must resolve after the authorized forwardMessage implementation');
+assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain visible');
+assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'Branch2 must expose the authorized inline forwardMessage implementation');
+assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'Branch2 must expose the bounded completion helper');
 assert(html.includes('async function renderDMs()'), 'DM renderer must remain inline');
 assert(html.includes('function showMsgMenu('), 'message action menu must remain inline');
 
 console.log('INLINE_HANDLER_SURFACE_HARNESS=PASS');
 console.log(`ONCLICK_HANDLERS=${handlers.length}`);
 console.log(`UNRESOLVED_DOCUMENTED_SEAMS=${unresolved.length}`);
+console.log('FORWARD_MESSAGE_IMPLEMENTATION=AUTHORIZED_INLINE');

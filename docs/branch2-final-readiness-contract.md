@@ -9,7 +9,7 @@
 
 Branch2 is ready for the next deployment/review step only when the modularized source inventory, HTML integration, protected inline boundaries, PWA files, contract-artifact pairing, and branch safety invariants all hold together. This checkpoint does not replace the individual behavior contracts; it confirms that their structural assumptions are simultaneously true at the repository boundary.
 
-The pre-existing `forwardMessage` caller remains the only documented unresolved inline handler seam. Its conservative product decision is now recorded and proven only in detached synthetic evidence; no production handler or protected DM split is authorized by that evidence alone.
+The pre-existing `forwardMessage` caller is now backed by the authorized bounded inline implementation. Its product decision and detached production-parity proof are published; the protected DM owner remains inline and is not extracted.
 
 ## Harness coverage
 
@@ -23,14 +23,14 @@ The pre-existing `forwardMessage` caller remains the only documented unresolved 
 | Script order | Core/modules precede inline code; the post-inline owner tail remains ordered from smart-ranking and nova-init through the approved owners and like-effects | PASS |
 | Protected boundaries | Nine approved owner groups are external classic scripts with anonymous `window` assignments; the remaining fragile DM, Reels, Calls, recording, diagnostics, reaction, and Note submission boundaries remain inline and gated | PASS |
 | PWA surface | Manifest and service worker remain available and referenced | PASS |
-| Documentation pairing | 294 Markdown docs and 295 harnesses exist, with 291 standard contract docs, 290 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
-| Known seam | `forwardMessage` is the only unresolved inline handler target; its conservative decision/proof pair is detached and production-free | PASS |
+| Documentation pairing | 295 Markdown docs and 296 harnesses exist, with 292 standard contract docs, 291 standard contract harnesses, and five mapped non-standard harness artifacts | PASS |
+| Forwarding seam | `forwardMessage` resolves to the authorized bounded inline implementation; origin/main remains caller-only | PASS |
 
-The harness is static and documentation-only. It does not authenticate, call Supabase, register a service worker, open media, send messages, mutate accounts, or execute any protected application function. The forwarding decision harness is synthetic-only and does not define `window.forwardMessage`.
+The harness is static and documentation-only. It does not authenticate, call Supabase, register a service worker, open media, send messages, mutate accounts, or execute any protected application function. The forwarding decision and production-parity harnesses are synthetic-only; they do not access live accounts or perform live mutations.
 
 ## Safe boundary
 
-No production application code is changed by this checkpoint. The harness is intended to run after publication, when the worktree is clean; it is therefore not a pre-commit check.
+The readiness harness is static and does not execute the authorized forwarding behavior or any other protected application function. It is intended to run after publication, when the worktree is clean; it is therefore not a pre-commit check.
 
 ## Validation
 

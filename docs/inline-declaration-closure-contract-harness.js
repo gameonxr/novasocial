@@ -15,7 +15,7 @@ const protectedNames = [
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
   'voteStoryPoll','refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 234, 'inline application script must retain 234 function declarations after the confirmCropPreview split');
+assert.strictEqual(declarations.length, 236, 'inline application script must retain 236 function declarations after the authorized forwardMessage implementation');
 const remainingInlineProtectedNames = protectedNames.filter(name => !['spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 19, 'protected declaration set must contain 19 unique names');
@@ -27,9 +27,10 @@ for (const name of protectedNames) {
   }
 }
 const hasForwardImplementation = /(?:async\s+)?function\s+forwardMessage\s*\(/.test(inline) || /(?:window\.)?forwardMessage\s*=/.test(inline);
-assert.strictEqual(hasForwardImplementation, false, 'forwardMessage must remain an unresolved caller-only seam');
+assert.strictEqual(hasForwardImplementation, true, 'forwardMessage must remain an authorized inline implementation');
+assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(inline), 'completeForwardMessage must remain inline with the protected handler');
 assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain present');
 console.log('INLINE_DECLARATION_CLOSURE_HARNESS=PASS');
 console.log(`INLINE_DECLARATIONS=${declarations.length}`);
 console.log(`PROTECTED_DECLARATIONS=${protectedNames.length}`);
-console.log('FORWARD_MESSAGE_IMPLEMENTATION=0');
+console.log('FORWARD_MESSAGE_IMPLEMENTATION=AUTHORIZED_INLINE');
