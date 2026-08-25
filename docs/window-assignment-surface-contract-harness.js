@@ -6,8 +6,8 @@ const repo = path.resolve(__dirname, '..');
 const expectedNames = [
   '_addingNewAccount', '_autoPurgeRunning', '_callIncomingSubscription', '_callReconnectTimeout',
   '_callRingTimeout', '_callStatusSub', '_chColor', '_chIcon', '_chatCid', '_chatGcAvatar',
-  '_chatGcName', '_chatIsAdmin', '_chatMembers', '_chatOtherId', '_chatScreenActive', '_collabAuthor',
-  '_collabUsers', '_curChatId', '_curIsGrp', '_exitTimer', '_expiredNotesCleaned', '_expiredStoriesCleaned',
+  '_chatGcName', '_chatIsAdmin', '_chatMembers',   '_chatOtherId', '_chatScreenActive', '_collabAuthor',
+  '_collabUsers', '_curChatId', '_curIsGrp', '_exitTimer', '_expiredNotesCleaned', '_expiredStoriesCleaned', '_forwardMessagePending',
   '_gcAudioCtx', '_gcs', '_historyApiBroken', '_incomingCallTimeout', '_journalMood',
   '_lastKnownFeedTimestamp', '_liveInterval', '_liveStream', '_mentionedUsers', '_msgPagination',
   '_navPopInProgress', '_networkMonitorInterval', '_noteColor', '_noteMusic', '_noteTextDraft',
@@ -40,7 +40,7 @@ const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
 assert.strictEqual(files.length, 227, 'index.html plus 226 extracted modules must be audited after the confirmCropPreview owner and the established owner groups');
-assert.strictEqual(matches.length, 209, 'application surface must retain 209 explicit window assignments after the confirmCropPreview split');
+assert.strictEqual(matches.length, 213, 'application surface must retain 213 explicit window assignments after the authorized forwardMessage implementation');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
