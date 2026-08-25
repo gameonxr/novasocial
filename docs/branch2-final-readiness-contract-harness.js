@@ -117,10 +117,10 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, ['forwardMessage'], 'only the documented forwardMessage seam may remain unresolved');
-assert.strictEqual(allDocs.length, 286, '286 documentation Markdown files must be published after group-call selection contract checkpoint');
-assert.strictEqual(allHarnesses.length, 287, '287 harness files must be published after group-call selection contract checkpoint');
-assert.strictEqual(contractFiles.length, 283, '283 standard contract documents must be published after group-call selection contract checkpoint');
-assert.strictEqual(harnessFiles.length, 282, '282 standard contract harnesses must be published after group-call selection contract checkpoint');
+assert.strictEqual(allDocs.length, 287, '287 documentation Markdown files must be published after showGC renderer contract checkpoint');
+assert.strictEqual(allHarnesses.length, 288, '288 harness files must be published after showGC renderer contract checkpoint');
+assert.strictEqual(contractFiles.length, 284, '284 standard contract documents must be published after showGC renderer contract checkpoint');
+assert.strictEqual(harnessFiles.length, 283, '283 standard contract harnesses must be published after showGC renderer contract checkpoint');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
