@@ -71,7 +71,7 @@ for (const marker of ['Preparation closed; production split complete under the c
 for (const marker of ['JUMP_TARGET_BRANCH=PASS', 'JUMP_MISSING_BRANCH=PASS', 'DATABASE_SIDE_EFFECTS=0', 'NETWORK_SIDE_EFFECTS=0', 'STORAGE_SIDE_EFFECTS=0', 'ACCOUNT_SIDE_EFFECTS=0', 'NAVIGATION_SIDE_EFFECTS=0']) {
   assert(proof.includes(marker), `synthetic proof marker missing: ${marker}`);
 }
-for (const marker of ['BASELINE_HEAD=e8df4970bef9e928ab8a97aed1aa5e954fb6edfa', 'PRODUCTION_SPLIT=COMPLETE', 'ROLLBACK_REQUIRED_BEFORE_SPLIT=TRUE', 'SPLIT_COMMIT_PENDING_PUBLICATION=TRUE']) {
+for (const marker of ['BASELINE_HEAD=e8df4970bef9e928ab8a97aed1aa5e954fb6edfa', 'PRODUCTION_SPLIT=COMPLETE', 'ROLLBACK_REQUIRED_BEFORE_SPLIT=TRUE', 'SPLIT_COMMIT=6b7a2b7c4563eda48c461d0f88f7b3158fb54f58']) {
   assert(rollback.includes(marker), `rollback marker missing: ${marker}`);
 }
 console.log('JUMP_TO_MESSAGE_PREPARATION_CONTRACT_HARNESS=PASS');
