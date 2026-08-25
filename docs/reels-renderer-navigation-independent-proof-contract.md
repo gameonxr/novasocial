@@ -27,6 +27,8 @@ The harness executes both the immutable-origin owner and the current Branch2 own
 | Cleanup | Settled transition is cleared, no synthetic timers remain, and no forbidden DOM/media/network operation is invoked | PASS |
 | Rollback-after-split | In-memory linkage-only split is reverted to byte-identical baseline HTML and owner hash | PASS |
 | Non-production extraction candidate | One external classic linkage, inline owner removal, script order, candidate lifecycle parity, and no repository production change | PASS |
+| Isolated post-split validation | Actual temporary tree with extracted module passed VM global exposure, exact lifecycle parity, and zero repository production changes | PASS |
+| Isolated rollback | Temporary tree restored to exact Branch2 baseline; experimental linkage/module absent afterward | PASS |
 
 The temporary candidate is pinned by module SHA-256 `3b7985ad1d8163a186a757cdd65ca8db80f4fdb3a9054abfabbef8e5a0955a24`, synthetic after-HTML SHA-256 `16388e916adbcedbbadf0477b290e2b937fbceda1430cd4160639b8b02e62d5f`, and baseline HTML SHA-256 `a5179f6c626cae5936da608b268d5ac8e22965699a1f5d211cf5aa4d1c3890cc`. It exists only in `/tmp`; the production repository has no renderer linkage or owner relocation.
 
@@ -53,6 +55,8 @@ This checkpoint authorizes the independent proof gates listed above only. It doe
 `ROLLBACK_AFTER_SPLIT_SIMULATION=PASS`
 `NONPRODUCTION_EXTRACTION_CANDIDATE=PASS`
 `CANDIDATE_LIFECYCLE_PARITY=PASS`
+`ISOLATED_POST_SPLIT_VALIDATION=PASS`
+`ISOLATED_ROLLBACK=PASS`
 `BROWSER_SAFE_LIVE_ACTIONS=0`
 `PRODUCTION_DECISION=BLOCKED`
 `PRODUCTION_CHANGE=0`
