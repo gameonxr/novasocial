@@ -20,6 +20,20 @@ This addendum grants **explicit scoped authorization to complete detached indepe
 | Production extraction | `NOT AUTHORIZED` |
 | Protected accounting | Unchanged: 19 signatures, 9 approved extracted owners, 10 blocked systems |
 
+## Expanded independent gate authorization
+
+The following gates are explicitly authorized and independently passed in the detached harness. The before/after comparison is between the immutable-origin owner and the current Branch2 owner; no source relocation is involved.
+
+| Gate | Evidence result |
+|---|---|
+| Swipe | PASS: fast forward, cancelled short swipe, last-item edge, and backward swipe |
+| Playback | PASS: initial delayed play, active-video reset/play, pause-all transition, and progress update |
+| Navigation stack | PASS: `renderReels()` leaves `navStack` unchanged and does not call browser history |
+| Overlay wiring | PASS: double-tap, like, comments, share, create-reel, and profile bindings match |
+| Timing | PASS: synthetic 100ms first-play, 240ms transition, 290ms settle cleanup, and progress timing |
+| Cleanup | PASS: settled transition cleared, no timers remain, and no forbidden operation occurs |
+| Rollback-after-split simulation | PASS: linkage-only synthetic split restores byte-identical baseline HTML and owner hash |
+
 ## Exact candidate and allowed proof surface
 
 The authorized candidate is the current inline `renderReels()` owner from the persistent-container guard through its restore path. The proof may inspect and execute this unchanged body in a detached VM using synthetic `document`, `window`, read-only database, video, timer, and windowing-helper mocks. It may record DOM attachment, read-query, error-boundary, synthetic playback, and windowing-handoff traces.
