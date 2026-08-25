@@ -1,0 +1,31 @@
+NOTES_REACTION_OWNER_INDEPENDENT_ROLLBACK_EVIDENCE=PINNED
+REPOSITORY=gameonxr/novasocial
+BRANCH=Branch2
+PRE_PROOF_BASELINE_COMMIT=40802d84409ea252ed790cb3b8d63234a01c914c
+IMMUTABLE_ORIGIN_MAIN=ef418007c9b9a797488b4825be5f0c807da22369
+CANDIDATE_OWNER=inline function reactToNote(noteId, emoji, clickedEl){...}
+INLINE_BOUNDARY=index.html:10703-10725
+ORIGIN_OWNER_SHA256=3877a5e2a75c4b95ff0e6494a03e7cb9eb2b0f02fee6fe64225c642078986880
+BRANCH2_OWNER_PARITY=EXACT_PASS
+SUCCESS_BEFORE_AFTER=PASS
+MISSING_CLICKED_ELEMENT=PASS
+ERROR_BEFORE_AFTER=PASS
+PAYLOAD_AND_CONFLICT_POLICY=PASS
+TIMING_AND_CLEANUP=PASS
+OPTIMISTIC_UI_ROLLBACK=PASS
+PRODUCTION_SPLIT_AT_CHECKPOINT=0
+LIVE_SIDE_EFFECTS=0
+
+ROLLBACK_PROCEDURE_PRODUCTION=NOT_EXECUTED_NO_PRODUCTION_SPLIT
+# If a future controlled extraction is attempted and must be reverted:
+# 1. git fetch origin Branch2
+# 2. git checkout Branch2
+# 3. git reset --hard 40802d84409ea252ed790cb3b8d63234a01c914c
+# 4. remove only the experimental Notes reaction owner linkage/module
+# 5. verify the inline reactToNote owner hash equals 3877a5e2a75c4b95ff0e6494a03e7cb9eb2b0f02fee6fe64225c642078986880
+# 6. run: node docs/notes-reaction-owner-independent-proof-contract-harness.js
+# 7. run the published full Branch2 regression gate after the worktree is clean and published
+
+POST_ROLLBACK_GATE=NOT_APPLICABLE_UNTIL_A_PRODUCTION_SPLIT_EXISTS
+ROLLBACK_SIDE_EFFECTS=0
+REAL_ACCOUNT_OR_BROWSER_ACTIONS=0
