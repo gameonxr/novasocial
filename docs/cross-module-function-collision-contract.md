@@ -2,12 +2,12 @@
 
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
-**Date:** 2026-08-20
+**Date:** 2026-08-25
 **Purpose:** Verify that classic-script modularization does not introduce duplicate top-level function names that could overwrite global handlers.
 
 ## Contract
 
-NovaSocial loads extracted scripts as classic scripts, so top-level function declarations are exposed in the shared page environment. Duplicate names across `index.html` and extracted modules could silently replace handlers depending on load order. The audit covers `index.html` plus all 211 extracted JavaScript modules and identifies 719 top-level function names.
+NovaSocial loads extracted scripts as classic scripts, so top-level function declarations are exposed in the shared page environment. Duplicate names across `index.html` and extracted modules could silently replace handlers depending on load order. The audit covers `index.html` plus all 226 extracted JavaScript modules and identifies 704 unique top-level function names after the authorized forwarding implementation.
 
 Every audited function name must occur only once across the complete classic-script surface. Protected functions remain inline; this audit detects collisions without moving or rewriting them.
 
@@ -17,8 +17,8 @@ Every audited function name must occur only once across the complete classic-scr
 
 | Check | Expected behavior | Result |
 |---|---|---|
-| Files audited | 212 total: index.html plus 211 modules | PASS |
-| Function inventory | 719 top-level function names | PASS |
+| Files audited | 227 total: index.html plus 226 modules | PASS |
+| Function inventory | 704 unique top-level function names | PASS |
 | Collision safety | Zero duplicate top-level function names | PASS |
 | Protected boundary | Existing inline systems remain in place | PASS |
 
@@ -26,11 +26,11 @@ The harness is static and documentation-only. It does not execute authentication
 
 ## Safe boundary
 
-No production code was changed in this checkpoint. The audit confirms global function-name safety without moving, rewriting, or modifying protected systems.
+The audit confirms global function-name safety after the authorized inline forwarding implementation; it does not extract or rename protected systems and still requires every top-level function name to remain unique.
 
 ## Validation
 
-The standalone harness passed with `AUDITED_FILES=212`, `TOP_LEVEL_FUNCTION_NAMES=719`, and `DUPLICATE_NAMES=0`. The complete repository validation chain must pass before this contract and harness are published to `docs/`.
+The standalone harness passed with `AUDITED_FILES=227`, `TOP_LEVEL_FUNCTION_NAMES=704`, and `DUPLICATE_NAMES=0`. The complete repository validation chain must pass after publication.
 
 ## References
 

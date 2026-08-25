@@ -27,7 +27,7 @@ for (const file of files) {
 }
 const duplicates = [...seen.entries()].filter(([, locations]) => locations.length > 1);
 assert.strictEqual(files.length, 227, 'index.html plus 226 extracted scripts must be audited after confirmCropPreview split');
-assert.strictEqual(seen.size, 702, 'top-level function inventory must reflect the confirmCropPreview split');
+assert.strictEqual(seen.size, 704, 'top-level function inventory must reflect the authorized forwardMessage implementation');
 assert.deepStrictEqual(duplicates, [], 'classic scripts must not duplicate top-level function names');
 
 console.log('CROSS_MODULE_FUNCTION_COLLISION_HARNESS=PASS');
