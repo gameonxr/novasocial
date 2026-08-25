@@ -10,7 +10,7 @@ for (const relative of files) {
   counts[relative] = (text.match(/throw\s+new\s+Error\s*\(/g) || []).length;
 }
 assert.deepStrictEqual(counts, {
-  'index.html': 6,
+  'index.html': 8,
   'src/features/profile.js': 2,
   'src/features/home.js': 2,
 }, 'explicit error boundaries must retain their exact per-file counts');
@@ -24,8 +24,8 @@ for (const relative of candidates) {
 }
 assert.deepStrictEqual(unexpected, [], `unexpected explicit error boundaries: ${unexpected.join(', ')}`);
 const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
-assert.strictEqual(total, 10, 'exactly ten explicit error boundaries must remain');
+assert.strictEqual(total, 12, 'exactly twelve explicit error boundaries must remain');
 console.log('EXPLICIT_ERROR_BOUNDARY_HARNESS=PASS');
 console.log(`TOTAL_BOUNDARIES=${total}`);
-console.log('PER_FILE=index.html:6,src/features/profile.js:2,src/features/home.js:2');
+console.log('PER_FILE=index.html:8,src/features/profile.js:2,src/features/home.js:2');
 console.log('UNEXPECTED_BOUNDARIES=0');
