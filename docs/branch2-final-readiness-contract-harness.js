@@ -18,6 +18,18 @@ const allHarnesses = fs.readdirSync(docsDir).filter(file => file.endsWith('-harn
 const contractFiles = allDocs.filter(file => file.endsWith('-contract.md'));
 const harnessFiles = allHarnesses.filter(file => file.endsWith('-contract-harness.js'));
 const mappedLegacyContracts = new Set(['account-bootstrap-contract.md', 'logout-account-transition-contract.md']);
+const protectedDossierContracts = [
+  'dm-chat-realtime-protected-readiness-contract.md',
+  'reels-renderer-navigation-protected-readiness-contract.md',
+  'calls-webrtc-group-calls-protected-readiness-contract.md',
+  'stories-lifecycle-editor-viewer-protected-readiness-contract.md',
+  'voice-recording-delivery-protected-readiness-contract.md',
+  'push-permission-resubscribe-protected-readiness-contract.md',
+  'notes-submission-reactions-protected-readiness-contract.md',
+  'account-bootstrap-security-protected-readiness-contract.md',
+  'creation-upload-media-deletion-protected-readiness-contract.md',
+  'moderation-admin-protected-readiness-contract.md'
+];
 
 const branch = execFileSync('git', ['-C', repo, 'branch', '--show-current'], { encoding: 'utf8' }).trim();
 const status = execFileSync('git', ['-C', repo, 'status', '--porcelain'], { encoding: 'utf8' });
@@ -29,6 +41,12 @@ assert.strictEqual(branch, 'Branch2', 'current branch must be Branch2');
 assert.strictEqual(status, '', 'worktree must be clean after publication');
 assert.strictEqual(head, remoteBranch, 'local HEAD must match origin/Branch2');
 assert.strictEqual(remoteMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain the protected untouched ref');
+for (const file of protectedDossierContracts) {
+  const dossier = fs.readFileSync(path.join(docsDir, file), 'utf8');
+  assert(dossier.includes('PREPARATION_ONLY'), `${file} must remain preparation-only`);
+  assert(dossier.includes('PRODUCTION_DECISION=BLOCKED'), `${file} must remain production-blocked`);
+  assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
+}
 
 assert.strictEqual(jsFiles.length, 227, '227 extracted JavaScript modules must remain after the jump-to-message split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
@@ -120,10 +138,10 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 296, '296 documentation Markdown files must be published after the jump-to-message production split checkpoint');
-assert.strictEqual(allHarnesses.length, 297, '297 harness files must be published after the jump-to-message production split checkpoint');
-assert.strictEqual(contractFiles.length, 293, '293 standard contract documents must be published after the jump-to-message production split checkpoint');
-assert.strictEqual(harnessFiles.length, 292, '292 standard contract harnesses must be published after the jump-to-message production split checkpoint');
+assert.strictEqual(allDocs.length, 306, '306 documentation Markdown files must be published after the protected-system dossier package');
+assert.strictEqual(allHarnesses.length, 307, '307 harness files must be published after the protected-system dossier package');
+assert.strictEqual(contractFiles.length, 303, '303 standard contract documents must be published after the protected-system dossier package');
+assert.strictEqual(harnessFiles.length, 302, '302 standard contract harnesses must be published after the protected-system dossier package');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'protected-contract-coverage.md'], 'legacy contract document exceptions must remain mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
