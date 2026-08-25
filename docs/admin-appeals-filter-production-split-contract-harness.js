@@ -82,9 +82,9 @@ assert(!sourceText.includes(signature), 'candidate must not remain as a named de
 assert(branch2Html.includes('async function loadAppealsList(){'), 'existing read-only reload owner must remain inline');
 assert(branch2Html.includes('async function adminApproveAppeal(') && branch2Html.includes('async function adminRejectAppeal('), 'appeal mutation owners must remain inline');
 assert(branch2Html.indexOf('src/features/admin-appeals-filter-owner.js') < branch2Html.indexOf('src/features/note-reactors-list-owner.js'), 'admin filter owner must load before the existing Notes owner footer boundary');
-assert.strictEqual((branch2Html.match(/<script\b/gi) || []).length, 228, '228 opening script tags required after confirmCropPreview split');
-assert.strictEqual((branch2Html.match(/<\/script>/gi) || []).length, 228, '228 closing script tags required after confirmCropPreview split');
-assert.strictEqual((branch2Html.match(/<script\s+src=/gi) || []).length, 227, '227 external script tags required after confirmCropPreview split');
+assert.strictEqual((branch2Html.match(/<script\b/gi) || []).length, 229, '229 opening script tags required after the jump-to-message split');
+assert.strictEqual((branch2Html.match(/<\/script>/gi) || []).length, 229, '229 closing script tags required after the jump-to-message split');
+assert.strictEqual((branch2Html.match(/<script\s+src=/gi) || []).length, 228, '228 external script tags required after the jump-to-message split');
 
 async function runSeam() {
   const elements = new Map();
