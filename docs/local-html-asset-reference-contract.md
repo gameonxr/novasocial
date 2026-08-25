@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
-**Date:** 2026-08-20
+**Date:** 2026-08-25
 **Purpose:** Verify that static local asset references in `index.html` resolve to files in the repository.
 
 ## Contract
@@ -15,7 +15,7 @@ Static local `src`, `href`, and `poster` references must resolve to existing rep
 
 | Check | Expected behavior | Result |
 |---|---|---|
-| Static local inventory | 232 unique local references | PASS |
+| Static local inventory | 248 unique local references after the jump-to-message split | PASS |
 | Missing local assets | Zero unresolved local references | PASS |
 | PWA manifest | `manifest.json` exists | PASS |
 | Service worker | `sw.js` exists | PASS |
@@ -26,11 +26,11 @@ The harness is structural and documentation-only. It does not execute authentica
 
 ## Safe boundary
 
-No production code was changed in this checkpoint. The audit confirms local asset availability without moving, rewriting, or modifying protected systems.
+The audit confirms local asset availability after the authorized jump-to-message owner linkage without moving, rewriting, or modifying protected systems.
 
 ## Validation
 
-The standalone harness passed with `STATIC_LOCAL_REFS=232` and `MISSING_REFS=0`. The complete repository validation chain must pass before this contract and harness are published to `docs/`.
+The standalone harness passed with `STATIC_LOCAL_REFS=248` and `MISSING_REFS=0`. The complete repository validation chain must pass after publication.
 
 ## References
 
