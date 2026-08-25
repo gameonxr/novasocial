@@ -2,12 +2,12 @@
 
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
-**Date:** 2026-08-20
+**Date:** 2026-08-25
 **Purpose:** Verify the formatting and basic integrity of every extracted source file.
 
 ## Contract
 
-The modularized source surface contains 246 files across `src/styles/`, `src/core/`, `src/components/`, and `src/features/`. Every extracted file must be non-empty, and every line must be free of trailing spaces or tabs. This protects the enforced whitespace gate and prevents accidental empty-module regressions.
+The modularized source surface contains 262 files across `src/styles/`, `src/core/`, `src/components/`, and `src/features/`, including the authorized `jump-to-message` owner. Every extracted file must be non-empty, and every line must be free of trailing spaces or tabs. This protects the enforced whitespace gate and prevents accidental empty-module regressions.
 
 ## Harness coverage
 
@@ -15,7 +15,7 @@ The modularized source surface contains 246 files across `src/styles/`, `src/cor
 
 | Check | Expected behavior | Result |
 |---|---|---|
-| Source inventory | 246 extracted files remain | PASS |
+| Source inventory | 262 extracted files remain | PASS |
 | Empty files | No extracted source file is empty | PASS |
 | Trailing whitespace | No extracted line ends with spaces or tabs | PASS |
 
@@ -23,11 +23,11 @@ The harness is structural and documentation-only. It does not execute authentica
 
 ## Safe boundary
 
-No production code was changed in this checkpoint. The audit confirms extracted-file hygiene without moving, rewriting, or modifying protected systems.
+The audit confirms extracted-file hygiene after the authorized `jump-to-message` owner addition without moving, rewriting, or modifying protected systems.
 
 ## Validation
 
-The standalone harness passed with `SOURCE_FILES=246`, `EMPTY_FILES=0`, and `TRAILING_WHITESPACE=0`. The complete repository validation chain must pass before this contract and harness are published to `docs/`.
+The standalone harness passed with `SOURCE_FILES=262`, `EMPTY_FILES=0`, and `TRAILING_WHITESPACE=0`. The complete repository validation chain must pass after publication.
 
 ## References
 
