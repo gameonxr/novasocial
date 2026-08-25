@@ -33,6 +33,9 @@ The following gates are explicitly authorized and independently passed in the de
 | Timing | PASS: synthetic 100ms first-play, 240ms transition, 290ms settle cleanup, and progress timing |
 | Cleanup | PASS: settled transition cleared, no timers remain, and no forbidden operation occurs |
 | Rollback-after-split simulation | PASS: linkage-only synthetic split restores byte-identical baseline HTML and owner hash |
+| Non-production extraction candidate | PASS: one external linkage, inline owner removal, classic global owner, script order, and candidate lifecycle parity |
+
+The temporary candidate is pinned by module SHA-256 `3b7985ad1d8163a186a757cdd65ca8db80f4fdb3a9054abfabbef8e5a0955a24` and after-HTML SHA-256 `16388e916adbcedbbadf0477b290e2b937fbceda1430cd4160639b8b02e62d5f`. It was generated and tested only under `/tmp`; the Branch2 production tree still has no Reels external linkage.
 
 ## Exact candidate and allowed proof surface
 

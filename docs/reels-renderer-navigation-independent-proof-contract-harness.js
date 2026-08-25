@@ -363,6 +363,32 @@ async function runLifecycle(ownerSource) {
   };
 }
 
+function runExtractionCandidateSimulation() {
+  const linkage = '<script src="src/features/reels-renderer-experimental.js"></script>\n';
+  const anonymousOwner = currentOwner.replace(/^async function renderReels\(\)\{/, 'async function(){');
+  const moduleText = `window.renderReels = ${anonymousOwner};\n`;
+  const candidateHtml = currentHtml.replace(currentOwner, '').replace('<script>\n', linkage + '<script>\n');
+  const linkageIndex = candidateHtml.indexOf(linkage);
+  const inlineIndex = candidateHtml.indexOf('<script>\n');
+  assert(linkageIndex > 0 && linkageIndex < inlineIndex, 'candidate linkage must precede the inline application script');
+  const rendererLinkageToken = 'src="src/features/reels-renderer-experimental.js"';
+  assert.strictEqual(candidateHtml.split(rendererLinkageToken).length - 1, 1, 'candidate must contain one renderer linkage');
+  assert(!candidateHtml.includes('async function renderReels(){'), 'candidate HTML must remove the inline renderer owner');
+  const candidatePrefix = 'window.renderReels = async function(){';
+  assert(moduleText.startsWith(candidatePrefix), 'candidate must expose an anonymous classic global owner');
+  const scriptTags = candidateHtml.split('\n').filter(line => line.startsWith('<script'));
+  assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
+  const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
+  assert.strictEqual(candidateNamedOwner, originOwner, 'candidate owner body must match immutable origin');
+  assert.strictEqual(sha(candidateHtml), '16388e916adbcedbbadf0477b290e2b937fbceda1430cd4160639b8b02e62d5f', 'candidate HTML hash must remain pinned');
+  return {
+    ownerSource: candidateNamedOwner,
+    moduleSha256: sha(moduleText),
+    candidateHtmlSha256: sha(candidateHtml),
+    baselineHtmlSha256: sha(currentHtml)
+  };
+}
+
 function runRollbackSimulation() {
   const linkage = '<script src="src/features/reels-renderer-experimental.js"></script>\n';
   const experimentalModule = `window.renderReels = ${originOwner}`;
@@ -407,6 +433,9 @@ function runRollbackSimulation() {
   const lifecycleBefore = await runLifecycle(originOwner);
   const lifecycleAfter = await runLifecycle(currentOwner);
   assert.deepStrictEqual(lifecycleAfter, lifecycleBefore, 'full lifecycle before/after traces must match');
+  const extractionCandidate = runExtractionCandidateSimulation();
+  const lifecycleCandidate = await runLifecycle(extractionCandidate.ownerSource);
+  assert.deepStrictEqual(lifecycleCandidate, lifecycleBefore, 'temporary extracted candidate lifecycle must match immutable-origin lifecycle');
   const rollback = runRollbackSimulation();
 
   console.log('REELS_RENDERER_NAVIGATION_INDEPENDENT_PROOF_HARNESS=PASS');
@@ -423,6 +452,15 @@ function runRollbackSimulation() {
   console.log('CLEANUP_BEFORE_AFTER=PASS');
   console.log(`BEFORE_TRACE_SHA256=${sha(JSON.stringify(lifecycleBefore.trace))}`);
   console.log(`AFTER_TRACE_SHA256=${sha(JSON.stringify(lifecycleAfter.trace))}`);
+  console.log('NONPRODUCTION_EXTRACTION_CANDIDATE=PASS');
+  console.log(`CANDIDATE_MODULE_SHA256=${extractionCandidate.moduleSha256}`);
+  console.log(`CANDIDATE_AFTER_HTML_SHA256=${extractionCandidate.candidateHtmlSha256}`);
+  console.log(`CANDIDATE_BASELINE_HTML_SHA256=${extractionCandidate.baselineHtmlSha256}`);
+  console.log('ONE_EXTERNAL_LINKAGE=PASS');
+  console.log('INLINE_OWNER_REMOVED_IN_CANDIDATE=PASS');
+  console.log('CLASSIC_GLOBAL_OWNER_IN_CANDIDATE=PASS');
+  console.log('CANDIDATE_SCRIPT_ORDER=PASS');
+  console.log('CANDIDATE_LIFECYCLE_PARITY=PASS');
   console.log('ROLLBACK_AFTER_SPLIT_SIMULATION=PASS');
   console.log(`ROLLBACK_BASELINE_HTML_SHA256=${rollback.baselineHtmlSha256}`);
   console.log(`ROLLBACK_EXPERIMENT_MODULE_SHA256=${rollback.experimentalModuleSha256}`);
