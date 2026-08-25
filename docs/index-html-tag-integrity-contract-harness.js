@@ -22,7 +22,7 @@ assert(html.includes('function renderDMs('), 'protected DMs renderer must remain
 assert(html.includes('function renderReels('), 'protected Reels renderer must remain inline');
 
 console.log('INDEX_HTML_TAG_INTEGRITY_HARNESS=PASS');
-console.log('SCRIPT_TAGS=227');
-console.log('SCRIPT_CLOSURES=227');
-console.log('EXTERNAL_SCRIPT_TAGS=225');
+console.log('SCRIPT_TAGS=229');
+console.log('SCRIPT_CLOSURES=229');
+console.log('EXTERNAL_SCRIPT_TAGS=228');
 console.log('INLINE_SCRIPT_TAGS=1');
