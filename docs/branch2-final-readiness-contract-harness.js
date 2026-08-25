@@ -138,11 +138,11 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 310, '310 documentation Markdown files must be published after the Notes reaction independent-proof package');
-assert.strictEqual(allHarnesses.length, 309, '309 harness files must be published after the Notes reaction independent-proof package');
-assert.strictEqual(contractFiles.length, 305, '305 standard contract documents must be published after the Notes reaction independent-proof package');
-assert.strictEqual(harnessFiles.length, 304, '304 standard contract harnesses must be published after the Notes reaction independent-proof package');
-assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'notes-reaction-owner-independent-authorization-addendum.md', 'protected-contract-coverage.md', 'reels-renderer-navigation-independent-authorization-addendum.md'], 'nonstandard documentation exceptions must remain explicitly mapped');
+assert.strictEqual(allDocs.length, 312, '312 documentation Markdown files must be published after the Notes submission independent-proof package');
+assert.strictEqual(allHarnesses.length, 310, '310 harness files must be published after the Notes submission independent-proof package');
+assert.strictEqual(contractFiles.length, 306, '306 standard contract documents must be published after the Notes submission independent-proof package');
+assert.strictEqual(harnessFiles.length, 305, '305 standard contract harnesses must be published after the Notes submission independent-proof package');
+assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'notes-reaction-owner-independent-authorization-addendum.md', 'notes-submission-owner-independent-authorization-addendum.md', 'protected-contract-coverage.md', 'reels-renderer-navigation-independent-authorization-addendum.md'], 'nonstandard documentation exceptions must remain explicitly mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
   if (mappedLegacyContracts.has(contract)) continue;
