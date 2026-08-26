@@ -4,7 +4,11 @@ BRANCH=Branch2
 BASELINE_COMMIT=2a6ba079d383c0fa869f55295f60dd3ade9cd4c4
 IMMUTABLE_ORIGIN_MAIN=ef418007c9b9a797488b4825be5f0c807da22369
 
-USER_LOG_OBSERVATION=Supabase Edge Function log attachment
+USER_LOG_OBSERVATION=Supabase Edge Function log attachment; direct read-only Supabase log query independently confirmed the same pattern
+SUPABASE_PROJECT_REF=ecztpnnydvlzpppmzvzm
+EDGE_FUNCTION_SLUG=send-push-notification
+DEPLOYED_EDGE_FUNCTION_SHA256=bc6d3329a401d24008683b62756795091c37bf7b3a924d00ed6cb11b54910050
+LIVE_LOG_SOURCE=function_logs
 SUBSCRIPTIONS_FOUND=7
 FINAL_SENT=0/7
 EDGE_STATUS=403_REPEATED

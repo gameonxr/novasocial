@@ -9,6 +9,8 @@
 
 The user-provided Supabase Edge Function log shows `subscriptions found=7`, repeated `statusCode=403`, repeated `Push failed with status 403`, and the response body `permission denied: VAPID public key must be on the P-256 curve`. The same execution reports `FINAL sent=0/7`. A second execution shows the same 403 and P-256 error pattern. Endpoint URLs and private-key values are intentionally not copied into this repository.
 
+A read-only inspection of the connected Supabase project independently confirmed project ref `ecztpnnydvlzpppmzvzm`, active function slug `send-push-notification`, and deployed source hash `bc6d3329a401d24008683b62756795091c37bf7b3a924d00ed6cb11b54910050`. The deployed source reads trimmed `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` secrets, passes them to `buildPushPayload`, and POSTs to each subscription endpoint. A bounded read-only query of the live `function_logs` source returned the same `subscriptions found=7`, `VAPID public length=87`, repeated 403, P-256 error, and `FINAL sent=0/7` pattern. Secret values were not retrieved or stored.
+
 The log also reports VAPID public length `87` and private length `43`, but it does not provide the private key value. Therefore the server-side key pair cannot be independently reconstructed from the log alone.
 
 ## Local Branch2 finding
@@ -31,7 +33,8 @@ The first safe verification is offline curve validation of the public key and a 
 | Client public-key decode | PASS: 87 characters / 65 decoded bytes / `0x04` prefix |
 | Client P-256 curve validity | FAIL: point is not on P-256 |
 | Standard generator control | PASS: disposable `npx web-push generate-vapid-keys` output parsed as valid P-256 |
-| Server private-key inspection | BLOCKED: secret not present and must not be shared |
+| Read-only deployed Edge Function inspection | PASS: active `send-push-notification` source and live `function_logs` verified |
+| Server private-key inspection | BLOCKED: secret value was not retrieved and must not be shared |
 | Safe repository auto-fix | BLOCKED: no trustworthy matching key pair available |
 | Production Push extraction | BLOCKED |
 | Production database/account mutation | 0 |
