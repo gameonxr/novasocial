@@ -22,6 +22,10 @@
 
 This is a **mapping-only checkpoint**. DMs rendering and realtime code remains inline. Three non-destructive browser-context mock artifacts cover the empty state, no-account refresh guard, and current-tab refresh guard, while the realtime harness now exposes a test-only injected primary-render/in-place-refresh dispatcher. These artifacts prove reversible mock behavior only and are not permission to extract production code. Before a split, the project still needs protected before/after marker parity and reversible browser proof for the production boundary itself, covering chat-open, scroll retention, navigation races, and realtime behavior.
 
+## Static owner-boundary audit
+
+The strengthened preparation harness now pins the current primary-render contract to its actual source shape: `renderDMs()` captures `_renderGeneration`, performs the conversations, unread, and Notes Bar fetches in one `Promise.all`, performs the dependent member lookup afterward, preserves `#notes-bar` and `data-cid` row markers, renders the already-fetched Notes Bar data, and returns before `#screen` mutation when the generation changes. It also pins `openChat()`, `loadMsgs()`, and `sendMsg()` as inline owners, including chat and typing subscription globals, navigation-stack ownership, and the chat generation capture. This is a static regression guard only; it does not claim exact before/after parity, safe browser proof, rollback proof, or production authorization.
+
 The first implementation step must be test-only or adapter-only and must preserve the current `renderDMs()` and `_refreshDmsInPlace()` owners until the complete seam harness passes.
 
 ## Harness coverage

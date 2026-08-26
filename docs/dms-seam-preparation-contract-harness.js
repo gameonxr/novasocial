@@ -20,10 +20,18 @@ for (const file of browserProofFiles) {
 const requiredMarkers = [
   'async function renderDMs()',
   'async function _refreshDmsInPlace()',
+  'async function openChat(',
+  'async function loadMsgs(',
+  'async function sendMsg(',
   '_silentBackgroundRefresh',
   '_renderGeneration',
+  'const [memRes, unreadRes, notesData] = await Promise.all([',
+  "db.from('conversation_members').select('conversation_id,conversations(*)').eq('user_id',ME.id)",
+  "db.from('messages').select('conversation_id').is('seen_at', null).neq('sender_id', ME.id)",
+  '_fetchNotesBarData()',
   "id=\"notes-bar\"",
   'data-cid=',
+  '_renderNotesBarHtml(notesData)',
   'conversation_members',
   'scrollTop',
   '_tabCache',
@@ -37,6 +45,12 @@ for (const marker of requiredMarkers) {
 assert(html.includes('if(myGeneration !== _renderGeneration) return;'), 'primary render generation guard must remain');
 assert(html.includes('if (chatGeneration !== _renderGeneration || !window._chatScreenActive) return;'), 'chat generation guard must remain');
 assert(html.includes('function openChat('), 'openChat must remain inline');
+assert(html.includes('const chatGeneration = ++_renderGeneration;'), 'chat generation must be captured before async reads');
+assert(html.includes('window.chatSubscription'), 'chat realtime subscription owner must remain inline');
+assert(html.includes('window.typingSub'), 'typing subscription owner must remain inline');
+assert(html.includes('pushNavState(\'chat\', cid'), 'chat navigation-stack owner must remain inline');
+assert(html.includes('scr.innerHTML=`'), 'DM primary renderer must retain its screen replacement boundary');
+assert(html.includes('_refreshDmsInPlace()'), 'background refresh must remain explicitly non-destructive');
 assert.strictEqual(sourceText.includes('async function renderDMs()'), false, 'renderDMs must not be extracted');
 assert.strictEqual(sourceText.includes('async function _refreshDmsInPlace()'), false, '_refreshDmsInPlace must not be extracted');
 assert.strictEqual(sourceText.includes('function openChat('), false, 'openChat must not be extracted');
