@@ -23,7 +23,7 @@ The pre-existing `forwardMessage` caller is now backed by the authorized bounded
 | Script order | Core/modules precede inline code; the jump-to-message owner precedes the post-inline tail, which remains ordered from smart-ranking and nova-init through the approved owners and like-effects | PASS |
 | Protected boundaries | Nine approved owner groups are external classic scripts with anonymous `window` assignments; the remaining fragile DM, Reels, Calls, recording, diagnostics, reaction, and Note submission boundaries remain inline and gated | PASS |
 | PWA surface | Manifest and service worker remain available and referenced | PASS |
-| Documentation pairing | 314 Markdown docs and 311 harnesses exist, with 307 standard contract docs, 306 standard contract harnesses, seven mapped non-standard document exceptions, and five mapped non-standard harness artifacts | PASS |
+| Documentation pairing | 316 Markdown docs and 312 harnesses exist, with 308 standard contract docs, 307 standard contract harnesses, eight mapped non-standard document exceptions, and five mapped non-standard harness artifacts | PASS |
 | Forwarding seam | `forwardMessage` resolves to the authorized bounded inline implementation; origin/main remains caller-only | PASS |
 | Protected-system dossiers | Ten separate preparation contracts and harnesses cover DM/chat, Reels renderer, Calls/WebRTC, Stories lifecycle, voice, Push, Notes submission/reactions, account/bootstrap/security, creation/upload/media deletion, and moderation/admin; all remain blocked for production extraction | PASS |
 
