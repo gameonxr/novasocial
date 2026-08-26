@@ -19,6 +19,8 @@ The only tracked client VAPID public key is the constant embedded in `index.html
 
 The diagnosis is therefore **not a modularization regression** and does not imply that the `web-push` generator is faulty. The user reports using `npx web-push generate-vapid-keys`; an independent disposable reproduction of that command produced a public key that passed Node’s native P-256 parser. The value currently embedded in Branch2 does not pass that parser. The most likely causes are that a different/altered public value was copied into `index.html`, the Edge Function secret was copied or encoded differently, or the preview and Edge Function are using different key material. Because the Edge Function source and private secret are not present in this repository, matching-pair verification requires the Supabase project owner to inspect secrets without sharing private material.
 
+A follow-up read-only history check found three distinct public-key fingerprints across tracked `index.html` history, while the current Branch2 tip has remained on fingerprint `d2ee55d644dd88152d994fd6ac17b17473081c9548d7804b947bb4c7b3221d95` since commit `6b7a2b7`. This does not prove which key the owner attempted to rotate in Supabase, but it establishes that repeated Supabase-only rotations cannot make the currently published client valid: the client must receive the matching public key through a committed Branch2 change and a fresh preview deployment. The supplied preview currently redirects the sandbox to Vercel login, so its served asset could not be independently read without owner authentication; this is an additional deployment-verification blocker, not evidence that login should be attempted.
+
 ## Safe remediation boundary
 
 Do not invent or randomly replace the public key in `index.html`, and do not commit a private VAPID key. The owner should compare the original generator output against the exact value in Branch2 and the public value configured for the Edge Function, checking for copy/paste alteration, quotes, whitespace, URL-safe encoding, and preview deployment staleness. If necessary, generate one fresh valid P-256 VAPID pair, set the private key and subject in the Edge Function secrets, and update the client public key with the matching uncompressed P-256 public key in Base64URL form. Existing browser subscriptions may need controlled staging reset/resubscribe after a key rotation.
@@ -35,6 +37,7 @@ The first safe verification is offline curve validation of the public key and a 
 | Standard generator control | PASS: disposable `npx web-push generate-vapid-keys` output parsed as valid P-256 |
 | Read-only deployed Edge Function inspection | PASS: active `send-push-notification` source and live `function_logs` verified |
 | Server private-key inspection | BLOCKED: secret value was not retrieved and must not be shared |
+| Client/deployment wiring audit | PASS: current Branch2 fingerprint is unchanged since `6b7a2b7`; preview asset verification is blocked by Vercel login redirect |
 | Safe repository auto-fix | BLOCKED: no trustworthy matching key pair available |
 | Production Push extraction | BLOCKED |
 | Production database/account mutation | 0 |
