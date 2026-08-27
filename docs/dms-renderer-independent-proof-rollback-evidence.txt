@@ -1,0 +1,21 @@
+DMs renderer independent proof rollback evidence
+Repository: gameonxr/novasocial
+Branch: Branch2 only
+
+DETACHED_ACTUAL_OWNER_PROOF=PASS
+POPULATED_RENDER=PASS
+EMPTY_STATE_RENDER=PASS
+STALE_GENERATION_ABORT=PASS
+SYNTHETIC_ROLLBACK=PASS
+LIVE_NETWORK_CALLS=0
+LIVE_DATABASE_MUTATIONS=0
+LIVE_ACCOUNT_ACTIONS=0
+PRODUCTION_EXTRACTION=0
+
+Rollback scope: The detached dispatcher temporarily hands off from a synthetic inline owner reference to a synthetic candidate and restores the exact original function reference. This proves only the test fixture rollback path; no production owner, script tag, database, browser, account, realtime subscription, or deployment was changed.
+
+PRODUCTION_ROLLBACK=REQUIRED
+SAFE_BROWSER_PROOF=REQUIRED
+EXACT_PRODUCTION_BEFORE_AFTER_PARITY=REQUIRED
+EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED
+PRODUCTION_DECISION=BLOCKED
