@@ -30,14 +30,15 @@ if (latestFiles.includes('index.html') || latestFiles.includes('src/features/dms
 
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 for (const marker of [
-  'window.renderReels = async function(){',
   'function createPeerConnection(',
   'function openSV('
 ]) {
   assert(html.includes(marker), `protected inline marker missing: ${marker}`);
 }
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 assert(dmsModule.includes('window.renderDMs = async function(){'), 'approved DMs renderer module owner must remain present');
+assert(reelsModule.includes('window.renderReels = async function(){'), 'approved Reels renderer module owner must remain present');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module owner must remain present');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
