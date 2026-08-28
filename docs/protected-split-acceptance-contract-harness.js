@@ -19,10 +19,10 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 12/19 protected signatures moved; 11 are split-complete and the bounded `reactToNote()` owner is validation-pending on fresh deployment observation'), 'matrix must record the eleven moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 12/19 protected signatures moved; 12 bounded scopes are split-complete, with `reactToNote()` fresh Preview deployment observation PASS; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the eleven moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
-assert(matrix.includes('browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
+assert(matrix.includes('browser proof is PASS for the fresh Notes reaction deployment observation; authenticated reaction invocation remains intentionally unperformed, and 7 unapproved systems remain blocked'), 'browser proof must remain explicitly outstanding for remaining systems');
 assert(gate.includes('Direct extraction remains explicitly blocked for the 7 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract.md')), 'browser-proof contract must exist');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract-harness.js')), 'browser-proof harness must exist');
