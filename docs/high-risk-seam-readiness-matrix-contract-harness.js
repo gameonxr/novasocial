@@ -91,7 +91,7 @@ assert(matrix.includes('one additional supporting Reels windowing helper is spli
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected'), 'matrix must keep the Reels renderer boundary protected');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
 const remainingAuthorizationRows = [
-  'DMs renderer (chat/realtime owners remain protected) | PASS | PASS | PASS | OUTSTANDING | SPLIT_VALIDATION_PENDING',
+  'DMs renderer (chat/realtime owners remain protected) | PASS | PASS | PASS | PASS | SPLIT_COMPLETE',
   'Reels renderer and swipe/navigation owners | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected',
   'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
@@ -102,7 +102,7 @@ const remainingAuthorizationRows = [
   'Push permission and silent resubscribe helpers | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
 ];
 for (const row of remainingAuthorizationRows) {
-  assert(matrix.includes(row), `remaining authorization row must remain explicitly blocked: ${row}`);
+  assert(matrix.includes(row), `authorization matrix row must remain explicit: ${row}`);
 }
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract.md')), 'reversible browser proof contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'reversible-browser-proof-contract-harness.js')), 'reversible browser proof harness must remain present');

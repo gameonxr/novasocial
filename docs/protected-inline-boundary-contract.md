@@ -14,7 +14,7 @@ The following systems remain inline and are not safe candidates for direct extra
 | Push permission helpers | `maybeShowPushPermissionBanner`, `silentPushResubscribeIfGranted` | Browser permission and subscription timing |
 | Story rendering/viewing | `renderStoryElements`, `openSV` | Viewer/editor state, media lifecycle, and inline handlers |
 | Reels | `renderReels` | Persistent container, video state, transforms, and cache ownership |
-| Direct messages | `renderDMs` | Shared screen ownership, realtime state, and non-destructive refresh |
+| Direct messages | `openChat`, `loadMsgs`, `_loadOlderMessages`, `_refreshDmsInPlace`, `_silentBackgroundRefresh`, typing, send, and realtime owners; `renderDMs` is externalized as a classic `window` owner | Shared screen ownership, realtime state, and non-destructive refresh |
 | Story polls | `voteStoryPoll`, `refreshPollResults`, `loadStoryPollState` | Viewer/editor state and realtime poll updates |
 | Voice recording | `toggleRecording` | MediaRecorder and active-chat DOM lifecycle |
 | Push settings | `enablePushFromSettings`, `resetPushFromSettings` | Subscription state and permission transitions |
@@ -22,11 +22,11 @@ The following systems remain inline and are not safe candidates for direct extra
 | Calls/WebRTC | `createPeerConnection` | Peer connection, ICE, media, and call-state ownership |
 | Notes | `submitNote`, `deleteMyNote`, `reactToNote`, `loadNoteReactorsList`, `submitNativeEmojiReaction` | Inline note state, realtime updates, and action handlers |
 
-These are documented boundaries, not extraction targets. The production functions remain in `index.html` unchanged.
+These are documented boundaries, not extraction targets. The listed protected functions remain in `index.html` unchanged; the bounded `renderDMs()` owner is the completed external-owner exception documented in the DMs proof artifacts.
 
 ## Safeguards
 
-The boundary harness checks that all 19 protected declaration markers remain present, that the trailing scripts retain the required order—`smart-ranking.js`, then `nova-init.js`, then `like-effects.js`—and that the published contract documentation set remains present. The harness does not execute real authentication, Supabase, WebRTC, media, push, stories, reels, DMs, notes, or account actions.
+The boundary harness checks that all 9 unapproved protected declaration markers remain present, that the trailing scripts retain the required order—`smart-ranking.js`, then `nova-init.js`, then `like-effects.js`—and that the published contract documentation set remains present. The harness does not execute real authentication, Supabase, WebRTC, media, push, stories, reels, DMs, notes, or account actions.
 
 ## Harness coverage
 
@@ -42,7 +42,7 @@ The boundary harness checks that all 19 protected declaration markers remain pre
 
 ## Safe boundary
 
-This checkpoint adds documentation and a static harness only. It does not extract, rewrite, reorder, rename, or otherwise modify any protected production function.
+This boundary inventory records the completed bounded `renderDMs()` exception; it does not authorize or modify the remaining protected DMs/chat/realtime functions, nor any other protected production system.
 
 ## Validation
 

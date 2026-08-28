@@ -21,14 +21,14 @@ The audit previously found one unresolved target, `forwardMessage`. Branch2 now 
 | Cross-source lookup | `index.html` and `src/**/*.js` searched | PASS |
 | Resolved handler surface | All available targets resolve to declarations or global assignments | PASS |
 | Forward handler | `forwardMessage` resolves to the authorized Branch2 inline implementation | PASS |
-| Protected DM boundary | `renderDMs` and `showMsgMenu` remain inline | PASS |
+| Protected DM boundary | `renderDMs` resolves through `window.renderDMs` in the classic external owner; `showMsgMenu` remains inline | PASS |
 | Caller preservation | `forwardMessage` caller remains visible and origin/main caller parity is preserved | PASS |
 
 The harness is static and documentation-only. It does not invoke authentication, Supabase, DMs, message actions, forwarding, navigation, or account mutations.
 
 ## Safe boundary
 
-The authorized `forwardMessage` implementation remains inline in the protected DM owner and is not extracted. Its recipient selection, payload allowlist, block policy, insert ordering, and failure behavior are defined by the companion product-decision and production-parity contracts; no group forwarding, schema migration, upload, or realtime behavior was added.
+The authorized `forwardMessage` implementation remains inline in the protected DM owner and is not extracted; the bounded `renderDMs()` owner is externalized through its classic `window` handoff. Its recipient selection, payload allowlist, block policy, insert ordering, and failure behavior are defined by the companion product-decision and production-parity contracts; no group forwarding, schema migration, upload, or realtime behavior was added.
 
 ## Validation
 

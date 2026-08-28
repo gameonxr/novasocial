@@ -1,7 +1,7 @@
 DMs renderer authenticated browser-proof evidence
 Repository: gameonxr/novasocial
 Branch under test: Branch2 preview
-Scope: observation-only authenticated browser proof of the current inline baseline before split
+Scope: observation-only authenticated browser proof of the inline baseline, post-split owner, and reversible rollback/recovery checkpoints
 
 AUTHENTICATED_PREVIEW_LOADED=PASS
 MESSAGES_ROUTE_RENDERED=PASS
@@ -28,7 +28,7 @@ LIVE_SERVICE_WORKER_MUTATION=0
 LIVE_DATABASE_MUTATION=0
 LIVE_ACCOUNT_CHANGE=0
 
-This evidence observes the current authenticated inline baseline only. It does not prove post-split preview behavior. A fresh post-split preview observation and production rollback evidence remain required after the bounded Branch2 publication.
+The baseline section records the authenticated inline observation before publication. The post-split section records the authenticated external-owner observation, and the separate rollback artifact records the temporary remote rollback/recovery sequence; broader DMs/chat/realtime ownership remains protected.
 
 
 ## Post-split Branch2 preview observation
@@ -56,4 +56,4 @@ POST_SPLIT_LIVE_SERVICE_WORKER_MUTATION=0
 POST_SPLIT_LIVE_DATABASE_MUTATION=0
 POST_SPLIT_LIVE_ACCOUNT_CHANGE=0
 
-This post-split preview proof confirms the selected external renderer loads and preserves the observed DMs list/chat lifecycle. It does not claim broader chat/realtime ownership was extracted. Remote rollback-after-split remains pending until a controlled Branch2 rollback checkpoint is verified.
+This post-split preview proof confirms the selected external renderer loads and preserves the observed DMs list/chat lifecycle. The remote rollback/recovery proof is recorded separately; broader chat/realtime ownership was not extracted.
