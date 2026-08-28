@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Contract and harness are present; DMs renderer, particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing helper, bounded Reels renderer, and Notes reactor-list before/after browser proofs are PASS, while browser proof remains outstanding for 8 unapproved systems'), 'matrix must continue to mark remaining browser proof');
-assert(matrix.includes('all eleven protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 11/19 protected signatures moved and fully validated; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must report the ten moved protected signatures and supporting Reels helper');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 8 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('Reversible browser proof | Contract and harness are present; DMs renderer, particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing helper, bounded Reels renderer, and Notes reactor-list before/after browser proofs are PASS, while browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('all twelve protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
+assert(matrix.includes('Protected production splits | 12/19 protected signatures moved; 11 are split-complete and the bounded `reactToNote()` owner is validation-pending on fresh deployment observation'), 'matrix must report the ten moved protected signatures and supporting Reels helper');
+assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',

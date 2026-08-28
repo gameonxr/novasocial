@@ -19,11 +19,11 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 11/19 protected signatures moved and fully validated; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the eleven moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 12/19 protected signatures moved; 11 are split-complete and the bounded `reactToNote()` owner is validation-pending on fresh deployment observation'), 'matrix must record the eleven moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
-assert(matrix.includes('browser proof remains outstanding for 8 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 8 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
+assert(matrix.includes('browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
+assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS'), 'high-risk gate must remain blocked for remaining systems');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract.md')), 'browser-proof contract must exist');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract-harness.js')), 'browser-proof harness must exist');
 
@@ -65,10 +65,9 @@ const protectedSignatures = [
 ];
 assert.strictEqual(protectedSignatures.length, 19, 'acceptance gate must cover all 19 protected signatures');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function reactToNote(' || signature === 'function reactToNote(';
+  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
-  else if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
   else assert(!source.includes(signature), `protected signature must not be duplicated by declaration: ${signature}`);
 }
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle window owner must exist');
@@ -93,9 +92,9 @@ assert(!source.includes('browserProofPassed'), 'no speculative browser proof fla
 assert(!source.includes('productionSplitApproved'), 'no speculative production approval flag may exist');
 
 console.log('PROTECTED_SPLIT_ACCEPTANCE_CONTRACT_HARNESS=PASS');
-console.log('DECISION=REELS_SPLIT_VALIDATION_PENDING_AFTER_ELEVEN_APPROVED_SPLITS');
+console.log('DECISION=NOTES_REACTION_VALIDATION_PENDING_AFTER_TWELVE_EXTERNALIZED_PROTECTED_OWNERS');
 console.log('PROTECTED_SIGNATURES=19');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=11_APPROVED_REELS_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
-console.log('BROWSER_PROOF=DMS_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_REMAINING_9');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_8_PROTECTED_SYSTEMS');
-console.log('PRODUCTION_CHANGE=11_APPROVED_SIGNATURES');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=12_APPROVED_REELS_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_REACTOR_LIST_AND_REACT_TO_NOTE');
+console.log('BROWSER_PROOF=DMS_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_NOTES_REACTION_DEPLOYMENT_OBSERVATION_PENDING');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS');
+console.log('PRODUCTION_CHANGE=12_EXTERNALIZED_PROTECTED_OWNERS');

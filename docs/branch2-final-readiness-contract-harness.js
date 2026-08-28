@@ -137,7 +137,7 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 321, '321 documentation Markdown files must be published after the bounded DMs and Reels renderer splits');
+assert.strictEqual(allDocs.length, 323, '323 documentation Markdown files must be published after the bounded Notes reaction owner split');
 assert.strictEqual(allHarnesses.length, 315, '315 harness files must be published after the independent DMs renderer proof package and bounded DMs renderer split');
 assert.strictEqual(contractFiles.length, 311, '311 standard contract documents must be published after the independent DMs renderer proof package');
 assert.strictEqual(harnessFiles.length, 310, '310 standard contract harnesses must be published after the independent DMs renderer proof package');

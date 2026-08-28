@@ -35,10 +35,9 @@ const protectedSignatures = [
 
 assert.strictEqual(sourceFiles.length, 230, '230 extracted JavaScript modules must remain present after the DMs renderer split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function reactToNote(' || signature === 'function reactToNote(';
+  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
-  else if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
   else assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
@@ -61,9 +60,9 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback
 assert(fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_OWNER_TYPE=function'), 'Notes reactor-list browser proof must remain passing');
 assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
 assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_8_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
+assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
-assert(matrix.includes('all eleven protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
+assert(matrix.includes('all twelve protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE; test-only comparison, after-split production smoke, exact owner hash, and rollback-after-split are PASS'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('Note viewer candidate | SPLIT_COMPLETE'), 'matrix must record Note viewer split completion');
@@ -88,7 +87,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-pr
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
-assert(matrix.includes('browser proof remains outstanding for 8 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'matrix must record remaining browser proof');
 assert(matrix.includes('one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the supporting Reels helper split');
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete'), 'matrix must record the Reels renderer boundary separately');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
@@ -99,7 +98,8 @@ const remainingAuthorizationRows = [
   'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
-  'Notes submission and reaction submission | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Notes submission | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Notes reaction owner (`reactToNote()` bounded only) | PASS | PASS | STALE_DEPLOYMENT_OBSERVATION | PASS | SPLIT_VALIDATION_PENDING',
   'Notes reactor list | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; submission/reaction owners remain protected',
   'Push permission and silent resubscribe helpers | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
 ];
