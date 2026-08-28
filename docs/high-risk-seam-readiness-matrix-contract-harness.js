@@ -33,9 +33,9 @@ const protectedSignatures = [
   'async function removeMyNoteFromViewer(noteId)'
 ];
 
-assert.strictEqual(sourceFiles.length, 227, '227 extracted JavaScript modules must remain present after the jump-to-message split');
+assert.strictEqual(sourceFiles.length, 228, '228 extracted JavaScript modules must remain present after the DMs renderer split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
+  const approved = signature === 'async function renderDMs()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
@@ -59,9 +59,9 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback
 assert(fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_OWNER_TYPE=function'), 'Notes reactor-list browser proof must remain passing');
 assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
 assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
+assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_9_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
-assert(matrix.includes('all nine protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
+assert(matrix.includes('all ten protected seam contracts explicitly bind their listed mock inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE; test-only comparison, after-split production smoke, exact owner hash, and rollback-after-split are PASS'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('Note viewer candidate | SPLIT_COMPLETE'), 'matrix must record Note viewer split completion');
@@ -86,12 +86,12 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-pr
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
-assert(matrix.includes('browser proof remains outstanding for 10 unapproved systems'), 'matrix must record remaining browser proof');
+assert(matrix.includes('browser proof remains outstanding for 9 unapproved systems'), 'matrix must record remaining browser proof');
 assert(matrix.includes('one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the supporting Reels helper split');
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected'), 'matrix must keep the Reels renderer boundary protected');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
 const remainingAuthorizationRows = [
-  'DMs and chat rendering | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'DMs renderer (chat/realtime owners remain protected) | PASS | PASS | PASS | OUTSTANDING | SPLIT_VALIDATION_PENDING',
   'Reels renderer and swipe/navigation owners | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer remains protected',
   'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
@@ -114,10 +114,10 @@ assert(fs.existsSync(path.join(repo, 'docs', 'push-settings-parity-rollback-evid
 
 console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
 console.log('PROTECTED_SIGNATURES=19');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=9_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=10_APPROVED_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
 console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
 console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
-console.log('REVERSIBLE_BROWSER_PROOF=PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_REMAINING_10');
+console.log('REVERSIBLE_BROWSER_PROOF=DMS_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_REMAINING_9');
 console.log('AGGREGATE_PREPARATION_INJECTED_PROOFS=7_PASS');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_9_PROTECTED_SYSTEMS');

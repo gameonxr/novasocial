@@ -20,7 +20,7 @@ const expectedNames = [
   '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'confirmCropPreview', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'invalidateTabCache', 'loadMoodFeed',
   'loadMoreFeedPosts', 'loadNoteReactorsList', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'refreshProfileCounts', 'replyToId', 'replyToText',
-  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', '_applyReelsVideoWindowing', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter', 'setVerifyFilter', 'toggleSVMute',
+  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'renderDMs', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', '_applyReelsVideoWindowing', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter', 'setVerifyFilter', 'toggleSVMute',
 ].sort();
 
 function collectSourceFiles(dir, files = []) {
@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 228, 'index.html plus 227 extracted modules must be audited after the jump-to-message owner split');
-assert.strictEqual(matches.length, 214, 'application surface must retain 214 explicit window assignments after the jump-to-message owner split');
+assert.strictEqual(files.length, 229, 'index.html plus 228 extracted modules must be audited after the DMs renderer owner split');
+assert.strictEqual(matches.length, 215, 'application surface must retain 215 explicit window assignments after the DMs renderer split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');

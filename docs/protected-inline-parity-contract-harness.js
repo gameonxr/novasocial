@@ -38,7 +38,7 @@ const protectedSignatures = [
   'async function syncLocalDeletionFallback()',
 ];
 
-const approvedBranch2Splits = new Set(['function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(']);
+const approvedBranch2Splits = new Set(['async function renderDMs()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(']);
 for (const signature of protectedSignatures) {
   const expectedBranch2Count = approvedBranch2Splits.has(signature) ? 0 : 1;
   assert.strictEqual(branch2Html.split(signature).length - 1, expectedBranch2Count, `Branch2 protected signature count mismatch: ${signature}`);
@@ -49,6 +49,7 @@ const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module must expose the global owner');
 assert(branch2Html.indexOf('src/features/spawn-like-particles.js') < branch2Html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
@@ -59,8 +60,9 @@ assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable module must have one window owner');
 assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset module must have one window owner');
 assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story module must have one window owner');
+assert.strictEqual((dmsModule.match(/window\.renderDMs\s*=\s*async function\(\)\{/g) || []).length, 1, 'approved DMs module must have one window owner');
 
 console.log('PROTECTED_INLINE_PARITY_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('BRANCH2_AND_MAIN_PROTECTED_SIGNATURES_MATCH=PASS_WITH_NINE_APPROVED_OWNER_SIGNATURES');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=9_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
+console.log('BRANCH2_AND_MAIN_PROTECTED_SIGNATURES_MATCH=PASS_WITH_TEN_APPROVED_OWNER_SIGNATURES');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=10_APPROVED_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');

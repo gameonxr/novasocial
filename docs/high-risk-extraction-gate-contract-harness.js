@@ -50,9 +50,9 @@ const requiredCoverage = [
   'note-reactors-list-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 227, '227 extracted JavaScript modules must remain present after confirmCropPreview split');
+assert.strictEqual(sourceFiles.length, 228, '228 extracted JavaScript modules must remain present after the DMs renderer split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
+  const approved = signature === 'async function renderDMs()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
   assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
@@ -66,6 +66,7 @@ const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-sett
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsWindowingModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-video-windowing.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable window owner must occur once');
@@ -74,6 +75,7 @@ assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g)
 assert.strictEqual((noteModule.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'approved Note removal window owner must occur once');
 assert.strictEqual((noteDeletionModule.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note deletion window owner must occur once');
 assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story renderer window owner must occur once');
+assert.strictEqual((dmsModule.match(/window\.renderDMs\s*=\s*async function\(\)\{/g) || []).length, 1, 'approved DMs renderer window owner must occur once');
 assert.strictEqual((reelsWindowingModule.match(/window\._applyReelsVideoWindowing\s*=\s*function\(currentIndex\)\s*\{/g) || []).length, 1, 'verified Reels windowing helper must occur once');
 assert.strictEqual((reactorListModule.match(/window\.loadNoteReactorsList\s*=\s*async function\(noteId\)\s*\{/g) || []).length, 1, 'verified Notes reactor-list owner must occur once');
 assert(fs.existsSync(path.join(docsDir, 'note-reactors-list-production-split-contract.md')), 'Notes reactor-list contract must remain present');
@@ -103,8 +105,8 @@ assert(fs.existsSync(path.join(docsDir, 'account-bootstrap-adapter-harness.js'))
 
 console.log('HIGH_RISK_EXTRACTION_GATE_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('EXTRACTED_PROTECTED_SIGNATURES=9_APPROVED_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=10_APPROVED_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_AND_REACTOR_LIST');
 console.log('EXTRACTED_SUPPORTING_REELS_HELPER=1_WINDOWING_OWNER');
 console.log(`REQUIRED_COVERAGE_FILES=${requiredCoverage.length + 2}`);
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_9_PROTECTED_SYSTEMS');
 console.log('BRANCH2_ONLY=PASS');

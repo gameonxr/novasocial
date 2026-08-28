@@ -7,6 +7,7 @@ const path = require('path');
 const repo = '/home/ubuntu/novasocial';
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 
 function countFiles(dir, suffix) {
   return fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith(suffix)).length;
@@ -32,7 +33,8 @@ const trailingPositions = requiredTrailing.map(marker => html.lastIndexOf(marker
 assert(trailingPositions.every(position => position >= 0), 'required trailing feature scripts must exist');
 assert(trailingPositions[0] < trailingPositions[1] && trailingPositions[1] < trailingPositions[2] && trailingPositions[2] < trailingPositions[3], 'trailing feature script order must be preserved');
 assert(html.indexOf('<script>') >= 0, 'protected inline application script must remain present');
-assert(html.indexOf('function renderDMs(') >= 0, 'protected DMs renderer remains inline');
+assert(!html.includes('async function renderDMs('), 'approved DMs renderer must be absent from inline HTML');
+assert(dmsModule.includes('window.renderDMs = async function(){'), 'approved DMs renderer must be assigned by its production module');
 assert(html.indexOf('function renderReels(') >= 0, 'protected Reels renderer remains inline');
 assert(html.indexOf('function createPeerConnection(') >= 0, 'protected WebRTC peer helper remains inline');
 assert(!html.includes('function spawnLikeParticles('), 'approved particle helper must be absent from inline HTML');

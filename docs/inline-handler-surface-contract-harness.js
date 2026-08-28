@@ -10,6 +10,7 @@ const moduleTexts = fs.readdirSync(path.join(repo, 'src'), { recursive: true })
   .filter(name => name.endsWith('.js'))
   .map(name => fs.readFileSync(path.join(repo, 'src', name), 'utf8'));
 const allSource = [html, ...moduleTexts].join('\n');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 
 const handlers = [...new Set([...html.matchAll(/onclick=["']\s*([A-Za-z_$][\w$]*)\s*\(/g)].map(match => match[1]))].sort();
 const unresolved = handlers.filter(name => {
@@ -18,12 +19,13 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 
-assert.strictEqual(handlers.length, 153, 'onclick handler inventory must reflect the current Notes reactor-list split');
+assert.strictEqual(handlers.length, 151, 'onclick handler inventory must reflect the current DMs renderer split');
 assert.deepStrictEqual(unresolved, [], 'all current inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain visible');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'Branch2 must expose the authorized inline forwardMessage implementation');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'Branch2 must expose the bounded completion helper');
-assert(html.includes('async function renderDMs()'), 'DM renderer must remain inline');
+assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
+assert(dmsModule.includes('window.renderDMs = async function(){'), 'approved DMs renderer module owner must resolve');
 assert(html.includes('function showMsgMenu('), 'message action menu must remain inline');
 
 console.log('INLINE_HANDLER_SURFACE_HARNESS=PASS');

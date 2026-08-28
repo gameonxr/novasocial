@@ -14,11 +14,11 @@ const counts = new Map();
 for (const id of ids) counts.set(id, (counts.get(id) || 0) + 1);
 const duplicates = [...counts.entries()].filter(([, count]) => count > 1);
 
-assert.strictEqual(ids.length, 162, 'static HTML ID inventory must reflect the four approved protected owner groups');
-assert.strictEqual(counts.size, 162, 'static HTML IDs must remain unique');
+assert.strictEqual(ids.length, 161, 'static HTML ID inventory must reflect the approved protected owner groups after the DMs renderer split');
+assert.strictEqual(counts.size, 161, 'static HTML IDs must remain unique');
 assert.deepStrictEqual(duplicates, [], 'static HTML markup must not duplicate element IDs');
 assert(html.includes('function createPeerConnection('), 'protected Calls/WebRTC implementation must remain inline');
-assert(html.includes('function renderDMs('), 'protected DMs renderer must remain inline');
+assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
 assert(html.includes('function renderReels('), 'protected Reels renderer must remain inline');
 
 console.log('STATIC_HTML_ID_HARNESS=PASS');

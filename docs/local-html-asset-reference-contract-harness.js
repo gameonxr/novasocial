@@ -22,7 +22,7 @@ while ((match = pattern.exec(html))) {
 const unique = [...new Map(refs.map(item => [item.ref, item])).values()];
 const missing = unique.filter(item => !fs.existsSync(path.join(repo, item.relative))).map(item => item.ref).sort();
 
-assert.strictEqual(unique.length, 248, 'static local asset-reference inventory must reflect the jump-to-message split');
+assert.strictEqual(unique.length, 249, 'static local asset-reference inventory must reflect the DMs renderer script addition');
 assert.deepStrictEqual(missing, [], 'every static local asset reference must resolve');
 assert(fs.existsSync(path.join(repo, 'manifest.json')), 'root manifest must remain available');
 assert(fs.existsSync(path.join(repo, 'sw.js')), 'service worker must remain available');

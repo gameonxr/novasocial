@@ -15,8 +15,8 @@ const protectedNames = [
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
   'voteStoryPoll','refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 235, 'inline application script must retain 235 function declarations after the jump-to-message split');
-const remainingInlineProtectedNames = protectedNames.filter(name => !['spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList'].includes(name));
+assert.strictEqual(declarations.length, 234, 'inline application script must retain 234 function declarations after the DMs renderer split');
+const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 19, 'protected declaration set must contain 19 unique names');
 const source = fs.readdirSync(path.join(repo, 'src'), { recursive: true }).filter(file => String(file).endsWith('.js'));

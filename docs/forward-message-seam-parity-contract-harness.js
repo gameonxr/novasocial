@@ -13,7 +13,8 @@ function hasImplementation(html) {
 
 for (const [name, html] of [['Branch2', branch2Html], ['origin/main', mainHtml]]) {
   assert(html.includes('onclick="forwardMessage('), `${name} must retain the documented forwardMessage caller`);
-  assert(html.includes('async function renderDMs()'), `${name} must retain inline renderDMs`);
+  if (name === 'Branch2') assert(!html.includes('async function renderDMs()'), 'Branch2 must use the approved external DMs renderer owner');
+  else assert(html.includes('async function renderDMs()'), 'origin/main must retain inline renderDMs baseline');
   assert(html.includes('function showMsgMenu('), `${name} must retain inline showMsgMenu`);
 }
 assert(hasImplementation(branch2Html), 'Branch2 must contain the authorized inline forwardMessage implementation');

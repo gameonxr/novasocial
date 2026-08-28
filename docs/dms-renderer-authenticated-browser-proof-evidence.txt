@@ -29,3 +29,31 @@ LIVE_DATABASE_MUTATION=0
 LIVE_ACCOUNT_CHANGE=0
 
 This evidence observes the current authenticated inline baseline only. It does not prove post-split preview behavior. A fresh post-split preview observation and production rollback evidence remain required after the bounded Branch2 publication.
+
+
+## Post-split Branch2 preview observation
+
+Scope: observation-only authenticated browser proof after the bounded `renderDMs()` owner split was published to Branch2.
+
+POST_SPLIT_AUTHENTICATED_PREVIEW_LOADED=PASS
+POST_SPLIT_MESSAGES_ROUTE_RENDERED=PASS
+POST_SPLIT_EXISTING_CHAT_OPEN=PASS
+POST_SPLIT_HISTORY_SCROLL_OBSERVED=PASS
+POST_SPLIT_BACK_NAVIGATION_RESTORED_DMS=PASS
+POST_SPLIT_ONE_TO_ONE_REOPEN_RENDER=PASS
+POST_SPLIT_HEADER_HISTORY_COMPOSER_PRESENT=PASS
+POST_SPLIT_CHAT_AND_TYPING_STATE_OBSERVED=PASS
+POST_SPLIT_MUTATION_CONTROLS_UNUSED=PASS
+POST_SPLIT_NOTIFICATION_CONTROL_UNTOUCHED=PASS
+POST_SPLIT_LIVE_MESSAGE_SEND=0
+POST_SPLIT_LIVE_MESSAGE_EDIT=0
+POST_SPLIT_LIVE_MESSAGE_DELETE=0
+POST_SPLIT_LIVE_REACTION=0
+POST_SPLIT_LIVE_CALL_OR_MEDIA=0
+POST_SPLIT_LIVE_PERMISSION_REQUEST=0
+POST_SPLIT_LIVE_PUSHMANAGER_OPERATION=0
+POST_SPLIT_LIVE_SERVICE_WORKER_MUTATION=0
+POST_SPLIT_LIVE_DATABASE_MUTATION=0
+POST_SPLIT_LIVE_ACCOUNT_CHANGE=0
+
+This post-split preview proof confirms the selected external renderer loads and preserves the observed DMs list/chat lifecycle. It does not claim broader chat/realtime ownership was extracted. Remote rollback-after-split remains pending until a controlled Branch2 rollback checkpoint is verified.

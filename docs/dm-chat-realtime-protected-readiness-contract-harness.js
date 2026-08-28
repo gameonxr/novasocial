@@ -5,9 +5,9 @@ const path = require('path');
 const repo = '/home/ubuntu/novasocial';
 const contractPath = path.join(repo, 'docs', 'dm-chat-realtime-protected-readiness-contract.md');
 const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const dmsOwner = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
-  'function renderDMs(',
   'function sendMsg('
 ];
 const requiredSections = [
@@ -22,6 +22,7 @@ const requiredSections = [
   '`BROWSER_LIVE_ACTIONS=0`'
 ];
 for (const marker of requiredMarkers) assert(source.includes(marker), `protected source marker missing: ${marker}`);
+assert(dmsOwner.includes('window.renderDMs = async function(){'), 'approved DMs renderer owner must be present in its external module');
 for (const section of requiredSections) assert(contract.includes(section), `readiness requirement missing: ${section}`);
 assert(contract.includes('PREPARATION_ONLY'), 'dossier must remain preparation-only');
 assert(contract.includes('BLOCKED'), 'dossier must remain blocked');

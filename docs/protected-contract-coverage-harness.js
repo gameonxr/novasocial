@@ -12,6 +12,7 @@ const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-sett
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 
 const coverage = [
@@ -44,6 +45,9 @@ for (const [marker, base] of coverage) {
     assert(!html.includes(marker), `approved Push owner must be absent from inline HTML: ${marker}`);
     const ownerName = marker.includes('enablePushFromSettings') ? 'enablePushFromSettings' : 'resetPushFromSettings';
     assert(pushModule.includes(`window.${ownerName} = async function(`), `approved Push owner missing from src: ${marker}`);
+  } else if (marker === 'async function renderDMs()') {
+    assert(!html.includes(marker), 'approved DMs renderer must be absent from inline HTML');
+    assert.strictEqual((dmsModule.match(/window\.renderDMs\s*=\s*async function\(\)\{/g) || []).length, 1, 'approved DMs renderer must have one owner');
   } else if (marker === 'function renderStoryElements()') {
     assert(!html.includes(marker), 'approved Story renderer must be absent from inline HTML');
     assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'approved Story renderer must have one owner');
@@ -78,4 +82,4 @@ assert.strictEqual((noteModule.match(/window\.(?:viewNote|removeMyNoteFromViewer
 
 console.log('PROTECTED_CONTRACT_COVERAGE_HARNESS=PASS');
 console.log(`PROTECTED_SEAMS=${coverage.length}`);
-console.log('APPROVED_WINDOW_OWNERS=9_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_AND_REACTOR_LIST');
+console.log('APPROVED_WINDOW_OWNERS=10_DMS_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_AND_REACTOR_LIST');
