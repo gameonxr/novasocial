@@ -36,7 +36,7 @@ The proof records zero database writes, network calls, storage writes, account m
 
 ## Rollback artifact
 
-The rollback record pins the baseline commit, whole-file baseline hash, normalized owner hash, current inline owner location, synthetic experimental linkage/module hash, and exact restored hashes. The simulated rollback restores the complete pre-split HTML byte-for-byte. No production extraction is part of this checkpoint.
+The rollback record pins the baseline commit, whole-file baseline hash, normalized owner hash, temporary rollback checkpoint, authenticated rollback observation, recovery checkpoint, and exact restored hashes. The remote rollback restored the inline renderer for observation and the published recovery restored the external owner; no excluded owner or live data was changed.
 
 ## Explicit authorization boundary
 

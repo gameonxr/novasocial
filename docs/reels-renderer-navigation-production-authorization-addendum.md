@@ -25,9 +25,9 @@ Browser validation must remain observation-only: no messages, edits, deletes, re
 
 ## Required completion decision
 
-The feature may be marked `SPLIT_COMPLETE` only when exact before/after parity, detached/browser-safe proof, rollback-after-split evidence, focused Reels gates, clean full regression, and Branch2 remote alignment all pass. If any gate fails, the extraction must stop and the reversible checkpoint must be restored.
+The feature is marked `SPLIT_COMPLETE` after exact before/after parity, detached/browser-safe proof, rollback-after-split evidence, focused Reels gates, clean full regression, and Branch2 remote alignment passed. If any gate fails, the extraction must stop and the reversible checkpoint must be restored.
 
 `FEATURE_AUTHORIZATION=BOUNDED_RENDER_REELS_EXTRACTION`
-`PRODUCTION_DECISION=PENDING_REQUIRED_GATES`
+`PRODUCTION_DECISION=SPLIT_COMPLETE`
 `PRODUCTION_CHANGE=AUTHORIZED_ON_BRANCH2_ONLY`
 `LIVE_SIDE_EFFECTS=0`
