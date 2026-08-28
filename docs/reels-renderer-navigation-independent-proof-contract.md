@@ -3,15 +3,15 @@
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
 **Date:** 2026-08-25
-**Status:** `INDEPENDENT_PROOF_COMPLETE`; production extraction remains `BLOCKED`.
+**Status:** `INDEPENDENT_PROOF_COMPLETE`; bounded production extraction is `SPLIT_VALIDATION_PENDING` until post-split browser and rollback gates pass.
 
 ## Candidate boundary
 
-The candidate is the existing inline `renderReels()` owner in `index.html`, including the persistent-container restore branch, read-only reel query/fallback, empty-state renderer, media markup, progress updates, touch swipe lifecycle, playback pause/resume, windowing handoff, overlay wiring, and cleanup timers. The already-approved Reels video windowing helper is excluded from this proof and remains a separate owner. The surrounding `go()` and `goBack()` functions own tab transitions and navigation-stack mutation; this harness verifies that `renderReels()` does not mutate that stack or browser history.
+The candidate is the exact `renderReels()` owner now linked from `src/features/reels-renderer-owner.js`, including the persistent-container restore branch, read-only reel query/fallback, empty-state renderer, media markup, progress updates, touch swipe lifecycle, playback pause/resume, windowing handoff, overlay wiring, and cleanup timers. The already-approved Reels video windowing helper is excluded from this proof and remains a separate owner. The surrounding `go()` and `goBack()` functions own tab transitions and navigation-stack mutation; this harness verifies that `renderReels()` does not mutate that stack or browser history.
 
 ## Exact origin parity
 
-The independent harness extracts `renderReels()` from the current Branch2 `index.html` and immutable `origin/main:index.html`, normalizes only line endings, and compares the exact owner body. Any owner-body difference fails the proof. The normalized immutable-origin owner hash is `db1f15428a4452e72b4a5223a5050151cb5deea0092b3a858afbd012b09653ca`.
+The independent harness extracts `renderReels()` from immutable `origin/main:index.html` and compares it with the current Branch2 external owner module after normalizing only the classic-global wrapper and line endings. Any owner-body difference fails the proof. The normalized immutable-origin owner hash is `db1f15428a4452e72b4a5223a5050151cb5deea0092b3a858afbd012b09653ca`.
 
 ## Detached synthetic before/after proof
 
@@ -30,7 +30,7 @@ The harness executes both the immutable-origin owner and the current Branch2 own
 | Isolated post-split validation | Actual temporary tree with extracted module passed VM global exposure, exact lifecycle parity, and zero repository production changes | PASS |
 | Isolated rollback | Temporary tree restored to exact Branch2 baseline; experimental linkage/module absent afterward | PASS |
 
-The temporary candidate is pinned by module SHA-256 `3b7985ad1d8163a186a757cdd65ca8db80f4fdb3a9054abfabbef8e5a0955a24`, synthetic after-HTML SHA-256 `16388e916adbcedbbadf0477b290e2b937fbceda1430cd4160639b8b02e62d5f`, and baseline HTML SHA-256 `a5179f6c626cae5936da608b268d5ac8e22965699a1f5d211cf5aa4d1c3890cc`. It exists only in `/tmp`; the production repository has no renderer linkage or owner relocation.
+The temporary candidate is pinned by module SHA-256 `3b7985ad1d8163a186a757cdd65ca8db80f4fdb3a9054abfabbef8e5a0955a24`, synthetic after-HTML SHA-256 `16388e916adbcedbbadf0477b290e2b937fbceda1430cd4160639b8b02e62d5f`, and baseline HTML SHA-256 `a5179f6c626cae5936da608b268d5ac8e22965699a1f5d211cf5aa4d1c3890cc`. The isolated candidate hashes are retained as historical evidence; the production Branch2 owner now uses the same classic linkage and exact owner body.
 
 The proof records zero database writes, network calls, storage writes, account mutations, uploads, permission requests, live navigation, real media playback, and production changes. Synthetic `video.play()` calls are mocks and do not open or play real media.
 
@@ -40,7 +40,7 @@ The rollback record pins the baseline commit, whole-file baseline hash, normaliz
 
 ## Explicit authorization boundary
 
-This checkpoint authorizes the independent proof gates listed above only. It does **not** authorize production extraction of the Reels renderer, swipe/navigation lifecycle, media playback, overlay actions, or cleanup. A future production decision still requires a separate formal authorization against this exact boundary, an actual controlled split, browser-safe post-split proof, and executed rollback-after-split evidence in a disposable non-production environment.
+The exact-scope production authorization is recorded in `reels-renderer-navigation-production-authorization-addendum.md`. The split remains validation-pending until actual post-split browser-safe proof, executed rollback-after-split evidence, and clean full Branch2 regression pass; excluded navigation-stack, media-policy, action, upload, database, realtime, and account surfaces remain outside scope.
 
 ## Decision and non-goals
 
@@ -58,10 +58,10 @@ This checkpoint authorizes the independent proof gates listed above only. It doe
 `ISOLATED_POST_SPLIT_VALIDATION=PASS`
 `ISOLATED_ROLLBACK=PASS`
 `BROWSER_SAFE_LIVE_ACTIONS=0`
-`PRODUCTION_DECISION=BLOCKED`
-`PRODUCTION_CHANGE=0`
+`PRODUCTION_DECISION=SPLIT_VALIDATION_PENDING`
+`PRODUCTION_CHANGE=1`
 
-This proof does not move source, change script order, alter protected accounting, modify schema, request media permissions, open live navigation, play real media, or mutate any production state.
+This proof and the bounded candidate do not alter excluded source, protected accounting, schema, permissions, live navigation, real media, or production state; the only Branch2 source change is the authorized renderer linkage and owner relocation.
 
 ## References
 

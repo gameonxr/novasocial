@@ -13,6 +13,7 @@ const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'not
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
 const protectedMarkers = [
   'function maybeShowPushPermissionBanner()',
@@ -44,6 +45,9 @@ for (const marker of protectedMarkers) {
     const ownerName = marker.includes('enablePushFromSettings') ? 'enablePushFromSettings' : 'resetPushFromSettings';
     assert(!html.includes(marker), `approved Push marker must be absent from inline HTML: ${marker}`);
     assert(pushModule.includes(`window.${ownerName} = async function(`), `approved Push module owner must be present: ${marker}`);
+  } else if (marker === 'async function renderReels()') {
+    assert(!html.includes(marker), 'approved Reels renderer marker must be absent from inline HTML');
+    assert.strictEqual((reelsModule.match(/window\.renderReels\s*=\s*async function\(\)\{/g) || []).length, 1, 'approved Reels module owner must be present exactly once');
   } else if (marker === 'async function renderDMs()') {
     assert(!html.includes(marker), 'approved DMs marker must be absent from inline HTML');
     assert.strictEqual((dmsModule.match(/window\.renderDMs\s*=\s*async function\(\)\{/g) || []).length, 1, 'approved DMs module owner must be present exactly once');

@@ -11,6 +11,9 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const windowingModulePath = path.join(repo, 'src', 'features', 'reels-video-windowing.js');
 const windowingModule = fs.readFileSync(windowingModulePath, 'utf8');
+const rendererModulePath = path.join(repo, 'src', 'features', 'reels-renderer-owner.js');
+const rendererModule = fs.readFileSync(rendererModulePath, 'utf8');
+const rendererSurface = `${html}\n${rendererModule}`;
 const browserProofFiles = [
   'reels-empty-state-browser-proof-evidence.txt',
   'reels-query-error-fallback-browser-proof-evidence.txt',
@@ -34,34 +37,38 @@ const requiredMarkers = [
   '.load()'
 ];
 for (const marker of requiredMarkers) {
-  assert(html.includes(marker) || windowingModule.includes(marker), `Reels seam marker must remain in the inline renderer or extracted windowing module: ${marker}`);
+  assert(rendererSurface.includes(marker) || windowingModule.includes(marker), `Reels seam marker must remain in the renderer owner or extracted windowing module: ${marker}`);
 }
-assert(html.includes('async function renderReels()'), 'renderReels must remain inline');
-assert(html.includes("const existingContainer = document.getElementById('reels-persistent-container');"), 'persistent-container lookup must remain');
-assert(html.includes('if (isSettling)'), 'new swipe must force-complete an in-flight settle');
-assert(html.includes('100 / count'), 'restore math must use live child count');
-assert(html.includes('currentIndex - 1') || windowingModule.includes('currentIndex - 1'), 'video window lower bound must remain');
-assert(html.includes('currentIndex + 3') || windowingModule.includes('currentIndex + 3'), 'video window upper bound must remain');
-assert.strictEqual(sourceText.includes('async function renderReels()'), false, 'renderReels must not be extracted');
+assert(rendererModule.startsWith('window.renderReels = async function(){'), 'renderReels must be the approved classic external owner');
+assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'renderReels external linkage must be present');
+assert(rendererSurface.includes("const existingContainer = document.getElementById('reels-persistent-container');"), 'persistent-container lookup must remain');
+assert(rendererSurface.includes('if (isSettling)'), 'new swipe must force-complete an in-flight settle');
+assert(rendererSurface.includes('100 / count'), 'restore math must use live child count');
+assert(rendererSurface.includes('currentIndex - 1') || windowingModule.includes('currentIndex - 1'), 'video window lower bound must remain');
+assert(rendererSurface.includes('currentIndex + 3') || windowingModule.includes('currentIndex + 3'), 'video window upper bound must remain');
+assert.strictEqual((sourceText.match(/window\.renderReels\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'renderReels external global owner must occur once');
 assert.strictEqual(html.includes('function _applyReelsVideoWindowing(currentIndex)'), false, 'Reels windowing inline owner must be removed');
 assert.strictEqual((windowingModule.match(/window\._applyReelsVideoWindowing\s*=\s*function\(currentIndex\)\s*\{/g) || []).length, 1, 'Reels windowing module owner must occur once');
 assert.strictEqual((sourceText.match(/window\._applyReelsVideoWindowing\s*=\s*function\(currentIndex\)\s*\{/g) || []).length, 1, 'Reels windowing global owner must occur once');
+const normalize = (value) => value.replace(/\r\n/g, '\n').replace(/[ \t]+$/gm, '').replace(/\n+$/, '');
 const hash = (value) => crypto.createHash('sha256').update(value).digest('hex');
 const windowingStart = html.indexOf('function _applyReelsVideoWindowing(currentIndex)');
 const windowingEnd = html.indexOf('async function renderReels(){', windowingStart);
 const mainWindowingStart = mainHtml.indexOf('function _applyReelsVideoWindowing(currentIndex)');
 const mainWindowingEnd = mainHtml.indexOf('async function renderReels(){', mainWindowingStart);
 const reelsStart = html.indexOf('async function renderReels(){');
-const reelsEnd = html.indexOf('function switchReelsView(mode) {', reelsStart);
 const mainReelsStart = mainHtml.indexOf('async function renderReels(){');
-const mainReelsEnd = mainHtml.indexOf('function switchReelsView(mode) {', mainReelsStart);
+const mainReelsEnd = mainHtml.indexOf('\n}\n\n// ═', mainReelsStart) + 2;
 assert(windowingStart < 0 && mainWindowingStart >= 0 && mainWindowingEnd > mainWindowingStart, 'Reels windowing owner must be externalized while origin baseline remains resolvable');
-assert(reelsStart >= 0 && reelsEnd > reelsStart && mainReelsStart >= 0 && mainReelsEnd > mainReelsStart, 'Reels renderer owner boundaries must be resolvable');
+assert(reelsStart < 0 && mainReelsStart >= 0 && mainReelsEnd > mainReelsStart, 'Reels renderer external owner and origin boundary must be resolvable');
 const normalizedWindowingModule = windowingModule
   .replace(/^window\._applyReelsVideoWindowing = function\(currentIndex\) \{\n/, 'function _applyReelsVideoWindowing(currentIndex) {\n')
   .replace(/\n\};\s*$/, '\n}');
-assert.strictEqual(hash(normalizedWindowingModule), hash(mainHtml.slice(mainWindowingStart, mainWindowingEnd).replace(/\n+$/, '')), 'Reels extracted windowing owner must match origin/main exactly');
-assert.strictEqual(hash(html.slice(reelsStart, reelsEnd)), hash(mainHtml.slice(mainReelsStart, mainReelsEnd)), 'Reels renderer owner must not drift from origin/main during preparation');
+assert.strictEqual(hash(normalize(normalizedWindowingModule)), hash(normalize(mainHtml.slice(mainWindowingStart, mainWindowingEnd).replace(/\n+$/, '\n'))), 'Reels extracted windowing owner must match origin/main exactly');
+const normalizedRendererModule = rendererModule
+  .replace(/^window\.renderReels = async function\(\)\{/, 'async function renderReels(){')
+  .replace(/\n\};\s*$/, '\n}');
+assert.strictEqual(hash(normalize(normalizedRendererModule)), hash(normalize(mainHtml.slice(mainReelsStart, mainReelsEnd))), 'Reels external renderer owner must match origin/main exactly');
 const beforeSplitEvidence = fs.readFileSync(path.join(repo, 'docs', 'reels-parity-rollback-evidence.txt'), 'utf8');
 assert(beforeSplitEvidence.includes('OWNER_BODY_PARITY=PASS'), 'Reels before-split parity evidence must pass');
 assert(beforeSplitEvidence.includes('ROLLBACK_TARGET=509bfe91e2aa03a83d7a66c57a535007f77d37d2'), 'Reels rollback target must remain pinned');

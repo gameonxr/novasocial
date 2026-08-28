@@ -3,16 +3,17 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = '/home/ubuntu/novasocial';
-const files = ['index.html', 'src/features/profile.js', 'src/features/home.js'];
+const files = ['index.html', 'src/features/profile.js', 'src/features/home.js', 'src/features/reels-renderer-owner.js'];
 const counts = {};
 for (const relative of files) {
   const text = fs.readFileSync(path.join(repo, relative), 'utf8');
   counts[relative] = (text.match(/throw\s+new\s+Error\s*\(/g) || []).length;
 }
 assert.deepStrictEqual(counts, {
-  'index.html': 8,
+  'index.html': 7,
   'src/features/profile.js': 2,
   'src/features/home.js': 2,
+  'src/features/reels-renderer-owner.js': 1,
 }, 'explicit error boundaries must retain their exact per-file counts');
 
 const candidates = ['sw.js', 'manifest.json', ...fs.readdirSync(path.join(repo, 'src'), { recursive: true }).filter(file => String(file).endsWith('.js')).map(file => path.join('src', file))];
@@ -27,5 +28,5 @@ const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
 assert.strictEqual(total, 12, 'exactly twelve explicit error boundaries must remain');
 console.log('EXPLICIT_ERROR_BOUNDARY_HARNESS=PASS');
 console.log(`TOTAL_BOUNDARIES=${total}`);
-console.log('PER_FILE=index.html:8,src/features/profile.js:2,src/features/home.js:2');
+console.log('PER_FILE=index.html:7,src/features/profile.js:2,src/features/home.js:2,src/features/reels-renderer-owner.js:1');
 console.log('UNEXPECTED_BOUNDARIES=0');

@@ -7,7 +7,6 @@ const contractPath = path.join(repo, 'docs', 'reels-renderer-navigation-protecte
 const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
-  'function renderReels(',
   'navStack'
 ];
 const requiredSections = [
@@ -22,6 +21,10 @@ const requiredSections = [
   '`BROWSER_LIVE_ACTIONS=0`'
 ];
 for (const marker of requiredMarkers) assert(source.includes(marker), `protected source marker missing: ${marker}`);
+const rendererModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
+assert(rendererModule.includes('window.renderReels = async function(){'), 'authorized Reels renderer external owner must be present');
+assert(source.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'authorized Reels renderer linkage must be present');
+assert(!source.includes('async function renderReels(){'), 'authorized Reels renderer must not remain inline');
 for (const section of requiredSections) assert(contract.includes(section), `readiness requirement missing: ${section}`);
 assert(contract.includes('PREPARATION_ONLY'), 'dossier must remain preparation-only');
 assert(contract.includes('BLOCKED'), 'dossier must remain blocked');

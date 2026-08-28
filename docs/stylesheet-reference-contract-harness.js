@@ -20,7 +20,7 @@ for (const name of styles) {
 assert.deepStrictEqual(missing, [], 'no extracted stylesheet may be unreferenced');
 assert.deepStrictEqual(duplicates, [], 'no extracted stylesheet may be linked more than once');
 assert(!html.includes('async function renderDMs('), 'approved DMs renderer must not remain inline');
-assert(html.includes('function renderReels('), 'protected Reels renderer must remain inline');
+assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
 
 console.log('STYLESHEET_REFERENCE_HARNESS=PASS');
 console.log(`STYLESHEETS=${styles.length}`);

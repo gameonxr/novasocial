@@ -8,6 +8,7 @@ const repo = '/home/ubuntu/novasocial';
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
 function countFiles(dir, suffix) {
   return fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith(suffix)).length;
@@ -35,7 +36,8 @@ assert(trailingPositions[0] < trailingPositions[1] && trailingPositions[1] < tra
 assert(html.indexOf('<script>') >= 0, 'protected inline application script must remain present');
 assert(!html.includes('async function renderDMs('), 'approved DMs renderer must be absent from inline HTML');
 assert(dmsModule.includes('window.renderDMs = async function(){'), 'approved DMs renderer must be assigned by its production module');
-assert(html.indexOf('function renderReels(') >= 0, 'protected Reels renderer remains inline');
+assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'approved Reels renderer linkage remains present');
+assert(reelsModule.includes('window.renderReels = async function(){'), 'approved Reels renderer remains available through its external owner');
 assert(html.indexOf('function createPeerConnection(') >= 0, 'protected WebRTC peer helper remains inline');
 assert(!html.includes('function spawnLikeParticles('), 'approved particle helper must be absent from inline HTML');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle helper must be assigned by its production module');

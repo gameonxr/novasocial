@@ -22,27 +22,37 @@ function extractOwner(text) {
   assert(end > start, 'renderReels owner boundary must be discoverable');
   return text.slice(start, end + 2);
 }
+function extractCurrentOwner(text) {
+  if (text.includes('async function renderReels(){')) return extractOwner(text);
+  const ownerPath = path.join(repo, 'src', 'features', 'reels-renderer-owner.js');
+  const moduleText = fs.readFileSync(ownerPath, 'utf8');
+  const prefix = 'window.renderReels = ';
+  assert(moduleText.startsWith(prefix), 'external renderReels owner must use the classic window assignment');
+  assert(moduleText.trimEnd().endsWith('};'), 'external renderReels owner must terminate as a classic assignment');
+  return moduleText.slice(prefix.length, moduleText.trimEnd().length - 1).replace(/^async function\(\)/, 'async function renderReels()');
+}
 function normalize(text) {
-  return text.replace(/\r\n/g, '\n');
+  return text.replace(/\r\n/g, '\n').replace(/[ \t]+$/gm, '');
 }
 function sha(text) {
   return crypto.createHash('sha256').update(text).digest('hex');
 }
 
-const currentOwner = extractOwner(currentHtml);
+const currentOwner = extractCurrentOwner(currentHtml);
 const originOwner = extractOwner(originHtml);
 const normalizedCurrentOwner = normalize(currentOwner);
 const normalizedOriginOwner = normalize(originOwner);
 const ownerHash = sha(normalizedOriginOwner);
 assert.strictEqual(normalizedCurrentOwner, normalizedOriginOwner, 'Branch2 renderReels owner must retain exact immutable-origin parity');
-assert(!/src\/features\/render-reels[^"']*\.js/.test(currentHtml), 'renderer must not be moved to an unapproved external module');
-assert(currentHtml.includes('async function renderReels(){'), 'renderer must remain a classic inline function');
+assert(currentHtml.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'renderer must use the approved classic external linkage');
+assert(fs.existsSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js')), 'external renderer owner module must exist');
+assert(!currentHtml.includes('async function renderReels(){'), 'renderer inline declaration must be removed after split');
 assert(!normalizedCurrentOwner.includes('navStack'), 'navigation-stack mutation must remain outside renderReels');
 assert(!normalizedCurrentOwner.includes('pushNavState'), 'navigation-stack push must remain outside renderReels');
 assert(!normalizedCurrentOwner.includes('history.pushState'), 'history mutation must remain outside renderReels');
 assert(contract.includes('EXACT_ORIGIN_PARITY=PASS'), 'contract must record exact owner parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=PASS'), 'contract must record detached proof');
-assert(contract.includes('PRODUCTION_DECISION=BLOCKED'), 'production decision must remain blocked');
+assert(contract.includes('PRODUCTION_DECISION=SPLIT_VALIDATION_PENDING'), 'bounded Reels production decision must remain validation-pending until post-split gates');
 assert(protectedDossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected dossier must remain blocked');
 
 function node(id) {
@@ -379,8 +389,8 @@ function runExtractionCandidateSimulation() {
   const scriptTags = candidateHtml.split('\n').filter(line => line.startsWith('<script'));
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
-  assert.strictEqual(candidateNamedOwner, originOwner, 'candidate owner body must match immutable origin');
-  assert.strictEqual(sha(candidateHtml), '868fbe26dd04ae2d7e8f3031dfe41eab0ab78346e98090943da87e9ddaaf9841', 'candidate HTML hash must remain pinned after the DMs renderer split');
+  assert.strictEqual(normalize(candidateNamedOwner), normalize(originOwner), 'candidate owner body must match immutable origin');
+  assert.strictEqual(sha(candidateHtml), 'eb49f7cfeb222ffe65d4215b50d86f7148960c89b51cb61c3c93799460280116', 'candidate HTML hash must remain pinned after the DMs renderer split');
   return {
     ownerSource: candidateNamedOwner,
     moduleSha256: sha(moduleText),

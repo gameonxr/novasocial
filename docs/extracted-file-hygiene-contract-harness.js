@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 263, 'all 263 extracted source files must remain present after the DMs renderer split');
+assert.strictEqual(files.length, 264, 'all 263 extracted source files must remain present after the DMs renderer split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {

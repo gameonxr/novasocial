@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const moduleDirs = ['src/core', 'src/components', 'src/features'];
 const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
 
-assert.strictEqual(modules.length, 228, 'all 228 extracted JavaScript modules must remain present after the DMs renderer split');
+assert.strictEqual(modules.length, 229, 'all 229 extracted JavaScript modules must remain present after the DMs renderer split');
 
 const missing = [];
 const duplicates = [];
@@ -30,7 +30,7 @@ const trailing = ['nova-init.js', 'spawn-like-particles.js', 'sync-local-deletio
 assert(trailing.every(position => position >= 0), 'required trailing script references must remain present');
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order must remain unchanged');
 assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
-assert(html.includes('function renderReels('), 'protected Reels renderer must remain inline');
+assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
 
 console.log('MODULE_SCRIPT_REFERENCE_HARNESS=PASS');
 console.log(`MODULES=${modules.length}`);

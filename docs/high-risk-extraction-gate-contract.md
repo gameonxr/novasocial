@@ -3,11 +3,11 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-22
-**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the ten verified protected-owner groups plus the contained Reels windowing-helper exception.
+**Purpose:** Define when and how a protected inline system may be considered for a modular split without weakening the stable architecture, and record the eleven verified or validation-pending protected-owner groups plus the contained Reels windowing-helper exception.
 
 ## Current decision
 
-The broader protected DM/chat realtime owners, the main Reels renderer, Calls/WebRTC, Story polls, recording, Notes submission/reaction, and Push permission systems remain inline in the current migration and are **not direct-extraction candidates yet**. The DMs renderer, particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, Story-editor, and read-only Notes reactor-list owners are the approved protected-owner exceptions; the contained Reels windowing helper is separately approved as a supporting owner. The nine previously completed owners passed seam, browser or authenticated shell, static parity, and rollback checks; the DMs renderer has now also passed detached parity, authenticated pre/post observation, and the controlled remote rollback/recovery sequence. Existing parity and behavior contracts do not authorize moving any other protected code; the DMs authorization is limited to `renderDMs()` and does not include chat/realtime mutation owners.
+The broader protected DM/chat realtime owners, the Reels navigation/media systems beyond the bounded renderer, Calls/WebRTC, Story polls, recording, Notes submission/reaction, and Push permission systems remain inline in the current migration and are **not direct-extraction candidates yet**. The bounded Reels renderer and DMs renderer, particle, deletion-fallback, Push-settings, Note-viewer, Note-deletion, Story-editor, and read-only Notes reactor-list owners are the approved protected-owner exceptions; the contained Reels windowing helper is separately approved as a supporting owner. The ten previously completed owners passed seam, browser or authenticated shell, static parity, and rollback checks; the DMs renderer has now also passed detached parity, authenticated pre/post observation, and the controlled remote rollback/recovery sequence. Existing parity and behavior contracts do not authorize moving any other protected code; the DMs authorization is limited to `renderDMs()` and does not include chat/realtime mutation owners.
 
 ## Required gate before any high-risk split
 
@@ -17,18 +17,18 @@ The first implementation step is therefore a **seam/adapter**, not a blind copy 
 
 ## Harness coverage
 
-`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 9 unapproved protected marker inventory remains inline and absent from `src/`, that the externalized DMs renderer, the nine previously completed owners, and the contained Reels windowing helper are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. DMs is marked `SPLIT_COMPLETE` for the bounded renderer owner; broader chat/realtime owners remain protected. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
+`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 8 unapproved protected marker inventory remains inline and absent from `src/`, that the externalized DMs and Reels renderers, the ten previously completed owners, and the contained Reels windowing helper are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. DMs is marked `SPLIT_COMPLETE` for the bounded renderer owner; broader chat/realtime owners remain protected. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
 
 | Gate condition | Current status | Result |
 |---|---|---|
-| Protected systems remain inline | 9 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; DMs renderer, particle, deletion fallback, Push settings, Note viewer, Note deletion, Story editor, and Notes reactor-list are represented by approved window owners | PASS |
+| Protected systems remain inline | 8 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; DMs renderer, particle, deletion fallback, Push settings, Note viewer, Note deletion, Story editor, and Notes reactor-list are represented by approved window owners | PASS |
 | Baseline behavior coverage | Existing protected contract/harness families are present, including particle and deletion-fallback after-split evidence | PASS |
-| Seam-first policy | Direct extraction remains explicitly blocked for the 9 unapproved systems until adapter and proof work passes | PASS |
+| Seam-first policy | Direct extraction remains explicitly blocked for the 8 unapproved systems until adapter and proof work passes | PASS |
 | Branch safety | Gate is documentation-only and applies to `Branch2` | PASS |
 
 ## Safe boundary
 
-The production logic changes in the completed checkpoints are limited to the isolated DMs renderer owner, particle owner, deletion-fallback owner, Push-settings owners, Note-viewer owners, Note-deletion owner, Story-editor renderer, contained Reels windowing-helper owner, and read-only Notes reactor-list owner. The nine previously completed owners passed subsystem-specific seam plans, reversible browser or authenticated shell proofs, static parity, and rollback checks; the DMs renderer has also passed its local/remote observation gates and controlled rollback/recovery evidence. The main Reels renderer, Notes submission/reaction owners, and all other high-risk systems remain inline and deferred until their own gates pass.
+The production logic changes in the completed checkpoints are limited to the isolated DMs renderer owner, bounded Reels renderer owner, particle owner, deletion-fallback owner, Push-settings owners, Note-viewer owners, Note-deletion owner, Story-editor renderer, contained Reels windowing-helper owner, and read-only Notes reactor-list owner. The ten previously completed owners passed subsystem-specific seam plans, reversible browser or authenticated shell proofs, static parity, and rollback checks; the DMs renderer has also passed its local/remote observation gates and controlled rollback/recovery evidence. Reels navigation/media systems beyond the bounded renderer, Notes submission/reaction owners, and all other high-risk systems remain inline and deferred until their own gates pass.
 
 ## References
 
