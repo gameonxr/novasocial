@@ -7,20 +7,32 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const originHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
+const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const startMarker = 'async function renderDMs(){';
+const globalStartMarker = 'window.renderDMs = async function(){';
 const endMarker = '\nasync function openChat('; 
 function ownerWindow(source) {
   const start = source.indexOf(startMarker);
   const end = source.indexOf(endMarker, start);
   assert(start >= 0 && end > start, 'renderDMs owner window must be present');
-  return source.slice(start, end);
+  return source.slice(start, end).trimEnd();
 }
-const ownerSource = ownerWindow(html);
-const originOwnerSource = ownerWindow(originHtml);
-assert.strictEqual(ownerSource, originOwnerSource, 'Branch2 renderDMs owner must equal immutable origin/main before proof');
+function globalOwnerWindow(source) {
+  const start = source.indexOf(globalStartMarker);
+  const end = source.lastIndexOf('}');
+  assert(start >= 0 && end > start, 'external renderDMs owner must be present');
+  return source.slice(start, end + 1).trimEnd();
+}
+const ownerSource = ownerWindow(originHtml);
+const originOwnerSource = ownerSource;
+const branchGlobalOwnerSource = globalOwnerWindow(branchModule);
+const branchOwnerSource = branchGlobalOwnerSource.replace(globalStartMarker, startMarker);
+assert(!html.includes(startMarker), 'Branch2 inline renderDMs owner must be removed after split');
+assert.strictEqual(branchOwnerSource, originOwnerSource, 'external Branch2 renderDMs owner must equal immutable origin/main inline owner');
 const sourceFiles = fs.readdirSync(path.join(repo, 'src', 'features')).map(file => path.join(repo, 'src', 'features', file));
 const sourceText = sourceFiles.filter(file => file.endsWith('.js')).map(file => fs.readFileSync(file, 'utf8')).join('\n');
-assert(!sourceText.includes('async function renderDMs()'), 'renderDMs must not be extracted');
+assert(sourceText.includes(globalStartMarker), 'external renderDMs classic global owner must be present');
+assert(html.includes('<script src="src/features/dms-renderer-owner.js"></script>'), 'index.html must load the external DMs owner');
 
 function makeQuery(value, calls, label) {
   const query = {
@@ -95,7 +107,6 @@ function fixtureInput({ bumpGeneration = false } = {}) {
 
 async function execute(source, input) {
   const fixture = createDocument(input);
-  const functionName = source === ownerSource ? 'renderDMs' : 'candidateRenderDMs';
   const candidateSource = source === ownerSource ? source : source.replace(startMarker, 'async function candidateRenderDMs(){');
   const owner = vm.runInContext(`(async function(){${candidateSource.slice(candidateSource.indexOf('{') + 1, candidateSource.lastIndexOf('}'))}})`, fixture.context);
   const result = await owner();
@@ -130,11 +141,17 @@ function snapshot(fixture) {
   assert.strictEqual(stale.screen.innerHTML, '', 'stale generation prevents screen replacement');
   assert(!stale.calls.includes('notes.render'), 'stale generation prevents Notes Bar mutation');
 
-  const candidatePopulated = await execute(ownerSource.replace(startMarker, 'async function candidateRenderDMs(){'), populatedInput);
+  const branchPopulated = await execute(branchOwnerSource, populatedInput);
+  assert.strictEqual(snapshot(branchPopulated), snapshot(populated), 'external Branch2 owner must match immutable inline baseline populated output');
+  const candidatePopulated = await execute(branchOwnerSource.replace(startMarker, 'async function candidateRenderDMs(){'), populatedInput);
   assert.strictEqual(snapshot(candidatePopulated), snapshot(populated), 'detached candidate must match actual owner populated output');
-  const candidateEmpty = await execute(ownerSource.replace(startMarker, 'async function candidateRenderDMs(){'), { conversations: [], unread: [], others: [], notes: [] });
+  const branchEmpty = await execute(branchOwnerSource, { conversations: [], unread: [], others: [], notes: [] });
+  assert.strictEqual(snapshot(branchEmpty), snapshot(empty), 'external Branch2 owner must match immutable inline baseline empty output');
+  const candidateEmpty = await execute(branchOwnerSource.replace(startMarker, 'async function candidateRenderDMs(){'), { conversations: [], unread: [], others: [], notes: [] });
   assert.strictEqual(snapshot(candidateEmpty), snapshot(empty), 'detached candidate must match actual owner empty output');
-  const candidateStale = await execute(ownerSource.replace(startMarker, 'async function candidateRenderDMs(){'), fixtureInput({ bumpGeneration: true }));
+  const branchStale = await execute(branchOwnerSource, fixtureInput({ bumpGeneration: true }));
+  assert.strictEqual(snapshot(branchStale), snapshot(stale), 'external Branch2 owner must match immutable inline baseline stale output');
+  const candidateStale = await execute(branchOwnerSource.replace(startMarker, 'async function candidateRenderDMs(){'), fixtureInput({ bumpGeneration: true }));
   assert.strictEqual(snapshot(candidateStale), snapshot(stale), 'detached candidate must match actual owner stale output');
 
   let owner = async () => 'inline';
@@ -159,7 +176,8 @@ function snapshot(fixture) {
   ]) assert(ownerSource.includes(marker), `inline owner marker missing: ${marker}`);
 
   console.log('DMS_RENDERER_INDEPENDENT_PROOF_HARNESS=PASS');
-  console.log('ACTUAL_INLINE_OWNER_EXECUTED=PASS');
+  console.log('ACTUAL_EXTERNAL_OWNER_EXECUTED=PASS');
+  console.log('INLINE_BASELINE_FROM_ORIGIN_MAIN=PASS');
   console.log('ORIGIN_MAIN_OWNER_PARITY=PASS');
   console.log('POPULATED_RENDER=PASS');
   console.log('EMPTY_STATE_RENDER=PASS');
@@ -169,8 +187,9 @@ function snapshot(fixture) {
   console.log('LIVE_NETWORK_CALLS=0');
   console.log('LIVE_DATABASE_MUTATIONS=0');
   console.log('LIVE_ACCOUNT_ACTIONS=0');
-  console.log('PRODUCTION_EXTRACTION=0');
-  console.log('PRODUCTION_DECISION=BLOCKED');
+  console.log('PRODUCTION_EXTRACTION=1');
+  console.log('PRODUCTION_SOURCE_WRITTEN=1');
+  console.log('PRODUCTION_DECISION=GATE_VALIDATION_PENDING');
 })().catch(error => {
   console.error(error.stack || error);
   process.exitCode = 1;

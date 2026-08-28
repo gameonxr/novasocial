@@ -1,0 +1,31 @@
+DMs renderer authenticated browser-proof evidence
+Repository: gameonxr/novasocial
+Branch under test: Branch2 preview
+Scope: observation-only authenticated browser proof of the current inline baseline before split
+
+AUTHENTICATED_PREVIEW_LOADED=PASS
+MESSAGES_ROUTE_RENDERED=PASS
+DM_LIST_RENDERED=PASS
+GROUP_CHAT_FIRST_RENDER=PASS
+ONE_TO_ONE_CHAT_FIRST_RENDER=PASS
+BACK_NAVIGATION_RESTORED_DMS=PASS
+ONE_TO_ONE_REOPEN_RENDER=PASS
+HISTORY_SCROLL_OBSERVED=PASS
+CHAT_ACTIVE_STATE_OBSERVED=PASS
+CHAT_SUBSCRIPTION_PRESENT=PASS
+TYPING_SUBSCRIPTION_PRESENT=PASS
+COMPOSER_PRESENT_UNTOUCHED=PASS
+NOTIFICATION_PERMISSION_CONTROL_UNTOUCHED=PASS
+
+LIVE_MESSAGE_SEND=0
+LIVE_MESSAGE_EDIT=0
+LIVE_MESSAGE_DELETE=0
+LIVE_REACTION=0
+LIVE_CALL_OR_MEDIA=0
+LIVE_PERMISSION_REQUEST=0
+LIVE_PUSHMANAGER_OPERATION=0
+LIVE_SERVICE_WORKER_MUTATION=0
+LIVE_DATABASE_MUTATION=0
+LIVE_ACCOUNT_CHANGE=0
+
+This evidence observes the current authenticated inline baseline only. It does not prove post-split preview behavior. A fresh post-split preview observation and production rollback evidence remain required after the bounded Branch2 publication.

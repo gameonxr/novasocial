@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 227, '227 extracted JavaScript modules must remain after the jump-to-message split');
+assert.strictEqual(jsFiles.length, 228, '228 extracted JavaScript modules must remain after the bounded DMs renderer split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 216, '216 feature modules must remain after the jump-to-message split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 229, 'HTML must retain 229 script tags');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 229, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 228, 'HTML must retain 228 external script tags');
+assert.strictEqual(featureFiles.length, 217, '217 feature modules must remain after the bounded DMs renderer split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 230, 'HTML must retain 230 script tags after the bounded DMs renderer split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 230, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 229, 'HTML must retain 229 external script tags after the bounded DMs renderer split');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -82,7 +82,6 @@ for (const marker of [
   'async function viewNote(noteId){',
   'async function deleteMyNote()',
   'async function removeMyNoteFromViewer(noteId){',
-  'async function renderDMs()',
   'async function renderReels()',
   'function createPeerConnection(callId, remoteUserId) {',
   'function openSV(startIdx){',
@@ -138,8 +137,8 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 320, '320 documentation Markdown files must be published after the independent DMs renderer proof package');
-assert.strictEqual(allHarnesses.length, 315, '315 harness files must be published after the independent DMs renderer proof package');
+assert.strictEqual(allDocs.length, 320, '320 documentation Markdown files must be published after the independent DMs renderer proof package and bounded DMs renderer split');
+assert.strictEqual(allHarnesses.length, 315, '315 harness files must be published after the independent DMs renderer proof package and bounded DMs renderer split');
 assert.strictEqual(contractFiles.length, 311, '311 standard contract documents must be published after the independent DMs renderer proof package');
 assert.strictEqual(harnessFiles.length, 310, '310 standard contract harnesses must be published after the independent DMs renderer proof package');
 assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'notes-reaction-owner-independent-authorization-addendum.md', 'notes-submission-owner-independent-authorization-addendum.md', 'protected-contract-coverage.md', 'push-permission-banner-owner-independent-authorization-addendum.md', 'push-silent-resubscribe-owner-independent-authorization-addendum.md', 'push-subscription-owner-independent-authorization-addendum.md', 'reels-renderer-navigation-independent-authorization-addendum.md'], 'nonstandard documentation exceptions must remain explicitly mapped');

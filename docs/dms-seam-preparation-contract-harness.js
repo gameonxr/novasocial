@@ -7,6 +7,9 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const combinedDmsSource = html + '\n' + branchModule;
+assert(branchModule.includes('window.renderDMs = async function(){'), 'external DMs renderer must expose the classic global owner');
 const browserProofFiles = [
   'dms-empty-state-browser-proof-evidence.txt',
   'dms-refresh-no-account-browser-proof-evidence.txt',
@@ -18,7 +21,6 @@ for (const file of browserProofFiles) {
   assert(fs.readFileSync(evidencePath, 'utf8').includes('PASS'), `DMs browser proof must contain PASS: ${file}`);
 }
 const requiredMarkers = [
-  'async function renderDMs()',
   'async function _refreshDmsInPlace()',
   'async function openChat(',
   'async function loadMsgs(',
@@ -40,18 +42,18 @@ const requiredMarkers = [
   'Promise.all'
 ];
 for (const marker of requiredMarkers) {
-  assert(html.includes(marker), `DMs seam marker must remain inline: ${marker}`);
+  assert(combinedDmsSource.includes(marker), `DMs seam marker must remain in protected DMs source: ${marker}`);
 }
-assert(html.includes('if(myGeneration !== _renderGeneration) return;'), 'primary render generation guard must remain');
+assert(combinedDmsSource.includes('if(myGeneration !== _renderGeneration) return;'), 'primary render generation guard must remain');
 assert(html.includes('if (chatGeneration !== _renderGeneration || !window._chatScreenActive) return;'), 'chat generation guard must remain');
 assert(html.includes('function openChat('), 'openChat must remain inline');
 assert(html.includes('const chatGeneration = ++_renderGeneration;'), 'chat generation must be captured before async reads');
 assert(html.includes('window.chatSubscription'), 'chat realtime subscription owner must remain inline');
 assert(html.includes('window.typingSub'), 'typing subscription owner must remain inline');
 assert(html.includes('pushNavState(\'chat\', cid'), 'chat navigation-stack owner must remain inline');
-assert(html.includes('scr.innerHTML=`'), 'DM primary renderer must retain its screen replacement boundary');
+assert(combinedDmsSource.includes('scr.innerHTML=`'), 'DM primary renderer must retain its screen replacement boundary');
 assert(html.includes('_refreshDmsInPlace()'), 'background refresh must remain explicitly non-destructive');
-assert.strictEqual(sourceText.includes('async function renderDMs()'), false, 'renderDMs must not be extracted');
+assert.strictEqual(sourceText.includes('async function renderDMs()'), false, 'renderDMs must use only the external classic global owner');
 assert.strictEqual(sourceText.includes('async function _refreshDmsInPlace()'), false, '_refreshDmsInPlace must not be extracted');
 assert.strictEqual(sourceText.includes('function openChat('), false, 'openChat must not be extracted');
 assert(fs.existsSync(path.join(repo, 'docs', 'dms-realtime-contract.md')), 'DMs behavior contract must remain present');
@@ -65,6 +67,7 @@ console.log('DEPENDENCY_MAP=RENDER_REFRESH_DATA_STATE_DOM_CACHE_SCROLL_NAVIGATIO
 console.log('PROTECTED_DM_SIGNATURES=3');
 console.log('BROWSER_MOCK_EVIDENCE=3_PASS');
 console.log('INJECTED_SEAM_PROOF=PASS');
-console.log('EXTRACTED_DM_SIGNATURES=0');
+console.log('EXTRACTED_DM_SIGNATURES=1');
 console.log('NON_DESTRUCTIVE_REFRESH=PASS');
-console.log('PRODUCTION_SPLIT=0');
+console.log('PRODUCTION_SPLIT=1');
+console.log('PRODUCTION_DECISION=GATE_VALIDATION_PENDING');

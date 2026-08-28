@@ -1,21 +1,51 @@
-DMs renderer independent proof rollback evidence
+DMs renderer independent proof and controlled rollback evidence
 Repository: gameonxr/novasocial
 Branch: Branch2 only
 
 DETACHED_ACTUAL_OWNER_PROOF=PASS
+ORIGIN_MAIN_OWNER_PARITY=PASS
 POPULATED_RENDER=PASS
 EMPTY_STATE_RENDER=PASS
 STALE_GENERATION_ABORT=PASS
+DETACHED_CANDIDATE_AFTER_PARITY=PASS
 SYNTHETIC_ROLLBACK=PASS
+
+CONTROLLED_DETACHED_SPLIT=PASS
+CLASSIC_GLOBAL_MODULE_TAG=PASS
+INLINE_OWNER_REMOVED_FROM_CANDIDATE=PASS
+SCRIPT_ORDER_BOUNDARY=PASS
+ROLLBACK_RESTORED_EXACT_HTML=PASS
+BASELINE_HTML_SHA256=a5179f6c626cae5936da608b268d5ac8e22965699a1f5d211cf5aa4d1c3890cc
+CANDIDATE_HTML_SHA256=f34866bb4a885b5e108ad0639d112bc0c50b38727d70a1997db156ea5a1f89a5
+ROLLBACK_HTML_SHA256=a5179f6c626cae5936da608b268d5ac8e22965699a1f5d211cf5aa4d1c3890cc
+OWNER_BYTES=5874
+MODULE_BYTES=5884
+
 LIVE_NETWORK_CALLS=0
 LIVE_DATABASE_MUTATIONS=0
 LIVE_ACCOUNT_ACTIONS=0
-PRODUCTION_EXTRACTION=0
+PRODUCTION_SOURCE_WRITTEN=0
+PRODUCTION_DEPLOYMENT=0
 
-Rollback scope: The detached dispatcher temporarily hands off from a synthetic inline owner reference to a synthetic candidate and restores the exact original function reference. This proves only the test fixture rollback path; no production owner, script tag, database, browser, account, realtime subscription, or deployment was changed.
+Rollback scope: A copied HTML file was temporarily split and restored exactly. The candidate module was materialized under /tmp only. No production owner, script tag, database, browser, account, realtime subscription, or deployment was changed.
 
-PRODUCTION_ROLLBACK=REQUIRED
-SAFE_BROWSER_PROOF=REQUIRED
-EXACT_PRODUCTION_BEFORE_AFTER_PARITY=REQUIRED
+SAFE_AUTHENTICATED_BROWSER_PROOF=REQUIRED
+PRODUCTION_ROLLBACK_ARTIFACT=REQUIRED
 EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED
 PRODUCTION_DECISION=BLOCKED
+
+
+AUTHENTICATED_BASELINE_BROWSER_PROOF=PASS
+- Branch2 preview loaded in an owner-authenticated browser session before publication.
+- DMs list, group chat, one-to-one chat, back navigation, reopen, history scroll, active chat subscription, typing subscription, and untouched composer were observed.
+- No message, permission, PushManager, service-worker, database, media, account, or realtime mutation occurred.
+
+LOCAL_BOUNDED_SPLIT=PASS
+- The exact renderDMs owner range was removed from the local Branch2 index.html working tree.
+- src/features/dms-renderer-owner.js exposes the classic window.renderDMs owner.
+- The external owner matches the immutable origin/main owner after terminal-whitespace normalization.
+- The detached post-split harness passes populated, empty, stale-generation, candidate-after parity, and synthetic rollback cases.
+
+POST_SPLIT_PREVIEW_BROWSER_PROOF=PENDING
+REMOTE_ROLLBACK_AFTER_SPLIT_PROOF=PENDING
+PRODUCTION_DECISION=GATE_VALIDATION_PENDING
