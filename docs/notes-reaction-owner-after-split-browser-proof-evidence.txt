@@ -1,0 +1,16 @@
+Notes reaction owner browser observation evidence
+Date: 2026-08-28
+Target: Branch2 deployment URL supplied by user
+Mode: observation-only; no login, reaction click, form submit, database write, realtime mutation, or account mutation
+
+Observed:
+- NovaSocial title loaded at the login boundary.
+- Login UI was visible.
+- Public fetched HTML contained 0 occurrences of src/features/notes-reaction-owner.js.
+- Public fetched HTML contained 1 occurrence of function reactToNote(, indicating the deployment still serves the pre-split build.
+- Public fetched module text did not expose window.reactToNote because the new module is not deployed yet.
+- No reaction invocation was executed.
+- No network mutation was triggered.
+
+Interpretation:
+The supplied deployment is stale relative to the local verified Branch2 worktree. This is not a post-split production proof; it is a safe observation proving no live mutation was attempted. A fresh deployment observation is required after Branch2 is pushed and the deployment rebuilds.

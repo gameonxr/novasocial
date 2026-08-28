@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 229, '229 extracted JavaScript modules must remain after the bounded DMs renderer split');
+assert.strictEqual(jsFiles.length, 230, '230 extracted JavaScript modules must remain after the bounded DMs renderer split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 218, '218 feature modules must remain after the bounded DMs and Reels renderer splits');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 231, 'HTML must retain 231 script tags after the bounded DMs renderer split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 231, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 230, 'HTML must retain 230 external script tags after the bounded DMs and Reels renderer splits');
+assert.strictEqual(featureFiles.length, 219, '219 feature modules must remain after the bounded Notes reaction owner split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 232, 'HTML must retain 232 script tags after the bounded DMs renderer split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 232, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 231, 'HTML must retain 231 external script tags after the bounded Notes reaction owner split');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -98,7 +98,7 @@ for (const marker of [
   'async function refreshPollResults(',
   'async function loadStoryPollState(',
 ]) {
-  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'async function renderReels()';
+  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()';
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');

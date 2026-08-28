@@ -15,6 +15,7 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -33,7 +34,7 @@ const coverage = [
   ['function createPeerConnection(', 'calls-webrtc-contract'],
   ['async function submitNote()', 'note-viewer-contract'],
   ['async function deleteMyNote()', 'note-viewer-contract'],
-  ['function reactToNote(', 'note-viewer-contract'],
+  ['function reactToNote(', 'notes-reaction-owner-production-split-contract'],
   ['async function loadNoteReactorsList(', 'note-reactors-list-production-split-contract'],
   ['function submitNativeEmojiReaction(', 'note-viewer-contract']
 ];
@@ -61,6 +62,9 @@ for (const [marker, base] of coverage) {
   } else if (marker === 'async function loadNoteReactorsList(') {
     assert(!html.includes(marker), 'approved Notes reactor-list owner must be absent from inline HTML');
     assert.strictEqual((reactorListModule.match(/window\.loadNoteReactorsList\s*=\s*async function\(/g) || []).length, 1, 'approved Notes reactor-list owner must have one owner');
+  } else if (marker === 'function reactToNote(') {
+    assert(!html.includes(marker), 'approved Notes reaction owner must be absent from inline HTML');
+    assert.strictEqual((notesReactionModule.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'approved Notes reaction owner must have one owner');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }

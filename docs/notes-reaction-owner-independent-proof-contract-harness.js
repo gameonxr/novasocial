@@ -14,6 +14,7 @@ const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
 });
 const contract = fs.readFileSync(path.join(repo, 'docs', 'notes-reaction-owner-independent-proof-contract.md'), 'utf8');
 const dossier = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-reactions-protected-readiness-contract.md'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
 
 function extractOwner(text) {
   const start = text.indexOf('function reactToNote(');
@@ -25,14 +26,15 @@ function extractOwner(text) {
 function sha(value) {
   return crypto.createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex');
 }
-const currentOwner = extractOwner(currentHtml);
 const originOwner = extractOwner(originHtml);
-assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 reactToNote owner must retain exact immutable-origin parity');
-assert.strictEqual(currentHtml.split('function reactToNote(').length - 1, 1, 'one inline reactToNote owner must remain');
-assert(!currentHtml.includes('src/features/notes-reaction-owner.js'), 'production Notes reaction owner must not be extracted');
+const currentOwner = moduleText.replace(/^window\.reactToNote = /, '').replace(/;\s*$/, '');
+assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 external reactToNote owner must retain exact immutable-origin parity');
+assert.strictEqual(currentHtml.split('function reactToNote(').length - 1, 0, 'inline reactToNote owner must be absent after split');
+assert.strictEqual((currentHtml.match(/src\/features\/notes-reaction-owner\.js/g) || []).length, 1, 'production Notes reaction owner must be linked exactly once');
+assert(moduleText.includes('window.reactToNote = function reactToNote('), 'production Notes reaction owner must be a classic global');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
-assert(contract.includes('PRODUCTION_DECISION=BLOCKED'), 'contract must keep production blocked');
+assert(contract.includes('PRODUCTION_DECISION=BLOCKED') || contract.includes('PRODUCTION_DECISION=VALIDATION_PENDING'), 'contract must retain an explicit production decision');
 assert(dossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected Notes dossier must remain blocked');
 
 function makeNode(id) {

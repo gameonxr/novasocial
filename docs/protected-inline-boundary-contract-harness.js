@@ -12,6 +12,7 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
@@ -64,6 +65,9 @@ for (const marker of protectedMarkers) {
   } else if (marker === 'async function loadNoteReactorsList(') {
     assert(!html.includes(marker), 'approved Notes reactor-list marker must be absent from inline HTML');
     assert(reactorListModule.includes('window.loadNoteReactorsList = async function('), 'approved Notes reactor-list module owner must be present');
+  } else if (marker === 'function reactToNote(') {
+    assert(!html.includes(marker), 'approved Notes reaction marker must be absent from inline HTML');
+    assert(notesReactionModule.includes('window.reactToNote = function reactToNote('), 'approved Notes reaction module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }

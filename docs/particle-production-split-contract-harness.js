@@ -43,9 +43,11 @@ assert.strictEqual(html.split('src/features/spawn-like-particles.js').length - 1
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'particle module must load before global caller');
 assert(source.includes('spawnLikeParticles(el);'), 'global caller handoff must remain present');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(' || signature === 'function removeMyNoteFromViewer(' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(';
+  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(' || signature === 'function removeMyNoteFromViewer(' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function reactToNote(' || signature === 'function reactToNote(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected inline signature count mismatch: ${signature}`);
-  assert(!source.includes(signature), `protected named signature must not be duplicated in src: ${signature}`);
+  if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
+  else if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
+  else assert(!source.includes(signature), `protected named signature must not be duplicated in src: ${signature}`);
 }
 const baselineHtml = execFileSync('git', ['-C', repo, 'show', 'cc72374:index.html'], { encoding: 'utf8' });
 const baselineStart = baselineHtml.indexOf('function spawnLikeParticles(el){');
