@@ -1,0 +1,23 @@
+# Notes reaction fresh deployment browser proof
+
+Date: 2026-08-28
+URLs observed:
+- https://project-aju33-git-branch2-prince-s-projectsgameon.vercel.app/
+- https://project-aju33-git-branch2-prince-s-projectsgameon.vercel.app/?branch2_commit=ea692d0
+Mode: observation-only; no login, reaction click, form submit, database write, realtime mutation, or account action.
+
+Result: FAIL — the supplied Vercel deployment artifact is inconsistent with the pushed Branch2 split.
+
+Observed login boundary: PASS (`#at-login` present).
+Public HTML inline `function reactToNote(` count: 0.
+Public HTML `src="src/features/notes-reaction-owner.js"` linkage count: 1.
+Linked module HTTP status: 404.
+Linked module content type: `text/plain; charset=utf-8`.
+Linked module response bytes: 79 (not the production owner module).
+On the cache-busted URL, the same result repeated: inline count 0, linkage count 1, module status 404, module bytes 79, and `typeof window.reactToNote === "undefined"`.
+The module linkage appears after the inline application boundary in the public HTML.
+Network/mutation actions caused by inspection: 0.
+
+Repository cross-check: GitHub Branch2 at `ea692d0b10ba3125414b525d587e9141c42ed4ba` contains `src/features/notes-reaction-owner.js` and the expected `index.html` linkage. Therefore the failure is isolated to the Vercel deployment artifact/alias or its source-root configuration, not the pushed GitHub Branch2 tree.
+
+Interpretation: fresh deployment observation is BLOCKED. The URL contains a dangling Notes reaction script reference and does not publish the module. No real data was touched. A valid deployment must be produced from GitHub Branch2 at `ea692d0` before the browser gate can pass.
