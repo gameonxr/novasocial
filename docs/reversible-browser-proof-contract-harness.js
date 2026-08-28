@@ -14,7 +14,7 @@ const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n')
 assert(matrix.includes('Reversible browser proof | Contract and harness are present; DMs renderer, particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing helper, bounded Reels renderer, and Notes reactor-list before/after browser proofs are PASS, while browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'matrix must continue to mark remaining browser proof');
 assert(matrix.includes('all twelve protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
 assert(matrix.includes('Protected production splits | 12/19 protected signatures moved; 11 are split-complete and the bounded `reactToNote()` owner is validation-pending on fresh deployment observation'), 'matrix must report the ten moved protected signatures and supporting Reels helper');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS'), 'direct extraction gate must remain blocked for remaining systems');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 7 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',

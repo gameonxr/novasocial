@@ -23,7 +23,7 @@ assert(matrix.includes('Protected production splits | 12/19 protected signatures
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS'), 'high-risk gate must remain blocked for remaining systems');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 7 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract.md')), 'browser-proof contract must exist');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract-harness.js')), 'browser-proof harness must exist');
 

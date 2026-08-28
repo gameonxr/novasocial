@@ -88,7 +88,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-eviden
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
 assert(matrix.includes('browser proof remains outstanding for the Notes reaction deployment observation and 7 unapproved systems'), 'matrix must record remaining browser proof');
-assert(matrix.includes('one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the supporting Reels helper split');
+assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete'), 'matrix must record the supporting Reels helper split');
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete'), 'matrix must record the Reels renderer boundary separately');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
 const remainingAuthorizationRows = [
