@@ -19,7 +19,7 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 11/19 protected signatures moved or under final validation; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the eleven moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 11/19 protected signatures moved and fully validated; one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the eleven moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('browser proof remains outstanding for 8 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');

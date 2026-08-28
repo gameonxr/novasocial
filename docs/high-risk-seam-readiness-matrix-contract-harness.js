@@ -88,12 +88,12 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harne
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
 assert(matrix.includes('browser proof remains outstanding for 8 unapproved systems'), 'matrix must record remaining browser proof');
 assert(matrix.includes('one additional supporting Reels windowing helper is split with its own gate'), 'matrix must record the supporting Reels helper split');
-assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer is separately validation-pending'), 'matrix must record the Reels renderer boundary separately');
+assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete'), 'matrix must record the Reels renderer boundary separately');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
 const remainingAuthorizationRows = [
   'DMs renderer (chat/realtime owners remain protected) | PASS | PASS | PASS | PASS | SPLIT_COMPLETE',
-  'Reels renderer and swipe/navigation owners | PASS | PASS | OUTSTANDING | OUTSTANDING | SPLIT_VALIDATION_PENDING',
-  'Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; renderer is separately validation-pending',
+  'Reels renderer and swipe/navigation owners (bounded renderer only) | PASS | PASS | PASS | PASS | SPLIT_COMPLETE',
+  'Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete',
   'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',

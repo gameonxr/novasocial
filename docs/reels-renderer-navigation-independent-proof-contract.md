@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`
 **Branch:** `Branch2` only
 **Date:** 2026-08-25
-**Status:** `INDEPENDENT_PROOF_COMPLETE`; bounded production extraction is `SPLIT_VALIDATION_PENDING` until post-split browser and rollback gates pass.
+**Status:** `INDEPENDENT_PROOF_COMPLETE`; bounded production extraction is `SPLIT_COMPLETE` after post-split browser, rollback, focused-gate, and clean-regression validation.
 
 ## Candidate boundary
 
@@ -40,7 +40,7 @@ The rollback record pins the baseline commit, whole-file baseline hash, normaliz
 
 ## Explicit authorization boundary
 
-The exact-scope production authorization is recorded in `reels-renderer-navigation-production-authorization-addendum.md`. The split remains validation-pending until actual post-split browser-safe proof, executed rollback-after-split evidence, and clean full Branch2 regression pass; excluded navigation-stack, media-policy, action, upload, database, realtime, and account surfaces remain outside scope.
+The exact-scope production authorization is recorded in `reels-renderer-navigation-production-authorization-addendum.md`. The split is complete for the bounded renderer after actual post-split browser-safe proof, executed rollback-after-split evidence, and clean full Branch2 regression pass; excluded navigation-stack, media-policy, action, upload, database, realtime, and account surfaces remain outside scope.
 
 ## Decision and non-goals
 
@@ -58,8 +58,11 @@ The exact-scope production authorization is recorded in `reels-renderer-navigati
 `ISOLATED_POST_SPLIT_VALIDATION=PASS`
 `ISOLATED_ROLLBACK=PASS`
 `BROWSER_SAFE_LIVE_ACTIONS=0`
-`PRODUCTION_DECISION=SPLIT_VALIDATION_PENDING`
+`PRODUCTION_DECISION=SPLIT_COMPLETE`
 `PRODUCTION_CHANGE=1`
+`POST_SPLIT_BROWSER_PROOF=PASS`
+`REMOTE_ROLLBACK_AFTER_SPLIT=PASS`
+`CLEAN_FULL_REGRESSION=PASS`
 
 This proof and the bounded candidate do not alter excluded source, protected accounting, schema, permissions, live navigation, real media, or production state; the only Branch2 source change is the authorized renderer linkage and owner relocation.
 

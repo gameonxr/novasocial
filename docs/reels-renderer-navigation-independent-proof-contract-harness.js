@@ -52,7 +52,7 @@ assert(!normalizedCurrentOwner.includes('pushNavState'), 'navigation-stack push 
 assert(!normalizedCurrentOwner.includes('history.pushState'), 'history mutation must remain outside renderReels');
 assert(contract.includes('EXACT_ORIGIN_PARITY=PASS'), 'contract must record exact owner parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=PASS'), 'contract must record detached proof');
-assert(contract.includes('PRODUCTION_DECISION=SPLIT_VALIDATION_PENDING'), 'bounded Reels production decision must remain validation-pending until post-split gates');
+assert(contract.includes('PRODUCTION_DECISION=SPLIT_COMPLETE'), 'bounded Reels production decision must record completed post-split gates');
 assert(protectedDossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected dossier must remain blocked');
 
 function node(id) {
