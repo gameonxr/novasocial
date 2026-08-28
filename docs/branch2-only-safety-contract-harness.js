@@ -30,7 +30,7 @@ if (latestFiles.includes('index.html') || latestFiles.includes('src/features/dms
 
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 for (const marker of [
-  'function renderReels(',
+  'window.renderReels = async function(){',
   'function createPeerConnection(',
   'function openSV('
 ]) {
@@ -45,5 +45,5 @@ assert(storyModule.includes('window.renderStoryElements = function(){'), 'approv
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=DMs_RENDERER_GATE_SYNC');
+console.log('LATEST_CHECKPOINT=REELS_RENDERER_SPLIT_COMPLETE');
 console.log('MAIN_REF_UNCHANGED=YES');

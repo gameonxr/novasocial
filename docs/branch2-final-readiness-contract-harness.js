@@ -50,10 +50,10 @@ for (const file of protectedDossierContracts) {
 
 assert.strictEqual(jsFiles.length, 229, '229 extracted JavaScript modules must remain after the bounded DMs renderer split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 217, '217 feature modules must remain after the bounded DMs renderer split');
+assert.strictEqual(featureFiles.length, 218, '218 feature modules must remain after the bounded DMs and Reels renderer splits');
 assert.strictEqual((html.match(/<script\b/gi) || []).length, 231, 'HTML must retain 231 script tags after the bounded DMs renderer split');
 assert.strictEqual((html.match(/<\/script>/gi) || []).length, 231, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 230, 'HTML must retain 229 external script tags after the bounded DMs renderer split');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 230, 'HTML must retain 230 external script tags after the bounded DMs and Reels renderer splits');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
