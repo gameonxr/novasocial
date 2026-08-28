@@ -1,0 +1,54 @@
+# Push permission banner owner — independent before-proof evidence
+
+Date: 2026-08-28
+Repository: `gameonxr/novasocial`
+Branch: `Branch2`
+Mode: detached independent synthetic proof only.
+
+## Result
+
+`PUSH_PERMISSION_BANNER_OWNER_INDEPENDENT_PROOF_HARNESS=PASS`
+
+Origin owner SHA-256: `17186cae241a0283e020fec128598bcbfcbc452ba913f652601f237e1fd0c84b`
+
+Exact owner parity: PASS.
+
+## Behavior gates
+
+Unsupported, granted, and denied capability gates: PASS.
+
+Dismissed account gate: PASS.
+
+Delayed banner creation: PASS.
+
+Logged-out delayed cleanup: PASS.
+
+Enable with permission granted: PASS.
+
+Enable with permission denied: PASS.
+
+Enable error handling: PASS.
+
+Dismissal persistence: PASS.
+
+Timing and cleanup: PASS.
+
+## Side-effect policy
+
+Live permission requests: 0.
+
+Live service-worker access: 0.
+
+Live PushManager access: 0.
+
+Database writes: 0.
+
+Storage writes: mocked dismissal-only behavior.
+
+Network side effects: 0.
+
+Account mutations: 0.
+
+Production split: 0.
+
+The proof authorizes no production extraction. The exact candidate remains limited to `maybeShowPushPermissionBanner()`; subscription delivery, service-worker registration, PushManager operations, VAPID handling, database persistence, Settings integration, authentication, and real-account activity remain excluded.
