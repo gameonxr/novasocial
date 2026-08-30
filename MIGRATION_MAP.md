@@ -4497,3 +4497,12 @@ The project owner explicitly authorized extraction of the bounded `maybeShowPush
 Exact normalized owner parity passed against immutable `origin/main` with SHA-256 `17186cae241a0283e020fec128598bcbfcbc452ba913f652601f237e1fd0c84b`. The production split harness passed unsupported/granted/denied, dismissal, delayed creation, logged-out cleanup, existing-banner, enable-granted/denied/error, timing, DOM, cleanup, and subscription-handoff traces. Detached apply-state and reverse-state rollback passed in a disposable worktree and restored the clean `Branch2` baseline. Live permission requests, service-worker access, PushManager access, database writes, network side effects, account mutations, and real browser actions remained zero; storage behavior was synthetic dismissal-only in proof.
 
 The complete 317-harness sweep passes after Push-specific accounting synchronization. Fresh deployment browser observation remains a post-push publication gate; it must verify module HTTP 200 and `window.maybeShowPushPermissionBanner` function loading without invoking Enable or Dismiss. `subscribeToPushNotifications()`, silent resubscribe, service-worker registration, PushManager operations, VAPID handling, database persistence, notification delivery, Settings changes, authentication, and real-account activity remain excluded.
+
+
+## 2026-08-30 — Silent Push resubscribe independent before-proof checkpoint
+
+The next safest pending bounded owner is the inline `function silentPushResubscribeIfGranted()` owner. Its existing authorization permits synthetic detached proof only and excludes production extraction, live permissions, service-worker access, PushManager access, database persistence, storage writes, network side effects, account activity, and real browser actions.
+
+At the current clean `Branch2` tip, independent proof passed with immutable-origin owner SHA-256 `44d86219373553165ac391574670f51de306bbdc5630ce645247dae36d8f932f`. Unsupported capability, default permission, denied permission, granted permission with login handoff, logout callback cleanup, five-second timing, and single synthetic subscription handoff all passed. Live permission requests, service-worker access, PushManager access, database writes, storage writes, network side effects, account mutations, and production changes remained zero.
+
+This checkpoint does not authorize production extraction. A separate exact-scope production authorization addendum is required before any controlled split of this owner.
