@@ -22,6 +22,7 @@ const protectedSignatures = [
   'async function deleteMyNote()',
   'function submitNativeEmojiReaction(',
   'function reactToNote(',
+  'function maybeShowPushPermissionBanner()',
   'async function loadNoteReactorsList(',
   'function renderStoryElements()',
   'async function voteStoryPoll(',
@@ -50,11 +51,12 @@ const requiredCoverage = [
   'note-reactors-list-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 230, '230 extracted JavaScript modules must remain present after the Reels renderer split');
+assert.strictEqual(sourceFiles.length, 231, '231 extracted JavaScript modules must remain present after the Push permission banner owner split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(';
+  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function maybeShowPushPermissionBanner()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
   if (signature === 'function reactToNote(') assert(sourceText.includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
+  else if (signature === 'function maybeShowPushPermissionBanner()') assert(sourceText.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'approved Push banner owner must exist');
   else assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');

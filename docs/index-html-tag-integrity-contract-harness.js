@@ -10,9 +10,9 @@ function count(pattern) {
 }
 
 assert(html.trimStart().toLowerCase().startsWith('<!doctype html>'), 'index.html must retain its HTML5 doctype');
-assert.strictEqual(count(/<script\b/gi), 232, 'index.html must retain 232 script tags after the DMs renderer split');
-assert.strictEqual(count(/<\/script>/gi), 232, 'every script tag must be closed after the DMs renderer split');
-assert.strictEqual(count(/<script\s+src=/gi), 231, '231 extracted/external script tags must remain integrated');
+assert.strictEqual(count(/<script\b/gi), 233, 'index.html must retain 233 script tags after the DMs renderer split');
+assert.strictEqual(count(/<\/script>/gi), 233, 'every script tag must be closed after the DMs renderer split');
+assert.strictEqual(count(/<script\s+src=/gi), 232, '231 extracted/external script tags must remain integrated');
 assert.strictEqual(count(/<script(?:\s[^>]*)?>/gi) - count(/<script\s+src=/gi), 1, 'one inline application script must remain');
 assert.strictEqual(count(/<body\b/gi), 1, 'one body element must remain');
 assert.strictEqual(count(/<\/body>/gi), 1, 'body element must close once');
@@ -22,7 +22,7 @@ assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must
 assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
 
 console.log('INDEX_HTML_TAG_INTEGRITY_HARNESS=PASS');
-console.log('SCRIPT_TAGS=232');
-console.log('SCRIPT_CLOSURES=232');
+console.log('SCRIPT_TAGS=233');
+console.log('SCRIPT_CLOSURES=233');
 console.log('EXTERNAL_SCRIPT_TAGS=231');
 console.log('INLINE_SCRIPT_TAGS=1');

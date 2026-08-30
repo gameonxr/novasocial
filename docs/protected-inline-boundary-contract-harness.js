@@ -13,6 +13,7 @@ const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'not
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
@@ -39,7 +40,10 @@ const protectedMarkers = [
 ];
 
 for (const marker of protectedMarkers) {
-  if (marker === 'function spawnLikeParticles(') {
+  if (marker === 'function maybeShowPushPermissionBanner()') {
+    assert(!html.includes(marker), 'approved Push banner marker must be absent from inline HTML');
+    assert(pushBannerModule.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'approved Push banner module owner must be present');
+  } else if (marker === 'function spawnLikeParticles(') {
     assert(!html.includes(marker), 'approved particle marker must be absent from inline HTML');
     assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module owner must be present');
   } else if (marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()') {

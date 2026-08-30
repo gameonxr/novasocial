@@ -3,7 +3,7 @@
 **Repository:** `gameonxr/novasocial`  
 **Branch:** `Branch2` only  
 **Date:** 2026-08-20  
-**Purpose:** Make protected-feature split readiness measurable while recording the eleven completed approved protected-owner signatures across the DMs renderer, particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing-helper, and Notes reactor-list checkpoints, while preserving safeguards for the remaining systems.
+**Purpose:** Make protected-feature split readiness measurable while recording the twelve completed approved protected-owner signatures across the DMs renderer, particle, deletion-fallback, Push settings, Push permission banner, Note viewer, Note deletion, Story editor, Reels windowing-helper, Notes reactor-list, bounded Reels renderer, and bounded Notes reaction checkpoints, while preserving safeguards for the remaining systems.
 
 ## Current matrix
 
@@ -37,7 +37,7 @@ The preparation harnesses are intentionally stronger than a production authoriza
 | Notes submission | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
 | Notes reaction owner (`reactToNote()` bounded only) | PASS | PASS | PASS (fresh Preview module observation; no invocation) | PASS | SPLIT_COMPLETE; authenticated invocation intentionally unperformed |
 | Notes reactor list | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; submission/reaction owners remain protected |
-| Push permission and silent resubscribe helpers | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED |
+| Push permission banner (`maybeShowPushPermissionBanner()` bounded only); silent resubscribe helpers remain protected | PASS | PASS | PASS (safe module observation; no permission invocation) | PASS | SPLIT_COMPLETE for banner; resubscribe remains BLOCKED |
 
 ## Contract decision
 

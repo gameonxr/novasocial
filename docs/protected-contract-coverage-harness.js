@@ -16,6 +16,7 @@ const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-render
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
 const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -62,6 +63,9 @@ for (const [marker, base] of coverage) {
   } else if (marker === 'async function loadNoteReactorsList(') {
     assert(!html.includes(marker), 'approved Notes reactor-list owner must be absent from inline HTML');
     assert.strictEqual((reactorListModule.match(/window\.loadNoteReactorsList\s*=\s*async function\(/g) || []).length, 1, 'approved Notes reactor-list owner must have one owner');
+  } else if (marker === 'function maybeShowPushPermissionBanner()') {
+    assert(!html.includes(marker), 'approved Push banner owner must be absent from inline HTML');
+    assert.strictEqual((pushBannerModule.match(/window\.maybeShowPushPermissionBanner\s*=\s*function maybeShowPushPermissionBanner\(\)/g) || []).length, 1, 'approved Push banner owner must have one owner');
   } else if (marker === 'function reactToNote(') {
     assert(!html.includes(marker), 'approved Notes reaction owner must be absent from inline HTML');
     assert.strictEqual((notesReactionModule.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'approved Notes reaction owner must have one owner');

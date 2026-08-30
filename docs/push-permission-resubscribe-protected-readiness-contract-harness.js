@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = '/home/ubuntu/novasocial';
 const contractPath = path.join(repo, 'docs', 'push-permission-resubscribe-protected-readiness-contract.md');
-const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
   'pushManager',

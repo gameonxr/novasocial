@@ -7,14 +7,14 @@ const { execFileSync } = require('child_process');
 
 const repo = '/home/ubuntu/novasocial';
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
   encoding: 'utf8',
   maxBuffer: 32 * 1024 * 1024
 });
-const contract = fs.readFileSync(path.join(repo, 'docs', 'push-permission-banner-owner-independent-proof-contract.md'), 'utf8');
-const dossier = fs.readFileSync(path.join(repo, 'docs', 'push-permission-resubscribe-protected-readiness-contract.md'), 'utf8');
+const contract = fs.readFileSync(path.join(repo, 'docs', 'push-permission-banner-owner-production-split-contract.md'), 'utf8');
+const authorization = fs.readFileSync(path.join(repo, 'docs', 'push-permission-banner-owner-production-authorization-addendum.md'), 'utf8');
+const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 
 function extractOwner(text) {
   const start = text.indexOf('function maybeShowPushPermissionBanner()');
@@ -31,11 +31,11 @@ const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 Push banner owner must retain exact immutable-origin parity');
 assert.strictEqual((currentHtml.match(/function maybeShowPushPermissionBanner\(/g) || []).length, 0, 'inline Push banner owner must be removed');
 assert.strictEqual((currentHtml.match(/src=[\"']src\/features\/push-permission-banner-owner\.js[\"']/g) || []).length, 1, 'one Push banner module linkage must exist');
-assert(moduleSource.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'classic Push banner owner must be present');
+assert(moduleSource.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'classic Push banner owner must be window-assigned once');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
-assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
-assert(contract.includes('PRODUCTION_DECISION=BLOCKED'), 'independent proof contract must remain historical reference-only');
-assert(dossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected Push dossier must remain blocked');
+assert(contract.includes('DETACHED_LIFECYCLE_PROOF=REQUIRED'), 'contract must require detached proof');
+assert(contract.includes('PRODUCTION_DECISION=AUTHORIZED_FOR_BOUNDED_OWNER_ONLY'), 'contract must record bounded production authorization');
+assert(authorization.includes('PRODUCTION_DECISION=AUTHORIZED_FOR_BOUNDED_OWNER_ONLY'), 'authorization addendum must record bounded production authorization');
 
 function stable(value) {
   return JSON.parse(JSON.stringify(value));
@@ -194,7 +194,7 @@ function makeBanner(events) {
   const unexpected = forbidden.filter(event => event !== allowedPermissionEvent && !event.startsWith('storage.set:nova_push_banner_dismissed_'));
   assert.deepStrictEqual(unexpected, [], 'Push banner proof must not perform live side effects');
 
-  console.log('PUSH_PERMISSION_BANNER_OWNER_INDEPENDENT_PROOF_HARNESS=PASS');
+  console.log('PUSH_PERMISSION_BANNER_OWNER_PRODUCTION_SPLIT_HARNESS=PASS');
   console.log(`ORIGIN_OWNER_SHA256=${sha(originOwner)}`);
   console.log('OWNER_PARITY=PASS');
   console.log('UNSUPPORTED_GRANTED_DENIED_GATES=PASS');
@@ -213,5 +213,5 @@ function makeBanner(events) {
   console.log('STORAGE_WRITES=MOCKED_DISMISSAL_ONLY');
   console.log('NETWORK_SIDE_EFFECTS=0');
   console.log('ACCOUNT_MUTATIONS=0');
-  console.log('PRODUCTION_SPLIT=0');
+  console.log('PRODUCTION_SPLIT=PASS');
 })();

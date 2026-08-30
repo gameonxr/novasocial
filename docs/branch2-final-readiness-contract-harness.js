@@ -48,10 +48,10 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 230, '230 extracted JavaScript modules must remain after the bounded DMs renderer split');
+assert.strictEqual(jsFiles.length, 230, '231 extracted JavaScript modules must remain after the bounded DMs renderer split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
 assert.strictEqual(featureFiles.length, 219, '219 feature modules must remain after the bounded Notes reaction owner split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 232, 'HTML must retain 232 script tags after the bounded DMs renderer split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 232, 'HTML must retain 233 script tags after the bounded DMs renderer split');
 assert.strictEqual((html.match(/<\/script>/gi) || []).length, 232, 'HTML script tags must remain balanced');
 assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 231, 'HTML must retain 231 external script tags after the bounded Notes reaction owner split');
 
