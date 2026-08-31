@@ -66,6 +66,8 @@ for (const [marker, base] of coverage) {
   } else if (marker === 'function maybeShowPushPermissionBanner()') {
     assert(!html.includes(marker), 'approved Push banner owner must be absent from inline HTML');
     assert.strictEqual((pushBannerModule.match(/window\.maybeShowPushPermissionBanner\s*=\s*function maybeShowPushPermissionBanner\(\)/g) || []).length, 1, 'approved Push banner owner must have one owner');
+  } else if (marker === 'function silentPushResubscribeIfGranted()') {
+    assert(!html.includes(marker), 'approved silent resubscribe marker must be absent from inline HTML');
   } else if (marker === 'function reactToNote(') {
     assert(!html.includes(marker), 'approved Notes reaction owner must be absent from inline HTML');
     assert.strictEqual((notesReactionModule.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'approved Notes reaction owner must have one owner');

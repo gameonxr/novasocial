@@ -12,19 +12,21 @@ const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   encoding: 'utf8',
   maxBuffer: 32 * 1024 * 1024
 });
-const contract = fs.readFileSync(path.join(repo, 'docs', 'push-silent-resubscribe-owner-independent-proof-contract.md'), 'utf8');
+const contract = fs.readFileSync(path.join(repo, 'docs', 'push-silent-resubscribe-owner-production-split-contract.md'), 'utf8');
 const dossier = fs.readFileSync(path.join(repo, 'docs', 'push-permission-resubscribe-protected-readiness-contract.md'), 'utf8');
+const rollbackEvidence = fs.readFileSync(path.join(repo, 'docs', 'push-silent-resubscribe-owner-parity-rollback-evidence.txt'), 'utf8');
 
 function extractOwner(text) {
   const start = text.indexOf('function silentPushResubscribeIfGranted()');
-  if (start < 0) {
-    const match = text.match(/window\.silentPushResubscribeIfGranted\s*=\s*(function\(\)\s*\{[\s\S]*?\n\};)/);
-    assert(match, 'silentPushResubscribeIfGranted owner declaration must exist');
-    return match[1].replace(/^function\(\)/, 'function silentPushResubscribeIfGranted()').replace(/\n\};$/, '\n}');
+  if (start >= 0) {
+    const end = text.indexOf('\n}\n', start);
+    assert(end > start, 'silent resubscribe owner boundary must be discoverable');
+    return text.slice(start, end + 2);
   }
-  const end = text.indexOf('\n}\n', start);
-  assert(end > start, 'silent resubscribe owner boundary must be discoverable');
-  return text.slice(start, end + 2);
+  const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-silent-resubscribe-owner.js'), 'utf8');
+  const match = moduleText.match(/window\.silentPushResubscribeIfGranted\s*=\s*(function\(\)\s*\{[\s\S]*?\n\};)/);
+  assert(match, 'external silent resubscribe owner assignment must exist');
+  return match[1].replace(/^function\(\)/, 'function silentPushResubscribeIfGranted()').replace(/\n\};$/, '\n}');
 }
 function sha(value) {
   return crypto.createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex');
@@ -32,16 +34,18 @@ function sha(value) {
 function stable(value) {
   return JSON.parse(JSON.stringify(value));
 }
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-silent-resubscribe-owner.js'), 'utf8');
-const currentOwner = extractOwner(moduleText).replace(/^function\(\)/, 'function silentPushResubscribeIfGranted()').replace(/\n\};$/, '\n}');
+const currentOwner = extractOwner(currentHtml);
 const originOwner = extractOwner(originHtml);
-assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 silent resubscribe owner must retain exact immutable-origin parity');
+assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'external silent resubscribe owner must retain exact immutable-origin parity');
 assert.strictEqual((currentHtml.match(/function silentPushResubscribeIfGranted\(\)\s*\{/g) || []).length, 0, 'inline silent resubscribe owner must be absent');
-assert.strictEqual((currentHtml.match(/src\/features\/push-silent-resubscribe-owner\.js/g) || []).length, 1, 'one silent resubscribe module linkage must exist');
-assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
-assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
-assert(contract.includes('PRODUCTION_DECISION=BLOCKED'), 'contract must keep production blocked');
+assert.strictEqual((currentHtml.match(/src\/features\/push-silent-resubscribe-owner\.js/g) || []).length, 1, 'external silent resubscribe owner must be linked once');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-silent-resubscribe-owner.js'), 'utf8');
+assert(moduleText.includes('window.silentPushResubscribeIfGranted = function()'), 'external owner must use a classic window assignment');
+assert(contract.includes('EXACT_ORIGIN_PARITY=PASS'), 'contract must record exact parity');
+assert(contract.includes('DETACHED_LIFECYCLE_PROOF=PASS'), 'contract must record detached lifecycle proof');
+assert(contract.includes('PRODUCTION_DECISION=SPLIT_COMPLETE_ONLY_AFTER_ALL_GATES'), 'contract must record bounded production decision');
 assert(dossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected Push dossier must remain blocked');
+assert(rollbackEvidence.includes('ROLLBACK_RESULT=PASS') && rollbackEvidence.includes('DETACHED_ONLY=true') && rollbackEvidence.includes('LIVE_SIDE_EFFECTS=0'), 'rollback evidence must pass with zero live effects');
 
 async function runOwner(ownerSource, scenario) {
   const events = [];
@@ -105,7 +109,7 @@ async function runOwner(ownerSource, scenario) {
   const forbidden = Object.values(results).flatMap(result => result.events).filter(event => /permission|serviceworker|pushmanager|db|storage|fetch|upload|history|navigate|media/i.test(event));
   assert.deepStrictEqual(forbidden, [], 'silent resubscribe proof must not perform live effects');
 
-  console.log('PUSH_SILENT_RESUBSCRIBE_OWNER_INDEPENDENT_PROOF_HARNESS=PASS');
+  console.log('PUSH_SILENT_RESUBSCRIBE_OWNER_PRODUCTION_SPLIT_HARNESS=PASS');
   console.log(`ORIGIN_OWNER_SHA256=${sha(originOwner)}`);
   console.log('OWNER_PARITY=PASS');
   console.log('UNSUPPORTED_GATE=PASS');
@@ -122,5 +126,5 @@ async function runOwner(ownerSource, scenario) {
   console.log('STORAGE_WRITES=0');
   console.log('NETWORK_SIDE_EFFECTS=0');
   console.log('ACCOUNT_MUTATIONS=0');
-  console.log('PRODUCTION_SPLIT=0');
+  console.log('PRODUCTION_SPLIT=1');
 })();

@@ -69,6 +69,8 @@ for (const marker of protectedMarkers) {
   } else if (marker === 'async function loadNoteReactorsList(') {
     assert(!html.includes(marker), 'approved Notes reactor-list marker must be absent from inline HTML');
     assert(reactorListModule.includes('window.loadNoteReactorsList = async function('), 'approved Notes reactor-list module owner must be present');
+  } else if (marker === 'function silentPushResubscribeIfGranted()') {
+    assert(!html.includes(marker), 'approved silent resubscribe marker must be absent from inline HTML');
   } else if (marker === 'function reactToNote(') {
     assert(!html.includes(marker), 'approved Notes reaction marker must be absent from inline HTML');
     assert(notesReactionModule.includes('window.reactToNote = function reactToNote('), 'approved Notes reaction module owner must be present');

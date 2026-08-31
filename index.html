@@ -412,6 +412,7 @@
 <script src="src/features/dms-renderer-owner.js"></script>
 <script src="src/features/reels-renderer-owner.js"></script>
 <script src="src/features/push-permission-banner-owner.js"></script>
+<script src="src/features/push-silent-resubscribe-owner.js"></script>
 <script>
 
 
@@ -1012,15 +1013,7 @@ async function forceResubscribePush() {
  * subscription fresh (endpoints can occasionally expire/change, and
  * upsert-on-endpoint is a safe no-op if nothing changed).
  */
-function silentPushResubscribeIfGranted() {
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
-  if (Notification.permission !== 'granted') return;
-  // Small delay so it doesn't compete with the initial app render
-  setTimeout(async () => {
-    if (!ME) return;
-    await subscribeToPushNotifications();
-  }, 5000);
-}
+
 
 function showApp(){
   document.getElementById('auth').style.display='none';

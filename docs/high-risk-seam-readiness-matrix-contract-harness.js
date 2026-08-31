@@ -33,7 +33,7 @@ const protectedSignatures = [
   'async function removeMyNoteFromViewer(noteId)'
 ];
 
-assert.strictEqual(sourceFiles.length, 231, '231 extracted JavaScript modules must remain present after the DMs renderer split');
+assert.strictEqual(sourceFiles.length, 232, '232 extracted JavaScript modules must remain present after the DMs renderer split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
@@ -101,7 +101,8 @@ const remainingAuthorizationRows = [
   'Notes submission | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
   'Notes reaction owner (`reactToNote()` bounded only) | PASS | PASS | PASS (fresh Preview module observation; no invocation) | PASS | SPLIT_COMPLETE; authenticated invocation intentionally unperformed',
   'Notes reactor list | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; submission/reaction owners remain protected',
-  'Push permission banner (`maybeShowPushPermissionBanner()` bounded only); silent resubscribe helpers remain protected | PASS | PASS | PASS (safe module observation; no permission invocation) | PASS | SPLIT_COMPLETE for banner; resubscribe remains BLOCKED',
+  'Push permission banner (`maybeShowPushPermissionBanner()` bounded only) | PASS | PASS | PASS (safe module observation; no permission invocation) | PASS | SPLIT_COMPLETE',
+  'Silent Push resubscribe (`silentPushResubscribeIfGranted()` bounded only) | PASS | PASS | PASS (safe module observation; no invocation) | PASS | SPLIT_COMPLETE; live Push actions excluded',
 ];
 for (const row of remainingAuthorizationRows) {
   assert(matrix.includes(row), `authorization matrix row must remain explicit: ${row}`);
