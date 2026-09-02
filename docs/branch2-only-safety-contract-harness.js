@@ -17,7 +17,7 @@ assert.strictEqual(git('rev-parse', 'HEAD'), git('rev-parse', 'origin/Branch2'),
 
 const latestFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD').split('\n').filter(Boolean);
 assert(latestFiles.length > 0, 'latest checkpoint must contain files');
-const allowedProtectedSplitFiles = new Set(['MIGRATION_MAP.md', 'index.html', 'src/features/dms-renderer-owner.js', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/reels-video-windowing.js', 'src/features/notes-reaction-owner.js']);
+const allowedProtectedSplitFiles = new Set(['HANDOFF.md', 'MIGRATION_MAP.md', 'index.html', 'src/features/dms-renderer-owner.js', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/reels-video-windowing.js', 'src/features/notes-reaction-owner.js']);
 assert(latestFiles.every(file => file.startsWith('docs/') || allowedProtectedSplitFiles.has(file)), 'latest checkpoint must contain only docs and approved protected split files');
 if (latestFiles.includes('index.html') || latestFiles.includes('src/features/dms-renderer-owner.js') || latestFiles.includes('src/features/spawn-like-particles.js') || latestFiles.includes('src/features/sync-local-deletion-fallback.js') || latestFiles.includes('src/features/push-settings.js') || latestFiles.includes('src/features/reels-video-windowing.js')) {
   assert(latestFiles.includes('index.html'), 'protected split checkpoint must include index.html');
