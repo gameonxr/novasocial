@@ -334,6 +334,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Side effects:** Live permission requests, service-worker access, PushManager access, database writes, storage writes, network side effects, account mutations, and production changes remained zero; database behavior was mock-only.
 - **Next action:** Commit and push the preparation map with synchronized handoff/inventory contracts. Do not extract this owner until explicit production authorization is received.
 
+### 2026-09-02 — Push subscription preparation publication verification
+
+- **Agent/task:** Manus AI; published preparation-only checkpoint for `subscribeToPushNotifications()`.
+- **Branch/HEAD:** `Branch2`; final preparation commit `a24cad2` pushed to `origin/Branch2`; clean worktree and local/remote alignment PASS; immutable `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Scope:** Dependency map and readiness inventory synchronization only; no production module, `index.html` extraction, caller rewrite, schema change, or live Push/service-worker/database/account action.
+- **Authorization state:** `INDEPENDENT_PROOF_ONLY`; production extraction remains `BLOCKED` and requires a new exact-scope production authorization addendum plus explicit approval.
+- **Result:** Independent before-proof PASS; final published regression `319/319 PASS`; syntax, Branch2-only, clean-worktree, remote-alignment, and immutable-origin checks PASS.
+- **Evidence:** `docs/push-subscription-owner-dependency-map.md`, existing Push subscription independent authorization/proof/rollback files, `docs/branch2-final-readiness-contract-harness.js`, and `MIGRATION_MAP.md`.
+- **Side effects:** Zero live permission, service-worker, PushManager, database, storage, network, account, authentication, or browser actions; persistence was mock-only.
+- **Next action:** Review/approve a separate Push subscription production authorization addendum before any source extraction. Until then, keep `subscribeToPushNotifications()` inline and continue respecting the exclusions in the dependency map.
+
 ### Template for the next agent
 
 ```text
