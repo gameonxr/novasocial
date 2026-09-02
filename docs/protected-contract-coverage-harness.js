@@ -15,6 +15,7 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const notesSubmissionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
 const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
 const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 
@@ -68,7 +69,14 @@ for (const [marker, base] of coverage) {
     assert.strictEqual((pushBannerModule.match(/window\.maybeShowPushPermissionBanner\s*=\s*function maybeShowPushPermissionBanner\(\)/g) || []).length, 1, 'approved Push banner owner must have one owner');
   } else if (marker === 'function silentPushResubscribeIfGranted()') {
     assert(!html.includes(marker), 'approved silent resubscribe marker must be absent from inline HTML');
+  } else if (marker === 'async function submitNote()') {
+    assert(!html.includes(marker), 'approved Notes submission marker must be absent from inline HTML');
+    assert(notesSubmissionModule.includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must be present');
+} else if (marker === 'async function submitNote()') {
+    assert(!html.includes(marker), 'approved Notes submission marker must be absent from inline HTML');
+    assert(notesSubmissionModule.includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must be present');
   } else if (marker === 'function reactToNote(') {
+} else if (marker === 'function reactToNote(') {
     assert(!html.includes(marker), 'approved Notes reaction owner must be absent from inline HTML');
     assert.strictEqual((notesReactionModule.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'approved Notes reaction owner must have one owner');
   } else {

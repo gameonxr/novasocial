@@ -7,6 +7,7 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const notesSubmissionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
 const docsDir = path.join(repo, 'docs');
 const protectedSignatures = [
   'async function renderDMs()',
@@ -51,11 +52,12 @@ const requiredCoverage = [
   'note-reactors-list-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 232, '232 extracted JavaScript modules must remain present after the Push permission banner owner split');
+assert.strictEqual(sourceFiles.length, 233, '233 extracted JavaScript modules must remain present after the Push permission banner owner split');
 for (const signature of protectedSignatures) {
-  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function maybeShowPushPermissionBanner()';
+  const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function maybeShowPushPermissionBanner()' || signature === 'async function submitNote()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
   if (signature === 'function reactToNote(') assert(sourceText.includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
+  else if (signature === 'async function submitNote()') assert(sourceText.includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must exist');
   else if (signature === 'function maybeShowPushPermissionBanner()') assert(sourceText.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'approved Push banner owner must exist');
   else assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
@@ -113,5 +115,5 @@ console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
 console.log('EXTRACTED_PROTECTED_SIGNATURES=12_APPROVED_REELS_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_REACTOR_LIST_AND_REACT_TO_NOTE');
 console.log('EXTRACTED_SUPPORTING_REELS_HELPER=1_WINDOWING_OWNER');
 console.log(`REQUIRED_COVERAGE_FILES=${requiredCoverage.length + 2}`);
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_5_UNAPPROVED_PROTECTED_SYSTEMS');
 console.log('BRANCH2_ONLY=PASS');

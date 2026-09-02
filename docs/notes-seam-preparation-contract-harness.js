@@ -43,7 +43,8 @@ for (const marker of requiredHtmlMarkers) {
 }
 assert(notesBar.includes('function _fetchNotesBarData('), 'Notes Bar data helper must remain extracted at its existing boundary');
 assert(notesBar.includes('function _renderNotesBarHtml('), 'Notes Bar render helper must remain extracted at its existing boundary');
-assert(html.includes('async function submitNote()'), 'submitNote must remain inline');
+assert(!html.includes('async function submitNote()'), 'submitNote inline owner must be absent after authorized split');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'submitNote external owner must be present');
 assert.strictEqual((noteOwners.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'viewNote must have one window-assigned module owner');
 assert.strictEqual((noteOwners.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'removeMyNoteFromViewer must have one window-assigned module owner');
 assert.strictEqual((noteDeletionOwner.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'deleteMyNote must have one window-assigned module owner');

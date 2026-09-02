@@ -4,37 +4,41 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 const { execFileSync } = require('child_process');
-
 const repo = '/home/ubuntu/novasocial';
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const currentModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
-const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
-  cwd: repo,
-  encoding: 'utf8',
-  maxBuffer: 32 * 1024 * 1024
-});
-const contract = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-owner-independent-proof-contract.md'), 'utf8');
-const dossier = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-reactions-protected-readiness-contract.md'), 'utf8');
-
-function extractOwner(text, external = false) {
-  const start = text.indexOf('async function submitNote(){');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
+const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+const authorization = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-owner-production-authorization-addendum.md'), 'utf8');
+const contract = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-owner-production-split-contract.md'), 'utf8');
+function extractOwner(text, marker = 'async function submitNote(){') {
+  const start = text.indexOf(marker);
   assert(start >= 0, 'submitNote owner declaration must exist');
-  const end = external ? text.lastIndexOf('\n};') : text.indexOf('\n}\n', start);
-  assert(end > start, 'submitNote owner boundary must be discoverable');
-  return text.slice(start, external ? end + 2 : end + 2);
+  const brace = text.indexOf('{', start);
+  let depth = 0, quote = null, escaped = false, lineComment = false, blockComment = false;
+  for (let i = brace; i < text.length; i++) {
+    const c = text[i], n = text[i + 1];
+    if (lineComment) { if (c === '\n') lineComment = false; continue; }
+    if (blockComment) { if (c === '*' && n === '/') { blockComment = false; i++; } continue; }
+    if (quote) { if (escaped) escaped = false; else if (c === '\\') escaped = true; else if (c === quote) quote = null; continue; }
+    if (c === '/' && n === '/') { lineComment = true; i++; continue; }
+    if (c === '/' && n === '*') { blockComment = true; i++; continue; }
+    if (c === '"' || c === "'") { quote = c; continue; }
+    if (c === '{') depth++;
+    if (c === '}') { depth--; if (depth === 0) return text.slice(start, i + 1); }
+  }
+  throw new Error('owner boundary missing');
 }
-function sha(value) {
-  return crypto.createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex');
-}
-const currentOwner = extractOwner(currentModule, true);
+function sha(value) { return crypto.createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex'); }
+const currentOwner = extractOwner(moduleText);
 const originOwner = extractOwner(originHtml);
-assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 submitNote owner must retain exact immutable-origin parity');
-assert.strictEqual(currentHtml.split('async function submitNote(){').length - 1, 0, 'inline submitNote owner must be absent after authorized split');
-assert(currentHtml.includes('src/features/notes-submission-owner.js'), 'production Notes submission owner linkage must be present');
-assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
-assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
-assert(dossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected Notes dossier must remain blocked');
-
+assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'external submitNote owner must retain exact immutable-origin parity');
+assert.strictEqual(sha(originOwner), 'f876963b27ad8661f0609e0dce77d55294e1017d03c88f4c5b9e2bae5de91173', 'origin owner hash must remain pinned');
+assert.strictEqual((currentHtml.match(/async function submitNote\(\)\{/g) || []).length, 0, 'inline submitNote owner must be absent');
+assert.strictEqual((moduleText.match(/window\.submitNote\s*=\s*async function submitNote\(\)\{/g) || []).length, 1, 'external submitNote owner must occur once');
+assert.strictEqual((currentHtml.match(/src\/features\/notes-submission-owner\.js/g) || []).length, 1, 'external linkage must occur exactly once');
+assert(authorization.includes('FEATURE_AUTHORIZATION=EXPLICIT_BOUNDED_PRODUCTION_EXTRACTION'), 'authorization must be explicit and bounded');
+assert(authorization.includes('PRODUCTION_DECISION=AUTHORIZED_CONDITIONAL_ON_ALL_GATES'), 'authorization must be conditional on all gates');
+assert(contract.includes('PRODUCTION_SPLIT=REQUIRED'), 'production contract must require split');
 function stable(value) {
   return JSON.parse(JSON.stringify(value));
 }
@@ -142,7 +146,7 @@ function runSubmission(ownerSource, mode) {
   const forbidden = Object.values(results).flatMap(result => result.events).filter(event => /fetch|storage|permission|upload|media|history|navigate|broadcast/i.test(event));
   assert.deepStrictEqual(forbidden, [], 'submission proof must not perform forbidden live effects');
 
-  console.log('NOTES_SUBMISSION_OWNER_INDEPENDENT_PROOF_HARNESS=PASS');
+  console.log('NOTES_SUBMISSION_OWNER_PRODUCTION_SPLIT_HARNESS=PASS');
   console.log(`ORIGIN_OWNER_SHA256=${sha(originOwner)}`);
   console.log('OWNER_PARITY=PASS');
   console.log('EMPTY_VALIDATION_BEFORE_AFTER=PASS');
@@ -161,5 +165,5 @@ function runSubmission(ownerSource, mode) {
   console.log('PERMISSION_REQUESTS=0');
   console.log('LIVE_NAVIGATION=0');
   console.log('REAL_MEDIA_ACCESS=0');
-  console.log('PRODUCTION_SPLIT=0');
+  console.log('PRODUCTION_SPLIT=1');
 })();

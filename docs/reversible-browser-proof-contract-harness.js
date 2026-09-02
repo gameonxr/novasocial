@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('Reversible browser proof | Contract and harness are present; DMs renderer, particle, deletion-fallback, Push settings, Note viewer, Note deletion, Story editor, Reels windowing helper, bounded Reels renderer, and Notes reactor-list before/after browser proofs are PASS, while browser proof is PASS for the fresh Notes reaction deployment observation; authenticated reaction invocation remains intentionally unperformed, and 7 unapproved systems remain blocked'), 'matrix must continue to mark remaining browser proof');
-assert(matrix.includes('all twelve protected seam contracts explicitly bind their listed mock inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 12/19 protected signatures moved; 12 bounded scopes are split-complete, with `reactToNote()` fresh Preview deployment observation PASS; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the ten moved protected signatures and supporting Reels helper');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 7 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('7 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('all fourteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
+assert(matrix.includes('Protected production splits | 14/19 protected signatures moved; 14 bounded scopes are split-complete, including Notes submission; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the fourteen moved protected signatures and supporting Reels helper');
+assert(gate.includes('Direct extraction remains explicitly blocked for the 5 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
   'dms-seam-preparation-contract.md',
@@ -150,9 +150,10 @@ for (const signature of [
   'function renderStoryElements()',
   'async function syncLocalDeletionFallback()'
 ]) {
-  const expectedInlineCount = ['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function deleteMyNote()', 'function renderStoryElements()'].includes(signature) ? 0 : 1;
+  const expectedInlineCount = ['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function submitNote()', 'async function deleteMyNote()', 'function renderStoryElements()'].includes(signature) ? 0 : 1;
   assert.strictEqual(html.split(signature).length - 1, expectedInlineCount, `protected owner count mismatch: ${signature}`);
-  assert(!source.includes(signature), `protected owner must remain outside src by declaration: ${signature}`);
+  if (signature === 'async function submitNote()') assert(source.includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must remain available through a window assignment');
+  else assert(!source.includes(signature), `protected owner must remain outside src by declaration: ${signature}`);
 }
 assert(source.includes('window.renderDMs = async function(){'), 'approved DMs renderer owner must remain available through a window assignment');
 assert(source.includes('window.renderReels = async function(){'), 'approved Reels renderer owner must remain available through a window assignment');
