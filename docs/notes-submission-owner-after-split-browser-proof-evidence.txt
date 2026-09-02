@@ -1,0 +1,30 @@
+Notes submission owner after-split browser proof
+===============================================
+
+Deployment: https://project-aju33-git-branch2-prince-s-projectsgameon.vercel.app/
+Branch: Branch2
+Mode: observation-only
+
+MODULE_HTTP_STATUS=200
+MODULE_CLASSIC_OWNER_PRESENT=1
+GLOBAL_OWNER_TYPE=function
+OWNER_INVOKED=0
+LIVE_EFFECTS=0
+DATABASE_WRITES=0
+STORAGE_WRITES=0
+UPLOADS=0
+PERMISSION_REQUESTS=0
+SERVICE_WORKER_ACTIONS=0
+PUSH_ACTIONS=0
+NETWORK_SIDE_EFFECTS=0
+ACCOUNT_MUTATIONS=0
+
+The preview reached the login boundary. The external module was fetched/read only; `window.submitNote` was not called. No login, Note creation/update, database, storage, upload, media, permission, service-worker, Push, network, or account action was performed.
+
+Observed at: 2026-09-02
+Result: PASS
+
+Browser console observation result:
+{"moduleStatus":200,"moduleHasClassicOwner":true,"globalOwnerType":"function","invoked":false,"liveEffects":0}
+
+This artifact is observation evidence only and is not evidence of an authenticated live Note operation.
