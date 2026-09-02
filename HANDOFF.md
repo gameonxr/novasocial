@@ -312,6 +312,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** Notes submission production authorization, production contract/harness, parity/rollback evidence, browser evidence, `MIGRATION_MAP.md`, and readiness matrix.
 - **Next action:** Review this handoff before starting another candidate. For any new production split, obtain that owner’s exact authorization and follow sections 7 and 11.
 
+### 2026-09-02 — Handoff publication verification
+
+- **Agent/task:** Manus AI; canonical handoff publication and continuation-contract verification.
+- **Branch/HEAD:** `Branch2`; handoff commit `59e099d` published to `origin/Branch2`; local/remote alignment PASS; immutable `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Scope:** Added root `HANDOFF.md` and updated only the Branch2 safety allowlist to permit the canonical handoff checkpoint.
+- **Authorization state:** Documentation/process update only; no new feature extraction authorized or performed.
+- **Result:** Syntax checks PASS; final published regression `319/319 PASS`; worktree clean; Branch2-only and immutable-origin checks PASS.
+- **Evidence:** `HANDOFF.md`, `docs/branch2-only-safety-contract-harness.js`, and `/tmp/handoff-regression.log` from the closing run.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Read this handoff before selecting the next candidate; maintain the mandatory update protocol in section 11.
+
 ### Template for the next agent
 
 ```text
