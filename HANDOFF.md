@@ -323,6 +323,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Read this handoff before selecting the next candidate; maintain the mandatory update protocol in section 11.
 
+### 2026-09-02 — Push subscription owner independent preparation
+
+- **Agent/task:** Manus AI; next-candidate selection and preparation for bounded `subscribeToPushNotifications()` owner.
+- **Branch/HEAD:** `Branch2`; current clean checkpoint before preparation commit; immutable `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Scope:** Created `docs/push-subscription-owner-dependency-map.md` only; no `index.html` extraction, module creation, caller rewrite, schema change, or live Push action.
+- **Authorization state:** Independent proof only. Production extraction remains explicitly blocked; a separate production authorization addendum and exact owner approval are required.
+- **Result:** Independent before-proof PASS. Exact owner parity SHA-256 `b6f11d4f504f8bc4b3fb7bf47447e8169d093b283f08c6bedaa7bd353adf70b4`; unsupported, missing-user, existing/new subscription, VAPID/options, payload/conflict policy, subscribe/database/get-subscription failures, and device-info truncation all PASS.
+- **Evidence:** `docs/push-subscription-owner-dependency-map.md`, `docs/push-subscription-owner-independent-authorization-addendum.md`, `docs/push-subscription-owner-independent-proof-contract.md`, `docs/push-subscription-owner-independent-proof-contract-harness.js`, and `docs/push-subscription-owner-independent-proof-rollback-evidence.txt`.
+- **Side effects:** Live permission requests, service-worker access, PushManager access, database writes, storage writes, network side effects, account mutations, and production changes remained zero; database behavior was mock-only.
+- **Next action:** Commit and push the preparation map with synchronized handoff/inventory contracts. Do not extract this owner until explicit production authorization is received.
+
 ### Template for the next agent
 
 ```text
