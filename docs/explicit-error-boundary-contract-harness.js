@@ -3,14 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
-const files = ['index.html', 'src/features/profile.js', 'src/features/home.js', 'src/features/reels-renderer-owner.js'];
+const files = ['index.html', 'src/features/switch-call-camera.js', 'src/features/profile.js', 'src/features/home.js', 'src/features/reels-renderer-owner.js'];
 const counts = {};
 for (const relative of files) {
   const text = fs.readFileSync(path.join(repo, relative), 'utf8');
   counts[relative] = (text.match(/throw\s+new\s+Error\s*\(/g) || []).length;
 }
 assert.deepStrictEqual(counts, {
-  'index.html': 7,
+  'src/features/switch-call-camera.js': 1,
+  'index.html': 6,
   'src/features/profile.js': 2,
   'src/features/home.js': 2,
   'src/features/reels-renderer-owner.js': 1,
