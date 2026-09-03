@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 348, '348 extracted JavaScript modules must remain after the show-call-bubble extraction');
+assert.strictEqual(jsFiles.length, 349, '349 extracted JavaScript modules must remain after the -attach-local-video-stream extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 337, '337 feature modules must remain after the show-call-bubble extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 350, 'HTML must retain 350 script tags after the show-call-bubble extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 350, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 349, 'HTML must retain 349 external script tags after the show-call-bubble extraction');
+assert.strictEqual(featureFiles.length, 338, '338 feature modules must remain after the -attach-local-video-stream extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 351, 'HTML must retain 351 script tags after the -attach-local-video-stream extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 351, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 350, 'HTML must retain 350 external script tags after the -attach-local-video-stream extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
