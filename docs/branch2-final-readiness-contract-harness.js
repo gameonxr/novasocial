@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 357, '357 extracted JavaScript modules must remain after the call-nova-ai extraction');
+assert.strictEqual(jsFiles.length, 358, '358 extracted JavaScript modules must remain after the -upload-to-cloudinary extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 346, '346 feature modules must remain after the call-nova-ai extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 359, 'HTML must retain 359 script tags after the call-nova-ai extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 359, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 358, 'HTML must retain 358 external script tags after the call-nova-ai extraction');
+assert.strictEqual(featureFiles.length, 347, '347 feature modules must remain after the -upload-to-cloudinary extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 360, 'HTML must retain 360 script tags after the -upload-to-cloudinary extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 360, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 359, 'HTML must retain 359 external script tags after the -upload-to-cloudinary extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
