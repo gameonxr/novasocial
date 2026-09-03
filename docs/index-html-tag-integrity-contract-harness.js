@@ -10,9 +10,9 @@ function count(pattern) {
 }
 
 assert(html.trimStart().toLowerCase().startsWith('<!doctype html>'), 'index.html must retain its HTML5 doctype');
-assert.strictEqual(count(/<script\b/gi), 295, 'index.html must retain 236 script tags after the Notes submission split');
-assert.strictEqual(count(/<\/script>/gi), 295, 'every script tag must be closed after the Notes submission split');
-assert.strictEqual(count(/<script\s+src=/gi), 294, '235 extracted/external script tags must remain integrated');
+assert.strictEqual(count(/<script\b/gi), 296, 'index.html must retain 236 script tags after the Notes submission split');
+assert.strictEqual(count(/<\/script>/gi), 296, 'every script tag must be closed after the Notes submission split');
+assert.strictEqual(count(/<script\s+src=/gi), 295, '235 extracted/external script tags must remain integrated');
 assert.strictEqual(count(/<script(?:\s[^>]*)?>/gi) - count(/<script\s+src=/gi), 1, 'one inline application script must remain');
 assert.strictEqual(count(/<body\b/gi), 1, 'one body element must remain');
 assert.strictEqual(count(/<\/body>/gi), 1, 'body element must close once');
