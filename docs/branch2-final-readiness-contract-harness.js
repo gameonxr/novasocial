@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 329, '329 extracted JavaScript modules must remain after the admin-ban-user extraction');
+assert.strictEqual(jsFiles.length, 330, '330 extracted JavaScript modules must remain after the create-group-peer-connection extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 318, '318 feature modules must remain after the admin-ban-user extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 331, 'HTML must retain 331 script tags after the admin-ban-user extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 331, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 330, 'HTML must retain 330 external script tags after the admin-ban-user extraction');
+assert.strictEqual(featureFiles.length, 319, '319 feature modules must remain after the create-group-peer-connection extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 332, 'HTML must retain 332 script tags after the create-group-peer-connection extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 332, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 331, 'HTML must retain 331 external script tags after the create-group-peer-connection extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
