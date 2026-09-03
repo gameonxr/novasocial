@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 320, '320 extracted JavaScript modules must remain after the add-local-tile-to-grid extraction');
+assert.strictEqual(jsFiles.length, 321, '321 extracted JavaScript modules must remain after the add-remote-tile-to-grid extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 309, '309 feature modules must remain after the add-local-tile-to-grid extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 322, 'HTML must retain 322 script tags after the add-local-tile-to-grid extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 322, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 321, 'HTML must retain 321 external script tags after the add-local-tile-to-grid extraction');
+assert.strictEqual(featureFiles.length, 310, '310 feature modules must remain after the add-remote-tile-to-grid extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 323, 'HTML must retain 323 script tags after the add-remote-tile-to-grid extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 323, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 322, 'HTML must retain 322 external script tags after the add-remote-tile-to-grid extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
