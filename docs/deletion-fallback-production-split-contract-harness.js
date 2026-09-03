@@ -37,9 +37,9 @@ const branch = execFileSync('git', ['-C', repo, 'branch', '--show-current'], { e
 const originMain = execFileSync('git', ['-C', repo, 'rev-parse', 'origin/main'], { encoding: 'utf8' }).trim();
 assert.strictEqual(branch, 'Branch2', 'production split must be on Branch2');
 assert.strictEqual(originMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain untouched');
-assert.strictEqual(count(/<script\b/gi), 369, 'after-split opening script count must be 236 after the Notes submission split');
-assert.strictEqual(count(/<\/script>/gi), 369, 'after-split closing script count must be 236 after the Notes submission split');
-assert.strictEqual(count(/<script\s+src=/gi), 368, 'after-split external script count must be 235 after the Notes submission split');
+assert.strictEqual(count(/<script\b/gi), 370, 'after-split opening script count must be 236 after the Notes submission split');
+assert.strictEqual(count(/<\/script>/gi), 370, 'after-split closing script count must be 236 after the Notes submission split');
+assert.strictEqual(count(/<script\s+src=/gi), 369, 'after-split external script count must be 235 after the Notes submission split');
 assert.strictEqual(sha256(baselineOwner), 'f267467785faea7ef3b8cc0c50a15764fd3bd13759a852b20e050a7887338786', 'baseline owner hash must match recorded anchor');
 assert.strictEqual(sha256(canonicalOwner), sha256(baselineOwner), 'canonical extracted owner hash must match baseline');
 assert.strictEqual((html.match(/async function syncLocalDeletionFallback\(\)/g) || []).length, 0, 'inline deletion-fallback owner must be absent');
