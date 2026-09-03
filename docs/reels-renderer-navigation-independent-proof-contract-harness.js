@@ -390,7 +390,7 @@ function runExtractionCandidateSimulation() {
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
   assert.strictEqual(normalize(candidateNamedOwner), normalize(originOwner), 'candidate owner body must match immutable origin');
-  assert.strictEqual(sha(candidateHtml), '9c53917284722244da8da303b14433c20513c3a94cbe4d26054ae3ea7be60957', 'candidate HTML hash must remain pinned after the init-calling-system owner split');
+  assert.strictEqual(sha(candidateHtml), 'b7693d79a7d15de1ac5398c8324050eb92edf369c04eba95a2f47df83394e074', 'candidate HTML hash must remain pinned after the setup-web-rtccaller owner split');
   return {
     ownerSource: candidateNamedOwner,
     moduleSha256: sha(moduleText),
