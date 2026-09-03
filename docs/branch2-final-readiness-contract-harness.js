@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 324, '324 extracted JavaScript modules must remain after the leave-group-call extraction');
+assert.strictEqual(jsFiles.length, 325, '325 extracted JavaScript modules must remain after the upload-gcavatar extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 313, '313 feature modules must remain after the leave-group-call extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 326, 'HTML must retain 326 script tags after the leave-group-call extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 326, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 325, 'HTML must retain 325 external script tags after the leave-group-call extraction');
+assert.strictEqual(featureFiles.length, 314, '314 feature modules must remain after the upload-gcavatar extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 327, 'HTML must retain 327 script tags after the upload-gcavatar extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 327, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 326, 'HTML must retain 326 external script tags after the upload-gcavatar extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
