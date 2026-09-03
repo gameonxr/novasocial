@@ -38,7 +38,7 @@ assert.strictEqual((html.match(/async function loadNoteReactorsList\(noteId\)\{/
 assert.strictEqual((html.match(/src\/features\/note-reactors-list-owner\.js/g) || []).length, 1, 'Notes reactor-list module must be linked exactly once');
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'reactor-list module must load after Push settings');
 assert(html.indexOf('src/features/note-reactors-list-owner.js') < html.indexOf('src/features/note-viewer-owners.js'), 'reactor-list module must load before Note viewer callers');
-assert.strictEqual(sourceModules, 266, 'source module count must include the Notes reactor-list owner, DMs owner, admin filter owner, refresh counts owner, reports filter owner, verification filter owner, toggleSVMute owner, invalidateTabCache owner, and confirmCropPreview owner');
+assert.strictEqual(sourceModules, 267, 'source module count must include the Notes reactor-list owner, DMs owner, admin filter owner, refresh counts owner, reports filter owner, verification filter owner, toggleSVMute owner, invalidateTabCache owner, and confirmCropPreview owner');
 
 function createInjectedNotesReactorListSeam(deps) {
   return {
