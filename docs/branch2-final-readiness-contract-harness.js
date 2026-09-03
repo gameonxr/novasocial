@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 387, '387 extracted JavaScript modules must remain after the delete-story extraction');
+assert.strictEqual(jsFiles.length, 388, '388 extracted JavaScript modules must remain after the -silent-background-refresh extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 376, '376 feature modules must remain after the delete-story extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 389, 'HTML must retain 389 script tags after the delete-story extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 389, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 388, 'HTML must retain 388 external script tags after the delete-story extraction');
+assert.strictEqual(featureFiles.length, 377, '377 feature modules must remain after the -silent-background-refresh extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 390, 'HTML must retain 390 script tags after the -silent-background-refresh extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 390, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 389, 'HTML must retain 389 external script tags after the -silent-background-refresh extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
