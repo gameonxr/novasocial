@@ -45,13 +45,17 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function adminTabReports(content){');
-    const end = source.indexOf('\nasync function adminResolveReport(', start);
-    assert(start >= 0 && end > start, 'reports tab function boundary must remain present and ordered');
-    const functionBlock = source.slice(start, end);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-reports.js', 'utf8');
+    const start = source.indexOf('window.adminTabReports = async function adminTabReports(content){');
+    assert(start >= 0, 'reports tab module owner must remain present');
+    const functionBlock = source.slice(start);
+    const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
+    const lrStart = html.indexOf('async function loadReportsList(');
+    const lrEnd = html.indexOf('\nasync function adminResolveReport(', lrStart);
+    assert(lrStart >= 0 && lrEnd > lrStart, 'reports list boundary must remain present and ordered');
+    const loadReportsBlock = html.slice(lrStart, lrEnd);
     const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/set-reports-filter-owner.js', 'utf8');
-    eval(`let _reportsFilter = 'pending'; const window = global; ${functionBlock}; ${moduleOwner}; global.adminTabReports = adminTabReports; global.setReportsFilter = window.setReportsFilter; global.loadReportsList = loadReportsList;`);
+    eval(`let _reportsFilter = 'pending'; const window = global; ${functionBlock}; ${loadReportsBlock}; ${moduleOwner}; global.adminTabReports = window.adminTabReports; global.setReportsFilter = window.setReportsFilter; global.loadReportsList = loadReportsList;`);
 
     const reports = [{
       id: 'r1', target_type: 'post', target_id: 'p1', reason: "spam <reason>", details: 'details <x>',
