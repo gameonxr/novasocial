@@ -261,7 +261,7 @@
 <script src="src/features/se-search-mention-users.js"></script>
 <script src="src/features/local-ai-response.js"></script>
 <script src="src/features/extract-cloudinary-public-id.js"></script>
-<script src="src/features/delete-cloudinary-media.js"></script>
+<script src="src/features/delete-cloudinary-media.js"></script><script src="src/features/cleanup-expired-story-media.js"></script>
 <script src="src/features/url-base64-to-uint8-array.js"></script>
 <script src="src/features/cld-url.js"></script>
 <script src="src/features/derive-video-thumbnail-url.js"></script>
@@ -434,43 +434,6 @@
 // Example URL: https://res.cloudinary.com/dhtf1b9ak/image/upload/v1234/novasocial/stories/abc123.webp
 // Public ID: novasocial/stories/abc123
 // App open hone par expired stories ka media cleanup
-async function cleanupExpiredStoryMedia() {
-  // Sirf ek baar per session
-  if(window._storiesCleanedUp) return;
-  window._storiesCleanedUp = true;
-
-  try {
-    // Expired stories dhundo jo abhi bhi Cloudinary media rakhti hain
-    const { data: expiredStories } = await db
-      .from('stories')
-      .select('id, media_url, user_id')
-      .lt('expires_at', new Date().toISOString())
-      .not('media_url', 'is', null)
-      .like('media_url', '%cloudinary%')
-      .limit(50); // Ek baar mein max 50
-
-    if(!expiredStories?.length) return;
-
-    console.log(`🧹 Found ${expiredStories.length} expired stories to cleanup`);
-
-    // Media delete queue mein daalo
-    for(const story of expiredStories) {
-      if(story.media_url) {
-        await deleteCloudinaryMedia(story.media_url);
-      }
-    }
-
-    // Expired stories Supabase se bhi delete karo
-    const expiredIds = expiredStories.map(s => s.id);
-    await db.from('stories')
-      .delete()
-      .in('id', expiredIds);
-
-    console.log(`✅ Cleaned up ${expiredStories.length} expired stories`);
-  } catch(e) {
-    console.log('Story cleanup failed silently:', e);
-  }
-}
 
 
 
