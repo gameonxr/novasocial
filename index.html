@@ -261,6 +261,7 @@
 <script src="src/features/se-search-mention-users.js"></script>
 <script src="src/features/local-ai-response.js"></script>
 <script src="src/features/extract-cloudinary-public-id.js"></script>
+<script src="src/features/delete-cloudinary-media.js"></script>
 <script src="src/features/url-base64-to-uint8-array.js"></script>
 <script src="src/features/cld-url.js"></script>
 <script src="src/features/derive-video-thumbnail-url.js"></script>
@@ -430,38 +431,6 @@
 // Cloudinary URL se public_id extract karo
 // Example URL: https://res.cloudinary.com/dhtf1b9ak/image/upload/v1234/novasocial/stories/abc123.webp
 // Public ID: novasocial/stories/abc123
-async function deleteCloudinaryMedia(mediaUrl) {
-  if(!mediaUrl || !mediaUrl.includes('cloudinary.com')) return;
-
-  const publicId = extractCloudinaryPublicId(mediaUrl);
-  if(!publicId) return;
-
-  // Which account ka hai ye URL?
-  const account = CLOUDINARY_ACCOUNTS.find(a => mediaUrl.includes(a.cloud));
-  if(!account) return;
-
-  // deleted_media table mein insert karo (agar table nahi hai to localStorage fallback)
-  try {
-    await db.from('deleted_media').insert({
-      media_url: mediaUrl,
-      public_id: publicId,
-      cloud_name: account.cloud,
-      deleted_at: new Date().toISOString(),
-    }).catch(() => {
-      // Table nahi hai toh localStorage mein save karo
-      const pending = JSON.parse(localStorage.getItem('_pendingDeletes') || '[]');
-      pending.push({ mediaUrl, publicId, cloud: account.cloud });
-      // Max 100 entries rakho
-      if(pending.length > 100) pending.shift();
-      localStorage.setItem('_pendingDeletes', JSON.stringify(pending));
-    });
-
-    console.log(`🗑️ Queued for deletion: ${publicId}`);
-  } catch(e) {
-    console.log('Delete queue failed:', e);
-  }
-}
-
 // App open hone par expired stories ka media cleanup
 async function cleanupExpiredStoryMedia() {
   // Sirf ek baar per session
