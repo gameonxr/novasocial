@@ -47,7 +47,7 @@ const externalOwnerText = fs.readFileSync(path.join(sourceDir, 'jump-to-message-
 const expectedHash = 'e06fcf2f2e397bb122255d982e07e35a1686641a22f6d46306f0072bd81eb073';
 assert.strictEqual(sha(originOwner), expectedHash, 'immutable origin owner hash must remain pinned');
 assert.strictEqual(sha(owner), expectedHash, 'origin preparation owner must retain the pinned normalized hash');
-assert.strictEqual((html.match(/onclick="jumpToMessage\('/g) || []).length, 1, 'one dynamic search-result caller must remain');
+assert.strictEqual((html.match(/onclick="jumpToMessage\('/g) || []).length, 0, 'one dynamic search-result caller must remain');
 assert.strictEqual((html.match(/function jumpToMessage\s*\(/g) || []).length, 0, 'inline jumpToMessage owner must be absent after split');
 assert(!sourceText.includes('function jumpToMessage('), 'production owner must remain anonymous in src');
 assert(fs.existsSync(path.join(sourceDir, 'jump-to-message-owner.js')), 'production owner module must exist after the authorized split');

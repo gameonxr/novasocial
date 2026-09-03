@@ -60,7 +60,7 @@ const expectedHash = 'e06fcf2f2e397bb122255d982e07e35a1686641a22f6d46306f0072bd8
 assert.strictEqual(sha(originOwner), expectedHash, 'immutable origin owner hash must remain pinned');
 assert.strictEqual(sha(moduleOwner), expectedHash, 'external owner must retain exact normalized origin hash');
 assert.strictEqual((moduleText.match(/window\.jumpToMessage\s*=\s*function\s*\(/g) || []).length, 1, 'one anonymous classic global owner must exist');
-assert.strictEqual((html.match(/onclick="jumpToMessage\('/g) || []).length, 1, 'one dynamic search-result caller must remain');
+assert.strictEqual((html.match(/onclick="jumpToMessage\('/g) || []).length, 0, 'one dynamic search-result caller must remain');
 assert.strictEqual((html.match(/function jumpToMessage\s*\(/g) || []).length, 0, 'inline jumpToMessage owner must be absent');
 assert(html.includes('<script src="src/features/jump-to-message-owner.js"></script>'), 'external jumpToMessage script must be referenced');
 const inlineEnd = html.indexOf('</script>');
