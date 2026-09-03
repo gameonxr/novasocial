@@ -390,7 +390,7 @@ function runExtractionCandidateSimulation() {
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
   assert.strictEqual(normalize(candidateNamedOwner), normalize(originOwner), 'candidate owner body must match immutable origin');
-  assert.strictEqual(sha(candidateHtml), 'ca322b8894298c30c2524e37a7f5e4dd23ae3c4443bb8ede08c6db971a5d9ac6', 'candidate HTML hash must remain pinned after the create-offer-to-participant owner split');
+  assert.strictEqual(sha(candidateHtml), '9e4c9e0ec5dba07db329a1e725ec69d24f196b8c96a80d8e77170f0dfb667de8', 'candidate HTML hash must remain pinned after the listen-for-group-participants owner split');
   return {
     ownerSource: candidateNamedOwner,
     moduleSha256: sha(moduleText),
