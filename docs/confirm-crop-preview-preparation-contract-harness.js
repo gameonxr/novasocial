@@ -55,7 +55,7 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current candidate must preserve normalized origin/main parity');
 assert.strictEqual(sha256(normalizedOrigin), '668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4', 'normalized origin hash must match the pinned candidate audit');
-assert.strictEqual(sourceFiles.length, hasInlineOwner ? 228 : 311, 'source module count must match the current post-split candidate state for Notes submission');
+assert.strictEqual(sourceFiles.length, hasInlineOwner ? 228 : 312, 'source module count must match the current post-split candidate state for Notes submission');
 assert.strictEqual((html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length, hasInlineOwner ? 1 : 0, 'candidate inline owner count must match the current pre/post-split state');
 assert.strictEqual((html.match(/onclick="confirmCropPreview\(\)"/g) || []).length, 1, 'candidate must retain exactly one existing Done control caller');
 assert.strictEqual(fs.existsSync(ownerModulePath), !hasInlineOwner, 'candidate external owner presence must match the current pre/post-split state');
