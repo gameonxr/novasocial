@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 281, '281 extracted JavaScript modules must remain after the toggle-approval-system extraction');
+assert.strictEqual(jsFiles.length, 282, '282 extracted JavaScript modules must remain after the admin-dismiss-report extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 270, '270 feature modules must remain after the toggle-approval-system extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 283, 'HTML must retain 283 script tags after the toggle-approval-system extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 283, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 282, 'HTML must retain 282 external script tags after the toggle-approval-system extraction');
+assert.strictEqual(featureFiles.length, 271, '271 feature modules must remain after the admin-dismiss-report extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 284, 'HTML must retain 284 script tags after the admin-dismiss-report extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 284, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 283, 'HTML must retain 283 external script tags after the admin-dismiss-report extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
