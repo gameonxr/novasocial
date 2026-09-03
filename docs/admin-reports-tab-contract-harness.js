@@ -45,12 +45,12 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function adminTabReports(content){');
     const end = source.indexOf('\nasync function adminResolveReport(', start);
     assert(start >= 0 && end > start, 'reports tab function boundary must remain present and ordered');
     const functionBlock = source.slice(start, end);
-    const moduleOwner = fs.readFileSync('/home/ubuntu/novasocial/src/features/set-reports-filter-owner.js', 'utf8');
+    const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/set-reports-filter-owner.js', 'utf8');
     eval(`let _reportsFilter = 'pending'; const window = global; ${functionBlock}; ${moduleOwner}; global.adminTabReports = adminTabReports; global.setReportsFilter = window.setReportsFilter; global.loadReportsList = loadReportsList;`);
 
     const reports = [{

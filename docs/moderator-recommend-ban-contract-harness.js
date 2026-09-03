@@ -40,7 +40,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function moderatorRecommendBan(');
     const end = source.indexOf('\n// Admin tab: Approvals', start);
     assert(start >= 0 && end > start, 'moderator recommendation boundary must remain present and ordered');

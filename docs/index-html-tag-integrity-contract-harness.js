@@ -4,7 +4,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const html = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
 function count(pattern) {
   return (html.match(pattern) || []).length;
 }

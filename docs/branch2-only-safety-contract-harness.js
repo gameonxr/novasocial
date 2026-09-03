@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 function git(...args) {
   return execFileSync('git', args, { cwd: repo, encoding: 'utf8' }).trim();
 }

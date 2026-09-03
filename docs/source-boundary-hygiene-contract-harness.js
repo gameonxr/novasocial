@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const files = [];
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

@@ -4,7 +4,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');

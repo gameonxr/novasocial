@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const decoder = fs.readFileSync(path.join(repo, 'src', 'features', 'url-base64-to-uint8-array.js'), 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'push-vapid-403-diagnosis-contract.md'), 'utf8');

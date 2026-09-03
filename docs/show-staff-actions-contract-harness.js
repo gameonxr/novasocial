@@ -23,7 +23,7 @@ async function runHarness() {
   };
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('function showStaffActions(userId, username, currentRole, isSuper){');
     assert(start >= 0, 'showStaffActions declaration must remain present');
     const end = source.indexOf('\n// ─── Moderator promote/demote functions ───', start);

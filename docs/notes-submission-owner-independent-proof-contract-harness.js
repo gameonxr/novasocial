@@ -5,7 +5,7 @@ const path = require('path');
 const vm = require('vm');
 const { execFileSync } = require('child_process');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const currentModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {

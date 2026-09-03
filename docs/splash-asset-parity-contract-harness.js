@@ -1,8 +1,9 @@
 const assert = require('assert');
+const path = require('path');
 const fs = require('fs');
 const cp = require('child_process');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const branch2 = fs.readFileSync(`${repo}/index.html`, 'utf8');
 const main = cp.execFileSync('git', ['show', 'refs/remotes/origin/main:index.html'], {cwd: repo, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024});
 const pattern = /<img[^>]+class=["']splash-icon["'][^>]+src=["']data:image\/png;base64,([^"']+)/;

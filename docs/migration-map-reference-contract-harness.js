@@ -4,7 +4,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const migrationMapPath = path.join(repo, 'MIGRATION_MAP.md');
 const migrationMap = fs.readFileSync(migrationMapPath, 'utf8');
 const refs = [...new Set([...migrationMap.matchAll(/`(docs\/[^`]+)`/g)].map(match => match[1]))].sort();

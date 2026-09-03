@@ -1,7 +1,7 @@
 const assert = require('assert');
 const fs = require('fs');
 
-const serviceWorker = fs.readFileSync('/home/ubuntu/novasocial/sw.js', 'utf8');
+const serviceWorker = fs.readFileSync('/home/z/my-project/novasocial/sw.js', 'utf8');
 
 assert(serviceWorker.includes("const CACHE_NAME = 'novasocial-v1';"), 'service worker cache name must remain stable');
 for (const url of ['/', '/index.html', '/icon-192.png', '/icon-180.png', '/manifest.json']) {

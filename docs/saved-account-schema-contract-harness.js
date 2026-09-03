@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 function read(relative) { return fs.readFileSync(path.join(repo, relative), 'utf8'); }
 const index = read('index.html');
 const getSaved = read('src/features/get-saved-accounts.js');

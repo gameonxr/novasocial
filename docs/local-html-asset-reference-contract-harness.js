@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const refs = [];
 const pattern = /\b(?:src|href|poster)\s*=\s*["']([^"']+)["']/g;

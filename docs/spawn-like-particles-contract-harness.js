@@ -49,8 +49,8 @@ async function runHarness() {
   Math.random = () => 0.5;
 
   try {
-    const html = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
-    const moduleSource = fs.readFileSync('/home/ubuntu/novasocial/src/features/spawn-like-particles.js', 'utf8');
+    const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
+    const moduleSource = fs.readFileSync('/home/z/my-project/novasocial/src/features/spawn-like-particles.js', 'utf8');
     assert(!html.includes('function spawnLikeParticles(el){'), 'inline particle owner must be removed after production split');
     assert(moduleSource.includes('window.spawnLikeParticles = function(el){'), 'production particle module must assign the global owner');
     global.window = global;
@@ -141,7 +141,7 @@ async function runHarness() {
     assert.throws(() => failureAdapter(target), /append-boundary-failure/, 'test-only failure boundary must surface the injected append error');
     assert.strictEqual(failureParticles.length, 1, 'failure branch stops at the injected append boundary');
     assert.strictEqual(typeof global.spawnLikeParticles, 'function', 'window-assigned production owner remains available under test');
-    const likeEffects = fs.readFileSync('/home/ubuntu/novasocial/src/features/like-effects.js', 'utf8');
+    const likeEffects = fs.readFileSync('/home/z/my-project/novasocial/src/features/like-effects.js', 'utf8');
     assert(likeEffects.includes('spawnLikeParticles(el);'), 'like-effects caller must preserve the global particle handoff');
     assert(!likeEffects.includes('particle-adapter'), 'like-effects caller must not import a second particle owner');
 

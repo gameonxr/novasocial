@@ -33,13 +33,13 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('const _tabCache = {};');
     const end = source.indexOf('\nfunction destroyReelsPersistentContainer()', start);
     assert(start >= 0 && end > start, 'tab-cache boundary must remain present and ordered');
     const block = source.slice(start, end);
     const hasInlineInvalidator = /function invalidateTabCache\(tab\)\s*\{/.test(block);
-    const externalInvalidator = hasInlineInvalidator ? '' : fs.readFileSync('/home/ubuntu/novasocial/src/features/invalidate-tab-cache-owner.js', 'utf8');
+    const externalInvalidator = hasInlineInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/invalidate-tab-cache-owner.js', 'utf8');
     const invalidatorBinding = hasInlineInvalidator ? 'invalidateTabCache' : 'window.invalidateTabCache';
     eval(`${block}; ${externalInvalidator}; global._saveTabToCache = _saveTabToCache; global._tryRestoreFromCache = _tryRestoreFromCache; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = invalidateAllTabCache;`);
 

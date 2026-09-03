@@ -58,7 +58,7 @@ async function runHarness() {
   }
 
   try {
-    const source = require('fs').readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = require('fs').readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function searchUserForPromotion(query){');
     assert(start >= 0, 'searchUserForPromotion declaration must remain present');
     const end = source.indexOf('\nfunction showStaffActions(', start);

@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 function readRoot(name) {
   const file = path.join(repo, name);
   assert(fs.existsSync(file), `${name} must exist`);

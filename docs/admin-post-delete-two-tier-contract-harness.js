@@ -72,7 +72,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function adminSoftDeletePost(postId, reason = \'\') {');
     const end = source.indexOf('\n/**\n * AUTO-PURGE', start);
     assert(start >= 0 && end > start, 'two-tier delete boundary must remain present and ordered');

@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const scriptTags = [...html.matchAll(/<script\b[^>]*>/gi)].map(match => match[0]);
 const moduleTags = scriptTags.filter(tag => /\btype\s*=\s*["']module["']/i.test(tag));

@@ -53,7 +53,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function showAdminUserDetail(userId){');
     assert(start >= 0, 'showAdminUserDetail declaration must remain present');
     const end = source.indexOf('\n// Load real report stats for a user in admin detail view', start);

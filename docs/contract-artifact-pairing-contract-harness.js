@@ -4,7 +4,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const docsDir = path.join(repo, 'docs');
 const names = fs.readdirSync(docsDir);
 const contracts = names.filter(name => name.endsWith('-contract.md')).sort();

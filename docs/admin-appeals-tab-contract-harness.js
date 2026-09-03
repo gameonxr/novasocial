@@ -42,12 +42,12 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function adminTabAppeals(content){');
     const end = source.indexOf('\nasync function adminApproveAppeal(', start);
     assert(start >= 0 && end > start, 'appeals tab function boundary must remain present and ordered');
     const functionBlock = source.slice(start, end);
-    const moduleOwner = fs.readFileSync('/home/ubuntu/novasocial/src/features/admin-appeals-filter-owner.js', 'utf8');
+    const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-appeals-filter-owner.js', 'utf8');
     eval(`let _appealsFilter = 'pending'; const window = global; ${functionBlock}; ${moduleOwner}; global.adminTabAppeals = adminTabAppeals; global.setAppealsFilter = window.setAppealsFilter; global.loadAppealsList = loadAppealsList;`);
 
     const appeal = {

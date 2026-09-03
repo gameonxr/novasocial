@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const manifestPath = path.join(repo, 'manifest.json');
 const htmlPath = path.join(repo, 'index.html');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));

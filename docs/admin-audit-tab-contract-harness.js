@@ -31,7 +31,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/ubuntu/novasocial/index.html', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('async function adminTabAudit(content){');
     const end = source.indexOf('\n// ─── Content Tab — browse all posts, delete any ───', start);
     assert(start >= 0 && end > start, 'audit-tab boundary must remain present and ordered');

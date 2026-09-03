@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const repo = '/home/ubuntu/novasocial';
+const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const files = ['index.html', 'src/features/profile.js', 'src/features/home.js', 'src/features/reels-renderer-owner.js'];
 const counts = {};
 for (const relative of files) {
