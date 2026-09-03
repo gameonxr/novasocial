@@ -352,7 +352,7 @@
 <script src="src/features/start-dm.js"></script>
 <script src="src/features/settings-notifications.js"></script>
 <script src="src/features/switch-admin-tab.js"></script>
-<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script>
+<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script>
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
@@ -9812,10 +9812,6 @@ function submitNativeEmojiReaction(noteId){
 // ═══════════════════════════════════════════════════════════════
 // 📝 NOTE RING HELPER — check if user has an active note (for profile ring)
 // ═══════════════════════════════════════════════════════════════
-async function checkUserActiveNote(userId){
-  const{data:note} = await db.from('quick_notes').select('id,text').eq('user_id',userId).gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(1).maybeSingle();
-  return note || null;
-}
 
 </script>
 <script src="src/features/jump-to-message-owner.js"></script>
