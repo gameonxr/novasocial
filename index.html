@@ -418,7 +418,7 @@
 <script src="src/features/push-subscription-owner.js"></script>
 <script src="src/features/push-force-resubscribe-owner.js"></script>
 <script src="src/features/push-silent-resubscribe-owner.js"></script>
-<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script>
+<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script><script src="src/features/reset-account-scoped-ui-state.js"></script>
 
 <script>
 
@@ -632,32 +632,6 @@ let _renderGeneration = 0;
 // story trays, scroll positions, and parked Reels DOM belong to the previous
 // session and can otherwise be restored before the new profile has rendered.
 let _uiAccountUserId = null;
-function resetAccountScopedUiState(nextUserId){
-  const normalizedUserId = nextUserId || null;
-  if(_uiAccountUserId === normalizedUserId) return;
-
-  _renderGeneration++;
-  Object.keys(_tabCache).forEach(k => delete _tabCache[k]);
-  Object.keys(_tabScrollPos).forEach(k => delete _tabScrollPos[k]);
-  window._lastKnownFeedTimestamp = null;
-
-  svData = [];
-  svBuckets = [];
-  svBucketIdx = 0;
-  svStoryIdx = 0;
-  svProg = 0;
-  svIsPaused = false;
-  if(typeof _myActiveNote !== 'undefined') _myActiveNote = null;
-  if(typeof destroyReelsPersistentContainer === 'function') destroyReelsPersistentContainer();
-
-  const scr = document.getElementById('screen');
-  if(scr){
-    scr.innerHTML = '';
-    scr.onscroll = null;
-    scr.scrollTop = 0;
-  }
-  _uiAccountUserId = normalizedUserId;
-}
 
 // ═══════════════════════════════════════════════════════════════
 // 👥 MULTI-ACCOUNT SUPPORT — Instagram-style account switching
