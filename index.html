@@ -418,7 +418,7 @@
 <script src="src/features/push-subscription-owner.js"></script>
 <script src="src/features/push-force-resubscribe-owner.js"></script>
 <script src="src/features/push-silent-resubscribe-owner.js"></script>
-<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script><script src="src/features/reset-account-scoped-ui-state.js"></script><script src="src/features/load-prof.js"></script>
+<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script><script src="src/features/reset-account-scoped-ui-state.js"></script><script src="src/features/load-prof.js"></script><script src="src/features/invalidate-all-tab-cache.js"></script>
 
 <script>
 
@@ -588,9 +588,6 @@ function _tryRestoreFromCache(tab) {
  * agli baar fresh load ho
  */
 
-function invalidateAllTabCache() {
-  Object.keys(_tabCache).forEach(k => delete _tabCache[k]);
-}
 
 /**
  * Reels persistent-container ko destroy karo (wherever it lives — #screen ya document.body parked).

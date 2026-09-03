@@ -41,7 +41,10 @@ async function runHarness() {
     const hasInlineInvalidator = /function invalidateTabCache\(tab\)\s*\{/.test(block);
     const externalInvalidator = hasInlineInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/invalidate-tab-cache-owner.js', 'utf8');
     const invalidatorBinding = hasInlineInvalidator ? 'invalidateTabCache' : 'window.invalidateTabCache';
-    eval(`${block}; ${externalInvalidator}; global._saveTabToCache = _saveTabToCache; global._tryRestoreFromCache = _tryRestoreFromCache; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = invalidateAllTabCache;`);
+    const hasInlineAllInvalidator = /function invalidateAllTabCache\(\)\s*\{/.test(block);
+    const externalAllInvalidator = hasInlineAllInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/invalidate-all-tab-cache.js', 'utf8');
+    const allInvalidatorBinding = hasInlineAllInvalidator ? 'invalidateAllTabCache' : 'window.invalidateAllTabCache';
+    eval(`${block}; ${externalInvalidator}; ${externalAllInvalidator}; global._saveTabToCache = _saveTabToCache; global._tryRestoreFromCache = _tryRestoreFromCache; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = ${allInvalidatorBinding};`);
 
     // Enabled non-Reels tabs save HTML and scroll position.
     Date.now = () => 100000;
