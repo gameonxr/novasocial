@@ -352,7 +352,7 @@
 <script src="src/features/start-dm.js"></script>
 <script src="src/features/settings-notifications.js"></script>
 <script src="src/features/switch-admin-tab.js"></script>
-<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script>
+<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script>
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
@@ -8542,10 +8542,6 @@ async function rejectIncomingCall(callId) {
   toast('Call rejected');
 }
 
-function dismissIncomingCallBanner() {
-  stopRingtone(); const banner = document.getElementById('nova-incoming-call'); if (banner) banner.classList.remove('show');
-  try { navigator.vibrate(0); } catch(e) {}
-}
 
 async function acceptIncomingCall(callId, callerId, name, avatar, type) {
   stopRingtone(); dismissIncomingCallBanner();
