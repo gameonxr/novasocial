@@ -17,7 +17,7 @@ const managedSlots = [
   '_groupCallState.participantsSub', 'window.notifsSub', 'window._selfProfileSub', 'window._notesSub',
 ];
 
-assert.strictEqual(files.length, 381, 'index.html plus 240 extracted modules must be audited after the DMs renderer split');
+assert.strictEqual(files.length, 382, 'index.html plus 240 extracted modules must be audited after the DMs renderer split');
 assert.strictEqual((source.match(/\.channel\(/g) || []).length, 10, '10 Supabase realtime channels must remain registered');
 assert.strictEqual((source.match(/removeChannel\(/g) || []).length, 21, '21 existing cleanup calls must remain present');
 for (const name of channelNames) {

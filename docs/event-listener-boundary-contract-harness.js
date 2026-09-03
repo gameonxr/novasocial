@@ -22,7 +22,7 @@ const indexText = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const serviceWorkerText = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 const listenerFiles = sourceFiles.filter((file) => fs.readFileSync(file, 'utf8').includes('addEventListener'));
 
-assert.strictEqual(sourceFiles.length, 380, '234 extracted JavaScript modules must remain present after the DMs renderer split');
+assert.strictEqual(sourceFiles.length, 381, '234 extracted JavaScript modules must remain present after the DMs renderer split');
 assert.strictEqual(count(sourceText, 'addEventListener'), 96, 'extracted modules must retain the audited 74 listener registrations after Reels windowing helper split');
 assert.strictEqual(count(sourceText, 'removeEventListener'), 0, 'the audit must not silently introduce cleanup registrations in extracted modules');
 assert.strictEqual(count(indexText, 'addEventListener'), 8, 'index.html must retain 30 listener registrations after the authorized forward-message selector');
