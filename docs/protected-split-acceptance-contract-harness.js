@@ -19,7 +19,7 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 15/20 protected signatures moved; 15 bounded scopes are split-complete, including Notes submission and Push subscription; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the fifteen moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 16/20 protected signatures moved; 16 bounded scopes are split-complete, including Notes submission, Push subscription, and Push force-resubscribe; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the sixteen moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('6 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');

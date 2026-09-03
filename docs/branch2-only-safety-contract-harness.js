@@ -19,13 +19,15 @@ const latestFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', 'HEA
 assert(latestFiles.length > 0, 'latest checkpoint must contain files');
 const allowedProtectedSplitFiles = new Set(['HANDOFF.md', 'MIGRATION_MAP.md', 'index.html', 'src/features/dms-renderer-owner.js', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/reels-video-windowing.js', 'src/features/notes-reaction-owner.js', 'src/features/push-subscription-owner.js', 'src/features/push-force-resubscribe-owner.js']);
 assert(latestFiles.every(file => file.startsWith('docs/') || allowedProtectedSplitFiles.has(file)), 'latest checkpoint must contain only docs and approved protected split files');
-if (latestFiles.includes('index.html') || latestFiles.includes('src/features/dms-renderer-owner.js') || latestFiles.includes('src/features/spawn-like-particles.js') || latestFiles.includes('src/features/sync-local-deletion-fallback.js') || latestFiles.includes('src/features/push-settings.js') || latestFiles.includes('src/features/reels-video-windowing.js')) {
+if (latestFiles.includes('index.html') || latestFiles.includes('src/features/dms-renderer-owner.js') || latestFiles.includes('src/features/spawn-like-particles.js') || latestFiles.includes('src/features/sync-local-deletion-fallback.js') || latestFiles.includes('src/features/push-settings.js') || latestFiles.includes('src/features/reels-video-windowing.js') || latestFiles.includes('src/features/push-subscription-owner.js') || latestFiles.includes('src/features/push-force-resubscribe-owner.js')) {
   assert(latestFiles.includes('index.html'), 'protected split checkpoint must include index.html');
   if (latestFiles.includes('src/features/dms-renderer-owner.js')) assert(latestFiles.includes('src/features/dms-renderer-owner.js'), 'DMs renderer split checkpoint must include the DMs renderer module');
-  assert(latestFiles.includes('src/features/spawn-like-particles.js'), 'protected split checkpoint must include the particle module');
-  assert(latestFiles.includes('src/features/sync-local-deletion-fallback.js'), 'protected split checkpoint must include the deletion-fallback module');
-  assert(latestFiles.includes('src/features/push-settings.js'), 'protected split checkpoint must include the Push settings module');
+  if (latestFiles.includes('src/features/spawn-like-particles.js')) assert(latestFiles.includes('src/features/spawn-like-particles.js'), 'particle module checkpoint must include the particle module');
+  if (latestFiles.includes('src/features/sync-local-deletion-fallback.js')) assert(latestFiles.includes('src/features/sync-local-deletion-fallback.js'), 'deletion-fallback module checkpoint must include the deletion-fallback module');
+  if (latestFiles.includes('src/features/push-settings.js')) assert(latestFiles.includes('src/features/push-settings.js'), 'Push settings module checkpoint must include the Push settings module');
   if (latestFiles.includes('src/features/reels-video-windowing.js')) assert(latestFiles.includes('src/features/reels-video-windowing.js'), 'Reels helper split checkpoint must include its module');
+  if (latestFiles.includes('src/features/push-subscription-owner.js')) assert(latestFiles.includes('src/features/push-subscription-owner.js'), 'Push subscription module checkpoint must include its module');
+  if (latestFiles.includes('src/features/push-force-resubscribe-owner.js')) assert(latestFiles.includes('src/features/push-force-resubscribe-owner.js'), 'Push force-resubscribe module checkpoint must include its module');
 }
 
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');

@@ -12,8 +12,8 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
 assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('6 unapproved systems'), 'matrix must continue to mark remaining browser proof');
-assert(matrix.includes('all fifteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 15/20 protected signatures moved; 15 bounded scopes are split-complete, including Notes submission and Push subscription; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the fifteen moved protected signatures and supporting Reels helper');
+assert(matrix.includes('all sixteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
+assert(matrix.includes('Protected production splits | 16/20 protected signatures moved; 16 bounded scopes are split-complete, including Notes submission, Push subscription, and Push force-resubscribe; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the sixteen moved protected signatures and supporting Reels helper');
 assert(gate.includes('Direct extraction remains explicitly blocked for the 5 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
