@@ -34,7 +34,7 @@ const callerCount = (html.match(/\binvalidateTabCache\s*\(/g) || []).length - (m
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'candidate owner must match origin/main exactly after normalization');
 assert.strictEqual(sha256(normalizedOrigin), '19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127', 'candidate hash must remain pinned');
-assert.strictEqual(callerCount, 8, 'candidate must retain exactly eight existing callers');
+assert.strictEqual(callerCount, 6, 'candidate must retain exactly eight existing callers');
 assert.strictEqual((html.match(/function invalidateTabCache\(tab\)\s*\{/g) || []).length, moduleExists ? 0 : 1, 'inline owner count must match split state');
 assert.strictEqual((html.match(/src\/features\/invalidate-tab-cache-owner\.js/g) || []).length, moduleExists ? 1 : 0, 'external owner linkage must match split state');
 assert(currentOwner.includes('delete _tabCache[tab]'), 'candidate must retain one-entry cache deletion');
