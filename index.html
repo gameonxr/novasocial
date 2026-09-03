@@ -418,7 +418,8 @@
 <script src="src/features/push-subscription-owner.js"></script>
 <script src="src/features/push-force-resubscribe-owner.js"></script>
 <script src="src/features/push-silent-resubscribe-owner.js"></script>
-<script src="src/features/notes-submission-owner.js"></script>
+<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script>
+
 <script>
 
 
@@ -806,9 +807,6 @@ window.addEventListener('load',async()=>{
     }
   }});
 });
-async function updateLastSeen(){
-  try{await db.from('profiles').update({last_seen:new Date().toISOString()}).eq('id',ME.id);}catch(e){}
-}
 
 async function loadProf(){
   const {data}=await db.from('profiles').select('*').eq('id',ME.id).single();
