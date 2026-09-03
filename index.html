@@ -352,7 +352,7 @@
 <script src="src/features/start-dm.js"></script>
 <script src="src/features/settings-notifications.js"></script>
 <script src="src/features/switch-admin-tab.js"></script>
-<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script><script src="src/features/report-group.js"></script><script src="src/features/show-msg-menu-from-el.js"></script>
+<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script><script src="src/features/report-group.js"></script><script src="src/features/show-msg-menu-from-el.js"></script><script src="src/features/update-participant-count.js"></script>
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
@@ -9462,11 +9462,6 @@ function removeRemoteTile(userId) {
   updateParticipantCount();
 }
 
-function updateParticipantCount() {
-  const grid = document.getElementById('group-call-grid');
-  const countEl = document.getElementById('gc-participant-count');
-  if (grid && countEl) countEl.textContent = grid.children.length + ' in call';
-}
 
 function setupSpeakingIndicator(userId, stream) {
   try {
