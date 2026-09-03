@@ -284,6 +284,7 @@
 <script src="src/features/setup-home-hold-restore.js"></script>
 <script src="src/features/update-account-avatar.js"></script>
 <script src="src/features/get-saved-accounts.js"></script>
+<script src="src/features/save-account-session.js"></script>
 <script src="src/features/client-moderation-guards.js"></script>
 <script src="src/features/private-public-id.js"></script>
 <script src="src/features/fallback-local-queue.js"></script>
@@ -697,21 +698,6 @@ function resetAccountScopedUiState(nextUserId){
 // ═══════════════════════════════════════════════════════════════
 // 👥 MULTI-ACCOUNT SUPPORT — Instagram-style account switching
 // localStorage mein multiple sessions store karo, 1-tap se switch karo
-// ═══════════════════════════════════════════════════════════════
-const MAX_ACCOUNTS = 5;
-
-function saveAccountSession(userId, username, avatarUrl, session){
-  let accounts = getSavedAccounts();
-  accounts = accounts.filter(a => a.userId !== userId); // duplicate hatao
-  accounts.unshift({
-    userId, username, avatarUrl,
-    access_token: session.access_token,
-    refresh_token: session.refresh_token,
-    savedAt: Date.now()
-  });
-  if(accounts.length > MAX_ACCOUNTS) accounts = accounts.slice(0, MAX_ACCOUNTS);
-  localStorage.setItem('nova_accounts', JSON.stringify(accounts));
-}
 
 function removeAccountSession(userId){
   let accounts = getSavedAccounts().filter(a => a.userId !== userId);

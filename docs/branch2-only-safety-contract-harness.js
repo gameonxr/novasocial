@@ -17,7 +17,7 @@ assert.strictEqual(git('rev-parse', 'HEAD'), git('rev-parse', 'origin/Branch2'),
 
 const latestFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD').split('\n').filter(Boolean);
 assert(latestFiles.length > 0, 'latest checkpoint must contain files');
-const allowedProtectedSplitFiles = new Set(['HANDOFF.md', 'MIGRATION_MAP.md', 'index.html', 'src/features/dms-renderer-owner.js', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/reels-video-windowing.js', 'src/features/notes-reaction-owner.js', 'src/features/push-subscription-owner.js', 'src/features/push-force-resubscribe-owner.js', 'src/features/cleanup-expired-stories.js', 'src/features/delete-cloudinary-media.js']);
+const allowedProtectedSplitFiles = new Set(['HANDOFF.md', 'MIGRATION_MAP.md', 'index.html', 'src/features/dms-renderer-owner.js', 'src/features/spawn-like-particles.js', 'src/features/sync-local-deletion-fallback.js', 'src/features/push-settings.js', 'src/features/reels-video-windowing.js', 'src/features/notes-reaction-owner.js', 'src/features/push-subscription-owner.js', 'src/features/push-force-resubscribe-owner.js', 'src/features/cleanup-expired-stories.js', 'src/features/delete-cloudinary-media.js', 'src/features/save-account-session.js']);
 assert(latestFiles.every(file => file.startsWith('docs/') || allowedProtectedSplitFiles.has(file)), 'latest checkpoint must contain only docs and approved protected split files');
 if (latestFiles.includes('index.html') || latestFiles.includes('src/features/dms-renderer-owner.js') || latestFiles.includes('src/features/spawn-like-particles.js') || latestFiles.includes('src/features/sync-local-deletion-fallback.js') || latestFiles.includes('src/features/push-settings.js') || latestFiles.includes('src/features/reels-video-windowing.js') || latestFiles.includes('src/features/push-subscription-owner.js') || latestFiles.includes('src/features/push-force-resubscribe-owner.js')) {
   assert(latestFiles.includes('index.html'), 'protected split checkpoint must include index.html');
@@ -48,5 +48,5 @@ assert(storyModule.includes('window.renderStoryElements = function(){'), 'approv
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=DELETE_CLOUDINARY_MEDIA_EXTRACTION');
+console.log('LATEST_CHECKPOINT=SAVE_ACCOUNT_SESSION_EXTRACTION');
 console.log('MAIN_REF_UNCHANGED=YES');
