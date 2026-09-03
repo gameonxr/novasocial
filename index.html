@@ -699,11 +699,6 @@ function resetAccountScopedUiState(nextUserId){
 // 👥 MULTI-ACCOUNT SUPPORT — Instagram-style account switching
 // localStorage mein multiple sessions store karo, 1-tap se switch karo
 
-function removeAccountSession(userId){
-  let accounts = getSavedAccounts().filter(a => a.userId !== userId);
-  localStorage.setItem('nova_accounts', JSON.stringify(accounts));
-}
-
 let _callState = {
   active: false, callId: null, callType: 'audio', isOutgoing: false,
   remoteUserId: null, remoteUserName: null, remoteUserAvatar: null,

@@ -48,5 +48,5 @@ assert(storyModule.includes('window.renderStoryElements = function(){'), 'approv
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=SAVE_ACCOUNT_SESSION_EXTRACTION');
+console.log('LATEST_CHECKPOINT=REMOVE_ACCOUNT_SESSION_EXTRACTION');
 console.log('MAIN_REF_UNCHANGED=YES');

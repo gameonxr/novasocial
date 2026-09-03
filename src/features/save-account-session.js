@@ -17,3 +17,9 @@ window.saveAccountSession = function saveAccountSession(userId, username, avatar
   if(accounts.length > MAX_ACCOUNTS) accounts = accounts.slice(0, MAX_ACCOUNTS);
   localStorage.setItem('nova_accounts', JSON.stringify(accounts));
 };
+
+
+window.removeAccountSession = function removeAccountSession(userId){
+  let accounts = getSavedAccounts().filter(a => a.userId !== userId);
+  localStorage.setItem('nova_accounts', JSON.stringify(accounts));
+};

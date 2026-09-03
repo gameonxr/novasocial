@@ -20,7 +20,7 @@ const expectedNames = [
   '_videoTrimTo', 'chatSubscription', 'checkUnreadNotifs', 'clearNavDebugLog', 'confirmCropPreview', 'currentMood',
   'generateAICaption', 'getLocalAIResponse', 'handleNovaCommand', 'initNovaFeatures', 'invalidateTabCache', 'loadMoodFeed',
   'loadMoreFeedPosts', 'loadNoteReactorsList', 'navStack', 'notifsSub', 'novaDebug', 'postsSub', 'refreshProfileCounts', 'replyToId', 'replyToText',
-  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'renderDMs', 'renderReels', 'enablePushFromSettings', 'resetPushFromSettings', 'subscribeToPushNotifications', 'forceResubscribePush', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'reactToNote', 'maybeShowPushPermissionBanner', 'silentPushResubscribeIfGranted', '_applyReelsVideoWindowing', 'submitNote', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter', 'setVerifyFilter', 'toggleSVMute', 'cleanupExpiredStories', 'deleteCloudinaryMedia', 'saveAccountSession',
+  'sendCmt', 'showApp', 'showNavDebugLog', 'showNovaUniverseHub', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'renderDMs', 'renderReels', 'enablePushFromSettings', 'resetPushFromSettings', 'subscribeToPushNotifications', 'forceResubscribePush', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'reactToNote', 'maybeShowPushPermissionBanner', 'silentPushResubscribeIfGranted', '_applyReelsVideoWindowing', 'submitNote', 'toggleLike', 'typingSub', 'setAppealsFilter', 'setReportsFilter', 'setVerifyFilter', 'toggleSVMute', 'cleanupExpiredStories', 'deleteCloudinaryMedia', 'saveAccountSession', 'removeAccountSession',
 ].sort();
 
 function collectSourceFiles(dir, files = []) {
@@ -40,7 +40,7 @@ const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
 assert.strictEqual(files.length, 239, 'index.html plus 238 extracted modules must be audited after the DMs renderer owner split');
-assert.strictEqual(matches.length, 225, 'application surface must retain 221 explicit window assignments after the Notes submission owner split');
+assert.strictEqual(matches.length, 226, 'application surface must retain 221 explicit window assignments after the Notes submission owner split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
