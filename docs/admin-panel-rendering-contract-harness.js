@@ -5,14 +5,22 @@ const path = require('path');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const adminUiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'render-admin-panel-ui.js'), 'utf8');
+const showAdminPanelModule = fs.readFileSync(path.join(repo, 'src', 'features', 'show-admin-panel.js'), 'utf8');
+
+const requiredModuleMarkers = [
+  'async function showAdminPanel()',
+  'Access Denied',
+  'Verifying access...',
+];
+for (const marker of requiredModuleMarkers) {
+  assert(showAdminPanelModule.includes(marker), `Admin panel module marker missing: ${marker}`);
+}
 
 const requiredMarkers = [
-  'async function showAdminPanel()',
   'async function loadAdminTab(tab)',
   'is_banned',
   'is_admin',
   'is_super_admin',
-  'Access Denied',
   "const content = document.getElementById('admin-content')",
   'content.innerHTML = `<div style="display:flex;justify-content:center;padding:40px">',
   "if(tab==='dashboard') await adminTabDashboard(content);",
@@ -41,7 +49,10 @@ assert(fs.existsSync(path.join(repo, 'docs', 'admin-post-delete-two-tier-contrac
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-post-delete-two-tier-contract-harness.js')), 'Admin deletion harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-notification-contract.md')), 'Admin notification contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-notification-contract-harness.js')), 'Admin notification harness must remain present');
-assert.strictEqual((html.match(/async function showAdminPanel\(/g) || []).length, 1, 'Admin panel must have one inline owner');
+assert.strictEqual((html.match(/async function showAdminPanel\(/g) || []).length, 0, 'Admin panel owner must be fully extracted (zero inline declarations)');
+assert.strictEqual((showAdminPanelModule.match(/window\.showAdminPanel\s*=\s*async function showAdminPanel\(/g) || []).length, 1, 'Admin panel module must expose exactly one window.showAdminPanel owner');
+assert(html.includes('src="src/features/show-admin-panel.js"'), 'Admin panel module must remain linked from index.html');
+assert(html.indexOf('src="src/features/show-admin-panel.js"') > html.indexOf('src="src/features/render-admin-panel-ui.js"'), 'Admin panel module must load after its render-admin-panel-ui dependency');
 assert.strictEqual((html.match(/async function loadAdminTab\(/g) || []).length, 1, 'Admin tab loader must have one inline owner');
 
 console.log('ADMIN_PANEL_RENDERING_CONTRACT_HARNESS=PASS');
