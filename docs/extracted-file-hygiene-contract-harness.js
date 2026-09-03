@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 286, 'all 268 extracted source files must remain present after the Push permission banner owner split');
+assert.strictEqual(files.length, 287, 'all 268 extracted source files must remain present after the Push permission banner owner split');
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {
