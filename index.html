@@ -352,7 +352,7 @@
 <script src="src/features/start-dm.js"></script>
 <script src="src/features/settings-notifications.js"></script>
 <script src="src/features/switch-admin-tab.js"></script>
-<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script><script src="src/features/report-group.js"></script><script src="src/features/show-msg-menu-from-el.js"></script><script src="src/features/update-participant-count.js"></script><script src="src/features/close-story-editor.js"></script><script src="src/features/deselect-story-element.js"></script><script src="src/features/swipe-start.js"></script><script src="src/features/reject-incoming-call.js"></script><script src="src/features/toggle-call-mute.js"></script><script src="src/features/toggle-call-video.js"></script>
+<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script><script src="src/features/report-group.js"></script><script src="src/features/show-msg-menu-from-el.js"></script><script src="src/features/update-participant-count.js"></script><script src="src/features/close-story-editor.js"></script><script src="src/features/deselect-story-element.js"></script><script src="src/features/swipe-start.js"></script><script src="src/features/reject-incoming-call.js"></script><script src="src/features/toggle-call-mute.js"></script><script src="src/features/toggle-call-video.js"></script><script src="src/features/toggle-call-speaker.js"></script>
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
@@ -9180,12 +9180,6 @@ async function showCallHistory(otherUserId){
 
 
 
-function toggleCallSpeaker() {
-  _callState.isSpeaker = !_callState.isSpeaker; const audio = document.getElementById('nova-call-remote-audio');
-  if (audio && audio.setSinkId) { audio.setSinkId(_callState.isSpeaker ? 'default' : '').catch(() => {}); }
-  const btn = document.getElementById('nova-call-speaker-btn'); if (btn) btn.style.background = _callState.isSpeaker ? 'rgba(0,229,255,0.3)' : 'rgba(255,255,255,0.15)'
-  toast(_callState.isSpeaker ? '🔊 Speaker on' : '🔉 Earpiece');
-}
 
 async function endCall(updateDB) {
   console.log('%c[CALL] endCall() triggered | updateDB=' + updateDB + ' | stack trace:', 'color:red;font-weight:bold', new Error().stack);
