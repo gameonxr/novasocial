@@ -418,7 +418,7 @@
 <script src="src/features/push-subscription-owner.js"></script>
 <script src="src/features/push-force-resubscribe-owner.js"></script>
 <script src="src/features/push-silent-resubscribe-owner.js"></script>
-<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script><script src="src/features/reset-account-scoped-ui-state.js"></script><script src="src/features/load-prof.js"></script><script src="src/features/invalidate-all-tab-cache.js"></script>
+<script src="src/features/notes-submission-owner.js"></script><script src="src/features/update-last-seen.js"></script><script src="src/features/reset-account-scoped-ui-state.js"></script><script src="src/features/load-prof.js"></script><script src="src/features/invalidate-all-tab-cache.js"></script><script src="src/features/destroy-reels-persistent-container.js"></script>
 
 <script>
 
@@ -598,16 +598,6 @@ function _tryRestoreFromCache(tab) {
  * Approach: destroy-and-rebuild — index-based IDs (rv-${i}) ke saath per-reel
  * DOM patching risky hai, poora rebuild safe hai.
  */
-function destroyReelsPersistentContainer() {
-  const container = document.getElementById('reels-persistent-container');
-  if (container && container.parentNode) {
-    container.parentNode.removeChild(container);
-  }
-  // Reset saved reel index so next rebuild starts at top (index 0)
-  window._savedReelIndex = 0;
-  // Note: TAB_CACHE_CONFIG.reels = Infinity (intentional, unchanged).
-  // Reels never used _tabCache HTML snapshot anyway — only the persistent-container.
-}
 
 // ═══════════════════════════════════════════════════════════════
 // 🧭 UNIFIED BACK NAVIGATION SYSTEM (Instagram/Snapchat/X style)

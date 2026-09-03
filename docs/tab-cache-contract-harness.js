@@ -35,7 +35,7 @@ async function runHarness() {
   try {
     const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
     const start = source.indexOf('const _tabCache = {};');
-    const end = source.indexOf('\nfunction destroyReelsPersistentContainer()', start);
+    const end = source.indexOf('\nlet svData=', start);
     assert(start >= 0 && end > start, 'tab-cache boundary must remain present and ordered');
     const block = source.slice(start, end);
     const hasInlineInvalidator = /function invalidateTabCache\(tab\)\s*\{/.test(block);

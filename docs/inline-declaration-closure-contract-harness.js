@@ -15,7 +15,7 @@ const protectedNames = [
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
   'voteStoryPoll','refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 218, 'inline application script must retain 228 function declarations after the Push permission banner owner split');
+assert.strictEqual(declarations.length, 217, 'inline application script must retain 228 function declarations after the Push permission banner owner split');
 const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 19, 'protected declaration set must contain 19 unique names');
