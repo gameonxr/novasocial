@@ -352,7 +352,7 @@
 <script src="src/features/start-dm.js"></script>
 <script src="src/features/settings-notifications.js"></script>
 <script src="src/features/switch-admin-tab.js"></script>
-<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script><script src="src/features/report-group.js"></script><script src="src/features/show-msg-menu-from-el.js"></script><script src="src/features/update-participant-count.js"></script><script src="src/features/close-story-editor.js"></script><script src="src/features/deselect-story-element.js"></script><script src="src/features/swipe-start.js"></script><script src="src/features/reject-incoming-call.js"></script><script src="src/features/toggle-call-mute.js"></script><script src="src/features/toggle-call-video.js"></script><script src="src/features/toggle-call-speaker.js"></script><script src="src/features/remove-remote-tile.js"></script><script src="src/features/sign-out-banned.js"></script><script src="src/features/toggle-group-video.js"></script><script src="src/features/minimize-call.js"></script><script src="src/features/restore-call.js"></script><script src="src/features/next-user-sv.js"></script><script src="src/features/prev-user-sv.js"></script><script src="src/features/pin-msg-from-enc.js"></script><script src="src/features/show-group-call-type-menu.js"></script><script src="src/features/init-calling-system.js"></script><script src="src/features/setup-web-rtccaller.js"></script><script src="src/features/update-call-status.js"></script><script src="src/features/toggle-group-mute.js"></script><script src="src/features/stop-svplayback.js"></script>
+<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script><script src="src/features/report-group.js"></script><script src="src/features/show-msg-menu-from-el.js"></script><script src="src/features/update-participant-count.js"></script><script src="src/features/close-story-editor.js"></script><script src="src/features/deselect-story-element.js"></script><script src="src/features/swipe-start.js"></script><script src="src/features/reject-incoming-call.js"></script><script src="src/features/toggle-call-mute.js"></script><script src="src/features/toggle-call-video.js"></script><script src="src/features/toggle-call-speaker.js"></script><script src="src/features/remove-remote-tile.js"></script><script src="src/features/sign-out-banned.js"></script><script src="src/features/toggle-group-video.js"></script><script src="src/features/minimize-call.js"></script><script src="src/features/restore-call.js"></script><script src="src/features/next-user-sv.js"></script><script src="src/features/prev-user-sv.js"></script><script src="src/features/pin-msg-from-enc.js"></script><script src="src/features/show-group-call-type-menu.js"></script><script src="src/features/init-calling-system.js"></script><script src="src/features/setup-web-rtccaller.js"></script><script src="src/features/update-call-status.js"></script><script src="src/features/toggle-group-mute.js"></script><script src="src/features/stop-svplayback.js"></script><script src="src/features/next-sv.js"></script>
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
@@ -3414,16 +3414,6 @@ async function loadStoryPollState(storyId, pollIdx, options, cardEl){
 
 // Global Playback Stop (Fixes Audio Echo)
 
-function nextSV(){
-  stopSVPlayback();
-  svStoryIdx++;
-  if(svStoryIdx >= svBuckets[svBucketIdx].stories.length) {
-    svBucketIdx++;
-    svStoryIdx = 0;
-    if(svBucketIdx >= svBuckets.length) return closeSV();
-  }
-  renderSV();
-}
 
 function prevSV(){
   stopSVPlayback();
