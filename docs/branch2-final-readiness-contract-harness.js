@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 233, '233 extracted JavaScript modules must remain after the bounded Notes submission owner split');
+assert.strictEqual(jsFiles.length, 234, '234 extracted JavaScript modules must remain after the bounded Push subscription owner split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 222, '222 feature modules must remain after the bounded Notes submission owner split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 235, 'HTML must retain 235 script tags after the bounded Push permission banner split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 235, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 234, 'HTML must retain 234 external script tags after the bounded Notes submission owner split');
+assert.strictEqual(featureFiles.length, 223, '223 feature modules must remain after the bounded Push subscription owner split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 236, 'HTML must retain 236 script tags after the bounded Push subscription owner split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 236, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 235, 'HTML must retain 235 external script tags after the bounded Push subscription owner split');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
