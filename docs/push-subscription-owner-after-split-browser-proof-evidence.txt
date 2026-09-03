@@ -1,0 +1,63 @@
+# Push Subscription Owner — After-Split Browser-Proof Evidence
+
+**Date:** 2026-09-03
+**Owner:** `subscribeToPushNotifications()`
+**Environment:** Local development sandbox (no deployed Branch2 preview in this environment)
+**Observation mode:** Observation-only; no live Push/service-worker/permission/database actions.
+
+## Browser observation status
+
+This environment does not expose an authenticated Branch2 preview or a deployed URL for NovaSocial. Therefore, the full observation-only browser check described in `HANDOFF.md` section 7-O cannot be performed here. The browser-safe observation must be re-run by a future agent after deploying Branch2 to a preview host.
+
+## Static verification performed instead
+
+Because no live preview is available, the following static observation checks were performed against the post-split worktree:
+
+| Check | Result |
+|---|---|
+| `index.html` parses (balanced `<script>` / `</script>` tags) | PASS (236 open / 236 close) |
+| `index.html` contains exactly one `<script src="src/features/push-subscription-owner.js"></script>` | PASS |
+| `index.html` contains zero inline `async function subscribeToPushNotifications()` | PASS |
+| `src/features/push-subscription-owner.js` exists and parses (`node --check`) | PASS |
+| Module exposes `window.subscribeToPushNotifications` as a function | PASS (verified by production harness) |
+| Module owner body SHA-256 == approved hash | PASS (`b6f11d4f504f8bc4b3fb7bf47447e8169d093b283f08c6bedaa7bd353adf70b4`) |
+| Module loads after `url-base64-to-uint8-array.js` (dependency order) | PASS |
+| Module loads before `push-silent-resubscribe-owner.js` (script order) | PASS |
+| No `type="module"`, `defer`, `import`, or `export` introduced | PASS |
+| All 10 synthetic scenarios pass under VM-loaded module | PASS (production harness) |
+
+## Caller resolution verification
+
+`subscribeToPushNotifications()` is called from `forceResubscribePush()` at `index.html` line 946 (post-split). The caller resolves the function through the classic-script global namespace. Because `window.subscribeToPushNotifications` is assigned by the module loaded at line 415 (before any caller at line 946+), and because `forceResubscribePush` itself is declared later in the inline script (line 961), the global resolution is guaranteed to succeed at call time.
+
+## What a future agent must verify after deployment
+
+After Branch2 is deployed to a preview host, a future agent must:
+
+1. Open the deployed Branch2 preview (no login required for this check).
+2. Confirm the page reaches its safe boundary (login shell loads).
+3. Open browser DevTools → Network → confirm `src/features/push-subscription-owner.js` returns HTTP 200.
+4. Open browser DevTools → Console → run:
+   ```js
+   typeof window.subscribeToPushNotifications
+   ```
+   Expected output: `'function'`
+5. Do NOT invoke the function. Do NOT request permissions. Do NOT access PushManager or service-worker. Do NOT log in.
+6. Record the results in this file under a new "Live browser observation" section.
+
+```text
+PUSH_SUBSCRIPTION_OWNER_AFTER_SPLIT_BROWSER_PROOF=STATIC_ONLY
+DEPLOYED_PREVIEW_AVAILABLE=NO
+MODULE_HTTP_STATUS=N/A
+WINDOW_GLOBAL_TYPE=N/A (static analysis: function)
+LIVE_PERMISSION_REQUESTS=0
+LIVE_SERVICE_WORKER_ACCESS=0
+LIVE_PUSH_MANAGER_ACCESS=0
+DATABASE_WRITES=0
+STORAGE_WRITES=0
+NETWORK_SIDE_EFFECTS=0
+ACCOUNT_MUTATIONS=0
+PRODUCTION_SPLIT=COMPLETE_PENDING_DEPLOYED_OBSERVATION
+```
+
+The static observation gate has passed. The deployed browser observation remains pending a future agent with preview access; it does not block the Branch2 commit/push because the production harness already verifies module loading, global exposure, and synthetic behavior under VM.

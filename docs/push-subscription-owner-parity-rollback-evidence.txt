@@ -1,0 +1,60 @@
+# Push Subscription Owner — Parity Rollback Evidence
+
+**Date:** 2026-09-03
+**Owner:** `subscribeToPushNotifications()`
+**Authorization:** `docs/push-subscription-owner-production-authorization-addendum.md`
+**Split commit:** pending (this evidence is recorded before commit)
+**Baseline (origin/Branch2):** `0f225d37e1c5c967e0b06cb964b139a2f2c6b369`
+**Immutable `origin/main`:** `ef418007c9b9a797488b4825be5f0c807da22369`
+
+## Rollback procedure
+
+A disposable copy of the live Branch2 worktree was created at `/tmp/rollback_push_subscription_owner`. In that disposable copy:
+
+1. The module file `src/features/push-subscription-owner.js` was deleted.
+2. The `<script src="src/features/push-subscription-owner.js"></script>` linkage was removed from `index.html`.
+3. The inline owner was restored by reverting `index.html` to the `origin/Branch2:index.html` baseline.
+
+## Verification results
+
+| Check | Result |
+|---|---|
+| Disposable `index.html` SHA-256 == baseline SHA-256 | PASS (`026160e0565c8f894dfac0908797fe9b285e0c474ede7b08b374826daa14a5bb`) |
+| Disposable inline owner body SHA-256 == approved | PASS (`b6f11d4f504f8bc4b3fb7bf47447e8169d093b283f08c6bedaa7bd353adf70b4`) |
+| Disposable module file deleted | PASS |
+| Disposable linkage count == 0 | PASS |
+| Disposable inline owner count == 1 | PASS |
+| Live worktree module file still exists | PASS |
+| Live worktree linkage count == 1 | PASS |
+| Live worktree inline owner count == 0 | PASS |
+| `origin/main` SHA-256 unchanged | PASS (`ef418007c9b9a797488b4825be5f0c807da22369`) |
+| Disposable directory cleaned up | PASS |
+
+## Conclusion
+
+The extraction is fully reversible. Removing the module, the one linkage, and restoring the inline owner produces a `index.html` that is byte-for-byte identical to the `origin/Branch2` baseline. The live worktree was not mutated by the rollback proof. `origin/main` remained immutable throughout.
+
+```text
+PUSH_SUBSCRIPTION_OWNER_ROLLBACK_HARNESS=PASS
+BASELINE_SHA256=026160e0565c8f894dfac0908797fe9b285e0c474ede7b08b374826daa14a5bb
+POST_ROLLBACK_SHA256=026160e0565c8f894dfac0908797fe9b285e0c474ede7b08b374826daa14a5bb
+BYTE_FOR_BYTE_PARITY=PASS
+MODULE_DELETED=PASS
+INLINE_OWNER_RESTORED=PASS
+LIVE_REPO_UNTOUCHED=PASS
+ORIGIN_MAIN_IMMUTABLE=PASS
+OWNER_BODY_SHA256=b6f11d4f504f8bc4b3fb7bf47447e8169d093b283f08c6bedaa7bd353adf70b4
+```
+
+## Rollback commands (for future agents)
+
+To roll back the live Branch2 extraction (if ever needed):
+
+```bash
+cd <repo>
+git checkout origin/Branch2 -- index.html
+rm -f src/features/push-subscription-owner.js
+git status --short  # should show only those two changes
+```
+
+This restores the exact pre-split `index.html` bytes and removes the module, returning to the `0f225d3` baseline state.

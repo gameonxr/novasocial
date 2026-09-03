@@ -12,6 +12,8 @@ const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   encoding: 'utf8',
   maxBuffer: 32 * 1024 * 1024
 });
+const ownerModulePath = path.join(repo, 'src', 'features', 'push-subscription-owner.js');
+const ownerModuleText = fs.readFileSync(ownerModulePath, 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'push-subscription-owner-independent-proof-contract.md'), 'utf8');
 const dossier = fs.readFileSync(path.join(repo, 'docs', 'push-permission-resubscribe-protected-readiness-contract.md'), 'utf8');
 
@@ -22,17 +24,27 @@ function extractOwner(text) {
   assert(end > start, 'Push subscription owner boundary must be discoverable');
   return text.slice(start, end + 2);
 }
+function extractOwnerFromModule(text) {
+  const signature = 'window.subscribeToPushNotifications = async function subscribeToPushNotifications()';
+  const start = text.indexOf(signature);
+  assert(start >= 0, 'subscribeToPushNotifications owner window assignment must exist in the module');
+  const bodyStart = start + 'window.subscribeToPushNotifications = '.length;
+  const end = text.indexOf('\n};', bodyStart);
+  assert(end > bodyStart, 'Push subscription owner boundary must be discoverable in the module');
+  return text.slice(bodyStart, end + 2);
+}
 function sha(value) {
   return crypto.createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex');
 }
 function stable(value) {
   return JSON.parse(JSON.stringify(value));
 }
-const currentOwner = extractOwner(currentHtml);
+const currentOwner = extractOwnerFromModule(ownerModuleText);
 const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 Push subscription owner must retain exact immutable-origin parity');
-assert.strictEqual(currentHtml.split('async function subscribeToPushNotifications()').length - 1, 1, 'one inline Push subscription owner must remain');
-assert(!currentHtml.includes('src/features/push-subscription-owner.js'), 'production Push subscription owner must not be extracted');
+assert.strictEqual(currentHtml.split('async function subscribeToPushNotifications()').length - 1, 0, 'no inline Push subscription owner must remain after extraction');
+assert(currentHtml.includes('src/features/push-subscription-owner.js'), 'production Push subscription owner must be linked from index.html');
+assert(ownerModuleText.includes('window.subscribeToPushNotifications = async function subscribeToPushNotifications()'), 'production Push subscription owner must exist as a window assignment in the module');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
 assert(contract.includes('PRODUCTION_DECISION=BLOCKED'), 'contract must keep production blocked');

@@ -19,10 +19,10 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 14/19 protected signatures moved; 14 bounded scopes are split-complete, including Notes submission; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the fourteen moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 15/20 protected signatures moved; 15 bounded scopes are split-complete, including Notes submission and Push subscription; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the fifteen moved protected signatures and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
-assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('7 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
+assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('6 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
 assert(gate.includes('Direct extraction remains explicitly blocked for the 5 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract.md')), 'browser-proof contract must exist');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract-harness.js')), 'browser-proof harness must exist');

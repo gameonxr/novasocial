@@ -412,6 +412,7 @@
 <script src="src/features/dms-renderer-owner.js"></script>
 <script src="src/features/reels-renderer-owner.js"></script>
 <script src="src/features/push-permission-banner-owner.js"></script>
+<script src="src/features/push-subscription-owner.js"></script>
 <script src="src/features/push-silent-resubscribe-owner.js"></script>
 <script src="src/features/notes-submission-owner.js"></script>
 <script>
@@ -909,44 +910,6 @@ const VAPID_PUBLIC_KEY = 'BJ0cpJ4UjNgiw3Q24Ah65N797A7FBpwT1awmS2wl2oos5uhCPOGn3i
  * Returns true on success, false on failure (unsupported browser, permission denied, DB error).
  * Never throws — caller can ignore the return value for silent background resubscribe.
  */
-async function subscribeToPushNotifications() {
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-    console.warn('[Push] Not supported on this browser');
-    return false;
-  }
-  if (!ME?.id) {
-    console.warn('[Push] No logged-in user — skipping subscribe');
-    return false;
-  }
-  try {
-    const registration = await navigator.serviceWorker.ready;
-    let subscription = await registration.pushManager.getSubscription();
-    if (!subscription) {
-      subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-      });
-      console.log('[Push] New subscription created');
-    } else {
-      console.log('[Push] Existing subscription found — refreshing DB record');
-    }
-    const subJson = subscription.toJSON();
-    await db.from('push_subscriptions').upsert({
-      user_id: ME.id,
-      endpoint: subJson.endpoint,
-      p256dh: subJson.keys.p256dh,
-      auth: subJson.keys.auth,
-      device_info: navigator.userAgent.substring(0, 200),
-      last_used_at: new Date().toISOString(),
-    }, { onConflict: 'endpoint' }).throwOnError();
-    console.log('[Push] Subscribed and saved successfully');
-    return true;
-  } catch (e) {
-    console.error('[Push] Subscribe failed:', e);
-    return false;
-  }
-}
-
 /**
  * Force a full unsubscribe + resubscribe cycle — useful when the VAPID key
  * has changed and old subscriptions are invalid. This does:

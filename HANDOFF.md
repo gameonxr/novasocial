@@ -345,6 +345,28 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Side effects:** Zero live permission, service-worker, PushManager, database, storage, network, account, authentication, or browser actions; persistence was mock-only.
 - **Next action:** Review/approve a separate Push subscription production authorization addendum before any source extraction. Until then, keep `subscribeToPushNotifications()` inline and continue respecting the exclusions in the dependency map.
 
+### 2026-09-03 — Push subscription owner bounded production split
+
+- **Agent/task:** Super Z (continuation agent); bounded `subscribeToPushNotifications()` extraction under the existing production authorization.
+- **Branch/HEAD:** `Branch2`; pre-split baseline `0f225d3` (harness-path portability commit); post-split HEAD pending commit at the time of this entry; immutable `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Scope:** Extracted only `subscribeToPushNotifications()` to `src/features/push-subscription-owner.js` as `window.subscribeToPushNotifications`; one classic-script linkage inserted at `index.html:415` (after `url-base64-to-uint8-array.js`, before `push-silent-resubscribe-owner.js`); inline owner at `index.html:912–948` removed. No live Push, service-worker, PushManager, permission, database, storage, upload, media, network, account, or authentication action.
+- **Authorization state:** Production extraction authorized per `docs/push-subscription-owner-production-authorization-addendum.md` (`PRODUCTION_DECISION=AUTHORIZED_EXTRACTION_CONDITIONAL_ON_ALL_GATES`); independent proof and production split contract/harness recorded; rollback evidence recorded; static browser observation recorded; deployed browser observation pending.
+- **Result:** Exact parity PASS (owner body SHA-256 `b6f11d4f504f8bc4b3fb7bf47447e8169d093b283f08c6bedaa7bd353adf70b4`); synthetic production proof PASS (10/10 scenarios); disposable rollback PASS (byte-for-byte baseline SHA-256 `026160e0565c8f894dfac0908797fe9b285e0c474ede7b08b374826daa14a5bb`); static browser observation PASS (script tags balanced, single linkage, zero inline owner, module parses, dependency order preserved); full regression `319/319 PASS` after extraction.
+- **Evidence:** `docs/push-subscription-owner-production-split-contract.md`, `docs/push-subscription-owner-production-split-contract-harness.js`, `docs/push-subscription-owner-parity-rollback-evidence.txt`, `docs/push-subscription-owner-after-split-browser-proof-evidence.txt`, `docs/high-risk-seam-readiness-matrix-contract.md` (updated to fifteen externalized owners), `MIGRATION_MAP.md` (dated entry), and this handoff section.
+- **Side effects:** Zero live permission, service-worker, PushManager, database, storage, network, account, authentication, or browser actions; database behavior was mock-only.
+- **Next action:** For any new production split, obtain that owner's exact authorization and follow sections 7 and 11. The bounded Push subscription owner is now the fifteenth externalized protected owner; the remaining 5 unapproved protected systems (Calls/WebRTC peer and signaling, Story viewer/playback/polls/viewers/replies/submission/deletion, voice recording and delivery, broader chat/realtime owners, Reels swipe/navigation/media-policy systems) remain gated.
+
+### 2026-09-03 — Harness path portability fix (pre-extraction doc-only commit)
+
+- **Agent/task:** Super Z (continuation agent); local-environment portability fix to make the harness suite runnable outside the original Manus AI environment.
+- **Branch/HEAD:** `Branch2`; commit `0f225d37e1c5c967e0b06cb964b139a2f2c6b369` pushed to `origin/Branch2`; immutable `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Scope:** Replaced hardcoded `/home/ubuntu/novasocial` path in 49 harness files with `process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..")`; added missing `require('path')` to two harnesses that referenced `path` without importing it; replaced direct path literals in 17 additional harnesses with the current repo path. No source code, contracts, or behavior changed; only test-path resolution.
+- **Authorization state:** Documentation/process update only; no new feature extraction authorized or performed.
+- **Result:** Syntax checks PASS; final published regression `319/319 PASS`; worktree clean; Branch2-only and immutable-origin checks PASS; remote alignment PASS.
+- **Evidence:** Commit `0f225d3` on `origin/Branch2`; full regression log captured in this session.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Continue with the Push subscription owner extraction (recorded in the entry above).
+
 ### Template for the next agent
 
 ```text

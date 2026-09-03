@@ -11,9 +11,9 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('7 unapproved systems'), 'matrix must continue to mark remaining browser proof');
-assert(matrix.includes('all fourteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 14/19 protected signatures moved; 14 bounded scopes are split-complete, including Notes submission; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the fourteen moved protected signatures and supporting Reels helper');
+assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('6 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('all fifteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
+assert(matrix.includes('Protected production splits | 15/20 protected signatures moved; 15 bounded scopes are split-complete, including Notes submission and Push subscription; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the fifteen moved protected signatures and supporting Reels helper');
 assert(gate.includes('Direct extraction remains explicitly blocked for the 5 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
 
 for (const file of [
