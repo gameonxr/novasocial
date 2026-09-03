@@ -413,6 +413,7 @@
 <script src="src/features/reels-renderer-owner.js"></script>
 <script src="src/features/push-permission-banner-owner.js"></script>
 <script src="src/features/push-subscription-owner.js"></script>
+<script src="src/features/push-force-resubscribe-owner.js"></script>
 <script src="src/features/push-silent-resubscribe-owner.js"></script>
 <script src="src/features/notes-submission-owner.js"></script>
 <script>
@@ -921,41 +922,6 @@ const VAPID_PUBLIC_KEY = 'BJ0cpJ4UjNgiw3Q24Ah65N797A7FBpwT1awmS2wl2oos5uhCPOGn3i
  * Returns true if the fresh subscription succeeded, false otherwise.
  * Callable from console (await forceResubscribePush()) or from Settings → Reset button.
  */
-async function forceResubscribePush() {
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-    console.warn('[Push] Not supported on this browser');
-    return false;
-  }
-  if (!ME?.id) {
-    console.warn('[Push] No logged-in user — skipping force resubscribe');
-    return false;
-  }
-  try {
-    const registration = await navigator.serviceWorker.ready;
-    const existingSub = await registration.pushManager.getSubscription();
-    if (existingSub) {
-      await existingSub.unsubscribe(); // browser-level unsubscribe — purani FCM binding hatao
-      console.log('[Push] Old subscription unsubscribed at browser level');
-      // DB se bhi purani row hatao (endpoint match se)
-      await db.from('push_subscriptions').delete().eq('endpoint', existingSub.endpoint);
-      console.log('[Push] Old DB row deleted');
-    } else {
-      console.log('[Push] No existing subscription found — proceeding to fresh subscribe');
-    }
-    // Fresh subscribe — naya FCM binding banega CURRENT VAPID_PUBLIC_KEY ke saath
-    const result = await subscribeToPushNotifications();
-    if (result) {
-      console.log('[Push] Force resubscribe SUCCESS — new subscription created with current VAPID key');
-    } else {
-      console.error('[Push] Force resubscribe — fresh subscribe step failed');
-    }
-    return result;
-  } catch(e) {
-    console.error('[Push] Force resubscribe failed:', e);
-    return false;
-  }
-}
-
 /**
  * Show a dismissible banner asking the user to enable notifications.
  * Shown ONCE per account — dismissal is recorded in localStorage so it

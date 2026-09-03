@@ -17,7 +17,7 @@ const managedSlots = [
   '_groupCallState.participantsSub', 'window.notifsSub', 'window._selfProfileSub', 'window._notesSub',
 ];
 
-assert.strictEqual(files.length, 235, 'index.html plus 234 extracted modules must be audited after the DMs renderer split');
+assert.strictEqual(files.length, 236, 'index.html plus 235 extracted modules must be audited after the DMs renderer split');
 assert.strictEqual((source.match(/\.channel\(/g) || []).length, 10, '10 Supabase realtime channels must remain registered');
 assert.strictEqual((source.match(/removeChannel\(/g) || []).length, 21, '21 existing cleanup calls must remain present');
 for (const name of channelNames) {
@@ -30,7 +30,7 @@ for (const slot of managedSlots) {
 }
 const channelBlocks = [...source.matchAll(/\.channel\([\s\S]*?\.subscribe\(\)/g)];
 assert.strictEqual(channelBlocks.length, 10, 'every realtime channel registration must retain a subscribe chain');
-assert(html.includes('existingSub.unsubscribe()'), 'browser PushManager unsubscribe must remain distinct from Supabase channel cleanup');
+assert(source.includes('existingSub.unsubscribe()'), 'browser PushManager unsubscribe must remain distinct from Supabase channel cleanup');
 
 console.log('REALTIME_SUBSCRIPTION_LIFECYCLE_HARNESS=PASS');
 console.log(`AUDITED_FILES=${files.length}`);

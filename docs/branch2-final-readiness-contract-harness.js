@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 234, '234 extracted JavaScript modules must remain after the bounded Push subscription owner split');
+assert.strictEqual(jsFiles.length, 235, '235 extracted JavaScript modules must remain after the bounded Push force-resubscribe owner split');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 223, '223 feature modules must remain after the bounded Push subscription owner split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 236, 'HTML must retain 236 script tags after the bounded Push subscription owner split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 236, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 235, 'HTML must retain 235 external script tags after the bounded Push subscription owner split');
+assert.strictEqual(featureFiles.length, 224, '224 feature modules must remain after the bounded Push force-resubscribe owner split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 237, 'HTML must retain 237 script tags after the bounded Push force-resubscribe owner split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 237, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 236, 'HTML must retain 236 external script tags after the bounded Push force-resubscribe owner split');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -137,11 +137,11 @@ const unresolved = handlers.filter(name => {
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(html), 'authorized completeForwardMessage helper must remain inline');
-assert.strictEqual(allDocs.length, 333, '333 documentation Markdown files must be published after the Push subscription production split');
-assert.strictEqual(allHarnesses.length, 320, '319 harness files must be published after the Push subscription owner production split');
-assert.strictEqual(contractFiles.length, 316, '315 standard contract documents must be published after the Push subscription production split contract');
-assert.strictEqual(harnessFiles.length, 315, '314 standard contract harnesses must be published after the Push subscription production split proof package');
-assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'notes-reaction-owner-independent-authorization-addendum.md', 'notes-reaction-owner-production-authorization-addendum.md', 'notes-submission-owner-dependency-map.md', 'notes-submission-owner-independent-authorization-addendum.md', 'notes-submission-owner-production-authorization-addendum.md', 'protected-contract-coverage.md', 'push-permission-banner-owner-independent-authorization-addendum.md', 'push-permission-banner-owner-production-authorization-addendum.md', 'push-silent-resubscribe-owner-independent-authorization-addendum.md', 'push-silent-resubscribe-owner-production-authorization-addendum.md', 'push-subscription-owner-dependency-map.md', 'push-subscription-owner-independent-authorization-addendum.md', 'push-subscription-owner-production-authorization-addendum.md', 'reels-renderer-navigation-independent-authorization-addendum.md', 'reels-renderer-navigation-production-authorization-addendum.md'], 'nonstandard documentation exceptions must remain explicitly mapped');
+assert.strictEqual(allDocs.length, 338, '338 documentation Markdown files must be published after the Push force-resubscribe production split');
+assert.strictEqual(allHarnesses.length, 322, '321 harness files must be published after the Push force-resubscribe owner production split');
+assert.strictEqual(contractFiles.length, 318, '317 standard contract documents must be published after the Push force-resubscribe production split contract');
+assert.strictEqual(harnessFiles.length, 317, '316 standard contract harnesses must be published after the Push force-resubscribe production split proof package');
+assert.deepStrictEqual(allDocs.filter(file => !file.endsWith('-contract.md')).sort(), ['blocking-contract-assessment.md', 'browser-smoke-baseline-2026-08-22.md', 'notes-reaction-owner-independent-authorization-addendum.md', 'notes-reaction-owner-production-authorization-addendum.md', 'notes-submission-owner-dependency-map.md', 'notes-submission-owner-independent-authorization-addendum.md', 'notes-submission-owner-production-authorization-addendum.md', 'protected-contract-coverage.md', 'push-force-resubscribe-owner-dependency-map.md', 'push-force-resubscribe-owner-independent-authorization-addendum.md', 'push-force-resubscribe-owner-production-authorization-addendum.md', 'push-permission-banner-owner-independent-authorization-addendum.md', 'push-permission-banner-owner-production-authorization-addendum.md', 'push-silent-resubscribe-owner-independent-authorization-addendum.md', 'push-silent-resubscribe-owner-production-authorization-addendum.md', 'push-subscription-owner-dependency-map.md', 'push-subscription-owner-independent-authorization-addendum.md', 'push-subscription-owner-production-authorization-addendum.md', 'reels-renderer-navigation-independent-authorization-addendum.md', 'reels-renderer-navigation-production-authorization-addendum.md'], 'nonstandard documentation exceptions must remain explicitly mapped');
 assert.deepStrictEqual(allHarnesses.filter(file => !file.endsWith('-contract-harness.js')).sort(), ['account-bootstrap-adapter-harness.js', 'logout-account-transition-harness.js', 'note-deletion-browser-parity-harness.js', 'protected-contract-coverage-harness.js', 'story-editor-browser-parity-harness.js'], 'legacy harness exceptions must remain mapped');
 for (const contract of contractFiles) {
   if (mappedLegacyContracts.has(contract)) continue;

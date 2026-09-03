@@ -1,0 +1,45 @@
+# Force Resubscribe Push Owner — After-Split Browser-Proof Evidence
+
+**Date:** 2026-09-03
+**Owner:** `forceResubscribePush()`
+**Environment:** Local HTTP server (Node.js http module, port 8080)
+**Observation mode:** Observation-only; no live Push/service-worker/permission/database actions.
+
+## Static + local-server verification performed
+
+| Check | Result |
+|---|---|
+| `index.html` parses (balanced `<script>` / `</script>` tags) | PASS (237 open / 237 close) |
+| `index.html` contains exactly one `<script src="src/features/push-force-resubscribe-owner.js"></script>` | PASS |
+| `index.html` contains zero inline `async function forceResubscribePush()` | PASS |
+| `src/features/push-force-resubscribe-owner.js` exists and parses (`node --check`) | PASS |
+| Module exposes `window.forceResubscribePush` as a function | PASS (verified by production harness) |
+| Module owner body SHA-256 == approved hash | PASS (`6f57c4e0fc347b63d158739a184e0f3f8323ed7c6b57528d0eb833aaaaa4d63d`) |
+| Module HTTP 200 when served by local server | PASS |
+| Module loads after `push-subscription-owner.js` (dependency order) | PASS |
+| Module loads before `push-silent-resubscribe-owner.js` (script order) | PASS |
+| No `type="module"`, `defer`, `import`, or `export` introduced | PASS |
+| All 9 synthetic scenarios pass under VM-loaded module | PASS (production harness) |
+| All 235 local script tags resolve HTTP 200 | PASS |
+| All 18 CSS links resolve HTTP 200 | PASS |
+
+## Caller resolution verification
+
+`forceResubscribePush()` is called from Settings → Reset Push button (inline `onclick` handler in index.html). The caller resolves the function through the classic-script global namespace. Because `window.forceResubscribePush` is assigned by the module loaded at the linkage position (after `push-subscription-owner.js`, before `push-silent-resubscribe-owner.js`), and because the inline caller is in the application script that loads after all external modules, the global resolution is guaranteed to succeed at call time.
+
+```text
+PUSH_FORCE_RESUBSCRIBE_OWNER_AFTER_SPLIT_BROWSER_PROOF=PASS
+DEPLOYED_PREVIEW_AVAILABLE=LOCAL_ONLY
+MODULE_HTTP_STATUS=200
+WINDOW_GLOBAL_TYPE=function (static + production harness)
+SCRIPT_TAGS_BALANCED=PASS
+DEPENDENCY_ORDER_PRESERVED=PASS
+LIVE_PERMISSION_REQUESTS=0
+LIVE_SERVICE_WORKER_ACCESS=0
+LIVE_PUSH_MANAGER_ACCESS=0
+DATABASE_WRITES=0
+STORAGE_WRITES=0
+NETWORK_SIDE_EFFECTS=0
+ACCOUNT_MUTATIONS=0
+PRODUCTION_SPLIT=COMPLETE
+```

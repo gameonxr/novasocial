@@ -1,0 +1,37 @@
+# Force Resubscribe Push Owner — Parity Rollback Evidence
+
+**Date:** 2026-09-03
+**Owner:** `forceResubscribePush()`
+**Authorization:** `docs/push-force-resubscribe-owner-production-authorization-addendum.md`
+**Baseline (origin/Branch2):** `4ef54f9` (preparation commit; index.html unchanged from pre-split)
+**Immutable `origin/main`:** `ef418007c9b9a797488b4825be5f0c807da22369`
+
+## Rollback procedure
+
+A disposable copy of the live Branch2 worktree was created at `/tmp/rollback_push_force_resubscribe`. In that disposable copy:
+
+1. The module file `src/features/push-force-resubscribe-owner.js` was deleted.
+2. The `<script src="src/features/push-force-resubscribe-owner.js"></script>` linkage was removed.
+3. The inline owner was restored by reverting `index.html` to the `origin/Branch2:index.html` baseline.
+
+## Verification results
+
+| Check | Result |
+|---|---|
+| Disposable `index.html` SHA-256 == baseline SHA-256 | PASS (`e919398e5de0fe52b884a2fbc405e15d0add62e72bb56dd5d0ea0534e49cd1a9`) |
+| Disposable module file deleted | PASS |
+| Disposable linkage count == 0 | PASS |
+| Disposable inline owner count == 1 | PASS |
+| Live worktree module file still exists | PASS |
+| Live worktree linkage count == 1 | PASS |
+| Live worktree inline owner count == 0 | PASS |
+| `origin/main` SHA-256 unchanged | PASS |
+| Disposable directory cleaned up | PASS |
+
+```text
+PUSH_FORCE_RESUBSCRIBE_OWNER_ROLLBACK_HARNESS=PASS
+BASELINE_SHA256=e919398e5de0fe52b884a2fbc405e15d0add62e72bb56dd5d0ea0534e49cd1a9
+POST_ROLLBACK_SHA256=e919398e5de0fe52b884a2fbc405e15d0add62e72bb56dd5d0ea0534e49cd1a9
+BYTE_FOR_BYTE_PARITY=PASS
+OWNER_BODY_SHA256=6f57c4e0fc347b63d158739a184e0f3f8323ed7c6b57528d0eb833aaaaa4d63d
+```
