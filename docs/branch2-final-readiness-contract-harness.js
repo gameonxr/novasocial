@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 235, '235 extracted JavaScript modules must remain after the bounded Push force-resubscribe owner split');
+assert.strictEqual(jsFiles.length, 236, '236 extracted JavaScript modules must remain after the cleanup-expired-stories extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 224, '224 feature modules must remain after the bounded Push force-resubscribe owner split');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 237, 'HTML must retain 237 script tags after the bounded Push force-resubscribe owner split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 237, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 236, 'HTML must retain 236 external script tags after the bounded Push force-resubscribe owner split');
+assert.strictEqual(featureFiles.length, 225, '225 feature modules must remain after the cleanup-expired-stories extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 238, 'HTML must retain 238 script tags after the cleanup-expired-stories extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 238, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 237, 'HTML must retain 237 external script tags after the cleanup-expired-stories extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
