@@ -352,7 +352,7 @@
 <script src="src/features/start-dm.js"></script>
 <script src="src/features/settings-notifications.js"></script>
 <script src="src/features/switch-admin-tab.js"></script>
-<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script>
+<script src="src/features/render-admin-panel-ui.js"></script><script src="src/features/show-admin-panel.js"></script><script src="src/features/load-admin-tab.js"></script><script src="src/features/set-typing.js"></script><script src="src/features/create-incoming-call-banner.js"></script><script src="src/features/dismiss-incoming-call-banner.js"></script><script src="src/features/check-user-active-note.js"></script><script src="src/features/react-to-story.js"></script>
 <script src="src/features/search-admin-users.js"></script>
 <script src="src/features/reply-helpers.js"></script>
 <script src="src/features/message-info.js"></script>
@@ -3623,11 +3623,6 @@ async function deleteStory(storyId) {
  * 24h expire ho chuki stories ka media + data cleanup karta hai
  * Non-blocking: max 100 per run, session-once flag
  */
-async function reactToStory(uid, emoji, storyId) {
-  await sendStoryReply(uid, emoji, storyId);
-  try { await sendNotif(uid, 'story_reaction', {message: emoji+' reacted to your story', story_id: storyId}); } catch(e) {}
-  toast('Reaction sent! ' + emoji);
-}
 
 async function sendStoryReply(uid, txt, storyId) {
   const{data:myConvos}=await db.from('conversation_members').select('conversation_id,conversations!inner(is_group)').eq('user_id',ME.id);
