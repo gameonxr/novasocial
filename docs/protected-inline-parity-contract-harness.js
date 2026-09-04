@@ -39,7 +39,7 @@ const protectedSignatures = [
   'async function syncLocalDeletionFallback()',
 ];
 
-const approvedBranch2Splits = new Set(['async function renderDMs()', 'function spawnLikeParticles(el){', 'function renderStoryElements()', 'async function renderReels()', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(', 'function reactToNote(', 'async function submitNote()', 'async function voteStoryPoll(', 'async function refreshPollResults(', 'async function loadStoryPollState(', 'function openSV(startIdx){', 'function submitNativeEmojiReaction(']);
+const approvedBranch2Splits = new Set(['async function renderDMs()', 'function spawnLikeParticles(el){', 'function renderStoryElements()', 'async function renderReels()', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(', 'function removeMyNoteFromViewer(', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(', 'function reactToNote(', 'async function submitNote()', 'async function voteStoryPoll(', 'async function refreshPollResults(', 'async function loadStoryPollState(', 'function openSV(startIdx){', 'function submitNativeEmojiReaction(', 'async function toggleRecording(cid)']);
 for (const signature of protectedSignatures) {
   const expectedBranch2Count = approvedBranch2Splits.has(signature) ? 0 : 1;
   assert.strictEqual(branch2Html.split(signature).length - 1, expectedBranch2Count, `Branch2 protected signature count mismatch: ${signature}`);
@@ -61,6 +61,8 @@ if (signature === 'async function renderReels()') {
     assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must be present in src as a classic global');
   } else if (signature === 'function submitNativeEmojiReaction(') {
     assert(fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must be present in src as a classic global');
+  } else if (signature === 'async function toggleRecording(cid)') {
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must be present in src as a classic global');
   } else {
     assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be extracted by declaration: ${signature}`);
   }

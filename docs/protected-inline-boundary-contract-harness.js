@@ -100,6 +100,10 @@ for (const marker of protectedMarkers) {
     const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
     assert(!html.includes(marker), 'approved Notes emoji reaction marker must be absent from inline HTML');
     assert(notesEmojiModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction module owner must be present');
+  } else if (marker === 'async function toggleRecording(') {
+    const voiceRecordingModule = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Voice recording marker must be absent from inline HTML');
+    assert(voiceRecordingModule.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }

@@ -33,7 +33,7 @@ const requiredMarkers = [
 ];
 const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'flush-pending-ice-candidates.js'), 'utf8');
 const endCallModule = fs.readFileSync(path.join(repo, 'src', 'features', 'end-call.js'), 'utf8');
-const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule;
+const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
 for (const marker of requiredMarkers) {
   assert(callsMarkerSurface.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
 }

@@ -4,7 +4,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
-const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const browserProofFiles = [
@@ -40,7 +40,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'voice-recording-contract-harness.j
 const voiceHarness = fs.readFileSync(path.join(repo, 'docs', 'voice-recording-contract-harness.js'), 'utf8');
 assert(voiceHarness.includes('createInjectedVoiceSeam'), 'Voice recording injected seam proof must remain present');
 assert(voiceHarness.includes("calls.push('recorder-flow')"), 'Voice recording injected seam dispatch marker must remain present');
-assert.strictEqual(sourceText.includes('async function toggleRecording(cid)'), false, 'toggleRecording must not be extracted');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved toggleRecording owner must exist in its module');
 assert(html.includes('audioChunks=[]'), 'Recorder chunk state must remain inline');
 assert(html.includes('new Blob(audioChunks,{type:\'audio/webm\'})') || html.includes('new Blob(audioChunks, {type:\'audio/webm\'})'), 'Recorder must retain webm assembly boundary');
 assert(html.includes('navigator.mediaDevices.getUserMedia'), 'Recorder must retain microphone permission boundary');

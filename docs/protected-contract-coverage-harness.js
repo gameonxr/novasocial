@@ -99,6 +99,10 @@ for (const [marker, base] of coverage) {
     const notesEmojiOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
     assert(!html.includes(marker), 'approved Notes emoji reaction owner must be absent from inline HTML');
     assert(notesEmojiOwnerModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner missing from src');
+  } else if (marker === 'async function toggleRecording(') {
+    const voiceRecordingOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Voice recording owner must be absent from inline HTML');
+    assert(voiceRecordingOwnerModule.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner missing from src');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
