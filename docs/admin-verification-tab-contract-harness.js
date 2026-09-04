@@ -47,11 +47,10 @@ async function runHarness() {
     assert(start >= 0, 'verification tab module owner must remain present');
     const functionBlock = source.slice(start);
     const filterModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/set-verify-filter-owner.js', 'utf8');
-    const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const lvStart = html.indexOf('async function loadVerifyList(');
-    const lvEnd = html.indexOf('\nasync function adminApproveVerify(', lvStart);
-    assert(lvStart >= 0 && lvEnd > lvStart, 'verification list boundary must remain present and ordered');
-    const loadVerifyBlock = html.slice(lvStart, lvEnd);
+    const loadVerifyModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-verify-list.js', 'utf8');
+    const lvStart = loadVerifyModule.indexOf('window.loadVerifyList = async function loadVerifyList(');
+    assert(lvStart >= 0, 'verification list module owner must remain present');
+    const loadVerifyBlock = loadVerifyModule.slice(lvStart + 'window.loadVerifyList = '.length);
     eval(`let _verifyFilter = 'pending'; const window = global; ${functionBlock}; ${loadVerifyBlock}; ${filterModule}; global.adminTabVerify = window.adminTabVerify; global.setVerifyFilter = window.setVerifyFilter; global.loadVerifyList = loadVerifyList;`);
 
     const request = {
