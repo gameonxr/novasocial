@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 461, '461 extracted JavaScript modules must remain after the send-msg extraction');
+assert.strictEqual(jsFiles.length, 462, '462 extracted JavaScript modules must remain after the forward-message extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 450, '450 feature modules must remain after the send-msg extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 463, 'HTML must retain 463 script tags after the send-msg extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 463, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 462, 'HTML must retain 462 external script tags after the send-msg extraction');
+assert.strictEqual(featureFiles.length, 451, '451 feature modules must remain after the forward-message extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 464, 'HTML must retain 464 script tags after the forward-message extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 464, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 463, 'HTML must retain 463 external script tags after the forward-message extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -150,7 +150,8 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
-assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'authorized forwardMessage implementation must remain inline');
+assert(!html.includes('async function forwardMessage('), 'approved forwardMessage owner must be absent from inline HTML');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'forward-message.js'), 'utf8').includes('window.forwardMessage = async function forwardMessage('), 'approved forwardMessage module owner must be present');
 assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'complete-forward-message.js'), 'utf8')).match(/(?:async\s+)?function\s+completeForwardMessage\s*\(/), 'authorized completeForwardMessage helper must remain available');
 assert.strictEqual(allDocs.length, 338, '338 documentation Markdown files must be published after the Push force-resubscribe production split');
 assert.strictEqual(allHarnesses.length, 322, '321 harness files must be published after the Push force-resubscribe owner production split');

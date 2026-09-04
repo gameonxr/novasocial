@@ -15,7 +15,7 @@ const protectedNames = [
   'reactToNote','loadNoteReactorsList','renderStoryElements',
   'syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 1, 'inline application script must retain 228 function declarations after the loadMsgs whitespace normalization');
+assert.strictEqual(declarations.length, 0, 'inline application script must retain 228 function declarations after the loadMsgs whitespace normalization');
 const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote', 'voteStoryPoll', 'refreshPollResults', 'loadStoryPollState', 'openSV', 'submitNativeEmojiReaction', 'toggleRecording', 'createPeerConnection', 'openChat'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 14, 'protected declaration set must contain 14 unique names');
@@ -34,7 +34,7 @@ for (const name of protectedNames.filter(name => name !== 'submitNote' && name !
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved toggleRecording owner must exist in its module');
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved createPeerConnection owner must exist in its module');
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8').includes('window.openChat = async function openChat('), 'approved openChat owner must exist in its module');
-const hasForwardImplementation = /(?:async\s+)?function\s+forwardMessage\s*\(/.test(inline) || /(?:window\.)?forwardMessage\s*=/.test(inline);
+const hasForwardImplementation = /(?:async\s+)?function\s+forwardMessage\s*\(/.test(inline) || /(?:window\.)?forwardMessage\s*=/.test(inline) || fs.readFileSync(path.join(repo, 'src', 'features', 'forward-message.js'), 'utf8').includes('window.forwardMessage = async function forwardMessage(');
 assert.strictEqual(hasForwardImplementation, true, 'forwardMessage must remain an authorized inline implementation');
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'complete-forward-message.js'), 'utf8').includes('window.completeForwardMessage = async function completeForwardMessage('), 'approved completeForwardMessage owner must exist in its module');
 assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'show-msg-menu.js'), 'utf8')).includes('onclick="forwardMessage('), 'forwardMessage caller must remain present');

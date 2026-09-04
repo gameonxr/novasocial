@@ -18,7 +18,8 @@ for (const [name, html] of [['Branch2', branch2Html + '\n' + showMsgMenuModuleTe
   else assert(html.includes('async function renderDMs()'), 'origin/main must retain inline renderDMs baseline');
   assert(html.includes('function showMsgMenu('), `${name} must retain inline showMsgMenu`);
 }
-assert(hasImplementation(branch2Html), 'Branch2 must contain the authorized inline forwardMessage implementation');
+const forwardMessageModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'forward-message.js'), 'utf8');
+assert(hasImplementation(branch2Html + '\n' + forwardMessageModuleText), 'Branch2 must contain the authorized forwardMessage implementation');
 assert((branch2Html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'complete-forward-message.js'), 'utf8')).includes('async function completeForwardMessage('), 'Branch2 must contain the bounded completion helper');
 assert(!hasImplementation(mainHtml), 'origin/main must remain caller-only for forwardMessage');
 
