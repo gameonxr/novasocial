@@ -10,15 +10,15 @@ assert(start >= 0 && end > start, 'inline application script boundaries must exi
 const inline = html.slice(start, end);
 const declarations = [...inline.matchAll(/^(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(/gm)].map(match => match[1]);
 const protectedNames = [
-  'renderDMs','openChat','renderReels','createPeerConnection','openSV','spawnLikeParticles',
+  'renderDMs','openChat','renderReels','createPeerConnection','spawnLikeParticles',
   'toggleRecording','enablePushFromSettings','resetPushFromSettings','submitNote','deleteMyNote',
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
   'syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 19, 'inline application script must retain 228 function declarations after the Push permission banner owner split');
-const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote', 'voteStoryPoll', 'refreshPollResults', 'loadStoryPollState'].includes(name));
+assert.strictEqual(declarations.length, 18, 'inline application script must retain 228 function declarations after the Push permission banner owner split');
+const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote', 'voteStoryPoll', 'refreshPollResults', 'loadStoryPollState', 'openSV'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
-assert.strictEqual(new Set(protectedNames).size, 16, 'protected declaration set must contain 16 unique names');
+assert.strictEqual(new Set(protectedNames).size, 15, 'protected declaration set must contain 15 unique names');
 const source = fs.readdirSync(path.join(repo, 'src'), { recursive: true }).filter(file => String(file).endsWith('.js'));
 for (const name of protectedNames.filter(name => name !== 'submitNote')) {
   if (name === 'reactToNote') {

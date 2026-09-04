@@ -91,6 +91,10 @@ for (const [marker, base] of coverage) {
     const storyPollStateOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
     assert(!html.includes(marker), 'approved Story poll state owner must be absent from inline HTML');
     assert(storyPollStateOwnerModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner missing from src');
+  } else if (marker === 'function openSV(') {
+    const storyViewerOpenOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Story viewer opener must be absent from inline HTML');
+    assert(storyViewerOpenOwnerModule.includes('window.openSV = function openSV('), 'approved Story viewer opener missing from src');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }

@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 442, '442 extracted JavaScript modules must remain after the render-sv extraction');
+assert.strictEqual(jsFiles.length, 443, '443 extracted JavaScript modules must remain after the open-sv extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 431, '431 feature modules must remain after the render-sv extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 444, 'HTML must retain 444 script tags after the render-sv extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 444, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 443, 'HTML must retain 443 external script tags after the render-sv extraction');
+assert.strictEqual(featureFiles.length, 432, '432 feature modules must remain after the open-sv extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 445, 'HTML must retain 445 script tags after the open-sv extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 445, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 444, 'HTML must retain 444 external script tags after the open-sv extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -98,7 +98,7 @@ for (const marker of [
   'async function refreshPollResults(',
   'async function loadStoryPollState(',
 ]) {
-  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()' || marker === 'function silentPushResubscribeIfGranted()' || marker === 'async function submitNote()' || marker === 'async function voteStoryPoll(' || marker === 'async function refreshPollResults(' || marker === 'async function loadStoryPollState(';
+  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()' || marker === 'function silentPushResubscribeIfGranted()' || marker === 'async function submitNote()' || marker === 'async function voteStoryPoll(' || marker === 'async function refreshPollResults(' || marker === 'async function loadStoryPollState(' || marker === 'function openSV(startIdx){';
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
@@ -119,6 +119,9 @@ assert(storyPollRefreshModule.includes('window.refreshPollResults = async functi
 const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
 assert(!html.includes('async function loadStoryPollState('), 'approved Story poll state owner must be absent from inline HTML');
 assert(storyPollStateModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state module must expose the global owner');
+const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
+assert(!html.includes('function openSV(startIdx){'), 'approved Story viewer opener must be absent from inline HTML');
+assert(storyViewerOpenModule.includes('window.openSV = function openSV('), 'approved Story viewer opener module must expose the global owner');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle module must have one owner');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module must expose the global owner');

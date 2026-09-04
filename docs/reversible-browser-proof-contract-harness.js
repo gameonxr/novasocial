@@ -150,9 +150,10 @@ for (const signature of [
   'function renderStoryElements()',
   'async function syncLocalDeletionFallback()'
 ]) {
-  const expectedInlineCount = ['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function submitNote()', 'async function deleteMyNote()', 'function renderStoryElements()'].includes(signature) ? 0 : 1;
+  const expectedInlineCount = ['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function submitNote()', 'async function deleteMyNote()', 'function renderStoryElements()', 'function openSV(startIdx){'].includes(signature) ? 0 : 1;
   assert.strictEqual(html.split(signature).length - 1, expectedInlineCount, `protected owner count mismatch: ${signature}`);
   if (signature === 'async function submitNote()') assert(source.includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must remain available through a window assignment');
+  else if (signature === 'function openSV(startIdx){') assert(source.includes('window.openSV = function openSV('), 'approved Story viewer opener owner must remain available through a window assignment');
   else assert(!source.includes(signature), `protected owner must remain outside src by declaration: ${signature}`);
 }
 assert(source.includes('window.renderDMs = async function(){'), 'approved DMs renderer owner must remain available through a window assignment');
@@ -165,6 +166,7 @@ assert(source.includes('window.viewNote = async function('), 'approved Note view
 assert(source.includes('window.removeMyNoteFromViewer = async function('), 'approved Note removal owner must remain available through a window assignment');
 assert(source.includes('window.renderStoryElements = function(){'), 'approved Story renderer owner must remain available through a window assignment');
 assert(source.includes('window.deleteMyNote = async function(){'), 'approved Note deletion owner must remain available through a window assignment');
+assert(source.includes('window.openSV = function openSV('), 'approved Story viewer opener owner must remain available through a window assignment');
 
 assert(!source.includes('reversibleBrowserProofPassed'), 'no speculative browser-proof pass flag may be introduced');
 assert(!source.includes('productionSplitApproved'), 'no speculative production-split approval flag may be introduced');
