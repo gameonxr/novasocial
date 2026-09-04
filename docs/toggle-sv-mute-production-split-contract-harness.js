@@ -33,7 +33,7 @@ assert.strictEqual(sha256(normalizedOriginOwner), 'edb16d31659caa52d9136da381a53
 assert.strictEqual((html.match(/function toggleSVMute\(\)\s*\{/g) || []).length, 0, 'named inline owner must be absent');
 assert.strictEqual((moduleText.match(/window\.toggleSVMute\s*=\s*function\(\)\s*\{/g) || []).length, 1, 'anonymous external owner must occur once');
 assert.strictEqual((html.match(/src\/features\/toggle-sv-mute-owner\.js/g) || []).length, 1, 'external owner script must be linked once');
-assert.strictEqual((html.match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
+assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'render-sv.js'), 'utf8')).match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
 assert(html.indexOf('src/features/set-reports-filter-owner.js') < html.indexOf('src/features/toggle-sv-mute-owner.js'), 'toggle owner must load after reports filter owner');
 assert(html.indexOf('src/features/toggle-sv-mute-owner.js') < html.indexOf('src/features/set-verify-filter-owner.js'), 'toggle owner must load before verification filter owner');
 assert(!/\b(?:db\.|localStorage|sessionStorage|fetch\(|navigator\.|location\.|notification|upload|\b(?:insert|update|delete|upsert|rpc)\s*\()/i.test(moduleText), 'module must remain free of stateful or persistence boundaries');

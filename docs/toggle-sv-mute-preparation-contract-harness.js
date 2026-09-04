@@ -37,7 +37,8 @@ const ownerHash = crypto.createHash('sha256').update(normalizedOrigin).digest('h
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current owner must retain normalized origin/main parity');
 assert.strictEqual(ownerHash, 'edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d', 'origin owner hash must remain pinned');
-assert.strictEqual((source.match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
+const renderSVModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'render-sv.js'), 'utf8');
+assert.strictEqual(((source + '\n' + renderSVModuleText).match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
 const inlineOwnerCount = (source.match(/function toggleSVMute\(\)\s*\{/g) || []).length;
 const externalOwnerCount = (moduleSource.match(/window\.toggleSVMute\s*=\s*function\(\)\s*\{/g) || []).length;
 assert.strictEqual(inlineOwnerCount + externalOwnerCount, 1, 'candidate must have exactly one inline or external owner');
