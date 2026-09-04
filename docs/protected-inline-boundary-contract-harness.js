@@ -96,6 +96,10 @@ for (const marker of protectedMarkers) {
     const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
     assert(!html.includes(marker), 'approved Story viewer opener marker must be absent from inline HTML');
     assert(storyViewerOpenModule.includes('window.openSV = function openSV('), 'approved Story viewer opener module owner must be present');
+  } else if (marker === 'function submitNativeEmojiReaction(') {
+    const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Notes emoji reaction marker must be absent from inline HTML');
+    assert(notesEmojiModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }

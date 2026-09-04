@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 449, '449 extracted JavaScript modules must remain after the flush-pending-ice-candidates extraction');
+assert.strictEqual(jsFiles.length, 450, '450 extracted JavaScript modules must remain after the submit-native-emoji-reaction extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 438, '438 feature modules must remain after the flush-pending-ice-candidates extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 451, 'HTML must retain 451 script tags after the flush-pending-ice-candidates extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 451, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 450, 'HTML must retain 450 external script tags after the flush-pending-ice-candidates extraction');
+assert.strictEqual(featureFiles.length, 439, '439 feature modules must remain after the submit-native-emoji-reaction extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 452, 'HTML must retain 452 script tags after the submit-native-emoji-reaction extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 452, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 451, 'HTML must retain 451 external script tags after the submit-native-emoji-reaction extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -98,7 +98,7 @@ for (const marker of [
   'async function refreshPollResults(',
   'async function loadStoryPollState(',
 ]) {
-  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()' || marker === 'function silentPushResubscribeIfGranted()' || marker === 'async function submitNote()' || marker === 'async function voteStoryPoll(' || marker === 'async function refreshPollResults(' || marker === 'async function loadStoryPollState(' || marker === 'function openSV(startIdx){';
+  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()' || marker === 'function silentPushResubscribeIfGranted()' || marker === 'async function submitNote()' || marker === 'async function voteStoryPoll(' || marker === 'async function refreshPollResults(' || marker === 'async function loadStoryPollState(' || marker === 'function openSV(startIdx){' || marker === 'function submitNativeEmojiReaction(';
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
@@ -122,6 +122,9 @@ assert(storyPollStateModule.includes('window.loadStoryPollState = async function
 const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
 assert(!html.includes('function openSV(startIdx){'), 'approved Story viewer opener must be absent from inline HTML');
 assert(storyViewerOpenModule.includes('window.openSV = function openSV('), 'approved Story viewer opener module must expose the global owner');
+const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
+assert(!html.includes('function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must be absent from inline HTML');
+assert(notesEmojiModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction module must expose the global owner');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle module must have one owner');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module must expose the global owner');
