@@ -9,7 +9,8 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const tabCacheModules = ['save-tab-to-cache.js', 'try-restore-from-cache.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n');
-const combinedDmsSource = html + '\n' + branchModule + '\n' + tabCacheModules;
+const dmsExtraModules = ['refresh-dms-in-place.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n');
+const combinedDmsSource = html + '\n' + branchModule + '\n' + tabCacheModules + '\n' + dmsExtraModules;
 assert(branchModule.includes('window.renderDMs = async function(){'), 'external DMs renderer must expose the classic global owner');
 const browserProofFiles = [
   'dms-empty-state-browser-proof-evidence.txt',
@@ -53,9 +54,9 @@ assert(html.includes('window.chatSubscription'), 'chat realtime subscription own
 assert(html.includes('window.typingSub'), 'typing subscription owner must remain inline');
 assert(html.includes('pushNavState(\'chat\', cid'), 'chat navigation-stack owner must remain inline');
 assert(combinedDmsSource.includes('scr.innerHTML=`'), 'DM primary renderer must retain its screen replacement boundary');
-assert(html.includes('_refreshDmsInPlace()'), 'background refresh must remain explicitly non-destructive');
+assert(combinedDmsSource.includes('_refreshDmsInPlace()'), 'background refresh must remain explicitly non-destructive');
 assert.strictEqual(sourceText.includes('async function renderDMs()'), false, 'renderDMs must use only the external classic global owner');
-assert.strictEqual(sourceText.includes('async function _refreshDmsInPlace()'), false, '_refreshDmsInPlace must not be extracted');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-dms-in-place.js'), 'utf8').includes('window._refreshDmsInPlace = async function _refreshDmsInPlace('), 'approved _refreshDmsInPlace owner must exist');
 assert.strictEqual(sourceText.includes('function openChat('), false, 'openChat must not be extracted');
 assert(fs.existsSync(path.join(repo, 'docs', 'dms-realtime-contract.md')), 'DMs behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'dms-realtime-contract-harness.js')), 'DMs behavior harness must remain present');
