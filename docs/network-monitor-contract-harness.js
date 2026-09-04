@@ -26,11 +26,11 @@ async function runHarness() {
     const smStart = startMonitorModule.indexOf('window.startNetworkMonitor = function startNetworkMonitor(){');
     assert(smStart >= 0, 'start-network-monitor module owner must remain present');
     const startMonitorBlock = startMonitorModule.slice(smStart + 'window.startNetworkMonitor = '.length);
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('function stopNetworkMonitor(){');
-    const end = source.indexOf('\nfunction showCallScreen()', start);
-    assert(start >= 0 && end > start, 'network-monitor boundary must remain present and ordered');
-    const fnSource = startMonitorBlock + '\n' + source.slice(start, end);
+    const stopMonitorModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/stop-network-monitor.js', 'utf8');
+    const smStop = stopMonitorModule.indexOf('window.stopNetworkMonitor = function stopNetworkMonitor(){');
+    assert(smStop >= 0, 'stop-network-monitor module owner must remain present');
+    const stopMonitorBlock = stopMonitorModule.slice(smStop + 'window.stopNetworkMonitor = '.length);
+    const fnSource = startMonitorBlock + '\n' + stopMonitorBlock;
     // Evaluate the exact declarations in a lexical scope that exposes the functions globally.
     eval(`${fnSource}; global.startNetworkMonitor = startNetworkMonitor; global.stopNetworkMonitor = stopNetworkMonitor;`);
 

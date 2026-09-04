@@ -29,16 +29,16 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 
 assert.strictEqual(normalizedModuleOwner, normalizedOriginOwner, 'external owner must preserve normalized origin/main parity');
 assert.strictEqual(sha256(normalizedOriginOwner), '19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127', 'normalized owner hash must match preparation anchor');
-assert.strictEqual(sourceFiles.length, 425, 'production split must retain 234 extracted JavaScript modules after the DMs renderer split');
+assert.strictEqual(sourceFiles.length, 426, 'production split must retain 234 extracted JavaScript modules after the DMs renderer split');
 assert.strictEqual((html.match(/function invalidateTabCache\(tab\)\s*\{/g) || []).length, 0, 'named inline invalidateTabCache owner must be absent');
 assert.strictEqual((moduleText.match(/window\.invalidateTabCache\s*=\s*function\(tab\)\s*\{/g) || []).length, 1, 'anonymous external invalidateTabCache owner must occur once');
 assert.strictEqual((html.match(/src\/features\/invalidate-tab-cache-owner\.js/g) || []).length, 1, 'external invalidate-tab-cache owner script must be linked once');
 assert.strictEqual((html.match(/invalidateTabCache\(/g) || []).length, 4, 'exactly eight existing invalidateTabCache callers must remain');
 assert(html.indexOf('src/features/set-reports-filter-owner.js') < html.indexOf('src/features/invalidate-tab-cache-owner.js'), 'cache invalidator must load after reports filter owner');
 assert(html.indexOf('src/features/invalidate-tab-cache-owner.js') < html.indexOf('src/features/set-verify-filter-owner.js'), 'cache invalidator must load before verification filter owner');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 427, '234 classic script tags must remain after the Push permission banner split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 427, '234 classic script closures must remain after the Push permission banner split');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 426, '233 external classic script tags must remain after the Push permission banner split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 428, '234 classic script tags must remain after the Push permission banner split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 428, '234 classic script closures must remain after the Push permission banner split');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 427, '233 external classic script tags must remain after the Push permission banner split');
 assert(!/\b(?:db\.|localStorage|sessionStorage|fetch\(|navigator\.|location\.|notification|permission|upload|navigate|account|message|follow|like|comment|\b(?:insert|update|upsert|rpc)\s*\()/i.test(ownerBody), 'owner must remain free of stateful boundaries');
 assert(ownerBody.includes('delete _tabCache[tab]'), 'owner must delete exactly the requested cache entry');
 assert(prepProof.includes('RESULT=PASS') && prepProof.includes('TARGET_REMOVED=true') && prepProof.includes('MISSING_ENTRY_NOOP=true') && prepProof.includes('DATABASE_CALLS=0') && prepProof.includes('NETWORK_CALLS=0') && prepProof.includes('ACCOUNT_MUTATIONS=0') && prepProof.includes('DETACHED_ONLY=true'), 'preparation browser proof must pass with zero side effects');
