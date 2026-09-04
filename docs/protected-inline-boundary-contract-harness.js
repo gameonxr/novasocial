@@ -80,6 +80,10 @@ for (const marker of protectedMarkers) {
 } else if (marker === 'function reactToNote(') {
     assert(!html.includes(marker), 'approved Notes reaction marker must be absent from inline HTML');
     assert(notesReactionModule.includes('window.reactToNote = function reactToNote('), 'approved Notes reaction module owner must be present');
+  } else if (marker === 'async function voteStoryPoll(') {
+    const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Story poll vote marker must be absent from inline HTML');
+    assert(storyPollVoteModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }

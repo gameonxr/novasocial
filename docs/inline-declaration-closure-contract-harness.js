@@ -13,12 +13,12 @@ const protectedNames = [
   'renderDMs','openChat','renderReels','createPeerConnection','openSV','spawnLikeParticles',
   'toggleRecording','enablePushFromSettings','resetPushFromSettings','submitNote','deleteMyNote',
   'submitNativeEmojiReaction','reactToNote','loadNoteReactorsList','renderStoryElements',
-  'voteStoryPoll','refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
+  'refreshPollResults','loadStoryPollState','syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 26, 'inline application script must retain 228 function declarations after the Push permission banner owner split');
-const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote'].includes(name));
+assert.strictEqual(declarations.length, 25, 'inline application script must retain 228 function declarations after the Push permission banner owner split');
+const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote', 'voteStoryPoll'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
-assert.strictEqual(new Set(protectedNames).size, 19, 'protected declaration set must contain 19 unique names');
+assert.strictEqual(new Set(protectedNames).size, 18, 'protected declaration set must contain 18 unique names');
 const source = fs.readdirSync(path.join(repo, 'src'), { recursive: true }).filter(file => String(file).endsWith('.js'));
 for (const name of protectedNames.filter(name => name !== 'submitNote')) {
   if (name === 'reactToNote') {

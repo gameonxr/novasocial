@@ -79,6 +79,10 @@ for (const [marker, base] of coverage) {
 } else if (marker === 'function reactToNote(') {
     assert(!html.includes(marker), 'approved Notes reaction owner must be absent from inline HTML');
     assert.strictEqual((notesReactionModule.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'approved Notes reaction owner must have one owner');
+  } else if (marker === 'async function voteStoryPoll(') {
+    const storyPollVoteOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Story poll vote owner must be absent from inline HTML');
+    assert(storyPollVoteOwnerModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner missing from src');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
