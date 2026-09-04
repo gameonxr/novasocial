@@ -9,7 +9,7 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const tabCacheModules = ['save-tab-to-cache.js', 'try-restore-from-cache.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n');
-const dmsExtraModules = ['refresh-dms-in-place.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n');
+const dmsExtraModules = ['refresh-dms-in-place.js', 'load-msgs.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n');
 const combinedDmsSource = html + '\n' + branchModule + '\n' + tabCacheModules + '\n' + dmsExtraModules;
 assert(branchModule.includes('window.renderDMs = async function(){'), 'external DMs renderer must expose the classic global owner');
 const browserProofFiles = [

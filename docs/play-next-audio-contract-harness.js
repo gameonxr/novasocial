@@ -16,7 +16,7 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Play next audio marker missing: ${marker}`);
 }
-assert(html.includes('onended="playNextAudio(this)"'), 'Audio markup must retain the play-next-audio ended handler');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'load-msgs.js'), 'utf8')).includes('onended="playNextAudio(this)"'), 'Audio markup must retain the play-next-audio ended handler');
 assert(!source.includes('fetch('), 'Play next audio must not own network requests');
 assert(!source.includes('localStorage'), 'Play next audio must not own persistence');
 assert.strictEqual((source.match(/function playNextAudio\(/g) || []).length, 1, 'Play next audio must have one module owner');
