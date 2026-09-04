@@ -13,7 +13,8 @@ const owners = fs.readFileSync(path.join(featureDir, 'story-editor-owners.js'), 
 assert(!html.includes('function renderStoryElements()'), 'Story editor renderer must be absent from inline HTML after split');
 assert(owners.includes('window.renderStoryElements = function(){'), 'Story editor renderer must have one anonymous window owner');
 assert(html.includes('let storyEditorElements = [];'), 'Story editor element state must remain inline');
-assert(html.includes('id="se-elements"'), 'Story editor elements container must remain present');
+const showCreateStoryModule = fs.readFileSync(path.join(featureDir, 'show-create-story.js'), 'utf8');
+assert((html + '\n' + showCreateStoryModule).includes('id="se-elements"'), 'Story editor elements container must remain present');
 assert(html.includes('function showDeleteZone()') && html.includes('function hideDeleteZone()'), 'delete-zone helpers must remain protected');
 const rendererSurface = html + '\n' + owners;
 assert(rendererSurface.includes('storyEditorElements = storyEditorElements.filter'), 'delete-zone removal must remain in the renderer surface');

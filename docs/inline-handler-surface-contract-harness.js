@@ -19,7 +19,7 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 
-assert.strictEqual(handlers.length, 93, 'onclick handler inventory must reflect the current Reels renderer split');
+assert.strictEqual(handlers.length, 60, 'onclick handler inventory must reflect the current Reels renderer split');
 assert.deepStrictEqual(unresolved, [], 'all current inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain visible');
 assert(/(?:async\s+)?function\s+forwardMessage\s*\(/.test(html), 'Branch2 must expose the authorized inline forwardMessage implementation');
