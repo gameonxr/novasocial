@@ -23,12 +23,10 @@ async function runHarness() {
   };
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('function showStaffActions(userId, username, currentRole, isSuper){');
-    assert(start >= 0, 'showStaffActions declaration must remain present');
-    const end = source.indexOf('\n// ─── Moderator promote/demote functions ───', start);
-    assert(end > start, 'showStaffActions boundary must remain unique and ordered');
-    const fnSource = source.slice(start, end);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/show-staff-actions.js', 'utf8');
+    const start = source.indexOf('window.showStaffActions = function showStaffActions(userId, username, currentRole, isSuper){');
+    assert(start >= 0, 'showStaffActions module owner must remain present');
+    const fnSource = source.slice(start + 'window.showStaffActions = '.length);
     eval(`global.showStaffActions = ${fnSource.slice(fnSource.indexOf('function showStaffActions'), fnSource.length)}`);
 
     function lastBody() {
