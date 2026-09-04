@@ -44,7 +44,13 @@ async function runHarness() {
     const hasInlineAllInvalidator = /function invalidateAllTabCache\(\)\s*\{/.test(block);
     const externalAllInvalidator = hasInlineAllInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/invalidate-all-tab-cache.js', 'utf8');
     const allInvalidatorBinding = hasInlineAllInvalidator ? 'invalidateAllTabCache' : 'window.invalidateAllTabCache';
-    eval(`${block}; ${externalInvalidator}; ${externalAllInvalidator}; global._saveTabToCache = _saveTabToCache; global._tryRestoreFromCache = _tryRestoreFromCache; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = ${allInvalidatorBinding};`);
+    const hasInlineSaveRestore = /function _saveTabToCache\(tab\)\s*\{/.test(block);
+    const externalSaveRestore = hasInlineSaveRestore ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/save-tab-to-cache.js', 'utf8');
+    const saveRestoreBinding = hasInlineSaveRestore ? '_saveTabToCache' : 'window._saveTabToCache';
+    const hasInlineTryRestore = /function _tryRestoreFromCache\(tab\)\s*\{/.test(block);
+    const externalTryRestore = hasInlineTryRestore ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/try-restore-from-cache.js', 'utf8');
+    const tryRestoreBinding = hasInlineTryRestore ? '_tryRestoreFromCache' : 'window._tryRestoreFromCache';
+    eval(`${block}; ${externalInvalidator}; ${externalAllInvalidator}; ${externalSaveRestore}; ${externalTryRestore}; global._saveTabToCache = ${saveRestoreBinding}; global._tryRestoreFromCache = ${tryRestoreBinding}; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = ${allInvalidatorBinding};`);
 
     // Enabled non-Reels tabs save HTML and scroll position.
     Date.now = () => 100000;
