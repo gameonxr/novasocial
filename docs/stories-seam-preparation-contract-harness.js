@@ -77,7 +77,9 @@ const protectedSignatures = [
 for (const signature of protectedSignatures) {
   assert.strictEqual(sourceText.includes(signature), false, `Protected Story signature must not be extracted: ${signature}`);
 }
-assert(html.includes('renderStoryElements();'), 'Story viewer must retain its render call boundary');
+const undoStoryEditorModule = fs.readFileSync(path.join(repo, 'src', 'features', 'undo-story-editor.js'), 'utf8');
+const storyCallSurface = html + '\n' + undoStoryEditorModule;
+assert(storyCallSurface.includes('renderStoryElements();'), 'Story viewer must retain its render call boundary');
 assert(html.includes('await refreshPollResults('), 'Poll voting must retain its result-refresh boundary');
 assert(html.includes('loadStoryPollState('), 'Poll cards must retain prior-state restoration boundary');
 assert(html.includes('pauseAllVideos()'), 'Story viewers modal must retain media-pause boundary');
