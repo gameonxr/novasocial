@@ -34,8 +34,8 @@ const requiredHtmlMarkers = [
   'multiVote',
   'story_poll_votes'
 ];
-const showStoryViewersModule = fs.readFileSync(path.join(repo, 'src', 'features', 'show-story-viewers.js'), 'utf8');
-const storyViewerSurface = html + '\n' + showStoryViewersModule;
+const storyViewerModules = ['show-story-viewers.js', 'close-sv.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', name), 'utf8')).join('\n');
+const storyViewerSurface = html + '\n' + storyViewerModules;
 for (const marker of requiredHtmlMarkers) {
   assert(storyViewerSurface.includes(marker), `Stories seam marker must remain inline: ${marker}`);
 }
