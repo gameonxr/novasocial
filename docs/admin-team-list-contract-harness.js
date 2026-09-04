@@ -37,12 +37,11 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function loadTeamList(){');
-    const end = source.indexOf('\nlet _teamSearchTimer = null;', start);
-    assert(start >= 0 && end > start, 'loadTeamList boundary must remain present and ordered');
-    const fnSource = source.slice(start, end);
-    eval(`global.loadTeamList = ${fnSource.slice(fnSource.indexOf('async function loadTeamList'), fnSource.length)}`);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-team-list.js', 'utf8');
+    const start = source.indexOf('window.loadTeamList = async function loadTeamList(){');
+    assert(start >= 0, 'loadTeamList module owner must remain present');
+    const functionBlock = source.slice(start);
+    eval(`const window = global; ${functionBlock}`);
 
     const list = { innerHTML: '' };
     elements.set('admin-team-list', list);
