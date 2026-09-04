@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const contractPath = path.join(repo, 'docs', 'stories-lifecycle-editor-viewer-protected-readiness-contract.md');
-const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8') + fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8') + fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8') + fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
   'window.renderStoryElements',

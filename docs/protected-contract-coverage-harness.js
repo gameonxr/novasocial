@@ -83,6 +83,10 @@ for (const [marker, base] of coverage) {
     const storyPollVoteOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
     assert(!html.includes(marker), 'approved Story poll vote owner must be absent from inline HTML');
     assert(storyPollVoteOwnerModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner missing from src');
+  } else if (marker === 'async function refreshPollResults(') {
+    const storyPollRefreshOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Story poll refresh owner must be absent from inline HTML');
+    assert(storyPollRefreshOwnerModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner missing from src');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }

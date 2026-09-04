@@ -34,7 +34,7 @@ const requiredHtmlMarkers = [
   'multiVote',
   'story_poll_votes'
 ];
-const storyViewerModules = ['show-story-viewers.js', 'close-sv.js', 'vote-story-poll.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', name), 'utf8')).join('\n');
+const storyViewerModules = ['show-story-viewers.js', 'close-sv.js', 'vote-story-poll.js', 'refresh-poll-results.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', name), 'utf8')).join('\n');
 const storyViewerSurface = html + '\n' + storyViewerModules;
 for (const marker of requiredHtmlMarkers) {
   assert(storyViewerSurface.includes(marker), `Stories seam marker must remain inline: ${marker}`);
@@ -77,9 +77,14 @@ const protectedSignatures = [
   'async function loadStoryPollState(storyId, pollIdx, options, cardEl)'
 ];
 const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
 for (const signature of protectedSignatures) {
   if (signature === 'async function voteStoryPoll(storyId, pollIdx, options, optIdx, cardEl)') {
     assert(storyPollVoteModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
+    continue;
+  }
+  if (signature === 'async function refreshPollResults(storyId, pollIdx, options, cardEl, pickedIdxs)') {
+    assert(storyPollRefreshModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
     continue;
   }
   assert.strictEqual(sourceText.includes(signature), false, `Protected Story signature must not be extracted: ${signature}`);
