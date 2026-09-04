@@ -59,8 +59,9 @@ for (const marker of ['document.querySelector', 'scrollIntoView', "style.transit
 for (const forbidden of [/\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i, /fetch\s*\(|XMLHttpRequest|WebSocket/i, /localStorage|sessionStorage|indexedDB|document\.cookie/i, /\bME\b|auth|account|upload|permission|Notification|PushManager/i, /sendMsg|sendMediaMsg|reactMsg|pinMsg|unsendMsg|deleteMsg|forwardMessage|showReportModal|loadMsgs|loadDMs/i, /location\.|history\.|goToProfile|viewPost|window\.open/i]) {
   assert(!forbidden.test(owner), `candidate must remain free of forbidden boundary: ${forbidden}`);
 }
+const tryRestoreModuleText = fs.readFileSync(path.join(sourceDir, 'try-restore-from-cache.js'), 'utf8');
 for (const marker of ['renderDMs()', '_refreshDmsInPlace()', 'function openChat(', 'function showMsgMenu(', 'forwardMessage(']) {
-  assert(html.includes(marker), `protected messaging marker must remain inline: ${marker}`);
+  assert((html + '\n' + tryRestoreModuleText).includes(marker), `protected messaging marker must remain inline: ${marker}`);
 }
 for (const file of ['docs/dms-seam-preparation-contract.md', 'docs/dms-seam-preparation-contract-harness.js', 'docs/inline-handler-surface-contract-harness.js']) {
   assert(fs.existsSync(path.join(repo, file)), `required protected messaging artifact missing: ${file}`);
