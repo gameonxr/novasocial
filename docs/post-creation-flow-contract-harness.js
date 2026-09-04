@@ -44,17 +44,20 @@ const requiredSubmitMarkers = [
   "go(type==='reel'?'reels':'home')",
   'Upload failed'
 ];
+const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8');
+const submitCreateSurface = html + '\n' + submitCreateModuleText;
 for (const marker of requiredSubmitMarkers) {
-  assert(html.includes(marker), `Submit-create marker missing: ${marker}`);
+  assert(submitCreateSurface.includes(marker), `Submit-create marker missing: ${marker}`);
 }
-assert(html.includes("await sendNotif(_collabAuthorRef.id, 'mention'"), 'Co-author notification boundary must remain');
-assert(html.includes("db.from('follows').select('follower_id')"), 'Follower notification query must remain');
-assert(html.includes('window._collabAuthor = null'), 'Create state reset must remain');
-assert(html.includes("window._selectedFilter = 'none'"), 'Filter state reset must remain');
-assert(html.includes('closeModal();'), 'Successful creation must close the modal');
+assert(submitCreateSurface.includes("await sendNotif(_collabAuthorRef.id, 'mention'"), 'Co-author notification boundary must remain');
+assert(submitCreateSurface.includes("db.from('follows').select('follower_id')"), 'Follower notification query must remain');
+assert(submitCreateSurface.includes('window._collabAuthor = null'), 'Create state reset must remain');
+assert(submitCreateSurface.includes("window._selectedFilter = 'none'"), 'Filter state reset must remain');
+assert(submitCreateSurface.includes('closeModal();'), 'Successful creation must close the modal');
 assert(fs.existsSync(path.join(repo, 'docs', 'share-story-post-contract.md')), 'Story-share contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'notification-dispatch-contract.md')), 'Notification-dispatch contract must remain present');
-assert.strictEqual((html.match(/async function submitCreate\(/g) || []).length, 1, 'submitCreate must have one inline owner');
+assert.strictEqual((html.match(/async function submitCreate\(/g) || []).length, 0, 'approved submitCreate owner must be absent from inline HTML');
+assert(submitCreateModuleText.includes('window.submitCreate = async function submitCreate('), 'approved submitCreate module owner must expose the global');
 assert.strictEqual((createModule.match(/function showCreate\(/g) || []).length, 1, 'showCreate must have one extracted owner');
 
 console.log('POST_CREATION_FLOW_CONTRACT_HARNESS=PASS');

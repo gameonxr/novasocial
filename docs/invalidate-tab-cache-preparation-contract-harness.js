@@ -31,7 +31,8 @@ const currentOwner = moduleExists ? extractModuleOwner(moduleText) : extractOwne
 const normalizedOrigin = normalize(originOwner);
 const normalizedCurrent = normalize(currentOwner);
 const publishStoryEditorModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'publish-story-editor.js'), 'utf8');
-const callerCount = ((html + '\n' + publishStoryEditorModuleText).match(/\binvalidateTabCache\s*\(/g) || []).length - (moduleExists ? 0 : 1);
+const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8');
+const callerCount = ((html + '\n' + publishStoryEditorModuleText + '\n' + submitCreateModuleText).match(/\binvalidateTabCache\s*\(/g) || []).length - (moduleExists ? 0 : 1);
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'candidate owner must match origin/main exactly after normalization');
 assert.strictEqual(sha256(normalizedOrigin), '19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127', 'candidate hash must remain pinned');
