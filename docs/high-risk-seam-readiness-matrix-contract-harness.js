@@ -34,7 +34,7 @@ const protectedSignatures = [
   'async function subscribeToPushNotifications()'
 ];
 
-assert.strictEqual(sourceFiles.length, 405, '234 extracted JavaScript modules must remain present after the Push subscription split');
+assert.strictEqual(sourceFiles.length, 406, '234 extracted JavaScript modules must remain present after the Push subscription split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'async function submitNote()' || signature === 'async function subscribeToPushNotifications()';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);

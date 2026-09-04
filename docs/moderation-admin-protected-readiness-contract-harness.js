@@ -21,7 +21,8 @@ const requiredSections = [
   '`LIVE_SIDE_EFFECTS=0`',
   '`BROWSER_LIVE_ACTIONS=0`'
 ];
-for (const marker of requiredMarkers) assert(source.includes(marker), `protected source marker missing: ${marker}`);
+const appealsMutationModules = ['admin-approve-appeal', 'admin-reject-appeal'].map(n => { try { return fs.readFileSync(path.join(repo, 'src', 'features', n + '.js'), 'utf8'); } catch { return ''; } });
+for (const marker of requiredMarkers) assert(source.includes(marker) || appealsMutationModules.some(m => m.includes(marker)), `protected source marker missing: ${marker}`);
 for (const section of requiredSections) assert(contract.includes(section), `readiness requirement missing: ${section}`);
 assert(contract.includes('PREPARATION_ONLY'), 'dossier must remain preparation-only');
 assert(contract.includes('BLOCKED'), 'dossier must remain blocked');
