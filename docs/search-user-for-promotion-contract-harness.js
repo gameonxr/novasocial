@@ -58,12 +58,10 @@ async function runHarness() {
   }
 
   try {
-    const source = require('fs').readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function searchUserForPromotion(query){');
-    assert(start >= 0, 'searchUserForPromotion declaration must remain present');
-    const end = source.indexOf('\nfunction showStaffActions(', start);
-    assert(end > start, 'searchUserForPromotion boundary must remain unique and ordered');
-    const fnSource = source.slice(start, end);
+    const source = require('fs').readFileSync('/home/z/my-project/novasocial/src/features/search-user-for-promotion.js', 'utf8');
+    const start = source.indexOf('window.searchUserForPromotion = async function searchUserForPromotion(query){');
+    assert(start >= 0, 'searchUserForPromotion module owner must remain present');
+    const fnSource = source.slice(start + 'window.searchUserForPromotion = '.length);
     // The extracted function is evaluated only inside this mocked harness scope.
     eval(`let _teamSearchTimer = null; global.searchUserForPromotion = ${fnSource.slice(fnSource.indexOf('async function searchUserForPromotion'), fnSource.length)}`);
 
