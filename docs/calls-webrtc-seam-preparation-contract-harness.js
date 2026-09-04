@@ -31,8 +31,10 @@ const requiredMarkers = [
   'async function endCall(updateDB)',
   'removeChannel'
 ];
+const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'flush-pending-ice-candidates.js'), 'utf8');
+const callsMarkerSurface = html + '\n' + flushPendingIceModule;
 for (const marker of requiredMarkers) {
-  assert(html.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
+  assert(callsMarkerSurface.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
 }
 assert(html.includes('function createPeerConnection(callId, remoteUserId) {'), 'createPeerConnection must remain inline');
 assert(html.includes('async function endCall(updateDB)'), 'endCall must remain inline');

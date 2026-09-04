@@ -83,9 +83,9 @@ assert(!sourceText.includes(signature), 'candidate must not remain as a named de
 assert(branch2Html.includes('src="src/features/load-appeals-list.js"'), 'existing read-only reload owner must remain external via linkage');
 assert(branch2Html.includes('src="src/features/admin-approve-appeal.js"') && branch2Html.includes('src="src/features/admin-reject-appeal.js"'), 'appeal mutation owners must remain present via external linkage');
 assert(branch2Html.indexOf('src/features/admin-appeals-filter-owner.js') < branch2Html.indexOf('src/features/note-reactors-list-owner.js'), 'admin filter owner must load before the existing Notes owner footer boundary');
-assert.strictEqual((branch2Html.match(/<script\b/gi) || []).length, 450, '397 opening script tags required after the DMs renderer split');
-assert.strictEqual((branch2Html.match(/<\/script>/gi) || []).length, 450, '234 closing script tags required after the DMs renderer split');
-assert.strictEqual((branch2Html.match(/<script\s+src=/gi) || []).length, 449, '234 external script tags required after the DMs renderer split');
+assert.strictEqual((branch2Html.match(/<script\b/gi) || []).length, 451, '397 opening script tags required after the DMs renderer split');
+assert.strictEqual((branch2Html.match(/<\/script>/gi) || []).length, 451, '234 closing script tags required after the DMs renderer split');
+assert.strictEqual((branch2Html.match(/<script\s+src=/gi) || []).length, 450, '234 external script tags required after the DMs renderer split');
 
 async function runSeam() {
   const elements = new Map();
