@@ -30,7 +30,7 @@ assert.strictEqual((ownerBody.match(/db\.from\(['"]profiles['"]\)/g) || []).leng
 assert(ownerBody.includes('Promise.all'), 'owner must retain parallel profile reads');
 assert(!/\b(?:insert|update|upsert|delete|rpc)\s*\(/i.test(ownerBody), 'owner must contain no database mutation calls');
 assert(!/(?:localStorage|sessionStorage|navigator\.|location\.|fetch\(|notification|permission|subscribe|upload|navigate)/i.test(ownerBody), 'owner must contain no storage, messaging, permission, upload, or navigation side effects');
-assert.strictEqual(sourceFiles.length, 433, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split');
+assert.strictEqual(sourceFiles.length, 434, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split');
 assert.strictEqual((html.match(/async function refreshProfileCounts\(userId\)\s*\{/g) || []).length, 0, 'inline refreshProfileCounts owner must be absent');
 assert.strictEqual((moduleText.match(/window\.refreshProfileCounts\s*=\s*async function\(userId\)\s*\{/g) || []).length, 1, 'external refreshProfileCounts owner must occur once');
 assert.strictEqual((html.match(/src\/features\/refresh-profile-counts-owner\.js/g) || []).length, 1, 'refresh-profile-counts module must be linked exactly once');

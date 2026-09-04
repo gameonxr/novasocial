@@ -34,8 +34,10 @@ const requiredHtmlMarkers = [
   'multiVote',
   'story_poll_votes'
 ];
+const showStoryViewersModule = fs.readFileSync(path.join(repo, 'src', 'features', 'show-story-viewers.js'), 'utf8');
+const storyViewerSurface = html + '\n' + showStoryViewersModule;
 for (const marker of requiredHtmlMarkers) {
-  assert(html.includes(marker), `Stories seam marker must remain inline: ${marker}`);
+  assert(storyViewerSurface.includes(marker), `Stories seam marker must remain inline: ${marker}`);
 }
 assert(!html.includes('function renderStoryElements()'), 'completed Story editor renderer must be absent from inline HTML');
 assert.strictEqual((storyModule.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length, 1, 'completed Story editor renderer owner must occur once');
