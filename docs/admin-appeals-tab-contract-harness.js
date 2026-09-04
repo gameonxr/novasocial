@@ -47,11 +47,10 @@ async function runHarness() {
     assert(start >= 0, 'appeals tab module owner must remain present');
     const functionBlock = source.slice(start);
     const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-appeals-filter-owner.js', 'utf8');
-    const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const laStart = html.indexOf('async function loadAppealsList(');
-    const laEnd = html.indexOf('\nasync function adminApproveAppeal(', laStart);
-    assert(laStart >= 0 && laEnd > laStart, 'appeals list boundary must remain present and ordered');
-    const loadAppealsBlock = html.slice(laStart, laEnd);
+    const loadAppealsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-appeals-list.js', 'utf8');
+    const laStart = loadAppealsModule.indexOf('window.loadAppealsList = async function loadAppealsList(');
+    assert(laStart >= 0, 'appeals list module owner must remain present');
+    const loadAppealsBlock = loadAppealsModule.slice(laStart + 'window.loadAppealsList = '.length);
     eval(`let _appealsFilter = 'pending'; const window = global; ${functionBlock}; ${loadAppealsBlock}; ${moduleOwner}; global.adminTabAppeals = window.adminTabAppeals; global.setAppealsFilter = window.setAppealsFilter; global.loadAppealsList = loadAppealsList;`);
 
     const appeal = {
