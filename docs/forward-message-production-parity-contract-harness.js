@@ -3,7 +3,7 @@ const assert = require('assert');
 const fs = require('fs');
 const vm = require('vm');
 
-const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
+const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8') + '\n' + fs.readFileSync('/home/z/my-project/novasocial/src/features/complete-forward-message.js', 'utf8');
 
 function extractFunction(source, name) {
   const start = source.search(new RegExp(`(?:async\\s+)?function\\s+${name}\\s*\\(`));
