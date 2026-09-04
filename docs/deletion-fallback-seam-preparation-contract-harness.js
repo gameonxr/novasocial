@@ -39,7 +39,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'local-deletion-fallback-contract-h
 assert.strictEqual((html.match(/async function syncLocalDeletionFallback\(\)/g) || []).length, 0, 'inline syncLocalDeletionFallback owner must be absent after split');
 assert.strictEqual((moduleText.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)/g) || []).length, 1, 'module must assign one window syncLocalDeletionFallback owner');
 assert.strictEqual(sourceText.includes('async function syncLocalDeletionFallback()'), false, 'named syncLocalDeletionFallback declaration must not be duplicated in src');
-assert.strictEqual(sourceText.includes('async function deleteMediaProduction('), false, 'deleteMediaProduction must not be extracted');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'delete-media-production.js'), 'utf8').includes('window.deleteMediaProduction = async function deleteMediaProduction('), 'approved deleteMediaProduction owner must exist');
 assert(moduleText.includes('for(const item of pending)'), 'Fallback replay must retain ordered item iteration');
 assert(moduleText.includes('try {\n        await deleteMediaProduction') || moduleText.includes('try{\n        await deleteMediaProduction') || moduleText.includes('try{await deleteMediaProduction'), 'Fallback replay must retain per-item isolation');
 assert(moduleText.includes('localStorage.removeItem(\'_mediaDeleteFallback\')') || moduleText.includes('localStorage.removeItem("_mediaDeleteFallback")'), 'Fallback queue must retain post-loop finalization');

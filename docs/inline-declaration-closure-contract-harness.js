@@ -15,7 +15,7 @@ const protectedNames = [
   'reactToNote','loadNoteReactorsList','renderStoryElements',
   'syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 9, 'inline application script must retain 228 function declarations after the loadMsgs whitespace normalization');
+assert.strictEqual(declarations.length, 8, 'inline application script must retain 228 function declarations after the loadMsgs whitespace normalization');
 const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote', 'voteStoryPoll', 'refreshPollResults', 'loadStoryPollState', 'openSV', 'submitNativeEmojiReaction'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 14, 'protected declaration set must contain 14 unique names');

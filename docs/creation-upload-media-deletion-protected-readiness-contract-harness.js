@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const contractPath = path.join(repo, 'docs', 'creation-upload-media-deletion-protected-readiness-contract.md');
-const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'delete-media-production.js'), 'utf8');
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
   'deleteMediaProduction',
