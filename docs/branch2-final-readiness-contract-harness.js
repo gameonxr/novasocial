@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 414, '414 extracted JavaScript modules must remain after the admin-recover-post extraction');
+assert.strictEqual(jsFiles.length, 415, '415 extracted JavaScript modules must remain after the load-admin-deleted-posts extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 403, '403 feature modules must remain after the admin-recover-post extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 416, 'HTML must retain 416 script tags after the admin-recover-post extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 416, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 415, 'HTML must retain 415 external script tags after the admin-recover-post extraction');
+assert.strictEqual(featureFiles.length, 404, '404 feature modules must remain after the load-admin-deleted-posts extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 417, 'HTML must retain 417 script tags after the load-admin-deleted-posts extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 417, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 416, 'HTML must retain 416 external script tags after the load-admin-deleted-posts extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');

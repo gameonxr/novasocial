@@ -84,11 +84,11 @@ async function runHarness() {
     const rcStart = recoverModule.indexOf('window.adminRecoverPost = async function adminRecoverPost(');
     assert(rcStart >= 0, 'recover module owner must remain present');
     const recoverBlock = recoverModule.slice(rcStart + 'window.adminRecoverPost = '.length);
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function loadAdminDeletedPosts(');
-    const end = source.indexOf('\n/**\n * AUTO-PURGE', start);
-    assert(start >= 0 && end > start, 'two-tier delete boundary must remain present and ordered');
-    const fnSource = softDeleteBlock + '\n' + hardDeleteBlock + '\n' + recoverBlock + '\n' + source.slice(start, end);
+    const deletedListModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-admin-deleted-posts.js', 'utf8');
+    const dlStart = deletedListModule.indexOf('window.loadAdminDeletedPosts = async function loadAdminDeletedPosts(');
+    assert(dlStart >= 0, 'deleted-posts module owner must remain present');
+    const deletedListBlock = deletedListModule.slice(dlStart + 'window.loadAdminDeletedPosts = '.length);
+    const fnSource = softDeleteBlock + '\n' + hardDeleteBlock + '\n' + recoverBlock + '\n' + deletedListBlock;
     eval(`${fnSource}; global.adminSoftDeletePost = adminSoftDeletePost; global.adminHardDeletePost = adminHardDeletePost; global.adminRecoverPost = adminRecoverPost; global.loadAdminDeletedPosts = loadAdminDeletedPosts;`);
 
     // Soft delete stores recoverable metadata and does not call media deletion.
