@@ -45,11 +45,15 @@ async function runHarness() {
   }
 
   try {
+    const approvalsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-approvals.js', 'utf8');
+    const apStart = approvalsModule.indexOf('window.adminTabApprovals = async function adminTabApprovals(content){');
+    assert(apStart >= 0, 'approvals tab module owner must remain present');
+    const approvalsBlock = approvalsModule.slice(apStart + 'window.adminTabApprovals = '.length);
     const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function adminTabApprovals(content){');
+    const start = source.indexOf('async function adminTabMyApprovals(content){');
     const end = source.indexOf('\n\n// ═══════════════════════════════════════════════════════════════\n// 🔍 DIAGNOSTIC FUNCTION', start);
     assert(start >= 0 && end > start, 'approval-tab boundary must remain present and ordered');
-    const fnSource = source.slice(start, end);
+    const fnSource = approvalsBlock + '\n' + source.slice(start, end);
     eval(`${fnSource}; global.adminTabApprovals = adminTabApprovals; global.adminTabMyApprovals = adminTabMyApprovals;`);
 
     // Admin pending approvals render moderator, target, reason, and decision actions.
