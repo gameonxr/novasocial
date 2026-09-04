@@ -15,7 +15,8 @@ assert(owners.includes('window.renderStoryElements = function(){'), 'Story edito
 assert(html.includes('let storyEditorElements = [];'), 'Story editor element state must remain inline');
 const showCreateStoryModule = fs.readFileSync(path.join(featureDir, 'show-create-story.js'), 'utf8');
 assert((html + '\n' + showCreateStoryModule).includes('id="se-elements"'), 'Story editor elements container must remain present');
-assert(html.includes('function showDeleteZone()') && html.includes('function hideDeleteZone()'), 'delete-zone helpers must remain protected');
+const showDeleteZoneModule = fs.readFileSync(path.join(featureDir, 'show-delete-zone.js'), 'utf8');
+assert((html + '\n' + showDeleteZoneModule).includes('function showDeleteZone()') && html.includes('function hideDeleteZone()'), 'delete-zone helpers must remain protected');
 const rendererSurface = html + '\n' + owners;
 assert(rendererSurface.includes('storyEditorElements = storyEditorElements.filter'), 'delete-zone removal must remain in the renderer surface');
 assert(rendererSurface.includes('el.x = Math.max(5, Math.min(95') && rendererSurface.includes('el.y = Math.max(5, Math.min(95'), 'drag position updates and 5–95 bounds must remain in the renderer surface');
