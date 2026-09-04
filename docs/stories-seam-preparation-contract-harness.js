@@ -103,7 +103,7 @@ const storyCallSurface = html + '\n' + undoStoryEditorModule;
 assert(storyCallSurface.includes('renderStoryElements();'), 'Story viewer must retain its render call boundary');
 assert(storyViewerSurface.includes('await refreshPollResults('), 'Poll voting must retain its result-refresh boundary');
 assert(storyViewerSurface.includes('loadStoryPollState('), 'Poll cards must retain prior-state restoration boundary');
-assert(html.includes('pauseAllVideos()'), 'Story viewers modal must retain media-pause boundary');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8')).includes('pauseAllVideos()'), 'Story viewers modal must retain media-pause boundary');
 
 console.log('STORIES_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=VIEWER_PLAYBACK_VIEWERS_POLL_REPLIES_SUBMISSION_DELETION');
