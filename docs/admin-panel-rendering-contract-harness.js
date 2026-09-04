@@ -53,7 +53,7 @@ assert(adminUiModule.includes('function renderAdminPanelUI('), 'Admin panel must
 assert(html.includes('async function sendAdminNotification(') || sendAdminNotificationModule.includes('window.sendAdminNotification = async function sendAdminNotification('), 'Admin notification boundary must remain present');
 assert(html.includes('async function adminSoftDeletePost(') || fs.readFileSync(path.join(repo, 'src', 'features', 'admin-soft-delete-post.js'), 'utf8').includes('window.adminSoftDeletePost = async function adminSoftDeletePost('), 'Soft-delete boundary must remain present');
 assert(html.includes('async function adminHardDeletePost(') || fs.readFileSync(path.join(repo, 'src', 'features', 'admin-hard-delete-post.js'), 'utf8').includes('window.adminHardDeletePost = async function adminHardDeletePost('), 'Hard-delete boundary must remain present');
-assert(html.includes('async function adminRecoverPost('), 'Recovery boundary must remain present');
+assert(html.includes('async function adminRecoverPost(') || fs.readFileSync(path.join(repo, 'src', 'features', 'admin-recover-post.js'), 'utf8').includes('window.adminRecoverPost = async function adminRecoverPost('), 'Recovery boundary must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-post-delete-two-tier-contract.md')), 'Admin deletion contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-post-delete-two-tier-contract-harness.js')), 'Admin deletion harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-notification-contract.md')), 'Admin notification contract must remain present');
