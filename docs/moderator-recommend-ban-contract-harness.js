@@ -40,11 +40,10 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function moderatorRecommendBan(');
-    const end = source.indexOf('\n// Admin tab: Approvals', start);
-    assert(start >= 0 && end > start, 'moderator recommendation boundary must remain present and ordered');
-    const fnSource = source.slice(start, end);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/moderator-recommend-ban.js', 'utf8');
+    const start = source.indexOf('window.moderatorRecommendBan = async function moderatorRecommendBan(');
+    assert(start >= 0, 'moderator recommendation module owner must remain present');
+    const fnSource = source.slice(start + 'window.moderatorRecommendBan = '.length);
     eval(`global.moderatorRecommendBan = ${fnSource.slice(fnSource.indexOf('async function moderatorRecommendBan'), fnSource.length)}`);
 
     // Authorized moderator submits a trimmed recommendation.
