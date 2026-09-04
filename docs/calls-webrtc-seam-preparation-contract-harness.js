@@ -32,14 +32,16 @@ const requiredMarkers = [
   'removeChannel'
 ];
 const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'flush-pending-ice-candidates.js'), 'utf8');
-const callsMarkerSurface = html + '\n' + flushPendingIceModule;
+const endCallModule = fs.readFileSync(path.join(repo, 'src', 'features', 'end-call.js'), 'utf8');
+const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule;
 for (const marker of requiredMarkers) {
   assert(callsMarkerSurface.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
 }
 assert(html.includes('function createPeerConnection(callId, remoteUserId) {'), 'createPeerConnection must remain inline');
-assert(html.includes('async function endCall(updateDB)'), 'endCall must remain inline');
+assert(!html.includes('async function endCall(updateDB)'), 'approved endCall owner must be absent from inline HTML');
+assert(endCallModule.includes('window.endCall = async function endCall('), 'approved endCall module owner must be present');
 assert.strictEqual(sourceText.includes('function createPeerConnection(callId, remoteUserId) {'), false, 'createPeerConnection must not be extracted');
-assert.strictEqual(sourceText.includes('async function endCall(updateDB)'), false, 'endCall must not be extracted');
+assert(endCallModule.includes('window.endCall = async function endCall(updateDB) {'), 'approved endCall external owner must exist');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract.md')), 'Calls/WebRTC behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract-harness.js')), 'Calls/WebRTC behavior harness must remain present');
 const callsHarness = fs.readFileSync(path.join(repo, 'docs', 'calls-webrtc-contract-harness.js'), 'utf8');
