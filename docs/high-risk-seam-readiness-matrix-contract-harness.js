@@ -34,7 +34,7 @@ const protectedSignatures = [
   'async function subscribeToPushNotifications()'
 ];
 
-assert.strictEqual(sourceFiles.length, 460, '234 extracted JavaScript modules must remain present after the Push subscription split');
+assert.strictEqual(sourceFiles.length, 461, '234 extracted JavaScript modules must remain present after the Push subscription split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'async function submitNote()' || signature === 'async function subscribeToPushNotifications()' || signature === 'async function voteStoryPoll(' || signature === 'async function refreshPollResults(' || signature === 'async function loadStoryPollState(' || signature === 'function openSV(startIdx){' || signature === 'function submitNativeEmojiReaction(' || signature === 'async function toggleRecording(cid)' || signature === 'function createPeerConnection(callId, remoteUserId) {' || signature === 'function openChat(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);

@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const contractPath = path.join(repo, 'docs', 'dm-chat-realtime-protected-readiness-contract.md');
-const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'send-msg.js'), 'utf8');
 const dmsOwner = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
