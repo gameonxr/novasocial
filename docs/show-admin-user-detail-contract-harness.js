@@ -53,13 +53,11 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function showAdminUserDetail(userId){');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/show-admin-user-detail.js', 'utf8');
+    const start = source.indexOf('window.showAdminUserDetail = async function showAdminUserDetail(userId){');
     assert(start >= 0, 'showAdminUserDetail declaration must remain present');
-    const end = source.indexOf('\n// Load real report stats for a user in admin detail view', start);
-    assert(end > start, 'showAdminUserDetail boundary must remain unique and ordered');
-    const fnSource = source.slice(start, end);
-    eval(`global.showAdminUserDetail = ${fnSource.slice(fnSource.indexOf('async function showAdminUserDetail'), fnSource.length)}`);
+    const functionBlock = source.slice(start);
+    eval(`const window = global; ${functionBlock}`);
 
     // A normal non-self user renders profile badges, counts, actions, and report placeholder.
     reportCalls.length = 0;
