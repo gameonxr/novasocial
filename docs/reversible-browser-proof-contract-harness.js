@@ -11,10 +11,10 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 
-assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('6 unapproved systems'), 'matrix must continue to mark remaining browser proof');
-assert(matrix.includes('all sixteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
-assert(matrix.includes('Protected production splits | 16/20 protected signatures moved; 16 bounded scopes are split-complete, including Notes submission, Push subscription, and Push force-resubscribe; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the sixteen moved protected signatures and supporting Reels helper');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 5 unapproved systems'), 'direct extraction gate must remain blocked for remaining systems');
+assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('0 unapproved systems'), 'matrix must continue to mark remaining browser proof');
+assert(matrix.includes('all twenty-two protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must preserve repository-wide seam inventory alignment');
+assert(matrix.includes('Protected production splits | 22/22 protected signatures moved; all bounded scopes are split-complete, including the final-stretch Calls/WebRTC, Story viewer, voice recording, chat/DMs, media upload, tab caching, and auth-helper owners, plus the nova-ultra-patches region; authenticated reaction invocation remains intentionally unperformed'), 'matrix must report the completed protected-signature extraction and supporting Reels helper');
+assert(gate.includes('Direct extraction remains explicitly blocked for the inline boundary surfaces'), 'direct extraction gate must remain blocked for the remaining inline boundary surfaces');
 
 for (const file of [
   'dms-seam-preparation-contract.md',
@@ -176,5 +176,5 @@ assert(!source.includes('productionSplitApproved'), 'no speculative production-s
 console.log('REVERSIBLE_BROWSER_PROOF_CONTRACT_HARNESS=PASS');
 console.log('PROOF_STATUS=APPROVED_SPLITS_PASS_REMAINING_PROTECTED_SYSTEMS_GATED');
 console.log('PROTECTED_SPLITS=9_OF_19');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_10_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS');
 console.log('PRODUCTION_CHANGE=9_APPROVED_SIGNATURES');

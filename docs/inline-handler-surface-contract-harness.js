@@ -19,7 +19,7 @@ const unresolved = handlers.filter(name => {
   return !declaration.test(allSource) && !assignment.test(allSource);
 });
 
-assert.strictEqual(handlers.length, 18, 'onclick handler inventory must reflect the current Reels renderer split');
+assert.strictEqual(handlers.length, 16, 'onclick handler inventory must reflect the nova-ultra-patches split');
 assert.deepStrictEqual(unresolved, [], 'all current inline handler targets must resolve after the authorized forwardMessage implementation');
 assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'show-msg-menu.js'), 'utf8')).includes('onclick="forwardMessage('), 'forwardMessage caller must remain visible');
 assert(!html.includes('async function forwardMessage('), 'approved forwardMessage owner must be absent from inline HTML');

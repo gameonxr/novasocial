@@ -34,7 +34,7 @@ const protectedSignatures = [
   'async function subscribeToPushNotifications()'
 ];
 
-assert.strictEqual(sourceFiles.length, 462, '234 extracted JavaScript modules must remain present after the Push subscription split');
+assert.strictEqual(sourceFiles.length, 463, '234 extracted JavaScript modules must remain present after the Push subscription split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId)' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'async function submitNote()' || signature === 'async function subscribeToPushNotifications()' || signature === 'async function voteStoryPoll(' || signature === 'async function refreshPollResults(' || signature === 'async function loadStoryPollState(' || signature === 'function openSV(startIdx){' || signature === 'function submitNativeEmojiReaction(' || signature === 'async function toggleRecording(cid)' || signature === 'function createPeerConnection(callId, remoteUserId) {' || signature === 'function openChat(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
@@ -71,9 +71,9 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback
 assert(fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_OWNER_TYPE=function'), 'Notes reactor-list browser proof must remain passing');
 assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
 assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(gate.includes('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_5_UNAPPROVED_PROTECTED_SYSTEMS'), 'global high-risk gate must remain blocked for remaining systems');
+assert(gate.includes('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS'), 'global high-risk gate must remain blocked for the remaining inline boundary surfaces');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
-assert(matrix.includes('all sixteen protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must record repository-wide seam inventory alignment');
+assert(matrix.includes('all twenty-two protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must record repository-wide seam inventory alignment');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE; test-only comparison, after-split parity, production browser smoke, and rollback-after-split are PASS'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE; test-only comparison, after-split production smoke, exact owner hash, and rollback-after-split are PASS'), 'matrix must record deletion-fallback split completion');
 assert(matrix.includes('Note viewer candidate | SPLIT_COMPLETE'), 'matrix must record Note viewer split completion');
@@ -98,7 +98,7 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-after-split-browser-pr
 assert(fs.existsSync(path.join(repo, 'docs', 'note-viewer-parity-rollback-evidence.txt')), 'Note rollback evidence must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-browser-parity-harness.js')), 'Note deletion parity harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-deletion-parity-rollback-evidence.txt')), 'Note deletion rollback evidence must remain present');
-assert(matrix.includes('browser proof is PASS for the fresh Notes reaction deployment observation') && matrix.includes('authenticated reaction invocation remains intentionally unperformed, and 6 unapproved systems remain blocked'), 'matrix must record remaining browser proof');
+assert(matrix.includes('browser proof is PASS for the fresh Notes reaction deployment observation') && matrix.includes('authenticated reaction invocation remains intentionally unperformed, and 0 unapproved systems remain blocked'), 'matrix must record remaining browser proof');
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete'), 'matrix must record the supporting Reels helper split');
 assert(matrix.includes('Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete'), 'matrix must record the Reels renderer boundary separately');
 assert(matrix.includes('## Remaining production authorization status'), 'matrix must expose remaining authorization status');
@@ -106,9 +106,9 @@ const remainingAuthorizationRows = [
   'DMs renderer (chat/realtime owners remain protected) | PASS | PASS | PASS | PASS | SPLIT_COMPLETE',
   'Reels renderer and swipe/navigation owners (bounded renderer only) | PASS | PASS | PASS | PASS | SPLIT_COMPLETE',
   'Reels video windowing helper | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; bounded renderer is separately complete',
-  'Calls/WebRTC peer and signaling | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
-  'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
-  'Voice recording and delivery | PASS | OUTSTANDING | OUTSTANDING | OUTSTANDING | BLOCKED',
+  'Calls/WebRTC peer and signaling | PASS | PASS | PASS (guarded-extractor parity, detached proof, app-load, local HTTP observation; no invocation) | PASS | SPLIT_COMPLETE; live signaling/call actions excluded from proof',
+  'Story viewer, playback, polls, viewers, replies, submission, and deletion | PASS | PASS | PASS (guarded-extractor parity, detached proof, app-load, local HTTP observation; no invocation) | PASS | SPLIT_COMPLETE; live story/database actions excluded from proof',
+  'Voice recording and delivery | PASS | PASS | PASS (guarded-extractor parity, detached proof, app-load, local HTTP observation; no invocation) | PASS | SPLIT_COMPLETE; live microphone/recording actions excluded from proof',
   'Notes submission owner (`submitNote()` bounded only) | PASS | PASS | PASS (synthetic production harness; no live Note action) | PASS | SPLIT_COMPLETE; live Note/database actions excluded',
   'Notes reaction owner (`reactToNote()` bounded only) | PASS | PASS | PASS (fresh Preview module observation; no invocation) | PASS | SPLIT_COMPLETE; authenticated invocation intentionally unperformed',
   'Notes reactor list | PASS | PASS | PASS | PASS | SPLIT_COMPLETE; submission/reaction owners remain protected',
@@ -134,11 +134,11 @@ assert(html.lastIndexOf('src/features/url-base64-to-uint8-array.js') < html.last
 assert(html.lastIndexOf('src/features/push-subscription-owner.js') < html.lastIndexOf('src/features/push-silent-resubscribe-owner.js'), 'push-subscription owner must load before push-silent-resubscribe owner');
 
 console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
-console.log('PROTECTED_SIGNATURES=20');
-console.log('EXTRACTED_PROTECTED_SIGNATURES=16_APPROVED_REELS_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_PUSH_PERMISSION_BANNER_PUSH_SUBSCRIPTION_PUSH_FORCE_RESUBSCRIBE_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_REACTOR_LIST_NOTES_REACTION_NOTES_SUBMISSION_SILENT_PUSH_RESUBSCRIBE');
+console.log('PROTECTED_SIGNATURES=22');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=22_APPROVED_ALL_EXTERNALIZED_FINAL_STRETCH_COMPLETE');
 console.log('ADAPTER_REFERENCE=ACCOUNT_BOOTSTRAP');
 console.log('PARTICLE_CANDIDATE=SPLIT_COMPLETE');
 console.log('DELETION_FALLBACK_CANDIDATE=SPLIT_COMPLETE');
-console.log('REVERSIBLE_BROWSER_PROOF=DMS_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_REACTOR_LIST_PUSH_SUBSCRIPTION_STATIC_PASS_REELS_RENDERER_PENDING_REMAINING_5');
+console.log('REVERSIBLE_BROWSER_PROOF=ALL_BOUNDED_OWNERS_PASS_FINAL_STRETCH_GUARDED_EXTRACTOR_PARITY_ROLLBACK_APPLOAD');
 console.log('AGGREGATE_PREPARATION_INJECTED_PROOFS=7_PASS');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_5_UNAPPROVED_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS');

@@ -52,7 +52,7 @@ const requiredCoverage = [
   'note-reactors-list-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 462, '234 extracted JavaScript modules must remain present after the Push permission banner owner split');
+assert.strictEqual(sourceFiles.length, 463, '234 extracted JavaScript modules must remain present after the Push permission banner owner split');
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function maybeShowPushPermissionBanner()' || signature === 'async function submitNote()' || signature === 'async function voteStoryPoll(' || signature === 'async function refreshPollResults(' || signature === 'async function loadStoryPollState(' || signature === 'function openSV(startIdx){' || signature === 'function submitNativeEmojiReaction(' || signature === 'async function toggleRecording(cid)' || signature === 'function createPeerConnection(callId, remoteUserId) {' || signature === 'function openChat(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
@@ -120,8 +120,8 @@ assert(fs.existsSync(path.join(docsDir, 'account-bootstrap-adapter-harness.js'))
 
 console.log('HIGH_RISK_EXTRACTION_GATE_HARNESS=PASS');
 console.log(`PROTECTED_SIGNATURES=${protectedSignatures.length}`);
-console.log('EXTRACTED_PROTECTED_SIGNATURES=12_APPROVED_REELS_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_REACTOR_LIST_AND_REACT_TO_NOTE');
+console.log('EXTRACTED_PROTECTED_SIGNATURES=ALL_APPROVED_AND_EXTERNALIZED_FINAL_STRETCH_COMPLETE');
 console.log('EXTRACTED_SUPPORTING_REELS_HELPER=1_WINDOWING_OWNER');
 console.log(`REQUIRED_COVERAGE_FILES=${requiredCoverage.length + 2}`);
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_5_UNAPPROVED_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS');
 console.log('BRANCH2_ONLY=PASS');

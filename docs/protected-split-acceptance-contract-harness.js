@@ -19,11 +19,11 @@ const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-ed
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
 
-assert(matrix.includes('Protected production splits | 16/20 protected signatures moved; 16 bounded scopes are split-complete, including Notes submission, Push subscription, and Push force-resubscribe; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the sixteen moved protected signatures and supporting Reels helper');
+assert(matrix.includes('Protected production splits | 22/22 protected signatures moved; all bounded scopes are split-complete, including the final-stretch Calls/WebRTC, Story viewer, voice recording, chat/DMs, media upload, tab caching, and auth-helper owners, plus the nova-ultra-patches region; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the completed protected-signature extraction and supporting Reels helper');
 assert(matrix.includes('Particle candidate | SPLIT_COMPLETE'), 'matrix must record particle split completion');
 assert(matrix.includes('Deletion-fallback candidate | SPLIT_COMPLETE'), 'matrix must record deletion-fallback split completion');
-assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('6 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining systems');
-assert(gate.includes('Direct extraction remains explicitly blocked for the 5 unapproved systems'), 'high-risk gate must remain blocked for remaining systems');
+assert(matrix.includes('fresh Notes reaction deployment observation') && matrix.includes('0 unapproved systems'), 'browser proof must remain explicitly outstanding for remaining boundary systems');
+assert(gate.includes('Direct extraction remains explicitly blocked for the inline boundary surfaces'), 'high-risk gate must remain blocked for the remaining inline boundary surfaces');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract.md')), 'browser-proof contract must exist');
 assert(fs.existsSync(path.join(docsDir, 'reversible-browser-proof-contract-harness.js')), 'browser-proof harness must exist');
 
@@ -105,5 +105,5 @@ console.log('DECISION=NOTES_REACTION_VALIDATION_PENDING_AFTER_TWELVE_EXTERNALIZE
 console.log('PROTECTED_SIGNATURES=19');
 console.log('EXTRACTED_PROTECTED_SIGNATURES=12_APPROVED_REELS_DMS_PARTICLE_DELETION_FALLBACK_PUSH_SETTINGS_NOTE_VIEWER_NOTE_DELETION_STORY_EDITOR_REACTOR_LIST_AND_REACT_TO_NOTE');
 console.log('BROWSER_PROOF=DMS_PARTICLE_DELETION_PUSH_NOTE_DELETION_STORY_REELS_HELPER_AND_REACTOR_LIST_PASS_NOTES_REACTION_DEPLOYMENT_OBSERVATION_PENDING');
-console.log('DIRECT_EXTRACTION=BLOCKED_FOR_REMAINING_7_UNAPPROVED_PROTECTED_SYSTEMS');
+console.log('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS');
 console.log('PRODUCTION_CHANGE=12_EXTERNALIZED_PROTECTED_OWNERS');

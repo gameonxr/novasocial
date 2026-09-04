@@ -17,13 +17,13 @@ The first implementation step is therefore a **seam/adapter**, not a blind copy 
 
 ## Harness coverage
 
-`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that the 5 unapproved protected marker inventory remains inline and absent from `src/`, that the externalized DMs and Reels renderers, the eleven previously completed owners and validation-pending Notes reaction owner, and the contained Reels windowing helper are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. DMs is marked `SPLIT_COMPLETE` for the bounded renderer owner; broader chat/realtime owners remain protected. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
+`docs/high-risk-extraction-gate-contract-harness.js` statically verifies that all tracked protected signatures are approved and externalized (zero unapproved signatures remain inline), that the externalized DMs and Reels renderers, the completed bounded owners, the final-stretch Calls/WebRTC, Story viewer, voice recording, chat/DMs, and media-upload owners, and the contained Reels windowing helper are window-assigned exactly once with their source modules linked before the caller, and that all systems remain covered by the existing contract families. The remaining inline surface (shared state declarations, bootstrap wiring, boundary listeners) remains protected by this gate. It also verifies that the required gate documentation and harness families exist. It does not move code, execute protected behavior, authenticate, call Supabase, or perform browser actions.
 
 | Gate condition | Current status | Result |
 |---|---|---|
-| Protected systems remain inline | 5 unapproved safeguarded signatures present exactly once in `index.html` and absent from `src/`; DMs renderer, particle, deletion fallback, Push settings, Note viewer, Note deletion, Story editor, Notes reactor-list, and bounded Notes reaction are represented by approved window owners | PASS |
+| Protected systems remain inline | 0 unapproved safeguarded signatures remain; all tracked protected owners are externalized with approved window owners, and the remaining inline surface is the by-design state/bootstrap/listener boundary | PASS |
 | Baseline behavior coverage | Existing protected contract/harness families are present, including particle and deletion-fallback after-split evidence | PASS |
-| Seam-first policy | Direct extraction remains explicitly blocked for the 5 unapproved systems until adapter and proof work passes | PASS |
+| Seam-first policy | Direct extraction remains explicitly blocked for the inline boundary surfaces (shared state declarations, bootstrap wiring, boundary listeners) until adapter and proof work passes | PASS |
 | Branch safety | Gate is documentation-only and applies to `Branch2` | PASS |
 
 ## Safe boundary
