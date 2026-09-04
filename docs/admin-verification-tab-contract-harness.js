@@ -42,13 +42,17 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function adminTabVerify(content){');
-    const end = source.indexOf('\nasync function adminApproveVerify(', start);
-    assert(start >= 0 && end > start, 'verification tab function boundary must remain present and ordered');
-    const functionBlock = source.slice(start, end);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-verify.js', 'utf8');
+    const start = source.indexOf('window.adminTabVerify = async function adminTabVerify(content){');
+    assert(start >= 0, 'verification tab module owner must remain present');
+    const functionBlock = source.slice(start);
     const filterModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/set-verify-filter-owner.js', 'utf8');
-    eval(`let _verifyFilter = 'pending'; const window = global; ${functionBlock}; ${filterModule}; global.adminTabVerify = adminTabVerify; global.setVerifyFilter = window.setVerifyFilter; global.loadVerifyList = loadVerifyList;`);
+    const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
+    const lvStart = html.indexOf('async function loadVerifyList(');
+    const lvEnd = html.indexOf('\nasync function adminApproveVerify(', lvStart);
+    assert(lvStart >= 0 && lvEnd > lvStart, 'verification list boundary must remain present and ordered');
+    const loadVerifyBlock = html.slice(lvStart, lvEnd);
+    eval(`let _verifyFilter = 'pending'; const window = global; ${functionBlock}; ${loadVerifyBlock}; ${filterModule}; global.adminTabVerify = window.adminTabVerify; global.setVerifyFilter = window.setVerifyFilter; global.loadVerifyList = loadVerifyList;`);
 
     const request = {
       id: 'v1', user_id: 'u1', full_name: '<Applicant>', category: 'creator', reason: 'Reason <unsafe>',

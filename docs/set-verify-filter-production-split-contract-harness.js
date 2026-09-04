@@ -10,6 +10,7 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'set-verify-filter-owner.js'), 'utf8');
+const verifyTabModule = fs.readFileSync(path.join(repo, 'src', 'features', 'admin-tab-verify.js'), 'utf8');
 const signature = 'function setVerifyFilter(f){';
 const endSignature = '\nasync function loadVerifyList()';
 
@@ -30,14 +31,14 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 
 assert.strictEqual(moduleOwner, originOwner, 'normalized external owner must match immutable origin/main exactly');
 assert.strictEqual(sha256(originOwner), 'a22a86b644df9efe16c59b6bcf828b97752140b37309fec4fa3aee06ac6a6be6', 'normalized origin owner hash must match the recorded anchor');
-assert.strictEqual(sourceFiles.length, 395, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split');
+assert.strictEqual(sourceFiles.length, 396, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split');
 assert.strictEqual((html.match(/function setVerifyFilter\(f\)\{/g) || []).length, 0, 'inline setVerifyFilter owner must be absent');
 assert.strictEqual((moduleText.match(/window\.setVerifyFilter\s*=\s*function\(f\)\s*\{/g) || []).length, 1, 'external setVerifyFilter owner must occur once');
 assert.strictEqual((html.match(/src\/features\/set-verify-filter-owner\.js/g) || []).length, 1, 'verification filter module must be linked exactly once');
-assert.strictEqual((html.match(/onclick="setVerifyFilter\('/g) || []).length, 4, 'four verification filter controls must remain');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 397, '236 script tags must remain after the DMs renderer split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 397, '233 script closures must remain after the DMs renderer split');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 396, '234 external scripts must remain after the DMs renderer split');
+assert.strictEqual((html.match(/onclick="setVerifyFilter\('/g) || []).length + (verifyTabModule.match(/onclick="setVerifyFilter\('/g) || []).length, 4, 'four verification filter controls must remain');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 398, '236 script tags must remain after the DMs renderer split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 398, '233 script closures must remain after the DMs renderer split');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 397, '234 external scripts must remain after the DMs renderer split');
 assert(html.indexOf('src/features/set-reports-filter-owner.js') < html.indexOf('src/features/set-verify-filter-owner.js'), 'verification filter module must load after reports filter owner');
 assert(html.indexOf('src/features/set-verify-filter-owner.js') < html.indexOf('src/features/refresh-profile-counts-owner.js'), 'verification filter module must load before refresh-counts owner');
 assert(body.includes('_verifyFilter=f'), 'external owner must preserve verification filter state assignment');
