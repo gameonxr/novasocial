@@ -31,12 +31,11 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function adminTabAudit(content){');
-    const end = source.indexOf('\n// ─── Content Tab — browse all posts, delete any ───', start);
-    assert(start >= 0 && end > start, 'audit-tab boundary must remain present and ordered');
-    const fnSource = source.slice(start, end);
-    eval(`global.adminTabAudit = ${fnSource.slice(fnSource.indexOf('async function adminTabAudit'), fnSource.length)}`);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-audit.js', 'utf8');
+    const start = source.indexOf('window.adminTabAudit = async function adminTabAudit(content){');
+    assert(start >= 0, 'audit-tab module owner must remain present');
+    const functionBlock = source.slice(start);
+    eval(`const window = global; ${functionBlock}`);
 
     // audit_logs is the source of truth when it returns entries.
     const auditContent = { innerHTML: '' };
