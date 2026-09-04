@@ -38,11 +38,10 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function novaDebug(){');
-    const end = source.indexOf('\n// Make it available globally', start);
-    assert(start >= 0 && end > start, 'novaDebug boundary must remain present and ordered');
-    const fnSource = source.slice(start, end);
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/nova-debug.js', 'utf8');
+    const start = source.indexOf('window.novaDebug = async function novaDebug(){');
+    assert(start >= 0, 'novaDebug module owner must remain present');
+    const fnSource = source.slice(start + 'window.novaDebug = '.length);
     eval(`${fnSource}; global.novaDebug = novaDebug;`);
 
     // No-session guard returns before any database access.
