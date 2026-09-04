@@ -33,7 +33,7 @@ The repository is operated conservatively because several systems are high-risk:
 
 ## 3. Current repository checkpoint
 
-At the time this handoff was updated, the recovered `Branch2` checkout is clean at `06efac5` with the nova-ultra-patches extraction published and its publication gates (clean-worktree, remote-alignment) closed by the 2026-09-05 post-push verification. The expected inventory is approximately **463 source JavaScript files, 452 feature JavaScript files, 18 CSS files, 338 Markdown documents, and 322 harness files**; always measure the current checkout rather than relying on this prose when a contract asserts an exact number.
+At the time this handoff was updated, the recovered `Branch2` checkout is clean at `06efac5` with the nova-ultra-patches extraction published and its publication gates (clean-worktree, remote-alignment) closed by the 2026-09-05 post-push verification. The expected inventory is approximately **463 source JavaScript files, 452 feature JavaScript files, 18 CSS files, 339 Markdown documents, and 322 harness files**; always measure the current checkout rather than relying on this prose when a contract asserts an exact number.
 
 The standard validation suite is a collection of standalone Node.js harnesses in `docs/`. The current published suite contains 322 `*-harness.js` files. A passing suite is reported as `TOTAL=322 PASSED=322 FAILED=0`. If a new document or harness is added, update the relevant inventory contracts deliberately; never weaken a contract merely to make a test pass.
 
@@ -415,6 +415,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `/home/z/my-project/scripts/analyze_structure.js` (read-only structure/duplicate auditor), this handoff section, and the 2026-09-05 `MIGRATION_MAP.md` audit entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Await the project owner's decision on the optional per-feature reorganization; the split mission itself is complete (zero inline functions, all protected families externalized, docs restored and in sync).
+
+### 2026-09-05 — Codebase Health & Integrity Audit (read-only) publication
+
+- **Agent/task:** Super Z (continuation agent); full 13-check read-only Codebase Health & Integrity Audit of the entire repository as requested by the project owner, with the report published as `docs/CODEBASE_HEALTH_AUDIT.md`.
+- **Branch/HEAD:** `Branch2`; audit executed at `6a4d591` (verified clean, aligned with `origin/Branch2`, `origin/main` immutable); this publication commit advances HEAD with documentation only.
+- **Scope:** READ-ONLY — zero application code, service-worker, manifest, CSS, or harness-logic changes. Static analyzers (file hashing, owner/listener/subscription inventory, reference resolution, CSS and security pattern scans) plus a detached Node `vm` sequential load simulation of all 464 local classic scripts in exact `index.html` order, plus the published 322/322 regression and 10/10 app-load runs. No live effects.
+- **Result:** 0 critical / 3 high / 7 medium / 5 low findings. Headline positives: 0 broken references, 0 syntax errors, 0 VM load errors across 464 scripts, 0 accidental duplicate owners, 0 duplicate realtime channels, 0 committed secrets, 0 unreferenced files. Headline findings: seven stale DOM-ID references (four user-visible silent feature breaks — smart-reply buttons, video-length picker, notification badge, following-count update; real IDs are `minp`/`ci-<pid>`/`followers-count`/`home-notif-dot`), one `eval()` at `profile-view.js:548`, and a systemic XSS surface (398 `innerHTML` assignments, 72 interpolated, no `escapeHtml` helper defined anywhere). Full details, severities, and a recommended fix order are in the report's 19 sections plus a machine-readable JSON appendix.
+- **Authorization state:** Documentation publication only, under the standing autonomous authorization; the audit changed no production code and the report recommends — but does not apply — every fix, deferring to the project owner per the audit instructions.
+- **Evidence:** `docs/CODEBASE_HEALTH_AUDIT.md`; read-only audit tooling at `/home/z/my-project/scripts/audit_*.js` with raw outputs under `/home/z/my-project/audit_out/`.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions; the VM simulation used absorbing stubs only.
+- **Next action:** Await the project owner's prioritization of the recommended fix order (report section 19). The deliberate count-sync in this commit: `branch2-final-readiness-contract-harness.js` documentation pins 338→339 and the non-contract documentation allowlist gains `CODEBASE_HEALTH_AUDIT.md`, per the published inventory-update protocol.
 
 ### Template for the next agent
 
