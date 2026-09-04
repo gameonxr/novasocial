@@ -8,6 +8,7 @@ const adminUiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'render
 const showAdminPanelModule = fs.readFileSync(path.join(repo, 'src', 'features', 'show-admin-panel.js'), 'utf8');
 const loadAdminTabModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-admin-tab.js'), 'utf8');
 const logAdminActionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'log-admin-action.js'), 'utf8');
+const sendAdminNotificationModule = fs.readFileSync(path.join(repo, 'src', 'features', 'send-admin-notification.js'), 'utf8');
 
 const requiredLoadAdminTabModuleMarkers = [
   'async function loadAdminTab(tab)',
@@ -49,7 +50,7 @@ for (const marker of requiredMarkers) {
   assert(html.includes(marker) || logAdminActionModule.includes(marker), `Admin panel marker missing: ${marker}`);
 }
 assert(adminUiModule.includes('function renderAdminPanelUI('), 'Admin panel must retain its extracted UI rendering boundary');
-assert(html.includes('async function sendAdminNotification('), 'Admin notification boundary must remain present');
+assert(html.includes('async function sendAdminNotification(') || sendAdminNotificationModule.includes('window.sendAdminNotification = async function sendAdminNotification('), 'Admin notification boundary must remain present');
 assert(html.includes('async function adminSoftDeletePost('), 'Soft-delete boundary must remain present');
 assert(html.includes('async function adminHardDeletePost('), 'Hard-delete boundary must remain present');
 assert(html.includes('async function adminRecoverPost('), 'Recovery boundary must remain present');
