@@ -34,7 +34,7 @@ const requiredHtmlMarkers = [
   'multiVote',
   'story_poll_votes'
 ];
-const storyViewerModules = ['show-story-viewers.js', 'close-sv.js', 'vote-story-poll.js', 'refresh-poll-results.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', name), 'utf8')).join('\n');
+const storyViewerModules = ['show-story-viewers.js', 'close-sv.js', 'vote-story-poll.js', 'refresh-poll-results.js', 'load-story-poll-state.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', name), 'utf8')).join('\n');
 const storyViewerSurface = html + '\n' + storyViewerModules;
 for (const marker of requiredHtmlMarkers) {
   assert(storyViewerSurface.includes(marker), `Stories seam marker must remain inline: ${marker}`);
@@ -78,6 +78,7 @@ const protectedSignatures = [
 ];
 const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
 const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
+const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
 for (const signature of protectedSignatures) {
   if (signature === 'async function voteStoryPoll(storyId, pollIdx, options, optIdx, cardEl)') {
     assert(storyPollVoteModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
@@ -87,13 +88,17 @@ for (const signature of protectedSignatures) {
     assert(storyPollRefreshModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
     continue;
   }
+  if (signature === 'async function loadStoryPollState(storyId, pollIdx, options, cardEl)') {
+    assert(storyPollStateModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must exist');
+    continue;
+  }
   assert.strictEqual(sourceText.includes(signature), false, `Protected Story signature must not be extracted: ${signature}`);
 }
 const undoStoryEditorModule = fs.readFileSync(path.join(repo, 'src', 'features', 'undo-story-editor.js'), 'utf8');
 const storyCallSurface = html + '\n' + undoStoryEditorModule;
 assert(storyCallSurface.includes('renderStoryElements();'), 'Story viewer must retain its render call boundary');
-assert(html.includes('await refreshPollResults('), 'Poll voting must retain its result-refresh boundary');
-assert(html.includes('loadStoryPollState('), 'Poll cards must retain prior-state restoration boundary');
+assert(storyViewerSurface.includes('await refreshPollResults('), 'Poll voting must retain its result-refresh boundary');
+assert(storyViewerSurface.includes('loadStoryPollState('), 'Poll cards must retain prior-state restoration boundary');
 assert(html.includes('pauseAllVideos()'), 'Story viewers modal must retain media-pause boundary');
 
 console.log('STORIES_SEAM_PREPARATION_HARNESS=PASS');

@@ -88,6 +88,10 @@ for (const marker of protectedMarkers) {
     const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
     assert(!html.includes(marker), 'approved Story poll refresh marker must be absent from inline HTML');
     assert(storyPollRefreshModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh module owner must be present');
+  } else if (marker === 'async function loadStoryPollState(') {
+    const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Story poll state marker must be absent from inline HTML');
+    assert(storyPollStateModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state module owner must be present');
   } else {
     assert(html.includes(marker), `protected marker missing: ${marker}`);
   }

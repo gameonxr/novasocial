@@ -32,14 +32,14 @@ const protectedSignatures = [
   'function renderStoryElements()', 'async function voteStoryPoll(',
   'async function refreshPollResults(', 'async function loadStoryPollState('
 ];
-const approved = new Set(['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(noteId){', 'async function removeMyNoteFromViewer(noteId){', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(', 'function reactToNote(', 'async function submitNote()', 'async function voteStoryPoll(', 'async function refreshPollResults(']);
+const approved = new Set(['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function viewNote(noteId){', 'async function removeMyNoteFromViewer(noteId){', 'async function deleteMyNote()', 'function renderStoryElements()', 'async function loadNoteReactorsList(', 'function reactToNote(', 'async function submitNote()', 'async function voteStoryPoll(', 'async function refreshPollResults(', 'async function loadStoryPollState(']);
 const branch = execFileSync('git', ['-C', repo, 'branch', '--show-current'], { encoding: 'utf8' }).trim();
 const originMain = execFileSync('git', ['-C', repo, 'rev-parse', 'origin/main'], { encoding: 'utf8' }).trim();
 assert.strictEqual(branch, 'Branch2', 'production split must be on Branch2');
 assert.strictEqual(originMain, 'ef418007c9b9a797488b4825be5f0c807da22369', 'origin/main must remain untouched');
-assert.strictEqual(count(/<script\b/gi), 439, 'after-split opening script count must be 236 after the Notes submission split');
-assert.strictEqual(count(/<\/script>/gi), 439, 'after-split closing script count must be 236 after the Notes submission split');
-assert.strictEqual(count(/<script\s+src=/gi), 438, 'after-split external script count must be 235 after the Notes submission split');
+assert.strictEqual(count(/<script\b/gi), 440, 'after-split opening script count must be 236 after the Notes submission split');
+assert.strictEqual(count(/<\/script>/gi), 440, 'after-split closing script count must be 236 after the Notes submission split');
+assert.strictEqual(count(/<script\s+src=/gi), 439, 'after-split external script count must be 235 after the Notes submission split');
 assert.strictEqual(sha256(baselineOwner), 'f267467785faea7ef3b8cc0c50a15764fd3bd13759a852b20e050a7887338786', 'baseline owner hash must match recorded anchor');
 assert.strictEqual(sha256(canonicalOwner), sha256(baselineOwner), 'canonical extracted owner hash must match baseline');
 assert.strictEqual((html.match(/async function syncLocalDeletionFallback\(\)/g) || []).length, 0, 'inline deletion-fallback owner must be absent');
