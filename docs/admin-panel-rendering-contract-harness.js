@@ -51,7 +51,7 @@ for (const marker of requiredMarkers) {
 }
 assert(adminUiModule.includes('function renderAdminPanelUI('), 'Admin panel must retain its extracted UI rendering boundary');
 assert(html.includes('async function sendAdminNotification(') || sendAdminNotificationModule.includes('window.sendAdminNotification = async function sendAdminNotification('), 'Admin notification boundary must remain present');
-assert(html.includes('async function adminSoftDeletePost('), 'Soft-delete boundary must remain present');
+assert(html.includes('async function adminSoftDeletePost(') || fs.readFileSync(path.join(repo, 'src', 'features', 'admin-soft-delete-post.js'), 'utf8').includes('window.adminSoftDeletePost = async function adminSoftDeletePost('), 'Soft-delete boundary must remain present');
 assert(html.includes('async function adminHardDeletePost('), 'Hard-delete boundary must remain present');
 assert(html.includes('async function adminRecoverPost('), 'Recovery boundary must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'admin-post-delete-two-tier-contract.md')), 'Admin deletion contract must remain present');
