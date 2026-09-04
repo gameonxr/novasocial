@@ -5,6 +5,8 @@ const path = require('path');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const contractPath = path.join(repo, 'docs', 'account-bootstrap-security-protected-readiness-contract.md');
 const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const startBanRecheckModule = fs.readFileSync(path.join(repo, 'src', 'features', 'start-ban-recheck.js'), 'utf8');
+const protectedSource = source + '\n' + startBanRecheckModule;
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
   'db.auth.signOut',
@@ -21,7 +23,7 @@ const requiredSections = [
   '`LIVE_SIDE_EFFECTS=0`',
   '`BROWSER_LIVE_ACTIONS=0`'
 ];
-for (const marker of requiredMarkers) assert(source.includes(marker), `protected source marker missing: ${marker}`);
+for (const marker of requiredMarkers) assert(protectedSource.includes(marker), `protected source marker missing: ${marker}`);
 for (const section of requiredSections) assert(contract.includes(section), `readiness requirement missing: ${section}`);
 assert(contract.includes('PREPARATION_ONLY'), 'dossier must remain preparation-only');
 assert(contract.includes('BLOCKED'), 'dossier must remain blocked');
