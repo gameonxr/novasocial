@@ -58,16 +58,16 @@ const statefulTokens = ['db.', 'localStorage', 'sessionStorage', 'fetch(', 'navi
 
 assert.strictEqual(normalizedModule, normalizedOrigin, 'external crop-preview owner must preserve normalized origin/main parity');
 assert.strictEqual(sha256(normalizedOrigin), '668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4', 'normalized crop-preview owner hash must match preparation anchor');
-assert.strictEqual(sourceFiles.length, 406, 'production split must retain 234 extracted JavaScript modules after the DMs renderer split');
+assert.strictEqual(sourceFiles.length, 407, 'production split must retain 234 extracted JavaScript modules after the DMs renderer split');
 assert.strictEqual((html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length, 0, 'named inline confirmCropPreview owner must be absent');
 assert.strictEqual((moduleText.match(/window\.confirmCropPreview\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'anonymous external confirmCropPreview owner must occur once');
 assert.strictEqual((html.match(/src\/features\/confirm-crop-preview-owner\.js/g) || []).length, 1, 'external crop-preview owner script must be linked once');
 assert.strictEqual((html.match(/onclick="confirmCropPreview\(\)"/g) || []).length, 1, 'exactly one existing Done control caller must remain');
 assert(html.indexOf('src/features/invalidate-tab-cache-owner.js') < html.indexOf('src/features/confirm-crop-preview-owner.js'), 'crop-preview owner must load after invalidate-cache owner');
 assert(html.indexOf('src/features/confirm-crop-preview-owner.js') < html.indexOf('src/features/set-verify-filter-owner.js'), 'crop-preview owner must load before verification owner');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 408, '234 classic script tags must remain after the DMs renderer split');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 408, '234 classic script closures must remain after the DMs renderer split');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 407, '234 external classic script tags must remain after the DMs renderer split');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 409, '234 classic script tags must remain after the DMs renderer split');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 409, '234 classic script closures must remain after the DMs renderer split');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 408, '234 external classic script tags must remain after the DMs renderer split');
 assert.deepStrictEqual(statefulTokens.filter(token => new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(ownerBody)), [], 'crop-preview owner must remain free of stateful boundaries');
 for (const required of ['_cropState', 'document.getElementById', 'canvas', 'drawImage', 'toBlob', 'new File', 'closeCropPreview', 'onConfirm']) {
   assert(ownerBody.includes(required), `crop-preview owner must retain ${required}`);
