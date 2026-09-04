@@ -13,7 +13,7 @@ const compressVideo = fs.readFileSync(path.join(repo, 'src', 'features', 'compre
 const prevMedia = fs.readFileSync(path.join(repo, 'src', 'features', 'prev-media.js'), 'utf8');
 const storyText = fs.readFileSync(path.join(repo, 'src', 'features', 'story-text-helpers.js'), 'utf8');
 
-assert.strictEqual(files.length, 410, 'index.html plus 240 extracted modules must be audited after the DMs renderer split');
+assert.strictEqual(files.length, 411, 'index.html plus 240 extracted modules must be audited after the DMs renderer split');
 assert.strictEqual((source.match(/URL\.createObjectURL\(/g) || []).length, 14, '14 object-URL creation calls must remain');
 assert.strictEqual((source.match(/URL\.revokeObjectURL\(/g) || []).length, 8, '8 object-URL revocation calls must remain');
 assert(index.includes('async function downloadStory(storyId)'), 'Story download helper must remain present');

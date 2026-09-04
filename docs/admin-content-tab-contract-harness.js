@@ -50,11 +50,10 @@ async function runHarness() {
     const start = source.indexOf('window.adminTabContent = async function adminTabContent(content){');
     assert(start >= 0, 'content-tab module owner must remain present');
     const functionBlock = source.slice(start + 'window.adminTabContent = '.length);
-    const html = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const lvStart = html.indexOf('async function loadAdminContent(type){');
-    const lvEnd = html.indexOf('\nasync function adminDeleteAnyContent(', lvStart);
-    assert(lvStart >= 0 && lvEnd > lvStart, 'content loader boundary must remain present and ordered');
-    const loadAdminBlock = html.slice(lvStart, lvEnd);
+    const loadAdminModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-admin-content.js', 'utf8');
+    const lvStart = loadAdminModule.indexOf('window.loadAdminContent = async function loadAdminContent(type){');
+    assert(lvStart >= 0, 'content loader module owner must remain present');
+    const loadAdminBlock = loadAdminModule.slice(lvStart + 'window.loadAdminContent = '.length);
     eval(`let _contentType = 'posts'; ${functionBlock}; ${loadAdminBlock}; global.adminTabContent = adminTabContent; global.loadAdminContent = loadAdminContent;`);
 
     const post = { id: 'p1', caption: 'Caption <unsafe>', media_url: 'media', media_type: 'image', user_id: 'u1', created_at: '2026-03-08T00:00:00Z', likes_count: 1, comments_count: 2 };
