@@ -18,7 +18,7 @@ const critical = [
   { source: comments, signature: 'async function sendCmt(pid)', table: "db.from('comments').insert", label: 'sendCmt' },
   { source: html, signature: 'async function submitCreate(type)', table: "db.from('posts').insert", label: 'submitCreate' },
   { source: html, signature: 'async function sendMsg(cid)', table: "db.from('messages').insert", label: 'sendMsg' },
-  { source: html, signature: 'async function blockUser(userId, btn)', table: "db.from('blocks').insert", label: 'blockUser' },
+  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'block-user.js'), 'utf8'), signature: 'async function blockUser(userId, btn)', table: "db.from('blocks').insert", label: 'blockUser' },
   { source: html, signature: 'async function unblockUser(userId, btn)', table: "db.from('blocks').delete", label: 'unblockUser' },
 ];
 
