@@ -49,11 +49,11 @@ async function runHarness() {
     const apStart = approvalsModule.indexOf('window.adminTabApprovals = async function adminTabApprovals(content){');
     assert(apStart >= 0, 'approvals tab module owner must remain present');
     const approvalsBlock = approvalsModule.slice(apStart + 'window.adminTabApprovals = '.length);
-    const source = fs.readFileSync('/home/z/my-project/novasocial/index.html', 'utf8');
-    const start = source.indexOf('async function adminTabMyApprovals(content){');
-    const end = source.indexOf('\n\n// ═══════════════════════════════════════════════════════════════\n// 🔍 DIAGNOSTIC FUNCTION', start);
-    assert(start >= 0 && end > start, 'approval-tab boundary must remain present and ordered');
-    const fnSource = approvalsBlock + '\n' + source.slice(start, end);
+    const myApprovalsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-myapprovals.js', 'utf8');
+    const myStart = myApprovalsModule.indexOf('window.adminTabMyApprovals = async function adminTabMyApprovals(content){');
+    assert(myStart >= 0, 'my-approvals tab module owner must remain present');
+    const myApprovalsBlock = myApprovalsModule.slice(myStart + 'window.adminTabMyApprovals = '.length);
+    const fnSource = approvalsBlock + '\n' + myApprovalsBlock;
     eval(`${fnSource}; global.adminTabApprovals = adminTabApprovals; global.adminTabMyApprovals = adminTabMyApprovals;`);
 
     // Admin pending approvals render moderator, target, reason, and decision actions.
