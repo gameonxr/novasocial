@@ -24,7 +24,7 @@ for (const field of ['access_token', 'refresh_token', 'savedAt']) {
   assert(saveModule.includes(`${field}:`), `saved-account schema must contain ${field}`);
 }
 assert(saveModule.includes('window.saveAccountSession = function saveAccountSession(userId, username, avatarUrl, session)'), 'saveAccountSession must be exposed as window global in save module');
-assert(index.includes('async function syncCurrentAccountToSavedList()'), 'inline syncCurrentAccountToSavedList must remain present');
+assert(read('src/features/sync-current-account-to-saved-list.js').includes('async function syncCurrentAccountToSavedList()'), 'syncCurrentAccountToSavedList owner must remain present in its module');
 
 console.log('SAVED_ACCOUNT_SCHEMA_HARNESS=PASS');
 console.log('STORAGE_KEY=nova_accounts');
