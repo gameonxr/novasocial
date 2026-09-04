@@ -15,7 +15,7 @@ const protectedNames = [
   'reactToNote','loadNoteReactorsList','renderStoryElements',
   'syncLocalDeletionFallback'
 ];
-assert.strictEqual(declarations.length, 8, 'inline application script must retain 228 function declarations after the loadMsgs whitespace normalization');
+assert.strictEqual(declarations.length, 7, 'inline application script must retain 228 function declarations after the loadMsgs whitespace normalization');
 const remainingInlineProtectedNames = protectedNames.filter(name => !['renderDMs', 'renderReels', 'spawnLikeParticles', 'syncLocalDeletionFallback', 'enablePushFromSettings', 'resetPushFromSettings', 'viewNote', 'removeMyNoteFromViewer', 'deleteMyNote', 'renderStoryElements', 'loadNoteReactorsList', 'reactToNote', 'silentPushResubscribeIfGranted', 'submitNote', 'voteStoryPoll', 'refreshPollResults', 'loadStoryPollState', 'openSV', 'submitNativeEmojiReaction'].includes(name));
 assert.deepStrictEqual(remainingInlineProtectedNames.filter(name => !declarations.includes(name)), [], 'all remaining protected declarations must remain inline');
 assert.strictEqual(new Set(protectedNames).size, 14, 'protected declaration set must contain 14 unique names');
@@ -34,7 +34,7 @@ for (const name of protectedNames.filter(name => name !== 'submitNote')) {
 const hasForwardImplementation = /(?:async\s+)?function\s+forwardMessage\s*\(/.test(inline) || /(?:window\.)?forwardMessage\s*=/.test(inline);
 assert.strictEqual(hasForwardImplementation, true, 'forwardMessage must remain an authorized inline implementation');
 assert(/(?:async\s+)?function\s+completeForwardMessage\s*\(/.test(inline), 'completeForwardMessage must remain inline with the protected handler');
-assert(html.includes('onclick="forwardMessage('), 'forwardMessage caller must remain present');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'show-msg-menu.js'), 'utf8')).includes('onclick="forwardMessage('), 'forwardMessage caller must remain present');
 console.log('INLINE_DECLARATION_CLOSURE_HARNESS=PASS');
 console.log(`INLINE_DECLARATIONS=${declarations.length}`);
 console.log(`PROTECTED_DECLARATIONS=${protectedNames.length}`);

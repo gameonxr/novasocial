@@ -61,8 +61,9 @@ for (const forbidden of [/\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.updat
 }
 const tryRestoreModuleText = fs.readFileSync(path.join(sourceDir, 'try-restore-from-cache.js'), 'utf8');
 const refreshDmsInPlaceModuleText = fs.readFileSync(path.join(sourceDir, 'refresh-dms-in-place.js'), 'utf8');
+const showMsgMenuModuleText = fs.readFileSync(path.join(sourceDir, 'show-msg-menu.js'), 'utf8');
 for (const marker of ['renderDMs()', '_refreshDmsInPlace()', 'function openChat(', 'function showMsgMenu(', 'forwardMessage(']) {
-  assert((html + '\n' + tryRestoreModuleText + '\n' + refreshDmsInPlaceModuleText).includes(marker), `protected messaging marker must remain inline: ${marker}`);
+  assert((html + '\n' + tryRestoreModuleText + '\n' + refreshDmsInPlaceModuleText + '\n' + showMsgMenuModuleText).includes(marker), `protected messaging marker must remain inline: ${marker}`);
 }
 for (const file of ['docs/dms-seam-preparation-contract.md', 'docs/dms-seam-preparation-contract-harness.js', 'docs/inline-handler-surface-contract-harness.js']) {
   assert(fs.existsSync(path.join(repo, file)), `required protected messaging artifact missing: ${file}`);
