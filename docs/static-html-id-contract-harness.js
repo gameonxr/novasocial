@@ -17,7 +17,8 @@ const duplicates = [...counts.entries()].filter(([, count]) => count > 1);
 assert.strictEqual(ids.length, 52, 'static HTML ID inventory must reflect the approved protected owner groups after the Reels renderer split');
 assert.strictEqual(counts.size, 52, 'static HTML IDs must remain unique');
 assert.deepStrictEqual(duplicates, [], 'static HTML markup must not duplicate element IDs');
-assert(html.includes('function createPeerConnection('), 'protected Calls/WebRTC implementation must remain inline');
+assert(!html.includes('function createPeerConnection('), 'approved Calls/WebRTC peer owner must be absent from inline HTML');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer module owner must remain present');
 assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
 assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
 

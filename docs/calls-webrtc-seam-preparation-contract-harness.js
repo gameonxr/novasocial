@@ -33,14 +33,15 @@ const requiredMarkers = [
 ];
 const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'flush-pending-ice-candidates.js'), 'utf8');
 const endCallModule = fs.readFileSync(path.join(repo, 'src', 'features', 'end-call.js'), 'utf8');
-const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
+const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
 for (const marker of requiredMarkers) {
   assert(callsMarkerSurface.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
 }
-assert(html.includes('function createPeerConnection(callId, remoteUserId) {'), 'createPeerConnection must remain inline');
+assert(!html.includes('function createPeerConnection(callId, remoteUserId) {'), 'approved createPeerConnection owner must be absent from inline HTML');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved createPeerConnection module owner must be present');
 assert(!html.includes('async function endCall(updateDB)'), 'approved endCall owner must be absent from inline HTML');
 assert(endCallModule.includes('window.endCall = async function endCall('), 'approved endCall module owner must be present');
-assert.strictEqual(sourceText.includes('function createPeerConnection(callId, remoteUserId) {'), false, 'createPeerConnection must not be extracted');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection(callId, remoteUserId) {'), 'approved createPeerConnection external owner must exist');
 assert(endCallModule.includes('window.endCall = async function endCall(updateDB) {'), 'approved endCall external owner must exist');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract.md')), 'Calls/WebRTC behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract-harness.js')), 'Calls/WebRTC behavior harness must remain present');

@@ -48,12 +48,12 @@ for (const file of protectedDossierContracts) {
   assert(dossier.includes('EXPLICIT_FEATURE_AUTHORIZATION=REQUIRED'), `${file} must require explicit authorization`);
 }
 
-assert.strictEqual(jsFiles.length, 457, '457 extracted JavaScript modules must remain after the toggle-recording extraction');
+assert.strictEqual(jsFiles.length, 458, '458 extracted JavaScript modules must remain after the create-peer-connection extraction');
 assert.strictEqual(cssFiles.length, 18, '18 extracted CSS stylesheets must remain');
-assert.strictEqual(featureFiles.length, 446, '446 feature modules must remain after the toggle-recording extraction');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 459, 'HTML must retain 459 script tags after the toggle-recording extraction');
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 459, 'HTML script tags must remain balanced');
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 458, 'HTML must retain 458 external script tags after the toggle-recording extraction');
+assert.strictEqual(featureFiles.length, 447, '447 feature modules must remain after the create-peer-connection extraction');
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 460, 'HTML must retain 460 script tags after the create-peer-connection extraction');
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 460, 'HTML script tags must remain balanced');
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 459, 'HTML must retain 459 external script tags after the create-peer-connection extraction');
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
@@ -98,7 +98,7 @@ for (const marker of [
   'async function refreshPollResults(',
   'async function loadStoryPollState(',
 ]) {
-  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()' || marker === 'function silentPushResubscribeIfGranted()' || marker === 'async function submitNote()' || marker === 'async function voteStoryPoll(' || marker === 'async function refreshPollResults(' || marker === 'async function loadStoryPollState(' || marker === 'function openSV(startIdx){' || marker === 'function submitNativeEmojiReaction(' || marker === 'async function toggleRecording(cid)';
+  const approved = marker === 'function spawnLikeParticles(el){' || marker === 'async function syncLocalDeletionFallback()' || marker === 'async function enablePushFromSettings()' || marker === 'async function resetPushFromSettings()' || marker === 'async function viewNote(noteId){' || marker === 'async function removeMyNoteFromViewer(noteId){' || marker === 'async function deleteMyNote()' || marker === 'function renderStoryElements()' || marker === 'async function loadNoteReactorsList(' || marker === 'function reactToNote(' || marker === 'async function renderReels()' || marker === 'function silentPushResubscribeIfGranted()' || marker === 'async function submitNote()' || marker === 'async function voteStoryPoll(' || marker === 'async function refreshPollResults(' || marker === 'async function loadStoryPollState(' || marker === 'function openSV(startIdx){' || marker === 'function submitNativeEmojiReaction(' || marker === 'async function toggleRecording(cid)' || marker === 'function createPeerConnection(callId, remoteUserId) {';
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');

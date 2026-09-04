@@ -150,11 +150,12 @@ for (const signature of [
   'function renderStoryElements()',
   'async function syncLocalDeletionFallback()'
 ]) {
-  const expectedInlineCount = ['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function submitNote()', 'async function deleteMyNote()', 'function renderStoryElements()', 'function openSV(startIdx){', 'async function toggleRecording(cid)'].includes(signature) ? 0 : 1;
+  const expectedInlineCount = ['async function renderDMs()', 'async function renderReels()', 'function spawnLikeParticles(el){', 'async function syncLocalDeletionFallback()', 'async function enablePushFromSettings()', 'async function resetPushFromSettings()', 'async function submitNote()', 'async function deleteMyNote()', 'function renderStoryElements()', 'function openSV(startIdx){', 'async function toggleRecording(cid)', 'function createPeerConnection(callId, remoteUserId) {'].includes(signature) ? 0 : 1;
   assert.strictEqual(html.split(signature).length - 1, expectedInlineCount, `protected owner count mismatch: ${signature}`);
   if (signature === 'async function submitNote()') assert(source.includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must remain available through a window assignment');
   else if (signature === 'function openSV(startIdx){') assert(source.includes('window.openSV = function openSV('), 'approved Story viewer opener owner must remain available through a window assignment');
   else if (signature === 'async function toggleRecording(cid)') assert(source.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must remain available through a window assignment');
+  else if (signature === 'function createPeerConnection(callId, remoteUserId) {') assert(source.includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner must remain available through a window assignment');
   else assert(!source.includes(signature), `protected owner must remain outside src by declaration: ${signature}`);
 }
 assert(source.includes('window.renderDMs = async function(){'), 'approved DMs renderer owner must remain available through a window assignment');

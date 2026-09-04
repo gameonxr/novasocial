@@ -38,7 +38,8 @@ assert(!html.includes('async function renderDMs('), 'approved DMs renderer must 
 assert(dmsModule.includes('window.renderDMs = async function(){'), 'approved DMs renderer must be assigned by its production module');
 assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'approved Reels renderer linkage remains present');
 assert(reelsModule.includes('window.renderReels = async function(){'), 'approved Reels renderer remains available through its external owner');
-assert(html.indexOf('function createPeerConnection(') >= 0, 'protected WebRTC peer helper remains inline');
+assert(!html.includes('function createPeerConnection('), 'approved WebRTC peer helper must be absent from inline HTML');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved WebRTC peer helper must be assigned by its production module');
 assert(!html.includes('function spawnLikeParticles('), 'approved particle helper must be absent from inline HTML');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle helper must be assigned by its production module');
 

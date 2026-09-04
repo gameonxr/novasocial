@@ -103,6 +103,10 @@ for (const [marker, base] of coverage) {
     const voiceRecordingOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
     assert(!html.includes(marker), 'approved Voice recording owner must be absent from inline HTML');
     assert(voiceRecordingOwnerModule.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner missing from src');
+  } else if (marker === 'function createPeerConnection(') {
+    const callsPeerOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
+    assert(!html.includes(marker), 'approved Calls/WebRTC peer owner must be absent from inline HTML');
+    assert(callsPeerOwnerModule.includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner missing from src');
   } else {
     assert(html.includes(marker), `protected production marker missing: ${marker}`);
   }
