@@ -46,8 +46,9 @@ const requiredMarkers = [
   "const content = document.getElementById('admin-content')",
   "db.rpc('log_audit_entry'",
 ];
+const loadAdminDeletedPostsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-admin-deleted-posts.js'), 'utf8');
 for (const marker of requiredMarkers) {
-  assert(html.includes(marker) || logAdminActionModule.includes(marker), `Admin panel marker missing: ${marker}`);
+  assert(html.includes(marker) || logAdminActionModule.includes(marker) || loadAdminDeletedPostsModule.includes(marker), `Admin panel marker missing: ${marker}`);
 }
 assert(adminUiModule.includes('function renderAdminPanelUI('), 'Admin panel must retain its extracted UI rendering boundary');
 assert(html.includes('async function sendAdminNotification(') || sendAdminNotificationModule.includes('window.sendAdminNotification = async function sendAdminNotification('), 'Admin notification boundary must remain present');
