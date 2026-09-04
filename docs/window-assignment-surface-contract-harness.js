@@ -39,8 +39,8 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 446, 'index.html plus 240 extracted modules must be audited after the DMs renderer owner split');
-assert.strictEqual(matches.length, 432, 'application surface must retain 221 explicit window assignments after the Notes submission owner split');
+assert.strictEqual(files.length, 447, 'index.html plus 240 extracted modules must be audited after the DMs renderer owner split');
+assert.strictEqual(matches.length, 433, 'application surface must retain 221 explicit window assignments after the Notes submission owner split');
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');
 assert.deepStrictEqual(actualNames, expectedNames, 'window assignment allowlist must remain stable');
