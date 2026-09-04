@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `f1b8cd2a285fe606d45b5c8468bfd8fe0342862b` (nova-ultra-patches extraction pending commit at the time of this update)
+**Current remote checkpoint:** `06efac5329220cea4e35809132f1d9f8ee666a9f` (nova-ultra-patches extraction published and verified — publication gates closed by the 2026-09-05 post-push verification)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -33,7 +33,7 @@ The repository is operated conservatively because several systems are high-risk:
 
 ## 3. Current repository checkpoint
 
-At the time this handoff was updated, the recovered `Branch2` checkout is clean at `f1b8cd2` with the nova-ultra-patches extraction staged for the next commit. The expected inventory is approximately **463 source JavaScript files, 452 feature JavaScript files, 18 CSS files, 338 Markdown documents, and 322 harness files**; always measure the current checkout rather than relying on this prose when a contract asserts an exact number.
+At the time this handoff was updated, the recovered `Branch2` checkout is clean at `06efac5` with the nova-ultra-patches extraction published and its publication gates (clean-worktree, remote-alignment) closed by the 2026-09-05 post-push verification. The expected inventory is approximately **463 source JavaScript files, 452 feature JavaScript files, 18 CSS files, 338 Markdown documents, and 322 harness files**; always measure the current checkout rather than relying on this prose when a contract asserts an exact number.
 
 The standard validation suite is a collection of standalone Node.js harnesses in `docs/`. The current published suite contains 322 `*-harness.js` files. A passing suite is reported as `TOTAL=322 PASSED=322 FAILED=0`. If a new document or harness is added, update the relevant inventory contracts deliberately; never weaken a contract merely to make a test pass.
 
@@ -403,6 +403,18 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `/home/z/my-project/scripts/extract_nova_ultra_patches.js`, `/home/z/my-project/scripts/proof_nova_ultra_patches.js`, `/home/z/my-project/scripts/count_sync_nova_ultra_patches.js`, `MIGRATION_MAP.md` (two 2026-09-04 entries), and this handoff section.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions; the detached proof used stub targets in a VM only.
 - **Next action:** After push, re-run the full 322-harness regression from the clean published checkout to close the publication gates. The inline surface now ends at the by-design boundary (state declarations, bootstrap wiring, three boundary listeners); any further change to those requires its own authorization and dossier.
+
+### 2026-09-05 — Publication gate closure and fresh-session structural audit
+
+- **Agent/task:** Super Z (fresh-session continuation agent); closed the pending publication gates for the nova-ultra-patches checkpoint and answered the project owner's structural questions (remaining splits, duplicates, per-feature consolidation).
+- **Branch/HEAD:** `Branch2`; HEAD = `origin/Branch2` = `06efac5` verified clean; immutable `origin/main` remains `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Scope:** Read-only audit only before this docs commit: bootstrap Steps 1-5, full 322-harness regression from the published checkout, the 10-check app-load test, a cross-module duplicate-owner audit across all 463 source modules, and an index.html remaining-code audit. No application code was changed.
+- **Authorization state:** Standing autonomous authorization used only for verification and documentation; no extraction was performed because none remains.
+- **Result:** Regression `322/322 PASS` (publication gates closed), app-load `10/10 PASS` (463 script refs, 465 balanced tags, 452 feature files). index.html audit: zero function declarations remain; the single inline application script now contains only the by-design boundary surface (shared state declarations, protected bootstrap wiring, three boundary event listeners) plus 18 unique inline HTML handler attributes that are part of the runtime contract. Duplicate-owner audit: 35 window-assigned names are set in more than one file — 33 are shared global state flags written by multiple feature modules (normal for the classic global architecture), and 2 are documented intentional patch chains (`showApp` wrapper seam in `nova-init.js` over `show-app.js`; `initNovaFeatures` v2 patch in `ai-moderation.js` then Nova Ultra patch in `nova-ultra-patches.js`). Zero accidental duplicate function owners were found.
+- **Consolidation review (deferred to the project owner):** Merging the ~48 Calls/WebRTC one-owner modules into a single calls module (or analogous per-feature merges) was evaluated and is NOT recommended under the standing rules: it would reverse the completed one-owner-per-file modularization, invalidate the count pins (463/452/465) and module-read assertions across the 322 harnesses, and risk load-order regressions because the per-owner script linkages were inserted at dependency-exact positions. A directory-level reorganization (for example `src/features/calls/`) would keep file contents intact but would still rewrite ~463 script paths and many module-read harness references. Any such reorganization requires its own explicit authorization, a full path/count sync plan, and rollback evidence before execution.
+- **Evidence:** `/home/z/my-project/scripts/analyze_structure.js` (read-only structure/duplicate auditor), this handoff section, and the 2026-09-05 `MIGRATION_MAP.md` audit entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Await the project owner's decision on the optional per-feature reorganization; the split mission itself is complete (zero inline functions, all protected families externalized, docs restored and in sync).
 
 ### Template for the next agent
 
