@@ -7,6 +7,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const adminUiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'render-admin-panel-ui.js'), 'utf8');
 const showAdminPanelModule = fs.readFileSync(path.join(repo, 'src', 'features', 'show-admin-panel.js'), 'utf8');
 const loadAdminTabModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-admin-tab.js'), 'utf8');
+const logAdminActionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'log-admin-action.js'), 'utf8');
 
 const requiredLoadAdminTabModuleMarkers = [
   'async function loadAdminTab(tab)',
@@ -45,7 +46,7 @@ const requiredMarkers = [
   "db.rpc('log_audit_entry'",
 ];
 for (const marker of requiredMarkers) {
-  assert(html.includes(marker), `Admin panel marker missing: ${marker}`);
+  assert(html.includes(marker) || logAdminActionModule.includes(marker), `Admin panel marker missing: ${marker}`);
 }
 assert(adminUiModule.includes('function renderAdminPanelUI('), 'Admin panel must retain its extracted UI rendering boundary');
 assert(html.includes('async function sendAdminNotification('), 'Admin notification boundary must remain present');
