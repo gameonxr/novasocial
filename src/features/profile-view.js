@@ -534,18 +534,32 @@ async function showUserProfileOptions(userId){
   try { isBlocked = await getBlockedList().then(s => s.has(userId)); } catch(e) {}
 
   const actions = [
-    {icon: 'share', color: '#FF2D7A', label: 'Share Profile', action: `shareUserProfile('${userId}')`},
-    {icon: 'star', color: '#FF2D7A', label: 'Close Friends', action: `showCloseFriends()`},
-    {icon: 'bell_off', color: '#8A8A8A', label: 'Mute User', action: `muteUser('${userId}',null);document.getElementById('action-sheet-bg').remove()`},
-    {icon: 'lock', color: '#FF2D7A', label: isBlocked ? 'Unblock User' : 'Block User', action: `${isBlocked ? 'unblockUser' : 'blockUser'}('${userId}',null);document.getElementById('action-sheet-bg').remove()`},
-    {icon: 'eye', color: '#8A8A8A', label: 'Restrict User', action: `toast('User restricted');document.getElementById('action-sheet-bg').remove()`},
-    {icon: 'flag', color: '#FF2D7A', label: 'Report User', action: `reportUser('${userId}');document.getElementById('action-sheet-bg').remove()`},
+    {icon: 'share', color: '#FF2D7A', label: 'Share Profile', type: 'share'},
+    {icon: 'star', color: '#FF2D7A', label: 'Close Friends', type: 'closeFriends'},
+    {icon: 'bell_off', color: '#8A8A8A', label: 'Mute User', type: 'mute'},
+    {icon: 'lock', color: '#FF2D7A', label: isBlocked ? 'Unblock User' : 'Block User', type: isBlocked ? 'unblock' : 'block'},
+    {icon: 'eye', color: '#8A8A8A', label: 'Restrict User', type: 'restrict'},
+    {icon: 'flag', color: '#FF2D7A', label: 'Report User', type: 'report'},
   ];
+
+  // Dispatch table replacing the former eval(a.action) string execution (audit M4):
+  // each entry maps to its real function with direct arguments, preserving the
+  // original call order and sheet-removal behavior exactly.
+  const closeProfileActionSheet = () => { const s = document.getElementById('action-sheet-bg'); if (s) s.remove(); };
+  const profileActionHandlers = {
+    share: (id) => shareUserProfile(id),
+    closeFriends: () => showCloseFriends(),
+    mute: (id) => { muteUser(id, null); closeProfileActionSheet(); },
+    block: (id) => { blockUser(id, null); closeProfileActionSheet(); },
+    unblock: (id) => { unblockUser(id, null); closeProfileActionSheet(); },
+    restrict: () => { toast('User restricted'); closeProfileActionSheet(); },
+    report: (id) => { reportUser(id); closeProfileActionSheet(); },
+  };
 
   actions.forEach(a => {
     const btn = document.createElement('div');
     btn.style.cssText = 'display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:0.2s';
-    btn.onclick = () => eval(a.action);
+    btn.onclick = () => profileActionHandlers[a.type]?.(userId);
     btn.innerHTML = `
       <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;flex-shrink:0">${ico(a.icon, a.color, 18)}</div>
       <span style="font-size:15px;font-weight:500;color:${a.color === '#8A8A8A' ? '#fff' : a.color}">${a.label}</span>
