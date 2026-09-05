@@ -30,7 +30,7 @@ window.sendMsg = async function sendMsg(cid){
   if(list){
     optimisticDiv = document.createElement('div');
     optimisticDiv.style.cssText='display:flex;justify-content:flex-end;margin-bottom:2px';
-    optimisticDiv.innerHTML=`<div class="mme" style="max-width:72%">${txt}<div style="color:rgba(255,255,255,0.3);font-size:10px;margin-top:3px;text-align:right">now</div></div>`;
+    optimisticDiv.innerHTML=`<div class="mme" style="max-width:72%">${esc(txt)}<div style="color:rgba(255,255,255,0.3);font-size:10px;margin-top:3px;text-align:right">now</div></div>`;
     list.appendChild(optimisticDiv);list.scrollTop=list.scrollHeight;
   }
     try {
