@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `df4261a71771591d1da41acc8955d0244cdad88b` (audit fix 7 published — profile action-sheet eval replaced with a dispatch table, 322/322 post-push; final hygiene batch in progress)
+**Current remote checkpoint:** `66158005551d21a0e3ab92656f64930c2f868a60` (audit fix series COMPLETE — fixes 1-7 and 9 published with 322/322 after every commit and 10/10 app-load at close; fix 8 deliberately skipped as deploy-gated; deferred items recorded in the series close-out entry)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -513,6 +513,16 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** the six-file diff, `docs/object-url-lifecycle-contract-harness.js` (pins `prevStoryMedia`'s object-URL creation, preserved), `docs/message-clipboard-helpers-contract-harness.js` (passing with synced markers), `docs/branch2-final-readiness-contract-harness.js` (passing with corrected messages), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Final verification — full 322-harness suite, 10/10 app-load checks, immutable `origin/main` re-check, worklog update, and the executive fix-series report to the project owner (including the deferred items: fix 8 SW versioning, the three dead v2 wrapper guards discovered during fix 4, the remaining ~60 lower-priority escaping sites, and the scaffolding-directory decision).
+
+### 2026-09-05 — Audit-fix series close-out: final verification
+
+- **Agent/task:** Super Z (continuation agent); final verification of the owner-authorized audit-fix series derived from `docs/CODEBASE_HEALTH_AUDIT.md` section 19.
+- **Branch/HEAD:** `Branch2`; series published from `64cf2af` (audit) through `6615800` (fix 9 amendment) — fifteen bounded commits, each pushed with a full 322-harness regression run after the push, per the owner's one-bounded-change-per-commit rule.
+- **Applied:** Fix 1 (H1) smart-reply wiring `cinp`→`minp` (`26ffd03`); fix 2 (M2) comment-moderation lookup `cinp`→`ci-<postId>` with the deliberate contract-marker sync (`1e422fa`); fix 3 (M3) `following-count` stat wiring in both profile templates (`60287fb`); fix 4 (M1) notification badge rewired to `home-notif-dot` with dot-toggle + per-render restore, owner option (a) (`5b8ea7a`); fix 5 (H2) `vlenpick`/`vlen-opts` container in the create modal (`7c395e6`); fix 6 (H3) staged escaping series — step 1 adjusted to the already-existing shared `esc()` helper with the audit record corrected (`8176eeb`), then nine one-file wrap commits covering the typing indicator, optimistic chat text, pinned text, feed caption attribution/expansion, story editor text elements, three search-result name surfaces, and the explore query echo (`83633df`…`eea3a7a`), plus the story parity harness dependency-injection amendment (`b19d641`); fix 7 (M4) the repository's only `eval()` replaced with a dispatch table (`df4261a`); fix 9 (M6/M7/L1/L2/L4) the hygiene batch — junk root file removed, dead `addStoryTextMode` removed, three guarded `react-box` no-ops removed, pairing-contract filename drift fixed, three stale readiness messages corrected (`7a1cc80` + inventory count-syncs `6615800`).
+- **Deferred to the owner (not applied):** fix 8 (M5) service-worker cache versioning — deploy-gated by instruction; the three pre-existing dead `v2` wrapper guards discovered during fix 4 (`nova-universe.js:146` `_origCheckUnread`, `ai-moderation.js:21` `_origSendCmt`, `ai-moderation.js:44` `_origInitNova` — all inherited verbatim from `origin/main`; repairing them activates previously-dead patch layers and notably is required for fix 2's corrected moderation lookup to actually execute at runtime); the remaining ~60 lower-priority interpolation sites of the audit's 72 (message-list rendering, notification bodies, comment rendering, and the story VIEWER path for already-published stories); the 14 empty `.gitkeep` scaffolding directories (reorganization decision); and the `showNavDebugLog`/`clearNavDebugLog` DevTools diagnostics (kept).
+- **Final verification at close:** full harness suite **322/322 PASS**, app-load **10/10 PASS** (463 script refs, 465 balanced tags, 452 feature files, all 463 scripts syntax-valid), worktree clean, HEAD = `origin/Branch2`, `origin/main` immutable at `ef418007c9b9a797488b4825be5f0c807da22369`.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions across the entire series (all verification is static, detached-VM, or local-server read-only).
+- **Next action:** Awaiting the project owner's review of this report and decisions on the deferred items above.
 
 ### Template for the next agent
 
