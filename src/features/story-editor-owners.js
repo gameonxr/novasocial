@@ -12,23 +12,23 @@ window.renderStoryElements = function(){
 
     if(el.type === 'text'){
       const colorStyle = el.gradient ? 'background:linear-gradient(135deg,#FF2D7A,#00E5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text' : `color:${el.color}`;
-      div.innerHTML = `<div style="font-family:${el.fontFamily};font-weight:${el.fontWeight};font-size:24px;text-align:center;white-space:nowrap;padding:4px 8px;${colorStyle};text-shadow:0 2px 4px rgba(0,0,0,0.3)">${el.text}</div>`;
+      div.innerHTML = `<div style="font-family:${el.fontFamily};font-weight:${el.fontWeight};font-size:24px;text-align:center;white-space:nowrap;padding:4px 8px;${colorStyle};text-shadow:0 2px 4px rgba(0,0,0,0.3)">${esc(el.text)}</div>`;
     } else if(el.type === 'sticker'){
       if(el.isText){
-        div.innerHTML = `<div style="font-family:${el.fontFamily};font-weight:${el.fontWeight};font-size:${el.fontSize}px;color:${el.color};background:${el.bg};padding:${el.padding};border-radius:${el.borderRadius};white-space:nowrap">${el.text}</div>`;
+        div.innerHTML = `<div style="font-family:${el.fontFamily};font-weight:${el.fontWeight};font-size:${el.fontSize}px;color:${el.color};background:${el.bg};padding:${el.padding};border-radius:${el.borderRadius};white-space:nowrap">${esc(el.text)}</div>`;
       } else {
-        div.innerHTML = `<div style="font-size:${el.fontSize}px">${el.text}</div>`;
+        div.innerHTML = `<div style="font-size:${el.fontSize}px">${esc(el.text)}</div>`;
       }
     } else if(el.type === 'poll'){
       // Support both new (options[]) and legacy (optionA/optionB) format
       const opts = el.options || [el.optionA || 'Yes', el.optionB || 'No'];
-      const optsHtml = opts.map(o => `<div style="flex:1;padding:8px;background:rgba(255,255,255,0.1);border-radius:10px;font-size:12px;color:#fff;text-align:center;min-width:60px">${o}</div>`).join('');
+      const optsHtml = opts.map(o => `<div style="flex:1;padding:8px;background:rgba(255,255,255,0.1);border-radius:10px;font-size:12px;color:#fff;text-align:center;min-width:60px">${esc(o)}</div>`).join('');
       const flexDir = opts.length > 2 ? 'column' : 'row';
       const style = _POLL_STYLES[el.style || 0] || _POLL_STYLES[0];
-      div.innerHTML = `<div style="background:${style.bg};backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:16px;min-width:200px;text-align:center"><div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px">${el.question}</div><div style="display:flex;flex-direction:${flexDir};gap:8px">${optsHtml}</div>${el.multiVote ? '<div style="margin-top:6px;font-size:9px;color:rgba(255,255,255,0.6)">Multi-vote</div>' : ''}</div>`;
+      div.innerHTML = `<div style="background:${style.bg};backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:16px;min-width:200px;text-align:center"><div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px">${esc(el.question)}</div><div style="display:flex;flex-direction:${flexDir};gap:8px">${optsHtml}</div>${el.multiVote ? '<div style="margin-top:6px;font-size:9px;color:rgba(255,255,255,0.6)">Multi-vote</div>' : ''}</div>`;
     } else {
       // mention, location, hashtag, link
-      div.innerHTML = `<div style="font-family:${el.fontFamily||'-apple-system, sans-serif'};font-weight:${el.fontWeight||600};font-size:${el.fontSize||16}px;color:${el.color||'#fff'};background:${el.bg||'rgba(0,0,0,0.3)'};padding:${el.padding||'6px 12px'};border-radius:${el.borderRadius||'8px'};white-space:nowrap">${el.text}</div>`;
+      div.innerHTML = `<div style="font-family:${el.fontFamily||'-apple-system, sans-serif'};font-weight:${el.fontWeight||600};font-size:${el.fontSize||16}px;color:${el.color||'#fff'};background:${el.bg||'rgba(0,0,0,0.3)'};padding:${el.padding||'6px 12px'};border-radius:${el.borderRadius||'8px'};white-space:nowrap">${esc(el.text)}</div>`;
     }
 
     // Double tap for text edit
