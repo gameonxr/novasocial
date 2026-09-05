@@ -137,5 +137,5 @@ async function doSearch(q){
     h+=`<div style="grid-column:1/-1;padding:12px 16px;font-weight:700;font-size:12px;color:#666;letter-spacing:1px">POSTS (${filteredPosts.length})</div>`;
     h+=filteredPosts.map(p=>`<div class="eitem" onclick="viewPost('${p.id}')">${p.media_url?`<img src="${cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" loading="lazy">`:'<div style="display:flex;align-items:center;justify-content:center;font-size:32px;width:100%;height:100%;color:#333">📷</div>'}</div>`).join('');
   }
-  g.innerHTML=h||`<div style="grid-column:1/-1;text-align:center;padding:48px;color:#444">"${qq}" ke liye koi result nahi mila 😕</div>`;
+  g.innerHTML=h||`<div style="grid-column:1/-1;text-align:center;padding:48px;color:#444">"${esc(qq)}" ke liye koi result nahi mila 😕</div>`;
 }
