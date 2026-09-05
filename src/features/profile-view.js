@@ -392,7 +392,7 @@ async function openFullProfile(userId){
 </div>` : `<div onclick="viewAvatarFullscreen('${prof.avatar_url||''}','${prof.username}')" style="cursor:pointer">${av(prof.avatar_url,prof.username,82,false,online)}</div>`}
     </div>
     <div style="display:flex;flex:1;justify-content:space-around;align-items:center">
-      ${[['Posts',myPosts.length,null],['Followers',fmt(prof.followers_count||0),'followers'],['Following',fmt(prof.following_count||0),'following']].map(([l,v,type])=>`<div class="pstat" ${type?`onclick="showFollowList('${userId}','${type}')" style="cursor:pointer"`:''}><div class="pstat-n" style="font-size:18px"${type==='followers'?` id="followers-count" data-raw="${prof.followers_count||0}"`:''}>${v}</div><div class="pstat-l" style="font-size:11px;letter-spacing:0.3px">${l}</div></div>`).join('')}
+      ${[['Posts',myPosts.length,null],['Followers',fmt(prof.followers_count||0),'followers'],['Following',fmt(prof.following_count||0),'following']].map(([l,v,type])=>`<div class="pstat" ${type?`onclick="showFollowList('${userId}','${type}')" style="cursor:pointer"`:''}><div class="pstat-n" style="font-size:18px"${type==='followers'?` id="followers-count" data-raw="${prof.followers_count||0}"`:(type==='following'?` id="following-count" data-raw="${prof.following_count||0}"`:'')}>${v}</div><div class="pstat-l" style="font-size:11px;letter-spacing:0.3px">${l}</div></div>`).join('')}
     </div>
   </div>
 

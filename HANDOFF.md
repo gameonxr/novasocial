@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `26ffd0339d92776d12e898debb334ccea9baa4a0` (audit fix 1/9 published — smart-reply wiring restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
+**Current remote checkpoint:** `1e422fa2f59da094131d22f2dae19e31de0cceda` (audit fix 2/9 published — comment moderation pre-check restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -448,6 +448,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `src/features/ai-moderation.js:22-32` (fixed wrapper), `src/features/comments.js:63,85-87` (real input id and original sender), `docs/ai-moderation-contract-harness.js` (passing with synced marker), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Fix 3 (M3) — add `id="following-count" data-raw` to the Following stat in `profile-view.js` and the `profile.js` stats template, mirroring `followers-count`.
+
+### 2026-09-05 — Audit fix 3 (M3): optimistic Following-count stat wiring
+
+- **Agent/task:** Super Z (continuation agent); fix 3 of the owner-authorized audit-fix series from `docs/CODEBASE_HEALTH_AUDIT.md` section 19, one bounded change per commit with the full 322-harness regression after each.
+- **Branch/HEAD:** `Branch2`; built on fix 2 `1e422fa`; this commit advances HEAD with two template attribute additions plus its deliberate contract/docs sync.
+- **Scope:** The Following stat gains `id="following-count" data-raw="<raw count>"` in the other-user profile stats row (`src/features/profile-view.js:395`) and the own-profile stats row (`src/features/profile.js:107`), mirroring the existing `followers-count` wiring exactly. Both parity-pinned consumer modules (`update-my-following-count.js`, `refresh-profile-counts-owner.js`) are untouched — the refresh owner stays byte-identical to origin/main per its production-split harness. Contract sync: `docs/branch2-only-safety-contract-harness.js` gains both touched modules in the allowed-checkpoint list and its label moves to `FIX3_FOLLOWING_COUNT_STAT_WIRING`; `MIGRATION_MAP.md` gains the fix ledger entry.
+- **Authorization state:** Owner-authorized via the audit fix implementation instruction; bounded single-fix scope respected.
+- **Result:** `toggleFollowProfile`'s optimistic `updateMyFollowingCount(±1)`, the post-write `refreshProfileCounts` re-sync, and the error-path rollback now all find their element — the M3 silent no-op is restored without a page refresh. Design nuance documented for the owner: the pinned refresh owner writes the viewer's own `ME.following_count` wherever the element exists (exact on the own-profile view; on the other-user view the stat now receives that authoritative value after a toggle instead of staying stale) — any product refinement of which user's count that view should show is deferred. Full regression target: 322/322 post-push.
+- **Evidence:** `src/features/profile-view.js:395`, `src/features/profile.js:107` (wired stats), `src/features/toggle-follow-profile.js:13,39,49` (optimistic/refresh/rollback callers), `docs/refresh-profile-counts-production-split-contract-harness.js` (passing, parity intact), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Fix 4 (M1) — notification badge: rename consumers `notif-dot` → `home-notif-dot` (owner-selected option a) and add the unread-count dot-update logic.
 
 ### Template for the next agent
 

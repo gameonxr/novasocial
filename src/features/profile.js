@@ -104,7 +104,7 @@ async function renderProfile(){
 
   <!-- Stats Row -->
   <div style="display:flex;padding:0 16px 12px;gap:0">
-    ${[['Posts',myP.length,null],['Followers',fmt(PROF.followers_count||0),'followers'],['Following',fmt(PROF.following_count||0),'following']].map(([l,v,type])=>`<div class="nova-stat" ${type?`onclick="showFollowList('${ME.id}','${type}')"`:''} style="flex:1;text-align:center;padding:8px 0;${type?'cursor:pointer':''}"><div style="font-size:17px;font-weight:800;color:#fff"${type==='followers'?` id="followers-count" data-raw="${PROF.followers_count||0}"`:''}>${v}</div><div style="font-size:10px;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600">${l}</div></div>`).join('')}
+    ${[['Posts',myP.length,null],['Followers',fmt(PROF.followers_count||0),'followers'],['Following',fmt(PROF.following_count||0),'following']].map(([l,v,type])=>`<div class="nova-stat" ${type?`onclick="showFollowList('${ME.id}','${type}')"`:''} style="flex:1;text-align:center;padding:8px 0;${type?'cursor:pointer':''}"><div style="font-size:17px;font-weight:800;color:#fff"${type==='followers'?` id="followers-count" data-raw="${PROF.followers_count||0}"`:(type==='following'?` id="following-count" data-raw="${PROF.following_count||0}"`:'')}>${v}</div><div style="font-size:10px;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600">${l}</div></div>`).join('')}
   </div>
 
   <!-- Action Buttons (Clean - only 3) -->
