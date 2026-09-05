@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `5b8ea7a695c2826cf6ecbd1b0b4d35e34610bca3` (audit fix 4/9 published — notification badge wiring restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
+**Current remote checkpoint:** `7c395e61ebb617da166f1acc4eca093a1d02c24a` (audit fix 5/9 published — video length picker container restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -481,6 +481,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `src/features/create.js:43-44` (new container), `src/features/prev-media.js:8-18` (video probe → renderer call, image-path hide), `src/features/video-length-options.js` (renderer, contract-unchanged), `docs/video-length-options-contract-harness.js` and `docs/post-creation-flow-contract-harness.js` (both passing with markers preserved), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Fix 6 step 1 (H3) — introduce the shared `escapeHtml()` helper in `src/core/utils.js`, then wrap the ten highest-touch user-text interpolation sites one file per commit.
+
+### 2026-09-05 — Audit fix 6 step 1 (H3, adjusted): escape-helper record correction
+
+- **Agent/task:** Super Z (continuation agent); fix 6 step 1 of the owner-authorized audit-fix series — prescribed as adding `escapeHtml` to `src/core/utils.js`, adjusted after verification.
+- **Branch/HEAD:** `Branch2`; built on fix 5 `7c395e6`; documentation-only commit.
+- **Scope:** Discovery: the shared escape helper already exists — `esc()` at `src/core/utils.js:4-12` (identical semantics to the prescribed `escapeHtml`), inherited from `origin/main`, pinned by `docs/escape-helper-contract-harness.js`, and actively used by the admin-side renderers. The audit's H3 "no helper defined anywhere" was a name-search miss. Adding `function escapeHtml` would duplicate an existing single-owner helper, so this checkpoint corrects the record instead: `docs/CODEBASE_HEALTH_AUDIT.md` gains a dated post-publication corrections section; the wrapping series that follows uses the existing `esc(...)`.
+- **Authorization state:** Owner-authorized series; the step-1 adjustment (no new helper, reuse `esc`) is documented transparently for the owner here and in the ledger.
+- **Result:** H3's protective plan proceeds with the same function under its existing name; no duplicate function owners are introduced.
+- **Evidence:** `src/core/utils.js:4-12` (existing `esc`), `docs/escape-helper-contract-harness.js` (single-definition pin, passing), admin-side usages (`load-admin-content.js:42-53`, `load-appeals-list.js:20-25`, `show-admin-user-detail.js:22-41`, `load-reports-list.js:70-76`), `docs/CODEBASE_HEALTH_AUDIT.md` section 20, this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Fix 6 step 2 — wrap the prescribed user-controlled interpolation sites one file per commit with `esc(...)`, in the owner's order: start-typing-watcher.js:31, send-msg.js:33, pin-msg.js:9, posts.js:20, story-editor-owners.js:20, search-dm.js:6, search-gc.js:9, search-add-members.js:14, explore.js:140, with the full regression after each commit.
 
 ### Template for the next agent
 
