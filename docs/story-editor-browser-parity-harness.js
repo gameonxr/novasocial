@@ -7,6 +7,13 @@ const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(repo, 'src/features/story-editor-owners.js'), 'utf8');
+// Shared dependency since the H3 staged wrap: the module calls the global esc() helper owned by
+// src/core/utils.js. Load the REAL helper (no mock) so the VM matches the production script order.
+const utilsSource = fs.readFileSync(path.join(repo, 'src', 'core', 'utils.js'), 'utf8');
+const escStart = utilsSource.indexOf('function esc(');
+const escEnd = utilsSource.indexOf('\nfunction ico', escStart);
+assert(escStart >= 0 && escEnd > escStart, 'shared esc helper must remain extractable from core utils');
+const escSource = utilsSource.slice(escStart, escEnd);
 const created = [];
 const container = {
   _innerHTML: 'stale', children: [],
@@ -40,6 +47,9 @@ const context = {
 };
 context.window.document = context.document;
 vm.createContext(context);
+vm.runInContext(escSource, context, { filename: 'utils.js:esc' });
+assert.strictEqual(typeof context.esc, 'function', 'injected esc dependency must be callable');
+assert.strictEqual(context.esc('<b>"&'), '&lt;b&gt;&quot;&amp;', 'injected esc dependency must be the real shared helper');
 vm.runInContext(source, context, { filename: 'story-editor-owners.js' });
 assert.strictEqual(typeof context.window.renderStoryElements, 'function', 'window owner must be callable');
 context.window.renderStoryElements();
