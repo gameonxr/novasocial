@@ -12,7 +12,7 @@ for (const marker of [
   'return {flagged: true, reason: word}',
   'return {flagged: false}',
   'const _origSendCmt_v2 = window.sendCmt',
-  "document.getElementById('cinp')",
+  "document.getElementById('ci-'+pid)",
   'const mod = moderateContent(inp.value)',
   "toast('⚠️ Comment flagged for: ' + mod.reason + '. Please follow community guidelines.')",
   'return _origSendCmt.apply(this, arguments)',

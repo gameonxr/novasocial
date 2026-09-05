@@ -20,7 +20,7 @@ function moderateContent(text){
 const _origSendCmt_v2 = window.sendCmt;
 if(typeof _origSendCmt === 'function'){
   window.sendCmt = function(pid){
-    const inp = document.getElementById('cinp');
+    const inp = document.getElementById('ci-'+pid);
     if(inp){
       const mod = moderateContent(inp.value);
       if(mod.flagged){

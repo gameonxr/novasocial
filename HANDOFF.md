@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `64cf2afbfe1b2da7854255571b426e804dab5303` (read-only codebase health audit published — beginning the owner-authorized audit-fix series, one bounded change per commit with full 322-harness regression after each)
+**Current remote checkpoint:** `26ffd0339d92776d12e898debb334ccea9baa4a0` (audit fix 1/9 published — smart-reply wiring restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -437,6 +437,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `src/features/smart-replies.js:33-39` (fixed wiring), `docs/smart-replies-contract-harness.js` (classifier contract untouched and passing), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Fix 2 (M2) — `ai-moderation.js:23` comment-input lookup `cinp` → `ci-<postId>`, with the deliberate marker sync in `docs/ai-moderation-contract-harness.js`.
+
+### 2026-09-05 — Audit fix 2 (M2): comment moderation pre-check (cinp → ci-<postId>)
+
+- **Agent/task:** Super Z (continuation agent); fix 2 of the owner-authorized audit-fix series from `docs/CODEBASE_HEALTH_AUDIT.md` section 19, one bounded change per commit with the full 322-harness regression after each.
+- **Branch/HEAD:** `Branch2`; built on fix 1 `26ffd03`; this commit advances HEAD with one production line plus its deliberate contract/docs sync.
+- **Scope:** One line in the `sendCmt` moderation wrapper (`src/features/ai-moderation.js:23`): input lookup `cinp` → `ci-'+pid`, matching the real per-post comment input id pattern from `comments.js:63` and the original sender's own lookup at `comments.js:87`. Contract sync: `docs/ai-moderation-contract-harness.js` pinned marker string updated to the corrected lookup (marker/strength preserved, not weakened — the pre-screen-then-delegate contract is now actually true at runtime); `docs/branch2-only-safety-contract-harness.js` gains `src/features/ai-moderation.js` in the allowed-checkpoint list and its label moves to `FIX2_COMMENT_MODERATION_PRECHECK`; `MIGRATION_MAP.md` gains the fix ledger entry.
+- **Authorization state:** Owner-authorized via the audit fix implementation instruction; bounded single-fix scope respected.
+- **Result:** The client-side moderation pre-screen runs again before comment submission — flagged comments are blocked with the community-guidelines toast before delegation. Full regression target: 322/322 post-push.
+- **Evidence:** `src/features/ai-moderation.js:22-32` (fixed wrapper), `src/features/comments.js:63,85-87` (real input id and original sender), `docs/ai-moderation-contract-harness.js` (passing with synced marker), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Fix 3 (M3) — add `id="following-count" data-raw` to the Following stat in `profile-view.js` and the `profile.js` stats template, mirroring `followers-count`.
 
 ### Template for the next agent
 
