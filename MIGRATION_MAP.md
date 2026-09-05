@@ -4637,3 +4637,7 @@ The wrap 5 checkpoint (6524c78) escaped the story editor's user-text interpolati
 ## 2026-09-05 — Audit fix 6 step 2, wrap 6 (H3): DM search-result names escaped
 
 Sixth staged wrap: the DM new-chat user search (`src/features/search-dm.js:6`) now renders each result's username and full name through the shared `esc()` helper — cross-user profile fields interpolated into `innerHTML` rows, previously raw. Text-content contexts; the row's `onclick` handler argument remains the server-issued profile UUID, which is not free text. No harness executes this module in a VM (the DM renderer contract pins only its result-container id). Zero live application, database, storage, upload, permission, service-worker, Push, network, account, or authentication actions were performed.
+
+## 2026-09-05 — Audit fix 6 step 2, wrap 7 (H3): group-chat search-result names escaped
+
+Seventh staged wrap: the group-chat member search (`src/features/search-gc.js:9`) now renders each result's username through the shared `esc()` helper — the same cross-user profile-field vector as wrap 6, in the group creation flow. Text-content context; the row's `togGC` argument remains the server-issued UUID. Zero live application, database, storage, upload, permission, service-worker, Push, network, account, or authentication actions were performed.
