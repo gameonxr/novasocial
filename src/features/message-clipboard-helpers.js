@@ -4,7 +4,6 @@ async function copyMsg(id, text) {
     await navigator.clipboard.writeText(text);
     toast('Message copied! 📋');
   } catch(e) { toast('Could not copy'); }
-  const box=document.getElementById('react-box'); if(box) box.remove();
 }
 
 

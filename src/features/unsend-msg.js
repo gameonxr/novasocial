@@ -6,9 +6,6 @@ window.unsendMsg = async function unsendMsg(mid){
   const ok=confirm('Unsend this message?');
   if(!ok) return;
 
-  // Close menu if open
-  const box=document.getElementById('react-box'); if(box) box.remove();
-
   // ── STEP 1: Fetch media_url + ownership before update ──
   let mediaUrlToClean = null;
   let conversationId = null;

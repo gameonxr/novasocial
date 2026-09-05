@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `fdc9aa1f18d7deb7206d71ac2e2e9f945baffcec` (audit fix 6 step 2 in progress — typing username and optimistic chat text escaped, 322/322 post-push after each; owner-ordered one-file-per-commit XSS wrapping series)
+**Current remote checkpoint:** `df4261a71771591d1da41acc8955d0244cdad88b` (audit fix 7 published — profile action-sheet eval replaced with a dispatch table, 322/322 post-push; final hygiene batch in progress)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -502,6 +502,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** the three module diffs, `docs/escape-helper-contract-harness.js` (unchanged, passing), the per-wrap `MIGRATION_MAP.md` ledger entries, and the per-commit regression logs.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Wraps 4-9 of the series in the owner's order: posts.js:20 (post attribution/caption), story-editor-owners.js:20 (story text elements), search-dm.js:6, search-gc.js:9, search-add-members.js:14 (search-result names), explore.js:140 (query echo).
+
+### 2026-09-05 — Audit fix 9 (M6/M7/L1/L2/L4): hygiene batch + series close-out
+
+- **Agent/task:** Super Z (continuation agent); the combined hygiene commit the owner prescribed as one batch, closing the owner-authorized audit-fix series (fixes 1-7 and 9 applied; fix 8 deliberately skipped as deploy-gated).
+- **Branch/HEAD:** `Branch2`; built on fix 7 `df4261a`; this commit advances HEAD with the cleanup plus its deliberate contract/docs sync.
+- **Scope:** Removed the 1-byte junk root file `chore: add feature architecture`; removed the dead legacy `addStoryTextMode()` (zero call sites, unguarded stale-ID references) from `story-text-helpers.js`; removed the three guarded no-op `react-box` statements from `pin-msg.js`, `unsend-msg.js`, and `message-clipboard-helpers.js`; fixed the `contract-artifact-pairing-contract.md` harness-name drift; corrected the three stale message strings in `branch2-final-readiness-contract-harness.js` (values already correct). Left untouched per the owner's instruction: the 14 empty `.gitkeep` scaffolding directories (reorganization decision open), the `showNavDebugLog`/`clearNavDebugLog` DevTools diagnostics, and the service worker (fix 8, deploy-gated).
+- **Contract syncs:** `message-clipboard-helpers-contract-harness.js` drops the removed `react-box` marker, gains a stay-removed assertion, and its scope label drops REACTION_CLEANUP; `branch2-only-safety-contract-harness.js` admits the touched modules plus the deleted junk filename into its allowed-checkpoint list and its label moves to `FIX9_HYGIENE_BATCH`.
+- **Result:** Zero behavior surface changed; the repository's only dead function family flagged for removal is gone; the docs now match the published inventory. Full regression target: 322/322 post-push, then the final app-load verification.
+- **Evidence:** the six-file diff, `docs/object-url-lifecycle-contract-harness.js` (pins `prevStoryMedia`'s object-URL creation, preserved), `docs/message-clipboard-helpers-contract-harness.js` (passing with synced markers), `docs/branch2-final-readiness-contract-harness.js` (passing with corrected messages), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Final verification — full 322-harness suite, 10/10 app-load checks, immutable `origin/main` re-check, worklog update, and the executive fix-series report to the project owner (including the deferred items: fix 8 SW versioning, the three dead v2 wrapper guards discovered during fix 4, the remaining ~60 lower-priority escaping sites, and the scaffolding-directory decision).
 
 ### Template for the next agent
 

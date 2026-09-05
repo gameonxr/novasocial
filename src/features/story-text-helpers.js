@@ -1,15 +1,4 @@
 // Independent Story Creator text/media helpers extracted from index.html.
-function addStoryTextMode() {
-  const prev = document.getElementById('story-prev');
-  prev.style.background = '#1a1a1a';
-  prev.innerHTML = ''; // Clear camera icon
-  document.getElementById('story-text-tools').style.display = 'flex'; // Show text tools
-  document.getElementById('story-submit-btn').disabled = false;
-  document.getElementById('story-submit-btn').style.opacity = '1';
-  window._storyFile = null; // No media file
-  addStoryText();
-}
-
 function prevStoryMedia(inp) {
   const f = inp.files[0];
   if(!f) return;

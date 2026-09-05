@@ -19,7 +19,7 @@ The resulting artifact set is complete: every contract resolves to a harness, ev
 
 ## Harness coverage
 
-`docs/contract-artifact-pairing-harness.js` validates:
+`docs/contract-artifact-pairing-contract-harness.js` validates:
 
 | Check | Result |
 |---|---|

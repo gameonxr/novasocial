@@ -7,8 +7,6 @@ window.pinMsg = async function pinMsg(mid,text){
   toast('Message pinned 📌');
   const pinBar=document.getElementById('pin-bar');
   if(pinBar){ pinBar.innerHTML='📌 ' + esc(text); pinBar.style.display='block'; }
-  const box=document.getElementById('react-box');
-  if(box) box.remove();
   // Part 9 Fix 2.2: removed loadMsgs() call — pin bar already updated above.
   // No need to reload entire message list just for a pin update.
 };
