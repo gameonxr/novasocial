@@ -145,10 +145,10 @@ function showDynamicIsland(text, icon='🔔'){
 const _origCheckUnread_v2 = window.checkUnreadNotifs;
 if(typeof _origCheckUnread === 'function'){
   window.checkUnreadNotifs = async function(){
-    const prevCount = parseInt(document.getElementById('notif-dot')?.textContent || '0');
+    const prevCount = parseInt(document.getElementById('home-notif-dot')?.dataset.count || '0');
     await _origCheckUnread.apply(this, arguments);
-    const dot = document.getElementById('notif-dot');
-    const newCount = parseInt(dot?.textContent || '0');
+    const dot = document.getElementById('home-notif-dot');
+    const newCount = parseInt(dot?.dataset.count || '0');
     if(newCount > prevCount){
       showDynamicIsland(`🔔 ${newCount} new notifications`, '🔔');
     }

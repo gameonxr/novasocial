@@ -151,6 +151,8 @@ async function renderHome(){
   <div style="height:80px"></div>`;
   // 📝 Set up pull-to-refresh touch handlers on #feed-list (scoped to Home only)
   setupHomePullToRefresh();
+  // 🔔 Restore topbar unread badge state on every Home render (template re-creates the dot display:none)
+  checkUnreadNotifs();
   // 🛡️ Race condition guard: agar user is await ke beech navigate kar gaya to aage mat badho
   if(myGeneration !== _renderGeneration) return;
   await loadMoreFeedPosts();

@@ -8,9 +8,9 @@
 async function checkUnreadNotifs(){
   try{
     const{count}=await db.from('notifications').select('id',{count:'exact',head:true}).eq('recipient_id',ME.id).eq('is_read',false);
-    const dot=document.getElementById('notif-dot');
+    const dot=document.getElementById('home-notif-dot');
     if(dot){
-      if(count > 0){dot.style.display='flex';dot.textContent = count > 99 ? '99+' : count;}else{dot.style.display='none';}
+      if(count > 0){dot.style.display='block';dot.dataset.count = String(count);}else{dot.style.display='none';dot.dataset.count = '0';}
     }
   }catch(e){}
 }
@@ -201,7 +201,7 @@ async function renderNotifs(){
   scr.innerHTML = html;
 
   await db.from('notifications').update({is_read:true}).eq('recipient_id',ME.id).eq('is_read',false);
-  const dot=document.getElementById('notif-dot'); if(dot) dot.style.display='none';
+  const dot=document.getElementById('home-notif-dot'); if(dot){ dot.style.display='none'; dot.dataset.count='0'; }
 }
 
 async function followBack(userId, btn){
@@ -324,7 +324,7 @@ async function notifClick(type, senderId, postId, conversationId, storyId){
 function setupNotifsRealtime(){
   if(window.notifsSub) db.removeChannel(window.notifsSub);
   window.notifsSub = db.channel('notifs-' + ME.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:`recipient_id=eq.${ME.id}`},(payload)=>{
-    const dot=document.getElementById('notif-dot');
+    const dot=document.getElementById('home-notif-dot');
     if(dot) dot.style.display='block';
     renderNotifs();
   }).subscribe();

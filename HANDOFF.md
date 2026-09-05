@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `1e422fa2f59da094131d22f2dae19e31de0cceda` (audit fix 2/9 published — comment moderation pre-check restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
+**Current remote checkpoint:** `60287fb32fca80671ec4c8f6c602293bbd8b6dca` (audit fix 3/9 published — following-count stat wiring restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -459,6 +459,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `src/features/profile-view.js:395`, `src/features/profile.js:107` (wired stats), `src/features/toggle-follow-profile.js:13,39,49` (optimistic/refresh/rollback callers), `docs/refresh-profile-counts-production-split-contract-harness.js` (passing, parity intact), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Fix 4 (M1) — notification badge: rename consumers `notif-dot` → `home-notif-dot` (owner-selected option a) and add the unread-count dot-update logic.
+
+### 2026-09-05 — Audit fix 4 (M1): notification unread badge wiring (owner option a)
+
+- **Agent/task:** Super Z (continuation agent); fix 4 of the owner-authorized audit-fix series from `docs/CODEBASE_HEALTH_AUDIT.md` section 19, using the owner's recommended option (a) — rewire consumers to the existing bare-dot topbar element with the least new code.
+- **Branch/HEAD:** `Branch2`; built on fix 3 `60287fb`; this commit advances HEAD with the badge rewire plus its deliberate contract/docs sync.
+- **Scope:** All four `notif-dot` lookups now target the real topbar element `home-notif-dot` (`notifications.js:11,204,327` and the wrapper reads at `nova-universe.js:148-151`). The count logic toggles the 8px bare dot (`display:block`/`none`) and records the raw count in `dataset.count` instead of `textContent` (no text fits a bare dot). The Home renderer now calls `checkUnreadNotifs()` after every topbar render (`home.js`, after `setupHomePullToRefresh()`) so the badge state is re-fetched from the database on every Home visit instead of silently resetting to hidden. Contract sync: `docs/branch2-only-safety-contract-harness.js` gains the three touched modules in the allowed-checkpoint list and its label moves to `FIX4_NOTIFICATION_BADGE_WIRING`; `MIGRATION_MAP.md` gains the fix ledger entry.
+- **Authorization state:** Owner-authorized via the audit fix implementation instruction (option a explicitly recommended and selected); bounded single-fix scope respected.
+- **Result:** The unread badge chain is live end-to-end: `loadProf` and every Home render re-count unread notifications and show/hide the dot, the realtime INSERT handler shows it on new arrivals, and `renderNotifs` hides it after notifications are read. **Newly discovered pre-existing defect (inherited verbatim from origin/main, documented for the owner, deliberately not fixed in this commit):** the dynamic-island wrapper (`nova-universe.js:145-156`) guards on the never-defined `_origCheckUnread` instead of the declared `_origCheckUnread_v2`, so that wrapper — and the identical `ai-moderation.js:21` (`_origSendCmt`) and `ai-moderation.js:44` (`_origInitNova`) guards — have never installed in the original monolith either. This means fix 2's corrected lookup alone does not activate the comment-moderation pre-screen (the wrapper body never runs), and the Nova-Ultra init wrapper is likewise inert. Repairing these three guards is a behavior-changing decision (it activates previously-dead patch layers) deferred to the project owner. Full regression target: 322/322 post-push.
+- **Evidence:** `src/features/notifications.js:8-16,203-204,324-331` (rewired badge owners), `src/features/nova-universe.js:144-156` (renamed reads in the inert wrapper), `src/features/home.js:152-155` (badge state restore on render), `src/features/load-prof.js:33` (existing count-check caller), `docs/notification-rendering-contract-harness.js` (passing, all pinned markers preserved), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Fix 5 (H2) — make `showVideoLengthOptions()` self-append its `vlenpick`/`vlen-opts` container into the media preview area so the video length picker renders.
 
 ### Template for the next agent
 
