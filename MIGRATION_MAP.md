@@ -4641,3 +4641,7 @@ Sixth staged wrap: the DM new-chat user search (`src/features/search-dm.js:6`) n
 ## 2026-09-05 — Audit fix 6 step 2, wrap 7 (H3): group-chat search-result names escaped
 
 Seventh staged wrap: the group-chat member search (`src/features/search-gc.js:9`) now renders each result's username through the shared `esc()` helper — the same cross-user profile-field vector as wrap 6, in the group creation flow. Text-content context; the row's `togGC` argument remains the server-issued UUID. Zero live application, database, storage, upload, permission, service-worker, Push, network, account, or authentication actions were performed.
+
+## 2026-09-05 — Audit fix 6 step 2, wrap 8 (H3): add-members search-result names escaped
+
+Eighth staged wrap: the group add-members search (`src/features/search-add-members.js:14`) now renders each candidate's username through the shared `esc()` helper — completing the three search-result name surfaces of the owner's ordered list. Text-content context; the add button's arguments remain server-issued identifiers. Zero live application, database, storage, upload, permission, service-worker, Push, network, account, or authentication actions were performed.
