@@ -12,12 +12,13 @@ async function recordPostView(postId) {
 function formatCaption(username, caption) {
   if (!caption) return '';
   const maxLen = 120;
-  const safeCaption = caption.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  // Double-escaped for the inline onclick innerHTML-rebuild context (attr decode + JS string + innerHTML layers)
+  const safeCaption = esc(esc(caption));
   if (caption.length <= maxLen) {
-    return `<span style="font-weight:700">${username} </span><span style="color:#ddd">${caption}</span>`;
+    return `<span style="font-weight:700">${esc(username)} </span><span style="color:#ddd">${esc(caption)}</span>`;
   }
   const shortText = caption.substring(0, maxLen).trim();
-  return `<span style="font-weight:700">${username} </span><span style="color:#ddd">${shortText}... <span class="caption-more" onclick="event.stopPropagation();this.parentElement.innerHTML='<b>${username}</b> <span style=\\'color:#ddd\\'>${safeCaption}</span>'">more</span></span>`;
+  return `<span style="font-weight:700">${esc(username)} </span><span style="color:#ddd">${esc(shortText)}... <span class="caption-more" onclick="event.stopPropagation();this.parentElement.innerHTML='<b>${esc(esc(username))}</b> <span style=\\'color:#ddd\\'>${safeCaption}</span>'">more</span></span>`;
 }
 
 // ── LIKE / REACTIONS ──────────────────────────────────────
