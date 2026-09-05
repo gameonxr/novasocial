@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `60287fb32fca80671ec4c8f6c602293bbd8b6dca` (audit fix 3/9 published — following-count stat wiring restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
+**Current remote checkpoint:** `5b8ea7a695c2826cf6ecbd1b0b4d35e34610bca3` (audit fix 4/9 published — notification badge wiring restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -470,6 +470,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `src/features/notifications.js:8-16,203-204,324-331` (rewired badge owners), `src/features/nova-universe.js:144-156` (renamed reads in the inert wrapper), `src/features/home.js:152-155` (badge state restore on render), `src/features/load-prof.js:33` (existing count-check caller), `docs/notification-rendering-contract-harness.js` (passing, all pinned markers preserved), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Fix 5 (H2) — make `showVideoLengthOptions()` self-append its `vlenpick`/`vlen-opts` container into the media preview area so the video length picker renders.
+
+### 2026-09-05 — Audit fix 5 (H2): video length picker container in the create modal
+
+- **Agent/task:** Super Z (continuation agent); fix 5 of the owner-authorized audit-fix series from `docs/CODEBASE_HEALTH_AUDIT.md` section 19, taking the owner's first-listed option (recreate the container in the media-preview template) with the least-disruptive placement.
+- **Branch/HEAD:** `Branch2`; built on fix 4 `5b8ea7a`; this commit advances HEAD with one template row plus its deliberate contract/docs sync.
+- **Scope:** The create modal body (`src/features/create.js`, `showCreate` post/reel template) gains a hidden `<div id="vlenpick" ...><div id="vlen-opts" ...></div></div>` pill row immediately after the edit-tools row and before the filter tray — the sibling placement survives `prevMedia`'s innerHTML replacement of the preview box and matches the existing image-path hide (`prev-media.js:18`). The renderer (`video-length-options.js`) and selection helper (`select-video-len.js`) are untouched — their contracts pin them as unchanged, and the fix only supplies the real-world container the renderer always expected. Contract sync: `docs/branch2-only-safety-contract-harness.js` gains `src/features/create.js` in the allowed-checkpoint list and its label moves to `FIX5_VIDEO_LENGTH_PICKER_CONTAINER`; `MIGRATION_MAP.md` gains the fix ledger entry.
+- **Authorization state:** Owner-authorized via the audit fix implementation instruction; bounded single-fix scope respected.
+- **Result:** After picking a video in the post/reel creation flow, the 15s/30s/60s/90s/180s length presets (filtered by duration) and the full-length pill now visibly render, `selectVideoLen` toggles pill selection into `window._videoTrimTo`, long videos show the 3-minute toast with the 180s auto-select, and image picks hide the row. Full regression target: 322/322 post-push.
+- **Evidence:** `src/features/create.js:43-44` (new container), `src/features/prev-media.js:8-18` (video probe → renderer call, image-path hide), `src/features/video-length-options.js` (renderer, contract-unchanged), `docs/video-length-options-contract-harness.js` and `docs/post-creation-flow-contract-harness.js` (both passing with markers preserved), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Fix 6 step 1 (H3) — introduce the shared `escapeHtml()` helper in `src/core/utils.js`, then wrap the ten highest-touch user-text interpolation sites one file per commit.
 
 ### Template for the next agent
 

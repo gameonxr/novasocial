@@ -40,6 +40,9 @@ function showCreate(type){
       <div onclick="seOpenMusicTool()" style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.25s" title="Music">${ico('music','#3DB83D',18)}</div>
     </div>
 
+    <!-- Video length preset picker (populated by showVideoLengthOptions when video metadata loads; hidden for images) -->
+    <div id="vlenpick" style="display:none;gap:8px;overflow-x:auto;padding:2px 0;scrollbar-width:none"><div id="vlen-opts" style="display:flex;gap:8px"></div></div>
+
     <div id="filter-tray" style="display:none;overflow-x:auto;padding:10px 0;gap:12px;scrollbar-width:none;"></div>
 
     <textarea id="capinp" placeholder="Write a caption... #hashtag @mention" rows="3" style="width:100%;background:#0A0A0A;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:14px 16px;color:#fff;font-size:14px;outline:none;resize:none;font-family:inherit;line-height:1.5;transition:0.25s" oninput="checkMentionInCaption(this)"></textarea>
