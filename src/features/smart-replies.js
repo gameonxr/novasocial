@@ -31,7 +31,7 @@ function showSmartReplies(cid, lastMsg){
 }
 
 function quickSendReply(cid, text){
-  const inp = document.getElementById('cinp');
+  const inp = document.getElementById('minp');
   if(inp){
     inp.value = text;
     sendMsg(cid);

@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `06efac5329220cea4e35809132f1d9f8ee666a9f` (nova-ultra-patches extraction published and verified — publication gates closed by the 2026-09-05 post-push verification)
+**Current remote checkpoint:** `64cf2afbfe1b2da7854255571b426e804dab5303` (read-only codebase health audit published — beginning the owner-authorized audit-fix series, one bounded change per commit with full 322-harness regression after each)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -426,6 +426,17 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `docs/CODEBASE_HEALTH_AUDIT.md`; read-only audit tooling at `/home/z/my-project/scripts/audit_*.js` with raw outputs under `/home/z/my-project/audit_out/`.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions; the VM simulation used absorbing stubs only.
 - **Next action:** Await the project owner's prioritization of the recommended fix order (report section 19). The deliberate count-sync in this commit: `branch2-final-readiness-contract-harness.js` documentation pins 338→339 and the non-contract documentation allowlist gains `CODEBASE_HEALTH_AUDIT.md`, per the published inventory-update protocol.
+
+### 2026-09-05 — Audit fix 1 (H1): smart-reply quick-send wiring (cinp → minp)
+
+- **Agent/task:** Super Z (continuation agent); applying fix 1 of the owner-authorized audit-fix series derived from `docs/CODEBASE_HEALTH_AUDIT.md` section 19 (recommended fix order), one bounded change per commit with the full 322-harness regression after each.
+- **Branch/HEAD:** `Branch2`; built on the audit publication `64cf2af`; this commit advances HEAD with one production line plus its deliberate contract/docs sync.
+- **Scope:** One line in `src/features/smart-replies.js` (`quickSendReply` element lookup `cinp` → `minp`, the real chat textarea id from `open-chat.js:143`). No load-order, global-surface, or inventory changes. Contract syncs: `docs/branch2-only-safety-contract-harness.js` allowed-checkpoint list gains `src/features/smart-replies.js` and its `LATEST_CHECKPOINT` label updates to `FIX1_SMART_REPLY_WIRING` (audit finding L3 drift fix); `MIGRATION_MAP.md` gains the fix ledger entry.
+- **Authorization state:** Owner-authorized via the audit fix implementation instruction; bounded single-fix scope respected.
+- **Result:** Smart-reply chips now insert their text into the chat input and send via `sendMsg(cid)` — the H1 user-visible silent feature break is restored. Full regression target: 322/322 post-push.
+- **Evidence:** `src/features/smart-replies.js:33-39` (fixed wiring), `docs/smart-replies-contract-harness.js` (classifier contract untouched and passing), this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Fix 2 (M2) — `ai-moderation.js:23` comment-input lookup `cinp` → `ci-<postId>`, with the deliberate marker sync in `docs/ai-moderation-contract-harness.js`.
 
 ### Template for the next agent
 
