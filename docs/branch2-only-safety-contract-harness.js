@@ -58,5 +58,5 @@ assert(storyModule.includes('window.renderStoryElements = function(){'), 'approv
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=FIX6_STEP1_ESCAPE_HELPER_RECORD_CORRECTION');
+console.log('LATEST_CHECKPOINT=FIX6_STEP2_WRAP1_TYPING_USERNAME');
 console.log('MAIN_REF_UNCHANGED=YES');

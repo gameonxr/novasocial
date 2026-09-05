@@ -28,7 +28,7 @@ window.startTypingWatcher = function startTypingWatcher(cid){
     if(!box) return;
           if(payload.new.typing_in===cid){
         box.style.display='block';
-        box.innerHTML='<span style="color:#aaa">'+payload.new.username+' is typing <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></span>';
+        box.innerHTML='<span style="color:#aaa">'+esc(payload.new.username)+' is typing <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></span>';
       }else{
       box.style.display='none';
     }
