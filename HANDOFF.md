@@ -2,7 +2,7 @@
 
 **Repository:** `gameonxr/novasocial`
 **Canonical working branch:** `Branch2` only
-**Current remote checkpoint:** `7c395e61ebb617da166f1acc4eca093a1d02c24a` (audit fix 5/9 published — video length picker container restored, 322/322 post-push; owner-authorized audit-fix series in progress, one bounded change per commit)
+**Current remote checkpoint:** `fdc9aa1f18d7deb7206d71ac2e2e9f945baffcec` (audit fix 6 step 2 in progress — typing username and optimistic chat text escaped, 322/322 post-push after each; owner-ordered one-file-per-commit XSS wrapping series)
 **Immutable protected reference:** `origin/main` = `ef418007c9b9a797488b4825be5f0c807da22369`
 **Document owner:** Manus AI / Super Z (continuation)
 **Purpose:** This file is the continuation contract for every future human or AI agent working on NovaSocial.
@@ -492,6 +492,16 @@ Do not rewrite history in a way that removes prior checkpoint meaning. Correct f
 - **Evidence:** `src/core/utils.js:4-12` (existing `esc`), `docs/escape-helper-contract-harness.js` (single-definition pin, passing), admin-side usages (`load-admin-content.js:42-53`, `load-appeals-list.js:20-25`, `show-admin-user-detail.js:22-41`, `load-reports-list.js:70-76`), `docs/CODEBASE_HEALTH_AUDIT.md` section 20, this handoff entry, and the `MIGRATION_MAP.md` ledger entry.
 - **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
 - **Next action:** Fix 6 step 2 — wrap the prescribed user-controlled interpolation sites one file per commit with `esc(...)`, in the owner's order: start-typing-watcher.js:31, send-msg.js:33, pin-msg.js:9, posts.js:20, story-editor-owners.js:20, search-dm.js:6, search-gc.js:9, search-add-members.js:14, explore.js:140, with the full regression after each commit.
+
+### 2026-09-05 — Audit fix 6 step 2 (H3): staged esc() wrapping series (wraps 1-3)
+
+- **Agent/task:** Super Z (continuation agent); the owner-ordered one-file-per-commit XSS wrapping series using the existing shared `esc()` helper, with the full 322-harness regression after each commit.
+- **Branch/HEAD:** `Branch2`; wraps 1-3 published at `83633df`, `fdc9aa1`, and this checkpoint; each commit is exactly one feature file plus its label/ledger sync.
+- **Scope:** Wrap 1 — `start-typing-watcher.js:31`: realtime typing peer username escaped (cross-user profile name, text context). Wrap 2 — `send-msg.js:33`: optimistic chat bubble text escaped (raw text still flows unchanged to the database insert, mention detection, and rollback). Wrap 3 — `pin-msg.js:9`: pinned-message bar text escaped (the pinned message can originate from the other chat participant, so this closes a cross-user vector). All three are text-content contexts using the single `esc()` form.
+- **Result:** 322/322 after each of wraps 1 and 2; this checkpoint targets the same. The `esc` owner (`src/core/utils.js`) loads in the core group before every feature module, so call-time resolution is safe.
+- **Evidence:** the three module diffs, `docs/escape-helper-contract-harness.js` (unchanged, passing), the per-wrap `MIGRATION_MAP.md` ledger entries, and the per-commit regression logs.
+- **Side effects:** Zero live application, database, storage, upload, permission, Push, service-worker, network, account, or authentication actions.
+- **Next action:** Wraps 4-9 of the series in the owner's order: posts.js:20 (post attribution/caption), story-editor-owners.js:20 (story text elements), search-dm.js:6, search-gc.js:9, search-add-members.js:14 (search-result names), explore.js:140 (query echo).
 
 ### Template for the next agent
 

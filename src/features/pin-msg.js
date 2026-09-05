@@ -6,7 +6,7 @@ window.pinMsg = async function pinMsg(mid,text){
   const {data,error} = await db.from('conversations').update({pinned_message_id: mid, pinned_message_text: text}).eq('id', window._curChatId);
   toast('Message pinned 📌');
   const pinBar=document.getElementById('pin-bar');
-  if(pinBar){ pinBar.innerHTML='📌 ' + text; pinBar.style.display='block'; }
+  if(pinBar){ pinBar.innerHTML='📌 ' + esc(text); pinBar.style.display='block'; }
   const box=document.getElementById('react-box');
   if(box) box.remove();
   // Part 9 Fix 2.2: removed loadMsgs() call — pin bar already updated above.
