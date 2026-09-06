@@ -142,7 +142,7 @@ function showDynamicIsland(text, icon='🔔'){
 }
 
 // Patch checkUnreadNotifs to also show dynamic island
-const _origCheckUnread_v2 = window.checkUnreadNotifs;
+const _origCheckUnread = window.checkUnreadNotifs;
 if(typeof _origCheckUnread === 'function'){
   window.checkUnreadNotifs = async function(){
     const prevCount = parseInt(document.getElementById('home-notif-dot')?.dataset.count || '0');
