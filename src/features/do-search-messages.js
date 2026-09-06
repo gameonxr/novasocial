@@ -20,7 +20,7 @@ window.doSearchMessages = async function doSearchMessages(cid, q) {
 
   r.innerHTML = msgs.map(x => `
     <div onclick="jumpToMessage('${x.id}')" style="padding:14px 16px;border-bottom:1px solid #111;cursor:pointer;">
-      <div style="color:#fff;font-size:14px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${x.text || '[Media]'}</div>
+      <div style="color:#fff;font-size:14px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(x.text || '[Media]')}</div>
       <div style="color:#666;font-size:11px;">${ago(x.created_at)}</div>
     </div>
   `).join('');
