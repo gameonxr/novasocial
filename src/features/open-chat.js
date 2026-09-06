@@ -87,7 +87,7 @@ window.openChat = async function openChat(cid,name,isGrp){
     callBannerHtml += '</div>';
   }
 
-  let pinBarHtml = convoInfo?.pinned_message_text ? '<div id="pin-bar" style="padding:8px 14px;background:#0A0A0A;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:8px">'+ico('star','#FF2D7A',14)+' '+convoInfo.pinned_message_text+'</div>' : '';
+  let pinBarHtml = convoInfo?.pinned_message_text ? '<div id="pin-bar" style="padding:8px 14px;background:#0A0A0A;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:8px">'+ico('star','#FF2D7A',14)+' '+esc(convoInfo.pinned_message_text)+'</div>' : ''; // XSS H8: escape pinned text from DB (plain text only — no linkify on this path)
 
   // Premium chat header
   let htmlArr = [];
