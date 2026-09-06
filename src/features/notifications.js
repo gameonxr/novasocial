@@ -167,7 +167,7 @@ async function renderNotifs(){
 
         html += `<div class="nitem" style="opacity:${opacity};background:${isUnread?'#0f0f0f':'#0a0a0a'};" ${onClick}>`;
         html += `<div style="position:relative">${av(item.sender?.avatar_url, name, 44)}<div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #000;">${notifIconSvg(item.type)}</div></div>`;
-        html += `<div style="flex:1"><div style="color:#fff;font-size:14px;line-height:1.4;"><b>${name}</b> ${txt}</div>`;
+        html += `<div style="flex:1"><div style="color:#fff;font-size:14px;line-height:1.4;"><b>${esc(name)}</b> ${txt}</div>`;
         html += `<div style="color:#666;font-size:11px;margin-top:4px;">${ago(item.created_at)}</div></div>`;
         if(isUnread) html += `<div style="width:8px;height:8px;border-radius:50%;background:#0095f6;flex-shrink:0;"></div>`;
         html += `</div>`;
@@ -181,7 +181,7 @@ async function renderNotifs(){
 
         html += `<div class="nitem" style="opacity:${opacity};background:${isUnread?'#0f0f0f':'#0a0a0a'};" onclick="notifClick('${n.type}','${n.sender_id}','${n.post_id||''}','${n.conversation_id||''}','${n.story_id||''}')">`;
         html += `<div style="position:relative">${av(n.sender?.avatar_url, n.sender?.username, 44)}<div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #000;">${notifIconSvg(n.type)}</div></div>`;
-        html += `<div style="flex:1"><div style="color:#fff;font-size:14px;line-height:1.4;"><b>${n.sender?.username || 'User'}</b> ${txt}</div>`;
+        html += `<div style="flex:1"><div style="color:#fff;font-size:14px;line-height:1.4;"><b>${esc(n.sender?.username || 'User')}</b> ${esc(txt)}</div>`;
 
         if(n.type==='follow' && !followingSet.has(n.sender_id)) {
           html += `<button onclick="event.stopPropagation();followBack('${n.sender_id}',this)" style="padding:6px 12px;border:none;border-radius:8px;background:#0095f6;color:#fff;font-weight:700;cursor:pointer;margin-top:6px;font-size:12px;">Follow Back</button>`;
