@@ -17,7 +17,7 @@ function moderateContent(text){
 }
 
 // Patch sendCmt to auto-moderate
-const _origSendCmt_v2 = window.sendCmt;
+const _origSendCmt = window.sendCmt;
 if(typeof _origSendCmt === 'function'){
   window.sendCmt = function(pid){
     const inp = document.getElementById('ci-'+pid);

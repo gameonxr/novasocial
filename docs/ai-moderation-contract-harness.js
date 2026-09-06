@@ -11,7 +11,7 @@ for (const marker of [
   "const banned = ['spam', 'scam', 'fake', 'abuse', 'hate', 'violent']",
   'return {flagged: true, reason: word}',
   'return {flagged: false}',
-  'const _origSendCmt_v2 = window.sendCmt',
+  'const _origSendCmt = window.sendCmt',
   "document.getElementById('ci-'+pid)",
   'const mod = moderateContent(inp.value)',
   "toast('⚠️ Comment flagged for: ' + mod.reason + '. Please follow community guidelines.')",
