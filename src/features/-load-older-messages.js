@@ -66,7 +66,7 @@ window._loadOlderMessages = async function _loadOlderMessages(cid, isGrp, list){
         let dateLabel = dateStr === today ? 'Today' : dateStr === yesterday ? 'Yesterday' : new Date(m.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         separator = '<div style="text-align:center;margin:10px 0;"><span style="background:#1a1a1a;color:#aaa;font-size:11px;padding:4px 12px;border-radius:8px;">'+dateLabel+'</span></div>';
       }
-      if(isSystem(m.text)) return separator + '<div style="text-align:center;padding:6px 0"><span style="background:#1a1a1a;color:#888;font-size:12px;padding:4px 12px;border-radius:12px">' + m.text + '</span></div>';
+      if(isSystem(m.text)) return separator + '<div style="text-align:center;padding:6px 0"><span style="background:#1a1a1a;color:#888;font-size:12px;padding:4px 12px;border-radius:12px">' + esc(m.text) + '</span></div>';
       let content = '';
       if (m.deleted) {
         content = '<i style="color:#888">This message was unsent</i>';
@@ -81,7 +81,7 @@ window._loadOlderMessages = async function _loadOlderMessages(cid, isGrp, list){
       } else if (m.media_type === 'video') {
         content = '<video controls src="' + m.media_url + '" style="max-width:180px;border-radius:12px"></video>';
       } else {
-        let rawText = m.text || '';
+        let rawText = esc(m.text || ''); // XSS H1b: escape BEFORE linkify/@-mention so generated anchors/spans stay intact (order matters)
         rawText = rawText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4FC3F7;text-decoration:underline;">$1</a>');
         if (window._chatMembers && rawText.includes('@')) {
           window._chatMembers.forEach(mem => {
@@ -100,12 +100,12 @@ window._loadOlderMessages = async function _loadOlderMessages(cid, isGrp, list){
       let replyContext = '';
       if (m.replied) {
         let replyText = m.replied.text || '📷 Media';
-        replyContext = '<div style="border-left:3px solid #E1306C;padding-left:8px;margin-bottom:6px;font-size:12px;color:#bbb;opacity:.9"><b style="color:#fff">'+(m.replied.profiles?.username||'User')+'</b><br>'+replyText+'</div>';
+        replyContext = '<div style="border-left:3px solid #E1306C;padding-left:8px;margin-bottom:6px;font-size:12px;color:#bbb;opacity:.9"><b style="color:#fff">'+esc(m.replied.profiles?.username||'User')+'</b><br>'+esc(replyText)+'</div>';
       }
       return separator + '<div style="display:flex;justify-content:' + (isMe?'flex-end':'flex-start') + ';gap:8px;align-items:flex-end;margin-bottom:2px">' +
         (!isMe ? '<div onclick="goToProfile(\'' + m.sender_id + '\')" style="cursor:pointer;flex-shrink:0">' + av(m.profiles?.avatar_url, m.profiles?.username, 28) + '</div>' : '') +
         '<div class="' + (isMe?'mme':'mthem') + '" data-msgid="' + m.id + '" data-sender="' + m.sender_id + '" data-text="' + encText + '" data-name="' + encName + '" data-mtype="' + encMtype + '" data-murl="' + encMurl + '" style="max-width:72%" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event)" ontouchend="swipeEnd(event)" oncontextmenu="event.preventDefault();showMsgMenuFromEl(event,this)" ondblclick="heartReact(\'' + m.id + '\')">' +
-        (isGrp && !isMe ? '<div onclick="goToProfile(\'' + m.sender_id + '\')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">' + (m.profiles?.username||'') + '</div>' : '') +
+        (isGrp && !isMe ? '<div onclick="goToProfile(\'' + m.sender_id + '\')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">' + esc(m.profiles?.username||'') + '</div>' : '') +
         replyContext +
         content +
         (reactionMap[m.id]?.length ? '<div style="margin-top:4px;font-size:13px;display:inline-flex;gap:2px;flex-wrap:wrap;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:10px;animation:reactionPop 0.18s ease">' + reactionMap[m.id].join(' ') + '</div>' : '') +
