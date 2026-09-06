@@ -50,8 +50,8 @@ async function openComments(pid){
         return `<div style="display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d">
           <div onclick="closeModal();goToProfile('${c.user_id}')" style="cursor:pointer">${av(c.profiles?.avatar_url,c.profiles?.username,34)}</div>
           <div style="flex:1">
-            <span style="font-weight:700;font-size:13px">${c.profiles?.username} </span>
-            <span style="font-size:13px;color:#ddd">${c.text}</span>
+            <span style="font-weight:700;font-size:13px">${esc(c.profiles?.username)} </span>
+            <span style="font-size:13px;color:#ddd">${esc(c.text)}</span>
             <div style="color:#444;font-size:11px;margin-top:3px">${ago(c.created_at)}</div>
           </div>
           <div onclick="toggleCommentLike('${c.id}', this)" data-liked="${isLiked}" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
