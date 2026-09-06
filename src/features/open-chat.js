@@ -99,7 +99,7 @@ window.openChat = async function openChat(cid,name,isGrp){
   // Avatar + Name (clickable)
   htmlArr.push('<div onclick="'+headerClick+'" style="cursor:pointer;display:flex;align-items:center;gap:10px;flex:1;min-width:0">');
   htmlArr.push(headerAv);
-  htmlArr.push('<div style="min-width:0"><div style="font-weight:700;font-size:15px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+gcName+'</div>'+subText+'</div>');
+  htmlArr.push('<div style="min-width:0"><div style="font-weight:700;font-size:15px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(gcName)+'</div>'+subText+'</div>');
   htmlArr.push('</div>');
   // Action icons
   htmlArr.push('<div onclick="searchMessages(\''+cid+'\')" style="width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.25s;flex-shrink:0">'+ico('search','#fff',18)+'</div>');
