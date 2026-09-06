@@ -169,7 +169,7 @@ window._refreshDmsInPlace = async function _refreshDmsInPlace() {
         const unreadBadge = unread > 0
           ? '<div style="min-width:20px;height:20px;border-radius:10px;background:#E1306C;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 6px;">'+unreadText+'</div>'
           : '';
-        const itemHtml = '<div class="clist" data-cid="'+c.id+'" onclick="openChat(\''+c.id+'\',\''+safeName+'\','+c.is_group+')">'+avatarHtml+'<div style="flex:1;overflow:hidden"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700;font-size:15px">'+name+'</span><div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+unreadBadge+'<span style="color:#444;font-size:11px">'+timeAgo+'</span></div></div><div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lastMsg+'</div></div></div>';
+        const itemHtml = '<div class="clist" data-cid="'+c.id+'" onclick="openChat(\''+c.id+'\',\''+safeName+'\','+c.is_group+')">'+avatarHtml+'<div style="flex:1;overflow:hidden"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700;font-size:15px">'+esc(name)+'</span><div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+unreadBadge+'<span style="color:#444;font-size:11px">'+timeAgo+'</span></div></div><div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(lastMsg)+'</div></div></div>';
         newConvosToPrepend.push(itemHtml);
         updatesMade = true;
       }
