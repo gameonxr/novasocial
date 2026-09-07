@@ -124,10 +124,10 @@ function postCard(p,liked,saved,reaction){
       ${av(p.profiles?.avatar_url,p.profiles?.username,40,true,online)}
       <div>
         <div style="display:flex;align-items:center;gap:5px">
-          <span style="font-weight:700;font-size:14px">${p.profiles?.username||''}</span>
+          <span style="font-weight:700;font-size:14px">${esc(p.profiles?.username||'')}</span>
           ${p.profiles?.is_verified?ico('verified','',14):''}
         </div>
-        ${p.location?`<div style="color:#777;font-size:11px">${p.location}</div>`:online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
+        ${p.location?`<div style="color:#777;font-size:11px">${esc(p.location)}</div>`:online?`<div style="color:#3db83d;font-size:11px">Active now</div>`:''}
       </div>
     </div>
     <div style="display:flex;gap:14px;align-items:center">

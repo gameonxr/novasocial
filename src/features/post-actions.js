@@ -329,8 +329,8 @@ async function openShareSheet(pid){
       <div style="display:flex;gap:14px;align-items:center;padding:14px;background:#0f0f0f;border-radius:14px;margin-bottom:18px;border:1px solid #1a1a1a;">
         <div style="width:64px;height:64px;border-radius:12px;overflow:hidden;background:#111;flex-shrink:0">${thumbHtml}</div>
         <div style="flex:1;min-width:0">
-          <div style="font-weight:700;font-size:14px;margin-bottom:4px">@${p.profiles?.username||'user'}</div>
-          <div style="color:#888;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(p.caption||'No caption').substring(0,60)}${(p.caption||'').length>60?'...':''}</div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:4px">@${esc(p.profiles?.username||'user')}</div>
+          <div style="color:#888;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc((p.caption||'No caption').substring(0,60))}${(p.caption||'').length>60?'...':''}</div>
         </div>
       </div>
 
