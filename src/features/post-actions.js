@@ -125,7 +125,7 @@ async function sharePostViaDM(pid) {
           const avHtml = c.is_group ? `<div style="width:40px;height:40px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;">👥</div>` : av(otherMap[c.id]?.avatar_url, otherMap[c.id]?.username, 40);
           return `<div onclick="sendSharedPostToChat('${c.id}', '${name.replace(/'/g, "\\'")}', ${c.is_group}, '${pid}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer;">
             ${avHtml}
-            <div style="font-weight:600;font-size:14px;">${name}</div>
+            <div style="font-weight:600;font-size:14px;">${esc(name)}</div>
           </div>`;
         }).join('')}
 

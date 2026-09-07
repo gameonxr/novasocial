@@ -18,7 +18,7 @@ window.showGroupInfo = async function showGroupInfo(cid){
   const isMuted = myMem?.muted_until && new Date(myMem.muted_until) > new Date();
   const chatTheme = ci?.theme || 'default';
 
-  const m = modal(`${gcName} · Info`);
+  const m = modal(`${esc(gcName)} · Info`); // XSS H9: escape group name in modal title (fresh-modal path renders title via innerHTML)
   const body = m.querySelector('#mbody');
   const inviteLink = `${window.location.origin}/?gc=${cid}`;
 
@@ -37,7 +37,7 @@ window.showGroupInfo = async function showGroupInfo(cid){
   if(isAdmin) {
     html += '<input id="gc-rename" value="'+gcName.replace(/"/g,'&quot;')+'" style="background:transparent;border:none;color:#fff;font-size:20px;font-weight:800;text-align:center;outline:none;width:220px" onblur="saveGCName(\''+cid+'\',this.value)">';
   } else {
-    html += '<div style="font-size:20px;font-weight:800">'+gcName+'</div>';
+    html += '<div style="font-size:20px;font-weight:800">'+esc(gcName)+'</div>'; // XSS H9: escape group name display
   }
   html += '<div style="color:#666;font-size:13px">Group · '+members.length+' members</div></div>';
 
@@ -104,7 +104,7 @@ window.showGroupInfo = async function showGroupInfo(cid){
     html += '<div id="member-'+mem.user_id+'" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d">';
     html += '<div onclick="closeModal();goToProfile(\''+mem.user_id+'\')" style="cursor:pointer;display:flex;align-items:center;gap:12px;flex:1">';
     html += av(mem.profiles?.avatar_url, mem.profiles?.username, 44, false, isOnline(mem.profiles?.last_seen));
-    html += '<div><div style="font-weight:600;font-size:14px">'+(mem.profiles?.username||'User')+(isMe?' (You)':'')+'</div>';
+    html += '<div><div style="font-weight:600;font-size:14px">'+esc(mem.profiles?.username||'User')+(isMe?' (You)':'')+'</div>'; // XSS H9: escape member display name
     html += '<div class="member-role">'; // Class added for instant update
     if(mem.is_admin) html += '<div style="color:#E1306C;font-size:11px;font-weight:700;display:flex;align-items:center;gap:3px">'+ico('star','#E1306C',10)+'Admin</div>';
     else html += '<div style="color:#555;font-size:11px">Member</div>';
