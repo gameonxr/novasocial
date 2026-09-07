@@ -24,6 +24,7 @@
 | XSS-H12 | Home story-rail username (home.js:136) | FIXED (dbf00f9) |
 | XSS-H13 | Story viewer header username + reply placeholder (render-sv.js:30/:195) | FIXED (H13 commit) |
 | XSS-H15 | Note viewer author username + full note text (note-viewer-owners.js:28/:32) | FIXED (H15 commit) |
+| XSS-H16 | Notes Bar text pills + usernames + own PLUS-slot pill + other-profile note pill (notes-bar.js:76/:86/:90 + profile-view.js:389) | FIXED (H16 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -31,20 +32,20 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H16 | Notes bar text + usernames raw | OPEN |
 | XSS-H17 | Note reactors username + typed emoji raw (targeted XSS) | OPEN |
 | XSS-H18 | Profile/follow-list/story-viewers full_name+username raw | OPEN |
 | XSS-H19 | Nova AI panel raw API response | OPEN |
-| XSS-M1 | media_url/avatar_url in src/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site added) | OPEN |
+| XSS-M1 | media_url/avatar_url in src/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site; profile-view :392 viewAvatarFullscreen onclick — H16 site) | OPEN |
 | XSS-M2 | profile-view bio partial escape | OPEN |
 | XSS-M3 | Reaction badge stored emoji raw | OPEN |
-| XSS-M4 | Note music metadata + JSON onclick | OPEN |
+| XSS-M4 | Note music metadata + JSON onclick (+ music search rows :13-25 — H16 site) | OPEN |
 | XSS-M5 | Admin approvals esc'd-username-in-onclick decode-back | OPEN |
-| XSS-M6 | Own-profile names + linkify(bio) | OPEN |
-| XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118, story-viewer :30) | OPEN |
+| XSS-M6 | Own-profile names + linkify(bio) (+ own note pill :75 — H16 site, self-XSS) | OPEN |
+| XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118, story-viewer :30, notes surfaces — H16 sites) | OPEN |
 | XSS-C2 | nova-ai own-msg partial escape | folded into H19 |
 | XSS-C3 | notes-bar own reaction badge (self-XSS) | OPEN (accepted low) |
 | XSS-C5 | isSystem() styling spoof | OPEN (cosmetic) |
+| XSS-C9 | notes.js personal localStorage notes raw render (self-XSS only — H16-discovered) | OPEN (accepted low) |
 | XSS-10.5 | esc() insufficient in JS-string-attr contexts (class) | OPEN |
 | H9-D1 | JS-string/inline onclick class (openChat/initiateCall/sendSharedPostToChat/addToGroup/insertMention/shareText…) | OPEN (dedicated hardening task) |
 | H9-D2 | Username-rendering surface class (mentions/call-UI/share-pickers/GC-add-member) | OPEN |
@@ -127,3 +128,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 - 2026-09-07 (H12): XSS-H12 → FIXED (home.js:136 esc); XSS-M1 site addition (home.js:133 tray avatar img src); SEC-001 site additions (home.js:430/:442 feed error paths); "C7" dangling reference clarified → XSS-C1 (no row deleted/merged); no new issues, no new category files.
 - 2026-09-07 (H13): XSS-H13 → FIXED (render-sv.js:30/:195 esc — header username + reply placeholder); NEW issue SEC-002 (story overlay poll content raw — sv-append-overlays.js:44/:51, HIGH, OPEN, future task); XSS-C1 site addition (render-sv.js:30 av() call); no category files created.
 - 2026-09-07 (H15): XSS-H15 → FIXED (note-viewer-owners.js:28/:32 esc — author username + full note text; ledger line refs clarified :29/:33 → actual :28/:32, 1-line counting drift, no content change); branch2-only-safety-contract-harness allowlist admission for note-viewer-owners.js; no new issues, no site additions, no category files created.
+- 2026-09-08 (H16): XSS-H16 → FIXED (notes-bar.js:76/:86/:90 esc — own PLUS-slot pill + others' pill + others' username; profile-view.js:389 esc — other-profile active-note pill text branch, XSS-H16 family site per dedupe rule #5); NEW issue XSS-C9 (notes.js:57-58 personal localStorage notes self-XSS, LOW, accepted low); site additions — XSS-M1 (profile-view.js:392 viewAvatarFullscreen onclick), XSS-M4 (search-music-for-note.js:13-25), XSS-M6 (profile.js:75 own-profile note pill), XSS-C1 (notes surfaces), XSS-C3 line-ref clarified :84 → actual :88; no category files created; TRACK A audit conclusion recorded (no href sink in Notes Bar; pre-fix breakout minted executable <a href=javascript:> elements — fixed by same esc sinks).
