@@ -38,12 +38,31 @@ function sha(text) {
   return crypto.createHash('sha256').update(text).digest('hex');
 }
 
+// ── H11 authorized security escape (2026-09-07): the renderReels owner now escapes
+// the reel username and caption at their two HTML-text display sinks (the only
+// authorized deviation from the immutable origin owner). The helper below reverts
+// EXACTLY those two substitutions — with occurrence-count assertions — so any
+// OTHER drift from the immutable origin still fails every parity check below.
+const h11AuthorizedEscapes = [
+  ["${esc(r.profiles?.username||'')}", "${r.profiles?.username||''}"],
+  ['${esc(r.caption)}', '${r.caption}'],
+];
+function authorizedH11Revert(text) {
+  let reverted = text;
+  for (const [escaped, raw] of h11AuthorizedEscapes) {
+    const occurrences = reverted.split(escaped).length - 1;
+    assert.strictEqual(occurrences, 1, `H11 authorized escape must occur exactly once: ${escaped}`);
+    reverted = reverted.split(escaped).join(raw);
+  }
+  return reverted;
+}
+
 const currentOwner = extractCurrentOwner(currentHtml);
 const originOwner = extractOwner(originHtml);
 const normalizedCurrentOwner = normalize(currentOwner);
 const normalizedOriginOwner = normalize(originOwner);
 const ownerHash = sha(normalizedOriginOwner);
-assert.strictEqual(normalizedCurrentOwner, normalizedOriginOwner, 'Branch2 renderReels owner must retain exact immutable-origin parity');
+assert.strictEqual(authorizedH11Revert(normalizedCurrentOwner), normalizedOriginOwner, 'Branch2 renderReels owner must retain exact immutable-origin parity (modulo the two authorized H11 security escapes)');
 assert(currentHtml.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'renderer must use the approved classic external linkage');
 assert(fs.existsSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js')), 'external renderer owner module must exist');
 assert(!currentHtml.includes('async function renderReels(){'), 'renderer inline declaration must be removed after split');
@@ -221,6 +240,7 @@ function makeFeedSandbox(ownerSource, mode) {
     likeIconHTML() { return '<span>like</span>'; },
     fmt(value) { return String(value); },
     av() { return '<span>avatar</span>'; },
+    esc(value) { return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); },
     Date: { now: () => clock.now },
     requestAnimationFrame(callback) { timers.push({ due: clock.now + 16, callback, kind: 'raf' }); },
     setTimeout(callback, delay) { timers.push({ due: clock.now + delay, callback, kind: 'timer' }); return timers.length; },
@@ -287,6 +307,7 @@ async function runSimple(ownerSource, mode) {
     likeIconHTML() { return '<span>like</span>'; },
     fmt(value) { return String(value); },
     av() { return '<span>avatar</span>'; },
+    esc(value) { return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); },
     console: { log() {}, error(message) { events.push(`console.error:${message}`); } }
   };
   const fn = vm.runInNewContext(`(${ownerSource})`, context);
@@ -389,7 +410,7 @@ function runExtractionCandidateSimulation() {
   const scriptTags = candidateHtml.split('\n').filter(line => line.startsWith('<script'));
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
-  assert.strictEqual(normalize(candidateNamedOwner), normalize(originOwner), 'candidate owner body must match immutable origin');
+  assert.strictEqual(authorizedH11Revert(normalize(candidateNamedOwner)), normalize(originOwner), 'candidate owner body must match immutable origin (modulo the two authorized H11 security escapes)');
   assert.strictEqual(sha(candidateHtml), 'cbc4aced45895eade325bc13b473be49673d37c1209710ba5e7044c7fb9969bd', 'candidate HTML hash must remain pinned after the nova-ultra-patches split');
   return {
     ownerSource: candidateNamedOwner,

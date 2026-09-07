@@ -116,10 +116,10 @@ window.renderReels = async function(){
           <div style="position:absolute;left:14px;right:64px;bottom:80px;z-index:5">
             <div onclick="goToProfile('${r.user_id}')" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer">
               ${av(r.profiles?.avatar_url,r.profiles?.username,40)}
-              <span style="font-weight:700;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,0.9)">${r.profiles?.username||''}</span>
+              <span style="font-weight:700;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,0.9)">${esc(r.profiles?.username||'')}</span>
               ${r.profiles?.is_verified?ico('verified','',14):''}
             </div>
-            ${r.caption?`<div style="color:rgba(255,255,255,0.92);font-size:14px;line-height:1.5;text-shadow:0 1px 6px rgba(0,0,0,0.9)">${r.caption}</div>`:''}
+            ${r.caption?`<div style="color:rgba(255,255,255,0.92);font-size:14px;line-height:1.5;text-shadow:0 1px 6px rgba(0,0,0,0.9)">${esc(r.caption)}</div>`:''}
           </div>
           <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:5px;z-index:5">
             ${reels.map((_,j)=>`<div style="width:3px;height:${j===i?18:5}px;border-radius:3px;background:${j===i?'#fff':'rgba(255,255,255,0.3)'};transition:all 0.3s"></div>`).join('')}

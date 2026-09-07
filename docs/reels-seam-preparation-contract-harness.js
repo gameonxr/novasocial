@@ -68,7 +68,22 @@ assert.strictEqual(hash(normalize(normalizedWindowingModule)), hash(normalize(ma
 const normalizedRendererModule = rendererModule
   .replace(/^window\.renderReels = async function\(\)\{/, 'async function renderReels(){')
   .replace(/\n\};\s*$/, '\n}');
-assert.strictEqual(hash(normalize(normalizedRendererModule)), hash(normalize(mainHtml.slice(mainReelsStart, mainReelsEnd))), 'Reels external renderer owner must match origin/main exactly');
+// ── H11 authorized security escape (2026-09-07): the renderReels owner now escapes
+// the reel username and caption at their two HTML-text display sinks (the only
+// authorized deviation from origin/main). Revert EXACTLY those two substitutions —
+// with occurrence-count assertions — before the origin/main comparison, so any
+// OTHER drift from origin/main still fails this harness.
+const h11AuthorizedEscapes = [
+  ["${esc(r.profiles?.username||'')}", "${r.profiles?.username||''}"],
+  ['${esc(r.caption)}', '${r.caption}'],
+];
+let h11ParityBase = normalizedRendererModule;
+for (const [escaped, raw] of h11AuthorizedEscapes) {
+  const occurrences = h11ParityBase.split(escaped).length - 1;
+  assert.strictEqual(occurrences, 1, `H11 authorized escape must occur exactly once: ${escaped}`);
+  h11ParityBase = h11ParityBase.split(escaped).join(raw);
+}
+assert.strictEqual(hash(normalize(h11ParityBase)), hash(normalize(mainHtml.slice(mainReelsStart, mainReelsEnd))), 'Reels external renderer owner must match origin/main exactly (modulo the two authorized H11 security escapes)');
 const beforeSplitEvidence = fs.readFileSync(path.join(repo, 'docs', 'reels-parity-rollback-evidence.txt'), 'utf8');
 assert(beforeSplitEvidence.includes('OWNER_BODY_PARITY=PASS'), 'Reels before-split parity evidence must pass');
 assert(beforeSplitEvidence.includes('ROLLBACK_TARGET=509bfe91e2aa03a83d7a66c57a535007f77d37d2'), 'Reels rollback target must remain pinned');
