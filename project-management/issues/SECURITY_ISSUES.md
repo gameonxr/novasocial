@@ -42,6 +42,7 @@
 | XSS-H10 | Post-card author username + location raw; share-sheet post-preview @username + caption raw (H10 codebase audit extended scope) | posts.js, post-actions.js | posts.js:127, :130; post-actions.js:332, :333 | 6b6dbf4 |
 | XSS-H11 | Reels renderer interpolates username + caption raw (feed's formatCaption escaping NOT used on reels surface); fixed after full H11 reels-surface provenance audit (all 30 rendering-path rows audited — see section 6) | reels-renderer-owner.js | :119 (username), :122 (caption) | THIS COMMIT (H11) |
 | XSS-H12 | Home story rail renders story usernames raw; fixed after full H12 home-surface provenance audit (all story-rail rendering paths audited — see section 7). Adjacent first-letter span (:133) was already covered by XSS-C1 — the old "C7" label in this row was a dangling legacy-ledger reference (C7 never existed as its own row; no C-tier entry was deleted or merged) | home.js | :136 | THIS COMMIT (H12) |
+| XSS-H13 | Story Viewer header username rendered raw (HTML text, :30) + reply-input placeholder attribute unescaped (double-quoted attr, :195 — quote payloads break out); fixed after full H13 story-viewer provenance audit (all 7 renderSV entry paths + adjacent surfaces audited — see section 8). All entry paths (open/next/prev/next-user/prev-user/mute-toggle re-render/recursive bucket-skip) funnel through the single renderSV template — both sinks inherit one fix | render-sv.js | :30 (header username, HTML text), :195 (reply placeholder, attr) | THIS COMMIT (H13) |
 | XSS-pre-audit wraps | H3 wrap series (typing indicator, optimistic bubble, pinned legacy, feed caption attribution, story editor, search echoes) | 8 files | 9 sites | 83633df…eea3a7a |
 
 Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nullish-safe) — verified correct for HTML text + quoted-attribute contexts, preserves all languages byte-for-byte (escape-helper-contract-harness pins behavior).
@@ -50,12 +51,12 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 
 | ID | Severity | File:line | Issue | Provenance | Recommended fix | Owning task |
 |----|----------|-----------|-------|------------|-----------------|-------------|
-| XSS-H13 | MEDIUM-HIGH | render-sv.js:30, :195 | Story viewer header username raw + reply-input placeholder attr unescaped | profiles.username | esc() at :30 (text) and :195 (double-quoted attr — esc sufficient) | H13 |
 | XSS-H15 | HIGH | note-viewer-owners.js:29, :33 | Note viewer renders note author username + full note text raw | profiles.username, quick_notes.text | esc() both; allowlist admission required | H15 |
 | XSS-H16 | MEDIUM-HIGH | notes-bar.js:82, :86 | Notes bar renders others' note text (truncated 18) + usernames raw | quick_notes.text, profiles.username | esc() both; allowlist admission required | H16 |
 | XSS-H17 | HIGH | note-reactors-list-owner.js:20-21 | Reactor username + typed "emoji" raw — stored XSS executing against the note OWNER (targeted attack) | profiles.username, quick_note_reactions.emoji (arbitrary typed text) | esc() both; allowlist admission required | H17 |
 | XSS-H18 | HIGH | profile-view.js:88, 92, 156, 160, 276, 298, 302, 376; follow-list.js:33; show-story-viewers.js:44 | Profile full_name/username raw across profile view, follow lists, story viewers — widest username exposure | profiles.full_name (unvalidated anywhere), profiles.username | esc() in 3 files (follow-list needs allowlist admission) | H18 |
 | XSS-H19 | HIGH(edge) | nova-ai.js:162, :251 | AI panel renders raw API response as innerHTML (user's own msg is `<`-escaped, AI reply not) | Nova AI chat API output (prompt-shapable) | esc() at appendNovaMsg call sites; allowlist admission | H19 |
+| SEC-002 | HIGH | sv-append-overlays.js:44, :51 | Story overlay poll content (question + option text) rendered raw into innerHTML — story-author-controlled stored content executing against every viewer who opens the story (overlay authoring-path constraints NOT verified; DB-write bypass = arbitrary HTML; H13-audit discovery). Mention/link/text overlay branches use textContent (safe). CSS-context residuals: ov.color/fontSize/fontWeight/textShadow into cssText (breakage class, not execution) + ov.url into window.open (URL class) | stories.overlay_data (JSON — poll question/options authored by the story owner via story-editor poll UI) | esc() at :44 (question) and :51 (option text); residuals stay deferred same-row | future H-task (owner assigns; suggest after H19) |
 
 ### 1.3 OPEN — MEDIUM findings (M-tier, separate cycle)
 
@@ -72,7 +73,7 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 
 | ID | Severity | File:line | Issue | Status |
 |----|----------|-----------|-------|--------|
-| XSS-C1 | LOW | utils.js:326-332 av(); posts.js:124; home.js:133; **reels-renderer-owner.js:118 (H11-noted site)**; (all av() callers) | av() first letter interpolated raw into text + onerror JS string (leading `\` = syntax breakage, not execution). ALSO: av() computes `safeName` (:329) but never uses it (dead variable, hygiene) | OPEN — av() review task (deferred issue #4) |
+| XSS-C1 | LOW | utils.js:326-332 av(); posts.js:124; home.js:133; **reels-renderer-owner.js:118 (H11-noted site)**; **render-sv.js:30 (H13-noted site — story viewer header avatar)**; (all av() callers) | av() first letter interpolated raw into text + onerror JS string (leading `\` = syntax breakage, not execution). ALSO: av() computes `safeName` (:329) but never uses it (dead variable, hygiene) | OPEN — av() review task (deferred issue #4) |
 | XSS-C2 | LOW | nova-ai.js:219 | Own message `<`-only partial escape | folded into H19 |
 | XSS-C3 | LOW | notes-bar.js:84 | Own reaction emoji badge — self-XSS only | OPEN (accepted low) |
 | XSS-C4 | — | show-group-info.js:38 | Rename input `value="…"` quote-escaped — double-quoted attr unbreakable | SAFE (verified) |
@@ -227,7 +228,45 @@ Vulnerability proven first (pre-fix disk = parent d7becc7): all 5 owner-specifie
 
 ---
 
-## 8. Task report hooks (per owner instruction)
+## 8. H13 — Story Viewer header username + reply placeholder XSS (this task)
+
+### 8.1 Provenance audit — all Story Viewer rendering paths (2026-09-07, BEFORE fix application)
+
+Data flow: `stories` table joined `profiles!stories_user_id_fkey(username,avatar_url)` at 4 fetch sites (home.js:76 main story rail · notifications.js:252 story-reply/reaction/mention deep-link · submit-story.js:181 post-publish · publish-story-editor.js:304 editor-publish) → `svData` (no transformation of username) → open-sv.js:11-15 per-user grouping → `svBuckets[].username` → renderSV template → `sv-hdr` innerHTML (:34 assignment, header) / `sv-reply-box` innerHTML (:195, reply input — rendered only when bucket.user_id !== ME.id, i.e. others' stories). Context classification per value: username = HTML text (:30) + double-quoted attribute (:195 — a quote in the payload breaks the attribute; a leading `"` fully breaks out and injects an executable element after the input tag); avatar_url = av() internal (C1 class); user_id / story.id = UUIDs in JS-string onclick args (DB-generated — safe by construction, established codebase treatment); created_at = ago() relative time; viewers count = numeric.
+
+All 7 renderSV entry paths funnel through the single template (one construction site per sink — every path inherits both fixes): open-sv.js:28 (tray open) · next-sv.js:13 / prev-sv.js:13 (story nav) · next-user-sv.js:11 / prev-user-sv.js:11 (bucket nav) · toggle-sv-mute-owner.js:6 (mute re-render) · render-sv.js:13 (recursive bucket-skip).
+
+| # | Rendering path | File:line | Value(s) | Context | Verdict |
+|---|---------------|-----------|---------|---------|---------|
+| 1 | Header username div | render-sv.js:30 → :34 sv-hdr innerHTML | bucket.username | HTML text | **VULNERABLE — XSS-H13 sink #1 (fixed in-task)** |
+| 2 | Reply-input placeholder attr | render-sv.js:195 sv-reply-box innerHTML | bucket.username | double-quoted attribute (others' stories only) | **VULNERABLE — XSS-H13 sink #2 (fixed in-task)** |
+| 3 | Header avatar | render-sv.js:30 via av() | bucket.avatar_url + username first letter | av() internal (img src + onerror JS-string + 1-char text) | DEFERRED — XSS-C1 class (site added to C1 row) |
+| 4 | goToProfile / showStoryActions / reactToStory onclicks | render-sv.js:30/:32/:195 | bucket.user_id, story.id | JS-string attrs | UUID (DB-generated) — safe by construction |
+| 5 | ago() timestamp | render-sv.js:30 | story.created_at | relative-time text | safe |
+| 6 | Viewers-count branch (own stories) | render-sv.js:191-193 | story.id + numeric count | JS-string attr + numeric text | safe (no username render — verified C11-C14) |
+| 7 | Reply Enter handler / analytics upsert | render-sv.js:198-204/:209-211 | replyInp.value, ME.id | function args, not markup | safe |
+| 8 | Progress bars / mute icon / nav zones / media loader | render-sv.js:20-38/:186 | numeric widths, ico() constants, static template | — | safe |
+| 9 | Story viewers list | show-story-viewers.js:44 | u.username | HTML text | NOT H13 — XSS-H18 (separate issue/task) |
+| 10 | Story actions modal | show-story-actions.js | storyId only + constants | — | safe (no username render) |
+| 11 | Story overlay content (polls) | sv-append-overlays.js:44/:51 | overlay_data question/options | HTML text | NEW finding SEC-002 (recorded, deferred to future task) |
+| 12 | Story overlay mention/link/text branches | sv-append-overlays.js:83/:90/:98 | ov.text | textContent assignment | safe (no HTML parsing) |
+| 13 | svData re-population paths (refresh/re-entry) | home.js:83 / notifications.js:256 / submit-story.js:182 / publish-story-editor.js:305 | same svBuckets → same template | same sinks | covered by the fix |
+
+### 8.2 H13 fix
+
+`render-sv.js` (2 lines, esc() at the two audited sinks, esc semantics only, no other change):
+- `:30` header username div: `+(bucket.username||'')+` → `+esc(bucket.username||'')+`
+- `:195` reply-input placeholder: `placeholder="Reply to '+(bucket.username||'')+'..."` → `placeholder="Reply to '+esc(bucket.username||'')+'..."` (esc sufficient for the double-quoted attribute context — `"` → `&quot;` prevents the breakout)
+
+esc() available: utils.js (index.html:211) loads before render-sv.js. **No harness changes required**: render-sv.js was already admitted to the branch2-only-safety-contract allowlist; the render-sv-referencing harnesses (toggle-sv-mute preparation/production-split, stories-seam preparation) all pass unchanged post-fix; no byte-parity harness pins the render-sv.js username/placeholder markup. Suite-tooling maintenance OUTSIDE the repo (scripts/, H9-H12 precedent): H11 focused E4 made evolution-tolerant (the M1 index row gains site additions from later tasks — the exact-string match is replaced by row-exists + OPEN + reels-content checks); H12 focused L-section re-anchored to the fixed hash d7becc7 with a worktree-state branch (original pre-commit H12 state OR committed-and-intact with later tasks free to dirty other files) — both re-ran green (H11 277/0 + NC 26/26; H12 176/0).
+
+### 8.3 H13 verification summary
+
+Vulnerability proven first (pre-fix disk = parent dbf00f9): all 5 owner-specified payloads rendered raw + executable at the :30 header div (element-level proof, 30/0), and raw/unescaped at the :195 placeholder with full attribute breakout for quote payloads — a leading `"` breaks the double-quoted attribute and injects an executable `<img onerror>` element into the reply box (browser-accurate parse-tree evidence). Post-fix focused suite 249 PASS / 0 FAIL (S-A header payload neutralization ×5; S-B placeholder payload neutralization ×5 incl. parse-level IMG/SCRIPT absence + intact parsed attribute; S-C combined/nullish/branch edges incl. own-story viewers-count branch + recursive bucket-skip; S-D 11-language multilingual byte-exact on both sinks; S-E adjacent-sink byte-identity — av() C1, ago, bars, nav, media, video mute button, own-story branch; S-F Story Viewer functional regression F1-F24 incl. progress bars, header nav, gestures/swipes, double-tap reaction, media lifecycle, reply Enter → sendStoryReply + REAL toast, analytics upsert, count query shape, re-render replacement, stopSVPlayback timer clear, mute-toggle re-render, zero listeners/channels; S-K esc contract; S-L hygiene incl. exactly-2-esc-wrap diff bound). Negative control vs parent dbf00f9: pre-fix VULNERABLE at both sinks (raw + executable + attr broken), post-fix esc-exact contrast, benign multilingual byte-identical pre/post. Full gates: prior H suites all green (H1 121/0, H1b 78/0, H4 114/0, H5 203/0, H6 84/0, H7 91/0, H8 154/154, H9 159/0, H10 247/0 + NC 29/29, H11 277/0 + NC 26/26, H12 176/0, H14 63/0); 322 regression 317/5 byte-identical to baseline (all 5 = owner main-pin family); app-load 10/10; listener/realtime harnesses 9/9; diff adds zero listeners/subscriptions.
+
+---
+
+## 9. Task report hooks (per owner instruction)
 
 At the end of every H task, report: historical issues imported/updated · issues fixed in this task · issues remaining open · newly discovered issues · ledger changes.
 
@@ -242,3 +281,9 @@ At the end of every H task, report: historical issues imported/updated · issues
 - Fixed in this task: XSS-H12 (home.js:136) — 1 sink, 1 source file, 1 insertion/1 deletion.
 - Newly discovered: site additions only — XSS-M1 gains home.js:133 (tray avatar_url img src); SEC-001 gains home.js:430/:442 (Home feed error-path e.message). C7 dangling reference clarified → XSS-C1 (no row deleted/merged).
 - Remaining open: 6 HIGH (H13, H15-H19), 6 MEDIUM (M1-M6), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (now reels + home error paths), cosmetics (H9-D5 BUG, H10-15 UI_UX).
+
+**H13 report block:**
+- Historical imported: none new (issue system live since H11; all history preserved).
+- Fixed in this task: XSS-H13 (render-sv.js:30/:195) — 2 sinks, 1 source file, 2 insertions/2 deletions.
+- Newly discovered: SEC-002 (story overlay poll question/options rendered raw to all story viewers — sv-append-overlays.js:44/:51, HIGH, OPEN, deferred to a future task per ISSUE_RULES #8); site addition to XSS-C1 (render-sv.js:30 av() call — story viewer header avatar).
+- Remaining open: 5 HIGH (H15-H19), 6 MEDIUM (M1-M6), SEC-002 (new, HIGH), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (reels + home error paths), cosmetics (H9-D5 BUG, H10-15 UI_UX).

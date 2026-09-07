@@ -21,7 +21,8 @@
 | XSS-H9 | GC Info + share-sheet group names / member list | FIXED (e30d6ba) |
 | XSS-H10 | Post-card username/location + share-sheet post preview | FIXED (6b6dbf4) |
 | XSS-H11 | Reels username + caption (reels-renderer-owner.js:119/:122) | FIXED (d7becc7) |
-| XSS-H12 | Home story-rail username (home.js:136) | FIXED (H12 commit) |
+| XSS-H12 | Home story-rail username (home.js:136) | FIXED (dbf00f9) |
+| XSS-H13 | Story viewer header username + reply placeholder (render-sv.js:30/:195) | FIXED (H13 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -29,7 +30,6 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H13 | Story viewer header username + placeholder attr | OPEN |
 | XSS-H15 | Note viewer username + note text raw | OPEN |
 | XSS-H16 | Notes bar text + usernames raw | OPEN |
 | XSS-H17 | Note reactors username + typed emoji raw (targeted XSS) | OPEN |
@@ -41,7 +41,7 @@
 | XSS-M4 | Note music metadata + JSON onclick | OPEN |
 | XSS-M5 | Admin approvals esc'd-username-in-onclick decode-back | OPEN |
 | XSS-M6 | Own-profile names + linkify(bio) | OPEN |
-| XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118) | OPEN |
+| XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118, story-viewer :30) | OPEN |
 | XSS-C2 | nova-ai own-msg partial escape | folded into H19 |
 | XSS-C3 | notes-bar own reaction badge (self-XSS) | OPEN (accepted low) |
 | XSS-C5 | isSystem() styling spoof | OPEN (cosmetic) |
@@ -63,7 +63,8 @@
 | H10-13 | admin deleted-posts @username raw | OPEN |
 | H10-1 | share-sheet post-preview @username | FIXED (6b6dbf4) |
 | H10-2 | share-sheet post-preview caption | FIXED (6b6dbf4) |
-| SEC-001 | reels error-path e.message raw render (H11-discovered, defense-in-depth) | OPEN |
+| SEC-001 | reels error-path e.message raw render (H11-discovered, defense-in-depth; home feed error paths H12-added) | OPEN |
+| SEC-002 | story overlay poll question/options raw render to all story viewers (sv-append-overlays.js:44/:51 — H13-discovered) | OPEN |
 | XSS-C4 | rename input quote-escaped attr | SAFE |
 | XSS-C6 | reactionMap[...] claimed bug | SAFE (non-issue) |
 | XSS-C8 | settings share-link constant | SAFE |
@@ -124,3 +125,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 
 - 2026-09-07 (H11): index created with full historical import (migration from docs/SECURITY_DEFERRED_ISSUES.md); XSS-H11 → FIXED; SEC-001, HYG-001 added; XSS-M1/XSS-C1 site additions recorded.
 - 2026-09-07 (H12): XSS-H12 → FIXED (home.js:136 esc); XSS-M1 site addition (home.js:133 tray avatar img src); SEC-001 site additions (home.js:430/:442 feed error paths); "C7" dangling reference clarified → XSS-C1 (no row deleted/merged); no new issues, no new category files.
+- 2026-09-07 (H13): XSS-H13 → FIXED (render-sv.js:30/:195 esc — header username + reply placeholder); NEW issue SEC-002 (story overlay poll content raw — sv-append-overlays.js:44/:51, HIGH, OPEN, future task); XSS-C1 site addition (render-sv.js:30 av() call); no category files created.

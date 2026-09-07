@@ -27,7 +27,7 @@ window.renderSV = function renderSV(){
   // 2. Header (With Mute Button for Video)
   let isMuted = window._svMuted || false;
   let muteBtnHtml = story.media_type === 'video' ? '<div onclick="toggleSVMute()" style="cursor:pointer;padding:4px;margin-right:10px;">'+(isMuted ? ico('mute','#fff',18) : ico('unmute','#fff',18))+'</div>' : '';
-  let hdrHtml = '<div onclick="closeSV();goToProfile(\''+bucket.user_id+'\')" style="display:flex;align-items:center;gap:10px;cursor:pointer;flex:1">'+av(bucket.avatar_url, bucket.username, 32)+'<div><div style="color:#fff;font-weight:700;font-size:14px">'+(bucket.username||'')+'</div><div style="color:rgba(255,255,255,0.6);font-size:11px">'+ago(story.created_at)+'</div></div></div>';
+  let hdrHtml = '<div onclick="closeSV();goToProfile(\''+bucket.user_id+'\')" style="display:flex;align-items:center;gap:10px;cursor:pointer;flex:1">'+av(bucket.avatar_url, bucket.username, 32)+'<div><div style="color:#fff;font-weight:700;font-size:14px">'+esc(bucket.username||'')+'</div><div style="color:rgba(255,255,255,0.6);font-size:11px">'+ago(story.created_at)+'</div></div></div>';
   hdrHtml += muteBtnHtml;
   hdrHtml += '<div onclick="showStoryActions(\''+story.id+'\', \''+bucket.user_id+'\')" style="cursor:pointer;padding:4px">'+ico('more','#fff')+'</div>';
   hdrHtml += '<div onclick="closeSV()" style="cursor:pointer;padding:4px;margin-left:10px">'+ico('close','#fff')+'</div>';
@@ -192,7 +192,7 @@ window.renderSV = function renderSV(){
       replyDiv.innerHTML = '<div onclick="showStoryViewers(\''+story.id+'\')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:12px 16px;color:#fff;font-size:14px;cursor:pointer;backdrop-filter:blur(10px)">👁️ Viewed by '+(count || 0)+' people</div>';
     });
   } else {
-    replyDiv.innerHTML = '<div style="flex:1;display:flex;align-items:center;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:4px 6px 4px 16px;backdrop-filter:blur(10px)"><input id="sv-reply" placeholder="Reply to '+(bucket.username||'')+'..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px;height:36px"><div onclick="toast(\'Stickers\')" style="cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:20px">😊</div></div><div onclick="reactToStory(\''+bucket.user_id+'\', \'❤️\', \''+story.id+'\')" style="cursor:pointer;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px">❤️</div>';
+    replyDiv.innerHTML = '<div style="flex:1;display:flex;align-items:center;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:4px 6px 4px 16px;backdrop-filter:blur(10px)"><input id="sv-reply" placeholder="Reply to '+esc(bucket.username||'')+'..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px;height:36px"><div onclick="toast(\'Stickers\')" style="cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:20px">😊</div></div><div onclick="reactToStory(\''+bucket.user_id+'\', \'❤️\', \''+story.id+'\')" style="cursor:pointer;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px">❤️</div>';
     const replyInp = document.getElementById('sv-reply');
     if(replyInp) {
       replyInp.onkeydown = (e) => {
