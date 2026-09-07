@@ -41,6 +41,7 @@
 | XSS-H14 | In-chat search results message text raw | do-search-messages.js | :23 | d5cee8c |
 | XSS-H10 | Post-card author username + location raw; share-sheet post-preview @username + caption raw (H10 codebase audit extended scope) | posts.js, post-actions.js | posts.js:127, :130; post-actions.js:332, :333 | 6b6dbf4 |
 | XSS-H11 | Reels renderer interpolates username + caption raw (feed's formatCaption escaping NOT used on reels surface); fixed after full H11 reels-surface provenance audit (all 30 rendering-path rows audited — see section 6) | reels-renderer-owner.js | :119 (username), :122 (caption) | THIS COMMIT (H11) |
+| XSS-H12 | Home story rail renders story usernames raw; fixed after full H12 home-surface provenance audit (all story-rail rendering paths audited — see section 7). Adjacent first-letter span (:133) was already covered by XSS-C1 — the old "C7" label in this row was a dangling legacy-ledger reference (C7 never existed as its own row; no C-tier entry was deleted or merged) | home.js | :136 | THIS COMMIT (H12) |
 | XSS-pre-audit wraps | H3 wrap series (typing indicator, optimistic bubble, pinned legacy, feed caption attribution, story editor, search echoes) | 8 files | 9 sites | 83633df…eea3a7a |
 
 Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nullish-safe) — verified correct for HTML text + quoted-attribute contexts, preserves all languages byte-for-byte (escape-helper-contract-harness pins behavior).
@@ -49,7 +50,6 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 
 | ID | Severity | File:line | Issue | Provenance | Recommended fix | Owning task |
 |----|----------|-----------|-------|------------|-----------------|-------------|
-| XSS-H12 | HIGH | home.js:136 | Home story rail renders story usernames raw (adjacent first-letter span = C7) | profiles.username via stories join | esc() at :136 | H12 |
 | XSS-H13 | MEDIUM-HIGH | render-sv.js:30, :195 | Story viewer header username raw + reply-input placeholder attr unescaped | profiles.username | esc() at :30 (text) and :195 (double-quoted attr — esc sufficient) | H13 |
 | XSS-H15 | HIGH | note-viewer-owners.js:29, :33 | Note viewer renders note author username + full note text raw | profiles.username, quick_notes.text | esc() both; allowlist admission required | H15 |
 | XSS-H16 | MEDIUM-HIGH | notes-bar.js:82, :86 | Notes bar renders others' note text (truncated 18) + usernames raw | quick_notes.text, profiles.username | esc() both; allowlist admission required | H16 |
@@ -61,7 +61,7 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 
 | ID | Severity | File:line | Issue | Recommended fix |
 |----|----------|-----------|-------|-----------------|
-| XSS-M1 | MEDIUM | load-msgs.js:112, 114, 116, 118; posts.js:134, :140-141, :151; post-actions.js:322-323, :363 (H10-discovered sites); **reels-renderer-owner.js:92 (data-media-url/poster/src attrs) + reels-video-windowing.js:21 (src restore) + profile.js:153/:157, profile-view.js:443/:501/:506 (grid img src) (H11-discovered sites, same class)** | media_url interpolated into src attributes AND onclick JS-strings (downloadMedia/viewChatImage) — write path does not constrain media_url; DB-write bypass = attribute/JS-string breakout | attr-safe esc for src + encodeURIComponent data-attr pattern for onclick args |
+| XSS-M1 | MEDIUM | load-msgs.js:112, 114, 116, 118; posts.js:134, :140-141, :151; post-actions.js:322-323, :363 (H10-discovered sites); **reels-renderer-owner.js:92 (data-media-url/poster/src attrs) + reels-video-windowing.js:21 (src restore) + profile.js:153/:157, profile-view.js:443/:501/:506 (grid img src) (H11-discovered sites, same class)**; home.js:133 (story-tray avatar `<img src="${profiles.avatar_url}">` — avatar_url, URL-attr context) (H12-discovered site, same class) | media_url/avatar_url interpolated into src attributes AND onclick JS-strings (downloadMedia/viewChatImage) — write path does not constrain media_url/avatar_url; DB-write bypass = attribute/JS-string breakout | attr-safe esc for src + encodeURIComponent data-attr pattern for onclick args |
 | XSS-M2 | MEDIUM | profile-view.js:135 | Bio uses `<`-only partial escape (safeBio) | replace with esc() — display-identical |
 | XSS-M3 | MEDIUM | -update-message-reaction-in-place.js:14 | Reaction badge renders stored emoji raw (join → insertAdjacentHTML) | esc each emoji |
 | XSS-M4 | MEDIUM | note-viewer-owners.js:38-39 | Note music metadata raw + JSON.stringify URL inside single-quoted onclick | esc title/artist; data-attr for JSON arg |
@@ -80,7 +80,7 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 | XSS-C6 | — | load-msgs.js:153 | Audit claimed reactionMap.id] bug — byte-verified the line is actually reactionMap[m.id] | SAFE (non-issue, verified H1 task) |
 | XSS-C8 | — | settings.js:627-628 | Share-link constant, app-origin | SAFE |
 | XSS-10.5 | CLASS | (see dedicated JS-string section 4) | esc() insufficient in JS-string-attribute contexts — entity decode-back breakout | OPEN — dedicated hardening task |
-| SEC-001 | LOW | reels-renderer-owner.js:324 | Reels error fallback renders `e.message` raw into innerHTML (Supabase/JS error text — not user-stored; defense-in-depth concern only; discovered during H11 audit) | OPEN (defer — error-path) |
+| SEC-001 | LOW | reels-renderer-owner.js:324; home.js:430/:442 (H12-discovered sites — Home feed error paths, same class) | Reels error fallback + Home feed error states render `e.message` raw into innerHTML (Supabase/JS error text — not user-stored; defense-in-depth concern only; discovered during H11 audit, Home sites added during H12 audit) | OPEN (defer — error-path class) |
 
 ---
 
@@ -188,7 +188,46 @@ esc() available: utils.js (index.html:211) loads before reels-renderer-owner.js 
 
 ---
 
-## 7. Task report hooks (per owner instruction)
+## 7. H12 — Home story-rail username XSS (this task)
+
+### 7.1 Provenance audit — all story-rail rendering paths (2026-09-07, BEFORE fix application)
+
+Data flow: `stories` table joined `profiles!stories_user_id_fkey(username,avatar_url)` (home.js:76, `.gt('expires_at')`, order desc, limit 20) → `svData` map (`_seen` marking from `story_views` + own-story auto-seen, :83-86) → `uniqueTrayUsers` per-user dedupe (:89-96) → tray-item template (:129-137) → `scr.innerHTML` (:98, one whole-screen assignment). Pull-to-refresh re-enters `renderHome` (same template); stories-query failure → `stories=null` → empty tray (no username render on the fallback). Context classification per value: username = HTML text; avatar_url = URL attribute (M1 class); first letter = single-char HTML text (C1 class — 1 char cannot form a tag); startIdx = numeric array index; story ids/user_ids = UUIDs.
+
+| # | Rendering path | File:line | Value(s) | Context | Verdict |
+|---|---------------|-----------|---------|---------|---------|
+| 1 | Story tray username span | home.js:136 | s.profiles?.username | HTML text | **VULNERABLE — XSS-H12 sink (fixed in-task)** |
+| 2 | Story tray avatar img | home.js:133 (if-branch) | s.profiles.avatar_url | URL attribute (double-quoted src) | DEFERRED — XSS-M1 class (site added to XSS-M1 row) |
+| 3 | Story tray first-letter span | home.js:133 (else-branch) | (s.profiles?.username||'?')[0] | single-char HTML text | DEFERRED — XSS-C1 class (:133 already listed in XSS-C1 row) |
+| 4 | Your Story avatar | home.js:110 | PROF.avatar_url / PROF.username via av() | av() internal (text + onerror JS-string) | DEFERRED — XSS-C1 class |
+| 5 | Feed error path message | home.js:430/:442 | e.message | HTML text | site addition to SEC-001 (error-path, not user-stored, defer) |
+| 6 | openSV(startIdx) onclick | home.js:130 | svData.findIndex of s.id | JS-string attr, numeric index | safe by construction |
+| 7 | Seen/unseen ring markup | home.js:124-127 | constant ringHtml variants | — | safe (no data) |
+| 8 | Your Story item | home.js:108-114 | constants + own av() | — | safe (constant text) |
+| 9 | Topbar / feed tabs / feed scaffold | home.js:99-151 | constants | — | safe |
+| 10 | Home feed post cards | home.js:411 → postCard (posts.js) | posts + profiles join | esc'd in H10 (posts.js:127/:130) | safe (H10 esc inherited — verified in H12 suite J20) |
+| 11 | Empty feed state | home.js:367-373 | constants | — | safe |
+| 12 | Feed error screen | home.js:427-444 | e.message (see #5) + constants | HTML text | SEC-001 class (deferred) |
+| 13 | renderHome re-entry (pull-to-refresh / switchFeedTab) | home.js:268-287 | same template | same sinks | covered by the fix |
+| 14 | Race-guard aborts | home.js:157/:162/:401 | — | — | safe (early returns) |
+| 15 | Other story-username surfaces | render-sv.js:30 (H13); show-story-viewers.js:44 (H18) | separate files | separate issues | NOT H12 (owned by H13/H18) |
+
+### 7.2 H12 fix
+
+`home.js` (1 line, esc() at the HTML-text sink, esc semantics only, no other change):
+- `:136` `<span class="sname">${s.profiles?.username||''}</span>` → `<span class="sname">${esc(s.profiles?.username||'')}</span>`
+
+esc() available: utils.js (index.html:211) loads before home.js (index.html:338). **No harness changes required**: home.js was already admitted to the branch2-only-safety-contract allowlist; the explicit-error-boundary harness pins home.js `throw new Error(` count (2, unchanged); the video-observer harness pins the `initVideoObserver()` call (unchanged); no byte-parity harness pins the home.js template. Suite-tooling maintenance OUTSIDE the repo (scripts/, H9-H11 precedent): H11 focused suite L1 re-anchored to the fixed hash d7becc7 + last-touch state; H11 migration reverify staged-deletion check made state-aware (staged OR untracked).
+
+**C7 clarification (dangling-reference fix, no issue deleted/merged):** the pre-H12 row's "(adjacent first-letter span = C7)" referenced a C-tier ID that never existed as its own ledger row — home.js:133 was already recorded in XSS-C1. The reference is corrected to XSS-C1 in the FIXED row above.
+
+### 7.3 H12 verification summary
+
+Vulnerability proven first (pre-fix disk = parent d7becc7): all 5 owner-specified payloads rendered raw + executable at the :136 span (19/0 proof). Post-fix focused suite 175 PASS / 0 FAIL (payload neutralization, adjacent-sink byte-identity, nullish/dedupe/ring edges, 11-language multilingual byte-exact, Home functional regression incl. H10-esc inheritance on the feed surface, esc contract, source hygiene). Negative control vs parent d7becc7: pre-fix VULNERABLE at the sink, benign multilingual byte-identical pre/post. Full gates: prior H suites all green (H1 121/0, H1b 78/0, H4 114/0, H5 203/0, H6 84/0, H7 91/0, H8 154/154, H9 159/0, H10 247/0 + NC 29/29, H11 277/0 + NC 26/26, H14 63/0); 322 regression 317/5 byte-identical to baseline (all 5 = owner main-pin family); app-load 10/10; listener/realtime harnesses all pass; diff adds zero listeners/subscriptions.
+
+---
+
+## 8. Task report hooks (per owner instruction)
 
 At the end of every H task, report: historical issues imported/updated · issues fixed in this task · issues remaining open · newly discovered issues · ledger changes.
 
@@ -197,3 +236,9 @@ At the end of every H task, report: historical issues imported/updated · issues
 - Fixed in this task: XSS-H11 (reels-renderer-owner.js:119/:122) — 2 sinks, 1 source file, 2 insertions/2 deletions.
 - Newly discovered: SEC-001 (reels error-path e.message, LOW, OPEN); site additions to XSS-M1 (reels-renderer-owner.js:92, reels-video-windowing.js:21, profile grids) and XSS-C1 (reels-renderer-owner.js:118).
 - Remaining open: 7 HIGH (H12-H19), 6 MEDIUM (M1-M6), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001, cosmetics (H9-D5 BUG, H10-15 UI_UX).
+
+**H12 report block:**
+- Historical imported: none new (issue system live since H11; all history preserved).
+- Fixed in this task: XSS-H12 (home.js:136) — 1 sink, 1 source file, 1 insertion/1 deletion.
+- Newly discovered: site additions only — XSS-M1 gains home.js:133 (tray avatar_url img src); SEC-001 gains home.js:430/:442 (Home feed error-path e.message). C7 dangling reference clarified → XSS-C1 (no row deleted/merged).
+- Remaining open: 6 HIGH (H13, H15-H19), 6 MEDIUM (M1-M6), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (now reels + home error paths), cosmetics (H9-D5 BUG, H10-15 UI_UX).

@@ -20,7 +20,8 @@
 | XSS-H8/H8b | Pinned-message bars | FIXED (8042e59) |
 | XSS-H9 | GC Info + share-sheet group names / member list | FIXED (e30d6ba) |
 | XSS-H10 | Post-card username/location + share-sheet post preview | FIXED (6b6dbf4) |
-| XSS-H11 | Reels username + caption (reels-renderer-owner.js:119/:122) | FIXED (H11 commit) |
+| XSS-H11 | Reels username + caption (reels-renderer-owner.js:119/:122) | FIXED (d7becc7) |
+| XSS-H12 | Home story-rail username (home.js:136) | FIXED (H12 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -28,14 +29,13 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H12 | Home story rail usernames raw | OPEN |
 | XSS-H13 | Story viewer header username + placeholder attr | OPEN |
 | XSS-H15 | Note viewer username + note text raw | OPEN |
 | XSS-H16 | Notes bar text + usernames raw | OPEN |
 | XSS-H17 | Note reactors username + typed emoji raw (targeted XSS) | OPEN |
 | XSS-H18 | Profile/follow-list/story-viewers full_name+username raw | OPEN |
 | XSS-H19 | Nova AI panel raw API response | OPEN |
-| XSS-M1 | media_url in src/onclick contexts (posts/reels/profile grids — H11 sites added) | OPEN |
+| XSS-M1 | media_url/avatar_url in src/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site added) | OPEN |
 | XSS-M2 | profile-view bio partial escape | OPEN |
 | XSS-M3 | Reaction badge stored emoji raw | OPEN |
 | XSS-M4 | Note music metadata + JSON onclick | OPEN |
@@ -123,3 +123,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 ## Synchronization log
 
 - 2026-09-07 (H11): index created with full historical import (migration from docs/SECURITY_DEFERRED_ISSUES.md); XSS-H11 → FIXED; SEC-001, HYG-001 added; XSS-M1/XSS-C1 site additions recorded.
+- 2026-09-07 (H12): XSS-H12 → FIXED (home.js:136 esc); XSS-M1 site addition (home.js:133 tray avatar img src); SEC-001 site additions (home.js:430/:442 feed error paths); "C7" dangling reference clarified → XSS-C1 (no row deleted/merged); no new issues, no new category files.

@@ -133,7 +133,7 @@ async function renderHome(){
             ${s.profiles?.avatar_url?`<img src="${s.profiles.avatar_url}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:24px;font-weight:700">${(s.profiles?.username||'?')[0].toUpperCase()}</span>`}
           ${closingHtml}
         </div>
-        <span class="sname">${s.profiles?.username||''}</span>
+        <span class="sname">${esc(s.profiles?.username||'')}</span>
       </div>`;
     }).join('')}
   </div>
