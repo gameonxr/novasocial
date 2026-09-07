@@ -23,6 +23,7 @@
 | XSS-H11 | Reels username + caption (reels-renderer-owner.js:119/:122) | FIXED (d7becc7) |
 | XSS-H12 | Home story-rail username (home.js:136) | FIXED (dbf00f9) |
 | XSS-H13 | Story viewer header username + reply placeholder (render-sv.js:30/:195) | FIXED (H13 commit) |
+| XSS-H15 | Note viewer author username + full note text (note-viewer-owners.js:28/:32) | FIXED (H15 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -30,7 +31,6 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H15 | Note viewer username + note text raw | OPEN |
 | XSS-H16 | Notes bar text + usernames raw | OPEN |
 | XSS-H17 | Note reactors username + typed emoji raw (targeted XSS) | OPEN |
 | XSS-H18 | Profile/follow-list/story-viewers full_name+username raw | OPEN |
@@ -126,3 +126,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 - 2026-09-07 (H11): index created with full historical import (migration from docs/SECURITY_DEFERRED_ISSUES.md); XSS-H11 → FIXED; SEC-001, HYG-001 added; XSS-M1/XSS-C1 site additions recorded.
 - 2026-09-07 (H12): XSS-H12 → FIXED (home.js:136 esc); XSS-M1 site addition (home.js:133 tray avatar img src); SEC-001 site additions (home.js:430/:442 feed error paths); "C7" dangling reference clarified → XSS-C1 (no row deleted/merged); no new issues, no new category files.
 - 2026-09-07 (H13): XSS-H13 → FIXED (render-sv.js:30/:195 esc — header username + reply placeholder); NEW issue SEC-002 (story overlay poll content raw — sv-append-overlays.js:44/:51, HIGH, OPEN, future task); XSS-C1 site addition (render-sv.js:30 av() call); no category files created.
+- 2026-09-07 (H15): XSS-H15 → FIXED (note-viewer-owners.js:28/:32 esc — author username + full note text; ledger line refs clarified :29/:33 → actual :28/:32, 1-line counting drift, no content change); branch2-only-safety-contract-harness allowlist admission for note-viewer-owners.js; no new issues, no site additions, no category files created.

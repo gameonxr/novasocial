@@ -43,6 +43,7 @@
 | XSS-H11 | Reels renderer interpolates username + caption raw (feed's formatCaption escaping NOT used on reels surface); fixed after full H11 reels-surface provenance audit (all 30 rendering-path rows audited — see section 6) | reels-renderer-owner.js | :119 (username), :122 (caption) | THIS COMMIT (H11) |
 | XSS-H12 | Home story rail renders story usernames raw; fixed after full H12 home-surface provenance audit (all story-rail rendering paths audited — see section 7). Adjacent first-letter span (:133) was already covered by XSS-C1 — the old "C7" label in this row was a dangling legacy-ledger reference (C7 never existed as its own row; no C-tier entry was deleted or merged) | home.js | :136 | THIS COMMIT (H12) |
 | XSS-H13 | Story Viewer header username rendered raw (HTML text, :30) + reply-input placeholder attribute unescaped (double-quoted attr, :195 — quote payloads break out); fixed after full H13 story-viewer provenance audit (all 7 renderSV entry paths + adjacent surfaces audited — see section 8). All entry paths (open/next/prev/next-user/prev-user/mute-toggle re-render/recursive bucket-skip) funnel through the single renderSV template — both sinks inherit one fix | render-sv.js | :30 (header username, HTML text), :195 (reply placeholder, attr) | THIS COMMIT (H13) |
+| XSS-H15 | Note viewer renders note author username + full note text raw (both HTML-text sinks); fixed after full H15 note-viewer provenance audit (all 5 viewNote entry paths + adjacent surfaces audited — see section 9). All entry paths (own-profile pill / notes-bar own+others / notes-feed / other-profile pill) funnel through the single viewNote template — both sinks inherit one fix. Ledger/audit rows originally cited :29/:33 (1-line drift vs the original docs/XSS_PRIORITY_AUDIT.md:215 counting — actual current lines :28/:32, sinks unambiguous by content) | note-viewer-owners.js | :28 (author username, HTML text), :32 (full note text, HTML text) | THIS COMMIT (H15) |
 | XSS-pre-audit wraps | H3 wrap series (typing indicator, optimistic bubble, pinned legacy, feed caption attribution, story editor, search echoes) | 8 files | 9 sites | 83633df…eea3a7a |
 
 Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nullish-safe) — verified correct for HTML text + quoted-attribute contexts, preserves all languages byte-for-byte (escape-helper-contract-harness pins behavior).
@@ -51,7 +52,6 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 
 | ID | Severity | File:line | Issue | Provenance | Recommended fix | Owning task |
 |----|----------|-----------|-------|------------|-----------------|-------------|
-| XSS-H15 | HIGH | note-viewer-owners.js:29, :33 | Note viewer renders note author username + full note text raw | profiles.username, quick_notes.text | esc() both; allowlist admission required | H15 |
 | XSS-H16 | MEDIUM-HIGH | notes-bar.js:82, :86 | Notes bar renders others' note text (truncated 18) + usernames raw | quick_notes.text, profiles.username | esc() both; allowlist admission required | H16 |
 | XSS-H17 | HIGH | note-reactors-list-owner.js:20-21 | Reactor username + typed "emoji" raw — stored XSS executing against the note OWNER (targeted attack) | profiles.username, quick_note_reactions.emoji (arbitrary typed text) | esc() both; allowlist admission required | H17 |
 | XSS-H18 | HIGH | profile-view.js:88, 92, 156, 160, 276, 298, 302, 376; follow-list.js:33; show-story-viewers.js:44 | Profile full_name/username raw across profile view, follow lists, story viewers — widest username exposure | profiles.full_name (unvalidated anywhere), profiles.username | esc() in 3 files (follow-list needs allowlist admission) | H18 |
@@ -266,7 +266,48 @@ Vulnerability proven first (pre-fix disk = parent dbf00f9): all 5 owner-specifie
 
 ---
 
-## 9. Task report hooks (per owner instruction)
+## 9. H15 — Note Viewer username + note text XSS (this task)
+
+### 9.1 Provenance audit — all Note Viewer rendering paths (2026-09-07, BEFORE fix application)
+
+Data flow: `quick_notes` table row joined `profiles(username,avatar_url)` (note-viewer-owners.js:4, `.eq('id',noteId).single()`) → `note` object (no transformation of username or text) → single viewNote template literal (:21-68) → `overlay.innerHTML` → `document.body.appendChild` (:70). Write side: `note-text-inp` input → `submitNote` (notes-submission-owner.js:2 → :8 update / :21 insert) — NO write-side escaping (correct escape-at-sink architecture; arbitrary text storable). Second source: `profiles.username` (user-stored, unvalidated). Context classification per value: username = HTML text (:28); note text = HTML text (:32, rendered only when truthy — card omitted otherwise); avatar_url = av() internal (C1 class); user_id/noteId = UUIDs in JS-string onclick args (DB-generated — safe by construction, established codebase treatment); created_at = ago() relative time; viewCount = numeric; music metadata = XSS-M4 (M-tier, untouched).
+
+All 5 viewNote entry paths funnel through the single template (one construction site per sink — every path inherits both fixes): profile.js:73 (own-profile active-note pill) · notes-bar.js:73 (own active note bubble) · notes-bar.js:83 (others' note bubbles) · load-notes-feed.js:74 (notes feed surface) · profile-view.js:388 (other-profile active-note pill). Each passes a DB UUID noteId (safe by construction).
+
+| # | Rendering path | File:line | Value(s) | Context | Verdict |
+|---|---------------|-----------|---------|---------|---------|
+| 1 | Note author username div | note-viewer-owners.js:28 | note.profiles?.username | HTML text | **VULNERABLE — XSS-H15 sink #1 (fixed in-task)** |
+| 2 | Full note text card | note-viewer-owners.js:32 (card :31-33) | note.text | HTML text | **VULNERABLE — XSS-H15 sink #2 (fixed in-task)** |
+| 3 | Author avatar | note-viewer-owners.js:26 via av() | profiles.avatar_url + username first letter | av() internal (img src + onerror JS-string + 1-char text) | DEFERRED — XSS-C1 class |
+| 4 | goToProfile onclick | note-viewer-owners.js:25 | note.user_id | JS-string attr | UUID (DB-generated) — safe by construction |
+| 5 | ago()/views line | note-viewer-owners.js:29 | note.created_at + numeric viewCount | relative-time text | safe |
+| 6 | Music chip (title/artist/artwork/JSON onclick) | note-viewer-owners.js:35-38 | music metadata | HTML text + img src + JSON-in-single-quoted-onclick | DEFERRED — XSS-M4 (M-tier class, NOT H15) |
+| 7 | Reaction emoji row + more-emoji picker | note-viewer-owners.js:43-44 | constant emoji + noteId UUID | JS-string attrs + text | safe (constants + UUID) |
+| 8 | Reply input + send | note-viewer-owners.js:51-52 | noteId + note.user_id | JS-string attrs | UUID — safe by construction |
+| 9 | Own-note Edit/Remove controls | note-viewer-owners.js:54-67 | constants + noteId | JS-string attrs | safe |
+| 10 | Reactors list container | note-viewer-owners.js:41 → loadNoteReactorsList | rendered by note-reactors-list-owner.js | separate file | NOT H15 — XSS-H17 (separate issue/task) |
+| 11 | Expired-note fallback | note-viewer-owners.js:5 | toast + loadNotesBar | no markup render | safe |
+| 12 | removeMyNoteFromViewer | note-viewer-owners.js:82-101 | DB values only, no innerHTML render | — | safe (no markup render) |
+| 13 | Notes bar surface itself (previews/usernames) | notes-bar.js:82/:86 | others' note text + usernames | HTML text | NOT H15 — XSS-H16 (separate issue/task) |
+| 14 | Re-open / re-entry paths (viewer close → reopen, notes-bar refresh) | 5 entry paths re-invoke viewNote | same template | same sinks | covered by the fix |
+
+SEC-002 (sv-append-overlays.js:44/:51, story overlay poll content) is a different file + different data source (stories.overlay_data) — NOT the H15 root cause; stays OPEN untouched per owner instruction.
+
+### 9.2 H15 fix
+
+`note-viewer-owners.js` (2 lines, esc() at the two audited HTML-text sinks, esc semantics only, no other change):
+- `:28` author username div: `${note.profiles?.username}` → `${esc(note.profiles?.username)}` (esc nullish-safe — null/undefined profiles render empty instead of the pre-fix cosmetic "null"/"undefined" text, consistent with every prior H-fix esc() contract)
+- `:32` full note text: `${esc(note.text)}` (inside the existing `note.text ?` truthy branch — card-omission behavior unchanged)
+
+esc() available: utils.js (index.html:211) + constants.js (index.html:208) load before note-viewer-owners.js (index.html:1658). Harness maintenance required by the authorized change (established mechanism, H11 precedent): branch2-only-safety-contract-harness.js allowlist admission for note-viewer-owners.js (the file was NOT previously admitted — the audit-prescribed "allowlist admission required"). No byte-parity harness pins the note-viewer-owners.js username/text markup; all 12 file-referencing harnesses pin owner-function counts / load order / the autoPlayNoteMusic call only (all re-verified green post-change).
+
+### 9.3 H15 verification summary
+
+Vulnerability proven first (pre-fix disk = parent 0a6cd52, proof artifact scripts/h15_proof_result.txt): all 5 owner-specified payloads rendered raw + executable at BOTH the :28 username div and the :32 text card (raw IMG/SCRIPT elements created in parsed zones, onerror=alert(1) handler attribute surviving parse — 47/0 proof). Post-fix focused suite 296 PASS / 0 FAIL (S-A username payload neutralization ×5 incl. parse-level IMG/SCRIPT absence; S-B note-text payload neutralization ×5 incl. parse-level; S-C combined payloads + nullish/branch edges incl. own/other note branches, empty/null text card omission, views-count, expired path; S-D 11-language multilingual byte-exact on both sinks + UTF-8 byte preservation + long-string untruncated; S-E adjacent-sink byte-identity — av() C1 block, ago/views line, music chip (M4 deferred, raw title/artist unchanged), reply row, reaction row; S-F Note Viewer functional regression F1-F14 incl. view upsert shape, own-count query, reaction query, reactors-list load gating, music autoplay, myReaction highlight, expired-note toast+reload, backdrop dismiss, removeMyNoteFromViewer success + failure paths (cloudinary cleanup, audio pause, toasts), zero channels/listeners/intervals, re-open no-accumulation; S-K esc contract; S-L hygiene incl. exactly-2-esc-wrap + 2-line diff bound + load order). Negative control vs parent 0a6cd52: pre-fix VULNERABLE at both sinks (raw + element + executable, 10 checks/payload), post-fix esc-exact contrast, benign multilingual visible-identical pre/post. Full gates: prior H suites all green (H1 121/0, H1b 78/0, H4 114/0, H5 203/0, H6 84/0, H7 91/0, H8 154/154, H9 159/0, H10 247/0 + NC 29/29, H11 277/0 + NC 26/26, H12 176/0, H13 249/0, H14 63/0); 322 regression 317/5 byte-identical to baseline (all 5 = owner main-pin family); app-load 10/10; event-listener boundary, interval lifecycle, DM/chat protected readiness, notes protected readiness, and all 12 note-viewer-referencing harnesses pass; diff adds zero listeners/subscriptions/intervals.
+
+---
+
+## 10. Task report hooks (per owner instruction)
 
 At the end of every H task, report: historical issues imported/updated · issues fixed in this task · issues remaining open · newly discovered issues · ledger changes.
 
@@ -287,3 +328,9 @@ At the end of every H task, report: historical issues imported/updated · issues
 - Fixed in this task: XSS-H13 (render-sv.js:30/:195) — 2 sinks, 1 source file, 2 insertions/2 deletions.
 - Newly discovered: SEC-002 (story overlay poll question/options rendered raw to all story viewers — sv-append-overlays.js:44/:51, HIGH, OPEN, deferred to a future task per ISSUE_RULES #8); site addition to XSS-C1 (render-sv.js:30 av() call — story viewer header avatar).
 - Remaining open: 5 HIGH (H15-H19), 6 MEDIUM (M1-M6), SEC-002 (new, HIGH), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (reels + home error paths), cosmetics (H9-D5 BUG, H10-15 UI_UX).
+
+**H15 report block:**
+- Historical imported: none new (issue system live since H11; all history preserved).
+- Fixed in this task: XSS-H15 (note-viewer-owners.js:28/:32) — 2 sinks, 1 source file, 2 insertions/2 deletions; branch2-only-safety-contract-harness.js allowlist admission for note-viewer-owners.js (audit-prescribed; H11-established mechanism).
+- Newly discovered: none (no new issues, no site additions — av() :26 already in XSS-C1; music metadata :35-38 already XSS-M4; reactors list already XSS-H17; notes-bar already XSS-H16; ledger line refs :29/:33 clarified to actual :28/:32 in the FIXED row, 1-line counting drift, no content change).
+- Remaining open: 4 HIGH (H16-H19), SEC-002 (HIGH), 6 MEDIUM (M1-M6), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (reels + home error paths), cosmetics (H9-D5 BUG, H10-15 UI_UX).

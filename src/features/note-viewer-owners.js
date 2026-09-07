@@ -25,11 +25,11 @@ window.viewNote = async function(noteId){
       <div onclick="closeNoteViewer();goToProfile('${note.user_id}')" style="cursor:pointer;margin-bottom:18px">
         ${av(note.profiles?.avatar_url,note.profiles?.username,80,true)}
       </div>
-      <div style="font-weight:700;font-size:16px;color:#fff;margin-bottom:4px">${note.profiles?.username}</div>
+      <div style="font-weight:700;font-size:16px;color:#fff;margin-bottom:4px">${esc(note.profiles?.username)}</div>
       <div style="color:#777;font-size:12px;margin-bottom:20px">${ago(note.created_at)}${viewCount!==null?' · '+viewCount+' views':''}</div>
 
       ${note.text ? `<div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);padding:20px 24px;border-radius:24px;max-width:300px;text-align:center;font-size:18px;font-weight:600;color:#fff;line-height:1.4;box-shadow:0 8px 32px rgba(0,0,0,0.4);margin-bottom:16px">
-        ${note.text}
+        ${esc(note.text)}
       </div>` : ''}
 
       ${note.music_title ? `<div onclick='toggleNoteMusicManual(${JSON.stringify(note.music_preview_url||'')},${note.music_start_sec||0})' id="note-music-chip" class="note-music-chip-playing" style="display:flex;align-items:center;gap:10px;background:rgba(29,185,84,0.12);border:1px solid rgba(29,185,84,0.25);padding:8px 16px;border-radius:20px;margin-bottom:20px;cursor:pointer">
