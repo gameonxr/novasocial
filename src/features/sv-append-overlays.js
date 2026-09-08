@@ -41,14 +41,14 @@ window.svAppendOverlays = function svAppendOverlays(med, story){
           <div class="sv-poll-card" style="background:${style.bg};backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.2);border-radius:18px;padding:14px 16px;min-width:220px;max-width:280px;box-shadow:0 8px 24px rgba(0,0,0,0.4)">
             <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
               <span style="font-size:14px;display:flex;align-items:center">${ico('poll','#FF2D7A',16)}</span>
-              <div style="font-size:13px;font-weight:700;color:#fff;flex:1">${ov.question}</div>
+              <div style="font-size:13px;font-weight:700;color:#fff;flex:1">${esc(ov.question)}</div>
             </div>
             <div class="sv-poll-options" style="display:flex;flex-direction:${flexDir};gap:8px">
               ${opts.map((o, i) => `
                 <div class="sv-poll-opt" data-opt-idx="${i}" style="position:relative;flex:1;padding:10px 12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:10px;font-size:12px;color:#fff;cursor:pointer;overflow:hidden;transition:all 0.25s ease;user-select:none;-webkit-user-select:none">
                   <div class="sv-poll-bar" style="position:absolute;inset:0;background:linear-gradient(90deg,#FF2D7A,#00E5FF);opacity:0;transition:opacity 0.4s ease, width 0.6s cubic-bezier(0.4,0,0.2,1);width:0%;border-radius:10px;z-index:0"></div>
                   <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:6px">
-                    <span class="sv-poll-opt-text" style="flex:1;font-weight:600">${o}</span>
+                    <span class="sv-poll-opt-text" style="flex:1;font-weight:600">${esc(o)}</span>
                     <span class="sv-poll-opt-pct" style="font-size:11px;font-weight:700;color:#fff;opacity:0"></span>
                   </div>
                 </div>
