@@ -85,11 +85,11 @@ async function showProfilePreview(userId){
 
           <!-- Name & username (kept visible — Instagram shows these) -->
           <div style="font-weight:800;font-size:17px;color:#fff;display:flex;align-items:center;justify-content:center;gap:5px">
-            ${prof.full_name || prof.username}
+            ${esc(prof.full_name || prof.username)}
             ${prof.is_verified?ico('verified','#3897f0',16):''}
             ${prof.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}
           </div>
-          <div style="color:#888;font-size:13px;margin-top:2px">@${prof.username}</div>
+          <div style="color:#888;font-size:13px;margin-top:2px">@${esc(prof.username)}</div>
           <!-- No bio, no website, no last_seen — all hidden when blocked either way -->
         </div>
 
@@ -153,11 +153,11 @@ async function showProfilePreview(userId){
 
         <!-- Name & username -->
         <div style="font-weight:800;font-size:17px;color:#fff;display:flex;align-items:center;justify-content:center;gap:5px">
-          ${prof.full_name || prof.username}
+          ${esc(prof.full_name || prof.username)}
           ${prof.is_verified?ico('verified','#3897f0',16):''}
           ${prof.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}
         </div>
-        <div style="color:#888;font-size:13px;margin-top:2px">@${prof.username}</div>
+        <div style="color:#888;font-size:13px;margin-top:2px">@${esc(prof.username)}</div>
 
         ${safeBio?`<div style="color:#ccc;font-size:13px;margin-top:10px;max-width:280px;margin-left:auto;margin-right:auto;line-height:1.5">${safeBio}${prof.bio?.length>100?'...':''}</div>`:''}
 
@@ -273,7 +273,7 @@ async function openFullProfile(userId){
         <div style="position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;z-index:5">
           <div onclick="goBack()" style="width:36px;height:36px;border-radius:10px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer">${ico('back','#fff',18)}</div>
           <div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);padding:6px 12px;border-radius:20px">
-            <span style="font-weight:700;font-size:14px;color:#fff">${gatedProf?.username || 'User'}</span>
+            <span style="font-weight:700;font-size:14px;color:#fff">${esc(gatedProf?.username || 'User')}</span>
             ${gatedProf?.is_verified?`<span style="display:inline-flex;align-items:center;transform:translateY(1px)">${ico('verified','#3897f0',16)}</span>`:''}
           </div>
           <div onclick="showUserProfileOptions('${userId}')" style="width:36px;height:36px;border-radius:10px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer">${ico('more_v','#fff',20)}</div>
@@ -295,11 +295,11 @@ async function openFullProfile(userId){
       <!-- Name + username -->
       <div style="padding:0 16px 12px">
         <div style="display:flex;align-items:center;gap:5px">
-          <span style="font-weight:800;font-size:16px;color:#fff">${gatedProf?.full_name || gatedProf?.username || 'User'}</span>
+          <span style="font-weight:800;font-size:16px;color:#fff">${esc(gatedProf?.full_name || gatedProf?.username || 'User')}</span>
           ${gatedProf?.is_verified?ico('verified','#3897f0',15):''}
           ${gatedProf?.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}
         </div>
-        <div style="color:#888;font-size:13px;margin-top:2px">@${gatedProf?.username || 'user'}</div>
+        <div style="color:#888;font-size:13px;margin-top:2px">@${esc(gatedProf?.username || 'user')}</div>
         <!-- No bio, no website, no last_seen — all hidden when blocked either way -->
       </div>
 
@@ -373,7 +373,7 @@ async function openFullProfile(userId){
     <div style="position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;z-index:5">
       <div onclick="goBack()" style="width:36px;height:36px;border-radius:10px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer">${ico('back','#fff',18)}</div>
       <div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);padding:6px 12px;border-radius:20px">
-        <span style="font-weight:700;font-size:14px;color:#fff">${prof.username}</span>
+        <span style="font-weight:700;font-size:14px;color:#fff">${esc(prof.username)}</span>
         ${prof.is_verified?`<span style="display:inline-flex;align-items:center;transform:translateY(1px)">${ico('verified','#3897f0',16)}</span>`:''}
         ${prof.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}
       </div>
@@ -400,7 +400,7 @@ async function openFullProfile(userId){
   <div style="padding:0 16px 14px">
     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">
       ${(prof.full_name && prof.full_name.trim() && prof.full_name.trim().toLowerCase() !== (prof.username||'').toLowerCase())
-        ? `<div style="font-weight:700;font-size:15px;letter-spacing:0.2px">${prof.full_name}</div>`
+        ? `<div style="font-weight:700;font-size:15px;letter-spacing:0.2px">${esc(prof.full_name)}</div>`
         : ''}
       ${prof.is_verified?`<span style="display:inline-flex;align-items:center;transform:translateY(1px)">${ico('verified','#3897f0',17)}</span>`:''}
       ${prof.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}

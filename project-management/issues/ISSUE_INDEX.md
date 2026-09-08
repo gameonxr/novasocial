@@ -26,6 +26,7 @@
 | XSS-H15 | Note viewer author username + full note text (note-viewer-owners.js:28/:32) | FIXED (H15 commit) |
 | XSS-H16 | Notes Bar text pills + usernames + own PLUS-slot pill + other-profile note pill (notes-bar.js:76/:86/:90 + profile-view.js:389) | FIXED (H16 commit) |
 | XSS-H17 | Note reactors list reactor username + typed reaction emoji — targeted stored XSS vs note OWNER (note-reactors-list-owner.js:20/:21) | FIXED (H17 commit) |
+| XSS-H18 | Profile/preview/full-profile/follow-list/story-viewers username+full_name — 11 HTML-text sinks (profile-view.js:88/:92/:156/:160/:276/:298/:302/:376/:403 + follow-list.js:34 + show-story-viewers.js:44) | FIXED (H18 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -33,22 +34,21 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H18 | Profile/follow-list/story-viewers full_name+username raw | OPEN |
 | XSS-H19 | Nova AI panel raw API response | OPEN |
-| XSS-M1 | media_url/avatar_url in src/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site; profile-view :392 viewAvatarFullscreen onclick — H16 site) | OPEN |
-| XSS-M2 | profile-view bio partial escape | OPEN |
+| XSS-M1 | media_url/avatar_url/cover_url in src/CSS-url/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site; profile-view :392 viewAvatarFullscreen onclick — H16 site; profile-view :62/:267/:366 cover — H18 sites) | OPEN |
+| XSS-M2 | profile-view bio partial escape (:135) + full-profile linkify(bio) unescaped (:408 — H18 site) | OPEN |
 | XSS-M3 | Reaction badge stored emoji raw | OPEN |
 | XSS-M4 | Note music metadata + JSON onclick (+ music search rows :13-25 — H16 site) | OPEN |
 | XSS-M5 | Admin approvals esc'd-username-in-onclick decode-back | OPEN |
 | XSS-M6 | Own-profile names + linkify(bio) (+ own note pill :75 — H16 site, self-XSS) | OPEN |
-| XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118, story-viewer :30, notes surfaces — H16 sites) | OPEN |
+| XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118, story-viewer :30, notes surfaces — H16 sites; profile/follow/viewer av sites — H18 sites) | OPEN |
 | XSS-C2 | nova-ai own-msg partial escape | folded into H19 |
 | XSS-C3 | notes-bar own reaction badge (self-XSS) | OPEN (accepted low) |
 | XSS-C5 | isSystem() styling spoof | OPEN (cosmetic) |
 | XSS-C9 | notes.js personal localStorage notes raw render (self-XSS only — H16-discovered) | OPEN (accepted low) |
 | XSS-10.5 | esc() insufficient in JS-string-attr contexts (class) | OPEN |
 | H9-D1 | JS-string/inline onclick class (openChat/initiateCall/sendSharedPostToChat/addToGroup/insertMention/shareText…) | OPEN (dedicated hardening task) |
-| H9-D2 | Username-rendering surface class (mentions/call-UI/share-pickers/GC-add-member) | OPEN |
+| H9-D2 | Username-rendering surface class (mentions/call-UI/share-pickers/GC-add-member + close-friends/blocked-list/se-search-mention — H18 sites) | OPEN |
 | H9-D3 | modal.js dynamic title caller audit (voice-rooms.js:53, show-staff-actions.js:6) | OPEN |
 | H9-D4 | av() review | OPEN (deduped into XSS-C1) |
 | H10-3 | postCard → av() username (C1 class) | OPEN |
@@ -64,7 +64,7 @@
 | H10-13 | admin deleted-posts @username raw | OPEN |
 | H10-1 | share-sheet post-preview @username | FIXED (6b6dbf4) |
 | H10-2 | share-sheet post-preview caption | FIXED (6b6dbf4) |
-| SEC-001 | reels error-path e.message raw render (H11-discovered, defense-in-depth; home feed error paths H12-added) | OPEN |
+| SEC-001 | reels error-path e.message raw render (H11-discovered, defense-in-depth; home feed error paths H12-added; profile-preview error path H18-added) | OPEN |
 | SEC-002 | story overlay poll question/options raw render to all story viewers (sv-append-overlays.js:44/:51 — H13-discovered) | OPEN |
 | XSS-C4 | rename input quote-escaped attr | SAFE |
 | XSS-C6 | reactionMap[...] claimed bug | SAFE (non-issue) |
@@ -130,3 +130,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 - 2026-09-07 (H15): XSS-H15 → FIXED (note-viewer-owners.js:28/:32 esc — author username + full note text; ledger line refs clarified :29/:33 → actual :28/:32, 1-line counting drift, no content change); branch2-only-safety-contract-harness allowlist admission for note-viewer-owners.js; no new issues, no site additions, no category files created.
 - 2026-09-08 (H16): XSS-H16 → FIXED (notes-bar.js:76/:86/:90 esc — own PLUS-slot pill + others' pill + others' username; profile-view.js:389 esc — other-profile active-note pill text branch, XSS-H16 family site per dedupe rule #5); NEW issue XSS-C9 (notes.js:57-58 personal localStorage notes self-XSS, LOW, accepted low); site additions — XSS-M1 (profile-view.js:392 viewAvatarFullscreen onclick), XSS-M4 (search-music-for-note.js:13-25), XSS-M6 (profile.js:75 own-profile note pill), XSS-C1 (notes surfaces), XSS-C3 line-ref clarified :84 → actual :88; no category files created; TRACK A audit conclusion recorded (no href sink in Notes Bar; pre-fix breakout minted executable <a href=javascript:> elements — fixed by same esc sinks).
 - 2026-09-08 (H17): XSS-H17 → FIXED (note-reactors-list-owner.js:20/:21 esc — reactor username + typed reaction emoji; targeted stored XSS executing against the note OWNER, container gated behind isOwnNote at note-viewer-owners.js:41); branch2-only-safety-contract-harness allowlist admission for note-reactors-list-owner.js; note-reactors-list-production-split-contract-harness parity re-pinned to origin/main + exactly the H17 esc delta; no new issues, no site additions, no category files created; write-path constraint documented (reactToNote upsert unvalidated — maxlength=4 client-side only, receiver-side esc is the only defense).
+- 2026-09-08 (H18): XSS-H18 → FIXED (profile-view.js:88/:92/:156/:160/:276/:298/:302/:376/:403 + follow-list.js:34 + show-story-viewers.js:44 esc — profile/preview/full-profile/blocked-shell username+full_name, followers/following rows, story-viewer rows; 11 HTML-text sinks, widest username exposure; write path = settings.js saveEdit client-side-only username regex + NO full_name validation); branch2-only-safety-contract-harness allowlist admission for follow-list.js (ledger-prescribed); H16 verify-suite L.3 evolution-proofed (scripts/ outside repo — historical H16 delta re-anchored to immutable 541196a + stricter L.3b sanction-check, product code unchanged); site additions to existing class rows (no new IDs): XSS-M2 (profile-view.js:408 linkify(bio) unescaped), XSS-M1 (profile-view.js:62 cover CSS-url + :267/:366 cover src), XSS-C1 (profile/follow/viewer av sites), SEC-001 (profile-view.js:213 error path), H9-D2 (close-friends.js:46, show-blocked-list.js:15, se-search-mention-users.js:48/:51); dedupe recorded (profile-view :403 absorbed into H18; explore/universal-search stay H10-10/H10-11; H19 + SEC-002 untouched).

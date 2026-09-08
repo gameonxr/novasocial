@@ -31,7 +31,7 @@ async function showFollowList(userId, type) {
   body.innerHTML = users.map(u => `
     <div onclick="closeModal();showUserProfile('${u.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
       ${av(u.avatar_url, u.username, 40)}
-      <div style="flex:1"><div style="font-weight:700;font-size:14px">${u.username}</div></div>
+      <div style="flex:1"><div style="font-weight:700;font-size:14px">${esc(u.username)}</div></div>
     </div>
   `).join('');
 }

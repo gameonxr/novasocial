@@ -41,7 +41,7 @@ window.showStoryViewers = async function showStoryViewers(storyId) {
   body.innerHTML = viewers.map(u =>
     '<div onclick="closeSV(); this.closest(\'.mbg\').remove(); showUserProfile(\''+u.id+'\')" style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #111;cursor:pointer;transition:0.2s;">' +
     av(u.avatar_url, u.username, 44) +
-    '<div style="flex:1"><div style="font-weight:600;font-size:15px;color:#fff">'+u.username+'</div></div>' +
+    '<div style="flex:1"><div style="font-weight:600;font-size:15px;color:#fff">'+esc(u.username)+'</div></div>' +
     '<div style="color:#555;font-size:20px;">›</div>' +
     '</div>'
   ).join('');
