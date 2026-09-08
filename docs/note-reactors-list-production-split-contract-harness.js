@@ -28,11 +28,19 @@ function extractOwner(text, signature) {
 
 const signature = 'async function loadNoteReactorsList(noteId){';
 const originOwner = extractOwner(originHtml, signature);
+// H17 (XSS-H17, Branch2 security fix) authorized escaping delta: the module
+// body legitimately moved from the origin/main extraction baseline when esc()
+// was wrapped around the two HTML-text sinks (reactor username + typed
+// reaction "emoji", note-reactors-list-owner.js:20-21). Parity now pins
+// origin/main + EXACTLY this delta, so any additional drift still fails.
+const expectedOwner = originOwner
+  .replace('${r.profiles?.username||\'User\'}', '${esc(r.profiles?.username||\'User\')}')
+  .replace('${r.emoji}', '${esc(r.emoji)}');
 const normalizedModule = moduleText
   .replace('// Classic-script Notes reactor-list owner.\n', '')
   .replace('window.loadNoteReactorsList = async function(noteId){', signature, 1)
   .trim();
-assert.strictEqual(normalizedModule, originOwner, 'extracted Notes reactor-list owner must match origin/main exactly');
+assert.strictEqual(normalizedModule, expectedOwner, 'extracted Notes reactor-list owner must match origin/main + the H17 esc delta exactly');
 assert.strictEqual((moduleText.match(/window\.loadNoteReactorsList\s*=\s*async function\(noteId\)\s*\{/g) || []).length, 1, 'Notes reactor-list module must have exactly one anonymous window owner');
 assert.strictEqual((html.match(/async function loadNoteReactorsList\(noteId\)\{/g) || []).length, 0, 'inline Notes reactor-list owner must be absent');
 assert.strictEqual((html.match(/src\/features\/note-reactors-list-owner\.js/g) || []).length, 1, 'Notes reactor-list module must be linked exactly once');

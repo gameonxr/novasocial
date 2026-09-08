@@ -17,7 +17,7 @@ window.loadNoteReactorsList = async function(noteId){
     reactions.map(r=>`
       <div onclick="closeNoteViewer();goToProfile('${r.user_id}')" style="display:flex;align-items:center;gap:12px;padding:8px 4px;cursor:pointer">
         ${av(r.profiles?.avatar_url, r.profiles?.username, 38)}
-        <div style="flex:1;font-weight:600;font-size:13px;color:#fff">${r.profiles?.username||'User'}</div>
-        <div style="font-size:22px">${r.emoji}</div>
+        <div style="flex:1;font-weight:600;font-size:13px;color:#fff">${esc(r.profiles?.username||'User')}</div>
+        <div style="font-size:22px">${esc(r.emoji)}</div>
       </div>`).join('');
 }

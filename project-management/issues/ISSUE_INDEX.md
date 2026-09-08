@@ -25,6 +25,7 @@
 | XSS-H13 | Story viewer header username + reply placeholder (render-sv.js:30/:195) | FIXED (H13 commit) |
 | XSS-H15 | Note viewer author username + full note text (note-viewer-owners.js:28/:32) | FIXED (H15 commit) |
 | XSS-H16 | Notes Bar text pills + usernames + own PLUS-slot pill + other-profile note pill (notes-bar.js:76/:86/:90 + profile-view.js:389) | FIXED (H16 commit) |
+| XSS-H17 | Note reactors list reactor username + typed reaction emoji — targeted stored XSS vs note OWNER (note-reactors-list-owner.js:20/:21) | FIXED (H17 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -32,7 +33,6 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H17 | Note reactors username + typed emoji raw (targeted XSS) | OPEN |
 | XSS-H18 | Profile/follow-list/story-viewers full_name+username raw | OPEN |
 | XSS-H19 | Nova AI panel raw API response | OPEN |
 | XSS-M1 | media_url/avatar_url in src/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site; profile-view :392 viewAvatarFullscreen onclick — H16 site) | OPEN |
@@ -129,3 +129,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 - 2026-09-07 (H13): XSS-H13 → FIXED (render-sv.js:30/:195 esc — header username + reply placeholder); NEW issue SEC-002 (story overlay poll content raw — sv-append-overlays.js:44/:51, HIGH, OPEN, future task); XSS-C1 site addition (render-sv.js:30 av() call); no category files created.
 - 2026-09-07 (H15): XSS-H15 → FIXED (note-viewer-owners.js:28/:32 esc — author username + full note text; ledger line refs clarified :29/:33 → actual :28/:32, 1-line counting drift, no content change); branch2-only-safety-contract-harness allowlist admission for note-viewer-owners.js; no new issues, no site additions, no category files created.
 - 2026-09-08 (H16): XSS-H16 → FIXED (notes-bar.js:76/:86/:90 esc — own PLUS-slot pill + others' pill + others' username; profile-view.js:389 esc — other-profile active-note pill text branch, XSS-H16 family site per dedupe rule #5); NEW issue XSS-C9 (notes.js:57-58 personal localStorage notes self-XSS, LOW, accepted low); site additions — XSS-M1 (profile-view.js:392 viewAvatarFullscreen onclick), XSS-M4 (search-music-for-note.js:13-25), XSS-M6 (profile.js:75 own-profile note pill), XSS-C1 (notes surfaces), XSS-C3 line-ref clarified :84 → actual :88; no category files created; TRACK A audit conclusion recorded (no href sink in Notes Bar; pre-fix breakout minted executable <a href=javascript:> elements — fixed by same esc sinks).
+- 2026-09-08 (H17): XSS-H17 → FIXED (note-reactors-list-owner.js:20/:21 esc — reactor username + typed reaction emoji; targeted stored XSS executing against the note OWNER, container gated behind isOwnNote at note-viewer-owners.js:41); branch2-only-safety-contract-harness allowlist admission for note-reactors-list-owner.js; note-reactors-list-production-split-contract-harness parity re-pinned to origin/main + exactly the H17 esc delta; no new issues, no site additions, no category files created; write-path constraint documented (reactToNote upsert unvalidated — maxlength=4 client-side only, receiver-side esc is the only defense).
