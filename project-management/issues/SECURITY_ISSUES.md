@@ -47,6 +47,7 @@
 | XSS-H16 | Notes Bar renders others' note text pill (slice 18) + others' usernames raw (ledger refs :82/:86 = actual current :86/:90, line drift, sinks unambiguous by content), PLUS own PLUS-slot text pill (:76, slice 16) and the receiver-side other-profile active-note pill text (profile-view.js:389) — the receiver surfaces of the PLUS (+) composer output; fixed after full H16 notes-bar provenance audit (TRACK A href/URL + TRACK B PLUS composer — see section 10). TRACK A: Notes Bar contains NO href construction (no <a>/href/window.open driven by note data; navigation = onclick JS-strings with DB UUIDs, safe by construction); pre-fix, quote-breakout payloads minted real parsed <a href="javascript:…"> / <img onerror> elements from the unescaped zones (the executable-href vector — proven); pure scheme strings (javascript:/data:/vbscript:/mixed-case/percent/entity-encoded/whitespace-control variants) render as literal text (no href sink exists). URL-valued deferred classes untouched: av() img src (XSS-C1), music artwork/preview (XSS-M4), viewAvatarFullscreen avatar_url onclick (XSS-M1-class site addition) | notes-bar.js + profile-view.js | notes-bar.js:76 (own pill, HTML text), :86 (others' pill, HTML text), :90 (others' username, HTML text); profile-view.js:389 (other-profile pill text branch, HTML text) | THIS COMMIT (H16) |
 | XSS-H17 | Note reactors list renders reactor username + typed reaction "emoji" raw (both HTML-text sinks) — a TARGETED stored XSS executing against the note OWNER (the only viewer who can open the reactors list: note-viewer-owners.js:41 gates the container behind isOwnNote, :73 invokes the loader); fixed after full H17 reactors-list provenance audit (reaction write paths + all render paths + adjacent surfaces — see section 11). Reaction write paths (quick 5 constant emojis OR openMoreEmojiPicker native input maxlength=4 CLIENT-SIDE ONLY → submitNativeEmojiReaction → reactToNote upsert {note_id, user_id:ME.id, emoji} onConflict note_id,user_id, notes-reaction-owner.js:17 — NO write-side validation; DB-write bypass = arbitrary emoji string). av() avatar block (:19) untouched — XSS-C1 class; onclick row UUID JS-string (:18) safe by construction (user_id = ME.id auth session uid, not free text) | note-reactors-list-owner.js | :20 (reactor username, HTML text), :21 (typed reaction emoji, HTML text) | THIS COMMIT (H17) |
 | XSS-H18 | Profile/preview/full-profile/follow-list/story-viewers render attacker-stored `profiles.username` + `profiles.full_name` raw across 11 HTML-text sinks — the widest username exposure (write path: settings.js saveEdit — username regex validation CLIENT-SIDE ONLY, full_name has NO validation; DB-write bypass = arbitrary strings; receiver = ANY user who opens the attacker's profile/preview, any follower/following list containing the attacker, and the story OWNER for viewer lists); fixed after full H18 provenance audit (profile 4 render paths + followers/following + story viewers + adjacent user-list surfaces — see section 12). Ledger row cited :88, :92, :156, :160, :276, :298, :302, :376 (all verified exact) + follow-list.js:33 (actual sink :34 — 1-line drift, unambiguous by content) + show-story-viewers.js:44 (exact); :403 (bio-section full_name) added in-task as the 9th same-file/same-class sink. av() blocks (:82/:150/:286/:391, follow-list :33, viewers :43) untouched — XSS-C1 class; viewAvatarFullscreen onclick :392 untouched — M1/H9-D1 class; bio :135/:408 untouched — M2 class; cover_url :62/:267/:366 untouched — M1 class; error path :213 — SEC-001-family site | profile-view.js + follow-list.js + show-story-viewers.js | profile-view.js:88, :92, :156, :160, :276, :298, :302, :376, :403; follow-list.js:34; show-story-viewers.js:44 (all HTML text) | THIS COMMIT (H18) |
+| XSS-H19 | Nova AI panel renders EVERY message through one shared innerHTML sink raw — `appendNovaMsg` (nova-ai.js:157-166, `div.innerHTML = text` at :162) — fed by (a) the raw GLM API response (:251 — prompt-shapable model output; call-nova-ai.js:30-44 keyword-redaction is NOT markup sanitization), (b) the local canned fallback (:247→:251), (c) `handleNovaCommand` responses containing DB-stored `profiles.username` from follows joins (:336 milta-jhulta contact list, :341 open-chat match, :351 similar list, :647 friend recommendations — cross-user stored XSS via the panel; username signup-unconstrained per H18), (d) the user's own message with `<`-only partial pre-escape (:219 — the old XSS-C2), and (e) the same sink from the voice pipeline (voice-assistant.js:139 user / :155 AI+command). PLUS the Nova AI response rendering path's modal variant: `showTranslatedCaption` (nova-universe.js:97-113) renders the GLM translation response raw (:108 — the translation prompt embeds the post's own stored caption, so caption content is prompt-injectable into model output) AND the original `posts.caption` raw (:104 — the same posts.caption value class that formatCaption/H10-2 escape; alternate path, per dedupe rule #5 recorded here as the H19-audit-discovered site of that class and fixed in this commit). Content model determined by runtime audit, not assumption: PLAIN TEXT — NO Markdown parser, linkify, or sanitizer exists anywhere in the Nova AI pipeline; all producers are Hinglish+emoji+\n text; no caller passes intentional HTML; the panel welcome message is static index.html markup; nova-user-name is set via textContent (:37); .nova-msg CSS has no white-space:pre-wrap so \n visually collapses both pre- and post-fix (display model unchanged). Fixed at the shared sink per the H-series shared-renderer principle — one esc() at :162 covers all 8 call sites, both text and voice pipelines, the command DB-username paths, and all future callers; the two `<`-only pre-escapes removed so esc() is the single escaping stage (no double-escape) | nova-ai.js + voice-assistant.js + nova-universe.js | nova-ai.js:162 (sink esc), :219 (pre-escape removed); voice-assistant.js:139 (pre-escape removed); nova-universe.js:104 (translate ORIGINAL), :108 (translate TRANSLATED) | THIS COMMIT (H19) |
 | XSS-pre-audit wraps | H3 wrap series (typing indicator, optimistic bubble, pinned legacy, feed caption attribution, story editor, search echoes) | 8 files | 9 sites | 83633df…eea3a7a |
 
 Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nullish-safe) — verified correct for HTML text + quoted-attribute contexts, preserves all languages byte-for-byte (escape-helper-contract-harness pins behavior).
@@ -55,7 +56,6 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 
 | ID | Severity | File:line | Issue | Provenance | Recommended fix | Owning task |
 |----|----------|-----------|-------|------------|-----------------|-------------|
-| XSS-H19 | HIGH(edge) | nova-ai.js:162, :251 | AI panel renders raw API response as innerHTML (user's own msg is `<`-escaped, AI reply not) | Nova AI chat API output (prompt-shapable) | esc() at appendNovaMsg call sites; allowlist admission | H19 |
 | SEC-002 | HIGH | sv-append-overlays.js:44, :51 | Story overlay poll content (question + option text) rendered raw into innerHTML — story-author-controlled stored content executing against every viewer who opens the story (overlay authoring-path constraints NOT verified; DB-write bypass = arbitrary HTML; H13-audit discovery). Mention/link/text overlay branches use textContent (safe). CSS-context residuals: ov.color/fontSize/fontWeight/textShadow into cssText (breakage class, not execution) + ov.url into window.open (URL class) | stories.overlay_data (JSON — poll question/options authored by the story owner via story-editor poll UI) | esc() at :44 (question) and :51 (option text); residuals stay deferred same-row | future H-task (owner assigns; suggest after H19) |
 
 ### 1.3 OPEN — MEDIUM findings (M-tier, separate cycle)
@@ -74,13 +74,13 @@ Pre-H-audit escaping infrastructure: shared `esc()` (utils.js:4-12, 5-entity, nu
 | ID | Severity | File:line | Issue | Status |
 |----|----------|-----------|-------|--------|
 | XSS-C1 | LOW | utils.js:326-332 av(); posts.js:124; home.js:133; **reels-renderer-owner.js:118 (H11-noted site)**; **render-sv.js:30 (H13-noted site — story viewer header avatar)**; **notes-bar.js:75/:85, note-viewer-owners.js:26, load-notes-feed.js:75 (H16-noted sites — notes surfaces)**; **profile-view.js:82/:150/:286/:391, follow-list.js:33, show-story-viewers.js:43 (H18-noted sites — profile preview/full/blocked paths, follow-list rows, story-viewer rows; byte-identity disk vs parent proven in H18 S-F)**; (all av() callers) | av() first letter interpolated raw into text + onerror JS string (leading `\` = syntax breakage, not execution). ALSO: av() computes `safeName` (:329) but never uses it (dead variable, hygiene) | OPEN — av() review task (deferred issue #4) |
-| XSS-C2 | LOW | nova-ai.js:219 | Own message `<`-only partial escape | folded into H19 |
+| XSS-C2 | LOW | nova-ai.js:219 (and voice-assistant.js:139 — same pre-escape, voice pipeline) | Own message `<`-only partial escape | FIXED in H19 (pre-escape removed at both call sites; the shared appendNovaMsg sink now applies full esc() — single escaping stage, no double-escape) |
 | XSS-C3 | LOW | notes-bar.js:84 (ledger counting; actual current line :88 — 4-line drift, sink unambiguous by content; H16-audit re-verified: badge renders myReactionsMap[n.id] = own reaction emoji, byte-identical pre/post H16 fix, untouched) | Own reaction emoji badge — self-XSS only | OPEN (accepted low) |
 | XSS-C4 | — | show-group-info.js:38 | Rename input `value="…"` quote-escaped — double-quoted attr unbreakable | SAFE (verified) |
 | XSS-C5 | LOW | load-msgs.js:86 | isSystem() prefix trivially spoofable → renders with system styling (styling only; text now esc'd by H1) | OPEN (cosmetic) |
 | XSS-C6 | — | load-msgs.js:153 | Audit claimed reactionMap.id] bug — byte-verified the line is actually reactionMap[m.id] | SAFE (non-issue, verified H1 task) |
 | XSS-C8 | — | settings.js:627-628 | Share-link constant, app-origin | SAFE |
-| XSS-C9 | LOW | notes.js:57-58 | Personal "My Notes" modal renders localStorage `nova-notes` myNotes title/content raw into innerHTML — self-XSS only (own-device localStorage, no cross-user vector; separate feature from the quick_notes Notes Bar — H16 audit discovery) | OPEN (accepted low — self-XSS class, C3/M6 family treatment) |
+| XSS-C9 | LOW | notes.js:57-58; **nova-ultra-patches.js:46 moodChip `innerHTML` interpolating currentMood (source: smart-feed.js fixed-enum OR ai-moderation.js:39 `localStorage.getItem('nova-current-mood')` — self-set localStorage, H19-audit-discovered site, same self-XSS class)** | Personal "My Notes" modal renders localStorage `nova-notes` myNotes title/content raw into innerHTML — self-XSS only (own-device localStorage, no cross-user vector; separate feature from the quick_notes Notes Bar — H16 audit discovery). The smart-feed mood ids are a developer fixed-enum; only the localStorage restore path (ai-moderation.js:39) is self-XSS-class | OPEN (accepted low — self-XSS class, C3/M6 family treatment) |
 | XSS-10.5 | CLASS | (see dedicated JS-string section 4) | esc() insufficient in JS-string-attribute contexts — entity decode-back breakout | OPEN — dedicated hardening task |
 | SEC-001 | LOW | reels-renderer-owner.js:324; home.js:430/:442 (H12-discovered sites — Home feed error paths, same class); **profile-view.js:213 (preview render-exception path `Error: ${e.message}` raw into innerHTML — H18-discovered site, same error-path class; only reachable via a render-section exception, exercised with benign stub data in the H18 suite)** | Reels error fallback + Home feed error states + profile preview error path render `e.message` raw into innerHTML (Supabase/JS error text — not user-stored; defense-in-depth concern only; discovered during H11 audit, Home sites added during H12 audit, profile site added during H18 audit) | OPEN (defer — error-path class) |
 
@@ -451,7 +451,133 @@ Harness maintenance required by the authorized change (established mechanism, H1
 
 Vulnerability proven first (pre-fix state = parent 0b06ea1 sources via `git show`, proof artifact scripts/h18_proof_result.txt): 40/40 PROVE — 4 payload families (svg-onload, img-onerror, script, dq-breakout-img) × 10 flow rows (preview username/full_name × blocked/normal, full username/full_name × blocked/normal, follow-list, story-viewers): raw payload present AND real parsed elements minted with surviving handler attributes at every sink (svg 6 vs benign 5, img 1 vs 0, script 1 vs 0, handlerEls 8 vs 7 — comparative census vs benign baseline). Post-fix focused suite **457 PASS / 0 FAIL** (S-A full two-user receiver flow, 5 payload families × 10 flows: parse-tree zero minted elements (comparative census === benign), zero handler-attr drift, raw absent, escRef present, zone === escRef; S-B 21-payload username matrix × 6 surfaces — img/script/svg/iframe/dq+sq breakouts/mixed-case/anchor-js-href/multiline/unicode-fullwidth (esc preserves fullwidth — literal text, no minting)/entity-encoded/attr-fragment/quote-amp-angle; S-C 21-payload full_name matrix × 4 profile surfaces — separate provenance path, zone === escRef on the full_name zones; S-D 15-language multilingual (English/Hindi/Hinglish/Punjabi/Urdu/Arabic/accented/CJK/Russian/quotes/amp-angle/emoji/mixed/whitespace/long-300) — byte-exact zones + UTF-8 round-trip + no mojibake; S-E functional F1-F28 — preview/full/follow/viewer opens, username/full_name display, counts, follow-state labels, follow/unfollow UI, query type-inversion (followers vs following verified on the db builder), multiple users no duplicates, empty states, refresh/re-render idempotence, repeat-open no accumulation, blocked shell, not-found, nullish fallbacks (User/user), full_name-missing → username fallback, render-error path, zero new listeners/intervals/channels; S-F deferred-class byte-identity — benign rich profile (bio/website/cover/avatar/verified/posts) renders byte-identical parent vs disk on preview AND full; :392 viewAvatarFullscreen onclick byte-identical; av() zone byte-identical; follow/viewers byte-identical; S-G esc() contract on REAL utils.js (5-entity reference, nullish-safe, Unicode-preserving); S-H hygiene — exactly 11 esc wraps (9+1+1), H16 pill esc preserved, diff bounds exactly 9/1/1 lines vs parent; NEG — parent re-proven vulnerable (raw + minted SVG), disk esc-exact contrast, benign multilingual identical). Full gates: ALL prior H suites green (H1 FIXED, H1b FIXED, H4 114/0, H5 ALL GREEN, H6 84/0, H7 91/0, H8 154/154, H9 PASS, H10 247/0 + NC 29/29, H11 277/0 + NC 26/26, H12 176/0, H13 249/0, H14 63/0, H15 296/0, H16 446/0 — L.3 evolution-proofed per H9–H12 suite-tooling precedent: historical H16 delta re-anchored to immutable commit 541196a + new stricter L.3b proving disk evolution = sanctioned H18 esc-wraps ONLY, product code never changed for tests, H17 237/0); 322 regression 317/5 byte-identical to baseline (all 5 = owner main-pin family: branch2-final-readiness / branch2-only-safety / deletion-fallback / dms-renderer / particle-split; both failure reasons re-verified); app-load 10/10; event-listener boundary, interval lifecycle, dm-chat-realtime protected readiness, dms-realtime, notes-submission-reactions-protected-readiness, index-html-tag-integrity, external-resource-url-integrity, follow-list-contract, stories-seam-preparation, clipboard-interaction all PASS; diff adds zero listeners/subscriptions/intervals.
 
-## 13. Task report hooks (per owner instruction)
+## 13. H19 — Nova AI panel + Nova AI response rendering path XSS (this task)
+
+### 13.1 Provenance audit — content model, trust boundary, and sink inventory (2026-09-08, BEFORE fix application)
+
+**Content model determination (runtime source of truth, per task mandate — NOT inferred from prompt/docs):**
+the Nova AI pipeline contains NO Markdown parser, NO linkify, NO sanitizer (grep-verified: exactly 2
+bigmodel fetch sites — call-nova-ai.js:12 and nova-universe.js:66; both `await resp.json()` single-shot;
+the only "sanitization" is call-nova-ai.js:30-44 keyword redaction + competitor-name replacement, which
+never touches markup). All producers are plain text (Hinglish + emojis + \n; system prompt demands
+short Hinglish replies). No caller ever passes intentional HTML through `appendNovaMsg`. The panel
+welcome message is static index.html:56 markup (outside appendNovaMsg); `nova-user-name` is set via
+textContent (nova-ai.js:37 — safe API). `.nova-msg` CSS (premium.css:86) has no
+`white-space:pre-wrap`, so \n already visually collapses today — esc() preserves that display
+byte-for-byte. => Intended model = **PLAIN TEXT**; fix strategy A (esc at sink, preserve text).
+No streaming implementation exists (both API paths single-shot; no SSE/getReader/ReadableStream —
+D3 check). No storage/history/reload path exists for panel messages: `novaHistory` is an in-memory
+array (never persisted; storage-key surface pins only nova-ai-pos / nova-fab-* / nova-current-mood),
+panel close/reopen toggles a CSS class without re-rendering, and page reload resets the panel to the
+static welcome markup (E1-E5 checks). Chunk-split and reopen tests were still executed for evidence.
+
+**Trust model answers (task section 10):** (A) AI output is NOT trusted-by-design — nothing sanitized
+it and it rendered as live HTML pre-fix. (B) YES — the user prompt is reflected (:219 own message,
+command echoes :353/:585/:605). (C) YES — other users' DB usernames reach the panel through command
+responses (:336/:341/:351/:647). (D) YES — DB content reaches the panel (same paths + posts.caption
+via the translate modal :104). (E) YES — external model output (GLM) reaches both the panel (:251)
+and the translate modal (:108). (F) Pre-fix the AI output COULD contain arbitrary HTML and it executed.
+(G) HTML intentionally supported: NO. (H) Markdown intentionally supported: NO. (I) Plain text only: YES.
+(J) Sanitized before rendering: NO. (K) No sanitizer at all; the AI call is client-side.
+
+| # | Rendering path | File:line | Data source | Context | Pre-fix state |
+|---|----------------|-----------|-------------|---------|---------------|
+| 1 | Panel AI response (typed) | nova-ai.js:162 via :251 | GLM API content (prompt-shapable) | HTML text (innerHTML) | **VULNERABLE — H19 core sink** |
+| 2 | Panel AI response (voice) | nova-ai.js:162 via voice-assistant.js:155 | GLM API content / cmdResponse | HTML text | **VULNERABLE — same sink** |
+| 3 | Panel AI fallback | nova-ai.js:162 via :251 (callNovaAI throw → getLocalAIResponse) | canned constants + own-username greeting (local-ai-response.js:51) | HTML text | VULNERABLE sink; benign producers (own username = self-XSS class, now esc-covered) |
+| 4 | Panel user message | nova-ai.js:162 via :219 | own typed/voice text (`<`-pre-escaped only) | HTML text | partial (old XSS-C2) — now full esc |
+| 5 | Panel sensitive-query canned | nova-ai.js:162 via :226 | constant | HTML text | SAFE producer, VULNERABLE sink |
+| 6 | Panel command: contact list | nova-ai.js:162 via :234 ← :336 | follows join profiles.username | HTML text | **VULNERABLE — cross-user stored XSS** |
+| 7 | Panel command: open-chat match | :234 ← :341 | follows join profiles.username | HTML text | **VULNERABLE — cross-user stored** |
+| 8 | Panel command: similar list | :234 ← :351 | follows join profiles.username | HTML text | **VULNERABLE — cross-user stored** |
+| 9 | Panel command: friend recs | :234 ← :647 | profiles.username (fof query) | HTML text | **VULNERABLE — cross-user stored** |
+| 10 | Panel command: caption/reply echo | :234 ← :585/:605 | own input topic/context | HTML text | self-input, now esc-covered |
+| 11 | Panel command: profile-analyzer error | :234 ← :727 | e.message | HTML text | SEC-001-class reflection, now esc-covered by sink |
+| 12 | Voice constants | voice-assistant.js:74/:242 via sink | constants | HTML text | SAFE producer |
+| 13 | Translate modal ORIGINAL | nova-universe.js:104 | posts.caption (DB, cross-user) | HTML text (mbody.innerHTML) | **VULNERABLE — posts.caption class site (H10-2 family)** |
+| 14 | Translate modal TRANSLATED | nova-universe.js:108 | GLM translation output (prompt embeds posts.caption → prompt injection) | HTML text | **VULNERABLE — H19 AI-response site** |
+| 15 | Translate modal lang label | nova-universe.js:107 | developer constant langs (post-actions.js:46-59) | HTML text | SAFE |
+| 16 | Typing indicator | nova-ai.js:174 | constant spans | HTML text | SAFE |
+| 17 | Panel header name | nova-ai.js:37 | PROF.username via textContent | textContent | SAFE |
+| 18 | Universe hub / dynamic island / moodChip | nova-universe.js:10/:63, :137; nova-ultra-patches.js:46 | constants / numeric count / currentMood (fixed-enum OR self-localStorage) | innerHTML | SAFE producers; currentMood localStorage path = XSS-C9-class site addition (deferred) |
+| 19 | AI caption generator output | ai-generators.js:22/:38 | GLM response → capinp.value | textarea .value (NOT an HTML sink) | SAFE by sink type; caption later rendered by posts family (formatCaption esc) |
+| 20 | AI journal | ai-journal.js:12/:75 | static mock constants | innerHTML | SAFE (no AI API output involved) |
+| 21 | translatePost error toast | nova-universe.js:93 | e.message → toast() | textContent (no iconName) | SAFE by sink type (verified G13) |
+| 22 | callNovaAI redaction | call-nova-ai.js:30-44 | API content | string filter | NOT a sanitizer (documented; defense-in-depth only) |
+
+Shared-renderer analysis: `appendNovaMsg` is THE single shared renderer for the entire panel —
+both the typed pipeline (nova-ai.js sendNovaMsg) and the voice pipeline (voice-assistant.js
+processVoiceConversationMsg), user + AI + command content models, 8 production call sites. No other
+file renders panel messages. The translate modal is the one additional Nova-AI-response surface
+(nova-universe.js, modal variant). esc() global available: utils.js (index.html:211) loads before
+nova-ai.js (:217), voice-assistant.js (:310), nova-universe.js (:309).
+
+### 13.2 H19 fix
+
+Minimal sink-level fix (shared-renderer principle — the ledger's "esc() at appendNovaMsg call
+sites" prescription strengthened to the single choke point; "or textContent" alternative rejected
+to keep innerHTML-assignment semantics and the established esc() architecture):
+
+- nova-ai.js:162: `div.innerHTML = text;` → `div.innerHTML = esc(text);`
+- nova-ai.js:219: `appendNovaMsg(text.replace(/</g,'&lt;'), false);` → `appendNovaMsg(text, false);`
+  (pre-escape removed — esc() at the sink is the single escaping stage; removing avoids
+  double-escaping and upgrades the old XSS-C2 `<`-only partial escape to full esc)
+- voice-assistant.js:139: same pre-escape removal (voice pipeline user message)
+- nova-universe.js:104: `${original}` → `${esc(original)}` (translate modal ORIGINAL slot)
+- nova-universe.js:108: `${translated}` → `${esc(translated)}` (translate modal TRANSLATED slot)
+- docs/branch2-only-safety-contract-harness.js: allowlist admission for src/features/nova-ai.js +
+  src/features/voice-assistant.js (ledger-prescribed "allowlist admission"; nova-universe.js
+  already admitted). Harness still fails at the pre-existing stale origin/main pin
+  (ef418007 ≠ owner df54898) BEFORE the allowlist check — failure set and reason remain
+  byte-identical to the documented baseline.
+
+5 production line-edits across 3 files + 1 harness allowlist line; 5 insertions / 5 deletions in
+production files. No other file touched. Deferred classes untouched: showNovaUniverseHub,
+showDynamicIsland, moodChip (C9-class), ai-journal, local-ai-response.js, ai-context.js,
+call-nova-ai.js, show-nova-universe-overview.js, nova-ultra-patches.js, ai-generators.js
+(byte-identity proven in J10/J12).
+
+### 13.3 H19 verification summary
+
+Vulnerability proven first (pre-fix state = parent a1e8027 sources via `git show`, proof artifact
+scripts/h19_proof_result.txt): PROVE 227 PASS / 0 FAIL — 20 XSS payload variants (img-onerror,
+svg-onload, details-ontoggle, div-onclick, anchor-javascript-href, dq/sq/backtick breakouts,
+iframe-javascript, math-mtext-script, script, mixed-case, multiline/whitespace, entity-encoded,
+data-URL anchor, entity-parens handler, double-angle, document.domain) × 5 receiver flows
+(panel API response, voice AI response, command DB-username list, user echo, translate modal both
+slots): payloads with raw tag syntax minted REAL parsed elements with surviving handler attributes
+(svg/img/script/iframe/details/math + on* attrs + javascript:/data: URLs); pure-entity payloads
+passed through as inert text in the parent (documented browser semantics). Post-fix focused suite
+**227 PASS / 0 FAIL** (S-A receiver flows ×5; S-B username matrix ×3 more flows; S-C 18-markdown
+matrix — renderer supports NO markdown, everything renders literal + inert, HTML-in-markdown
+neutralized; S-D streaming evidence — no streaming code exists (D3 grep-proof), per-message chunk
+halves individually inert, accumulated re-render simulation proves intermediate-stage atomicity;
+S-E storage/history — no persistence, reopen = class toggle with no re-render, history trim/system
+unshift intact; S-F 8-value multilingual byte-exact round-trip (English/Hindi/Hinglish/Punjabi/Urdu/
+Arabic/emoji/mixed+specials) + no mojibake across panel/voice/echo/translate surfaces; S-G functional
+G1-G25 — panel toggle/focus/drag-setup, send+clear+typing lifecycle, sensitive-query block, open-chat
+command + startDM scheduling, non-command fallthrough, API-error fallback, no-key fallback, own-username
+greeting, patched command chain (GC/channel), suggestion chips, multiline \n preservation, 5000-char
+long response, empty-API default reply, appendNovaMsg return contract, autoGrow, competitor
+replacement, API sensitive-redaction, voice loop + speech, voice stop, translate success/fallback/
+no-caption paths, modal title textContent; S-H negative control — parent re-proven vulnerable 4/4,
+disk esc-exact 4/4; S-I esc() contract on REAL utils.js; S-J hygiene — exactly 1 esc() in nova-ai.js,
+0 in voice-assistant.js, 2 in nova-universe.js, disk-vs-parent diff == exactly the 5 sanctioned edits,
+5 adjacent modules byte-identical, zero leaked listeners/intervals, dynamic-island constant path
+byte-exact). Full gates: ALL prior H suites green (H1 FIXED, H1b FIXED, H4 114/0, H5 ALL GREEN,
+H6 84/0, H7 91/0, H8 154/154, H9 159/0, H10 247/0 + NC 29/29, H11 PASS + NC 26/26, H12 176/0,
+H13 249/0, H14 63/0, H15 296/0, H16 446/0, H17 237/0, H18 457/0); 322 regression 317/5
+byte-identical to baseline (all 5 = owner main-pin family; branch2-only-safety reason re-verified =
+stale origin/main pin, fails BEFORE the H19 allowlist check; branch2-final-readiness pre-commit
+reason = "worktree must be clean after publication", the documented pre-publication baseline
+behavior); app-load 10/10; event-listener-boundary, interval-lifecycle, dm-chat-realtime-protected-
+readiness, dms-realtime, realtime-subscription-lifecycle, notes-submission-reactions-protected-
+readiness, index-html-tag-integrity, external-resource-url-integrity, local-ai-response-contract,
+ai-context-contract, show-nova-universe-overview-contract, nova-debug-contract,
+window-assignment-surface, storage-key-surface, explicit-error-boundary all exit 0; diff adds zero
+listeners/subscriptions/intervals/window assignments/storage keys.
+
+## 14. Task report hooks (per owner instruction)
 
 At the end of every H task, report: historical issues imported/updated · issues fixed in this task · issues remaining open · newly discovered issues · ledger changes.
 
@@ -499,3 +625,10 @@ At the end of every H task, report: historical issues imported/updated · issues
 - Deduplication decisions: profile-view.js:403 (bio-section full_name) absorbed into XSS-H18 (same file + same provenance + same fix pattern — in-scope site addition); follow-list ledger ref :33 clarified to actual sink :34 (1-line drift, unambiguous by content); explore.js:128-:131 (H10-10) and universal-search.js:111-:115 (H10-11) NOT absorbed (existing OPEN MEDIUM rows with "H18-family sweep" owner); close-friends/blocked-list/se-search-mention-users NOT fixed (H9-D2 class — H18-family extensions task); own-profile surfaces NOT fixed (XSS-M6 self-XSS class); SEC-002/H19 untouched.
 - Suite-tooling (scripts/ OUTSIDE repo, H9–H12 precedent, product code NEVER changed for tests): H16 verify-suite L.3 evolution-proofed — historical H16 delta re-anchored to immutable commit 541196a (still exactly 1 line) + new stricter L.3b proving disk evolution from H16-commit state = sanctioned H18 esc-wraps only (9 lines, every changed line is an esc() injection into one ${…} slot).
 - Remaining open: 1 HIGH (H19), SEC-002 (HIGH, untouched), 6 MEDIUM (M1-M6), XSS-C9, JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13, now with 3 more sites), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (reels + home + profile-preview error paths), cosmetics (H9-D5 BUG, H10-15 UI_UX).
+
+**H19 report block:**
+- Historical imported: none new (issue system live since H11; all history preserved).
+- Fixed in this task: XSS-H19 — nova-ai.js:162 (esc() at the shared appendNovaMsg sink — covers all 8 call sites: typed + voice pipelines, user/AI/command/canned content) + :219 and voice-assistant.js:139 (`<`-pre-escape removal, single escaping stage) + nova-universe.js:104/:108 (translate modal ORIGINAL + TRANSLATED esc) — 5 production line-edits across 3 files, 5 insertions/5 deletions; branch2-only-safety-contract-harness allowlist admission for nova-ai.js + voice-assistant.js (ledger-prescribed; nova-universe.js already admitted). XSS-C2 (own-message `<`-only partial escape) FIXED as a side effect of the sink fix + pre-escape removal (its row updated — folded as promised).
+- Newly discovered (site additions / class notes, per dedupe rule #5 — no new issue IDs for the translate slots, they are H19's own audited rendering path): nova-universe.js:104 recorded as a posts.caption-class site (same value class as H10-2/formatCaption; FIXED in H19); XSS-C9 gains nova-ultra-patches.js:46 moodChip + ai-moderation.js:39 (currentMood self-localStorage self-XSS class, deferred); call-nova-ai.js:30-44 documented as keyword redaction, not a sanitizer; ai-generators.js caption output verified as textarea .value (non-HTML sink); local-ai-response.js:51 own-username greeting now esc-covered by the sink; nova-ai.js:727 e.message reflection now esc-covered by the sink (SEC-001 family note); panel command DB-username sites (:336/:341/:351/:647) now esc-covered by the sink (H9-D2 username-rendering class note — no separate rows existed for the panel-internal paths).
+- Deduplication decisions: XSS-C2 absorbed into H19 as prescribed by its row ("folded into H19"); translate-modal ORIGINAL slot absorbed into H19 (same commit + same rendering path being secured; data class attribution recorded); NO other issues merged; SEC-002 untouched (different root cause: stories.overlay_data poll content vs Nova AI response/posts.caption); no username-rendering-class sites outside the panel were touched; no Markdown renderer was added or removed (none exists); no CSP work (out of scope).
+- Remaining open: 0 XSS H-series HIGH; SEC-002 (HIGH, untouched — story overlay poll content, separate task per owner); 6 MEDIUM (M1-M6), XSS-C9 (+2 sites), JS-string class (H9-D1/XSS-10.5), username-rendering class (H9-D2 + H10-6…H10-13), av() review, modal-title caller audit, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache versioning (PLATFORM file), SEC-001 (reels + home + profile-preview error paths; the nova-ai panel error reflection is now esc-covered), cosmetics (H9-D5 BUG, H10-15 UI_UX). With H19 closed, the entire H1-H19 HIGH XSS audit backlog is FIXED; remaining HIGH = SEC-002 only.

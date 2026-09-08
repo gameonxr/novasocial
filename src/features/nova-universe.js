@@ -101,11 +101,11 @@ function showTranslatedCaption(original, translated, lang){
     <div style="padding:16px">
       <div style="margin-bottom:16px">
         <div style="font-size:11px;color:#666;font-weight:700;margin-bottom:6px">ORIGINAL</div>
-        <div style="font-size:13px;color:#888;line-height:1.6;padding:12px;background:#0f0f0f;border-radius:10px;border:1px solid #1a1a1a">${original}</div>
+        <div style="font-size:13px;color:#888;line-height:1.6;padding:12px;background:#0f0f0f;border-radius:10px;border:1px solid #1a1a1a">${esc(original)}</div>
       </div>
       <div>
         <div style="font-size:11px;color:#7afdff;font-weight:700;margin-bottom:6px">🌍 TRANSLATED (${lang})</div>
-        <div style="font-size:14px;color:#fff;line-height:1.6;padding:12px;background:rgba(122,253,255,0.05);border-radius:10px;border:1px solid rgba(122,253,255,0.2)">${translated}</div>
+        <div style="font-size:14px;color:#fff;line-height:1.6;padding:12px;background:rgba(122,253,255,0.05);border-radius:10px;border:1px solid rgba(122,253,255,0.2)">${esc(translated)}</div>
       </div>
       <button class="bgrd" onclick="closeModal()" style="margin-top:16px;width:100%;padding:12px">Done</button>
     </div>

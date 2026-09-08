@@ -159,7 +159,7 @@ function appendNovaMsg(text, isAI){
   if(!body) return;
   const div = document.createElement('div');
   div.className = 'nova-msg ' + (isAI ? 'ai' : 'user');
-  div.innerHTML = text;
+  div.innerHTML = esc(text);
   body.appendChild(div);
   body.scrollTop = body.scrollHeight;
   return div;
@@ -216,7 +216,7 @@ async function sendNovaMsg(){
   const text = inp.value.trim();
   if(!text) return;
 
-  appendNovaMsg(text.replace(/</g,'&lt;'), false);
+  appendNovaMsg(text, false);
   inp.value = '';
   inp.style.height = 'auto';
 

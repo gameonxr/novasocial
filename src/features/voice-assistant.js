@@ -136,7 +136,7 @@ function startVoiceConvListening(){
 }
 
 async function processVoiceConversationMsg(text){
-  appendNovaMsg(text.replace(/</g,'&lt;'), false);
+  appendNovaMsg(text, false);
 
   const cmdResponse = await handleNovaCommand(text);
   let aiResponse;

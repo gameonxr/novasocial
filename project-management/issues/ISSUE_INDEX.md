@@ -27,6 +27,7 @@
 | XSS-H16 | Notes Bar text pills + usernames + own PLUS-slot pill + other-profile note pill (notes-bar.js:76/:86/:90 + profile-view.js:389) | FIXED (H16 commit) |
 | XSS-H17 | Note reactors list reactor username + typed reaction emoji — targeted stored XSS vs note OWNER (note-reactors-list-owner.js:20/:21) | FIXED (H17 commit) |
 | XSS-H18 | Profile/preview/full-profile/follow-list/story-viewers username+full_name — 11 HTML-text sinks (profile-view.js:88/:92/:156/:160/:276/:298/:302/:376/:403 + follow-list.js:34 + show-story-viewers.js:44) | FIXED (H18 commit) |
+| XSS-H19 | Nova AI panel shared innerHTML sink (appendNovaMsg) + voice pipeline + command DB-username paths + translate modal ORIGINAL/TRANSLATED (nova-ai.js:162/:219, voice-assistant.js:139, nova-universe.js:104/:108) | FIXED (H19 commit) |
 | XSS-pre-audit wraps | H3 wrap series, 9 sites | FIXED (83633df…eea3a7a) |
 | HA-H3 | Systemic XSS surface premise → wrap series | FIXED (8176eeb…) |
 | HA-M4 | eval(a.action) in profile sheet → dispatch table | FIXED (df4261a) |
@@ -34,7 +35,6 @@
 ### OPEN / DEFERRED (security)
 | ID | Summary | Status |
 |----|---------|--------|
-| XSS-H19 | Nova AI panel raw API response | OPEN |
 | XSS-M1 | media_url/avatar_url/cover_url in src/CSS-url/onclick contexts (posts/reels/profile grids + home tray :133 — H12 site; profile-view :392 viewAvatarFullscreen onclick — H16 site; profile-view :62/:267/:366 cover — H18 sites) | OPEN |
 | XSS-M2 | profile-view bio partial escape (:135) + full-profile linkify(bio) unescaped (:408 — H18 site) | OPEN |
 | XSS-M3 | Reaction badge stored emoji raw | OPEN |
@@ -42,10 +42,10 @@
 | XSS-M5 | Admin approvals esc'd-username-in-onclick decode-back | OPEN |
 | XSS-M6 | Own-profile names + linkify(bio) (+ own note pill :75 — H16 site, self-XSS) | OPEN |
 | XSS-C1 | av() first-letter + onerror JS-string (all callers incl. reels :118, story-viewer :30, notes surfaces — H16 sites; profile/follow/viewer av sites — H18 sites) | OPEN |
-| XSS-C2 | nova-ai own-msg partial escape | folded into H19 |
+| XSS-C2 | nova-ai own-msg partial escape (+ voice-assistant.js:139 same pre-escape) | FIXED (H19 commit — sink-level esc, pre-escape removed) |
 | XSS-C3 | notes-bar own reaction badge (self-XSS) | OPEN (accepted low) |
 | XSS-C5 | isSystem() styling spoof | OPEN (cosmetic) |
-| XSS-C9 | notes.js personal localStorage notes raw render (self-XSS only — H16-discovered) | OPEN (accepted low) |
+| XSS-C9 | notes.js personal localStorage notes raw render + nova-ultra-patches.js:46 moodChip currentMood (self-localStorage, ai-moderation.js:39 — H19-discovered site; self-XSS only) | OPEN (accepted low) |
 | XSS-10.5 | esc() insufficient in JS-string-attr contexts (class) | OPEN |
 | H9-D1 | JS-string/inline onclick class (openChat/initiateCall/sendSharedPostToChat/addToGroup/insertMention/shareText…) | OPEN (dedicated hardening task) |
 | H9-D2 | Username-rendering surface class (mentions/call-UI/share-pickers/GC-add-member + close-friends/blocked-list/se-search-mention — H18 sites) | OPEN |
@@ -131,3 +131,4 @@ Per ISSUE_RULES.md #9, a category file is created only when an existing or newly
 - 2026-09-08 (H16): XSS-H16 → FIXED (notes-bar.js:76/:86/:90 esc — own PLUS-slot pill + others' pill + others' username; profile-view.js:389 esc — other-profile active-note pill text branch, XSS-H16 family site per dedupe rule #5); NEW issue XSS-C9 (notes.js:57-58 personal localStorage notes self-XSS, LOW, accepted low); site additions — XSS-M1 (profile-view.js:392 viewAvatarFullscreen onclick), XSS-M4 (search-music-for-note.js:13-25), XSS-M6 (profile.js:75 own-profile note pill), XSS-C1 (notes surfaces), XSS-C3 line-ref clarified :84 → actual :88; no category files created; TRACK A audit conclusion recorded (no href sink in Notes Bar; pre-fix breakout minted executable <a href=javascript:> elements — fixed by same esc sinks).
 - 2026-09-08 (H17): XSS-H17 → FIXED (note-reactors-list-owner.js:20/:21 esc — reactor username + typed reaction emoji; targeted stored XSS executing against the note OWNER, container gated behind isOwnNote at note-viewer-owners.js:41); branch2-only-safety-contract-harness allowlist admission for note-reactors-list-owner.js; note-reactors-list-production-split-contract-harness parity re-pinned to origin/main + exactly the H17 esc delta; no new issues, no site additions, no category files created; write-path constraint documented (reactToNote upsert unvalidated — maxlength=4 client-side only, receiver-side esc is the only defense).
 - 2026-09-08 (H18): XSS-H18 → FIXED (profile-view.js:88/:92/:156/:160/:276/:298/:302/:376/:403 + follow-list.js:34 + show-story-viewers.js:44 esc — profile/preview/full-profile/blocked-shell username+full_name, followers/following rows, story-viewer rows; 11 HTML-text sinks, widest username exposure; write path = settings.js saveEdit client-side-only username regex + NO full_name validation); branch2-only-safety-contract-harness allowlist admission for follow-list.js (ledger-prescribed); H16 verify-suite L.3 evolution-proofed (scripts/ outside repo — historical H16 delta re-anchored to immutable 541196a + stricter L.3b sanction-check, product code unchanged); site additions to existing class rows (no new IDs): XSS-M2 (profile-view.js:408 linkify(bio) unescaped), XSS-M1 (profile-view.js:62 cover CSS-url + :267/:366 cover src), XSS-C1 (profile/follow/viewer av sites), SEC-001 (profile-view.js:213 error path), H9-D2 (close-friends.js:46, show-blocked-list.js:15, se-search-mention-users.js:48/:51); dedupe recorded (profile-view :403 absorbed into H18; explore/universal-search stay H10-10/H10-11; H19 + SEC-002 untouched).
+- 2026-09-08 (H19): XSS-H19 → FIXED (nova-ai.js:162 esc() at the shared appendNovaMsg sink covering all 8 call sites — typed + voice pipelines, AI/API response, local fallback, command DB-username paths, sensitive canned, user echo; :219 + voice-assistant.js:139 pre-escape removal for single escaping stage; nova-universe.js:104/:108 translate modal ORIGINAL posts.caption + TRANSLATED GLM-response esc; content model = PLAIN TEXT by runtime audit — no Markdown/sanitizer/streaming/persistence exists); XSS-C2 → FIXED (absorbed as its row prescribed); branch2-only-safety-contract-harness allowlist admission for nova-ai.js + voice-assistant.js (ledger-prescribed); site addition: XSS-C9 gains nova-ultra-patches.js:46 moodChip + ai-moderation.js:39 (currentMood self-localStorage class, deferred); nova-universe.js:104 recorded as a posts.caption-class site (H10-2 family, fixed in H19); no new issue IDs, no category files created; with H19 the H1-H19 HIGH XSS backlog is fully closed — remaining HIGH = SEC-002 only.
