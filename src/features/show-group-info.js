@@ -26,7 +26,7 @@ window.showGroupInfo = async function showGroupInfo(cid){
 
   html += '<div onclick="'+(isAdmin?`document.getElementById('gc-av-pick').click()`:'')+'" style="position:relative;cursor:'+(isAdmin?'pointer':'default')+';margin-bottom:8px;">';
   if(gcAvatar) {
-    html += '<div style="width:90px;height:90px;border-radius:50%;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.5);"><img src="'+gcAvatar+'" style="width:100%;height:100%;object-fit:cover"></div>';
+    html += '<div style="width:90px;height:90px;border-radius:50%;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.5);"><img src="'+esc(gcAvatar)+'" style="width:100%;height:100%;object-fit:cover"></div>';
   } else {
     html += '<div style="width:90px;height:90px;border-radius:50%;background:'+GRAD+';display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 4px 12px rgba(0,0,0,0.5);">👥</div>';
   }
@@ -53,8 +53,8 @@ window.showGroupInfo = async function showGroupInfo(cid){
     html += '<div style="padding:16px; border-bottom:8px solid #0a0a0a;"><div style="color:#666;font-size:12px;font-weight:700;margin-bottom:8px; display:flex; justify-content:space-between;">SHARED MEDIA <span style="color:#4a90d9;cursor:pointer;" onclick="toast(\'Opening all media...\')">See All</span></div>';
     html += '<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:4px;">';
     mediaMsgs.forEach(m => {
-      if(m.media_type === 'image') html += '<img src="'+m.media_url+'" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;cursor:pointer;" onclick="window.open(\''+m.media_url+'\',\'_blank\')">';
-      else if(m.media_type === 'video') html += '<div style="position:relative;width:100%;aspect-ratio:1/1;background:#000;border-radius:8px;overflow:hidden;"><video src="'+m.media_url+'" style="width:100%;height:100%;object-fit:cover;"></video><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;">▶️</div></div>';
+      if(m.media_type === 'image') html += '<img src="'+esc(m.media_url)+'" data-mu="'+encodeURIComponent(m.media_url)+'" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;cursor:pointer;" onclick="window.open(decodeURIComponent(this.dataset.mu),\'_blank\')">';
+      else if(m.media_type === 'video') html += '<div style="position:relative;width:100%;aspect-ratio:1/1;background:#000;border-radius:8px;overflow:hidden;"><video src="'+esc(m.media_url)+'" style="width:100%;height:100%;object-fit:cover;"></video><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;">▶️</div></div>';
     });
     html += '</div></div>';
   }

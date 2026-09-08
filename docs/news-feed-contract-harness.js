@@ -30,7 +30,7 @@ for (const marker of [
 assert.strictEqual((source.match(/\.from\('posts'\)/g) || []).length, 1, 'News feed must own one posts query');
 assert.strictEqual((source.match(/\.limit\(20\)/g) || []).length, 1, 'News feed must retain the twenty-result cap');
 assert.strictEqual((source.match(/viewPost\('\$\{p\.id\}'\)/g) || []).length, 1, 'News feed must use one result navigation template');
-assert.strictEqual((source.match(/esc\(/g) || []).length, 2, 'News feed must escape caption and username output');
+assert.strictEqual((source.match(/esc\(/g) || []).length, 3, 'News feed must escape caption, username and media_url output');
 assert(source.includes('if(error) throw error;'), 'News feed must preserve database error propagation to the error state');
 assert(source.includes('if(!posts || posts.length === 0)'), 'News feed must preserve empty-result handling');
 assert(!source.includes('renderReels'), 'News feed must not own the protected Reels renderer');

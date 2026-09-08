@@ -29,7 +29,7 @@ window.loadAdminDeletedPosts = async function loadAdminDeletedPosts() {
               const safeCaption = (p.caption || '').substring(0, 60);
               return `
               <div style="display:flex;align-items:center;gap:12px;padding:12px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,193,7,0.15);border-radius:14px">
-                ${p.media_url ? `<img src="${p.media_url}" style="width:56px;height:56px;border-radius:10px;object-fit:cover" onerror="this.style.display='none'">` : '<div style="width:56px;height:56px;border-radius:10px;background:#111;display:flex;align-items:center;justify-content:center">📷</div>'}
+                ${p.media_url ? `<img src="${esc(p.media_url)}" style="width:56px;height:56px;border-radius:10px;object-fit:cover" onerror="this.style.display='none'">` : '<div style="width:56px;height:56px;border-radius:10px;background:#111;display:flex;align-items:center;justify-content:center">📷</div>'}
                 <div style="flex:1;min-width:0">
                   <div style="font-size:13px;font-weight:600">@${p.profiles?.username || '?'}</div>
                   <div style="font-size:11px;color:#8A8A8A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(safeCaption) || 'No caption'}</div>

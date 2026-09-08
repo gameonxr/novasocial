@@ -319,8 +319,8 @@ async function openShareSheet(pid){
   // Preview thumbnail
   const thumbHtml = p.media_url
     ? (p.media_type==='video'
-      ? `<video src="${p.media_url}" ${p.thumbnail_url?`poster="${p.thumbnail_url}"`:''} style="width:100%;height:100%;object-fit:cover" muted></video>`
-      : `<img src="${optimizeCloudinaryUrl(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.post_image.cloudTransform))}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`)
+      ? `<video src="${esc(p.media_url)}" ${p.thumbnail_url?`poster="${esc(p.thumbnail_url)}"`:''} style="width:100%;height:100%;object-fit:cover" muted></video>`
+      : `<img src="${esc(optimizeCloudinaryUrl(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.post_image.cloudTransform)))}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`)
     : '<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:32px">📷</div>';
 
   body.innerHTML=`
@@ -360,7 +360,7 @@ async function openShareSheet(pid){
           <div style="width:48px;height:48px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:22px">📋</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">Copy Link</div>
         </div>
-        <div onclick="downloadMedia('${p.media_url||''}','novasocial_${pid}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
+        <div data-dl-url="${encodeURIComponent(p.media_url||'')}" onclick="downloadMedia(decodeURIComponent(this.dataset.dlUrl),'novasocial_${pid}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
           <div style="width:48px;height:48px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:22px">⬇</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">Download</div>
         </div>

@@ -14,7 +14,7 @@ for (const marker of [
   'modal.style.cssText =',
   'onclick="document.getElementById(\'nova-avatar-viewer\').remove()"',
   'esc(username)',
-  '<img src="${avatarUrl}"',
+  '<img src="${esc(avatarUrl)}"',
   'modal.onclick = (e) => { if(e.target === modal) modal.remove(); };',
   'document.body.appendChild(modal)'
 ]) {

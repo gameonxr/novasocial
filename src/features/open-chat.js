@@ -67,7 +67,7 @@ window.openChat = async function openChat(cid,name,isGrp){
   window._chatCid=cid;
 
   let headerClick = isGrp ? "showGroupInfo('" + cid + "')" : (otherProf ? "goToProfile('" + window._chatOtherId + "')" : '');
-  let headerAv = isGrp ? (gcAvatar ? '<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.08)"><img src="'+gcAvatar+'" style="width:100%;height:100%;object-fit:cover"></div>' : '<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF2D7A,#833AB4);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+ico('group','#fff',20)+'</div>') : av(otherProf?.avatar_url,otherProf?.username,40,false,online);
+  let headerAv = isGrp ? (gcAvatar ? '<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.08)"><img src="'+esc(gcAvatar)+'" style="width:100%;height:100%;object-fit:cover"></div>' : '<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF2D7A,#833AB4);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+ico('group','#fff',20)+'</div>') : av(otherProf?.avatar_url,otherProf?.username,40,false,online);
 
   // Premium chat header icons
   let callIcons = isGrp ?

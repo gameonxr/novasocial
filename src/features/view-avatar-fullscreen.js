@@ -18,7 +18,7 @@ function viewAvatarFullscreen(avatarUrl, username) {
     <div style="position:absolute;top:20px;left:20px;color:#fff;font-weight:700;font-size:16px;z-index:2">
       @${esc(username) || ''}
     </div>
-    <img src="${avatarUrl}" style="width:min(90vw,420px);height:min(90vw,420px);border-radius:50%;object-fit:cover;box-shadow:0 0 60px rgba(255,255,255,0.1)">
+    <img src="${esc(avatarUrl)}" style="width:min(90vw,420px);height:min(90vw,420px);border-radius:50%;object-fit:cover;box-shadow:0 0 60px rgba(255,255,255,0.1)">
   `;
 
   modal.onclick = (e) => { if(e.target === modal) modal.remove(); };

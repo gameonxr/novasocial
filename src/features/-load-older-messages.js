@@ -73,13 +73,13 @@ window._loadOlderMessages = async function _loadOlderMessages(cid, isGrp, list){
       } else if (m.shared_post_id) {
         content = '<div onclick="closeModal();viewPost(\'' + m.shared_post_id + '\')" style="background:#111;padding:10px 12px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:8px;">' + ico('cam','#aaa',16) + ' <span style="color:#fff;font-size:13px">View Shared Post</span></div>';
       } else if (m.media_type === 'audio') {
-        content = '<div style="display:flex;align-items:center;gap:8px;background:#111;padding:4px 8px;border-radius:12px;"><audio controls src="' + m.media_url + '" style="max-width:150px;height:32px" onended="playNextAudio(this)"></audio><button onclick="changeAudioSpeed(this)" style="background:#333;border:none;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:10px;flex-shrink:0;font-weight:700;">1x</button></div>';
+        content = '<div style="display:flex;align-items:center;gap:8px;background:#111;padding:4px 8px;border-radius:12px;"><audio controls src="' + esc(m.media_url) + '" style="max-width:150px;height:32px" onended="playNextAudio(this)"></audio><button onclick="changeAudioSpeed(this)" style="background:#333;border:none;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:10px;flex-shrink:0;font-weight:700;">1x</button></div>';
       } else if (m.media_type === 'location') {
-        content = '<img src="' + m.media_url + '" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="window.open(\'https://www.google.com/maps?q=' + m.text + '\',\'_blank\')">';
+        content = '<img src="' + esc(m.media_url) + '" data-mq="' + encodeURIComponent(m.text||'') + '" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="window.open(\'https://www.google.com/maps?q=\'+decodeURIComponent(this.dataset.mq),\'_blank\')">';
       } else if (m.media_type === 'image') {
-        content = '<img src="' + m.media_url + '" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="viewChatImage(\'' + m.media_url + '\')">';
+        content = '<img src="' + esc(m.media_url) + '" data-fu="' + encodeURIComponent(m.media_url) + '" style="max-width:180px;border-radius:12px;cursor:pointer" onclick="viewChatImage(decodeURIComponent(this.dataset.fu))">';
       } else if (m.media_type === 'video') {
-        content = '<video controls src="' + m.media_url + '" style="max-width:180px;border-radius:12px"></video>';
+        content = '<video controls src="' + esc(m.media_url) + '" style="max-width:180px;border-radius:12px"></video>';
       } else {
         let rawText = esc(m.text || ''); // XSS H1b: escape BEFORE linkify/@-mention so generated anchors/spans stay intact (order matters)
         rawText = rawText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4FC3F7;text-decoration:underline;">$1</a>');

@@ -31,7 +31,7 @@ async function showNewsFeed(){
           const prof = p.profiles || {};
           return `<div onclick="closeModal();viewPost('${p.id}')" style="display:flex;gap:12px;padding:14px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer">
             <div style="font-size:24px;font-weight:900;color:${i<3?'#FF2D7A':'#555'};min-width:30px">${i+1}</div>
-            ${p.media_url ? `<img src="${p.media_url}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0">` : ''}
+            ${p.media_url ? `<img src="${esc(p.media_url)}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0">` : ''}
             <div style="flex:1;min-width:0">
               <div style="font-size:13px;color:#fff;font-weight:600;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${esc(p.caption || '[Media post]')}</div>
               <div style="display:flex;align-items:center;gap:6px;margin-top:4px">

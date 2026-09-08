@@ -11,7 +11,7 @@ for (const marker of [
   "m.querySelector('.mhdr').style.display = 'none'",
   "m.querySelector('.msheet').style.background = 'rgba(0,0,0,0.95)'",
   "m.querySelector('#mbody').innerHTML",
-  "<img src=\"'+url+'\"",
+  "<img src=\"'+esc(url)+'\"",
   'downloadMedia(',
   'novasocial_image',
   'm.onclick = e => { if(e.target === m) closeModal(); };'

@@ -59,7 +59,7 @@ async function showProfilePreview(userId){
 
     // ── COVER BACKGROUND for preview popup (agar available hai to use karo, else gradient) ──
     const previewCoverStyle = prof.cover_url
-      ? `background:linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0.85)),url('${prof.cover_url}');background-size:cover;background-position:center`
+      ? `background:linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0.85)),url('${esc(prof.cover_url)}');background-size:cover;background-position:center`
       : `background:linear-gradient(135deg,rgba(131,58,180,0.15),rgba(225,48,108,0.15))`;
 
     // ── BLOCKED-EITHER-WAY SHELL RENDER ──
@@ -264,7 +264,7 @@ async function openFullProfile(userId){
       <!-- Cover Image Header (same structure as normal profile) -->
       <div style="position:relative;height:180px;overflow:hidden">
         ${otherUserCoverUrl
-          ? `<img src="${cldUrl(otherUserCoverUrl, NOVA_MEDIA_CONFIG.cover.cloudTransform)}" style="width:100%;height:100%;object-fit:cover">`
+          ? `<img src="${esc(cldUrl(otherUserCoverUrl, NOVA_MEDIA_CONFIG.cover.cloudTransform))}" style="width:100%;height:100%;object-fit:cover">`
           : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0a0a,#1a0a2e,#16213e);display:flex;align-items:center;justify-content:center"><div style="font-size:40px;color:#222">${ico('img','#222',40)}</div></div>`
         }
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.05) 35%,rgba(0,0,0,0.55) 75%,rgba(0,0,0,0.9) 100%)"></div>
@@ -363,7 +363,7 @@ async function openFullProfile(userId){
   <!-- Cover Image Header -->
   <div style="position:relative;height:180px;overflow:hidden">
     ${otherUserCoverUrl
-      ? `<img src="${cldUrl(otherUserCoverUrl, NOVA_MEDIA_CONFIG.cover.cloudTransform)}" style="width:100%;height:100%;object-fit:cover">`
+      ? `<img src="${esc(cldUrl(otherUserCoverUrl, NOVA_MEDIA_CONFIG.cover.cloudTransform))}" style="width:100%;height:100%;object-fit:cover">`
       : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0a0a,#1a0a2e,#16213e);display:flex;align-items:center;justify-content:center"><div style="font-size:40px;color:#222">${ico('img','#222',40)}</div></div>`
     }
     <!-- Gradient overlay for contrast -->
@@ -389,7 +389,7 @@ async function openFullProfile(userId){
     ${profileActiveNote.text ? esc(profileActiveNote.text.slice(0,16)) : (profileActiveNote.music_title ? '🎵 '+profileActiveNote.music_title.slice(0,14) : '💭')}
   </div>
   ${av(prof.avatar_url,prof.username,82,false,online)}
-</div>` : `<div onclick="viewAvatarFullscreen('${prof.avatar_url||''}','${prof.username}')" style="cursor:pointer">${av(prof.avatar_url,prof.username,82,false,online)}</div>`}
+</div>` : `<div data-av-url="${encodeURIComponent(prof.avatar_url||'')}" data-av-name="${encodeURIComponent(prof.username||'')}" onclick="viewAvatarFullscreen(decodeURIComponent(this.dataset.avUrl),decodeURIComponent(this.dataset.avName))" style="cursor:pointer">${av(prof.avatar_url,prof.username,82,false,online)}</div>`}
     </div>
     <div style="display:flex;flex:1;justify-content:space-around;align-items:center">
       ${[['Posts',myPosts.length,null],['Followers',fmt(prof.followers_count||0),'followers'],['Following',fmt(prof.following_count||0),'following']].map(([l,v,type])=>`<div class="pstat" ${type?`onclick="showFollowList('${userId}','${type}')" style="cursor:pointer"`:''}><div class="pstat-n" style="font-size:18px"${type==='followers'?` id="followers-count" data-raw="${prof.followers_count||0}"`:(type==='following'?` id="following-count" data-raw="${prof.following_count||0}"`:'')}>${v}</div><div class="pstat-l" style="font-size:11px;letter-spacing:0.3px">${l}</div></div>`).join('')}
@@ -440,7 +440,7 @@ async function openFullProfile(userId){
 
   <!-- Posts Grid -->
   <div class="pgrid" id="upgrid">
-    ${!myPosts.length?'<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>No posts yet</div>':myPosts.map(p=>'<div class="pitem" onclick="viewPost(\''+p.id+'\')">'+(p.media_url?'<img src="'+p.media_url+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.style.background=\'#0a0a0a\'">':'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>')+'</div>').join('')}
+    ${!myPosts.length?'<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>No posts yet</div>':myPosts.map(p=>'<div class="pitem" onclick="viewPost(\''+p.id+'\')">'+(p.media_url?'<img src="'+esc(p.media_url)+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.style.background=\'#0a0a0a\'">':'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>')+'</div>').join('')}
   </div>
 
   <div style="height:80px"></div>`;
@@ -498,12 +498,12 @@ function userProfileTab(tab, userId){
     ptBtn.style.borderBottomColor='#fff';
     ptBtn.innerHTML=ico('grid','#fff',22);
     const p = window._userProfilePosts || [];
-    grid.innerHTML = !p.length?'<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>No posts yet</div>':p.map(x=>'<div class="pitem" onclick="viewPost(\''+x.id+'\')">'+(x.media_url?'<img src="'+cldUrl(x.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.style.background=\'#0a0a0a\'">':'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>')+'</div>').join('');
+    grid.innerHTML = !p.length?'<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">📷</div>No posts yet</div>':p.map(x=>'<div class="pitem" onclick="viewPost(\''+x.id+'\')">'+(x.media_url?'<img src="'+esc(cldUrl(x.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.style.background=\'#0a0a0a\'">':'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>')+'</div>').join('');
   } else if(tab==='reels'){
     rtBtn.style.borderBottomColor='#fff';
     rtBtn.innerHTML=ico('film','#fff',22);
     const r = window._userProfileReels || [];
-    grid.innerHTML = !r.length?'<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">🎬</div>No reels yet</div>':r.map(x=>'<div class="pitem" onclick="viewPost(\''+x.id+'\')" style="position:relative">'+(x.media_url?'<img src="'+cldUrl(x.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.style.background=\'#0a0a0a\'">':'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">🎬</div>')+'<div style="position:absolute;top:6px;right:6px">'+ico('film','#fff',14)+'</div></div>').join('');
+    grid.innerHTML = !r.length?'<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">🎬</div>No reels yet</div>':r.map(x=>'<div class="pitem" onclick="viewPost(\''+x.id+'\')" style="position:relative">'+(x.media_url?'<img src="'+esc(cldUrl(x.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.style.background=\'#0a0a0a\'">':'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">🎬</div>')+'<div style="position:absolute;top:6px;right:6px">'+ico('film','#fff',14)+'</div></div>').join('');
   } else if(tab==='tagged'){
     tgBtn.style.borderBottomColor='#fff';
     tgBtn.innerHTML=ico('tag','#fff',22);

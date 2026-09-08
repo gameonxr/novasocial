@@ -89,7 +89,7 @@ window.renderReels = async function(){
         return `
         <div style="height:${100/reels.length}%;position:relative;background:#000;overflow:hidden">
                    <div ondblclick="dblLikeReel('${r.id}', this)" style="position:absolute;inset:0;z-index:1;"></div>
-          ${r.media_url?`<video data-media-url="${r.media_url}" ${r.thumbnail_url?`poster="${r.thumbnail_url}"`:''} ${i<=3?`src="${r.media_url}"`:''} class="rvid" id="rv-${i}" muted playsinline loop></video>`:`<div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0533,#0d1f3c);display:flex;align-items:center;justify-content:center;font-size:90px">🎬</div>`}
+          ${r.media_url?`<video data-media-url="${esc(r.media_url)}" ${r.thumbnail_url?`poster="${esc(r.thumbnail_url)}"`:''} ${i<=3?`src="${esc(r.media_url)}"`:''} class="rvid" id="rv-${i}" muted playsinline loop></video>`:`<div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0533,#0d1f3c);display:flex;align-items:center;justify-content:center;font-size:90px">🎬</div>`}
           <div class="reel-progress-bar" style="position:absolute;bottom:0;left:0;height:3px;background:${GRAD};width:0%;z-index:5;"></div>
          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 70%,rgba(0,0,0,0.3) 100%);pointer-events:none;"></div>
           <div style="position:absolute;top:0;left:0;right:0;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;z-index:5">

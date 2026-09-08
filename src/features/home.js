@@ -130,7 +130,7 @@ async function renderHome(){
       <div class="si" onclick="openSV(${startIdx})">
         <div style="position:relative;">
           ${ringHtml}
-            ${s.profiles?.avatar_url?`<img src="${s.profiles.avatar_url}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:24px;font-weight:700">${(s.profiles?.username||'?')[0].toUpperCase()}</span>`}
+            ${s.profiles?.avatar_url?`<img src="${esc(s.profiles.avatar_url)}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:24px;font-weight:700">${(s.profiles?.username||'?')[0].toUpperCase()}</span>`}
           ${closingHtml}
         </div>
         <span class="sname">${esc(s.profiles?.username||'')}</span>

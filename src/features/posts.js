@@ -131,14 +131,14 @@ function postCard(p,liked,saved,reaction){
       </div>
     </div>
     <div style="display:flex;gap:14px;align-items:center">
-      ${p.media_url?`<div onclick="downloadMedia('${p.media_url}','novasocial_${p.id}')" style="cursor:pointer" title="Download">${ico('img','#aaa',18)}</div>`:''}
+      ${p.media_url?`<div data-dl-url="${encodeURIComponent(p.media_url)}" onclick="downloadMedia(decodeURIComponent(this.dataset.dlUrl),'novasocial_${p.id}')" style="cursor:pointer" title="Download">${ico('img','#aaa',18)}</div>`:''}
       <div onclick="showPostMenu('${p.id}','${p.user_id}')" style="cursor:pointer">${ico('more','#fff')}</div>
     </div>
   </div>
   <div style="position:relative;aspect-ratio:1/1;background:#111;overflow:hidden;cursor:pointer" ondblclick="dblLike('${p.id}',this)">
     ${p.media_url?
-      p.media_type==='video'?`<div style="position:relative;width:100%;height:100%"><video src="${p.media_url}" ${p.thumbnail_url?`poster="${p.thumbnail_url}"`:''} style="width:100%;height:100%;object-fit:cover" controls playsinline loop muted id="pv-${p.id}"></video></div>`
-      :`<img src="${optimizeCloudinaryUrl(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.post_image.cloudTransform))}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
+      p.media_type==='video'?`<div style="position:relative;width:100%;height:100%"><video src="${esc(p.media_url)}" ${p.thumbnail_url?`poster="${esc(p.thumbnail_url)}"`:''} style="width:100%;height:100%;object-fit:cover" controls playsinline loop muted id="pv-${p.id}"></video></div>`
+      :`<img src="${esc(optimizeCloudinaryUrl(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.post_image.cloudTransform)))}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
     :`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#333;font-size:48px">📷</div>`}
   </div>
   <div class="post-acts">

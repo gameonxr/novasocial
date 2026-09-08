@@ -161,7 +161,7 @@ window._refreshDmsInPlace = async function _refreshDmsInPlace() {
         let avatarHtml = '';
         if (c.is_group) {
           avatarHtml = c.group_avatar
-            ? '<div style="width:54px;height:54px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="'+c.group_avatar+'" style="width:100%;height:100%;object-fit:cover;"></div>'
+            ? '<div style="width:54px;height:54px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="'+esc(c.group_avatar)+'" style="width:100%;height:100%;object-fit:cover;"></div>'
             : '<div style="width:54px;height:54px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">👥</div>';
         } else {
           avatarHtml = '<div style="position:relative;width:54px;height:54px;flex-shrink:0;">' + av(other?.avatar_url, other?.username, 54, false, false) + onlineDot + '</div>';

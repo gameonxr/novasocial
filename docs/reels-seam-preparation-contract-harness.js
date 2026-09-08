@@ -73,9 +73,15 @@ const normalizedRendererModule = rendererModule
 // authorized deviation from origin/main). Revert EXACTLY those two substitutions —
 // with occurrence-count assertions — before the origin/main comparison, so any
 // OTHER drift from origin/main still fails this harness.
+// ── M1 authorized security escapes (2026-09-09, XSS-M1 task): the reel video
+// media attributes (data-media-url / poster / src) are now escaped at the URL
+// attribute sinks — 3 additional authorized deviations, same revert mechanism.
 const h11AuthorizedEscapes = [
   ["${esc(r.profiles?.username||'')}", "${r.profiles?.username||''}"],
   ['${esc(r.caption)}', '${r.caption}'],
+  ['data-media-url="${esc(r.media_url)}"', 'data-media-url="${r.media_url}"'],
+  ['poster="${esc(r.thumbnail_url)}"', 'poster="${r.thumbnail_url}"'],
+  ['src="${esc(r.media_url)}"', 'src="${r.media_url}"'],
 ];
 let h11ParityBase = normalizedRendererModule;
 for (const [escaped, raw] of h11AuthorizedEscapes) {
