@@ -108,7 +108,7 @@ window._loadOlderMessages = async function _loadOlderMessages(cid, isGrp, list){
         (isGrp && !isMe ? '<div onclick="goToProfile(\'' + m.sender_id + '\')" style="color:#E1306C;font-size:11px;font-weight:700;margin-bottom:4px;cursor:pointer">' + esc(m.profiles?.username||'') + '</div>' : '') +
         replyContext +
         content +
-        (reactionMap[m.id]?.length ? '<div style="margin-top:4px;font-size:13px;display:inline-flex;gap:2px;flex-wrap:wrap;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:10px;animation:reactionPop 0.18s ease">' + reactionMap[m.id].join(' ') + '</div>' : '') +
+        (reactionMap[m.id]?.length ? '<div style="margin-top:4px;font-size:13px;display:inline-flex;gap:2px;flex-wrap:wrap;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:10px;animation:reactionPop 0.18s ease">' + reactionMap[m.id].map(e => esc(e)).join(' ') + '</div>' : '') + // XSS-M3: esc each stored emoji (badge HTML-text zone)
         '<div style="font-size:10px;margin-top:3px;text-align:right"><span style="color:rgba(255,255,255,0.3)">' + ago(m.created_at) + '</span>' +
         (isMe ? (m.seen_at ? '<span style="color:#4FC3F7"> ✓✓</span>' : '<span style="color:rgba(255,255,255,0.4)"> ✓</span>') : '') +
         '</div></div></div>';

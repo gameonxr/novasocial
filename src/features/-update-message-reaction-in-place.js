@@ -14,7 +14,9 @@ window._updateMessageReactionInPlace = async function _updateMessageReactionInPl
     // Find or create reaction badge div (rendered as: <div style="margin-top:4px;font-size:13px;...">)
     let badge = msgEl.querySelector('div[style*="margin-top:4px;font-size:13px"]');
     if(emojis.length > 0){
-      const badgeHtml = '<div style="margin-top:4px;font-size:13px;display:inline-flex;gap:2px;flex-wrap:wrap;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:10px;animation:reactionPop 0.18s ease">' + emojis.join(' ') + '</div>';
+      // XSS-M3: esc each stored emoji — message_reactions.emoji is unconstrained
+      // (DB-write bypass); HTML-text context of the badge → shared 5-entity esc()
+      const badgeHtml = '<div style="margin-top:4px;font-size:13px;display:inline-flex;gap:2px;flex-wrap:wrap;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:10px;animation:reactionPop 0.18s ease">' + emojis.map(e => esc(e)).join(' ') + '</div>';
       if(badge){
         badge.outerHTML = badgeHtml;
       } else {
