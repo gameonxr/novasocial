@@ -386,7 +386,7 @@ async function openFullProfile(userId){
     <div class="profile-theme-ring" style="background:${profileGrad};border:3px solid #000;border-radius:50%;box-shadow:0 4px 16px rgba(0,0,0,0.4)">
       ${profileActiveNote ? `<div style="position:relative;display:inline-block">
   <div onclick="viewNote('${profileActiveNote.id}')" style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2a2a2a,#1c1c1c);color:#fff;font-size:10.5px;font-weight:700;padding:5px 11px;border-radius:12px;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 14px rgba(0,0,0,0.4);cursor:pointer;z-index:5;animation:pillFadeIn 0.3s ease">
-    ${profileActiveNote.text ? esc(profileActiveNote.text.slice(0,16)) : (profileActiveNote.music_title ? '🎵 '+profileActiveNote.music_title.slice(0,14) : '💭')}
+    ${profileActiveNote.text ? esc(profileActiveNote.text.slice(0,16)) : (profileActiveNote.music_title ? '🎵 '+esc(profileActiveNote.music_title.slice(0,14)) : '💭')}
   </div>
   ${av(prof.avatar_url,prof.username,82,false,online)}
 </div>` : `<div data-av-url="${encodeURIComponent(prof.avatar_url||'')}" data-av-name="${encodeURIComponent(prof.username||'')}" onclick="viewAvatarFullscreen(decodeURIComponent(this.dataset.avUrl),decodeURIComponent(this.dataset.avName))" style="cursor:pointer">${av(prof.avatar_url,prof.username,82,false,online)}</div>`}

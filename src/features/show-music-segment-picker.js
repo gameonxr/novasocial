@@ -9,16 +9,16 @@ function showMusicSegmentPicker(title, artist, artwork, previewUrl){
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
       <div onclick="cancelSegmentPicker()" style="cursor:pointer;color:#aaa;">✕</div>
       <div style="font-weight:700;color:#fff">Choose Part</div>
-      <div onclick='confirmMusicSegment(${JSON.stringify(title)},${JSON.stringify(artist)},${JSON.stringify(artwork)},${JSON.stringify(previewUrl)})' style="cursor:pointer;color:#E1306C;font-weight:700;font-size:14px">Done</div>
+      <div data-title="${encodeURIComponent(title)}" data-artist="${encodeURIComponent(artist)}" data-artwork="${encodeURIComponent(artwork)}" data-preview="${encodeURIComponent(previewUrl)}" onclick="confirmMusicSegment(decodeURIComponent(this.dataset.title), decodeURIComponent(this.dataset.artist), decodeURIComponent(this.dataset.artwork), decodeURIComponent(this.dataset.preview))" style="cursor:pointer;color:#E1306C;font-weight:700;font-size:14px">Done</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;position:relative">
-      <div style="position:absolute;inset:-20px;background-image:url('${artwork.replace('60x60','300x300')}');background-size:cover;background-position:center;filter:blur(40px) brightness(0.3);z-index:-1"></div>
-      <img src="${artwork.replace('60x60','300x300')}" style="width:180px;height:180px;border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
+      <div style="position:absolute;inset:-20px;background-image:url('${esc(artwork.replace('60x60','300x300'))}');background-size:cover;background-position:center;filter:blur(40px) brightness(0.3);z-index:-1"></div>
+      <img src="${esc(artwork.replace('60x60','300x300'))}" style="width:180px;height:180px;border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
       <div style="text-align:center">
-        <div style="font-weight:800;font-size:17px;color:#fff">${title}</div>
-        <div style="font-size:13px;color:#999;margin-top:4px">${artist}</div>
+        <div style="font-weight:800;font-size:17px;color:#fff">${esc(title)}</div>
+        <div style="font-size:13px;color:#999;margin-top:4px">${esc(artist)}</div>
       </div>
-      <div onclick='toggleSegmentPreview(${JSON.stringify(previewUrl)})' id="segment-play-btn" style="width:68px;height:68px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(225,48,108,0.45)">
+      <div data-preview="${encodeURIComponent(previewUrl)}" onclick="toggleSegmentPreview(decodeURIComponent(this.dataset.preview))" id="segment-play-btn" style="width:68px;height:68px;border-radius:50%;background:${GRAD};display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(225,48,108,0.45)">
         <svg id="segment-play-icon" width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       </div>
       <div style="width:100%;max-width:300px;padding:0 16px">

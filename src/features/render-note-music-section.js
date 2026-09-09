@@ -5,10 +5,10 @@ function renderNoteMusicSection(){
   if(window._noteMusic){
     sec.innerHTML = `
       <div style="display:flex;align-items:center;gap:12px;background:#141414;padding:10px 14px;border-radius:16px;border:1px solid #1f1f1f">
-        ${window._noteMusic.artwork ? `<img src="${window._noteMusic.artwork}" style="width:38px;height:38px;border-radius:8px;object-fit:cover">` : `<div style="width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#1DB954,#0d8a3e);display:flex;align-items:center;justify-content:center;font-size:16px">🎵</div>`}
+        ${window._noteMusic.artwork ? `<img src="${esc(window._noteMusic.artwork)}" style="width:38px;height:38px;border-radius:8px;object-fit:cover">` : `<div style="width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#1DB954,#0d8a3e);display:flex;align-items:center;justify-content:center;font-size:16px">🎵</div>`}
         <div style="flex:1;overflow:hidden">
-          <div style="font-weight:700;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${window._noteMusic.title}</div>
-          <div style="font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${window._noteMusic.artist||''}</div>
+          <div style="font-weight:700;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(window._noteMusic.title)}</div>
+          <div style="font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(window._noteMusic.artist||'')}</div>
         </div>
         <div onclick="window._noteMusic=null;renderNoteMusicSection()" style="cursor:pointer;color:#555;padding:4px">${ico('close','#555',16)}</div>
       </div>`;

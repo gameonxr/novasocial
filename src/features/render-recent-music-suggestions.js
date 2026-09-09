@@ -10,11 +10,11 @@ function renderRecentMusicSuggestions(){
   }
   r.innerHTML = '<div style="color:#666;font-size:11px;font-weight:700;margin:12px 0 8px;letter-spacing:0.5px">RECENTLY USED</div>' +
     recents.map(song=>`
-      <div onclick='selectNoteMusicResult(${JSON.stringify(song.title)},${JSON.stringify(song.artist)},${JSON.stringify(song.artwork||"")},${JSON.stringify(song.previewUrl||"")})' style="display:flex;align-items:center;gap:12px;padding:10px 4px;cursor:pointer;border-bottom:1px solid #111">
-        ${song.artwork?`<img src="${song.artwork}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">`:`<div style="width:44px;height:44px;border-radius:8px;background:#1a1a1a;display:flex;align-items:center;justify-content:center">🎵</div>`}
+      <div data-title="${encodeURIComponent(song.title||'')}" data-artist="${encodeURIComponent(song.artist||'')}" data-artwork="${encodeURIComponent(song.artwork||"")}" data-preview="${encodeURIComponent(song.previewUrl||"")}" onclick="selectNoteMusicResult(decodeURIComponent(this.dataset.title), decodeURIComponent(this.dataset.artist), decodeURIComponent(this.dataset.artwork), decodeURIComponent(this.dataset.preview))" style="display:flex;align-items:center;gap:12px;padding:10px 4px;cursor:pointer;border-bottom:1px solid #111">
+        ${song.artwork?`<img src="${esc(song.artwork)}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">`:`<div style="width:44px;height:44px;border-radius:8px;background:#1a1a1a;display:flex;align-items:center;justify-content:center">🎵</div>`}
         <div style="flex:1;overflow:hidden">
-          <div style="font-weight:700;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${song.title}</div>
-          <div style="font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${song.artist}</div>
+          <div style="font-weight:700;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(song.title)}</div>
+          <div style="font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(song.artist)}</div>
         </div>
       </div>`).join('');
 }

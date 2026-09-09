@@ -32,9 +32,9 @@ window.viewNote = async function(noteId){
         ${esc(note.text)}
       </div>` : ''}
 
-      ${note.music_title ? `<div onclick='toggleNoteMusicManual(${JSON.stringify(note.music_preview_url||'')},${note.music_start_sec||0})' id="note-music-chip" class="note-music-chip-playing" style="display:flex;align-items:center;gap:10px;background:rgba(29,185,84,0.12);border:1px solid rgba(29,185,84,0.25);padding:8px 16px;border-radius:20px;margin-bottom:20px;cursor:pointer">
-        ${note.music_artwork?`<img src="${note.music_artwork}" style="width:26px;height:26px;border-radius:6px">`:'🎵'}
-        <div style="text-align:left;flex:1"><div style="font-weight:700;font-size:12px;color:#fff">${note.music_title}</div><div style="font-size:10px;color:#999">${note.music_artist||''}</div></div>
+      ${note.music_title ? `<div data-music-url="${encodeURIComponent(note.music_preview_url||'')}" data-music-start="${encodeURIComponent(note.music_start_sec||0)}" onclick="toggleNoteMusicManual(decodeURIComponent(this.dataset.musicUrl), +decodeURIComponent(this.dataset.musicStart))" id="note-music-chip" class="note-music-chip-playing" style="display:flex;align-items:center;gap:10px;background:rgba(29,185,84,0.12);border:1px solid rgba(29,185,84,0.25);padding:8px 16px;border-radius:20px;margin-bottom:20px;cursor:pointer">
+        ${note.music_artwork?`<img src="${esc(note.music_artwork)}" style="width:26px;height:26px;border-radius:6px">`:'🎵'}
+        <div style="text-align:left;flex:1"><div style="font-weight:700;font-size:12px;color:#fff">${esc(note.music_title)}</div><div style="font-size:10px;color:#999">${esc(note.music_artist||'')}</div></div>
         <svg id="note-music-play-icon" width="18" height="18" viewBox="0 0 24 24" fill="#3db83d"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       </div>` : '<div style="height:12px"></div>'}
 
