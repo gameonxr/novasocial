@@ -117,7 +117,7 @@ window.loadReportsList = async function loadReportsList(){
         <div style="display:flex;gap:6px">
           <button onclick="showReportDetail('${r.id}')" style="flex:2;padding:8px;background:rgba(255,45,122,0.1);border:1px solid #FF2D7A;border-radius:8px;color:#FF2D7A;font-size:11px;font-weight:700;cursor:pointer">View Full Details</button>
           ${r.status==='pending'?`
-          <button onclick="adminResolveReport('${r.id}','${r.reporter_id||''}','${esc(r.reason).replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:8px;color:#3db83d;font-size:11px;font-weight:700;cursor:pointer">Resolve</button>
+          <button data-report-reason="${encodeURIComponent(r.reason)}" onclick="adminResolveReport('${r.id}','${r.reporter_id||''}',decodeURIComponent(this.dataset.reportReason))" style="flex:1;padding:8px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:8px;color:#3db83d;font-size:11px;font-weight:700;cursor:pointer">Resolve</button>
           <button onclick="adminDismissReport('${r.id}','${r.reporter_id||''}')" style="flex:1;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#8A8A8A;font-size:11px;font-weight:700;cursor:pointer">Dismiss</button>
           `:''}
         </div>

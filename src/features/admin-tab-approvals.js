@@ -36,8 +36,8 @@ window.adminTabApprovals = async function adminTabApprovals(content){
         </div>
         <div style="font-size:12px;color:#fff;background:rgba(0,0,0,0.3);padding:8px;border-radius:8px;margin-bottom:8px">${esc(a.reason)}</div>
         <div style="display:flex;gap:6px">
-          <button onclick="adminApproveBan('${a.id}','${a.target_user_id}','${esc(target.username||'').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Approve Ban</button>
-          <button onclick="adminRejectBan('${a.id}','${esc(target.username||'').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#8A8A8A;font-size:11px;font-weight:700;cursor:pointer">Reject</button>
+          <button data-approval-username="${encodeURIComponent(target.username||'')}" onclick="adminApproveBan('${a.id}','${a.target_user_id}',decodeURIComponent(this.dataset.approvalUsername))" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Approve Ban</button>
+          <button data-approval-username="${encodeURIComponent(target.username||'')}" onclick="adminRejectBan('${a.id}',decodeURIComponent(this.dataset.approvalUsername))" style="flex:1;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#8A8A8A;font-size:11px;font-weight:700;cursor:pointer">Reject</button>
         </div>
       </div>`;
     }).join('');

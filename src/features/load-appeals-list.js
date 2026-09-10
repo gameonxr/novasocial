@@ -21,8 +21,8 @@ window.loadAppealsList = async function loadAppealsList(){
         </div>
         <div style="font-size:12px;color:#fff;background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:8px;margin-bottom:8px;line-height:1.4">${esc(a.appeal_reason)}</div>
         ${a.status==='pending'?`<div style="display:flex;gap:6px">
-          <button onclick="adminApproveAppeal('${a.id}','${a.user_id}','${esc(p.username||'user').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:8px;color:#3db83d;font-size:11px;font-weight:700;cursor:pointer">Approve (Unban)</button>
-          <button onclick="adminRejectAppeal('${a.id}','${a.user_id}','${esc(p.username||'user').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Reject</button>
+          <button data-appeal-username="${encodeURIComponent(p.username||'user')}" onclick="adminApproveAppeal('${a.id}','${a.user_id}',decodeURIComponent(this.dataset.appealUsername))" style="flex:1;padding:8px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:8px;color:#3db83d;font-size:11px;font-weight:700;cursor:pointer">Approve (Unban)</button>
+          <button data-appeal-username="${encodeURIComponent(p.username||'user')}" onclick="adminRejectAppeal('${a.id}','${a.user_id}',decodeURIComponent(this.dataset.appealUsername))" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Reject</button>
         </div>`:''}
       </div>`;
     }).join('');

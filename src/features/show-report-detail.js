@@ -162,8 +162,8 @@ window.showReportDetail = async function showReportDetail(reportId){
               <div style="font-size:10px;color:#8A8A8A;margin-bottom:8px">Joined: ${authorProfile.created_at ? new Date(authorProfile.created_at).toLocaleDateString() : 'Unknown'} · ID: ${authorProfile.id?.substring(0,8)}</div>
               <div style="display:flex;gap:6px;flex-wrap:wrap">
                 <button onclick="closeModal();showAdminUserDetail('${authorProfile.id}')" style="padding:8px 12px;background:rgba(255,45,122,0.1);border:1px solid #FF2D7A;border-radius:8px;color:#FF2D7A;font-size:11px;font-weight:700;cursor:pointer">Full Profile</button>
-                ${report.target_type !== 'user' ? `<button onclick="closeModal();adminBanUser('${authorProfile.id}','${esc(authorProfile.username||'').replace(/'/g,"\\'")}')" style="padding:8px 12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Ban Author</button>` : ''}
-                ${report.target_type === 'post' || report.target_type === 'reel' ? `<button onclick="adminDeleteContentFromReport('${report.target_id}','${report.target_type}','${esc(authorProfile.username||'').replace(/'/g,"\\'")}','${authorProfile.id}')" style="padding:8px 12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Delete Content</button>` : ''}
+                ${report.target_type !== 'user' ? `<button data-author-username="${encodeURIComponent(authorProfile.username||'')}" onclick="closeModal();adminBanUser('${authorProfile.id}',decodeURIComponent(this.dataset.authorUsername))" style="padding:8px 12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Ban Author</button>` : ''}
+                ${report.target_type === 'post' || report.target_type === 'reel' ? `<button data-author-username="${encodeURIComponent(authorProfile.username||'')}" onclick="adminDeleteContentFromReport('${report.target_id}','${report.target_type}',decodeURIComponent(this.dataset.authorUsername),'${authorProfile.id}')" style="padding:8px 12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Delete Content</button>` : ''}
               </div>
             </div>
           </div>
@@ -213,7 +213,7 @@ window.showReportDetail = async function showReportDetail(reportId){
           <div>
             <div style="font-size:11px;color:#8A8A8A;font-weight:700;margin-bottom:8px;text-transform:uppercase">Admin Decision</div>
             <div style="display:flex;gap:8px">
-              <button onclick="adminResolveReport('${report.id}','${report.reporter_id||''}','${esc(report.reason).replace(/'/g,"\\'")}');closeModal()" style="flex:1;padding:12px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:10px;color:#3db83d;font-size:13px;font-weight:700;cursor:pointer">✓ Resolve (Genuine)</button>
+              <button data-report-reason="${encodeURIComponent(report.reason)}" onclick="adminResolveReport('${report.id}','${report.reporter_id||''}',decodeURIComponent(this.dataset.reportReason));closeModal()" style="flex:1;padding:12px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:10px;color:#3db83d;font-size:13px;font-weight:700;cursor:pointer">✓ Resolve (Genuine)</button>
               <button onclick="adminDismissReport('${report.id}','${report.reporter_id||''}');closeModal()" style="flex:1;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#8A8A8A;font-size:13px;font-weight:700;cursor:pointer">✗ Dismiss (False)</button>
             </div>
           </div>

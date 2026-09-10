@@ -22,8 +22,8 @@ window.loadVerifyList = async function loadVerifyList(){
         <div style="font-size:12px;color:#fff;background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:8px;margin-bottom:8px;line-height:1.4">${esc(r.reason)}</div>
         ${r.id_proof_url?`<div style="font-size:11px;color:#4a90d9;margin-bottom:6px"><a href="${esc(r.id_proof_url)}" target="_blank" style="color:#4a90d9">View ID Proof</a></div>`:''}
         ${r.status==='pending'?`<div style="display:flex;gap:6px">
-          <button onclick="adminApproveVerify('${r.id}','${r.user_id}','${esc(p.username||'user').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:8px;color:#3db83d;font-size:11px;font-weight:700;cursor:pointer">Approve</button>
-          <button onclick="adminRejectVerify('${r.id}','${r.user_id}','${esc(p.username||'user').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Reject</button>
+          <button data-verify-username="${encodeURIComponent(p.username||'user')}" onclick="adminApproveVerify('${r.id}','${r.user_id}',decodeURIComponent(this.dataset.verifyUsername))" style="flex:1;padding:8px;background:rgba(61,184,61,0.1);border:1px solid #3db83d;border-radius:8px;color:#3db83d;font-size:11px;font-weight:700;cursor:pointer">Approve</button>
+          <button data-verify-username="${encodeURIComponent(p.username||'user')}" onclick="adminRejectVerify('${r.id}','${r.user_id}',decodeURIComponent(this.dataset.verifyUsername))" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">Reject</button>
         </div>`:''}
       </div>`;
     }).join('');

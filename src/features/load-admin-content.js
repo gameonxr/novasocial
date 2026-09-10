@@ -49,8 +49,8 @@ window.loadAdminContent = async function loadAdminContent(type){
         </div>
         <div style="font-size:13px;color:#ddd;background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:8px;margin-bottom:8px;line-height:1.4">${preview}</div>
         <div style="display:flex;gap:6px">
-          <button onclick="adminDeleteAnyContent('${item.id}','${type}','${esc(u.username||'').replace(/'/g,"\\'")}','${u.id||''}')" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">${ico('trash','#ff4444',14)} Delete</button>
-          ${u.id?`<button onclick="adminBanUser('${u.id}','${esc(u.username||'').replace(/'/g,"\\'")}')" style="flex:1;padding:8px;background:rgba(255,170,0,0.1);border:1px solid #ffaa00;border-radius:8px;color:#ffaa00;font-size:11px;font-weight:700;cursor:pointer">Ban User</button>`:''}
+          <button data-content-username="${encodeURIComponent(u.username||'')}" onclick="adminDeleteAnyContent('${item.id}','${type}',decodeURIComponent(this.dataset.contentUsername),'${u.id||''}')" style="flex:1;padding:8px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:8px;color:#ff4444;font-size:11px;font-weight:700;cursor:pointer">${ico('trash','#ff4444',14)} Delete</button>
+          ${u.id?`<button data-content-username="${encodeURIComponent(u.username||'')}" onclick="adminBanUser('${u.id}',decodeURIComponent(this.dataset.contentUsername))" style="flex:1;padding:8px;background:rgba(255,170,0,0.1);border:1px solid #ffaa00;border-radius:8px;color:#ffaa00;font-size:11px;font-weight:700;cursor:pointer">Ban User</button>`:''}
         </div>
       </div>`;
     }).join('');

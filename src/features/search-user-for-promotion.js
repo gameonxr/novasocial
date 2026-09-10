@@ -26,10 +26,10 @@ window.searchUserForPromotion = async function searchUserForPromotion(query){
           <span style="flex:1;font-size:12px;color:#fff;font-weight:600">${esc(u.username)}</span>
           ${alreadyStaff ? '<span style="font-size:10px;color:#8A8A8A">Already staff</span>' :
             isSuper ? `
-              <button onclick="adminPromoteModerator('${u.id}','${esc(u.username||'').replace(/'/g,"\\'")}')" style="padding:4px 8px;background:rgba(0,229,255,0.1);border:1px solid #00E5FF;border-radius:6px;color:#00E5FF;font-size:10px;font-weight:700;cursor:pointer">Make Mod</button>
-              <button onclick="adminPromoteUser('${u.id}','${esc(u.username||'').replace(/'/g,"\\'")}')" style="padding:4px 8px;background:rgba(168,85,247,0.1);border:1px solid #a855f7;border-radius:6px;color:#a855f7;font-size:10px;font-weight:700;cursor:pointer">Make Admin</button>
+              <button data-promotion-username="${encodeURIComponent(u.username||'')}" onclick="adminPromoteModerator('${u.id}',decodeURIComponent(this.dataset.promotionUsername))" style="padding:4px 8px;background:rgba(0,229,255,0.1);border:1px solid #00E5FF;border-radius:6px;color:#00E5FF;font-size:10px;font-weight:700;cursor:pointer">Make Mod</button>
+              <button data-promotion-username="${encodeURIComponent(u.username||'')}" onclick="adminPromoteUser('${u.id}',decodeURIComponent(this.dataset.promotionUsername))" style="padding:4px 8px;background:rgba(168,85,247,0.1);border:1px solid #a855f7;border-radius:6px;color:#a855f7;font-size:10px;font-weight:700;cursor:pointer">Make Admin</button>
             ` : `
-              <button onclick="adminPromoteModerator('${u.id}','${esc(u.username||'').replace(/'/g,"\\'")}')" style="padding:4px 8px;background:rgba(0,229,255,0.1);border:1px solid #00E5FF;border-radius:6px;color:#00E5FF;font-size:10px;font-weight:700;cursor:pointer">Make Mod</button>
+              <button data-promotion-username="${encodeURIComponent(u.username||'')}" onclick="adminPromoteModerator('${u.id}',decodeURIComponent(this.dataset.promotionUsername))" style="padding:4px 8px;background:rgba(0,229,255,0.1);border:1px solid #00E5FF;border-radius:6px;color:#00E5FF;font-size:10px;font-weight:700;cursor:pointer">Make Mod</button>
             `
           }
         </div>`;

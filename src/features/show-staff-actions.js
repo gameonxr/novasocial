@@ -3,7 +3,7 @@
 // Classic script — exposes window.showStaffActions
 
 window.showStaffActions = function showStaffActions(userId, username, currentRole, isSuper){
-  const m = modal('Manage ' + username);
+  const m = modal('Manage ' + esc(username));
   const body = m.querySelector('#mbody');
   const callerSuper = PROF?.is_super_admin === true;
   const callerAdmin = PROF?.is_admin === true;
@@ -12,14 +12,14 @@ window.showStaffActions = function showStaffActions(userId, username, currentRol
 
   if(currentRole === 'admin' && callerSuper){
     // Super admin can demote admin to moderator or remove admin entirely
-    actionsHtml += `<button onclick="adminDemoteToModerator('${userId}','${username.replace(/'/g,"\\'")}')" style="padding:12px;background:rgba(0,229,255,0.1);border:1px solid #00E5FF;border-radius:10px;color:#00E5FF;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Demote to Moderator</button>`;
-    actionsHtml += `<button onclick="adminDemoteUser('${userId}','${username.replace(/'/g,"\\'")}')" style="padding:12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:10px;color:#ff4444;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Remove Admin Completely</button>`;
+    actionsHtml += `<button data-staff-action-username="${encodeURIComponent(username)}" onclick="adminDemoteToModerator('${userId}',decodeURIComponent(this.dataset.staffActionUsername))" style="padding:12px;background:rgba(0,229,255,0.1);border:1px solid #00E5FF;border-radius:10px;color:#00E5FF;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Demote to Moderator</button>`;
+    actionsHtml += `<button data-staff-action-username="${encodeURIComponent(username)}" onclick="adminDemoteUser('${userId}',decodeURIComponent(this.dataset.staffActionUsername))" style="padding:12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:10px;color:#ff4444;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Remove Admin Completely</button>`;
   } else if(currentRole === 'moderator'){
     // Admin or super admin can promote moderator to admin (only super) or demote
     if(callerSuper){
-      actionsHtml += `<button onclick="adminPromoteModToAdmin('${userId}','${username.replace(/'/g,"\\'")}')" style="padding:12px;background:rgba(168,85,247,0.1);border:1px solid #a855f7;border-radius:10px;color:#a855f7;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Promote to Admin</button>`;
+      actionsHtml += `<button data-staff-action-username="${encodeURIComponent(username)}" onclick="adminPromoteModToAdmin('${userId}',decodeURIComponent(this.dataset.staffActionUsername))" style="padding:12px;background:rgba(168,85,247,0.1);border:1px solid #a855f7;border-radius:10px;color:#a855f7;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Promote to Admin</button>`;
     }
-    actionsHtml += `<button onclick="adminDemoteModerator('${userId}','${username.replace(/'/g,"\\'")}')" style="padding:12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:10px;color:#ff4444;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Remove Moderator</button>`;
+    actionsHtml += `<button data-staff-action-username="${encodeURIComponent(username)}" onclick="adminDemoteModerator('${userId}',decodeURIComponent(this.dataset.staffActionUsername))" style="padding:12px;background:rgba(255,68,68,0.1);border:1px solid #ff4444;border-radius:10px;color:#ff4444;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px">Remove Moderator</button>`;
   }
 
   body.innerHTML = `<div style="padding:16px">

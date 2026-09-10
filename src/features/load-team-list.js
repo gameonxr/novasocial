@@ -53,7 +53,7 @@ window.loadTeamList = async function loadTeamList(){
           <div style="font-size:11px;color:#8A8A8A;margin-top:2px">${esc(s.full_name||'')} · ${s.last_seen ? 'Active ' + new Date(s.last_seen).toLocaleDateString() : 'Never active'}</div>
         </div>
         ${canManage ? `
-          <div onclick="showStaffActions('${s.id}','${esc(s.username||'').replace(/'/g,"\\'")}','${s.is_admin?'admin':'moderator'}','${s.is_super_admin?'super':''}')" style="cursor:pointer;padding:6px 10px;background:rgba(255,255,255,0.06);border-radius:8px;font-size:11px;font-weight:700;color:#fff">Manage</div>
+          <div data-staff-username="${encodeURIComponent(s.username||'')}" onclick="showStaffActions('${s.id}',decodeURIComponent(this.dataset.staffUsername),'${s.is_admin?'admin':'moderator'}','${s.is_super_admin?'super':''}')" style="cursor:pointer;padding:6px 10px;background:rgba(255,255,255,0.06);border-radius:8px;font-size:11px;font-weight:700;color:#fff">Manage</div>
         ` : ''}
       </div>`;
     }).join('');
