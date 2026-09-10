@@ -71,7 +71,7 @@ async function renderProfile(){
     <div onclick="showAvatarActionSheet()" style="cursor:pointer;position:relative;flex-shrink:0">
       ${_myActiveNote ? `<div style="position:relative;display:inline-block">
   <div onclick="viewNote('${_myActiveNote.id}')" style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2a2a2a,#1c1c1c);color:#fff;font-size:10.5px;font-weight:700;padding:5px 11px;border-radius:12px;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 14px rgba(0,0,0,0.4);cursor:pointer;z-index:5;animation:pillFadeIn 0.3s ease">
-    ${_myActiveNote.text ? _myActiveNote.text.slice(0,16) : (_myActiveNote.music_title ? '🎵 '+_myActiveNote.music_title.slice(0,14) : '💭')}
+    ${_myActiveNote.text ? esc(_myActiveNote.text.slice(0,16)) : (_myActiveNote.music_title ? '🎵 '+esc(_myActiveNote.music_title.slice(0,14)) : '💭')}
   </div>
   ${av(PROF.avatar_url,PROF.username||ME.email,82)}
 </div>` : `<div class="nova-story-ring" style="background:linear-gradient(135deg,#FF3B81,#833AB4,#00D4FF);padding:3px;border-radius:50%"><div style="border:3px solid #000;border-radius:50%">${av(PROF.avatar_url,PROF.username||ME.email,82)}</div></div>`}
@@ -85,18 +85,18 @@ async function renderProfile(){
     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
       <div style="font-weight:800;font-size:18px;letter-spacing:0.2px">
         ${(PROF.full_name && PROF.full_name.trim() && PROF.full_name.trim().toLowerCase() !== (PROF.username||'').toLowerCase())
-          ? PROF.full_name
-          : PROF.username || ''}
+          ? esc(PROF.full_name)
+          : esc(PROF.username || '')}
       </div>
       ${PROF.is_verified?ico('verified','#3897f0',16):''}
       ${PROF.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}
       <span onclick="showAccountSwitcher()" style="cursor:pointer;margin-left:4px;display:inline-flex;vertical-align:middle" title="Switch Account">${ico('chevron_down','#888',16)}</span>
     </div>
     ${(PROF.full_name && PROF.full_name.trim() && PROF.full_name.trim().toLowerCase() !== (PROF.username||'').toLowerCase())
-      ? `<div style="color:#666;font-size:12px;margin-bottom:6px">@${PROF.username||''}</div>`
+      ? `<div style="color:#666;font-size:12px;margin-bottom:6px">@${esc(PROF.username||'')}</div>`
       : ''}
-    ${PROF.bio?`<div style="color:#d4d4d4;font-size:13.5px;line-height:1.55;margin-bottom:6px">${linkify(PROF.bio)}</div>`:''}
-    ${PROF.website?`<div onclick="window.open('${sanitizeUrl(PROF.website)}','_blank')" style="color:#00D4FF;font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:500">${ico('link','#00D4FF',14)}${sanitizeUrl(PROF.website).replace(/^https?:\/\//,'')}</div>`:''}
+    ${PROF.bio?`<div style="color:#d4d4d4;font-size:13.5px;line-height:1.55;margin-bottom:6px">${linkify(esc(PROF.bio))}</div>`:''}
+    ${PROF.website?`<div data-web="${encodeURIComponent(sanitizeUrl(PROF.website))}" onclick="window.open(decodeURIComponent(this.dataset.web),'_blank')" style="color:#00D4FF;font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:500">${ico('link','#00D4FF',14)}${esc(sanitizeUrl(PROF.website).replace(/^https?:\/\//,''))}</div>`:''}
     <div style="display:flex;align-items:center;gap:12px">
       <div style="color:#3db83d;font-size:11.5px;display:flex;align-items:center;gap:5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#3db83d;display:inline-block;box-shadow:0 0 6px rgba(61,184,61,0.6)"></span>Active now</div>
     </div>
