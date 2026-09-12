@@ -24,7 +24,7 @@ window.loadProf = async function loadProf(){
   if(el){
     const fallbackLetter = (PROF.username||ME.email||'?')[0].toUpperCase();
     if(PROF.avatar_url){
-      el.innerHTML=`<img src="${PROF.avatar_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.textContent='${fallbackLetter}'">`;
+      el.innerHTML=`<img src="${esc(PROF.avatar_url)}" style="width:100%;height:100%;object-fit:cover" data-fb="${esc(fallbackLetter)}" onerror="this.style.display='none';this.parentElement.textContent=this.dataset.fb">`;
     } else {
       el.textContent = fallbackLetter;
     }

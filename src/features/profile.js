@@ -49,7 +49,7 @@ async function renderProfile(){
   <!-- Cover Image Header -->
   <div style="position:relative;height:180px;overflow:hidden">
     <div onclick="document.getElementById('cover-pick').click()" style="position:absolute;inset:0;cursor:pointer">
-      ${coverUrl?`<img src="${cldUrl(coverUrl, NOVA_MEDIA_CONFIG.cover.cloudTransform)}" style="width:100%;height:100%;object-fit:cover">`:`<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0a0a,#1a0a2e,#16213e);display:flex;align-items:center;justify-content:center"><div style="font-size:40px;color:#222">${ico('img','#222',40)}</div></div>`}
+      ${coverUrl?`<img src="${esc(cldUrl(coverUrl, NOVA_MEDIA_CONFIG.cover.cloudTransform))}" style="width:100%;height:100%;object-fit:cover">`:`<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0a0a,#1a0a2e,#16213e);display:flex;align-items:center;justify-content:center"><div style="font-size:40px;color:#222">${ico('img','#222',40)}</div></div>`}
       <!-- Gradient overlay for contrast (premium strong bottom fade) -->
       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.05) 35%,rgba(0,0,0,0.55) 75%,rgba(0,0,0,0.9) 100%)"></div>
     </div>
@@ -122,7 +122,7 @@ async function renderProfile(){
     <div id="ptb-l" onclick="profTab('liked')" style="flex:1;display:flex;justify-content:center;padding:13px;cursor:pointer;border-bottom:2px solid transparent">${ico('heart','#555',22)}</div>
   </div>
   <div class="pgrid" id="pgrid">
-    ${!myP.length?`<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">${ico('img','#333',44)}</div>No posts yet</div>`:myP.map(p=>`<div class="pitem" onclick="viewPost('${p.id}')">${p.media_url?`<img src="${cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#0a0a0a'">`:`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333">${ico('img','#333',32)}</div>`}</div>`).join('')}
+    ${!myP.length?`<div style="grid-column:1/-1;text-align:center;padding:52px;color:#333"><div style="font-size:44px;margin-bottom:10px">${ico('img','#333',44)}</div>No posts yet</div>`:myP.map(p=>`<div class="pitem" onclick="viewPost('${p.id}')">${p.media_url?`<img src="${esc(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#0a0a0a'">`:`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333">${ico('img','#333',32)}</div>`}</div>`).join('')}
   </div>
   <div style="height:80px"></div>`;
   } catch(e) {
@@ -235,7 +235,7 @@ async function _doAvatarUpload(f) {
     // Nav bar avatar update (cache-busting with ?t= timestamp)
     const nav = document.getElementById('nav-av');
     if(nav) {
-      nav.innerHTML = `<img src="${url}?t=${Date.now()}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.textContent='${(PROF.username||'?')[0].toUpperCase()}'">`;
+      nav.innerHTML = `<img src="${esc(url)}?t=${Date.now()}" style="width:100%;height:100%;object-fit:cover" data-fb="${esc((PROF.username||'?')[0].toUpperCase())}" onerror="this.style.display='none';this.parentElement.textContent=this.dataset.fb">`;
     }
 
     toast('✅ Profile photo updated!');
