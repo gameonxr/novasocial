@@ -221,11 +221,11 @@ function updatePollPreview(){
     <div style="background:${style.bg};backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.2);border-radius:18px;padding:14px 16px;min-width:220px;max-width:280px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.4)">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;justify-content:center">
         <span style="display:flex;align-items:center">${ico('poll','#FF2D7A',16)}</span>
-        <div style="font-size:13px;font-weight:700;color:#fff">${q}</div>
+        <div style="font-size:13px;font-weight:700;color:#fff">${esc(q)}</div>
       </div>
       <div style="display:flex;flex-direction:${flexDir};gap:8px">
         ${displayOpts.map(o => `
-          <div style="flex:1;padding:10px 12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:10px;font-size:12px;color:#fff;font-weight:600;text-align:center">${o}</div>
+          <div style="flex:1;padding:10px 12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:10px;font-size:12px;color:#fff;font-weight:600;text-align:center">${esc(o)}</div>
         `).join('')}
       </div>
       <div style="margin-top:8px;font-size:10px;color:rgba(255,255,255,0.6)">${_sePollMultiVote ? 'Multi-vote' : 'Single vote'} · Tap to vote</div>
