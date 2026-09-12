@@ -123,7 +123,7 @@ async function universalAISearch(query){
         <div class="egrid">
           ${posts.map(p=>`
             <div class="eitem" onclick="viewPost('${p.id}')">
-              ${p.media_url?(p.media_type==='video'?(p.thumbnail_url?`<img src="${cldUrl(p.thumbnail_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" loading="lazy">`:`<video src="${p.media_url}" muted></video>`):`<img src="${cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" loading="lazy">`):`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>`}
+              ${p.media_url?(p.media_type==='video'?(p.thumbnail_url?`<img src="${esc(cldUrl(p.thumbnail_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))}" loading="lazy">`:`<video src="${esc(p.media_url)}" muted></video>`):`<img src="${esc(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))}" loading="lazy">`):`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#333;font-size:32px">📷</div>`}
               ${p.media_type==='video'?`<div style="position:absolute;top:6px;right:6px">${ico('film','#fff',14)}</div>`:''}
             </div>
           `).join('')}

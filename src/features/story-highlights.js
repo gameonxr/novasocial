@@ -34,9 +34,9 @@ async function showHighlights(userId){
           ${highlights.map(h=>`
             <div onclick="viewHighlight('${h.id}')" style="cursor:pointer;text-align:center">
               <div class="highlight-circle has-content" style="margin:0 auto">
-                ${h.cover_url?`<img src="${cldUrl(h.cover_url, NOVA_MEDIA_CONFIG.cover.cloudTransform)}" style="width:100%;height:100%;object-fit:cover">`:'<div style="font-size:24px">✨</div>'}
+                ${h.cover_url?`<img src="${esc(cldUrl(h.cover_url, NOVA_MEDIA_CONFIG.cover.cloudTransform))}" style="width:100%;height:100%;object-fit:cover">`:'<div style="font-size:24px">✨</div>'}
               </div>
-              <div style="font-size:11px;color:#ccc;margin-top:6px;font-weight:600">${h.title||'Highlight'}</div>
+              <div style="font-size:11px;color:#ccc;margin-top:6px;font-weight:600">${esc(h.title||'Highlight')}</div>
             </div>
           `).join('')}
         </div>
