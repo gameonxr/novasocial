@@ -161,7 +161,7 @@ async function showProfilePreview(userId){
 
         ${safeBio?`<div style="color:#ccc;font-size:13px;margin-top:10px;max-width:280px;margin-left:auto;margin-right:auto;line-height:1.5">${safeBio}${prof.bio?.length>100?'...':''}</div>`:''}
 
-        ${safeWebsite?`<div style="color:#4a90d9;font-size:12px;margin-top:6px">${safeWebsite.replace(/^https?:\/\//,'')}</div>`:''}
+        ${safeWebsite?`<div style="color:#4a90d9;font-size:12px;margin-top:6px">${esc(safeWebsite.replace(/^https?:\/\//,''))}</div>`:''}
 
         <div style="color:#666;font-size:11px;margin-top:6px">${online?'<span style="color:#3db83d">● Active now</span>':lastSeenText(prof.last_seen)}</div>
       </div>
@@ -406,7 +406,7 @@ async function openFullProfile(userId){
       ${prof.is_verified_plus?`<span class="verified-plus">${ico('crown','#000',10)}PLUS</span>`:''}
     </div>
     ${prof.bio?`<div style="color:#d4d4d4;font-size:13.5px;line-height:1.55;margin-top:4px">${linkify(esc(prof.bio))}</div>`:''}
-    ${safeWebsite?`<div onclick="window.open('${safeWebsite}','_blank')" style="color:#4a90d9;font-size:13px;margin-top:6px;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:500">${ico('link','#4a90d9',14)}${safeWebsite.replace(/^https?:\/\//,'')}</div>`:''}
+    ${safeWebsite?`<div data-web="${encodeURIComponent(safeWebsite)}" onclick="window.open(decodeURIComponent(this.dataset.web),'_blank')" style="color:#4a90d9;font-size:13px;margin-top:6px;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:500">${ico('link','#4a90d9',14)}${esc(safeWebsite.replace(/^https?:\/\//,''))}</div>`:''}
     <div style="margin-top:8px;display:flex;align-items:center;gap:6px">
       ${online?`<div style="color:#3db83d;font-size:11.5px;display:flex;align-items:center;gap:5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#3db83d;display:inline-block;box-shadow:0 0 6px rgba(61,184,61,0.6)"></span>Active now</div>`:`<div style="color:#666;font-size:11.5px;display:flex;align-items:center;gap:5px">${ico('clock','#666',12)}${lastSeenText(prof.last_seen)}</div>`}
     </div>

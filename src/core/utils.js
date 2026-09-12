@@ -341,11 +341,15 @@ function av(url,name,size=36,ring=false,online=false){
 // Sanitize URLs — strip file:///, content://, and other non-web URLs
 function sanitizeUrl(url){
   if(!url) return '';
-  const u = String(url);
-  // Only allow http/https URLs
-  if(u.startsWith('http://') || u.startsWith('https://')) return u;
+  // SEC-004: normalize like browsers do before scheme resolution — strip
+  // tabs/newlines/CR (ignored by URL parsers) and edge whitespace, so
+  // " javascript:" / "jav\tascript:" cannot smuggle a dangerous scheme through.
+  const u = String(url).replace(/[\t\n\r]/g,'').trim();
+  // Only allow http/https URLs (scheme allow-list, case-insensitive)
+  const ul = u.toLowerCase();
+  if(ul.startsWith('http://') || ul.startsWith('https://')) return u;
   // Strip file:/// content:// etc, just show the meaningful part
-  if(u.startsWith('file:///') || u.startsWith('content://')){
+  if(ul.startsWith('file:///') || ul.startsWith('content://')){
     // Try to extract domain/path
     const match = u.match(/(?:https?\/\/|\/\/)([^\/]+)/);
     return match ? 'https://' + match[1] : '';
@@ -354,7 +358,9 @@ function sanitizeUrl(url){
   if(u.match(/^[a-z0-9.-]+\.(com|net|org|io|co|in|me|app|dev|ai)/i)){
     return 'https://' + u;
   }
-  return u;
+  // SEC-004: everything else (javascript:, data:, vbscript:, mailto:, arbitrary
+  // text) is REJECTED — the old `return u` fallthrough passed unsafe schemes raw.
+  return '';
 }
 
 function linkify(text) {

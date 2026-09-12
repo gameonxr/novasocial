@@ -96,7 +96,7 @@ async function renderProfile(){
       ? `<div style="color:#666;font-size:12px;margin-bottom:6px">@${esc(PROF.username||'')}</div>`
       : ''}
     ${PROF.bio?`<div style="color:#d4d4d4;font-size:13.5px;line-height:1.55;margin-bottom:6px">${linkify(esc(PROF.bio))}</div>`:''}
-    ${PROF.website?`<div data-web="${encodeURIComponent(sanitizeUrl(PROF.website))}" onclick="window.open(decodeURIComponent(this.dataset.web),'_blank')" style="color:#00D4FF;font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:500">${ico('link','#00D4FF',14)}${esc(sanitizeUrl(PROF.website).replace(/^https?:\/\//,''))}</div>`:''}
+    ${sanitizeUrl(PROF.website)?`<div data-web="${encodeURIComponent(sanitizeUrl(PROF.website))}" onclick="window.open(decodeURIComponent(this.dataset.web),'_blank')" style="color:#00D4FF;font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:500">${ico('link','#00D4FF',14)}${esc(sanitizeUrl(PROF.website).replace(/^https?:\/\//,''))}</div>`:''}
     <div style="display:flex;align-items:center;gap:12px">
       <div style="color:#3db83d;font-size:11.5px;display:flex;align-items:center;gap:5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#3db83d;display:inline-block;box-shadow:0 0 6px rgba(61,184,61,0.6)"></span>Active now</div>
     </div>
