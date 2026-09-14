@@ -110,9 +110,9 @@ async function universalAISearch(query){
           <div onclick="closeModal();showUserProfile('${u.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d;cursor:pointer">
             ${av(u.avatar_url, u.username, 46)}
             <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:5px"><span style="font-weight:700;font-size:14px">${u.username}</span>${u.is_verified?ico('verified','#3897f0',13):''}</div>
-              <div style="color:#666;font-size:12px">${u.full_name||''} • ${fmt(u.followers_count||0)} followers</div>
-              ${u.bio?`<div style="color:#888;font-size:11px;margin-top:2px">${u.bio.substring(0,60)}${u.bio.length>60?'...':''}</div>`:''}
+              <div style="display:flex;align-items:center;gap:5px"><span style="font-weight:700;font-size:14px">${esc(u.username)}</span>${u.is_verified?ico('verified','#3897f0',13):''}</div>
+              <div style="color:#666;font-size:12px">${esc(u.full_name||'')} • ${fmt(u.followers_count||0)} followers</div>
+              ${u.bio?`<div style="color:#888;font-size:11px;margin-top:2px">${esc(u.bio.substring(0,60))}${u.bio.length>60?'...':''}</div>`:''}
             </div>
           </div>
         `).join('')}
