@@ -325,11 +325,15 @@ function ico(n,c='#fff',s=24){
 function av(url,name,size=36,ring=false,online=false){
   const l=(name||'?')[0].toUpperCase();
   // FIX: Add onerror fallback so broken avatar images show first letter instead of "K" or broken img
-  const safeName = (name||'?').replace(/'/g,"\\'").replace(/"/g,'&quot;');
   // ── Part 7 Fix 1: Apply avatar Cloudinary transform at display time
   // (stored URL stays full-quality, only display URL gets resized/cropped)
   const displayUrl = url ? cldUrl(url, NOVA_MEDIA_CONFIG.avatar.cloudTransform) : '';
-  const inner=displayUrl?`<img src="${displayUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:${Math.round(size*0.42)}px;font-weight:700;line-height:1\\'>${l}</span>'">`:`<span style="font-size:${Math.round(size*0.42)}px;font-weight:700;line-height:1">${l}</span>`;
+  // XSS-C1: img src = HTML attribute boundary → esc() (the M1 media-sink twin,
+  // profile-view.js:267); the fallback letter NEVER enters the onerror JS string —
+  // it travels the data-fl attribute (esc codec; encodeURIComponent would throw on
+  // the lone high surrogate of emoji-first names) and the CONSTANT-expression
+  // handler reads it back at runtime with esc() (profile-view.js:392 pattern)
+  const inner=displayUrl?`<img src="${esc(displayUrl)}" style="width:100%;height:100%;object-fit:cover" data-fl="${esc(l)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:${Math.round(size*0.42)}px;font-weight:700;line-height:1\\'>'+esc(this.dataset.fl||'?')+'</span>'">`:`<span style="font-size:${Math.round(size*0.42)}px;font-weight:700;line-height:1">${esc(l)}</span>`;
   let html;
   if(ring) html=`<div class="avring"><div class="avrinner"><div class="av" style="width:${size-5}px;height:${size-5}px">${inner}</div></div></div>`;
   else html=`<div class="av" style="width:${size}px;height:${size}px">${inner}</div>`;
