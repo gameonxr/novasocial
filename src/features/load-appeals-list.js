@@ -17,7 +17,7 @@ window.loadAppealsList = async function loadAppealsList(){
       return `<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           ${av(p.avatar_url,p.username,40)}
-          <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-weight:700;font-size:13px;color:#fff">${esc(p.username)||'unknown'}</span><span style="font-size:9px;font-weight:800;color:${sc};background:${sc}26;padding:2px 6px;border-radius:6px;text-transform:uppercase">${a.status}</span></div>${p.ban_reason?`<div style="font-size:11px;color:#ff4444;margin-top:2px">Banned: ${esc(p.ban_reason)}</div>`:''}</div>
+          <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-weight:700;font-size:13px;color:#fff">${esc(p.username)||'unknown'}</span><span style="font-size:9px;font-weight:800;color:${sc};background:${sc}26;padding:2px 6px;border-radius:6px;text-transform:uppercase">${esc(a.status)}</span></div>${p.ban_reason?`<div style="font-size:11px;color:#ff4444;margin-top:2px">Banned: ${esc(p.ban_reason)}</div>`:''}</div>
         </div>
         <div style="font-size:12px;color:#fff;background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:8px;margin-bottom:8px;line-height:1.4">${esc(a.appeal_reason)}</div>
         ${a.status==='pending'?`<div style="display:flex;gap:6px">

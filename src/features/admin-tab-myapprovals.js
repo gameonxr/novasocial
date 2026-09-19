@@ -29,7 +29,7 @@ window.adminTabMyApprovals = async function adminTabMyApprovals(content){
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
           ${av(target.avatar_url,target.username,28)}
           <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">@${esc(target.username)}</div></div>
-          <span style="font-size:10px;font-weight:800;color:${sc};text-transform:uppercase">${r.status}</span>
+          <span style="font-size:10px;font-weight:800;color:${sc};text-transform:uppercase">${esc(r.status)}</span>
         </div>
         <div style="font-size:12px;color:#fff;background:rgba(0,0,0,0.3);padding:8px;border-radius:8px;margin-bottom:6px">${esc(r.reason)}</div>
         ${r.admin_notes ? `<div style="font-size:11px;color:#ffaa00;margin-bottom:4px">Admin: ${esc(r.admin_notes)}</div>` : ''}
