@@ -39,9 +39,9 @@ window.loadAdminContent = async function loadAdminContent(type){
     listEl.innerHTML = items.map(item => {
       const u = userMap[item.user_id] || {};
       let preview = '';
-      if(type === 'posts') preview = item.caption ? esc(item.caption.substring(0,120)) : (item.media_url ? `[${item.media_type||'media'}]` : '[no content]');
+      if(type === 'posts') preview = item.caption ? esc(item.caption.substring(0,120)) : (item.media_url ? `[${esc(item.media_type||'media')}]` : '[no content]');
       else if(type === 'comments') preview = esc(item.text?.substring(0,120) || '');
-      else if(type === 'stories') preview = `[${item.media_type||'media'} story]`;
+      else if(type === 'stories') preview = `[${esc(item.media_type||'media')} story]`;
       return `<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
           ${av(u.avatar_url,u.username,28)}

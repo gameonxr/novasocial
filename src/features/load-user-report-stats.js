@@ -29,7 +29,7 @@ window.loadUserReportStats = async function loadUserReportStats(userId){
         ${recentAgainst.map(r => `
           <div onclick="showReportDetail('${r.id}')" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
             <div><span style="font-size:11px;color:#FF2D7A;font-weight:700">${esc(r.reason)}</span><span style="font-size:10px;color:#8A8A8A;margin-left:8px">${new Date(r.created_at).toLocaleDateString()}</span></div>
-            <span style="font-size:9px;color:${r.status==='pending'?'#ffaa00':r.status==='resolved'?'#3db83d':'#8A8A8A'}">${r.status}</span>
+            <span style="font-size:9px;color:${r.status==='pending'?'#ffaa00':r.status==='resolved'?'#3db83d':'#8A8A8A'}">${esc(r.status)}</span>
           </div>
         `).join('')}
       ` : '<div style="font-size:11px;color:#666;text-align:center;padding:10px">No reports against this user</div>'}

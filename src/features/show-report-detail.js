@@ -186,7 +186,7 @@ window.showReportDetail = async function showReportDetail(reportId){
                       <div style="font-size:13px;font-weight:700;color:#fff">${esc(reporter.username || 'unknown')}</div>
                       <div style="font-size:10px;color:#8A8A8A">${new Date(r.created_at).toLocaleString()}</div>
                     </div>
-                    <span style="font-size:9px;font-weight:800;color:${r.status==='pending'?'#ffaa00':r.status==='resolved'?'#3db83d':'#8A8A8A'};background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;text-transform:uppercase">${r.status}</span>
+                    <span style="font-size:9px;font-weight:800;color:${r.status==='pending'?'#ffaa00':r.status==='resolved'?'#3db83d':'#8A8A8A'};background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;text-transform:uppercase">${esc(r.status)}</span>
                   </div>
                   <div style="font-size:11px;color:#FF2D7A;margin-bottom:4px">Reason: ${esc(r.reason)}</div>
                   ${r.details ? `<div style="font-size:11px;color:#8A8A8A;font-style:italic;margin-bottom:6px">"${esc(r.details)}"</div>` : ''}

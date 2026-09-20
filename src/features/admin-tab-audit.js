@@ -109,7 +109,7 @@ window.adminTabAudit = async function adminTabAudit(content){
       const p=a.profiles||{};
       const label = actionLabels[a.action_type] || a.action_type.replace(/_/g,' ');
       const ac = actionColor(a.action_type);
-      const statusBadge = a.status && a.status !== 'success' ? `<span style="font-size:9px;color:${a.status==='denied'?'#ff4444':a.status==='failed'?'#ffaa00':'#888'};background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;margin-left:6px;text-transform:uppercase">${a.status}</span>` : '';
+      const statusBadge = a.status && a.status !== 'success' ? `<span style="font-size:9px;color:${a.status==='denied'?'#ff4444':a.status==='failed'?'#ffaa00':'#888'};background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;margin-left:6px;text-transform:uppercase">${esc(a.status)}</span>` : '';
       const roleBadge = a.actor_role && a.actor_role !== 'user' ? `<span style="font-size:9px;color:#a855f7;margin-left:4px">${a.actor_role}</span>` : '';
       return `<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;margin-bottom:8px">
         <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px">
