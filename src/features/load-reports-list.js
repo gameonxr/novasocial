@@ -81,12 +81,12 @@ window.loadReportsList = async function loadReportsList(){
         contentAuthor = author ? `@${esc(author.username)}` : '';
       } else if(r.target_type === 'message'){
         const m = target;
-        contentPreview = m?.text ? esc(m.text.substring(0, 150)) : (m?.media_type ? `[${m.media_type} message]` : '[Message deleted]');
+        contentPreview = m?.text ? esc(m.text.substring(0, 150)) : (m?.media_type ? `[${esc(m.media_type)} message]` : '[Message deleted]');
         const author = m?.sender_id ? userMap[m.sender_id] : null;
         contentAuthor = author ? `@${esc(author.username)}` : '';
       } else if(r.target_type === 'story'){
         const s = target;
-        contentPreview = s?.media_url ? `[${s.media_type || 'media'} story]` : '[Story expired]';
+        contentPreview = s?.media_url ? `[${esc(s.media_type || 'media')} story]` : '[Story expired]';
         const author = s?.user_id ? userMap[s.user_id] : null;
         contentAuthor = author ? `@${esc(author.username)}` : '';
       }
