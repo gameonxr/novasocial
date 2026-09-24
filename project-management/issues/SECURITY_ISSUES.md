@@ -1499,6 +1499,36 @@ super_admin/user, custom role, HTML payloads, quote-breakout, entity-encoded, nu
 - §28.4 status: CLOSED (all three sites fixed/verified — sites 1+2 esc()'d as CONFIRMED VULNERABLE, site 3 esc()'d as
   UNVERIFIED-external with the dependency retained above).
 
+### 29.4-AUDIT §29.4 target_id security audit outcome (2026-09-25, parent 6aa9939 — the §29.4 dedicated task; history above preserved verbatim)
+
+- AUDIT-ONLY task executed at parent 6aa9939752060fd223d9a0b340e0c1188e29dffc (Branch2): the :125 target_id data flow
+  was re-verified INDEPENDENTLY end-to-end — read path (admin-tab-audit.js:55-64 audit_logs → :125 sink; :85-91
+  admin_actions fallback → the SAME :125 template, index.html:1305 documents the legacy table is also RPC-written) +
+  write path (log-admin-action.js:7-13 log_audit_entry p_target_id client-supplied; R-block: exactly 1 direct
+  log_audit_entry site in src/, 11 further p_target_id sites feed DOMAIN RPCs ban_user/promote_user/… whose audit rows
+  are composed server-side by the EXTERNAL SECURITY-DEFINER RPC; ZERO direct insert/update/delete/upsert on
+  audit_logs/admin_actions in src/+index.html; ZERO .sql files in repo).
+- Harness (outside-repo, /home/z/my-project/scripts/xss_fix_s294_audit.js): browser-faithful tokenizer w/ RAW-TEXT/RCDATA
+  semantics, REAL modules via vm, 88 payload classes incl. all task-mandated vectors + 8-char-optimized adversarial
+  classes + cutoff-boundary classes, BOTH read paths. FOCUSED (disk == HEAD byte-pinned): **257/0 PASS, zero
+  alert-firing classes** — every minted tag is handler-free. NEGCTL (same sink, substring(0,8) REMOVED): 35 expected
+  detection failures, 24 alert-firing classes → the 8-char truncation is PROVEN load-bearing. node --check OK ×2;
+  working tree byte-identical to parent at close.
+- Classification (single, per taxonomy): **B. SAFE BY CONSTRUCTION for script execution** — the in-repo
+  String(...).substring(0,8) render truncation in HTML-text position provably prevents any completable
+  tag+handler/URL-scheme construct regardless of stored value; sink safety does NOT depend on the external RPC/DB/RLS
+  (unlike the §28.4 site-3 actor_role D-classification, where safety hinged on external role-gating). MECHANISM
+  REFINEMENT of the original record (conclusion unchanged): the "(EOF-in-tag drops incomplete elements)" rationale is
+  imprecise — the truncated prefix is NOT followed by EOF (template markup continues), so an incomplete "<img src"
+  COMPLETES against the following template markup and mints an inert garbage-attribute element; complete
+  tag+HANDLER formation remains impossible in 8 chars, exactly as recorded. Residual (unchanged, LOW, cosmetic):
+  ≤8-char inert structural minting (img/svg/iframe/script-no-exec/etc.) and raw-text swallowing of subsequent card
+  markup remain possible — the defense-in-depth gap stands; NO esc() applied per the task decision rule (no cosmetic
+  fix on a proven-safe-by-construction sink).
+- Code change: NONE ("NO CODE CHANGE REQUIRED" — src/ untouched; only this ledger record + the ISSUE_INDEX sync line).
+  External dependency retained: log_audit_entry role-gating / p_target_id-to-trusted-value constraint / actor_role
+  derivation remain §29.4 runbook items (1); §27.1 items 1-4 unchanged.
+
 ## 30. Task report hooks (per owner instruction)
 
 At the end of every H task, report: historical issues imported/updated · issues fixed in this task · issues remaining open · newly discovered issues · ledger changes.
