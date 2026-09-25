@@ -127,8 +127,8 @@ async function doSearch(q){
     h+=filteredUsers.map(u=>`<div style="grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d;cursor:pointer" onclick="showUserProfile('${u.id}')">
       ${av(u.avatar_url,u.username,46,false,isOnline(u.last_seen))}
       <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:5px"><span style="font-weight:700;font-size:14px">${u.username}</span>${u.is_verified?ico('verified','',13):''}</div>
-        <div style="color:#666;font-size:13px">${u.full_name||''}</div>
+        <div style="display:flex;align-items:center;gap:5px"><span style="font-weight:700;font-size:14px">${esc(u.username)}</span>${u.is_verified?ico('verified','',13):''}</div>
+        <div style="color:#666;font-size:13px">${esc(u.full_name||'')}</div>
       </div>
       ${ico('back','#444',18)}
     </div>`).join('');
