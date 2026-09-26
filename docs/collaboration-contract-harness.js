@@ -16,7 +16,8 @@ for (const marker of [
   'id="collab-search"',
   'filterCollabList(this.value)',
   'id="collab-list"',
-  "selectCollab('${u.id}','${u.username}')",
+  'data-uname="${esc(u.username)}"',
+  "selectCollab('${u.id}',this.dataset.uname)",
   'window._collabUsers = users',
   'function filterCollabList(q)',
   'window._collabUsers.filter',
@@ -31,7 +32,7 @@ for (const marker of [
   assert(source.includes(marker), `Collaboration marker missing: ${marker}`);
 }
 assert.strictEqual((source.match(/db\.from\('follows'\)/g) || []).length, 1, 'Collaboration must own one following query');
-assert.strictEqual((source.match(/selectCollab\('\$\{u\.id\}','\$\{u\.username\}'\)/g) || []).length, 2, 'Collaboration must retain initial and filtered selection templates');
+assert.strictEqual((source.match(/selectCollab\('\$\{u\.id\}',this\.dataset\.uname\)/g) || []).length, 2, 'Collaboration must retain initial and filtered selection templates (H10-12: same constant-expression transport in both, username via the esc() data-uname attribute)');
 assert.strictEqual((source.match(/window\._collabUsers = users/g) || []).length, 1, 'Collaboration must cache users once');
 assert.strictEqual((source.match(/window\._collabAuthor =/g) || []).length, 1, 'Collaboration must store one selected author');
 assert(!source.includes('insert('), 'Collaboration picker must not create or persist posts');

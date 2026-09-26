@@ -34,10 +34,10 @@ async function showCollabPicker(){
       <input id="collab-search" placeholder="Search..." oninput="filterCollabList(this.value)" class="inp" style="margin-bottom:12px">
       <div id="collab-list" style="max-height:50vh;overflow-y:auto">
         ${users.map(u=>`
-          <div onclick="selectCollab('${u.id}','${u.username}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
+          <div data-uname="${esc(u.username)}" onclick="selectCollab('${u.id}',this.dataset.uname)" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
             ${av(u.avatar_url, u.username, 40)}
             <div style="flex:1">
-              <div style="font-weight:600;font-size:14px;color:#fff">${u.username}</div>
+              <div style="font-weight:600;font-size:14px;color:#fff">${esc(u.username)}</div>
             </div>
             <div style="color:#555;font-size:18px">›</div>
           </div>
@@ -53,9 +53,9 @@ function filterCollabList(q){
   if(!list || !window._collabUsers) return;
   const filtered = window._collabUsers.filter(u=>u.username.toLowerCase().includes(q.toLowerCase()));
   list.innerHTML = filtered.map(u=>`
-    <div onclick="selectCollab('${u.id}','${u.username}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
+    <div data-uname="${esc(u.username)}" onclick="selectCollab('${u.id}',this.dataset.uname)" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d;cursor:pointer">
       ${av(u.avatar_url, u.username, 40)}
-      <div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">${u.username}</div></div>
+      <div style="flex:1"><div style="font-weight:600;font-size:14px;color:#fff">${esc(u.username)}</div></div>
       <div style="color:#555;font-size:18px">›</div>
     </div>
   `).join('') || '<div style="text-align:center;padding:20px;color:#555">No match</div>';
