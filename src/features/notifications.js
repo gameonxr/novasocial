@@ -179,7 +179,13 @@ async function renderNotifs(){
         const isUnread = !n.is_read;
         const opacity = isUnread ? '1' : '0.6';
 
-        html += `<div class="nitem" style="opacity:${opacity};background:${isUnread?'#0f0f0f':'#0a0a0a'};" onclick="notifClick('${n.type}','${n.sender_id}','${n.post_id||''}','${n.conversation_id||''}','${n.story_id||''}')">`;
+        // XSS-10.5: notifications.type is client-insert-writable (send-notif.js
+        // plain client INSERT, caller-supplied type — M7 payload-tamper doctrine),
+        // raw into a JS-string attr = breakout class. Transport on data-ntype
+        // (esc codec) + constant-expression handler; UUID args stay inline
+        // (sender_id confirmed FK; post_id/conversation_id/story_id = the
+        // M5/M7-pinned DB uuid-typed onclick-arg class).
+        html += `<div class="nitem" data-ntype="${esc(n.type)}" style="opacity:${opacity};background:${isUnread?'#0f0f0f':'#0a0a0a'};" onclick="notifClick(this.dataset.ntype,'${n.sender_id}','${n.post_id||''}','${n.conversation_id||''}','${n.story_id||''}')">`;
         html += `<div style="position:relative">${av(n.sender?.avatar_url, n.sender?.username, 44)}<div style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #000;">${notifIconSvg(n.type)}</div></div>`;
         html += `<div style="flex:1"><div style="color:#fff;font-size:14px;line-height:1.4;"><b>${esc(n.sender?.username || 'User')}</b> ${esc(txt)}</div>`;
 

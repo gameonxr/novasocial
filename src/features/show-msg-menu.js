@@ -28,7 +28,14 @@ window.showMsgMenu = function showMsgMenu(id, isMe, senderId, encText, encName, 
   const favs = JSON.parse(localStorage.getItem('fav_stickers') || '[]');
   const isFav = favs.includes(decodeURIComponent(encMurl));
 
-  html += '<button onclick="toggleFavFromMsg(\''+encMurl+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">'
+  // XSS-10.5 (H9-D1 §35.1 follow-up): encMurl/encText are percent-encoded but
+  // encodeURIComponent leaves ' ( ) ! ~ * - . unescaped — re-interpolating them
+  // into JS string literals re-opens the class (arithmetic-chain breakout
+  // ')-alert(1)-('). Transport on data-* attrs (esc codec — percent strings
+  // contain no HTML-special chars so esc(enc) === enc byte-exact) + constant-
+  // expression handlers; the REAL handlers' decodeURIComponent contracts are
+  // preserved (dataset returns the ORIGINAL percent-string at click time).
+  html += '<button data-enc-murl="'+esc(encMurl)+'" onclick="toggleFavFromMsg(this.dataset.encMurl)" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">'
        + (isFav ? '⭐ Remove Favorite Sticker' : '☆ Add To Favorites')
        + '</button>';
 }
@@ -38,9 +45,9 @@ window.showMsgMenu = function showMsgMenu(id, isMe, senderId, encText, encName, 
   }
 
   if(text) {
-    html += '<button onclick="copyMsgFromEnc(\''+encText+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">📋 Copy</button>';
+    html += '<button data-enc-text="'+esc(encText)+'" onclick="copyMsgFromEnc(this.dataset.encText)" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">📋 Copy</button>';
   }
-  html += '<button onclick="pinMsgFromEnc(\''+id+'\',\''+encText+'\')" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">📌 Pin</button>';
+  html += '<button data-enc-text="'+esc(encText)+'" onclick="pinMsgFromEnc(\''+id+'\',this.dataset.encText)" class="bout" style="border:none;border-bottom:1px solid #1a1a1a;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;">📌 Pin</button>';
 
   if(isMe) {
     html += '<button onclick="unsendMsg(\''+id+'\')" class="bout" style="border:none;border-radius:0;text-align:left;padding:16px 20px;width:100%;font-size:15px;color:#E1306C;display:flex;align-items:center;gap:10px">'+ico('trash_2','#E1306C',16)+' Unsend</button>';

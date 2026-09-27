@@ -98,7 +98,7 @@ With SEC-004 fixed (2026-09-12, section 21), the 1.2 HIGH section is now EMPTY �
 | XSS-C6 | — | load-msgs.js:153 | Audit claimed reactionMap.id] bug — byte-verified the line is actually reactionMap[m.id] | SAFE (non-issue, verified H1 task) |
 | XSS-C8 | — | settings.js:627-628 | Share-link constant, app-origin | SAFE |
 | XSS-C9 | LOW | notes.js:57-58; **nova-ultra-patches.js:46 moodChip `innerHTML` interpolating currentMood (source: smart-feed.js fixed-enum OR ai-moderation.js:39 `localStorage.getItem('nova-current-mood')` — self-set localStorage, H19-audit-discovered site, same self-XSS class)**; **M1-audit-reviewed own-data sites 2026-09-09: memories.js:65 (own posts grid, .eq user_id), load-prof.js:27 (own nav avatar), avatar-action-sheet.js:11 (own avatar+username in onclick) — own-data only, no cross-user vector, same accepted-low family**; **M6-audit own-data sites 2026-09-10: profile.js:52 (own cover_url raw img src — cldUrl passthrough for non-cloudinary strings, mints on quote/markup payloads; byte-identical parent/disk proven in the M6 harness D-group), profile.js:125 (own posts INITIAL-grid media_url raw img src — the initial-render twin of the M1-fixed :153/:157/:161/:165 profTab sites), profile.js:238 (nav-avatar onerror first-letter JS-string + own-upload URL — C1-pattern at an own-data site)** — own-data only, receiver=self, same accepted-low family (memories.js:65 precedent) | Personal "My Notes" modal renders localStorage `nova-notes` myNotes title/content raw into innerHTML — self-XSS only (own-device localStorage, no cross-user vector; separate feature from the quick_notes Notes Bar — H16 audit discovery). The smart-feed mood ids are a developer fixed-enum; only the localStorage restore path (ai-moderation.js:39) is self-XSS-class | PARTIAL-FIXED (2026-09-12, XSS-C9 task — section 23: the own-profile URL/media rendering surfaces FIXED: profile.js:52 cover src esc-wrap + profile.js:125 initial-grid src esc-wrap + profile.js:238 nav-avatar esc(url)+esc(letter) data-fb transport + load-prof.js:27 nav-avatar INITIAL-render twin [stored avatar_url esc-wrap + the same data-fb transport — the #nav-av surface completion]; REMAINING OPEN accepted-low self-XSS sites: notes.js:57-58 [personal localStorage notes modal] + nova-ultra-patches.js:46 [moodChip currentMood] + memories.js:65 [own posts grid] + avatar-action-sheet.js:11 [own avatar+username in onclick] — different surfaces, not in the XSS-C9 task's 3 named surfaces, deferred unchanged) |
-| XSS-10.5 | CLASS | (see dedicated JS-string section 4; **site additions recorded by the M1 audit 2026-09-09: show-report-detail.js:113/:134 — esc(targetContent.media_url) inside viewChatImage onclick JS-strings = the decode-back class at the admin report-detail surface**) | esc() insufficient in JS-string-attribute contexts — entity decode-back breakout | OPEN — dedicated hardening task |
+| XSS-10.5 | CLASS | (see dedicated JS-string section 4; **site additions recorded by the M1 audit 2026-09-09: show-report-detail.js:113/:134 — esc(targetContent.media_url) inside viewChatImage onclick JS-strings = the decode-back class at the admin report-detail surface**; **2026-09-28 dedicated class-level audit (section 37) — 4 NEW same-class sites discovered and fixed: show-msg-menu.js:31 toggleFavFromMsg('encMurl') + :41 copyMsgFromEnc('encText') + :43 pinMsgFromEnc('id','encText') [the percent-codec-into-JS-string RE-INTERPOLATION family — encodeURIComponent leaves ' ( ) ! ~ * - . unescaped so the arithmetic-chain breakout ')-alert(1)-(' rides the codec; §35.1 had pinned "show-msg-menu encMurl/encText" as already-safe transports — the data-attr transports WERE safe but the showMsgMenu modal-layer re-interpolation into JS strings re-opened the class] + notifications.js:182 notifClick('n.type',…) [notifications.type = client-insert-writable per send-notif.js:23-31, the M7 ban_appeals.status/messages.media_type doctrine]; parent 5f4941f PROVEN VULNERABLE 198/0 with 38 exec firings, post-fix focused 241/0 (zero execution/minting), negctl 38 firings = detection power; class-level inventory: 4 A / ~290 B / 2 C, no vulnerable member remains**) | esc() insufficient in JS-string-attribute contexts — entity decode-back breakout | FIXED (2026-09-27: H9-D1 closed the row's 13 assigned sites, section 35; 2026-09-28: dedicated XSS-10.5 class-level audit closed the 4 remaining unassigned sites — section 37; H9-D1/H9-D2 transports re-verified intact, class member census complete, B/C classifications pinned) |
 | SEC-001 | LOW | reels-renderer-owner.js:324; home.js:430/:442 (H12-discovered sites — Home feed error paths, same class); **profile-view.js:213 (preview render-exception path `Error: ${e.message}` raw into innerHTML — H18-discovered site, same error-path class; only reachable via a render-section exception, exercised with benign stub data in the H18 suite)** | Reels error fallback + Home feed error states + profile preview error path render `e.message` raw into innerHTML (Supabase/JS error text — not user-stored; defense-in-depth concern only; discovered during H11 audit, Home sites added during H12 audit, profile site added during H18 audit) | OPEN (defer — error-path class) |
 | SEC-003 | LOW | story-poll-addon.js:224 (`${q}` in updatePollPreview) + :228 (`${o}` in the same preview's option loop) | Story editor poll LIVE PREVIEW renders the author's own question/option text raw into preview.innerHTML (fires while typing via oninput → updatePollPreview). SELF-XSS only: the preview renders only the author's own modal input state (question input :35 / option inputs :166) — NO cross-user vector, NO DB read; the same values are safely esc()'d on the editor canvas (story-editor-owners.js:25/:28) and, since SEC-002, in the viewer (sv-append-overlays.js:44/:51). SEC-002-audit discovery (2026-09-08) | esc() in updatePollPreview (mirroring the editor-canvas pattern) — C3/M6/C9 self-XSS family treatment | FIXED (SEC-003 commit 2026-09-12 — the row's own prescription applied: esc() wraps at :224/:228, exactly mirroring the editor-canvas story-editor-owners.js:25/:28 + viewer sv-append-overlays.js:44/:51 patterns; see section 22) |
 
@@ -2205,3 +2205,158 @@ same lineage). Secret scan CLEAN (h9d2_secret_scan.js, 14 files, Owner-SHA-256 s
   the established scripts/-tooling pattern). No issue deleted, no duplicate IDs, no unrelated rows touched
   (§29.4/H9-D1/H9-D3/H10-5 CLOSED records untouched; H10-6/7/8/9, XSS-10.5, XSS-C3/C5/C9, SEC-001, M1 rows
   untouched).
+
+---
+
+## 37. XSS-10.5 — JS-string/inline event-handler CLASS status review + fix (this task, 2026-09-28, parent 5f4941f)
+
+### 37.1 Scope + class-level inventory (current code authoritative; historical line numbers NOT trusted)
+
+Scope = the XSS-10.5 CLASS ROW status review (SECURITY_ISSUES.md row :101, "esc() insufficient in
+JS-string-attribute contexts — entity decode-back breakout", status OPEN since the original XSS priority
+audit). The task's own scope rules: H9-D1's 13 fixed sites must NOT be reopened; H9-D2/H9-D3 work must not
+be duplicated; H10-6/7/8/9, XSS-C3/C5/C9, SEC-001, H10-14, DG-3/4/5, HA-M5 untouched; no full-repo rescan.
+
+Inventory method (outside-repo scanners, the established scripts/ pattern): xss105_scan.py — every on*
+attribute in src/ + index.html + sw.js with dynamic content (template-literal / concat / quote-replace /
+esc / encodeURIComponent / dataset) = 314 dynamic sites / 102 files (555 constant handlers excluded);
+xss105_stage2.py — expression-level filter = 278 sites with dynamic exprs feeding handler strings; then
+full per-file source reads with data-flow tracing. H9-D1 §35.1's own inventory was re-checked against
+current code (its 13 sites + its B-pin list + its adjacents).
+
+**A. CONFIRMED VULNERABLE — 4 sites in 2 files, never previously assigned to any row** (the class row
+stays OPEN because of these; §35.1's "show-msg-menu encMurl/encText" B-pin was a MISCLASSIFICATION —
+correct about the data-attr transports, wrong about the modal-layer re-interpolation):
+
+| # | Site | Handler shape | Attacker field | Source/write path | Receiver | Trigger | Existing escaping |
+|---|------|--------------|----------------|-------------------|----------|---------|-------------------|
+| S-A1 | show-msg-menu.js:31 | onclick="toggleFavFromMsg('encMurl')" | messages.media_url | client-insert-writable URL column (M1 lineage: send-media-msg.js:13 + 6 more insert sites, incl. complete-forward-message verbatim copy) | cross-user stored (attacker→victim chat) | long-press image message → modal → click Fav | encodeURIComponent (leaves ' ( ) ! ~ * - .) |
+| S-A2 | show-msg-menu.js:41 | onclick="copyMsgFromEnc('encText')" | messages.text | fully attacker-controlled chat body (H1 lineage) | cross-user stored | long-press → modal → click Copy | encodeURIComponent |
+| S-A3 | show-msg-menu.js:43 | onclick="pinMsgFromEnc('id','encText')" | messages.text | same | cross-user stored | long-press → modal → click Pin | encodeURIComponent (id = UUID inline-safe) |
+| S-A4 | notifications.js:182 | onclick="notifClick('n.type','n.sender_id',…)" | notifications.type | client-insert-writable string column — send-notif.js:23-31 plain client INSERT with caller-supplied type (M7 ban_appeals.status/messages.media_type payload-tamper doctrine; all current callers pass constants — NOT a boundary) | cross-user stored (hostile sender→victim recipient list) | click notification row | NONE (raw; only :184 message text was H5-fixed) |
+
+The S-A1/2/3 mechanism (NEW sub-variant of the class, distinct from H9-D1's raw/quote-replace/esc'd
+shapes): messages render with data-text/data-murl = encodeURIComponent(m.text / m.media_url)
+("100% Safe Encoded Attributes" comment at load-msgs.js:135 — safe as a TRANSPORT); the long-press flow
+re-reads the dataset (show-msg-menu-from-el.js:8) and showMsgMenu RE-INTERPOLATES the percent-encoded
+value into a single-quoted JS string inside the double-quoted onclick attr (modal innerHTML :54→:62).
+encodeURIComponent does NOT escape ' ( ) ! ~ * - . — so the codec absorbs H9-D1's entity/backslash/
+semicolon/markup classes (all %XX) but leaves the arithmetic-chain breakout fully live:
+text = `')-alert(1)-('` → onclick = `copyMsgFromEnc('')-alert(1)-('')` → valid JS expression → alert(1)
+fires on click. Parent-state honest functional evidence: quote-bearing legit names (O'Brien) ALSO break
+the Copy/Pin buttons (SyntaxError) — the class's own breakage side.
+
+**B. SAFE BY CONSTRUCTION — pinned (byte-shape X-BLOCK + inert firing in the harness, all verified on
+disk at parent 5f4941f AND post-fix):**
+- the 13 H9-D1 sites (dms-renderer :50 data-name, refresh :97 setAttribute + :174 prepend, open-chat :76
+  data-cname/data-cav ×2, post-actions :126 data-sname + :339/:343/:351/:367 data-share-text + :355/:359
+  + :363 data-dl-url, gcs :20 data-uname, check-mention :24, search-add :15, call-history :39
+  data-uname/data-cav [ctype ternary-normalized, otherId FK UUID — inline], incoming :12
+  data-uname/data-cav/data-ctype, report-detail :113/:134 data-img-url [the row's M1-audit site
+  additions]);
+- the 2 H9-D2 mention-family JS-string sites (mention.js:47, se-search-mention-users.js:48 data-uname);
+- M1 constant-expression transports: load-msgs :114/:116 + -load-older :78/:80 (data-mq/data-fu maps/
+  image), post-actions :363 (data-dl-url), profile-view :392 (data-av), search-music-for-note :15;
+- XSS-C1: utils.js:336 av() data-fl constant-expression onerror;
+- UUID-arg family (~180 sites, the M5/M7-pinned "UUID onclick args (DB uuid-typed columns)" doctrine:
+  posts/profile-view/note-viewer/notifications UUID args incl. sender_id [FK confirmed by the
+  notifications select join] and post_id/conversation_id/story_id; messages m.id/m.sender_id; do-search;
+  show-msg-menu id args; load-msgs/-load-older :90/:106-:108/:128/:148-:150; admin surfaces
+  [approvals/reports/verify/team/stats/user-detail/staff-actions/appeal-form/ban-screen/report-detail];
+  search-* / show-add-members / show-group-call-type-menu / open-chat cid / chat-actions / attachment-
+  sheet / comments / channels :32/:140 / communities :32/:150-:153 / sticker-tab idx / show-group-info
+  cid / render-sv / story-highlights / memories / news-feed / load-notes-feed / follow-list /
+  close-friends / show-blocked-list / show-story-viewers / universal-search / explore :69/:127/:138 /
+  collaboration :37/:56 [H10-12] / show-account-switcher / reels / notes-bar / reel-poll / show-story-
+  actions / handle-incoming-call callData.id/caller_id);
+- booleans (c.is_group ×3, load-team-list :56 ternaries), ternary-normalized constants (call-history
+  ctype, settings :236/:244), numeric indexes (home :130, sticker-tab :21/:29, search-music :15 idx,
+  calendar d, video-length-options s);
+- dev-constant arrays (§35.1 lineage re-verified): channels :51/:57, communities :53/:59, marketplace
+  :30, games :24, learning :29, smart-feed :37, creator-wallet :127, settings :407 help titles + :627/:628
+  share-link [origin+constant, XSS-C8 row], smart-replies :27 [fixed reply bank; lastMsg used only for
+  regex matching, never interpolated], show-create-story :85/:89/:106/:123/:169 [fonts/colors/stickers/
+  gradients], nova-universe :43, nova-ultra-patches :96, fab-speed-dial :25, explore :59/:64 chips,
+  ai-journal :81 moods, notes :72 colors, open-note-creator :25 visibility enum, disappearing :28 opt.v,
+  show-group-info :71 durations + :91 themes + :98 inviteLink [origin+UUID] + :27 constant onclick,
+  post-actions :64 langs + postUrl [origin+UUID], create :32/:73 type enum, video-length, sticker-tab;
+- quote-replace-on-constants sites (show-create-story :169 gradients, smart-replies :27) — constants
+  only, replace is defense-in-depth on inert data.
+
+**C. EXTERNAL / SELF-ONLY (recorded, NOT fixed per the no-guess rule):** auth.js:84 resendVerification-
+Email('email') — own signup self-input (receiver=self, §35.1 "self-input email, class C" lineage);
+avatar-action-sheet.js:11 viewAvatarFullscreen('own avatar','esc(username)') — C9 row's accepted-low
+own-data residual (in-row record only, C9 row untouched).
+
+**ADJACENT-ROW sites (10.5-shaped but owned elsewhere — recorded, NOT touched per the scope lock):**
+trending.js:104/:113 searchHashtag (H10-9 hashtag DB-write-bypass row); posts.js:21 caption-more
+double-esc JS-string (H10-15 cosmetic row); avatar-action-sheet.js:11 (C9, above).
+
+### 37.2 Fix (2 production files, 4 sink sites — the row's own data-* prescription, H9-D1 §35.2 convention)
+
+- show-msg-menu.js:31 → `data-enc-murl="'+esc(encMurl)+'" onclick="toggleFavFromMsg(this.dataset.encMurl)"`
+- show-msg-menu.js:41 → `data-enc-text="'+esc(encText)+'" onclick="copyMsgFromEnc(this.dataset.encText)"`
+- show-msg-menu.js:43 → `data-enc-text="'+esc(encText)+'" onclick="pinMsgFromEnc(\''+id+'\',this.dataset.encText)"` (id UUID inline per the H9-D1 convention)
+- notifications.js:182 → `data-ntype="${esc(n.type)}" onclick="notifClick(this.dataset.ntype,'${n.sender_id}','${n.post_id||''}','${n.conversation_id||''}','${n.story_id||''}')"` (UUID args inline per the M5/M7 uuid-typed-column pin; sender_id FK confirmed)
+
+Codec note: percent-encoded values contain only [A-Za-z0-9-_.!~*'()] and %XX — zero HTML-special
+characters — so esc(enc) === enc byte-exact; the browser entity-decodes the data-* attribute at parse
+time and this.dataset.X returns the ORIGINAL percent-string at click time, so the REAL handlers'
+decodeURIComponent contracts (copyMsgFromEnc/pinMsgFromEnc/toggleFavFromMsg/notifClick internals) are
+preserved verbatim — handlers/utils/load-order/schema/RLS untouched; UUIDs/booleans stay inline.
+
+### 37.3 Verification (scripts/xss105_verify.js — s294-lineage browser-faithful tokenizer + REAL modules; prove/focused/negctl modes)
+
+- PROVE parent 5f4941f (git show source): **198/0 PASS — 38 exec-class firings** across all 4 site
+  variants (S-A1 5 arith classes; S-A2 4; S-A3 4; S-A4 25: sq/sqStmt/bs2/dq/dqFull/attrBk/entitySq/
+  entityHex/entityApos/hindi/cyrillic/cjk/emoji/multiling/arith×4) + honest parent-state evidence:
+  O'Brien breaks Copy/Pin byte-exact delivery (the class's functional breakage side). Honest-inert
+  classes documented: semicolon/backslash/backtick/markup classes absorbed by the percent codec at
+  S-A1/2/3 (data classes); arithLong = postfix-decrement parse (breakage); mixedCase = ReferenceError.
+- FOCUSED post-fix (disk): **241/0 PASS — zero JavaScript execution, zero attacker-controlled handlers,
+  zero script minting (census), zero false positives**; 132 payload tests + 60+ X-BLOCK/functional
+  assertions; legit values (Prince / Prince Kumar / O'Brien / Test "User" / भाई / ਪ੍ਰਿੰਸ / پرنس / 😀 /
+  combos) byte-exact through the REAL handlers: clipboard writeText, pinned_message_text DB update,
+  fav_stickers localStorage, notifClick mark-as-read; O'Brien Copy/Pin now WORKS (was broken at parent);
+  existing handlers still execute (reaction emojis, View Profile/Forward/Info/Unsend/Report buttons,
+  grouped-likes viewPost(UUID), Follow Back follows-insert); no double escaping, no mojibake (multilingual
+  byte-identical).
+- NEGCTL (parent source through the FOCUSED safe-expectation set): **38 exec firings = detection power**
+  (every post-fix inertness assertion fires on the vulnerable source) + the 3 parent-state legitApos
+  functional fails (the breakage side).
+- H9-D1/H9-D2/M1/C1 cross-check: all X-BLOCK byte-shape pins PASS in both prove (parent) and focused
+  (post-fix) modes — the 13 H9-D1 sites + 2 H9-D2 mention sites + M1 transports + C1 av() onerror
+  remain EXACTLY the established constant-expression shapes (task §6 requirement — no H9-D1 regression).
+- Line-diff hygiene: git diff HEAD touches ONLY the 2 fix files (harness-enforced).
+
+### 37.4 Regression + task report hooks
+
+- 322-harness battery: **317 PASS / 5 FAIL = the documented baseline** (same 5 names, git-stash verified
+  BYTE-IDENTICAL at clean parent 5f4941f: branch2-final-readiness / branch2-only-safety /
+  deletion-fallback / dms-renderer-independent-proof / particle-production-split).
+- app-load 10/10 (463/463 scripts fetch + syntax-valid, 465 classic tags, PWA 200/200); node --check 2/2
+  changed files; git diff --check CLEAN; secret scan CLEAN (h9d2_secret_scan.js pattern, 4 files incl.
+  both ledger files).
+- Dedicated suites: parent 30/9 (the H9-D2-documented 8 era-pins + xss105-RED-at-parent [the vulnerability
+  detector itself]) → post-fix 28/11: xss105 GREEN; 3 newly-tripped all classified non-regression —
+  h5 (190/14: all 14 = the M/SR/MSG notifClick-wrapper byte-pins + task-era diff-scope pins, substantive
+  H5 security assertions all PASS — the h1012-S3 §33.3 era-pin lineage, harness preserved verbatim),
+  ba + m284 (S5 clean-worktree scope pins, documented resolve-post-commit pattern; ba N1 = the same
+  task-era notifClick-literal shape pin). h9d1 output BYTE-IDENTICAL parent vs with-fix (its H11-era
+  line-diff pins unaffected by this task).
+- Sites audited: 314 dynamic handler sites scanned → 278 stage-2 → 4 A / ~290 B / 2 C classified
+  (per-site records in §37.1 + audit_out/xss105_candidates.json + xss105_stage2.json).
+- Vulnerable: 4 (all fixed). Safe-by-construction: ~290 pinned (§37.1 B-list). External/self-only: 2
+  (auth.js:84 self-input C; avatar-action-sheet.js:11 C9-row residual).
+- Adjacent out-of-scope: trending :104/:113 (H10-9), posts.js:21 (H10-15), avatar-action-sheet :11 (C9)
+  — recorded in-row only, rows untouched.
+- Newly discovered: the 4 sites as XSS-10.5 CLASS MEMBERS (the row's own scope — not new IDs); no new
+  issue IDs created; no unrelated rows touched.
+- Remaining open (unchanged by this task): H10-6/H10-7/H10-8 (self-XSS rows), H10-9, XSS-C3/C5, XSS-C9
+  remaining accepted-low sites, SEC-001, H10-14, DG-3/4/5, HA-M5; external SQL/RPC/RLS runbook items
+  (§29.4 (1) + §27.1 items 1-4).
+- Ledger changes: SECURITY_ISSUES.md — XSS-10.5 row OPEN → FIXED 2026-09-28 (history preserved in-row);
+  section 37 added (37.1-37.4). ISSUE_INDEX.md — XSS-10.5 row → FIXED + 2026-09-28 sync-log entry.
+  NO in-repo harness changes (docs/ untouched). Outside-repo scripts/ additions only (xss105_verify.js +
+  xss105_scan.py + xss105_stage2.py + xss105_run_suites.sh + result artifacts — the established
+  scripts/-tooling pattern).
