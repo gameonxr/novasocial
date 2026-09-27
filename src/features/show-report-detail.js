@@ -110,7 +110,7 @@ window.showReportDetail = async function showReportDetail(reportId){
                     <div style="margin-bottom:10px;border-radius:10px;overflow:hidden;background:#111">
                       ${targetContent.media_type === 'video'
                         ? `<video src="${esc(targetContent.media_url)}" style="width:100%;max-height:300px;object-fit:cover" controls></video>`
-                        : `<img src="${esc(targetContent.media_url)}" style="width:100%;max-height:300px;object-fit:cover" loading="lazy" decoding="async" onclick="viewChatImage('${esc(targetContent.media_url)}')">`
+                        : `<img src="${esc(targetContent.media_url)}" data-img-url="${esc(targetContent.media_url)}" style="width:100%;max-height:300px;object-fit:cover" loading="lazy" decoding="async" onclick="viewChatImage(this.dataset.imgUrl)">`
                       }
                     </div>
                   ` : ''}
@@ -131,7 +131,7 @@ window.showReportDetail = async function showReportDetail(reportId){
                   <div style="font-size:14px;color:#fff;line-height:1.5">${esc(targetContent.text || '['+targetContent.media_type+' message]')}</div>
                 ` : ''}
                 ${report.target_type === 'story' ? `
-                  ${targetContent.media_url ? `<div><${targetContent.media_type === 'video' ? 'video' : 'img'} src="${esc(targetContent.media_url)}" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px" ${targetContent.media_type === 'video' ? 'controls' : 'onclick="viewChatImage(\''+esc(targetContent.media_url)+'\')"'}></div>` : '<div style="color:#666">[Story expired]</div>'}
+                  ${targetContent.media_url ? `<div><${targetContent.media_type === 'video' ? 'video' : 'img'} src="${esc(targetContent.media_url)}" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px" ${targetContent.media_type === 'video' ? 'controls' : 'data-img-url="'+esc(targetContent.media_url)+'" onclick="viewChatImage(this.dataset.imgUrl)"'}></div>` : '<div style="color:#666">[Story expired]</div>'}
                 ` : ''}
               ` : '<div style="color:#666;font-size:13px">[Content no longer exists — may have been deleted]</div>'}
             </div>

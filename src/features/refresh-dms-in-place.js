@@ -81,7 +81,6 @@ window._refreshDmsInPlace = async function _refreshDmsInPlace() {
     convos.forEach(c => {
       const other = otherMap[c.id];
       const name = c.is_group ? c.group_name : (other?.username || 'Chat');
-      const safeName = name.replace(/'/g, "\\'");
       const online = other ? isOnline(other.last_seen) : false;
       const lastMsg = c.last_message || 'Tap to open';
       const timeAgo = ago(c.last_message_at);
@@ -93,8 +92,11 @@ window._refreshDmsInPlace = async function _refreshDmsInPlace() {
         // ── In-place update: stamp data-cid if not already, then patch text nodes ──
         if (!existingEl.getAttribute('data-cid')) existingEl.setAttribute('data-cid', c.id);
 
-        // Update onclick (in case name changed)
-        existingEl.setAttribute('onclick', `openChat('${c.id}','${safeName}',${c.is_group})`);
+        // Update onclick (in case name changed) — XSS H9-D1: data-name attribute
+        // + CONSTANT-expression onclick (raw DOM write, no HTML parsing — the
+        // attribute value needs no escaping at this boundary)
+        existingEl.setAttribute('data-name', name);
+        existingEl.setAttribute('onclick', `openChat('${c.id}',this.dataset.name,${c.is_group})`);
 
         // Update name (the bold span — first span inside the inner flex div)
         const nameSpan = existingEl.querySelector('div[style*="flex:1"] > div > span');
@@ -169,7 +171,7 @@ window._refreshDmsInPlace = async function _refreshDmsInPlace() {
         const unreadBadge = unread > 0
           ? '<div style="min-width:20px;height:20px;border-radius:10px;background:#E1306C;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 6px;">'+unreadText+'</div>'
           : '';
-        const itemHtml = '<div class="clist" data-cid="'+c.id+'" onclick="openChat(\''+c.id+'\',\''+safeName+'\','+c.is_group+')">'+avatarHtml+'<div style="flex:1;overflow:hidden"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700;font-size:15px">'+esc(name)+'</span><div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+unreadBadge+'<span style="color:#444;font-size:11px">'+timeAgo+'</span></div></div><div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(lastMsg)+'</div></div></div>';
+        const itemHtml = '<div class="clist" data-cid="'+c.id+'" data-name="'+esc(name)+'" onclick="openChat(\''+c.id+'\',this.dataset.name,'+c.is_group+')">'+avatarHtml+'<div style="flex:1;overflow:hidden"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700;font-size:15px">'+esc(name)+'</span><div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+unreadBadge+'<span style="color:#444;font-size:11px">'+timeAgo+'</span></div></div><div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(lastMsg)+'</div></div></div>';
         newConvosToPrepend.push(itemHtml);
         updatesMade = true;
       }

@@ -125,7 +125,7 @@ Root cause (all): 2026-07-27 v1-declaration deletion (8e26c10→58615b3 lineage)
 
 | ID | Severity | Scope | Issue | Owning task |
 |----|----------|-------|-------|-------------|
-| H9-D1 | HIGH(class) | JS-string onclick security: openChat('cid','safeName') (DM list), initiateCall('id','safeName') (open-chat.js:76), sendSharedPostToChat (post-actions.js:126), addToGroup (load-gcsuggestions.js:20), insertMention (check-mention.js:24), search-add-member.js:15, show-call-history.js:41, handle-incoming-call accept, dms-renderer/refresh-dms safeName onclicks, shareText onclicks (post-actions.js:315→:339/:343/:351/:367); + H10-5 merged (shareText contains raw author username inside 4 onclick JS-string attrs, quote-replace only) | quote-replace-only escaping inside JS-string-attribute contexts — esc() insufficient (XSS-10.5 class); prescribed = encodeURIComponent data-* pattern | Dedicated JS-context hardening task (owner-authorized separately) |
+| H9-D1 | HIGH(class) | JS-string onclick security: openChat('cid','safeName') (DM list), initiateCall('id','safeName') (open-chat.js:76), sendSharedPostToChat (post-actions.js:126), addToGroup (load-gcsuggestions.js:20), insertMention (check-mention.js:24), search-add-member.js:15, show-call-history.js:41, handle-incoming-call accept, dms-renderer/refresh-dms safeName onclicks, shareText onclicks (post-actions.js:315→:339/:343/:351/:367); + H10-5 merged (shareText contains raw author username inside 4 onclick JS-string attrs, quote-replace only) | quote-replace-only escaping inside JS-string-attribute contexts — esc() insufficient (XSS-10.5 class); prescribed = data-* pattern | FIXED 2026-09-27 (dedicated H9-D1 task — see section 35: 13 sites in 10 files transported [S1 dms-renderer :49 data-name · S2 refresh :97 setAttribute data-name · S3 refresh :172 prepend · S4 open-chat :76 initiateCall data-cname/data-cav ×2 icons · S5 post-actions :126 sendSharedPostToChat data-sname · S6 post-actions :339/:343/:351/:367 shareText data-share-text ×4 (H10-5 merged) · S7 load-gcsuggestions :20 addToGroup data-uname · S8 check-mention :24 insertMention data-uname · S9 search-add-member :15 addToGroup data-uname · S10 show-call-history :41 initiateCall data-uname/data-cav · S11 handle-incoming-call :12 acceptIncomingCall data-uname/data-cav/data-ctype · S12/S13 show-report-detail :114/:134 viewChatImage data-img-url (the M5-recorded 10.5 site additions)]; parent 7326361 PROVEN VULNERABLE 824/0 — 131 exec-class firings, post-fix focused 1239/0, negctl 802/0 detection power) |
 | H9-D2 | HIGH(class) | Username-rendering surface not yet assigned: mentions (check-mention.js:26), call UI (add-remote-tile-to-grid.js:17-18, show-call-history.js:37, handle-incoming-call.js:12, show-call-screen.js:47/:58), share-sheet user pickers (post-actions.js:136/:151), GC Info add-member search/suggestions (search-add-member.js:14, load-gcsuggestions.js:19); **close-friends.js:46 (privacy-modal following-list rows render u.username raw — H18-discovered site), show-blocked-list.js:15 (blocked-users rows render u.username raw — H18-discovered site), se-search-mention-users.js:48/:51 (story-editor mention-search rows render @u.username raw + seSelectMentionUser('${u.id}','${u.username}') JS-string arg — H18-discovered sites, mention family)** | raw username interpolation in HTML text + JS-string onclicks | Username-rendering hardening series (H18-family extensions) |
 | H9-D3 | MEDIUM | modal.js shared dynamic title (modal.js:43 fresh-path el.innerHTML) — safe only when callers escape; dynamic callers: voice-rooms.js:53 (prompt() self-XSS), show-staff-actions.js:6 ('Manage '+username admin UI) | caller-side esc audit | Modal dynamic-title caller audit task — RESOLVED 2026-09-26 (audit-complete, section 34: ALL 10 dynamic-title callers classified; the two cross-user-capable callers esc()-verified in current code [show-staff-actions.js:6 'Manage '+esc(username), historical fix 96e577c; show-group-info.js:21 `${esc(gcName)} · Info`, historical fix e30d6ba + 172c40d — the row's ':6 raw' citation was already stale]; remaining raw callers self-XSS-only [voice-rooms.js:53 prompt()/hardcoded-constants; communities.js:138 + channels.js:128 own-form→own-localStorage, zero db/transport — recorded in-row, no new IDs]; 5 callers construction-safe constants [nova-universe.js:98 12 hardcoded langs, settings.js:280 3 constant methods, create.js:25 label map, follow-list.js:10 + open-note-creator.js:3 ternary constants]; nesting paths modal.js:15/:25 textContent-inert; overall classification B — NO attacker-controlled path reaches the title sink; NO code change per the no-cosmetic-change rule; history preserved) |
 | H9-D4 | LOW | av() first-letter + dead safeName (utils.js:326-332) | XSS-C1 duplicate — deduped into 1.4 | av() review task |
@@ -142,7 +142,7 @@ Root cause (all): 2026-07-27 v1-declaration deletion (8e26c10→58615b3 lineage)
 | H10-2 | 2026-09-07 | HIGH | Stored XSS | post-actions.js:333 | openShareSheet post-preview caption rendered raw (truncated 60) — alternate path of the same posts.caption value that formatCaption escapes | posts.caption | HTML text | post caption = payload; viewer opens share sheet | CONFIRMED (suite NEG N-D) | esc() — APPLIED in H10 | H10 | FIXED (6b6dbf4) |
 | H10-3 | 2026-09-07 | MEDIUM | XSS class-instance | posts.js:124 | postCard passes username into av() (first-letter + onerror JS-string = C1 class at posts surface) | profiles.username | av() internal | leading `\` in username → onerror syntax breakage | suspected (C1 class) | av() review (XSS-C1) | av() task | OPEN |
 | H10-4 | 2026-09-07 | MEDIUM | URL/JS-string | posts.js:134, :140-141, :151; post-actions.js:322-323, :363 | postCard/shareSheet media_url in downloadMedia onclick + src/poster attrs — M1 class at posts surface (sites added to XSS-M1) | posts.media_url / thumbnail_url (DB-write unconstrained) | URL attr + JS-string | crafted media_url row | suspected (M1 class) | fold into M1 fix cycle | M-tier | OPEN (merged into XSS-M1) |
-| H10-5 | 2026-09-07 | MEDIUM | JS-string | post-actions.js:315 → :339/:343/:351/:367 | shareText contains raw author username inside 4 onclick JS-string attrs (quote-replace only) — 10.5 class | profiles.username | JS-string-attr | username with `"`/entity-breakout | suspected (10.5 class, verified byte-identical pre/post) | dedicated JS-context task | H9-D1 task | OPEN (merged into H9-D1) |
+| H10-5 | 2026-09-07 | MEDIUM | JS-string | post-actions.js:315 → :339/:343/:351/:367 | shareText contains raw author username inside 4 onclick JS-string attrs (quote-replace only) — 10.5 class | profiles.username | JS-string-attr | username with `"`/entity-breakout | suspected (10.5 class, verified byte-identical pre/post) | dedicated JS-context task | H9-D1 task | FIXED (2026-09-27, closed via H9-D1 — the 4 merged shareText onclick sites [post-actions.js:339/:343/:351/:367] now ride data-share-text="${esc(shareText)}" transports with constant-expression onclicks; see SECURITY_ISSUES.md section 35) |
 | H10-6 | 2026-09-07 | LOW | self-XSS | memories.js:59, :66 | Memories screen renders own @username + caption raw — query is .eq('user_id', ME.id) (own posts only) | own profiles.username / own posts.caption | HTML text | self-crafted values, own session | confirmed (code-read; scope=own data) | esc() in a later username sweep | username sweep | OPEN |
 | H10-7 | 2026-09-07 | LOW | self-XSS | scheduled-posts.js:35 | Scheduled-posts modal renders caption from localStorage ('nova-scheduled', own submissions) raw | own localStorage caption | HTML text | self-crafted localStorage | confirmed (code-read) | esc() | username sweep | OPEN |
 | H10-8 | 2026-09-07 | LOW | self-XSS | insights.js:30 | Post Insights renders @username raw — entry gated by isMine (own posts only from UI) | own profiles.username | HTML text | console-call with foreign pid (not UI-reachable) | suspected | esc() | username sweep | OPEN |
@@ -1916,3 +1916,171 @@ Adjacent observed (out-of-title-scope, NOT fixed, no new IDs — same self-sourc
 - Newly discovered: none as NEW IDs; recorded IN-ROW per the no-new-issue rule — the 2 additional dynamic callers found by the current-code inventory (communities.js:138, channels.js:128 — self-XSS/own-localStorage class, not in the row's original 2-caller list) + the adjacent out-of-title-scope BODY renders (communities :35/:144/:147/:157; channels :35/:134/:137/:150 — same own-localStorage source class, observations only, NOT the H9-D3 modal-title sink).
 - Remaining open: JS-string class (H9-D1/XSS-10.5 + H10-5), username-rendering class (H9-D2 + H10-6/H10-7/H10-8 — H10-10/H10-11/H10-12/H10-13 all CLOSED), XSS-C1 era-pin note (F6, §32.3) + h1010-S3 era-pin note (§33.3), XSS-C3/C5, XSS-C9 remaining accepted-low sites, SEC-001 error-path class, H10-9 trending, H10-14 dead safeName, DG-3/4/5 human decisions (BUG file), HA-M5 SW cache (PLATFORM file), cosmetics; external SQL/RPC/RLS runbook items unchanged (§29.4 (1) + §27.1 items 1-4 + the log_audit_entry role-gating/p_target_id/actor_role item).
 - Ledger changes: SECURITY_ISSUES.md — H9-D3 row status OPEN → RESOLVED 2026-09-26 (history preserved in-row); section 34 added (34.1 audit + classification / 34.2 resolution / 34.3 verification / 34.4 hooks); this report block appended; hooks renumbered 33→34. ISSUE_INDEX.md — H9-D3 row → RESOLVED + 2026-09-26 sync-log entry. NO in-repo harness changes (zero production files touched — no allowlist implications). Outside-repo scripts/ additions only (h9d3_verify.js + h9d3_secret_scan.js + result artifacts — the established scripts/-tooling pattern). No issue deleted, no duplicate IDs, no unrelated rows touched (§29.4 target_id CLOSED record untouched; H9-D1/H9-D2 remain OPEN as their own dedicated tasks — untouched; H10-10/H10-12/H10-13 records untouched).
+
+## 35. H9-D1 — JS-string onclick class hardening (this task, 2026-09-27, parent 7326361)
+
+### 35.1 Scope, inventory, data flow, and classification (BEFORE fix)
+
+Scope = EXACTLY the existing H9-D1 ledger row (+ the merged H10-5 shareText sites + the M5-recorded
+XSS-10.5 site additions show-report-detail.js:113/:134). NO new issue IDs. Current-code inventory
+(machine-checked via scripts/h9d1_scan.py + full read of every ledger-cited file; current code
+authoritative over historical line numbers):
+
+- **S1** dms-renderer-owner.js:49 `openChat('cid','safeName',isGrp)` — safeName (:34) = (group_name | other-partner
+  profiles.username).replace(/'/g,"\\'") — quote-replace-only.
+- **S2** refresh-dms-in-place.js:97 setAttribute('onclick', `openChat('${c.id}','${safeName}',${c.is_group})`) — :84 twin.
+- **S3** refresh-dms-in-place.js:172 prepend-path innerHTML twin (insertAdjacentHTML).
+- **S4a/S4b** open-chat.js:76 (BOTH 1-on-1 call icons): initiateCall('UUID',(gcName||'User').replace(/'/g,"\\'"),
+  otherProf?.avatar_url||'', 'audio'|'video') — username quote-replace + avatar_url COMPLETELY RAW in a JS string.
+- **S5** post-actions.js:126 `sendSharedPostToChat('${c.id}','${name.replace(/'/g,"\\'")}',${c.is_group},'${pid}')` —
+  share-DM picker row (group_name | partner username).
+- **S6** post-actions.js:339/:343/:351/:367 (H10-5 merged): shareToWhatsApp/Twitter/Telegram/Native('${postUrl}',
+  '${shareText.replace(/'/g,"\\'")}') — shareText embeds the post AUTHOR's profiles.username.
+- **S7** load-gcsuggestions.js:20 `addToGroup('cid','uuid','u.username',this)` — username COMPLETELY RAW.
+- **S8** check-mention.js:24 `insertMention('m.profiles.username','minp')` — chat-member username COMPLETELY RAW.
+- **S9** search-add-member.js:15 — the .replace(/'/g,"\'") is a NO-OP (\' === ' in JS) — username effectively RAW.
+- **S10** show-call-history.js:41 `initiateCall('${otherId}','${uname}','${ava}','${ctype}')` — uname quote-replace,
+  ava RAW (call-partner profiles).
+- **S11** handle-incoming-call.js:12 acceptIncomingCall('callUUID','callerUUID',quote-replace username,RAW avatar,
+  raw callData.call_type) — the realtime incoming-call banner.
+- **S12/S13** show-report-detail.js:114/:134 `onclick="viewChatImage('${esc(targetContent.media_url)}')"` — the
+  M5-recorded XSS-10.5 decode-back site additions (esc'd media_url inside single-quoted JS strings).
+
+Write path (recorded lineage, H10-10/H10-11/H10-13/H18/M5/M7/M1): profiles.username = settings.js saveEdit
+client-side regex ONLY — DB-write bypass stores arbitrary strings; conversations.group_name, profiles.avatar_url,
+posts/stories.media_url, calls.call_type = unconstrained columns. Client-side validation is NOT a security
+boundary. Any DB CHECK/RLS = EXTERNAL (zero .sql files in repo) — never claimed. Receivers are cross-user by
+construction: DM-list rows, chat headers, share-sheet targets, GC add-member surfaces, call UI, incoming-call
+banner, admin report-detail — all render OTHER users' stored values in the CURRENT user's session.
+Classification: **A. CONFIRMED VULNERABLE** at every site (cross-user stored XSS via JS-string/attr breakout:
+`'` closes the string at raw sites; `&#39;`/`&#x27;` entity decode-back re-closes it at quote-replace AND esc'd
+sites [HTML entity decoding happens BEFORE JS evaluation]; `"` terminates the double-quoted onclick attribute and
+mints handlers; backslash-escape inversion `\'` defeats quote-replace-only everywhere INCLUDING the setAttribute
+path which has no entity decode; search-add-member's replace is a literal no-op).
+
+Context differentiation (NOT auto-flagged): UUID args (c.id, u.id, otherId, callData.id, caller_id, pid, postUrl
+= origin+UUID), booleans, ternary-normalized ctype constants, dev-constant arrays (channels/communities/games/
+learning/marketplace/smart-feed/creator-wallet/settings-help/smart-replies/show-create-story gradients/
+nova-universe/nova-ultra-patches/fab-speed-dial/explore chips/ai-journal moods), already-safe transports
+(load-msgs/-load-older data-mq/data-fu, show-msg-menu encMurl/encText, post-actions :363 data-dl-url,
+profile-view :392 M1 data-av) — all classification B, pinned inert (X-BLOCK). Adjacent-class sites recorded and
+NOT touched per the scope lock: raw username HTML-TEXT twins (H9-D2 row — check-mention :26, gcs :19,
+search-add :14, call-history :37, post-actions :136/:149/:151); mention.js:47 + se-search-mention-users.js:48
+(the mention-family JS-string twins — H9-D2 row's explicitly-assigned surfaces, recorded as site additions
+there, NOT fixed here); trending.js:104/:113 (H10-9's hashtag surface); auth.js:84 (self-input email, class C);
+avatar-action-sheet.js:11 (C9 residual); posts.js:21 (H10-15 cosmetic); XSS-10.5 class row itself (status
+untouched — its two concrete site additions were fixed here; the class row's own status review belongs to its
+dedicated task/owner).
+
+### 35.2 Fix (10 production files, 22 insertions/21 deletions — the row's own data-* prescription)
+
+The M-pattern transport (M5/M1-established, H10-12/C1-refined esc codec — encodeURIComponent throws URIError
+on unpaired surrogates, esc is attribute-safe AND lone-surrogate-proof; the browser entity-decodes data-*
+attributes at parse time so this.dataset.X is the ORIGINAL string byte-exact at click time):
+
+- dms-renderer-owner.js:49 — `data-name="'+esc(name)+'" onclick="openChat(\''+c.id+'\',this.dataset.name,'+c.is_group+')'`
+  (the :34 safeName const removed; data-cid stamping, esc(name)/esc(last_message) display twins untouched).
+- refresh-dms-in-place.js:97 — `existingEl.setAttribute('data-name', name)` (raw DOM write — no HTML parsing at
+  this boundary, no escaping needed) + constant-expression setAttribute onclick; :172 prepend twin
+  `data-name="'+esc(name)+'"`; the :84 safeName const removed; textContent update paths untouched.
+- open-chat.js:76 — BOTH call icons: `data-cname="'+esc(gcName||'User')+'" data-cav="'+esc(otherProf?.avatar_url||'')"
+  onclick="initiateCall(\''+window._chatOtherId+'\',this.dataset.cname,this.dataset.cav,\'audio|video\')"` —
+  ONE line replaced (the whole 1-on-1 callIcons concat expression); group icons (:74, UUID args) untouched.
+- post-actions.js:126 — `data-sname="${esc(name)}" onclick="sendSharedPostToChat('${c.id}', this.dataset.sname,
+  ${c.is_group}, '${pid}')"`. :339/:343/:351/:367 (H10-5) — `data-share-text="${esc(shareText)}"
+  onclick="shareToWhatsApp|shareToTwitter|shareToTelegram|shareNative('${postUrl}',this.dataset.shareText)"`
+  (postUrl stays inline — origin+UUID, safe-by-construction). Onmouseover/onmouseout + every other share-sheet
+  element byte-preserved (a mid-task tail-quote regression on :351/:367 was caught by the h10 N-F byte-identity
+  neg-control and repaired BEFORE commit).
+- load-gcsuggestions.js:20 — `data-uname="'+esc(u.username)+'" onclick="addToGroup(\''+cid+'\',\''+u.id+'\',
+  this.dataset.uname,this)"`.
+- check-mention.js:24 — `data-uname="'+esc(m.profiles.username)+'" onclick="insertMention(this.dataset.uname, \'minp\')"`.
+- search-add-member.js:15 — `data-uname="${esc(x.username||'')}" onclick="addToGroup('${cid}','${x.id}',
+  this.dataset.uname,this)"` (the no-op replace gone).
+- show-call-history.js:41 — `data-uname="${esc(otherProf?.username||'')}" data-cav="${esc(otherProf?.avatar_url||'')}"
+  onclick="initiateCall('${otherId}',this.dataset.uname,this.dataset.cav,'${ctype}')"` (the :31/:32 uname/ava
+  consts removed; ctype = ternary-normalized constant, stays inline).
+- handle-incoming-call.js:12 — accept button: `data-uname="esc(username)" data-cav="esc(avatar)" data-ctype="esc(call_type)"
+  onclick="acceptIncomingCall(\'' + callData.id + '\',\'' + callData.caller_id + '\',this.dataset.uname,
+  this.dataset.cav,this.dataset.ctype)"` (call UUIDs stay inline; reject button + banner structure untouched).
+- show-report-detail.js:114/:134 — `data-img-url="${esc(targetContent.media_url)}" onclick="viewChatImage(this.dataset.imgUrl)"`
+  (+ the :134 concat twin) — video branches, captions, author/reporter blocks, M5-fixed admin buttons
+  (data-author-username) all untouched (X-BLOCK pinned).
+
+Handlers (receivers) verified terminal-safe and byte-identical: openChat/initiateCall/acceptIncomingCall/
+addToGroup/insertMention/sendSharedPostToChat/shareTo*/viewChatImage — ONLY CALLERS changed, zero attacker
+data inside any JS string anywhere. The refresh-dms onclick-parsing regex (/openChat\('([^']+)'/) still
+matches the new form (cid remains the first quoted arg) and data-cid stamping is the primary lookup.
+
+### 35.3 Verification (scripts/h9d1_verify.js — REAL modules vm-loaded era-faithful, browser-faithful s294-lineage tokenizer; modes prove/focused/negctl)
+
+- **PROVE** (parent 7326361 sources via git show): **824/0 — VULNERABLE, 131 exec-class firings** across all 13
+  site variants (bs/longBs backslash-inversion, entitySq/entityHex decode-back, dq attr-breakout, dqFull/attrBk
+  sibling mints, sq/sqStmt raw breakouts, Hindi/Cyrillic/CJK/emoji-embedded breakouts) × the context-specific
+  exec sets (quote-replace sites fire bs+entity+dq; the setAttribute site fires bs/longBs — the entity decode
+  and attr-breakout classes are inert there by browser semantics, honestly recorded; raw sites fire sq-family;
+  esc'd sites fire the decode-back sq-family). 443 honest-inert entries (semi/mixedCase = breakage classes —
+  a bare ';' inside an open arg list is a SyntaxError and JS identifiers are case-SENSITIVE [aLeRt = ReferenceError];
+  entityDq/&quot; decode-back yields a '"' INSIDE a single-quoted JS string; entityAmp double-encoded = single-stage
+  decode keeps it data; markup tags ride inert as JS-string args).
+- **FOCUSED** (post-fix disk): **1239/0 — POST-FIX SAFE.** Zero execution/minting/attacker handlers across the full
+  payload matrix × every site (media auto-fire + tap/hover simulation of every on*); **574 byte-exact data
+  deliveries** — every payload class round-trips as DATA through the dataset transports (esc encode → parse decode
+  = original byte-exact) into the REAL handlers (openChat name, initiateCall name+avatar, acceptIncomingCall
+  name+avatar+ctype, addToGroup uname, insertMention @mention text, sendSharedPostToChat name, share URLs via
+  encodeURIComponent, viewChatImage img src); legit usernames byte-identical (normaluser/user.with.dots/
+  user_123_Sid/40-char/मेरानाम/МоёИмя/我的名字/🎉emojiयूज़र); complete workflows preserved end-to-end (DM-list
+  render + tap; in-place refresh name-change; prepend new-conversation; chat header BOTH call icons; share-DM
+  send → REAL sendSharedPostToChat → db insert + toast + openChat; share sheet 4 window.open targets; GC
+  suggestion add; mention insert writes the input; member search add; call-history tap; incoming-call accept;
+  report-detail → REAL viewChatImage opens the image byte-exact); line-diff hygiene pins per file
+  (parent-only/disk-only counts exact); X-BLOCK adjacent-safety pins (utils/constants/cld-url/handler files
+  byte-identical parent/disk; profile-view M1 transport intact; M5 admin buttons intact; load order).
+- **NEGCTL**: **802/0 + the same 131 exec firings = detection power** — the focused (post-fix) assertion set run
+  against the parent source fires every exec class (the harness WOULD catch a real regression).
+- Regression: node --check all 10 files OK; git diff --check CLEAN; **322 battery 317/5 = the documented
+  baseline** (identical 5 failing names, git-stash verified: branch2-only-safety/deletion-fallback/particle-split
+  byte-identical parent/disk failures; branch2-final-readiness = the documented mid-task dirty-worktree artifact
+  resolving post-commit; dms-renderer-independent-proof = pre-existing m7s4-era inline-pin drift
+  [esc(c.group_avatar) line] with the H9-D1 lines adding to the same already-stale assertion — no in-repo harness
+  changes); app-load 10/10; dedicated suites 30/37 — the 7 non-GREEN entries ALL documented non-regressions
+  (c1/m7s4/h1013/h1010 fail IDENTICALLY at clean parent 7326361 via git-stash — pre-existing era-pins
+  [c1 F6 §32.3, m7s4 §29.3, h1013 S3 §31.3, h1010 S3 §33.3]; ba/m284/h1012 fail ONLY on the S5/S3
+  clean-worktree scope pins — resolve GREEN post-commit, harnesses preserved verbatim); secret scan CLEAN
+  (scripts/h9d1_secret_scan.js, 12 files, Owner-SHA-256 provenance stamps allowlisted).
+- Sanctioned outside-repo suite-tooling evolution ONLY (dated H9-D1 comments, original invariants preserved):
+  xss_fix_h6_verify.js (1.10 value-aware display scan [esc'd data-attr VALUES are DATA — the value-blind
+  raw-attr regex false-positived on data-name payload text] + 1.14/8.7/8.8/3.3/9.1/9.2 transport shapes),
+  xss_fix_h7_verify.js (6.9/7.1 transport shapes), xss_fix_h9_verify.js (the byte-identical passthrough pin →
+  transport shape), xss_fix_h10_verify.js (J16 shareText shell in esc'd transport + L3/L4 15-line diff bound +
+  the h9d1Revert neg-control revert of EXACTLY the 5 authorized substitutions with occurrence assertions).
+  NO in-repo harness changes.
+
+### 35.4 Task report hooks
+
+**H9-D1 report block (2026-09-27):**
+- Historical imported: full history preserved — the H9-D1 row's original description text retained verbatim
+  (site list + the 10.5-class prescription; the "prescribed = encodeURIComponent data-* pattern" wording
+  updated to the C1-constrained esc codec actually applied, in-row documented); the H10-5 merged row closed
+  with its full description intact.
+- Fixed in this task: 13 sites in 10 production files (S1-S13 above) + the H10-5 merged shareText sites
+  (4 of the 13) + the M5-recorded XSS-10.5 site additions (S12/S13 — fixed under H9-D1 per the prior-session
+  scoping; the XSS-10.5 CLASS row's status left untouched per the task scope lock, its concrete site additions
+  now closed — noted here, the class row's own status review belongs to its owner).
+- Newly discovered: none as NEW IDs; recorded IN-ROW per the no-new-issue rule — mention.js:47
+  (insertMentionIntoCaption) and se-search-mention-users.js:48 (seSelectMentionUser) are mention-family
+  JS-string twins recorded as H9-D2 site additions (the H9-D2 row already explicitly assigns the
+  se-search-mention JS-string arg; mention.js:47 joins it — the H18-discovered mention-family pattern);
+  trending.js:104/:113 recorded as H10-9 surface (its dedicated row); auth.js:84 self-input (class C);
+  posts.js:21 (H10-15). NOT fixed here (scope lock).
+- Remaining open: XSS-10.5 class row (status untouched — concrete sites closed, class-row review deferred to
+  owner), H9-D2 (username-rendering class + the mention-family JS-string additions), H10-6/H10-7/H10-8
+  (self-XSS rows), H10-9 (trending), XSS-C3/C5, XSS-C9 remaining accepted-low sites, SEC-001, H10-14,
+  DG-3/4/5, HA-M5, cosmetics; external SQL/RPC/RLS runbook items unchanged (§29.4 (1) + §27.1 items 1-4).
+- Ledger changes: SECURITY_ISSUES.md — H9-D1 row status OPEN → FIXED 2026-09-27 (history preserved in-row);
+  H10-5 row → FIXED via H9-D1; section 35 added (35.1 scope/classification / 35.2 fix / 35.3 verification /
+  35.4 hooks); hooks renumbered 34→35. ISSUE_INDEX.md — H9-D1 + H10-5 rows → FIXED + 2026-09-27 sync-log entry.
+  NO in-repo harness changes. Outside-repo scripts/ additions/evolutions only (h9d1_verify.js + h9d1_scan.py +
+  h9d1_secret_scan.js + h9d1_run_suites.sh + result artifacts + the 4 dated suite-pin evolutions — the
+  established scripts/-tooling pattern). No issue deleted, no duplicate IDs, no unrelated rows touched
+  (§29.4 CLOSED record untouched; H9-D2/H10-6/7/8/9 untouched; XSS-10.5 row untouched).

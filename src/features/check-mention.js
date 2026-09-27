@@ -21,7 +21,7 @@ function checkMention(inp, cid) {
 
       let html = '';
       matched.forEach(m => {
-        html += '<div onclick="insertMention(\''+m.profiles.username+'\', \'minp\')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid #222;">';
+        html += '<div data-uname="'+esc(m.profiles.username)+'" onclick="insertMention(this.dataset.uname, \'minp\')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid #222;">';
         html += av(m.profiles?.avatar_url, m.profiles.username, 32);
         html += '<span style="font-weight:600;font-size:14px;">'+m.profiles.username+'</span></div>';
       });

@@ -31,7 +31,6 @@ window.renderDMs = async function(){
     convos.forEach(c => {
       const other=otherMap[c.id];
       const name=c.is_group?c.group_name:(other?.username||'Chat');
-      const safeName = name.replace(/'/g, "\\'");
       const online=other?isOnline(other.last_seen):false;
       const onlineDot = online ? '<div style="position:absolute;bottom:0;right:0;width:14px;height:14px;background:#3db83d;border-radius:50%;border:2px solid #000;"></div>' : '';
 
@@ -46,7 +45,9 @@ window.renderDMs = async function(){
 
       // Stamp data-cid on each item so _refreshDmsInPlace can find them cleanly
       // without parsing onclick attributes on future background refreshes.
-      convosHtml += '<div class="clist" data-cid="'+c.id+'" onclick="openChat(\''+c.id+'\',\''+safeName+'\','+c.is_group+')">'+avatarHtml+'<div style="flex:1;overflow:hidden"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700;font-size:15px">'+esc(name)+'</span><div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+unreadBadge+'<span style="color:#444;font-size:11px">'+ago(c.last_message_at)+'</span></div></div><div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(c.last_message||'Tap to open')+'</div></div></div>';
+      // XSS H9-D1: name rides a data-name attribute (esc codec) into a
+      // CONSTANT-expression onclick — zero attacker data inside any JS string.
+      convosHtml += '<div class="clist" data-cid="'+c.id+'" data-name="'+esc(name)+'" onclick="openChat(\''+c.id+'\',this.dataset.name,'+c.is_group+')">'+avatarHtml+'<div style="flex:1;overflow:hidden"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-weight:700;font-size:15px">'+esc(name)+'</span><div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+unreadBadge+'<span style="color:#444;font-size:11px">'+ago(c.last_message_at)+'</span></div></div><div style="color:#555;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(c.last_message||'Tap to open')+'</div></div></div>';
     });
   }
 

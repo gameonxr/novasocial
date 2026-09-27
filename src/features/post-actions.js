@@ -123,7 +123,7 @@ async function sharePostViaDM(pid) {
         ${convos.slice(0, 5).map(c => {
           const name = c.is_group ? c.group_name : (otherMap[c.id]?.username || 'Chat');
           const avHtml = c.is_group ? `<div style="width:40px;height:40px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;">👥</div>` : av(otherMap[c.id]?.avatar_url, otherMap[c.id]?.username, 40);
-          return `<div onclick="sendSharedPostToChat('${c.id}', '${name.replace(/'/g, "\\'")}', ${c.is_group}, '${pid}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer;">
+          return `<div data-sname="${esc(name)}" onclick="sendSharedPostToChat('${c.id}', this.dataset.sname, ${c.is_group}, '${pid}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer;">
             ${avHtml}
             <div style="font-weight:600;font-size:14px;">${esc(name)}</div>
           </div>`;
@@ -336,11 +336,11 @@ async function openShareSheet(pid){
 
       <!-- Share Targets Grid -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;">
-        <div onclick="shareToWhatsApp('${postUrl}','${shareText.replace(/'/g,"\\'")}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
+        <div data-share-text="${esc(shareText)}" onclick="shareToWhatsApp('${postUrl}',this.dataset.shareText)" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
           <div style="width:48px;height:48px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:24px">💬</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">WhatsApp</div>
         </div>
-        <div onclick="shareToTwitter('${postUrl}','${shareText.replace(/'/g,"\\'")}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
+        <div data-share-text="${esc(shareText)}" onclick="shareToTwitter('${postUrl}',this.dataset.shareText)" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
           <div style="width:48px;height:48px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid #333">𝕏</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">Twitter / X</div>
         </div>
@@ -348,7 +348,7 @@ async function openShareSheet(pid){
           <div style="width:48px;height:48px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;font-size:24px">f</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">Facebook</div>
         </div>
-        <div onclick="shareToTelegram('${postUrl}','${shareText.replace(/'/g,"\\'")}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
+        <div data-share-text="${esc(shareText)}" onclick="shareToTelegram('${postUrl}',this.dataset.shareText)" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
           <div style="width:48px;height:48px;border-radius:50%;background:#0088cc;display:flex;align-items:center;justify-content:center;font-size:22px">✈</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">Telegram</div>
         </div>
@@ -364,7 +364,7 @@ async function openShareSheet(pid){
           <div style="width:48px;height:48px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:22px">⬇</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">Download</div>
         </div>
-        <div onclick="shareNative('${postUrl}','${shareText.replace(/'/g,"\\'")}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
+        <div data-share-text="${esc(shareText)}" onclick="shareNative('${postUrl}',this.dataset.shareText)" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px;border-radius:14px;background:#0f0f0f;transition:.2s" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#0f0f0f'">
           <div style="width:48px;height:48px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:22px">⤴</div>
           <div style="font-size:11px;color:#aaa;font-weight:600">More...</div>
         </div>
