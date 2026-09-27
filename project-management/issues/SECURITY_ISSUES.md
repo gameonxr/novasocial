@@ -126,7 +126,7 @@ Root cause (all): 2026-07-27 v1-declaration deletion (8e26c10→58615b3 lineage)
 | ID | Severity | Scope | Issue | Owning task |
 |----|----------|-------|-------|-------------|
 | H9-D1 | HIGH(class) | JS-string onclick security: openChat('cid','safeName') (DM list), initiateCall('id','safeName') (open-chat.js:76), sendSharedPostToChat (post-actions.js:126), addToGroup (load-gcsuggestions.js:20), insertMention (check-mention.js:24), search-add-member.js:15, show-call-history.js:41, handle-incoming-call accept, dms-renderer/refresh-dms safeName onclicks, shareText onclicks (post-actions.js:315→:339/:343/:351/:367); + H10-5 merged (shareText contains raw author username inside 4 onclick JS-string attrs, quote-replace only) | quote-replace-only escaping inside JS-string-attribute contexts — esc() insufficient (XSS-10.5 class); prescribed = data-* pattern | FIXED 2026-09-27 (dedicated H9-D1 task — see section 35: 13 sites in 10 files transported [S1 dms-renderer :49 data-name · S2 refresh :97 setAttribute data-name · S3 refresh :172 prepend · S4 open-chat :76 initiateCall data-cname/data-cav ×2 icons · S5 post-actions :126 sendSharedPostToChat data-sname · S6 post-actions :339/:343/:351/:367 shareText data-share-text ×4 (H10-5 merged) · S7 load-gcsuggestions :20 addToGroup data-uname · S8 check-mention :24 insertMention data-uname · S9 search-add-member :15 addToGroup data-uname · S10 show-call-history :41 initiateCall data-uname/data-cav · S11 handle-incoming-call :12 acceptIncomingCall data-uname/data-cav/data-ctype · S12/S13 show-report-detail :114/:134 viewChatImage data-img-url (the M5-recorded 10.5 site additions)]; parent 7326361 PROVEN VULNERABLE 824/0 — 131 exec-class firings, post-fix focused 1239/0, negctl 802/0 detection power) |
-| H9-D2 | HIGH(class) | Username-rendering surface not yet assigned: mentions (check-mention.js:26), call UI (add-remote-tile-to-grid.js:17-18, show-call-history.js:37, handle-incoming-call.js:12, show-call-screen.js:47/:58), share-sheet user pickers (post-actions.js:136/:151), GC Info add-member search/suggestions (search-add-member.js:14, load-gcsuggestions.js:19); **close-friends.js:46 (privacy-modal following-list rows render u.username raw — H18-discovered site), show-blocked-list.js:15 (blocked-users rows render u.username raw — H18-discovered site), se-search-mention-users.js:48/:51 (story-editor mention-search rows render @u.username raw + seSelectMentionUser('${u.id}','${u.username}') JS-string arg — H18-discovered sites, mention family)** | raw username interpolation in HTML text + JS-string onclicks | Username-rendering hardening series (H18-family extensions) |
+| H9-D2 | HIGH(class) | Username-rendering surface not yet assigned: mentions (check-mention.js:26), call UI (add-remote-tile-to-grid.js:17-18, show-call-history.js:37, handle-incoming-call.js:12, show-call-screen.js:47/:58), share-sheet user pickers (post-actions.js:136/:151), GC Info add-member search/suggestions (search-add-member.js:14, load-gcsuggestions.js:19); **close-friends.js:46 (privacy-modal following-list rows render u.username raw — H18-discovered site), show-blocked-list.js:15 (blocked-users rows render u.username raw — H18-discovered site), se-search-mention-users.js:48/:51 (story-editor mention-search rows render @u.username raw + seSelectMentionUser('${u.id}','${u.username}') JS-string arg — H18-discovered sites, mention family)** | raw username interpolation in HTML text + JS-string onclicks | Username-rendering hardening series (H18-family extensions) — FIXED 2026-09-28 (dedicated H9-D2 task — see section 36: 21 sink instances in 12 files [the row sites + the H9-D1 §35-recorded mention.js:47/:50/:51 site additions, current-line drift noted in-row]: esc() at every HTML-text sink [check-mention.js:26 · load-gcsuggestions.js:19 · search-add-member.js:14 (username+full_name) · show-call-history.js:35 (row said :37 — 2-line H9-D1-era drift) · post-actions.js:136 + :151 (username+full_name) · close-friends.js:46 · show-blocked-list.js:15 · add-remote-tile-to-grid.js:17/:18 · handle-incoming-call.js:12 · show-call-screen.js:47/:58 · mention.js:50/:51 · se-search-mention-users.js:51/:52] + the 2 mention-family JS-string args transported to the H9-D1 data-uname esc-codec constant-expression pattern [mention.js:47 insertMentionIntoCaption + se-search-mention-users.js:48 seSelectMentionUser — UUID ids stay inline per the H9-D1 convention]; parent 90f7f2c PROVEN VULNERABLE 667/0 — 108 exec-class firings + 15 script mintings across 15 site variants; post-fix focused 1530/0 (zero execution/minting, 228 byte-exact deliveries, multilingual byte-identical); negctl 643/0 — 97 esc-stripped firings = esc load-bearing detection power + 473 structurally inert [constant-expression callers immune even with esc() stripped]) |
 | H9-D3 | MEDIUM | modal.js shared dynamic title (modal.js:43 fresh-path el.innerHTML) — safe only when callers escape; dynamic callers: voice-rooms.js:53 (prompt() self-XSS), show-staff-actions.js:6 ('Manage '+username admin UI) | caller-side esc audit | Modal dynamic-title caller audit task — RESOLVED 2026-09-26 (audit-complete, section 34: ALL 10 dynamic-title callers classified; the two cross-user-capable callers esc()-verified in current code [show-staff-actions.js:6 'Manage '+esc(username), historical fix 96e577c; show-group-info.js:21 `${esc(gcName)} · Info`, historical fix e30d6ba + 172c40d — the row's ':6 raw' citation was already stale]; remaining raw callers self-XSS-only [voice-rooms.js:53 prompt()/hardcoded-constants; communities.js:138 + channels.js:128 own-form→own-localStorage, zero db/transport — recorded in-row, no new IDs]; 5 callers construction-safe constants [nova-universe.js:98 12 hardcoded langs, settings.js:280 3 constant methods, create.js:25 label map, follow-list.js:10 + open-note-creator.js:3 ternary constants]; nesting paths modal.js:15/:25 textContent-inert; overall classification B — NO attacker-controlled path reaches the title sink; NO code change per the no-cosmetic-change rule; history preserved) |
 | H9-D4 | LOW | av() first-letter + dead safeName (utils.js:326-332) | XSS-C1 duplicate — deduped into 1.4 | av() review task |
 
@@ -2084,3 +2084,124 @@ matches the new form (cid remains the first quoted arg) and data-cid stamping is
   h9d1_secret_scan.js + h9d1_run_suites.sh + result artifacts + the 4 dated suite-pin evolutions — the
   established scripts/-tooling pattern). No issue deleted, no duplicate IDs, no unrelated rows touched
   (§29.4 CLOSED record untouched; H9-D2/H10-6/7/8/9 untouched; XSS-10.5 row untouched).
+## 36. H9-D2 — Username-rendering class hardening (this task, 2026-09-28, parent 90f7f2c)
+
+### 36.1 Scope + classification (current code authoritative; historical line numbers reconciled in-row)
+
+Scope = the H9-D2 row's site list (SECURITY_ISSUES.md row 129: the original 8 assigned files + the 3
+H18-discovered bold additions) PLUS the H9-D1 §35-recorded mention-family site additions (mention.js:47
+insertMentionIntoCaption JS-string twin — recorded there as "the H18-discovered mention-family pattern",
+explicitly left for this task) — 12 files total, every site current-code-verified.
+
+Source-side inventory (all cross-user DB values; client-side validation NON-SECURITY per the write-path
+evidence): profiles via chat membership (check-mention: window._chatMembers ← conversation_members join
+profiles), profiles ilike search (mention.js:35-39, se-search:31-35, post-actions searchUserForShare,
+search-add-member:8), follows-join profiles (se-search:12-15, load-gcsuggestions:8, close-friends:15,
+post-actions:113), blocks-join profiles (show-blocked-list:6), calls-join profiles (show-call-history:9-10),
+incoming-call caller profile (handle-incoming-call:7), group-call participant profiles
+(add-remote-tile-to-grid ← create-group-peer-connection:22 ← listen-for-group-signals:19 db profiles by
+sig.sender_id), and _callState.remoteUserName (show-call-screen — set by initiate-call:14 /
+accept-incoming-call:21 from the H9-D1-transported cross-user username; the transport secures the
+attribute path, the in-memory value is still the raw cross-user string). Write path: settings.js
+saveEdit username = client-regex-only; full_name = ZERO validation (the H10-10-recorded W-class
+DB-write-bypass evidence) — render-side esc() is the security boundary, as prescribed.
+
+Classification: A. CONFIRMED VULNERABLE — 21 sink instances across the 12 files (all cross-user,
+all raw at parent 90f7f2c):
+  - check-mention.js:26 — mention-list username span (HTML text)
+  - mention.js:47 — insertMentionIntoCaption('${u.username}','${u.id}') JS-string arg (H9-D1 §35 addition)
+  - mention.js:50 + :51 — @username + full_name (HTML text; §35 addition)
+  - se-search-mention-users.js:48 — seSelectMentionUser('${u.id}','${u.username}') JS-string arg (row-assigned)
+  - se-search-mention-users.js:51 + :52 — @username + full_name (HTML text)
+  - add-remote-tile-to-grid.js:17 + :18 — gc-name-tag (both call-type branches)
+  - show-call-history.js:35 — history row name (row cited :37 — 2-line H9-D1-era drift, current verified)
+  - handle-incoming-call.js:12 — banner full_name || username
+  - show-call-screen.js:47 + :58 — center name + compact badge name
+  - post-actions.js:136 — share-sheet SUGGESTED username; :151 — search username + full_name
+  - search-add-member.js:14 — member-search username + full_name
+  - load-gcsuggestions.js:19 — GC suggestion username
+  - close-friends.js:46 — following-list username (H18-discovered)
+  - show-blocked-list.js:15 — blocked-list username (H18-discovered)
+
+B. SAFE BY CONSTRUCTION (pinned, untouched): all 6 H9-D1 data-* transports co-located in these files
+(check-mention:24, post-actions:126, search-add:15, gcs:20, call-history:39, incoming:12 buttons — the
+X-BLOCK pins), av() internals (XSS-C1-fixed; username only feeds the fallback letter), UUID/constant
+onclicks (post-actions:134/:147, close-friends:43/:48, blocked:16, call-screen control buttons),
+name[0]-single-glyph fallbacks (call-screen:43/:56, call-bubble:15 — one glyph cannot mint markup),
+toast() textContent paths (all username call-sites pass no iconName), insertMention → input.value
+(value assignment is not an HTML sink), insertMentionIntoCaption → textarea.value + renderStoryElements
+(story-editor-owners.js:31 mention branch already esc'd), addToGroup → messages.text (esc'd at render by
+the H1/H1b fixed chat renderers) + toast textContent, ico()/getNetworkQualityHTML() internal constants.
+
+C. External/unverifiable: none (every H9-D2 site's write path and render path are repo-verifiable).
+
+Out-of-scope adjacent-class observations (recorded IN-ROW here, NOT fixed, no new IDs — the §34/§35
+observation pattern): show-call-screen.js:43/:56 and show-call-bubble.js:14 render _callState.remoteUserAvatar
+raw in <img src> (XSS-M1 attribute/URL class residual — M1 row FIXED; these call-UI avatar sites were not
+in M1's fixed-site list; M1-class review belongs to its owner). No other new-class discoveries.
+
+### 36.2 Fix (12 production files, 19 insertions/19 deletions — the row's own prescription)
+
+HTML-text sinks: ${esc(...)} / '+esc(...)+' exactly as prescribed (19 of the 21 instances; pure in-place
+wrapping, 1:1 line-diff verified per file). JS-string sinks (the 2 mention-family args): the established
+H9-D1 pattern (check-mention.js:24, the same family) —
+  mention.js:47        onclick="insertMentionIntoCaption(this.dataset.uname, '${u.id}')" data-uname="${esc(u.username)}"
+  se-search:48        onclick="seSelectMentionUser('${u.id}', this.dataset.uname)" data-uname="${esc(u.username)}"
+UUID ids stay inline (H9-D1 convention); handlers untouched (insertMentionIntoCaption / seSelectMentionUser
+byte-identical — H4b pin); shared esc()/av() untouched (H1 byte-identical); load order untouched (H5);
+no architecture/feature changes — callers only.
+
+### 36.3 Verification (scripts/h9d2_verify.js — REAL modules vm-loaded, browser-faithful s294-lineage tokenizer, era-faithful prove mode; modes prove/focused/negctl)
+
+PROVE parent 90f7f2c: 667/0 — CONFIRMED VULNERABLE: 108 exec-class firings (alert(1) — quote breakouts
+at the 2 JS-string sites incl. entity decode-back &#39;/&#x27;, attribute breakouts dq/dqFull/attrBk,
+markup classes <img onerror>/<svg onload>/mixed-case/3KB-long at the 19 text sinks, multilingual breakout
+variants Hindi/Cyrillic/CJK/emoji) + 15 script-mintings (<script>alert(1)</script> DOM injection, census
+proof) + 462 honest-inert (breakage/text/probe classes pinned, incl. the bs/longBs backslash classes which
+are inert at RAW sites — the h9d1 classification: the backslash escapes the payload's own quote when there
+is no quote-replace preprocessing).
+FOCUSED post-fix: 1530/0 POST-FIX SAFE — zero JavaScript execution, zero attacker handlers, zero unexpected
+DOM elements (12-tag census deltas vs benign baseline), zero tag injection; 228 byte-exact data deliveries
+(§7 legit set: Prince / Prince Kumar / O'Brien / Test "User" / भाई / ਪ੍ਰਿੰਸ / پرنس / 😀 / emoji-combos /
+dotted / 40-char — literal display byte-identical, dataset transports byte-exact into the REAL handlers);
+no double-escaping (single esc form + exact decode pinned); complete workflows preserved end-to-end
+(REAL insertMention / insertMentionIntoCaption / seSelectMentionUser / addToGroup / initiateCall /
+acceptIncomingCall / sendSharedPostToUser / toggleCloseFriend / unblockUser flows, H9-D1 transports
+re-verified byte-exact).
+NEGCTL (disk with esc() stripped): 643/0 — 97 firings = detection power, esc() load-bearing at every
+wrapped sink AND at the co-located H9-D1 transports (dq breaks out of the stripped data-uname at 7 sites);
+473 structurally inert — the constant-expression callers have NO JS string to break out of, so the
+sq/entity/multilingual classes stay dead even with esc() stripped (the fix is structural, not
+codec-dependent). bs/longBs stay byte-exact delivery probes (DELIV block).
+
+Regression: node --check 12/12 OK; git diff --check CLEAN; 322 battery 317/5 = documented baseline
+(stash-verified: the 5 failures BYTE-IDENTICAL at clean parent 90f7f2c — branch2-final-readiness /
+branch2-only-safety / deletion-fallback-production-split / dms-renderer-independent-proof /
+particle-production-split, all the documented era-pin set); app-load 10/10; dedicated suites 28/38 —
+10 non-GREEN all classified non-regression: 7 fail IDENTICALLY at the clean parent (c1 F6 §32.3 era-pin,
+ba/m284 clean-worktree scope pins [resolve post-commit per the established pattern], m7s4 documented
+stale era-fails, h1013/h1010/h1012 committed-diff era-pins) + h7 6.6a (last-touch pin tripped by the
+H9-D1 commit itself — fails identically at the clean parent, pre-existing) + h9d1 (5 × H11 task-era
+line-diff pins tripped by this task's authorized esc() additions to 6 shared files — 1234/1239 substantive
+PASS, the h1012-S3 §33.3 lineage: harness asserts its own task-era diff; later authorized tasks trip it;
+harness preserved verbatim) + h10 (L3/L4 task-era line-count pins, 243/245 substantive + 29/29 negctl —
+same lineage). Secret scan CLEAN (h9d2_secret_scan.js, 14 files, Owner-SHA-256 stamps allowlisted).
+
+### 36.4 Task report hooks
+
+- Sites audited: 15 site variants / 12 files (21 sink instances) — every row-assigned site + the §35-recorded
+  mention-family additions; current lines discovered from source (row's :37 → current :35 drift reconciled).
+- Vulnerable: 21 instances classified A (all fixed). Safe-by-construction: pinned (36.1 B-list). External: none.
+- Adjacent out-of-scope observations: call-UI avatar src sites (M1-class, 3 instances) recorded 36.1, NOT fixed.
+- Newly discovered: none as NEW IDs; the avatar-src observations recorded IN-ROW only (M1-class residual
+  note — no reclassification, M1 row untouched).
+- Remaining open: XSS-10.5 class row (owner review), H10-6/H10-7/H10-8 (self-XSS rows), H10-9 (trending),
+  XSS-C3/C5, XSS-C9 remaining accepted-low sites, SEC-001, H10-14, DG-3/4/5, HA-M5, cosmetics; external
+  SQL/RPC/RLS runbook items unchanged (§29.4 (1) + §27.1 items 1-4). M1-class call-UI avatar residual noted.
+- Ledger changes: SECURITY_ISSUES.md — H9-D2 row status OPEN → FIXED 2026-09-28 (history preserved in-row);
+  section 36 added (36.1 scope/classification / 36.2 fix / 36.3 verification / 36.4 hooks). ISSUE_INDEX.md —
+  H9-D2 row → FIXED + 2026-09-28 sync-log entry. NO in-repo harness changes (docs/ untouched). Outside-repo
+  scripts/ additions only (h9d2_verify.js + h9d2_secret_scan.js + h9d2_run_suites.sh + result artifacts —
+  the established scripts/-tooling pattern). No issue deleted, no duplicate IDs, no unrelated rows touched
+  (§29.4/H9-D1/H9-D3/H10-5 CLOSED records untouched; H10-6/7/8/9, XSS-10.5, XSS-C3/C5/C9, SEC-001, M1 rows
+  untouched).

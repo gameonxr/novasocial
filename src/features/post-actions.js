@@ -133,7 +133,7 @@ async function sharePostViaDM(pid) {
         ${followingList.map(u => `
           <div onclick="sendSharedPostToUser('${u.id}', '${pid}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer;">
             ${av(u.avatar_url, u.username, 40)}
-            <div style="font-weight:600;font-size:14px;">${u.username}</div>
+            <div style="font-weight:600;font-size:14px;">${esc(u.username)}</div>
           </div>
         `).join('')}
       </div>
@@ -148,7 +148,7 @@ async function searchUserForShare(q, pid) {
   r.innerHTML = (users||[]).map(u => `
     <div onclick="sendSharedPostToUser('${u.id}', '${pid}')" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer">
       ${av(u.avatar_url, u.username, 40, false, isOnline(u.last_seen))}
-      <div><div style="font-weight:700;font-size:14px">${u.username}</div><div style="color:#555;font-size:12px">${u.full_name||''}</div></div>
+      <div><div style="font-weight:700;font-size:14px">${esc(u.username)}</div><div style="color:#555;font-size:12px">${esc(u.full_name||'')}</div></div>
     </div>
   `).join('') || '<div style="color:#444;text-align:center;padding:24px">Koi nahi mila</div>';
 }

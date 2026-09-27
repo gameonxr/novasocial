@@ -44,7 +44,7 @@ window.showCallScreen = function showCallScreen() {
           </div>
         </div>
       </div>
-      <div style="font-weight:800;font-size:25px;color:#fff;margin-bottom:8px;letter-spacing:-0.4px">${name}</div>
+      <div style="font-weight:800;font-size:25px;color:#fff;margin-bottom:8px;letter-spacing:-0.4px">${esc(name)}</div>
       <div id="nova-call-status" style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:500;letter-spacing:0.1px">${_callState.isOutgoing ? 'Calling...' : 'Connecting...'}</div>
       <div id="nova-call-timer" style="font-size:15px;color:#fff;margin-top:10px;display:none;font-weight:700;font-variant-numeric:tabular-nums;background:rgba(61,184,61,0.18);padding:5px 16px;border-radius:16px;border:1px solid rgba(61,184,61,0.25)">00:00</div>
     </div>
@@ -55,7 +55,7 @@ window.showCallScreen = function showCallScreen() {
       <div style="width:26px;height:26px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#222">
         ${avatar ? `<img src="${avatar}" style="width:100%;height:100%;object-fit:cover">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff">${name[0]?.toUpperCase() || '?'}</div>`}
       </div>
-      <span style="color:#fff;font-size:13px;font-weight:700">${name}</span>
+      <span style="color:#fff;font-size:13px;font-weight:700">${esc(name)}</span>
       <span id="nova-call-compact-timer" style="color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums"></span>
     </div>` : ''}
 

@@ -43,7 +43,7 @@ async function showCloseFriendsManager(){
           <div id="cf-${u.id}" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d">
             ${av(u.avatar_url, u.username, 40)}
             <div style="flex:1">
-              <div style="font-weight:600;font-size:14px;color:#fff">${u.username}</div>
+              <div style="font-weight:600;font-size:14px;color:#fff">${esc(u.username)}</div>
             </div>
             <button onclick="toggleCloseFriend('${u.id}')" class="${cfSet.has(u.id)?'bgrd':'bout'}" style="width:auto;padding:7px 14px;font-size:12px" id="cfbtn-${u.id}">${cfSet.has(u.id)?'⭐ Added':'Add'}</button>
           </div>

@@ -16,7 +16,7 @@ window.loadGCSuggestions = async function loadGCSuggestions(cid) {
   suggestions.forEach(u => {
     html += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;">';
     html += av(u.avatar_url, u.username, 36);
-    html += '<div style="flex:1;font-size:14px;font-weight:600">'+u.username+'</div>';
+    html += '<div style="flex:1;font-size:14px;font-weight:600">'+esc(u.username)+'</div>';
     html += '<button data-uname="'+esc(u.username)+'" onclick="addToGroup(\''+cid+'\',\''+u.id+'\',this.dataset.uname,this)" style="background:'+GRAD+';border:none;border-radius:6px;color:#fff;font-size:11px;padding:5px 10px;cursor:pointer">Add</button>';
     html += '</div>';
   });

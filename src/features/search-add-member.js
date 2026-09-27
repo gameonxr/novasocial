@@ -11,7 +11,7 @@ window.searchAddMember = async function searchAddMember(q,cid){
   r.innerHTML=filtered.map(x=>`
     <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d0d">
       ${av(x.avatar_url,x.username,40)}
-      <div style="flex:1"><div style="font-weight:700;font-size:14px">${x.username}</div><div style="color:#555;font-size:12px">${x.full_name||''}</div></div>
+      <div style="flex:1"><div style="font-weight:700;font-size:14px">${esc(x.username)}</div><div style="color:#555;font-size:12px">${esc(x.full_name||'')}</div></div>
       <button data-uname="${esc(x.username||'')}" onclick="addToGroup('${cid}','${x.id}',this.dataset.uname,this)" style="background:${GRAD};border:none;border-radius:8px;color:#fff;font-size:12px;padding:6px 12px;cursor:pointer">Add</button>
     </div>`).join('')||'<div style="color:#444;text-align:center;padding:16px">Koi nahi mila</div>';
 };

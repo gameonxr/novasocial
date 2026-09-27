@@ -32,7 +32,7 @@ window.showCallHistory = async function showCallHistory(otherUserId){
     return `<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d">
       ${av(otherProf?.avatar_url, otherProf?.username, 42)}
       <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:6px"><span style="display:inline-flex">${arrowSvg}</span><span style="font-weight:700;font-size:14px;color:#fff">${otherProf?.username || 'User'}</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="display:inline-flex">${arrowSvg}</span><span style="font-weight:700;font-size:14px;color:#fff">${esc(otherProf?.username || 'User')}</span></div>
         <div style="display:flex;align-items:center;gap:5px;margin-top:3px"><span style="display:inline-flex">${typeSvg}</span><span style="color:#777;font-size:12px">${isMissedOrRejected ? (c.status === 'missed' ? 'Missed' : 'Declined') : (isOutgoing ? 'Outgoing' : 'Incoming')}${durText ? ' · '+durText : ''}</span></div>
       </div>
       <div style="color:#555;font-size:11px">${ago(c.created_at)}</div>

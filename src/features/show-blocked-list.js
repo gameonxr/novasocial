@@ -12,7 +12,7 @@ async function showBlockedList() {
   body.innerHTML = blocked.map(u => `
     <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d0d">
       ${av(u.avatar_url, u.username, 40)}
-      <div style="flex:1"><div style="font-weight:700;font-size:14px">${u.username}</div></div>
+      <div style="flex:1"><div style="font-weight:700;font-size:14px">${esc(u.username)}</div></div>
       <button onclick="unblockUser('${u.id}', this)" style="background:#262626;border:none;border-radius:8px;color:#fff;font-size:12px;padding:8px 14px;cursor:pointer">Unblock</button>
     </div>
   `).join('');

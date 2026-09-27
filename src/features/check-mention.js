@@ -23,7 +23,7 @@ function checkMention(inp, cid) {
       matched.forEach(m => {
         html += '<div data-uname="'+esc(m.profiles.username)+'" onclick="insertMention(this.dataset.uname, \'minp\')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid #222;">';
         html += av(m.profiles?.avatar_url, m.profiles.username, 32);
-        html += '<span style="font-weight:600;font-size:14px;">'+m.profiles.username+'</span></div>';
+        html += '<span style="font-weight:600;font-size:14px;">'+esc(m.profiles.username)+'</span></div>';
       });
       document.getElementById('mention-list').innerHTML = html;
     } else {

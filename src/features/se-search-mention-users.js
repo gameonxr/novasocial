@@ -45,11 +45,11 @@ async function seSearchMentionUsers(query){
       }
 
       resultsDiv.innerHTML = results.map(u => `
-        <div onclick="seSelectMentionUser('${u.id}', '${u.username}')" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;cursor:pointer;transition:0.2s;margin-bottom:4px;background:rgba(255,255,255,0.02)">
+        <div onclick="seSelectMentionUser('${u.id}', this.dataset.uname)" data-uname="${esc(u.username)}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;cursor:pointer;transition:0.2s;margin-bottom:4px;background:rgba(255,255,255,0.02)">
           ${av(u.avatar_url, u.username, 36)}
           <div>
-            <div style="font-size:13px;font-weight:600;color:#fff">@${u.username}</div>
-            ${u.full_name ? `<div style="font-size:11px;color:#8A8A8A">${u.full_name}</div>` : ''}
+            <div style="font-size:13px;font-weight:600;color:#fff">@${esc(u.username)}</div>
+            ${u.full_name ? `<div style="font-size:11px;color:#8A8A8A">${esc(u.full_name)}</div>` : ''}
           </div>
         </div>
       `).join('');

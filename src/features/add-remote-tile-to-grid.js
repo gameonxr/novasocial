@@ -14,8 +14,8 @@ window.addRemoteTileToGrid = function addRemoteTileToGrid(userId, profile, strea
   }
   const isVideo = _groupCallState.callType === 'video' && stream.getVideoTracks().length > 0;
   tile.innerHTML = isVideo
-    ? `<video autoplay playsinline style="width:100%;height:100%;object-fit:cover" id="gc-video-${userId}"></video><div class="gc-name-tag">${profile?.username || 'User'}</div>`
-    : `<div class="gc-avatar-tile">${av(profile?.avatar_url, profile?.username, 64)}</div><div class="gc-name-tag">${profile?.username || 'User'}</div><audio autoplay playsinline id="gc-audio-${userId}"></audio>`;
+    ? `<video autoplay playsinline style="width:100%;height:100%;object-fit:cover" id="gc-video-${userId}"></video><div class="gc-name-tag">${esc(profile?.username || 'User')}</div>`
+    : `<div class="gc-avatar-tile">${av(profile?.avatar_url, profile?.username, 64)}</div><div class="gc-name-tag">${esc(profile?.username || 'User')}</div><audio autoplay playsinline id="gc-audio-${userId}"></audio>`;
   if (isVideo) document.getElementById('gc-video-'+userId).srcObject = stream;
   else { const a = document.getElementById('gc-audio-'+userId); if(a) a.srcObject = stream; }
   updateParticipantCount();

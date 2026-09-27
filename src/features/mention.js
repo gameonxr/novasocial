@@ -44,11 +44,11 @@ async function checkMentionInCaption(textarea){
       }
 
       suggestionsDiv.innerHTML = users.map(u => `
-        <div onclick="insertMentionIntoCaption('${u.username}', '${u.id}')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:0.2s;border-bottom:1px solid rgba(255,255,255,0.04)">
+        <div onclick="insertMentionIntoCaption(this.dataset.uname, '${u.id}')" data-uname="${esc(u.username)}" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:0.2s;border-bottom:1px solid rgba(255,255,255,0.04)">
           ${av(u.avatar_url, u.username, 32)}
           <div>
-            <div style="font-size:13px;font-weight:600;color:#fff">@${u.username}</div>
-            ${u.full_name?`<div style="font-size:11px;color:#8A8A8A">${u.full_name}</div>`:''}
+            <div style="font-size:13px;font-weight:600;color:#fff">@${esc(u.username)}</div>
+            ${u.full_name?`<div style="font-size:11px;color:#8A8A8A">${esc(u.full_name)}</div>`:''}
           </div>
         </div>
       `).join('');
