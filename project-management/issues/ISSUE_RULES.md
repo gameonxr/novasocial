@@ -1,6 +1,6 @@
 # NovaSocial — Issue Management Rules
 
-**Location:** `project-management/issues/` (established 2026-09-07, H11 task, per owner instruction)
+**Location:** `project-management/issues/` (established 2026-09-07, H11 task, per owner instruction; reorganized problem-wise 2026-09-29 — category ledgers live in per-category subfolders: `security/`, `bugs/`, `platform/`, `code-hygiene/`, `ui-ux/`; this file and `ISSUE_INDEX.md` remain at the `issues/` root; reports structure documented in `project-management/reports/README.md`)
 **Repo line:** Branch2 only (`origin/Branch2`); `origin/main` immutable
 **This file is the permanent protocol for the entire NovaSocial issue-management system.**
 
@@ -53,3 +53,4 @@ At the end of every H/M task, report: historical issues imported/updated · issu
 ## Migration record
 
 - 2026-09-07 (H11): `docs/SECURITY_DEFERRED_ISSUES.md` (created by H10) was migrated into this system. Security-root-cause entries moved to `SECURITY_ISSUES.md`; non-security entries from that ledger were re-homed by root cause (`BUG_ISSUES.md`, `PLATFORM_ISSUES.md`, `CODE_HYGIENE_ISSUES.md`, `UI_UX_ISSUES.md`) with their IDs, severity, provenance, and statuses preserved. The old file was removed only after verification. Audit reports and general documentation remain in `docs/` (reorganization deferred until H + M complete).
+- 2026-09-29 (organization pass): the issue system was reorganized problem-wise (post-H+M per rules #10-#11): the five category ledgers moved into per-category subfolders (`security/SECURITY_ISSUES.md`, `bugs/BUG_ISSUES.md`, `platform/PLATFORM_ISSUES.md`, `code-hygiene/CODE_HYGIENE_ISSUES.md`, `ui-ux/UI_UX_ISSUES.md`) via history-preserving `git mv`; all IDs, rows, sections, and in-file history untouched (paths only); the sole path-consuming reference (the branch2-only-safety allowlist) was synced in-commit; `project-management/reports/README.md` documents the reports structure and the stay-in-docs decision for split-era evidence. Category rule #9 unchanged: new category files land directly in their subfolder (see ISSUE_INDEX.md for the reserved homes).
