@@ -87,13 +87,24 @@ const h11AuthorizedEscapes = [
   // (defense-in-depth, the row's own prescription) — same revert mechanism.
   ["Error: ${esc(e.message||'Unknown')}", "Error: ${e.message||'Unknown'}"],
 ];
-let h11ParityBase = normalizedRendererModule;
+// ── HYG-001 authorized dead-code removal (2026-09-29, HYG-001 hygiene task): the
+// nested function-scope dblLikeReel duplicate inside renderReels (dead weight —
+// byte-identical to the global reel-like-helper.js owner, which is what every
+// inline ondblclick handler resolves to; the nested declaration is unreachable
+// from handler scope) was deleted. The block below re-inserts EXACTLY that text
+// — with occurrence-count assertions — before the origin/main comparison, so any
+// OTHER drift from origin/main still fails this harness.
+const hyg001DeletedForm = "  const inner=document.getElementById('rinner');\n\n  // FIX: Pehle reel ko manually play karo";
+const hyg001ReinsertedForm = "  const inner=document.getElementById('rinner');\n\n  function dblLikeReel(pid, cont) {\n  const el=document.getElementById('lbtn-'+pid);\n  if(el&&el.dataset.liked!=='true') toggleLike(pid);\n\n  // Flying Hearts Animation\n  for(let i=0; i<6; i++) {\n    setTimeout(() => {\n      const p=document.createElement('div');\n      p.textContent='❤️';\n      p.style.cssText = 'position:absolute; top:'+(30 + Math.random() * 40)+'%; left:'+(30 + Math.random() * 40)+'%; font-size:'+(40 + Math.random() * 30)+'px; pointer-events:none; z-index:10; animation:heartPop 0.8s ease forwards;';\n      cont.appendChild(p);\n      setTimeout(()=>p.remove(), 800);\n    }, i * 100);\n  }\n}\n\n  // FIX: Pehle reel ko manually play karo";
+assert.strictEqual(normalizedRendererModule.split(hyg001DeletedForm).length - 1, 1, 'HYG-001 deleted-form anchor must occur exactly once');
+assert.strictEqual(normalizedRendererModule.includes('function dblLikeReel(pid, cont)'), false, 'HYG-001: the nested duplicate must be fully deleted (global reel-like-helper.js owner is the only declaration)');
+let h11ParityBase = normalizedRendererModule.replace(hyg001DeletedForm, hyg001ReinsertedForm);
 for (const [escaped, raw] of h11AuthorizedEscapes) {
   const occurrences = h11ParityBase.split(escaped).length - 1;
   assert.strictEqual(occurrences, 1, `H11 authorized escape must occur exactly once: ${escaped}`);
   h11ParityBase = h11ParityBase.split(escaped).join(raw);
 }
-assert.strictEqual(hash(normalize(h11ParityBase)), hash(normalize(mainHtml.slice(mainReelsStart, mainReelsEnd))), 'Reels external renderer owner must match origin/main exactly (modulo the two authorized H11 security escapes)');
+assert.strictEqual(hash(normalize(h11ParityBase)), hash(normalize(mainHtml.slice(mainReelsStart, mainReelsEnd))), 'Reels external renderer owner must match origin/main exactly (modulo the two authorized H11 security escapes + the authorized HYG-001 dead-code removal)');
 const beforeSplitEvidence = fs.readFileSync(path.join(repo, 'docs', 'reels-parity-rollback-evidence.txt'), 'utf8');
 assert(beforeSplitEvidence.includes('OWNER_BODY_PARITY=PASS'), 'Reels before-split parity evidence must pass');
 assert(beforeSplitEvidence.includes('ROLLBACK_TARGET=509bfe91e2aa03a83d7a66c57a535007f77d37d2'), 'Reels rollback target must remain pinned');

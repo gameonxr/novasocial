@@ -67,12 +67,27 @@ function authorizedH11Revert(text) {
   return reverted;
 }
 
+// ── HYG-001 authorized dead-code removal (2026-09-29, HYG-001 hygiene task):
+// the nested function-scope dblLikeReel duplicate inside renderReels (dead
+// weight — byte-identical to the global reel-like-helper.js owner, which is
+// what every inline ondblclick handler resolves to; the nested declaration is
+// unreachable from handler scope) was deleted. The helper below re-inserts
+// EXACTLY that block — with occurrence-count assertions — so any OTHER drift
+// from the immutable origin owner still fails every parity check below.
+function authorizedHyg001Reinsert(text) {
+  const deletedForm = "  const inner=document.getElementById('rinner');\n\n  // FIX: Pehle reel ko manually play karo";
+  const reinsertedForm = "  const inner=document.getElementById('rinner');\n\n  function dblLikeReel(pid, cont) {\n  const el=document.getElementById('lbtn-'+pid);\n  if(el&&el.dataset.liked!=='true') toggleLike(pid);\n\n  // Flying Hearts Animation\n  for(let i=0; i<6; i++) {\n    setTimeout(() => {\n      const p=document.createElement('div');\n      p.textContent='❤️';\n      p.style.cssText = 'position:absolute; top:'+(30 + Math.random() * 40)+'%; left:'+(30 + Math.random() * 40)+'%; font-size:'+(40 + Math.random() * 30)+'px; pointer-events:none; z-index:10; animation:heartPop 0.8s ease forwards;';\n      cont.appendChild(p);\n      setTimeout(()=>p.remove(), 800);\n    }, i * 100);\n  }\n}\n\n  // FIX: Pehle reel ko manually play karo";
+  assert.strictEqual(text.split(deletedForm).length - 1, 1, 'HYG-001 deleted-form anchor must occur exactly once');
+  assert.strictEqual(text.includes('function dblLikeReel(pid, cont)'), false, 'HYG-001: the nested duplicate must be fully deleted (global reel-like-helper.js owner is the only declaration)');
+  return text.replace(deletedForm, reinsertedForm);
+}
+
 const currentOwner = extractCurrentOwner(currentHtml);
 const originOwner = extractOwner(originHtml);
 const normalizedCurrentOwner = normalize(currentOwner);
 const normalizedOriginOwner = normalize(originOwner);
 const ownerHash = sha(normalizedOriginOwner);
-assert.strictEqual(authorizedH11Revert(normalizedCurrentOwner), normalizedOriginOwner, 'Branch2 renderReels owner must retain exact immutable-origin parity (modulo the two authorized H11 security escapes)');
+assert.strictEqual(authorizedH11Revert(authorizedHyg001Reinsert(normalizedCurrentOwner)), normalizedOriginOwner, 'Branch2 renderReels owner must retain exact immutable-origin parity (modulo the two authorized H11 security escapes + the authorized HYG-001 dead-code removal)');
 assert(currentHtml.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'renderer must use the approved classic external linkage');
 assert(fs.existsSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js')), 'external renderer owner module must exist');
 assert(!currentHtml.includes('async function renderReels(){'), 'renderer inline declaration must be removed after split');
@@ -420,7 +435,7 @@ function runExtractionCandidateSimulation() {
   const scriptTags = candidateHtml.split('\n').filter(line => line.startsWith('<script'));
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
-  assert.strictEqual(authorizedH11Revert(normalize(candidateNamedOwner)), normalize(originOwner), 'candidate owner body must match immutable origin (modulo the two authorized H11 security escapes)');
+  assert.strictEqual(authorizedH11Revert(authorizedHyg001Reinsert(normalize(candidateNamedOwner))), normalize(originOwner), 'candidate owner body must match immutable origin (modulo the two authorized H11 security escapes + the authorized HYG-001 dead-code removal)');
   assert.strictEqual(sha(candidateHtml), 'cbc4aced45895eade325bc13b473be49673d37c1209710ba5e7044c7fb9969bd', 'candidate HTML hash must remain pinned after the nova-ultra-patches split');
   return {
     ownerSource: candidateNamedOwner,
