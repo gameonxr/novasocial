@@ -101,10 +101,10 @@ async function showTrendingPage(){
       </div>
 
       ${topTags.length ? topTags.map((t,i)=>`
-        <div class="trending-tag" onclick="searchHashtag('${t[0]}')">
+        <div class="trending-tag" data-tag="${esc(t[0])}" onclick="searchHashtag(this.dataset.tag)">
           <div class="trending-rank">${i+1}</div>
           <div style="flex:1">
-            <div style="font-weight:700;font-size:15px;color:#fff">${t[0]}</div>
+            <div style="font-weight:700;font-size:15px;color:#fff">${esc(t[0])}</div>
             <div style="font-size:12px;color:#888">${t[1]} posts</div>
           </div>
           <div style="color:#E1306C;font-size:24px;font-weight:800">${i<3?'🔥':'📈'}</div>

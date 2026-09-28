@@ -25,7 +25,11 @@ for (const marker of [
   'Top Trends Right Now',
   'Most used hashtags in last 500 posts',
   'class="trending-tag"',
-  "searchHashtag('${t[0]}')",
+  // H10-9 (2026-09-29): hashtag name moved to the esc() data-tag transport
+  // with a constant-expression onclick (the H10-12 selectCollab twin) — the
+  // raw searchHashtag('${t[0]}') JS-string interpolation was the H10-9 sink.
+  'data-tag="${esc(t[0])}"',
+  "searchHashtag(this.dataset.tag)",
   "searchHashtag('${t.tag}')",
   'i<3?\'🔥\':\'📈\'',
   'async function searchHashtag(tag)',

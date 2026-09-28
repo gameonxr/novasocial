@@ -146,7 +146,7 @@ Root cause (all): 2026-07-27 v1-declaration deletion (8e26c10→58615b3 lineage)
 | H10-6 | 2026-09-07 | LOW | self-XSS | memories.js:59, :66 | Memories screen renders own @username + caption raw — query is .eq('user_id', ME.id) (own posts only) | own profiles.username / own posts.caption | HTML text | self-crafted values, own session | confirmed (code-read; scope=own data) | esc() in a later username sweep | username sweep | FIXED (2026-09-28, dedicated H10-6 task — section 38: esc() wraps at BOTH current sinks, the row's own "esc() in a later username sweep" prescription — :59 `@${esc(p.profiles?.username||'')}` [the H10-13/H10-10 twin shape] + :66 `${esc(p.caption.substring(0,100))}` [substring-then-esc, the H10-11 bio-slice twin; raw-length `p.caption.length>100` ellipsis semantics unchanged]; ledger-cited lines :59/:66 = EXACT current lines, no drift; 2-line diff, 1 file; parent a516aae PROVEN VULNERABLE 150/0 — 30 exec firings [15 payload classes × 2 sinks: imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 10 mint records; receiver = self proven by the W3 receiver-scoping harness check [foreign user_id row filtered out by the real .eq query shape — cross-user possibility NONE]; post-fix focused 319/0 [zero execution/minting/attacker handlers over 40 exec+mint + 16 text + 22 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; viewPost UUID tap + goBack/Mood/av()/media/truncation workflows preserved]; negctl 149/0 — 30 exec + 10 mint firings = detection power) |
 | H10-7 | 2026-09-07 | LOW | self-XSS | scheduled-posts.js:35 | Scheduled-posts modal renders caption from localStorage ('nova-scheduled', own submissions) raw | own localStorage caption | HTML text | self-crafted localStorage | confirmed (code-read) | esc() | username sweep | FIXED (2026-09-29, dedicated H10-7 task — section 39: esc() wrap at the exact current sink, the row's own esc() prescription — :35 `${esc(s.caption\|\|'No caption')}` [the H10-6 memories.js:66 caption twin shape; the \|\|'No caption' falsy fallback preserved INSIDE the wrap]; ledger-cited line :35 = EXACT current line, no drift; 1-line diff, 1 file; parent 87cbf36 PROVEN VULNERABLE 86/0 — 15 exec firings [imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 5 mint records; receiver = self proven by the W6/W7 storage-surface inventory [zero db/supabase calls in the module, exactly 3 nova-scheduled refs in src/ — localStorage is own-device storage, cross-user possibility NONE]; post-fix focused 183/0 [zero execution/minting/attacker handlers over 20 exec+mint + 9 text + 11 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; modal/empty-state/malformed-storage/delete-flow-confirm-both-ways/mediaUrl/date workflows preserved]; negctl 85/0 — 15 exec + 5 mint firings = detection power) |
 | H10-8 | 2026-09-07 | LOW | self-XSS | insights.js:30 | Post Insights renders @username raw — entry gated by isMine (own posts only from UI) | own profiles.username | HTML text | console-call with foreign pid (not UI-reachable) | suspected | esc() | username sweep | FIXED (2026-09-29, dedicated H10-8 task — section 40: esc() wrap at the exact current sink, the row's own esc() prescription — :30 `@${esc(p.profiles?.username\|\|'')}` [the H10-6 memories.js:59 / H10-13 @-username twin shape; the \|\|'' falsy fallback preserved INSIDE the wrap]; ledger-cited line :30 = EXACT current line, no drift; 1-line diff, 1 file; parent bed566b PROVEN VULNERABLE 115/0 — 17 exec firings [imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/punjabi/urdu/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 5 mint records [scriptFull/aHrefJs/iframeSrcdoc/nullByte/styleEl]; receiver = self proven by the W2/W3/W5/W6/W7 caller-chain scoping checks [the ONLY UI entry = posts.js:162 viewInsights onclick rendered solely inside the posts.js:120 isMine gate; exactly ONE showEnhancedInsights call site in src/ (post-actions.js:94) — no cross-user surface reuses the render function; the query's own lack of a user_id filter is honestly recorded — the boundary is the CALLER-side gate; cross-user possibility via UI NONE]; post-fix focused 218/0 [zero execution/minting/attacker handlers over 22 exec+mint + 9 text + 11 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; modal/loading/not-found/stats/chart/engagement/reactions/media-branch workflows preserved]; negctl 114/0 — 17 exec + 5 mint firings = detection power) |
-| H10-9 | 2026-09-07 | LOW | DB-write bypass | trending.js:104, :107 | Hashtag names rendered raw + searchHashtag onclick — client extraction is \w-only (safe), direct DB write of hashtags.name renders arbitrary HTML | hashtags.name | HTML text + JS-string | crafted DB row | suspected (M3 class) | esc() + encodeURIComponent | M-tier | OPEN |
+| H10-9 | 2026-09-07 | LOW | DB-write bypass | trending.js:104, :107 | Hashtag names rendered raw + searchHashtag onclick — client extraction is \w-only (safe), direct DB write of hashtags.name renders arbitrary HTML | hashtags.name | HTML text + JS-string | crafted DB row | suspected (M3 class) | esc() + encodeURIComponent | M-tier | FIXED (2026-09-29, dedicated H10-9 task — section 41: BOTH sinks at the DB-path template, ledger-cited lines = EXACT current lines, no drift [later task records citing ":104/:113" referred to the 2 card templates; the :113/:116 defaultTrending constants path = B safe-by-construction, untouched]; the row's "suspected (M3 class)" CONFIRMED with the M3 evidence standard — parent b66023d PROVEN VULNERABLE 156/0 [22 exec firings: 17 classes fire via BOTH channels — :107 HTML-text mint + zero-click media auto-fire on parse AND the :104 breakout; 5 JS-string classes fire via the row-tap channel: '-alert(1)-' arithmetic chain / ');alert(1);// statement inject / x&#39;-alert(1)-&#39;y entity decode-back / multilingual / 3KB long; + 5 mint records; receiver = ANY user opening Trending — the global top-20 ranking has NO user_id filter, entry = home.js:282 tab + explore.js:45 icon → cross-user STORED XSS; write side = the \w-only client gate (safe by construction) + the DB-write bypass vector (RLS UNKNOWN, zero .sql in repo — the §16/M3 doctrine); git history = exactly 1 commit (4fc4c3b Phase 14 extraction) → never security-fixed, D ruled out]; fix = the row's esc() prescription in its post-XSS-10.5 §35.1 form — the raw "encodeURIComponent" sketch would RE-OPEN the class [percent-strings re-interpolated into JS strings break out via the arithmetic chain, the exact XSS-10.5 show-msg-menu finding], so the H10-12 09fce32 selectCollab twin applied: :104 data-tag="${esc(t[0])}" transport + constant-expression onclick searchHashtag(this.dataset.tag) + :107 ${esc(t[0])} [the H10-6/H10-10/H10-11/H10-13 HTML-text esc twin]; the REAL searchHashtag handler byte-identical, still receiving the ORIGINAL string via the entity decode-back contract; post-fix focused 396/0 [zero execution/minting/attacker handlers; every payload delivered byte-exact through the transport; O'Brien-class quote-breakage REPAIRED]; negctl 153/0 detection power [22 exec + 5 mint re-fire on the reverted sinks]; adjacent :108 ${t[1]} posts recorded in-row NOT fixed [crafted-row posts_count escalation, numeric class, X1-proven parent/disk byte-identical]; row status OPEN → FIXED, history preserved) |
 | H10-10 | 2026-09-07 | MEDIUM | Username rendering | explore.js:128-:131 | doSearch PEOPLE results render u.username + u.full_name raw | profiles.username/full_name | HTML text | crafted username + search | CONFIRMED (code-read; same class as H18) | esc() both | H18-family sweep | FIXED (2026-09-26, dedicated H10-10 task — section 32: esc() wraps at the actual current sinks :130 `${esc(u.username)}` + :131 `${esc(u.full_name||'')}`, the H10-11 universal-search.js:113/:114 twin shapes [the row's own "esc() both" prescription]; ledger-cited range :128-:131 = 1-line drift, sinks unambiguous by content — the row description names the two fields; :126 numeric count / :127 UUID onclick / :128 av() [XSS-C1-fixed internals] = adjacents, all pinned inert and untouched; parent 7390d52 PROVEN VULNERABLE 110/0 — 24 exec alerts [12 payload classes × 2 sink fields] + negctl detection 24 exec + 10 mint entries, post-fix focused 234/0; row status OPEN → FIXED, history preserved) |
 | H10-11 | 2026-09-07 | MEDIUM | Username rendering | universal-search.js:111-:115 | universalAISearch PEOPLE results render username + full_name + bio slice raw (+ XSS-C9-audit site addition 2026-09-12: story-highlights.js:38 — highlights.title raw HTML text in the other-user highlights modal, same cross-user raw-text class; FIXED 2026-09-13 by the dedicated universal-search/story-highlights task = esc(h.title||'Highlight'), see section 24 [ledger-cited :38 = actual current :39, 1-line drift, sink unambiguous by content]; + core sites FIXED 2026-09-15 by the dedicated H10-11 users-list task: esc() at the three raw HTML-text sinks — actual current :113 username [esc(u.username), the H18 follow-list.js:34 twin] / :114 full_name [esc(u.full_name||''), the H18 profile-view.js:88/:156 twin shape] / :115 bio slice [esc(u.bio.substring(0,60)), substring-then-esc — the ellipsis semantics on raw length unchanged; ledger-cited :111-:115 range, 2-line drift, sinks unambiguous by content — the row's own description names the three fields; see section 25] [adjacents audited + classified, NOT H10-11 sinks: :111 av(u.avatar_url, u.username, 46) = the OPEN XSS-C1 row (av() internals); :110 onclick showUserProfile('${u.id}') = DB UUID, no client write path, H11-audit rows #6/#7 UUID-safe-by-construction class; :114 fmt(followers_count) = server-maintained counter, no client write path (follows junction only), H11-audit row #9 numeric-safe class + H18 raw fmt() twins profile-view.js:172/:176/:180/:395]) | profiles.* | HTML text | crafted bio/username + AI search | CONFIRMED (code-read) | esc() | H18-family sweep | FIXED 2026-09-15 (core sites :113/:114/:115 + the 2026-09-12 story-highlights.js:38 site addition fixed 2026-09-13; see section 25 for the audit, threat model and verification) |
 | H10-12 | 2026-09-07 | MEDIUM | Username + JS-string | collaboration.js:37-:40, :54-:58 | Co-author picker renders username raw + selectCollab('${u.id}','${u.username}') onclick | profiles.username (following) | HTML text + JS-string | crafted following username | CONFIRMED (code-read) | esc() + data-attr pattern | username sweep + JS-context task | FIXED (2026-09-26, dedicated H10-12 task — section 33: BOTH sink types at BOTH render paths [showCollabPicker :37 onclick JS-string + :40 HTML text; filterCollabList :56/:58 twins — ledger-cited :37-:40 exact, :54-:58 = filter-line + render window, sinks unambiguous by content, the row description names the selectCollab onclick + raw username]; fix = the row's own "esc() + data-attr pattern" prescription: data-uname="${esc(u.username)}" transport + constant-expression onclick selectCollab('${u.id}',this.dataset.uname) [the M-pattern data-attr shape, show-staff-actions.js twin; esc codec per the C1 lone-surrogate constraint — encodeURIComponent throws URIError on unpaired surrogates] + ${esc(u.username)} at the HTML-text sinks [the H10-10/H10-11/H10-13 twin]; parent 541de1d PROVEN VULNERABLE 118/0 — 32 exec alerts [16 payload classes × 2 render paths: HTML-text markup family + JS-string breakout family] + negctl detection 32 exec + 10 mint entries, post-fix focused 347/0; row status OPEN → FIXED, history preserved) |
@@ -2700,3 +2700,146 @@ vm context = the browser-faithful page-load model; modes prove/focused/negctl)
   accepted-low sites (now incl. insights.js:27 — line-pinned untouched), SEC-001 error-path
   class (+ the H10-6-recorded memories.js:82 member), H10-14, DG-3/4/5, HA-M5; external
   SQL/RPC/RLS runbook items unchanged.
+
+## 41. H10-9 — trending.js hashtag-name DB-write-bypass XSS fix (this task, 2026-09-29, parent b66023dc)
+
+### 41.1 Scope + classification (current code authoritative; ledger lines reconciled)
+
+- Row read: H10-9 (2026-09-07, LOW, DB-write bypass, trending.js:104/:107, hashtags.name,
+  HTML text + JS-string, "crafted DB row", "suspected (M3 class)", prescription "esc() +
+  encodeURIComponent", M-tier, OPEN). ISSUE_INDEX.md:67 OPEN.
+- Current-code discovery (parent b66023dc): BOTH sinks at EXACTLY the ledger-cited lines in
+  the DB-path template — :104 `onclick="searchHashtag('${t[0]}')"` (JS-string attr) + :107
+  `${t[0]}` (HTML text), both into `scr.innerHTML` (:90). NO drift. Later task records
+  citing ":104/:113" referred to the two card templates; the :113/:116 defaultTrending path
+  renders developer constants only — B safe-by-construction, untouched.
+- Render-surface census: exactly ONE `from('hashtags')` read in src/ (trending.js:67 —
+  single render surface, no cross-surface reuse); `showTrendingPage` has exactly 2
+  navigation callers (home.js:282 tab switch + explore.js:45 topbar 🔥 icon — no value
+  flow); `searchHashtag` has exactly 2 onclick call sites (:104 DB path + :113 constants
+  path) + the definition (:128).
+- D ruled out by git history: trending.js has exactly ONE commit ever (4fc4c3b "Phase 14:
+  Extract Trending and hashtag feature" — not a security fix); the sinks were raw since
+  creation. H9-D1 and M3 both explicitly recorded trending :104/:113 as H10-9's surface and
+  did NOT touch it.
+- Data-flow audit: write side = `caption.match(/#[\w]+/g)` (:28) \w-ONLY extraction →
+  `increment_hashtag_count` RPC (:37, tag_name from the \w set) + post_hashtags link insert
+  — the CLIENT path is safe by construction (ASCII word chars cannot break HTML text, JS
+  strings, or attributes). The DB-write bypass vector (the row's own "crafted DB row",
+  the M3-class §16 doctrine): a malicious client with a valid session attempts a direct
+  INSERT/UPDATE into `hashtags` (RLS UNKNOWN — zero .sql in repo, never claimed) →
+  arbitrary `name` text stored. Read side = the global top-20 by posts_count with NO
+  user_id filter (a global ranking by design) → RECEIVER = ANY user opening Trending.
+- Classification: **A — confirmed vulnerable** (the row's "suspected (M3 class)" confirmed
+  with the M3 evidence standard: parent-state browser-faithful execution proof). Cross-user
+  STORED XSS delivered on every Trending open: :107 HTML-text fires ZERO-CLICK (media on*
+  auto-fires on parse), :104 JS-string fires on the row-tap interaction (searchHashtag is
+  the normal click target). LOW ledger severity retained (the row's own rating — not
+  upgraded/downgraded without evidence).
+- Adjacent sites classified (NOT H10-9, pinned untouched): :108 `${t[1]} posts` — the
+  posts_count numeric render (server-maintained counter column, H11-audit numeric class;
+  honest residual: a FULLY crafted row can also target it — same DB-write escalation,
+  DIFFERENT column, out of the row's name scope — X1-proven parent/disk byte-identical,
+  recorded in-row, NOT fixed); :113/:116 constants (B); :92 goBack topbar (constant);
+  :110 emoji ternary (constant).
+
+### 41.2 Fix (1 production file + 1 contract-harness marker sync — the row's own prescription in its post-XSS-10.5 form)
+
+- The row's prescription "esc() + encodeURIComponent" predates the XSS-10.5 §35.1 finding:
+  percent-encoded strings re-interpolated into JS-string literals RE-OPEN the class
+  (encodeURIComponent leaves ' ( ) ! ~ * - . unescaped → the `'-alert(1)-'` arithmetic-chain
+  breakout — show-msg-menu.js:31's original bug shape). The repo's canonical successor for
+  JS-string onclicks is the H10-12 09fce32 selectCollab shape (also H9-D1's 13-site fix):
+  `data-*="${esc(value)}"` transport + constant-expression onclick
+  `handler(this.dataset.X)` — the handler preserved byte-identical, still receiving the
+  ORIGINAL string (HTML attribute entity-decode-back restores it at dataset read time).
+- Applied (trending.js, 2 lines, +2/-2):
+  - :104 `<div class="trending-tag" onclick="searchHashtag('${t[0]}')">` →
+    `<div class="trending-tag" data-tag="${esc(t[0])}" onclick="searchHashtag(this.dataset.tag)">`
+  - :107 `<div style="font-weight:700;font-size:15px;color:#fff">${t[0]}</div>` →
+    `<div style="font-weight:700;font-size:15px;color:#fff">${esc(t[0])}</div>`
+    (the H10-6/H10-10/H10-11/H10-13 HTML-text esc twin; esc nullish-safe per utils.js:4-12).
+- esc availability pinned: utils.js loads at index.html:211, trending.js at :230 (classic
+  scripts, window-global esc). The searchHashtag function (:128-134) byte-identical
+  (harness X3); the :113/:116 constants path byte-identical (X2b/X2c + the X4 whole-fallback
+  render byte-identical parent vs disk).
+- In-repo contract harness evolution (the 09fce32 H10-12 precedent — marker sync, NO
+  assertion removed, net marker count +1): docs/trending-contract-harness.js's marker
+  `"searchHashtag('${t[0]}')"` → `'data-tag="${esc(t[0])}"'` +
+  `"searchHashtag(this.dataset.tag)"` with a dated H10-9 comment; the
+  searchHashtag-count===3 assertion RETAINED verbatim (2 templates + 1 definition still
+  true); docs/trending-contract.md NOT modified (its "delegates selection to
+  searchHashtag(tag)" description is behavior-level, still exactly true);
+  docs/explore-trending-contract-harness.js untouched and GREEN.
+
+### 41.3 Verification (scripts/h109_verify.js — REAL modules vm-loaded [utils.js + trending.js], browser-faithful s294-lineage tokenizer, db mock shaped as the real builder chain [from→select→order→limit→await], the REAL searchHashtag workflow mocked only at the module boundary [go/setTimeout/#sq/doSearch receipts]; TWO exec channels: media auto-fire + tap simulation of every on* attr; deterministic renders [seeded LCG + frozen Date.now]; modes prove/focused/negctl)
+
+- PROVE parent b66023dc: **156/0 — ALL 22 exec classes fire** (17 via BOTH channels — the
+  :107 HTML-text mint + zero-click media auto-fire AND the :104 breakout; 5 JS-string
+  classes via the tap channel: jsqArith `'-alert(1)-'`, jsqStmt `');alert(1);//`, jsqEntity
+  `x&#39;-alert(1)-&#39;y` [entity decode-back — the class that defeats esc-in-JS-string],
+  jsqMultiling `भाई'-alert(1)-'भाई`, jsqLong 3KB) + 5 mint records (script/iframe/srcdoc/
+  nullbyte/style minted at the raw :107) + honest text-class records (entity/backslash/
+  scheme payloads context-inert at the raw sinks — recorded, not missed) + the R9 honest
+  record: the raw :104 compile-BREAKS legit quote values (O'Brien) — the class's
+  functional-breakage side.
+- FOCUSED post-fix (disk): **396/0 — zero JavaScript execution, zero attacker-controlled
+  handlers, zero minting, zero dangerous URL attrs, zero false positives**; 27 exec+mint
+  runs + 10 text runs + 13 display runs + gates; every payload confined as decoded TEXT at
+  :107 AND delivered byte-exact to the REAL searchHashtag through the data-tag transport
+  (the T1g/T1h/T2e/T3d/T4b receipt proofs — the entity decode-back contract); legit values
+  (#landscape / #travel2026 / #insta_great / Prince / O'Brien / Test "User" / भाई /
+  ਪ੍ਰਿੰਸ / پرنس / 😀 / emoji combos / Tom & Jerry <3 "nice" / multilingual) esc'd EXACTLY
+  twice (data-tag + text — the 2 sinks, no double escaping, no mojibake); the O'Brien-class
+  quote-breakage REPAIRED (all row onclicks compile post-fix); functional workflow
+  preservation: the real query chain (hashtags / name,posts_count / posts_count desc /
+  limit 20), 5 ranked rows + ranks 1-5 + top-3 🔥 branch, the REAL searchHashtag end-to-end
+  (go('explore') → 300ms timer → #sq fill → doSearch with the ORIGINAL tag), all 3 fallback
+  paths (empty data / db error / db throw → 8 defaultTrending rows with functioning
+  constants-path onclicks), the topbar goBack; X1 honest record: the :108 posts_count
+  residual fires IDENTICALLY on parent and disk (byte-identical render, untouched by
+  design); X2-X5 line-level pins (:108/:113/:116/:92/defaultTrending/searchHashtag body
+  byte-identical to parent; ONLY lines 104+107 differ); W1-W8 data-flow evidence (the
+  single hashtags-read census, the \w-only write gate, the RPC pin, the 2 navigation
+  callers, no user_id filter [global ranking = the cross-user receiver class], zero .sql
+  files, the single-commit git history → D ruled out); S-block fix shape (2-line diff, exact
+  shapes, scope pins); F-block live runs of BOTH in-repo trending harnesses GREEN
+  (TRENDING_CONTRACT_HARNESS=PASS / EXPLORE_TRENDING_CONTRACT_HARNESS=PASS).
+- NEGCTL (disk source with BOTH fix lines reverted in-memory): **153/0 — 22 exec + 5 mint
+  firings = detection power** (every post-fix inertness assertion fires on the unescaped
+  source — the esc() wrap and the data-tag transport are load-bearing at both sinks).
+
+### 41.4 Regression + task report hooks
+
+- 322-harness battery: **317 PASS / 5 FAIL = the documented baseline** (same 5 names:
+  branch2-final-readiness / branch2-only-safety / deletion-fallback-production-split /
+  dms-renderer-independent-proof / particle-production-split — pre-existing parent-era
+  pins; a parent-state battery run confirmed the identical 317/5 BEFORE the fix was
+  applied; docs/trending-contract-harness.js + docs/explore-trending-contract-harness.js
+  both GREEN post-fix on the evolved markers).
+- app-load 10/10 (463/463 scripts fetch + syntax-valid, 465 classic tags, PWA 200/200);
+  node --check 2/2 changed files; git diff --stat = 2 files +7/-3 [trending.js +2/-2, the
+  contract-harness marker sync +5/-1]; git diff --check CLEAN; secret scan CLEAN
+  (h109_secret_scan.js, 4 files incl. both ledger files).
+- Dedicated-suite runner (h109_run_suites.sh, 42 suites incl. h108 + h109): 28 PASS
+  pre-commit / 14 non-GREEN — ALL classified, NONE a code regression: 12 FAIL-IDENTICAL at
+  clean parent b66023dc via git stash (h5/h7/h10/c1/ba/m7s4/h1013/h1010/h1012/h9d1/xss105/
+  h107 — the documented era-pins) + m284 S5 (the documented clean-worktree allowlist pin —
+  PASSED at clean parent in this task's stash run, re-passes post-commit) + h108 S3 (the
+  H10-8 task's own worktree/HEAD-commit shape pin, re-armed by this task's authorized
+  changes — the same documented era-pin phenomenon as h107 S3 in the H10-8 run; its 217
+  security assertions ALL stay green, only the S3 shape assertion trips) — h109_verify.js
+  itself GREEN in all 3 modes (prove 156/0, focused 396/0, negctl 153/0).
+- Incidental discovery recorded per the issue rules (in-row, NOT fixed):
+  trending.js:108 `${t[1]} posts` — a fully crafted hashtags row can also target the
+  posts_count column (same DB-write-bypass escalation, different column; server-maintained
+  counter per the increment RPC; H11-audit numeric class) — recorded in the H10-9 row
+  above, harness X1-proven parent/disk byte-identical, NOT fixed (scope lock: the row's
+  scope is the NAME column + the searchHashtag onclick). No new issue IDs created.
+- Ledger changes: SECURITY_ISSUES.md — H10-9 row OPEN → FIXED 2026-09-29 (history
+  preserved in-row); section 41 added (41.1-41.4). ISSUE_INDEX.md — H10-9 row → FIXED +
+  2026-09-29 sync-log entry.
+- Remaining open (unchanged by this task): XSS-C3/C5, XSS-C9 remaining accepted-low sites
+  (incl. memories.js:65 / scheduled-posts.js:32 / insights.js:27 — line-pinned untouched),
+  SEC-001 error-path class (+ the H10-6-recorded memories.js:82 member), H10-14, DG-3/4/5,
+  HA-M5; external SQL/RPC/RLS runbook items unchanged.
