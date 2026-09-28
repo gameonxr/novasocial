@@ -59,5 +59,8 @@ assert(storyModule.includes('window.renderStoryElements = function(){'), 'approv
 
 console.log('BRANCH2_ONLY_SAFETY_HARNESS=PASS');
 console.log(`LATEST_FILES=${latestFiles.length}`);
-console.log('LATEST_CHECKPOINT=FIX9_HYGIENE_BATCH');
+// HA-L3 (2026-09-29, autonomous cycle): derive the checkpoint label from the HEAD
+// commit subject (was hardcoded FIX9_HYGIENE_BATCH — it lagged every docs commit
+// since; no assertion depends on this line, output-only).
+console.log(`LATEST_CHECKPOINT=${git('log', '-1', '--pretty=%s')}`);
 console.log('MAIN_REF_UNCHANGED=YES');
