@@ -10,8 +10,8 @@ window.addToGroup = async function addToGroup(cid,uid,uname,btn){
     } catch(msgErr) {
       console.warn('Group system message send failed (non-critical, member already added):', msgErr);
     }
-    const{data:grpInfo}=await db.from('conversations').select('name').eq('id',cid).single();
-    try { await sendNotif(uid, 'group_invite', {message: 'added you to '+((grpInfo && grpInfo.name) || 'a group'), conversation_id: cid}); } catch(e) {}
+    const{data:grpInfo}=await db.from('conversations').select('group_name').eq('id',cid).single();
+    try { await sendNotif(uid, 'group_invite', {message: 'added you to '+((grpInfo && grpInfo.group_name) || 'a group'), conversation_id: cid}); } catch(e) {}
     toast(`${uname} added! 🎉`);
     btn.textContent='Added ✓';btn.disabled=true;btn.style.opacity='0.5';
     const{data:mems}=await db.from('conversation_members').select('user_id,is_admin,profiles!conversation_members_user_id_fkey(username,avatar_url,last_seen)').eq('conversation_id',cid);
