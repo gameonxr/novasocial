@@ -85,7 +85,7 @@ function _renderNotesBarHtml(notesData){
         ${av(n.profiles?.avatar_url,n.profiles?.username,52,true)}
         <div class="note-text-pill">${esc((n.text||'').slice(0,18))}</div>
         ${n.music_title ? `<div class="note-music-note">🎵</div>` : ''}
-        ${myReactionsMap[n.id] ? `<div style="position:absolute;bottom:-4px;left:-4px;background:#1a1a1a;border:2px solid #000;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px">${myReactionsMap[n.id]}</div>` : ''}
+        ${myReactionsMap[n.id] ? `<div style="position:absolute;bottom:-4px;left:-4px;background:#1a1a1a;border:2px solid #000;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px">${esc(myReactionsMap[n.id])}</div>` : ''}
       </div>
       <span style="font-size:11px;color:#bbb">${esc(n.profiles?.username||'')}</span>
     </div>`).join('');

@@ -92,7 +92,7 @@ With SEC-004 fixed (2026-09-12, section 21), the 1.2 HIGH section is now EMPTY �
 |----|----------|-----------|-------|--------|
 | XSS-C1 | LOW | utils.js:326-332 av(); posts.js:124; home.js:133; **reels-renderer-owner.js:118 (H11-noted site)**; **render-sv.js:30 (H13-noted site — story viewer header avatar)**; **notes-bar.js:75/:85, note-viewer-owners.js:26, load-notes-feed.js:75 (H16-noted sites — notes surfaces)**; **profile-view.js:82/:150/:286/:391, follow-list.js:33, show-story-viewers.js:43 (H18-noted sites — profile preview/full/blocked paths, follow-list rows, story-viewer rows; byte-identity disk vs parent proven in H18 S-F)**; (all av() callers) | av() first letter interpolated raw into text + onerror JS string (leading `\` = syntax breakage, not execution). ALSO: av() computes `safeName` (:329) but never uses it (dead variable, hygiene) | FIXED 2026-09-19 (XSS-C1 hardening — see section 26; the av() review EXECUTED: img src esc() + data-fl attribute transport + CONSTANT-expression onerror + esc'd letter span + dead safeName removed, ALL ~60 callers fixed at once INSIDE the helper; 1 file, 6 insertions/2 deletions). History: av() review task (deferred issue #4). M1 note (2026-09-09): the av()-ADJACENT direct interpolations are now M1-fixed where they existed (home.js:133 direct tray img src esc'd; profile-view.js:392 onclick transport data-attr'd); av()'s OWN internal img-src + onerror JS-string at utils.js:326-332 remains THE C1 scope, untouched by M1 per the do-not-start av() review instruction |
 | XSS-C2 | LOW | nova-ai.js:219 (and voice-assistant.js:139 — same pre-escape, voice pipeline) | Own message `<`-only partial escape | FIXED in H19 (pre-escape removed at both call sites; the shared appendNovaMsg sink now applies full esc() — single escaping stage, no double-escape) |
-| XSS-C3 | LOW | notes-bar.js:84 (ledger counting; actual current line :88 — 4-line drift, sink unambiguous by content; H16-audit re-verified: badge renders myReactionsMap[n.id] = own reaction emoji, byte-identical pre/post H16 fix, untouched) | Own reaction emoji badge — self-XSS only | OPEN (accepted low) |
+| XSS-C3 | LOW | notes-bar.js:84 (ledger counting; actual current line :88 — 4-line drift, sink unambiguous by content; H16-audit re-verified: badge renders myReactionsMap[n.id] = own reaction emoji, byte-identical pre/post H16 fix, untouched) | Own reaction emoji badge — self-XSS only | FIXED (2026-09-29, dedicated XSS-C3 task, ledger-driven selection — section 43: esc() at the exact current sink :88 `${esc(myReactionsMap[n.id])}` [the M3/H17 reaction-badge esc twin — the row's own class prescription; HTML-text context, the truthiness ternary + badge styling + every template constant preserved]; receiver = SELF proven by the REAL .eq('user_id',ME.id) reactions query shape [foreign user_id row dropped in-harness, the h106 W3 precedent]; write paths = fixed-enum viewer picker + native-emoji input maxlength=4 CLIENT-SIDE only + window-global reactToNote + direct DB upsert (the DB-write-bypass threat model, RLS unknown, zero .sql in repo); parent c4eec67 PROVEN VULNERABLE 111/0 — 17/17 exec classes fire alert(1) zero-click + 5 mint classes mint elements [stored own-reaction emoji reaches the badge DOM unsanitized]; post-fix focused 214/0 [zero execution/minting/attacker handlers over 22 exec+mint + 9 text + 12 display runs; legit reaction emoji incl. ZWJ sequences + skin tones byte-identical; bubbles/badge-gate/dedupe/mutual-follow/expiry/empty/missing-bar/receiver-scoping workflows preserved]; negctl 110/0 — 17 exec + 5 mint re-fires = detection power; 1-line diff, 1 file; full record in section 43) |
 | XSS-C4 | — | show-group-info.js:38 | Rename input `value="…"` quote-escaped — double-quoted attr unbreakable | SAFE (verified) |
 | XSS-C5 | LOW | load-msgs.js:86 | isSystem() prefix trivially spoofable → renders with system styling (styling only; text now esc'd by H1) | OPEN (cosmetic) |
 | XSS-C6 | — | load-msgs.js:153 | Audit claimed reactionMap.id] bug — byte-verified the line is actually reactionMap[m.id] | SAFE (non-issue, verified H1 task) |
@@ -2992,3 +2992,156 @@ entity-decode-back and arithmetic-chain lineage classes) + 5 mint classes +
   the index already supersedes; noted for any future ledger-sync task.
   No new issue ID created (ISSUE_RULES #4/#5 — status-sync note, not a
   code or security issue).
+
+
+## 43. XSS-C3 — notes-bar.js own-reaction-emoji badge self-XSS fix (this task, 2026-09-29, parent c4eec67)
+
+**LEDGER-DRIVEN SELECTION:** the task required selecting the next eligible
+repo-verifiable OPEN/DEFERRED security issue from the CURRENT ledger (no
+assumption). Selection rationale, per the ledger's documented ordering:
+(1) severity-tier ordering — §1.2 HIGH documented EMPTY, every §1.3 MEDIUM
+row FIXED, the H10 series fully closed (§42.3) → the remaining security rows
+are ALL LOW; (2) the ledger's own listing order (§1.4 row order + every
+"Remaining open" report since H10-6): XSS-C3 → XSS-C5 → XSS-C9 residuals →
+SEC-001; (3) the recent-task precedent: the recent series fixed single-site
+LOW self-XSS rows one-at-a-time (H10-6/H10-7/H10-8); (4) XSS-C3 is
+repo-verifiable (notes-bar.js:88 locatable, sink decidable, fix state
+decidable). Selected: **XSS-C3**, exactly one issue. XSS-C5, XSS-C9
+residuals, SEC-001, DG-3/4/5 (BUG file), HA-M5 (PLATFORM file) NOT started.
+
+### 43.1 Scope + classification (current code authoritative; ledger lines reconciled)
+
+- Row scope (the row's own description): "Own reaction emoji badge — self-XSS
+  only". Ledger-cited site: notes-bar.js:84 → actual current line **:88**
+  (the row's own documented 4-line drift; H16-audit re-verified; the sink is
+  unambiguous by content — the ONLY unescaped interpolation in the file).
+- **Exact current sink** (:88, HTML text): the corner-badge div on OTHERS'
+  note bubbles — `${myReactionsMap[n.id]}` interpolated raw into the badge
+  template; every style/attribute in the badge markup is a developer
+  constant; the only interpolated value is the emoji. Sink:
+  `bar.innerHTML = html` (:93).
+- **Source**: own `quick_note_reactions.emoji` rows. Read path: the fetch at
+  :27 `db.from('quick_note_reactions').select('note_id,emoji')
+  .eq('user_id',ME.id).in('note_id',noteIds)` → map build :28
+  `myReactionsMap[r.note_id]=r.emoji`.
+- **Write paths** (provenance, all client-side-constrained only — the
+  DB-write-bypass threat model): (a) note-viewer-owners.js:43 fixed enum
+  ['❤️','😂','😮','🔥','👀'] developer constants; (b) the native-emoji input
+  (open-more-emoji-picker.js:10, maxlength=4 CLIENT-SIDE only, no emoji
+  validation) → submit-native-emoji-reaction.js:10; (c) window.reactToNote —
+  a WINDOW-GLOBAL callable with an arbitrary emoji argument
+  (notes-reaction-owner.js:1); (d) direct DB upsert
+  (notes-reaction-owner.js:17, user_id:ME.id) / DB-write bypass (RLS
+  UNKNOWN, zero .sql in repo — the established doctrine; W10).
+- **Ownership/data boundary**: receiver = SELF. The badge renders ONLY the
+  viewer's own reactions (the .eq('user_id',ME.id) filter — proven in-harness
+  by feeding a FOREIGN user_id reaction row and verifying the real query
+  shape drops it); the write boundary matches (upsert user_id:ME.id) →
+  STORED SELF-XSS, LOW severity — the row's "accepted low" scope re-affirmed
+  from the actual data flow (the M3 cross-user twin class writes
+  message_reactions for OTHERS' chats; quick_note_reactions rows are
+  per-(note,user) own rows).
+- Adjacent surfaces audited and DEDUPED (not XSS-C3, untouched):
+  :73/:83 `viewNote('${...id}')` — quick_notes.id is DB-generated (the
+  insert at notes-submission-owner.js:21 supplies NO id) — the H11-audit
+  UUID-safe-by-construction class (W6, X1 byte-identity); :75/:85 av() calls
+  — the XSS-C1-fixed shared helper (X3 byte-identity + constant-onerror
+  compile proof); :76/:86/:90 — the H16 esc'd surfaces (X2 line-level
+  byte-identity); :79 constant label; :77/:87 music_title truthiness + the
+  constant 🎵 glyph (no value interpolation). Caller census (W7/W8/W9):
+  exactly 6 loadNotesBar external call sites + 2 _renderNotesBarHtml + 2
+  _fetchNotesBarData external sites, and ZERO myReactionsMap references
+  outside notes-bar.js — the badge is the ONLY consumer of the own-reactions
+  map (every render path funnels through the single template).
+- **Classification: A = confirmed vulnerable.** The sink is a raw
+  unescaped interpolation into innerHTML at an HTML-text sink; the write
+  path is client-constrained only (the same doctrine the M3 row used to
+  classify its reaction-badge twin: "window-global callable with arbitrary
+  emoji + DIRECT DB WRITE by a malicious client"); an arbitrary stored
+  value mints elements/handlers in the reactor's OWN DOM. Severity LOW
+  (self-XSS only) — the classification was NOT forced from the OPEN status;
+  it was reached by exhausting the current-source census and the three-mode
+  executable proof below.
+
+### 43.2 Fix (1 production file, 1 sink line — the row's own class prescription, the M3/H17 esc twin)
+
+```js
+:88  ${esc(myReactionsMap[n.id])}     // was: ${myReactionsMap[n.id]}
+```
+
+- HTML-text context → `esc()` (the shared 5-entity escaper, utils.js:4-12,
+  loaded at index.html:211 before notes-bar.js:320 — already used at :76/:86/:90
+  of the same file since H16). The M3 fix twin (`.map(e => esc(e)).join(' ')`
+  for the multi-reaction message badge) collapses to the single-value esc()
+  wrap here; H17 (note-reactors-list) is the same esc-at-badge precedent.
+- Behavior contracts preserved: the truthiness ternary (badge renders only
+  for truthy values — falsy emoji rows render NO badge, identical to
+  parent); every badge style constant byte-identical; legit reaction emoji
+  (single emoji, ZWJ sequences, skin-tone modifiers) pass through esc()
+  byte-identically (esc only replaces & < > " '); the picker highlight
+  consumer (note-viewer-owners.js:43 `myReaction?.emoji===e`) compares the
+  RAW DB value — untouched by the display-side esc().
+- No shared helper modified (utils.js untouched); no unrelated cleanup; no
+  scope expansion — the 1-line diff is the entire production change.
+
+### 43.3 Verification (scripts/c3_verify.js — REAL modules vm-loaded [utils.js + cld-url.js + notes-bar.js], browser-faithful s294-lineage tokenizer, db mock shaped as the REAL builder chains [from→select→gt/order/eq/in/limit/maybeSingle, thenable at every hop, the .eq/.in/.gt filters APPLIED — the foreign-row receiver-scoping proof], the REAL loadNotesBar() entry as the render driver [fresh vm context per render = the browser-faithful page-load model]; frozen Date + seeded LCG determinism; TWO exec channels: media auto-fire + constant-onerror compile; modes prove/focused/negctl)
+
+- **PROVE (parent c4eec67, raw sink): 111 PASS / 0 FAIL — VULNERABLE.**
+  All 17 exec payload classes fire alert(1) zero-click (imgOnerror,
+  svgOnload, attrBreakout, sqBreakout, quotedHandler, sourceOnerr,
+  mixedCase, longPayload, hindi, punjabi, urdu, cyrillic, cjk, emoji,
+  entitySq, entityHex, entityDq) + all 5 mint classes mint real parsed
+  elements (scriptFull, aHrefJs, iframeSrcdoc, nullByte, styleEl). The
+  stored own-reaction emoji reaches the notes-bar badge DOM unsanitized.
+- **FOCUSED (disk, post-fix): 214 PASS / 0 FAIL — SAFE.** Zero execution /
+  zero minting / zero attacker handlers over 22 exec+mint + 9 text + 12
+  display runs: strict census ZERO drift vs benign controls, payloads
+  confined as decoded TEXT, zero javascript:/data: hrefs/src, legit reaction
+  values byte-identical round-trips (❤️🔥😂👀👏, ZWJ 🏳️‍🌈/👨‍👩‍👧‍👦, 👍🏽
+  skin tone, 😀🎉 combos, multilingual mix, `Tom & Jerry "x"` esc'd exactly
+  once = single escaping stage). Functional: benign bar (own + mutual
+  bubbles + ❤️ badge), the 5 real db chains in order, mutual-follow filter,
+  PERMANENT DEDUPE GUARD (reaction on a dedupe-dropped note renders no
+  badge), expiry .gt filter, empty state (+ composer), missing-bar early
+  return, falsy-emoji gate ('' / null / undefined), receiver scoping (the
+  foreign user_id row dropped by the real .eq), av() C1-fixed shape intact
+  through the surface (transform src + data-fl codec + constant onerror,
+  zero alert), H16 esc lines byte-identical, UUID-class onclicks
+  byte-identical parent-vs-disk, ONLY line 88 differs.
+- **NEGCTL (disk with the esc() wrap removed): 110 PASS / 0 FAIL —
+  detection power.** All 17 exec classes re-fire + 5 mint classes re-mint
+  on the reverted sink: the esc() wrap is load-bearing.
+
+### 43.4 Regression + task report hooks
+
+- Notes-system contract harnesses (the feature-specific battery):
+  notes-seam-preparation (PRODUCTION_SPLIT=COMPLETE), notes-audio-helper,
+  notes-reaction-owner independent-proof + production-split,
+  notes-submission-owner independent-proof + production-split,
+  notes-submission-reactions-protected-readiness,
+  cleanup-expired-notes, note-reactors-list-production-split — ALL GREEN
+  (9/9); the c3 focused P-block covers the real feature states
+  (normal/loading/empty/error-missing-bar/fallback/handler-flow).
+- 322-harness battery: **317 PASS / 5 FAIL = the documented baseline**
+  (identical 5 names: branch2-final-readiness / branch2-only-safety /
+  deletion-fallback-production-split / dms-renderer-independent-proof /
+  particle-production-split — pre-existing parent-era pins; all 5
+  re-verified FAIL-identical at the clean parent state via git stash, so
+  zero regressions from this task's 1-line change).
+- app-load 10/10 (463/463 scripts fetch + syntax-valid, 465 classic tags,
+  PWA 200/200, disk/HTML integrity 452 feature files); node --check OK
+  (notes-bar.js + utils.js); VM load OK (utils.js + notes-bar.js,
+  loadNotesBar exported); git diff --check CLEAN; secret scan CLEAN
+  (c3_secret_scan.js — 1 diff file, 0 suspects).
+- Ledger changes: SECURITY_ISSUES.md — XSS-C3 row OPEN (accepted low) →
+  FIXED (full history preserved in-row) + section 43 (43.1-43.4);
+  ISSUE_INDEX.md — XSS-C3 row → FIXED + 2026-09-29 sync-log entry.
+- Remaining open (unchanged by this task): XSS-C5, XSS-C9 remaining
+  accepted-low sites (incl. memories.js:65 / scheduled-posts.js:32 /
+  insights.js:27 — line-pinned untouched), SEC-001 error-path class (+ the
+  H10-6-recorded memories.js:82 member), DG-3/4/5 (BUG file), HA-M5
+  (PLATFORM file); external SQL/RPC/RLS runbook items unchanged.
+- Incidental observation: NONE (no new issue, no site addition — the
+  :73/:83 UUID-class onclicks and the :77/:87 music-title truthiness were
+  already covered by documented doctrine: UUID-safe-by-construction and
+  non-interpolated constants respectively).
