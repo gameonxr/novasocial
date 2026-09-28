@@ -50,7 +50,8 @@ window._loadOlderMessages = async function _loadOlderMessages(cid, isGrp, list){
       reactionMap[r.message_id].push(r.emoji);
     });
 
-    const isSystem=t=>t&&(t.startsWith('✅')||t.startsWith('❌')||t.startsWith('👑')||t.startsWith('👋')||t.startsWith('📞'));
+    // XSS-C5: exact-shape matchers for the 4 repo-written group-event sentences (add-to-group/remove-member/make-admin/leave-group) — was bare-prefix startsWith, trivially spoofable styling; legacy 📞 prefix-class kept (no repo writer; DB-side shapes unverifiable); twin of load-msgs.js:86
+    const isSystem=t=>t&&(/^✅ \S+ was added to the group$/.test(t)||/^❌ \S+ removed \S+$/.test(t)||/^👑 \S+ made an admin$/.test(t)||/^👋 \S+ left the group$/.test(t)||t.startsWith('📞'));
     const now = new Date();
     const validMsgs = olderMsgs.filter(m => !m.expires_at || new Date(m.expires_at) > now);
 
