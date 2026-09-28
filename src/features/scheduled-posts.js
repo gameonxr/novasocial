@@ -32,7 +32,7 @@ function showScheduledPosts(){
             ${s.mediaUrl?`<img src="${s.mediaUrl}" style="width:100%;height:100%;object-fit:cover">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:24px">📷</div>'}
           </div>
           <div style="flex:1;min-width:0">
-            <div style="font-weight:600;font-size:13px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.caption||'No caption'}</div>
+            <div style="font-weight:600;font-size:13px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.caption||'No caption')}</div>
             <div class="schedule-time">📅 ${new Date(s.scheduledFor).toLocaleString('en-IN')}</div>
           </div>
           <button onclick="deleteScheduledPost(${i})" style="background:transparent;border:none;color:#E1306C;cursor:pointer;padding:6px">×</button>
