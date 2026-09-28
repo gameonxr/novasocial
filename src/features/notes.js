@@ -51,8 +51,8 @@ function showNotes(){
       ` : `
         ${myNotes.map((n,i) => `
           <div onclick="editNote(${i})" style="padding:14px;background:#0f0f0f;border-radius:12px;margin-bottom:8px;cursor:pointer;border:1px solid #1a1a1a;border-left:3px solid ${n.color || '#E1306C'}">
-            <div style="font-weight:600;font-size:13px;color:#fff;margin-bottom:4px">${n.title}</div>
-            <div style="font-size:12px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.content}</div>
+            <div style="font-weight:600;font-size:13px;color:#fff;margin-bottom:4px">${esc(n.title)}</div>
+            <div style="font-size:12px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(n.content)}</div>
             <div style="font-size:10px;color:#666;margin-top:6px">${new Date(n.date).toLocaleString('en-IN')}</div>
           </div>
         `).join('')}

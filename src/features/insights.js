@@ -24,7 +24,7 @@ async function showEnhancedInsights(pid){
       <!-- Header -->
       <div style="display:flex;gap:12px;align-items:center;padding:14px;background:#0f0f0f;border-radius:14px;margin-bottom:14px;border:1px solid #1a1a1a">
         <div style="width:50px;height:50px;border-radius:10px;overflow:hidden;background:#111">
-          ${p.media_url?`<img src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:20px">'+ico('img','#333',32)+'</div>'}
+          ${p.media_url?`<img src="${esc(p.media_url)}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:20px">'+ico('img','#333',32)+'</div>'}
         </div>
         <div style="flex:1">
           <div style="font-weight:700;font-size:13px">@${esc(p.profiles?.username||'')}</div>

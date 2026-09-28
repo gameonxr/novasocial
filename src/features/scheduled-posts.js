@@ -29,7 +29,7 @@ function showScheduledPosts(){
       ${scheduledPosts.map((s,i)=>`
         <div class="schedule-card" style="margin-bottom:10px">
           <div style="width:50px;height:50px;border-radius:10px;overflow:hidden;background:#111;flex-shrink:0">
-            ${s.mediaUrl?`<img src="${s.mediaUrl}" style="width:100%;height:100%;object-fit:cover">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:24px">📷</div>'}
+            ${s.mediaUrl?`<img src="${esc(s.mediaUrl)}" style="width:100%;height:100%;object-fit:cover">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:24px">📷</div>'}
           </div>
           <div style="flex:1;min-width:0">
             <div style="font-weight:600;font-size:13px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.caption||'No caption')}</div>

@@ -62,7 +62,7 @@ async function showMemories(){
                 </div>
                 <div style="font-size:10px;background:linear-gradient(135deg,#833AB4,#E1306C);padding:4px 10px;border-radius:10px;color:#fff;font-weight:700">1 YEAR AGO</div>
               </div>
-              ${p.media_url ? `<div style="aspect-ratio:1/1;background:#111;overflow:hidden">${p.media_type==='video'?(p.thumbnail_url?`<img src="${cldUrl(p.thumbnail_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`:`<video src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" muted></video>`):`<img src="${cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`}</div>` : ''}
+              ${p.media_url ? `<div style="aspect-ratio:1/1;background:#111;overflow:hidden">${p.media_type==='video'?(p.thumbnail_url?`<img src="${esc(cldUrl(p.thumbnail_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`:`<video src="${esc(p.media_url)}" style="width:100%;height:100%;object-fit:cover" muted></video>`):`<img src="${esc(cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform))}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`}</div>` : ''}
               ${p.caption?`<div style="padding:12px 14px;font-size:13px;color:#ccc;line-height:1.5">${esc(p.caption.substring(0,100))}${p.caption.length>100?'...':''}</div>`:''}
             </div>
           `).join('')}

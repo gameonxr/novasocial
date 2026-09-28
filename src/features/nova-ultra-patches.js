@@ -43,7 +43,7 @@ if(typeof window.loadMoodFeed === 'function'){
         if(feedList){
           const moodChip = document.createElement('div');
           moodChip.style.cssText = 'padding:12px 14px;margin:10px 12px;background:linear-gradient(135deg,rgba(122,253,255,0.1),rgba(252,0,124,0.1));border:1px solid rgba(122,253,255,0.2);border-radius:14px;font-size:12px;color:#fff;display:flex;align-items:center;gap:8px';
-          moodChip.innerHTML = `🧠 <b>Smart Feed:</b> ${window.currentMood || 'default'} mood active. <span onclick="showSmartFeed()" style="color:#7afdff;cursor:pointer;margin-left:auto">Change →</span>`;
+          moodChip.innerHTML = `🧠 <b>Smart Feed:</b> ${esc(window.currentMood || 'default')} mood active. <span onclick="showSmartFeed()" style="color:#7afdff;cursor:pointer;margin-left:auto">Change →</span>`;
           feedList.insertBefore(moodChip, feedList.firstChild);
 
           if((window.currentMood || 'default') !== 'default'){

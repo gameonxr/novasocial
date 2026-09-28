@@ -8,7 +8,7 @@ function showAvatarActionSheet() {
   sheet.innerHTML = `
     <div style="width:100%;background:#0A0A0A;border-radius:20px 20px 0 0;padding:8px 16px 30px;border-top:1px solid rgba(255,255,255,0.08)">
       ${PROF?.avatar_url ? `
-        <div onclick="document.getElementById('avatar-action-sheet').remove();viewAvatarFullscreen('${PROF.avatar_url}','${esc(PROF.username)||''}')" style="padding:16px;text-align:center;color:#fff;font-weight:600;font-size:15px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <div data-av-url="${encodeURIComponent(PROF.avatar_url||'')}" data-av-name="${encodeURIComponent(PROF.username||'')}" onclick="document.getElementById('avatar-action-sheet').remove();viewAvatarFullscreen(decodeURIComponent(this.dataset.avUrl),decodeURIComponent(this.dataset.avName))" style="padding:16px;text-align:center;color:#fff;font-weight:600;font-size:15px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06)">
           👁 View Photo
         </div>
       ` : ''}

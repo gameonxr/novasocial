@@ -12,7 +12,13 @@ const requiredMarkers = [
   "sheet.id = 'avatar-action-sheet'",
   'position:fixed;inset:0',
   'PROF?.avatar_url',
-  "viewAvatarFullscreen('${PROF.avatar_url}','${esc(PROF.username)||''}')",
+  // XSS-C9 site fix 2026-09-29: the raw JS-string onclick args moved to the
+  // M1/profile-view.js:392-twin data-av-url/data-av-name encodeURIComponent
+  // transport + constant-expression handler (marker synced with the fix,
+  // H10-9 contract-harness marker-sync precedent)
+  "data-av-url=\"${encodeURIComponent(PROF.avatar_url||'')}\"",
+  "data-av-name=\"${encodeURIComponent(PROF.username||'')}\"",
+  'viewAvatarFullscreen(decodeURIComponent(this.dataset.avUrl),decodeURIComponent(this.dataset.avName))',
   '👁 View Photo',
   "document.getElementById('avpick').click()",
   '📷 Change Photo',
