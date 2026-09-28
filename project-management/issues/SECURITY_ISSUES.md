@@ -141,7 +141,7 @@ Root cause (all): 2026-07-27 v1-declaration deletion (8e26c10→58615b3 lineage)
 | H10-1 | 2026-09-07 | HIGH | Stored XSS | post-actions.js:332 | openShareSheet post-preview renders @username raw → mbody.innerHTML | posts join profiles.username (post author, other user) | HTML text | post author username = payload; any viewer taps Share | CONFIRMED (suite NEG N-C, raw payload rendered) | esc() — APPLIED in H10 | H10 | FIXED (6b6dbf4) |
 | H10-2 | 2026-09-07 | HIGH | Stored XSS | post-actions.js:333 | openShareSheet post-preview caption rendered raw (truncated 60) — alternate path of the same posts.caption value that formatCaption escapes | posts.caption | HTML text | post caption = payload; viewer opens share sheet | CONFIRMED (suite NEG N-D) | esc() — APPLIED in H10 | H10 | FIXED (6b6dbf4) |
 | H10-3 | 2026-09-07 | MEDIUM | XSS class-instance | posts.js:124 | postCard passes username into av() (first-letter + onerror JS-string = C1 class at posts surface) | profiles.username | av() internal | leading `\` in username → onerror syntax breakage | suspected (C1 class) | av() review (XSS-C1) | av() task | OPEN |
-| H10-4 | 2026-09-07 | MEDIUM | URL/JS-string | posts.js:134, :140-141, :151; post-actions.js:322-323, :363 | postCard/shareSheet media_url in downloadMedia onclick + src/poster attrs — M1 class at posts surface (sites added to XSS-M1) | posts.media_url / thumbnail_url (DB-write unconstrained) | URL attr + JS-string | crafted media_url row | suspected (M1 class) | fold into M1 fix cycle | M-tier | OPEN (merged into XSS-M1) |
+| H10-4 | 2026-09-07 | MEDIUM | URL/JS-string | posts.js:134, :140-141, :151; post-actions.js:322-323, :363 | postCard/shareSheet media_url in downloadMedia onclick + src/poster attrs — M1 class at posts surface (sites added to XSS-M1) | posts.media_url / thumbnail_url (DB-write unconstrained) | URL attr + JS-string | crafted media_url row | suspected (M1 class) | fold into M1 fix cycle | M-tier | RESOLVED via XSS-M1 (FIXED 2026-09-09 by the M1 fix cycle, commit 172c40d — the row's sites were folded into XSS-M1's scope per the row's own "fold into M1 fix cycle" prescription and the XSS-M1 row's §1.1 scope list explicitly includes posts.js:134/140-141 + post-actions.js:322-323/363; status OPEN→RESOLVED 2026-09-29 by the dedicated H10-4 audit task — classification D [duplicate/already fixed], NO production change, current-code re-verification + parent-state prove + negctl detection power; the ":151" cite = cross-file cite confusion already clarified in the XSS-M1 §1.1 row [posts.js:151 is rbar UUID-only; post-actions.js:136/:151 are H9-D2 username-class, NOT media]; see SECURITY_ISSUES.md section 42) |
 | H10-5 | 2026-09-07 | MEDIUM | JS-string | post-actions.js:315 → :339/:343/:351/:367 | shareText contains raw author username inside 4 onclick JS-string attrs (quote-replace only) — 10.5 class | profiles.username | JS-string-attr | username with `"`/entity-breakout | suspected (10.5 class, verified byte-identical pre/post) | dedicated JS-context task | H9-D1 task | FIXED (2026-09-27, closed via H9-D1 — the 4 merged shareText onclick sites [post-actions.js:339/:343/:351/:367] now ride data-share-text="${esc(shareText)}" transports with constant-expression onclicks; see SECURITY_ISSUES.md section 35) |
 | H10-6 | 2026-09-07 | LOW | self-XSS | memories.js:59, :66 | Memories screen renders own @username + caption raw — query is .eq('user_id', ME.id) (own posts only) | own profiles.username / own posts.caption | HTML text | self-crafted values, own session | confirmed (code-read; scope=own data) | esc() in a later username sweep | username sweep | FIXED (2026-09-28, dedicated H10-6 task — section 38: esc() wraps at BOTH current sinks, the row's own "esc() in a later username sweep" prescription — :59 `@${esc(p.profiles?.username||'')}` [the H10-13/H10-10 twin shape] + :66 `${esc(p.caption.substring(0,100))}` [substring-then-esc, the H10-11 bio-slice twin; raw-length `p.caption.length>100` ellipsis semantics unchanged]; ledger-cited lines :59/:66 = EXACT current lines, no drift; 2-line diff, 1 file; parent a516aae PROVEN VULNERABLE 150/0 — 30 exec firings [15 payload classes × 2 sinks: imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 10 mint records; receiver = self proven by the W3 receiver-scoping harness check [foreign user_id row filtered out by the real .eq query shape — cross-user possibility NONE]; post-fix focused 319/0 [zero execution/minting/attacker handlers over 40 exec+mint + 16 text + 22 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; viewPost UUID tap + goBack/Mood/av()/media/truncation workflows preserved]; negctl 149/0 — 30 exec + 10 mint firings = detection power) |
 | H10-7 | 2026-09-07 | LOW | self-XSS | scheduled-posts.js:35 | Scheduled-posts modal renders caption from localStorage ('nova-scheduled', own submissions) raw | own localStorage caption | HTML text | self-crafted localStorage | confirmed (code-read) | esc() | username sweep | FIXED (2026-09-29, dedicated H10-7 task — section 39: esc() wrap at the exact current sink, the row's own esc() prescription — :35 `${esc(s.caption\|\|'No caption')}` [the H10-6 memories.js:66 caption twin shape; the \|\|'No caption' falsy fallback preserved INSIDE the wrap]; ledger-cited line :35 = EXACT current line, no drift; 1-line diff, 1 file; parent 87cbf36 PROVEN VULNERABLE 86/0 — 15 exec firings [imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 5 mint records; receiver = self proven by the W6/W7 storage-surface inventory [zero db/supabase calls in the module, exactly 3 nova-scheduled refs in src/ — localStorage is own-device storage, cross-user possibility NONE]; post-fix focused 183/0 [zero execution/minting/attacker handlers over 20 exec+mint + 9 text + 11 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; modal/empty-state/malformed-storage/delete-flow-confirm-both-ways/mediaUrl/date workflows preserved]; negctl 85/0 — 15 exec + 5 mint firings = detection power) |
@@ -2843,3 +2843,152 @@ vm context = the browser-faithful page-load model; modes prove/focused/negctl)
   (incl. memories.js:65 / scheduled-posts.js:32 / insights.js:27 — line-pinned untouched),
   SEC-001 error-path class (+ the H10-6-recorded memories.js:82 member), H10-14, DG-3/4/5,
   HA-M5; external SQL/RPC/RLS runbook items unchanged.
+
+---
+
+## 42. H10-4 — postCard/shareSheet media_url status-reconciliation audit (this task, 2026-09-29, parent 3726db1)
+
+**LEDGER-DRIVEN SELECTION:** the task required selecting the next eligible
+repo-verifiable OPEN/DEFERRED security issue from the CURRENT ledger (no
+assumption). Selection rationale, per the ledger's documented ordering:
+(1) severity-tier ordering — §1.2 HIGH is documented EMPTY, every §1.3
+MEDIUM row (M1–M7) is FIXED, and H10-4 is a MEDIUM-severity row still marked
+OPEN while every other remaining security row (XSS-C3/C5, XSS-C9 residuals,
+SEC-001) is LOW accepted-low/cosmetic/deferred; (2) the H10-series ordering
+the recent tasks executed in numeric sequence (H10-6 → H10-7 → H10-8 →
+H10-9) — H10-4 is the ONLY remaining OPEN H10-series row; (3) H10-4 is
+repo-verifiable: its cited sites are locatable in current code and its fix
+state is decidable from the repo. Selected: **H10-4**, exactly one issue.
+
+### 42.1 Scope + classification (current code authoritative; ledger lines reconciled)
+
+- Row scope (the row's own description): "postCard/shareSheet media_url in
+  downloadMedia onclick + src/poster attrs — M1 class at posts surface".
+  Ledger-cited sites: posts.js:134, :140-141, :151; post-actions.js:322-323,
+  :363. The ":151" cite = cross-file cite confusion already clarified in the
+  XSS-M1 §1.1 row (posts.js:151 is the rbar UUID-only region; the
+  post-actions.js :136/:151 lines are H9-D2 username-class, NOT media).
+- **Full current-source census** of every media_url/thumbnail_url
+  interpolation in BOTH files (rg, exhaustive): posts.js:134
+  `data-dl-url="${encodeURIComponent(p.media_url)}"` + constant-expression
+  onclick `downloadMedia(decodeURIComponent(this.dataset.dlUrl),…)` ·
+  posts.js:140 `src="${esc(p.media_url)}"` + `poster="${esc(p.thumbnail_url)}"`
+  · posts.js:141 `src="${esc(optimizeCloudinaryUrl(cldUrl(p.media_url,…)))}"`
+  · post-actions.js:322 (the :140 video twin) · post-actions.js:323 (the :141
+  img twin) · post-actions.js:363 (the :134 data-dl-url twin with
+  `p.media_url||''`). Non-sink uses: post-actions.js:240 (DB select string),
+  :275 (Cloudinary deleteMultipleMediaProduction API args — not an HTML
+  context). **All six render sinks carry the M1 fix patterns.**
+- Fix-state provenance: git log --follow both files → the M1 commit
+  `172c40d` ("fix(xss): harden attribute and JS-context URL rendering
+  (XSS-M1)", 2026-09-09) touched both files; the XSS-M1 §1.1 FIXED row's
+  scope list explicitly includes posts.js:134/140-141 +
+  post-actions.js:322-323/363 and §15.2 explicitly lists "posts.js:134 +
+  post-actions.js:363 (data-dl-url + downloadMedia…)" among its applied
+  sites. The H10-4 row's "fold into M1 fix cycle" prescription was executed
+  by M1; the row's status cell simply never advanced.
+- Data flow / boundary: posts.media_url / thumbnail_url (DB rows; write path
+  = submit-create.js client insert — DB-write unconstrained, the row's own
+  threat model; RLS UNKNOWN, zero .sql in repo — the established doctrine).
+  Receiver = ANY viewer rendering the attacker's post (postCard feed render)
+  or opening its share sheet → **cross-user** (the M1-class boundary), NOT
+  self-only.
+- **Classification: D = duplicate/already fixed.** Current Branch2 code is
+  authoritative: every cited sink is M1-patterned (esc() attr boundaries +
+  encodeURIComponent data-attr transports with constant-expression
+  onclicks); the vulnerability the row described existed at the row's
+  recording era and was closed by M1 on 2026-09-09. The classification was
+  NOT forced from the row's OPEN status — it was reached by exhausting the
+  current-source census and executing the three-mode proof below.
+
+### 42.2 Verification (scripts/h104_verify.js — REAL modules vm-loaded)
+
+REAL sources: src/core/utils.js + src/core/constants.js + src/features/
+cld-url.js + src/features/get-connection-quality.js + src/features/
+optimize-cloudinary-url.js + the NOVA_MEDIA_CONFIG literal extracted
+verbatim from index.html (brace-balanced) + posts.js + post-actions.js
+(the two audited modules, mode-selected). Browser-faithful s294-lineage
+tokenizer (entity decode AFTER tokenization, duplicate-attr keep-FIRST,
+RAW-TEXT/RCDATA); TWO exec channels: media auto-fire + tap simulation of
+EVERY on* attr; deterministic renders (frozen Date.now); the REAL
+openShareSheet workflow driven end-to-end via a db mock shaped as the real
+builder chain (from→select→eq→single) + a modal() mock preserving the
+#mbody sink path (H10-12 precedent). Six render surfaces: postCard
+image/video/poster + shareSheet image/video/poster (S1–S6). Payload
+matrices: 17 exec classes (12 attr-breakout incl. multilingual hindi/
+punjabi/urdu/cyrillic/cjk/emoji + 5 JS-string breakout incl. the
+entity-decode-back and arithmetic-chain lineage classes) + 5 mint classes +
+9 text classes + 6 legit-URL display classes.
+
+- **PROVE (pre-M1 parent 1e66272 sources via git show): 70/0 — VULNERABLE,
+  164 exec channel-firings (72 media-auto-fire + 92 tap) across 17 classes ×
+  6 surfaces + 30 mint records.** The historical row described a real
+  vulnerability: at the pre-M1 sinks every attr-breakout payload minted an
+  executing `<img onerror>` (zero-click on parse) and every JS-string
+  payload broke out of the raw `downloadMedia('…')` onclick (tap channel).
+  Adjacent prove checks: the parent state ALREADY had esc()'d username at
+  both surfaces (H10-1/6b6dbf4 predates M1) — H10-4's scope was indeed the
+  media sinks only.
+- **FOCUSED (current disk state): 687/0 — SAFE.** Zero execution and zero
+  minting at all six sinks for every payload class (tag census + handler
+  census == benign baseline for every payload × surface — no minted
+  elements, no new handlers, no handler-value drift); every payload
+  delivered byte-exact to the REAL downloadMedia through the
+  data-dl-url/entity-decode-back transport contract (receipts); legit URL
+  round-trips byte-exact at every sink (Cloudinary transform path, plain
+  passthrough, query-string `&`-entity decode-back, O'Brien apostrophe,
+  unicode path, video src); benign shapes + empty state (📷 placeholder) +
+  not-found error state (toast receipt, mbody untouched) + db query-shape
+  contract; repeated renders byte-identical (determinism). Adjacent pins
+  (scope lock, untouched): postCard/shareSheet username esc (H10-1 family),
+  formatCaption esc (H3 family), shareText data-share-text transports
+  (H10-5/H9-D1 family), UUID onclick args, QR encodeURIComponent constant.
+- **NEGCTL (disk sources with the SIX M1 protections surgically reverted):
+  70/0 — all 17 exec classes re-fire (164 channel-firings, identical
+  distribution) = detection power.** The harness would catch a
+  reintroduction of any raw sink; the inert focused result is therefore a
+  real measurement, not a blind pass.
+
+### 42.3 Resolution + task report hooks
+
+- **NO production change** (classification D — the row's sites were already
+  fixed by M1/172c40d on 2026-09-09; per the B/C/D rule an unnecessary
+  production fix is forbidden). The deliverable of this task is the
+  executable D-classification evidence (42.2) + the status reconciliation.
+- 322-harness battery: **317 PASS / 5 FAIL = the documented baseline**
+  (identical 5 names: branch2-final-readiness / branch2-only-safety /
+  deletion-fallback-production-split / dms-renderer-independent-proof /
+  particle-production-split — pre-existing parent-era pins; zero production
+  files changed this task, the battery run IS the clean-parent state).
+- app-load 10/10 (463/463 scripts fetch + syntax-valid, 465 classic tags,
+  PWA 200/200); node --check OK (harness); git diff --check CLEAN; secret
+  scan CLEAN (h104_secret_scan.js — ledger files only in the diff).
+- Dedicated-suite runner (h104_run_suites.sh, 43 suites incl. h104): 30
+  PASS / 13 non-GREEN — ALL classified, NONE a code regression (zero
+  production changes): the 12 documented era-pins (h5/h7/h10/c1/ba/m7s4/
+  h1013/h1010/h1012/h9d1/xss105/h107 — identical set to the H10-9 run's
+  documented 12) + h108 S3 (the H10-8-era shape pin, 217 security
+  assertions green — same documented phenomenon); m284 GREEN (this run IS
+  the clean-parent state — zero production files changed); h109_verify.js
+  GREEN in the clean-parent run (its S3 worktree/HEAD-commit shape
+  assertion re-arms on this task's authorized ledger edits — the exact
+  h108-S3/h107-S3 documented lineage, only the shape assertion trips,
+  security assertions stay green); h104_verify.js GREEN (all 3 modes).
+- Ledger changes: SECURITY_ISSUES.md — H10-4 row OPEN (merged into XSS-M1)
+  → RESOLVED via XSS-M1 (full history preserved in-row; the merge
+  provenance and the ":151" clarification retained); section 42 added
+  (42.1–42.3). ISSUE_INDEX.md — H10-4 row → RESOLVED + 2026-09-29
+  sync-log entry.
+- Remaining open (unchanged by this task): XSS-C3/C5, XSS-C9 remaining
+  accepted-low sites (incl. memories.js:65 / scheduled-posts.js:32 /
+  insights.js:27 — line-pinned untouched), SEC-001 error-path class (+ the
+  H10-6-recorded memories.js:82 member), DG-3/4/5 (BUG file), HA-M5
+  (PLATFORM file); external SQL/RPC/RLS runbook items unchanged. The H10
+  series is now fully closed (H10-1…H10-13 FIXED/RESOLVED, H10-14 RESOLVED
+  via XSS-C1, H10-15 re-homed UI_UX).
+- Incidental observation recorded, NOT fixed (scope lock): the H10-3 row's
+  section-5 status cell still reads "OPEN" while the master index (and the
+  XSS-C1 §1.1/§26 record) says RESOLVED via XSS-C1 — a stale detail-cell
+  the index already supersedes; noted for any future ledger-sync task.
+  No new issue ID created (ISSUE_RULES #4/#5 — status-sync note, not a
+  code or security issue).
