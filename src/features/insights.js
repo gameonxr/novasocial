@@ -27,7 +27,7 @@ async function showEnhancedInsights(pid){
           ${p.media_url?`<img src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`:'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:20px">'+ico('img','#333',32)+'</div>'}
         </div>
         <div style="flex:1">
-          <div style="font-weight:700;font-size:13px">@${p.profiles?.username||''}</div>
+          <div style="font-weight:700;font-size:13px">@${esc(p.profiles?.username||'')}</div>
           <div style="font-size:11px;color:#888">${ago(p.created_at)} ago</div>
         </div>
       </div>

@@ -97,7 +97,7 @@ With SEC-004 fixed (2026-09-12, section 21), the 1.2 HIGH section is now EMPTY �
 | XSS-C5 | LOW | load-msgs.js:86 | isSystem() prefix trivially spoofable → renders with system styling (styling only; text now esc'd by H1) | OPEN (cosmetic) |
 | XSS-C6 | — | load-msgs.js:153 | Audit claimed reactionMap.id] bug — byte-verified the line is actually reactionMap[m.id] | SAFE (non-issue, verified H1 task) |
 | XSS-C8 | — | settings.js:627-628 | Share-link constant, app-origin | SAFE |
-| XSS-C9 | LOW | notes.js:57-58; **nova-ultra-patches.js:46 moodChip `innerHTML` interpolating currentMood (source: smart-feed.js fixed-enum OR ai-moderation.js:39 `localStorage.getItem('nova-current-mood')` — self-set localStorage, H19-audit-discovered site, same self-XSS class)**; **M1-audit-reviewed own-data sites 2026-09-09: memories.js:65 (own posts grid, .eq user_id), load-prof.js:27 (own nav avatar), avatar-action-sheet.js:11 (own avatar+username in onclick) — own-data only, no cross-user vector, same accepted-low family**; **M6-audit own-data sites 2026-09-10: profile.js:52 (own cover_url raw img src — cldUrl passthrough for non-cloudinary strings, mints on quote/markup payloads; byte-identical parent/disk proven in the M6 harness D-group), profile.js:125 (own posts INITIAL-grid media_url raw img src — the initial-render twin of the M1-fixed :153/:157/:161/:165 profTab sites), profile.js:238 (nav-avatar onerror first-letter JS-string + own-upload URL — C1-pattern at an own-data site)** — own-data only, receiver=self, same accepted-low family (memories.js:65 precedent) | Personal "My Notes" modal renders localStorage `nova-notes` myNotes title/content raw into innerHTML — self-XSS only (own-device localStorage, no cross-user vector; separate feature from the quick_notes Notes Bar — H16 audit discovery). The smart-feed mood ids are a developer fixed-enum; only the localStorage restore path (ai-moderation.js:39) is self-XSS-class | PARTIAL-FIXED (2026-09-12, XSS-C9 task — section 23: the own-profile URL/media rendering surfaces FIXED: profile.js:52 cover src esc-wrap + profile.js:125 initial-grid src esc-wrap + profile.js:238 nav-avatar esc(url)+esc(letter) data-fb transport + load-prof.js:27 nav-avatar INITIAL-render twin [stored avatar_url esc-wrap + the same data-fb transport — the #nav-av surface completion]; REMAINING OPEN accepted-low self-XSS sites: notes.js:57-58 [personal localStorage notes modal] + nova-ultra-patches.js:46 [moodChip currentMood] + memories.js:65 [own posts grid] + avatar-action-sheet.js:11 [own avatar+username in onclick] + scheduled-posts.js:32 [own localStorage mediaUrl raw img src — H10-7-audit-discovered site addition 2026-09-29, same accepted-low own-data family (own submissions only, receiver = self), deferred unchanged — see section 39] — different surfaces, not in the XSS-C9 task's 3 named surfaces, deferred unchanged) |
+| XSS-C9 | LOW | notes.js:57-58; **nova-ultra-patches.js:46 moodChip `innerHTML` interpolating currentMood (source: smart-feed.js fixed-enum OR ai-moderation.js:39 `localStorage.getItem('nova-current-mood')` — self-set localStorage, H19-audit-discovered site, same self-XSS class)**; **M1-audit-reviewed own-data sites 2026-09-09: memories.js:65 (own posts grid, .eq user_id), load-prof.js:27 (own nav avatar), avatar-action-sheet.js:11 (own avatar+username in onclick) — own-data only, no cross-user vector, same accepted-low family**; **M6-audit own-data sites 2026-09-10: profile.js:52 (own cover_url raw img src — cldUrl passthrough for non-cloudinary strings, mints on quote/markup payloads; byte-identical parent/disk proven in the M6 harness D-group), profile.js:125 (own posts INITIAL-grid media_url raw img src — the initial-render twin of the M1-fixed :153/:157/:161/:165 profTab sites), profile.js:238 (nav-avatar onerror first-letter JS-string + own-upload URL — C1-pattern at an own-data site)** — own-data only, receiver=self, same accepted-low family (memories.js:65 precedent) | Personal "My Notes" modal renders localStorage `nova-notes` myNotes title/content raw into innerHTML — self-XSS only (own-device localStorage, no cross-user vector; separate feature from the quick_notes Notes Bar — H16 audit discovery). The smart-feed mood ids are a developer fixed-enum; only the localStorage restore path (ai-moderation.js:39) is self-XSS-class | PARTIAL-FIXED (2026-09-12, XSS-C9 task — section 23: the own-profile URL/media rendering surfaces FIXED: profile.js:52 cover src esc-wrap + profile.js:125 initial-grid src esc-wrap + profile.js:238 nav-avatar esc(url)+esc(letter) data-fb transport + load-prof.js:27 nav-avatar INITIAL-render twin [stored avatar_url esc-wrap + the same data-fb transport — the #nav-av surface completion]; REMAINING OPEN accepted-low self-XSS sites: notes.js:57-58 [personal localStorage notes modal] + nova-ultra-patches.js:46 [moodChip currentMood] + memories.js:65 [own posts grid] + avatar-action-sheet.js:11 [own avatar+username in onclick] + scheduled-posts.js:32 [own localStorage mediaUrl raw img src — H10-7-audit-discovered site addition 2026-09-29, same accepted-low own-data family (own submissions only, receiver = self), deferred unchanged — see section 39] + insights.js:27 [own-post media_url raw img src — H10-8-audit-discovered site addition 2026-09-29, same accepted-low own-data family (the Post-Insights modal is isMine-gated → own posts only from the UI, receiver = self; harness X1-proven byte-identical parent/disk, untouched by design), deferred unchanged — see section 40] — different surfaces, not in the XSS-C9 task's 3 named surfaces, deferred unchanged) |
 | XSS-10.5 | CLASS | (see dedicated JS-string section 4; **site additions recorded by the M1 audit 2026-09-09: show-report-detail.js:113/:134 — esc(targetContent.media_url) inside viewChatImage onclick JS-strings = the decode-back class at the admin report-detail surface**; **2026-09-28 dedicated class-level audit (section 37) — 4 NEW same-class sites discovered and fixed: show-msg-menu.js:31 toggleFavFromMsg('encMurl') + :41 copyMsgFromEnc('encText') + :43 pinMsgFromEnc('id','encText') [the percent-codec-into-JS-string RE-INTERPOLATION family — encodeURIComponent leaves ' ( ) ! ~ * - . unescaped so the arithmetic-chain breakout ')-alert(1)-(' rides the codec; §35.1 had pinned "show-msg-menu encMurl/encText" as already-safe transports — the data-attr transports WERE safe but the showMsgMenu modal-layer re-interpolation into JS strings re-opened the class] + notifications.js:182 notifClick('n.type',…) [notifications.type = client-insert-writable per send-notif.js:23-31, the M7 ban_appeals.status/messages.media_type doctrine]; parent 5f4941f PROVEN VULNERABLE 198/0 with 38 exec firings, post-fix focused 241/0 (zero execution/minting), negctl 38 firings = detection power; class-level inventory: 4 A / ~290 B / 2 C, no vulnerable member remains**) | esc() insufficient in JS-string-attribute contexts — entity decode-back breakout | FIXED (2026-09-27: H9-D1 closed the row's 13 assigned sites, section 35; 2026-09-28: dedicated XSS-10.5 class-level audit closed the 4 remaining unassigned sites — section 37; H9-D1/H9-D2 transports re-verified intact, class member census complete, B/C classifications pinned) |
 | SEC-001 | LOW | reels-renderer-owner.js:324; home.js:430/:442 (H12-discovered sites — Home feed error paths, same class); **profile-view.js:213 (preview render-exception path `Error: ${e.message}` raw into innerHTML — H18-discovered site, same error-path class; only reachable via a render-section exception, exercised with benign stub data in the H18 suite)**; **memories.js:82 (catch-state `${e.message}` raw into scr.innerHTML — H10-6-task-observed site 2026-09-28, same error-path class; recorded in-row per the issue rules, NOT fixed by H10-6 [scope lock — the H10-6 fix is :59/:66 only]; benign-error coverage in the h106 harness P6/P6b; deferred with the class)** | Reels error fallback + Home feed error states + profile preview error path render `e.message` raw into innerHTML (Supabase/JS error text — not user-stored; defense-in-depth concern only; discovered during H11 audit, Home sites added during H12 audit, profile site added during H18 audit) | OPEN (defer — error-path class) |
 | SEC-003 | LOW | story-poll-addon.js:224 (`${q}` in updatePollPreview) + :228 (`${o}` in the same preview's option loop) | Story editor poll LIVE PREVIEW renders the author's own question/option text raw into preview.innerHTML (fires while typing via oninput → updatePollPreview). SELF-XSS only: the preview renders only the author's own modal input state (question input :35 / option inputs :166) — NO cross-user vector, NO DB read; the same values are safely esc()'d on the editor canvas (story-editor-owners.js:25/:28) and, since SEC-002, in the viewer (sv-append-overlays.js:44/:51). SEC-002-audit discovery (2026-09-08) | esc() in updatePollPreview (mirroring the editor-canvas pattern) — C3/M6/C9 self-XSS family treatment | FIXED (SEC-003 commit 2026-09-12 — the row's own prescription applied: esc() wraps at :224/:228, exactly mirroring the editor-canvas story-editor-owners.js:25/:28 + viewer sv-append-overlays.js:44/:51 patterns; see section 22) |
@@ -145,7 +145,7 @@ Root cause (all): 2026-07-27 v1-declaration deletion (8e26c10→58615b3 lineage)
 | H10-5 | 2026-09-07 | MEDIUM | JS-string | post-actions.js:315 → :339/:343/:351/:367 | shareText contains raw author username inside 4 onclick JS-string attrs (quote-replace only) — 10.5 class | profiles.username | JS-string-attr | username with `"`/entity-breakout | suspected (10.5 class, verified byte-identical pre/post) | dedicated JS-context task | H9-D1 task | FIXED (2026-09-27, closed via H9-D1 — the 4 merged shareText onclick sites [post-actions.js:339/:343/:351/:367] now ride data-share-text="${esc(shareText)}" transports with constant-expression onclicks; see SECURITY_ISSUES.md section 35) |
 | H10-6 | 2026-09-07 | LOW | self-XSS | memories.js:59, :66 | Memories screen renders own @username + caption raw — query is .eq('user_id', ME.id) (own posts only) | own profiles.username / own posts.caption | HTML text | self-crafted values, own session | confirmed (code-read; scope=own data) | esc() in a later username sweep | username sweep | FIXED (2026-09-28, dedicated H10-6 task — section 38: esc() wraps at BOTH current sinks, the row's own "esc() in a later username sweep" prescription — :59 `@${esc(p.profiles?.username||'')}` [the H10-13/H10-10 twin shape] + :66 `${esc(p.caption.substring(0,100))}` [substring-then-esc, the H10-11 bio-slice twin; raw-length `p.caption.length>100` ellipsis semantics unchanged]; ledger-cited lines :59/:66 = EXACT current lines, no drift; 2-line diff, 1 file; parent a516aae PROVEN VULNERABLE 150/0 — 30 exec firings [15 payload classes × 2 sinks: imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 10 mint records; receiver = self proven by the W3 receiver-scoping harness check [foreign user_id row filtered out by the real .eq query shape — cross-user possibility NONE]; post-fix focused 319/0 [zero execution/minting/attacker handlers over 40 exec+mint + 16 text + 22 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; viewPost UUID tap + goBack/Mood/av()/media/truncation workflows preserved]; negctl 149/0 — 30 exec + 10 mint firings = detection power) |
 | H10-7 | 2026-09-07 | LOW | self-XSS | scheduled-posts.js:35 | Scheduled-posts modal renders caption from localStorage ('nova-scheduled', own submissions) raw | own localStorage caption | HTML text | self-crafted localStorage | confirmed (code-read) | esc() | username sweep | FIXED (2026-09-29, dedicated H10-7 task — section 39: esc() wrap at the exact current sink, the row's own esc() prescription — :35 `${esc(s.caption\|\|'No caption')}` [the H10-6 memories.js:66 caption twin shape; the \|\|'No caption' falsy fallback preserved INSIDE the wrap]; ledger-cited line :35 = EXACT current line, no drift; 1-line diff, 1 file; parent 87cbf36 PROVEN VULNERABLE 86/0 — 15 exec firings [imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 5 mint records; receiver = self proven by the W6/W7 storage-surface inventory [zero db/supabase calls in the module, exactly 3 nova-scheduled refs in src/ — localStorage is own-device storage, cross-user possibility NONE]; post-fix focused 183/0 [zero execution/minting/attacker handlers over 20 exec+mint + 9 text + 11 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; modal/empty-state/malformed-storage/delete-flow-confirm-both-ways/mediaUrl/date workflows preserved]; negctl 85/0 — 15 exec + 5 mint firings = detection power) |
-| H10-8 | 2026-09-07 | LOW | self-XSS | insights.js:30 | Post Insights renders @username raw — entry gated by isMine (own posts only from UI) | own profiles.username | HTML text | console-call with foreign pid (not UI-reachable) | suspected | esc() | username sweep | OPEN |
+| H10-8 | 2026-09-07 | LOW | self-XSS | insights.js:30 | Post Insights renders @username raw — entry gated by isMine (own posts only from UI) | own profiles.username | HTML text | console-call with foreign pid (not UI-reachable) | suspected | esc() | username sweep | FIXED (2026-09-29, dedicated H10-8 task — section 40: esc() wrap at the exact current sink, the row's own esc() prescription — :30 `@${esc(p.profiles?.username\|\|'')}` [the H10-6 memories.js:59 / H10-13 @-username twin shape; the \|\|'' falsy fallback preserved INSIDE the wrap]; ledger-cited line :30 = EXACT current line, no drift; 1-line diff, 1 file; parent bed566b PROVEN VULNERABLE 115/0 — 17 exec firings [imgOnerror/svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/punjabi/urdu/cyrillic/cjk/emoji/entitySq/entityHex/entityDq] + 5 mint records [scriptFull/aHrefJs/iframeSrcdoc/nullByte/styleEl]; receiver = self proven by the W2/W3/W5/W6/W7 caller-chain scoping checks [the ONLY UI entry = posts.js:162 viewInsights onclick rendered solely inside the posts.js:120 isMine gate; exactly ONE showEnhancedInsights call site in src/ (post-actions.js:94) — no cross-user surface reuses the render function; the query's own lack of a user_id filter is honestly recorded — the boundary is the CALLER-side gate; cross-user possibility via UI NONE]; post-fix focused 218/0 [zero execution/minting/attacker handlers over 22 exec+mint + 9 text + 11 display runs; legit values Prince/Prince Kumar/O'Brien/Test "User"/भाई/ਪ੍ਰਿੰਸ/پرنس/😀/combos byte-identical round-trip; modal/loading/not-found/stats/chart/engagement/reactions/media-branch workflows preserved]; negctl 114/0 — 17 exec + 5 mint firings = detection power) |
 | H10-9 | 2026-09-07 | LOW | DB-write bypass | trending.js:104, :107 | Hashtag names rendered raw + searchHashtag onclick — client extraction is \w-only (safe), direct DB write of hashtags.name renders arbitrary HTML | hashtags.name | HTML text + JS-string | crafted DB row | suspected (M3 class) | esc() + encodeURIComponent | M-tier | OPEN |
 | H10-10 | 2026-09-07 | MEDIUM | Username rendering | explore.js:128-:131 | doSearch PEOPLE results render u.username + u.full_name raw | profiles.username/full_name | HTML text | crafted username + search | CONFIRMED (code-read; same class as H18) | esc() both | H18-family sweep | FIXED (2026-09-26, dedicated H10-10 task — section 32: esc() wraps at the actual current sinks :130 `${esc(u.username)}` + :131 `${esc(u.full_name||'')}`, the H10-11 universal-search.js:113/:114 twin shapes [the row's own "esc() both" prescription]; ledger-cited range :128-:131 = 1-line drift, sinks unambiguous by content — the row description names the two fields; :126 numeric count / :127 UUID onclick / :128 av() [XSS-C1-fixed internals] = adjacents, all pinned inert and untouched; parent 7390d52 PROVEN VULNERABLE 110/0 — 24 exec alerts [12 payload classes × 2 sink fields] + negctl detection 24 exec + 10 mint entries, post-fix focused 234/0; row status OPEN → FIXED, history preserved) |
 | H10-11 | 2026-09-07 | MEDIUM | Username rendering | universal-search.js:111-:115 | universalAISearch PEOPLE results render username + full_name + bio slice raw (+ XSS-C9-audit site addition 2026-09-12: story-highlights.js:38 — highlights.title raw HTML text in the other-user highlights modal, same cross-user raw-text class; FIXED 2026-09-13 by the dedicated universal-search/story-highlights task = esc(h.title||'Highlight'), see section 24 [ledger-cited :38 = actual current :39, 1-line drift, sink unambiguous by content]; + core sites FIXED 2026-09-15 by the dedicated H10-11 users-list task: esc() at the three raw HTML-text sinks — actual current :113 username [esc(u.username), the H18 follow-list.js:34 twin] / :114 full_name [esc(u.full_name||''), the H18 profile-view.js:88/:156 twin shape] / :115 bio slice [esc(u.bio.substring(0,60)), substring-then-esc — the ellipsis semantics on raw length unchanged; ledger-cited :111-:115 range, 2-line drift, sinks unambiguous by content — the row's own description names the three fields; see section 25] [adjacents audited + classified, NOT H10-11 sinks: :111 av(u.avatar_url, u.username, 46) = the OPEN XSS-C1 row (av() internals); :110 onclick showUserProfile('${u.id}') = DB UUID, no client write path, H11-audit rows #6/#7 UUID-safe-by-construction class; :114 fmt(followers_count) = server-maintained counter, no client write path (follows junction only), H11-audit row #9 numeric-safe class + H18 raw fmt() twins profile-view.js:172/:176/:180/:395]) | profiles.* | HTML text | crafted bio/username + AI search | CONFIRMED (code-read) | esc() | H18-family sweep | FIXED 2026-09-15 (core sites :113/:114/:115 + the 2026-09-12 story-highlights.js:38 site addition fixed 2026-09-13; see section 25 for the audit, threat model and verification) |
@@ -2573,3 +2573,130 @@ receiver. Classification: A — genuinely OPEN self-XSS (not already fixed: line
   XSS-C9 remaining accepted-low sites (now incl. scheduled-posts.js:32 — line-pinned untouched),
   SEC-001 error-path class (+ the H10-6-recorded memories.js:82 member), H10-14, DG-3/4/5, HA-M5;
   external SQL/RPC/RLS runbook items unchanged.
+
+## 40. H10-8 — insights.js own @username self-XSS fix (this task, 2026-09-29, parent bed566b)
+
+### 40.1 Scope + classification (current code authoritative; ledger lines reconciled)
+
+The H10-8 row (section 5, 2026-09-07) names insights.js:30 — the Post-Insights modal @username
+line, own profiles.username via the posts join, HTML-text sink, self-XSS scope (LOW), receiver =
+self, entry gated by isMine, prescription esc(). Current-code audit: the site exists RAW at
+EXACTLY the cited line (no drift — H3b line-index pin :30); the render is a single surface —
+exactly ONE showEnhancedInsights declaration in src/ (the contract harness's module-owner check);
+git history shows exactly ONE commit ever touching insights.js (cfd5e32 Phase 4 module
+extraction, a refactor — NOT a security fix → classification D ruled out).
+
+| # | Site (current) | Function | Sink context | Value | Source/data-flow | Cross-user | Stored | Existing escape | Class |
+|---|----------------|----------|--------------|-------|------------------|-----------|--------|-----------------|-------|
+| S1 | insights.js:30 | showEnhancedInsights | HTML text (body.innerHTML, modal #mbody) | `@${p.profiles?.username\|\|''}` | db.from('posts').select('*,profiles!posts_user_id_fkey(username)').eq('id',pid).single() (:12) → modal render :22/:30 | NONE (self — caller-gated) | yes (profiles.username) | NONE (raw) | **A — CONFIRMED VULNERABLE (self-XSS)** |
+
+Ownership boundary (receiver scoping, harness W2-W7): the ONLY UI entry is postCard's
+Insights button — posts.js:120 `const isMine = p.user_id === ME.id;` → posts.js:162 renders
+`viewInsights('${p.id}')` ONLY inside the isMine? template gate → post-actions.js:93-95 thin
+wrapper → showEnhancedInsights. Caller census: exactly ONE showEnhancedInsights call site in
+src/ outside the owner module (post-actions.js:94) and ONE viewInsights call site (posts.js:162)
+— NO cross-user surface reuses this render function. The module's own query filters by post id
+only (no user_id filter — W7 honest record): the pid arrives from the own-post postCard, so the
+UI-reachable username is ALWAYS the user's own; a console call with a foreign pid is not
+UI-reachable (own browser = self by definition — the row's own reproduction note, W7b harness
+demonstration). Cross-user possibility via UI: NONE → classification A (LOW self-XSS
+re-affirmed — not upgraded, not downgraded; B ruled out, C ruled out by the raw :30, D ruled
+out by the cfd5e32-only history; E-in-the-self-XSS-sense confirmed by the prove harness).
+
+Adjacent lines audited + pinned, NOT H10-8 (untouched by the fix, X1-X4 line-level pins):
+:27 `${p.media_url}` raw img src (own-post media via the isMine gate — the XSS-C9 row's
+accepted-low own-data family: incidental same-class discovery, recorded in-row as a C9 site
+addition, NOT fixed per the scope lock — the M1-row "memories.js:65 own-data self-XSS, C9
+family" deferred precedent; harness X1/X1b/X1c: fires byte-identically on parent and disk);
+:31 `ago(p.created_at)` (Date-parser + formatter output — never emits markup, B
+safe-by-construction, X2 harness proof); :38/:42/:46 `fmt(p.*_count||…)` (server-maintained
+numeric counters, H11-audit row #9 numeric-safe class); :55-:58 chart bars (loop index +
+Math.random ints — constants); :70/:72/:74 engagement formula (numeric + fixed copy
+thresholds).
+
+### 40.2 Fix (1 production file, 1 sink line — the row's own esc() prescription)
+
+- insights.js:30 → `@${esc(p.profiles?.username||'')}` (the H10-6 memories.js:59 / H10-13
+  load-admin-deleted-posts.js:34 @-username twin shape — esc over the value INCLUDING the
+  falsy fallback; the ||'' gate semantics unchanged: null/''/undefined/missing profiles →
+  bare '@', esc('') = '').
+
+1-line diff, 1 file (+1/-1). utils.js esc() shared implementation, modal contract, load order
+(index.html: utils.js :211 < insights.js :218), the dual-query db contract (:11-:14), the
+postCard gate (posts.js:120/:162), the viewInsights wrapper (post-actions.js:93-95), the
+:27/:31/:38-:46/:55-:58/:70-:74 adjacents, schema, RLS — untouched.
+
+### 40.3 Verification (scripts/h108_verify.js — REAL modules vm-loaded [utils.js + insights.js],
+browser-faithful s294-lineage tokenizer, db mock shaped EXACTLY like the real call chain
+[posts .eq('id',pid).single() + post_views .eq('post_id',pid) thenable — the real Supabase
+builder shape], modal component-contract mock, deterministic Math.random LCG + frozen Date.now
+for byte-reproducible renders; showEnhancedInsights is async → every render awaited in a FRESH
+vm context = the browser-faithful page-load model; modes prove/focused/negctl)
+
+- PROVE parent bed566b (git show source): **115/0 PASS — 17 exec firings** (imgOnerror/
+  svgOnload/attrBreakout/sqBreakout/quotedHandler/sourceOnerr/mixedCase/longPayload/hindi/
+  punjabi/urdu/cyrillic/cjk/emoji/entitySq/entityHex/entityDq at the :30 sink — the
+  entitySq/entityHex/entityDq are the mixed HTML+entity classes: the raw `<tag>` part fires
+  while the entity prefix decodes as text; punjabi/urdu are the H10-8 additions to the matrix)
+  + **5 mint records** (scriptFull/aHrefJs/iframeSrcdoc/nullByte/styleEl). Self-XSS delivery
+  shape: own crafted profiles.username → own post → isMine-gated Insights tap → modal render →
+  zero-click firing (the browser-faithful over-approximation: media on* handlers fire
+  post-parse; script minting is census-honest — browsers do not execute innerHTML-minted
+  script tags).
+- FOCUSED post-fix (disk): **218/0 PASS — zero JavaScript execution, zero attacker-controlled
+  handlers, zero minting, zero dangerous URL attrs, zero false positives**; 22 exec+mint runs +
+  9 text runs (incl. the backtick class — inert in HTML-text context; structure-equal, decoded
+  TEXT round-trip) + 11 display runs (Prince / Prince Kumar / O'Brien / Test "User" / भाई /
+  ਪ੍ਰਿੰਸ / پرنس / 😀 / emoji combos / multilingual — @-prefixed byte-identical round-trip,
+  esc'd EXACTLY once [occurrence-count check], no double escaping, no mojibake) + gates
+  (null/''/undefined username + missing profiles → bare '@', no undefined/null leak) +
+  functional workflow preservation: the real modal title, loading-state-first (:8 ldiv/spin,
+  snapshotted at query time), BOTH real queries fired (the Promise.all contract), 'Post not
+  found' error state (:16 early return), stats labels + fmt values, EXACTLY 24 chart bars,
+  engagement formula 22.0% + threshold copy + 🔥 branch, reaction fixtures, media branch
+  (benign URL img) + null-media ico placeholder branch, ago() time line, views-fallback path;
+  W1-W8 data-flow evidence (the query strings, the isMine gate chain, the single-caller
+  census, the foreign-pid honest record, zero .sql files); X1 honest record: the :27 C9-family
+  residual fires IDENTICALLY on parent and disk (byte-identical render output, untouched by
+  design); X2-X4 line-level pins: :27/:31/:38-:46/:55-:58/:70-:74 byte-identical to parent;
+  X5 ONLY line 30 differs.
+- NEGCTL (disk source with the esc() wrap stripped): **114/0 — 17 exec + 5 mint firings =
+  detection power** (every post-fix inertness assertion fires on the unescaped source — esc()
+  is load-bearing at the sink).
+- Fix-shape pins (S-block): disk differs from parent bed566b by EXACTLY 1 line (the esc() wrap
+  at :30); EXACTLY ONE production file touched (git diff --stat; post-commit form covers the
+  clean-tree HEAD-commit shape).
+
+### 40.4 Regression + task report hooks
+
+- 322-harness battery: **317 PASS / 5 FAIL = the documented baseline** (same 5 names:
+  branch2-final-readiness / branch2-only-safety / deletion-fallback-production-split /
+  dms-renderer-independent-proof / particle-production-split — the pre-existing parent-era
+  pins, NOT this fix's regressions; docs/insights-contract-harness.js GREEN — every contract
+  marker incl. the dual-query/not-found/24h-chart/stats/engagement/reaction contracts and the
+  module-owner check preserved by the fix; explicitly run: INSIGHTS_CONTRACT_HARNESS=PASS,
+  PRODUCTION_CHANGE=0).
+- app-load 10/10 (463/463 scripts fetch + syntax-valid, 465 classic tags, PWA 200/200);
+  node --check 1/1 changed file; git diff --stat = 1 file +1/-1; git diff --check CLEAN;
+  secret scan CLEAN (h108_secret_scan.js, 3 files incl. both ledger files).
+- Dedicated-suite runner (h108_run_suites.sh, 41 suites incl. h108): 28 PASS pre-commit /
+  13 non-GREEN — ALL classified state-coupled, NONE a code regression: the 11 H10-7-era
+  documented era-pins (h5/h7/h10/c1/ba/m7s4/h1013/h1010/h1012/h9d1/xss105) + 2 new
+  worktree-state couplings resolved by the commit — m284 S5 (clean-worktree allowlist pin:
+  re-PASSED post-commit) + h107 S3 (H10-7's HEAD-commit-shape pin: permanently era-pinned by
+  this task's commit, the same documented phenomenon as the h1010-S3/§33.3 and XSS-C1 F6/§32.3
+  era-pin notes; its 182 scheduled-posts security assertions stay green) — h108_verify.js
+  itself GREEN in all 3 modes (prove 115/0, focused 218/0, negctl 114/0).
+- Incidental discovery recorded per the issue rules (in-row, NOT fixed): insights.js:27
+  own-post media_url raw img src → appended to the XSS-C9 row's accepted-low deferred site
+  list (own-data self-XSS family, isMine-gated receiver = self; harness X1-proven
+  byte-identical parent/disk). No new issue IDs created. No in-repo harness changes (docs/
+  untouched); outside-repo scripts/ additions only (h108_verify.js + h108_run_battery.sh +
+  h108_run_suites.sh + h108_secret_scan.js — the established scripts/-tooling pattern).
+- Ledger changes: SECURITY_ISSUES.md — H10-8 row OPEN → FIXED 2026-09-29 (history preserved
+  in-row); XSS-C9 row +insights.js:27 site; section 40 added (40.1-40.4). ISSUE_INDEX.md —
+  H10-8 row → FIXED + 2026-09-29 sync-log entry.
+- Remaining open (unchanged by this task): H10-9 (trending), XSS-C3/C5, XSS-C9 remaining
+  accepted-low sites (now incl. insights.js:27 — line-pinned untouched), SEC-001 error-path
+  class (+ the H10-6-recorded memories.js:82 member), H10-14, DG-3/4/5, HA-M5; external
+  SQL/RPC/RLS runbook items unchanged.
