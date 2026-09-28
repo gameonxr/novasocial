@@ -56,14 +56,14 @@ async function showMemories(){
                 <div style="display:flex;align-items:center;gap:10px">
                   ${av(p.profiles?.avatar_url, p.profiles?.username, 36)}
                   <div>
-                    <div style="font-weight:700;font-size:13px">@${p.profiles?.username||''}</div>
+                    <div style="font-weight:700;font-size:13px">@${esc(p.profiles?.username||'')}</div>
                     <div style="color:#888;font-size:11px">📅 ${new Date(p.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</div>
                   </div>
                 </div>
                 <div style="font-size:10px;background:linear-gradient(135deg,#833AB4,#E1306C);padding:4px 10px;border-radius:10px;color:#fff;font-weight:700">1 YEAR AGO</div>
               </div>
               ${p.media_url ? `<div style="aspect-ratio:1/1;background:#111;overflow:hidden">${p.media_type==='video'?(p.thumbnail_url?`<img src="${cldUrl(p.thumbnail_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`:`<video src="${p.media_url}" style="width:100%;height:100%;object-fit:cover" muted></video>`):`<img src="${cldUrl(p.media_url, NOVA_MEDIA_CONFIG.grid_thumb.cloudTransform)}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">`}</div>` : ''}
-              ${p.caption?`<div style="padding:12px 14px;font-size:13px;color:#ccc;line-height:1.5">${p.caption.substring(0,100)}${p.caption.length>100?'...':''}</div>`:''}
+              ${p.caption?`<div style="padding:12px 14px;font-size:13px;color:#ccc;line-height:1.5">${esc(p.caption.substring(0,100))}${p.caption.length>100?'...':''}</div>`:''}
             </div>
           `).join('')}
         </div>
