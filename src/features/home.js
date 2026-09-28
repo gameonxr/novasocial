@@ -427,7 +427,7 @@ try {
         list.innerHTML=`<div style="text-align:center;padding:60px 20px;color:#444">
           <div style="font-size:52px;margin-bottom:16px">⚠️</div>
           <div style="font-weight:700;font-size:17px;color:#fff;margin-bottom:8px">Feed load nahi hua</div>
-          <div style="font-size:12px;margin-bottom:8px;color:#888;word-break:break-all;padding:0 20px">${errorMsg}</div>
+          <div style="font-size:12px;margin-bottom:8px;color:#888;word-break:break-all;padding:0 20px">${esc(errorMsg)}</div>
           <div style="font-size:11px;color:#666;margin-bottom:16px">SQL reset script run kiya? Supabase → SQL Editor</div>
           <button class="bgrd" onclick="renderHome()" style="width:auto;padding:13px 28px;margin-top:10px">🔄 Retry</button>
         </div>`;
@@ -439,7 +439,7 @@ try {
           <div style="text-align:center;padding:60px 20px;color:#444">
             <div style="font-size:52px;margin-bottom:16px">⚠️</div>
             <div style="font-weight:700;font-size:17px;color:#fff;margin-bottom:8px">Feed load nahi hua</div>
-            <div style="font-size:12px;margin-bottom:16px;color:#888">${errorMsg}</div>
+            <div style="font-size:12px;margin-bottom:16px;color:#888">${esc(errorMsg)}</div>
             <button class="bgrd" onclick="renderHome()" style="width:auto;padding:13px 28px">🔄 Retry</button>
           </div>`;
         }

@@ -82,6 +82,10 @@ const h11AuthorizedEscapes = [
   ['data-media-url="${esc(r.media_url)}"', 'data-media-url="${r.media_url}"'],
   ['poster="${esc(r.thumbnail_url)}"', 'poster="${r.thumbnail_url}"'],
   ['src="${esc(r.media_url)}"', 'src="${r.media_url}"'],
+  // SEC-001 authorized security escape (2026-09-29, SEC-001 task): the reels
+  // load-failure error path now escapes e.message at the :324 HTML-text sink
+  // (defense-in-depth, the row's own prescription) — same revert mechanism.
+  ["Error: ${esc(e.message||'Unknown')}", "Error: ${e.message||'Unknown'}"],
 ];
 let h11ParityBase = normalizedRendererModule;
 for (const [escaped, raw] of h11AuthorizedEscapes) {

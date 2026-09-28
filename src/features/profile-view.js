@@ -210,7 +210,7 @@ async function showProfilePreview(userId){
       <div style="height:8px"></div>
     `;
   } catch(e) {
-    body.innerHTML = `<div style="padding:30px;text-align:center;color:#666">Error: ${e.message}</div>`;
+    body.innerHTML = `<div style="padding:30px;text-align:center;color:#666">Error: ${esc(e.message)}</div>`;
   }
 }
 

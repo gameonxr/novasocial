@@ -79,6 +79,6 @@ async function showMemories(){
       <div style="height:80px"></div>
     `;
   } catch(e) {
-    scr.innerHTML = `<div class="topbar"><div onclick="goBack()" style="cursor:pointer">${ico('back')}</div><span style="font-weight:700">Memories</span></div><div style="padding:30px;text-align:center;color:#666">Memories load nahi ho payi. ${e.message}</div>`;
+    scr.innerHTML = `<div class="topbar"><div onclick="goBack()" style="cursor:pointer">${ico('back')}</div><span style="font-weight:700">Memories</span></div><div style="padding:30px;text-align:center;color:#666">Memories load nahi ho payi. ${esc(e.message)}</div>`;
   }
 }

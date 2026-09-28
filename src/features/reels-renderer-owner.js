@@ -321,7 +321,7 @@ window.renderReels = async function(){
     scr.innerHTML=`<div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:20px">
       <div style="font-size:56px">⚠️</div>
       <div style="font-weight:700;font-size:17px;color:#fff">Reels load nahi hue</div>
-      <div style="color:#888;font-size:13px">Error: ${e.message||'Unknown'}</div>
+      <div style="color:#888;font-size:13px">Error: ${esc(e.message||'Unknown')}</div>
       <button class="bgrd" onclick="go('reels')" style="width:auto;padding:13px 32px">Retry</button>
     </div>`;
   }
