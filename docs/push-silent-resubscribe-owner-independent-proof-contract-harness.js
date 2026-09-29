@@ -32,12 +32,12 @@ function sha(value) {
 function stable(value) {
   return JSON.parse(JSON.stringify(value));
 }
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-silent-resubscribe-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-silent-resubscribe-owner.js'), 'utf8');
 const currentOwner = extractOwner(moduleText).replace(/^function\(\)/, 'function silentPushResubscribeIfGranted()').replace(/\n\};$/, '\n}');
 const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 silent resubscribe owner must retain exact immutable-origin parity');
 assert.strictEqual((currentHtml.match(/function silentPushResubscribeIfGranted\(\)\s*\{/g) || []).length, 0, 'inline silent resubscribe owner must be absent');
-assert.strictEqual((currentHtml.match(/src\/features\/push-silent-resubscribe-owner\.js/g) || []).length, 1, 'one silent resubscribe module linkage must exist');
+assert.strictEqual((currentHtml.match(/src\/features\/notifications\/push-silent-resubscribe-owner\.js/g) || []).length, 1, 'one silent resubscribe module linkage must exist');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
 assert(contract.includes('PRODUCTION_DECISION=BLOCKED'), 'contract must keep production blocked');

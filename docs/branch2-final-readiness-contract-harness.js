@@ -65,14 +65,14 @@ assert(true, 'src/features/home/smart-ranking.js — demand-loaded ordering pres
 assert(html.indexOf('src/features/home/smart-ranking.js') < html.indexOf('src/features/system/nova-init.js'), 'smart-ranking must precede nova-init');
 assert(html.indexOf('src/features/system/nova-init.js') < html.indexOf('src/features/posts/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
 assert(html.indexOf('src/features/posts/spawn-like-particles.js') < html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
-assert(true, 'src/features/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
-assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/admin/admin-appeals-filter-owner.js'), 'push-settings must precede admin-appeals-filter-owner');
+assert(true, 'src/features/notifications/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/notifications/push-settings.js') < html.indexOf('src/features/admin/admin-appeals-filter-owner.js'), 'push-settings must precede admin-appeals-filter-owner');
 assert(true, 'src/features/notes/note-reactors-list-owner.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(html.lastIndexOf('src/features/notes/note-reactors-list-owner.js') < html.lastIndexOf('src/features/notes/note-viewer-owners.js'), 'note-reactors-list-owner must precede note-viewer-owners');
 assert(html.lastIndexOf('src/features/notes/note-viewer-owners.js') < html.lastIndexOf('src/features/notes/note-deletion-owner.js'), 'note-viewer-owners must precede note-deletion-owner');
 assert(html.lastIndexOf('src/features/notes/note-deletion-owner.js') < html.lastIndexOf('src/features/stories/story-editor-owners.js'), 'note-deletion-owner must precede story-editor-owners');
 assert(html.lastIndexOf('src/features/stories/story-editor-owners.js') < html.lastIndexOf('src/features/posts/like-effects.js'), 'story-editor-owners must precede like-effects');
-assert(html.includes('src/features/push-settings.js'), 'push-settings module must remain referenced');
+assert(html.includes('src/features/notifications/push-settings.js'), 'push-settings module must remain referenced');
 assert(html.includes('src/features/admin/admin-appeals-filter-owner.js'), 'admin-appeals-filter-owner module must remain referenced');
 assert(html.includes('src/features/notes/note-viewer-owners.js'), 'note-viewer-owners module must remain referenced');
 assert(html.includes('src/features/notes/note-deletion-owner.js'), 'note-deletion-owner module must remain referenced');
@@ -104,7 +104,7 @@ for (const marker of [
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 assert(!html.includes('function spawnLikeParticles(el){'), 'approved particle owner must be absent from inline HTML');

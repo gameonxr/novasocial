@@ -19,7 +19,7 @@ The harness is deterministic and static. It does not contact push services or re
 
 ## References
 
-1. [`url-base64-to-uint8-array.js`](../src/features/url-base64-to-uint8-array.js)
+1. [`url-base64-to-uint8-array.js`](../src/features/notifications/url-base64-to-uint8-array.js)
 2. [`index.html`](../index.html), push subscription call site
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

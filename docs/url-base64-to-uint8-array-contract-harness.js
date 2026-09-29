@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'url-base64-to-uint8-array.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'url-base64-to-uint8-array.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const pushSubscriptionOwnerSource = fs.readFileSync(path.join(repo, 'src', 'features', 'push-subscription-owner.js'), 'utf8');
+const pushSubscriptionOwnerSource = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-subscription-owner.js'), 'utf8');
 
 for (const marker of [
   'function urlBase64ToUint8Array(base64String)',
@@ -25,5 +25,5 @@ assert.strictEqual((source.match(/function urlBase64ToUint8Array\(/g) || []).len
 
 console.log('URL_BASE64_TO_UINT8_ARRAY_CONTRACT_HARNESS=PASS');
 console.log('PADDING_ALPHABET_DECODE_TYPED_ARRAY_BYTE_COPY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/url-base64-to-uint8-array.js');
+console.log('MODULE_OWNER=src/features/notifications/url-base64-to-uint8-array.js');
 console.log('PRODUCTION_CHANGE=0');

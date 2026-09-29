@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'particle-production-split-contract.md'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');

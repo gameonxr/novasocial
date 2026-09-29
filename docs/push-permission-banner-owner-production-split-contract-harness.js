@@ -14,7 +14,7 @@ const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
 });
 const contract = fs.readFileSync(path.join(repo, 'docs', 'push-permission-banner-owner-production-split-contract.md'), 'utf8');
 const authorization = fs.readFileSync(path.join(repo, 'docs', 'push-permission-banner-owner-production-authorization-addendum.md'), 'utf8');
-const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
+const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-permission-banner-owner.js'), 'utf8');
 
 function extractOwner(text) {
   const start = text.indexOf('function maybeShowPushPermissionBanner()');
@@ -30,7 +30,7 @@ const currentOwner = extractOwner(moduleSource);
 const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 Push banner owner must retain exact immutable-origin parity');
 assert.strictEqual((currentHtml.match(/function maybeShowPushPermissionBanner\(/g) || []).length, 0, 'inline Push banner owner must be removed');
-assert.strictEqual((currentHtml.match(/src=[\"']src\/features\/push-permission-banner-owner\.js[\"']/g) || []).length, 1, 'one Push banner module linkage must exist');
+assert.strictEqual((currentHtml.match(/src=[\"']src\/features\/notifications\/push-permission-banner-owner\.js[\"']/g) || []).length, 1, 'one Push banner module linkage must exist');
 assert(moduleSource.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'classic Push banner owner must be window-assigned once');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_LIFECYCLE_PROOF=REQUIRED'), 'contract must require detached proof');

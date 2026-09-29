@@ -46,6 +46,6 @@ The first safe verification is offline curve validation of the public key and a 
 
 1. User-provided redacted Supabase Edge Function log attachment: `pasted_content.txt` (local evidence only; endpoints/private values not committed)
 2. [`index.html`](../index.html)
-3. [`url-base64-to-uint8-array.js`](../src/features/url-base64-to-uint8-array.js)
+3. [`url-base64-to-uint8-array.js`](../src/features/notifications/url-base64-to-uint8-array.js)
 4. [`push-permission-resubscribe-protected-readiness-contract.md`](./push-permission-resubscribe-protected-readiness-contract.md)
 5. [`push-subscription-owner-independent-proof-contract.md`](./push-subscription-owner-independent-proof-contract.md)

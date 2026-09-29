@@ -52,7 +52,7 @@ This contract authorizes detached independent proof only. It does not authorize 
 ## References
 
 1. [`push-permission-resubscribe-protected-readiness-contract.md`](./push-permission-resubscribe-protected-readiness-contract.md)
-2. [`push-settings.js`](../src/features/push-settings.js)
+2. [`push-settings.js`](../src/features/notifications/push-settings.js)
 3. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
 4. [`protected-inline-parity-contract.md`](./protected-inline-parity-contract.md)
 5. [`push-permission-banner-owner-independent-proof-rollback-evidence.txt`](./push-permission-banner-owner-independent-proof-rollback-evidence.txt)

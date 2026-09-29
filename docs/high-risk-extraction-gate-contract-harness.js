@@ -76,7 +76,7 @@ assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'ap
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle window owner must occur once');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback window owner must exist');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback window owner must occur once');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
@@ -104,11 +104,11 @@ assert(fs.existsSync(path.join(docsDir, 'reels-parity-rollback-evidence.txt')), 
 assert(fs.readFileSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt'), 'utf8').includes('PRODUCTION_BROWSER_PROOF=BEFORE_AFTER_PASS') || fs.readFileSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_WINDOWING_OWNER=PASS'), 'Reels after-split browser proof must pass');
 assert(html.lastIndexOf('src/features/posts/spawn-like-particles.js') < html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
 assert(html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/posts/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(html.indexOf('src/features/push-settings.js') >= 0, 'Push module present at startup; Notes reactor-list module is demand-loaded and loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: notes demand loading — original order preserved by construction */
+assert(html.indexOf('src/features/notifications/push-settings.js') >= 0, 'Push module present at startup; Notes reactor-list module is demand-loaded and loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: notes demand loading — original order preserved by construction */
 assert(true, 'Notes reactor-list module must load before Note module — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
 assert(true, 'Note viewer module must load before Note deletion module — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
 assert(true, 'Note deletion module + Story module both demand-loaded (notes + stories chunks — load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29: stories demand loading */
-assert(html.indexOf('src/features/push-settings.js') >= 0, 'Notes reactor-list module must load after Push settings — note-reactors-list-owner.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/notifications/push-settings.js') >= 0, 'Notes reactor-list module must load after Push settings — note-reactors-list-owner.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
 assert(true, 'Notes reactor-list module must load before Note viewer callers — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
 assert(true, 'demand-loaded ordering preserved by construction'); /* architecture-migration 2026-09-29 */
 assert(html.indexOf('src/features/posts/like-effects.js') >= 0, 'Reels windowing module must load before caller — reels-video-windowing.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */

@@ -18,7 +18,7 @@ const branch2Html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024
 });
-const modulePath = path.join(repo, 'src', 'features', 'push-force-resubscribe-owner.js');
+const modulePath = path.join(repo, 'src', 'features', 'notifications', 'push-force-resubscribe-owner.js');
 const moduleText = fs.readFileSync(modulePath, 'utf8');
 
 const APPROVED_SHA256 = '6f57c4e0fc347b63d158739a184e0f3f8323ed7c6b57528d0eb833aaaaa4d63d';
@@ -76,12 +76,12 @@ assert.strictEqual(moduleOwnerSha, APPROVED_SHA256, `module owner SHA-256 must m
 const inlineCount = (branch2Html.match(/async\s+function\s+forceResubscribePush\s*\(\s*\)\s*\{/g) || []).length;
 assert.strictEqual(inlineCount, 0, 'index.html must have 0 inline owner');
 
-const linkageCount = (branch2Html.match(/src\/features\/push-force-resubscribe-owner\.js/g) || []).length;
+const linkageCount = (branch2Html.match(/src\/features\/notifications\/push-force-resubscribe-owner\.js/g) || []).length;
 assert.strictEqual(linkageCount, 1, 'index.html must have exactly 1 linkage');
 
-const subIdx = branch2Html.indexOf('src/features/push-subscription-owner.js');
-const forceIdx = branch2Html.indexOf('src/features/push-force-resubscribe-owner.js');
-const silentIdx = branch2Html.indexOf('src/features/push-silent-resubscribe-owner.js');
+const subIdx = branch2Html.indexOf('src/features/notifications/push-subscription-owner.js');
+const forceIdx = branch2Html.indexOf('src/features/notifications/push-force-resubscribe-owner.js');
+const silentIdx = branch2Html.indexOf('src/features/notifications/push-silent-resubscribe-owner.js');
 assert(subIdx >= 0 && forceIdx >= 0 && subIdx < forceIdx, 'push-subscription must load BEFORE push-force-resubscribe');
 assert(silentIdx >= 0 && forceIdx < silentIdx, 'push-force-resubscribe must load BEFORE push-silent-resubscribe');
 

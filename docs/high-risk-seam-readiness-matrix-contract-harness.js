@@ -41,7 +41,7 @@ for (const signature of protectedSignatures) {
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   if (signature === 'async function submitNote()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'submitNote module owner must exist');
   else if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
-  else if (signature === 'async function subscribeToPushNotifications()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'push-subscription-owner.js'), 'utf8').includes('window.subscribeToPushNotifications = async function subscribeToPushNotifications()'), 'approved Push subscription owner must exist');
+  else if (signature === 'async function subscribeToPushNotifications()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-subscription-owner.js'), 'utf8').includes('window.subscribeToPushNotifications = async function subscribeToPushNotifications()'), 'approved Push subscription owner must exist');
   else if (signature === 'async function voteStoryPoll(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
   else if (signature === 'async function refreshPollResults(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
   else if (signature === 'async function loadStoryPollState(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must exist');
@@ -54,7 +54,7 @@ for (const signature of protectedSignatures) {
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
@@ -131,8 +131,8 @@ assert(fs.existsSync(path.join(repo, 'docs', 'push-subscription-owner-production
 assert(fs.existsSync(path.join(repo, 'docs', 'push-subscription-owner-production-split-contract-harness.js')), 'Push subscription production harness must be present');
 assert(fs.existsSync(path.join(repo, 'docs', 'push-subscription-owner-parity-rollback-evidence.txt')), 'Push subscription rollback evidence must be present');
 assert(fs.existsSync(path.join(repo, 'docs', 'push-subscription-owner-after-split-browser-proof-evidence.txt')), 'Push subscription after-split browser proof must be present');
-assert(html.lastIndexOf('src/features/url-base64-to-uint8-array.js') < html.lastIndexOf('src/features/push-subscription-owner.js'), 'url-base64 helper must load before push-subscription owner');
-assert(html.lastIndexOf('src/features/push-subscription-owner.js') < html.lastIndexOf('src/features/push-silent-resubscribe-owner.js'), 'push-subscription owner must load before push-silent-resubscribe owner');
+assert(html.lastIndexOf('src/features/notifications/url-base64-to-uint8-array.js') < html.lastIndexOf('src/features/notifications/push-subscription-owner.js'), 'url-base64 helper must load before push-subscription owner');
+assert(html.lastIndexOf('src/features/notifications/push-subscription-owner.js') < html.lastIndexOf('src/features/notifications/push-silent-resubscribe-owner.js'), 'push-subscription owner must load before push-silent-resubscribe owner');
 
 console.log('HIGH_RISK_SEAM_READINESS_MATRIX_HARNESS=PASS');
 console.log('PROTECTED_SIGNATURES=22');

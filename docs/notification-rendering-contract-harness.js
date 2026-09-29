@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications.js'), 'utf8');
+const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'notifications.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 const requiredMarkers = [
@@ -33,10 +33,10 @@ assert(moduleSource.includes("case 'message':"), 'Message notification routing m
 assert(moduleSource.includes("case 'admin':"), 'Administrative notification routing must remain present');
 assert(moduleSource.includes('window.notifsSub = db.channel'), 'Realtime subscription must remain window-owned');
 assert(moduleSource.includes(".subscribe();"), 'Realtime subscription must remain active');
-assert(html.includes('src/features/notifications.js'), 'Notification module must remain linked from HTML');
+assert(html.includes('src/features/notifications/notifications.js'), 'Notification module must remain linked from HTML');
 assert.strictEqual((moduleSource.match(/function renderNotifs\(/g) || []).length, 1, 'Notification renderer must have one module owner');
 
 console.log('NOTIFICATION_RENDERING_CONTRACT_HARNESS=PASS');
 console.log('QUERY_FILTER_GROUP_RACE_READ_REALTIME=LOCKED');
-console.log('MODULE_OWNER=src/features/notifications.js');
+console.log('MODULE_OWNER=src/features/notifications/notifications.js');
 console.log('PRODUCTION_CHANGE=0');

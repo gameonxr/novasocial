@@ -37,7 +37,7 @@ const comparisonEvidencePath = path.join(repo, 'docs', 'push-settings-seam-compa
 assert(fs.existsSync(comparisonEvidencePath), 'Push settings comparison evidence must exist');
 const comparisonEvidence = fs.readFileSync(comparisonEvidencePath, 'utf8');
 const productionEvidence = fs.readFileSync(path.join(repo, 'docs', 'push-settings-parity-rollback-evidence.txt'), 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 assert(comparisonEvidence.includes('COMPARISON_RESULT=PASS'), 'Push settings comparison evidence must pass');
 assert(comparisonEvidence.includes('ADAPTER_PARITY=PASS'), 'Push settings adapter parity evidence must pass');
 assert(comparisonEvidence.includes('BROWSER_CONTEXT_SMOKE=PASS'), 'Push browser-context smoke must pass');

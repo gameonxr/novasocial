@@ -74,15 +74,15 @@ if (signature === 'async function renderReels()') {
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module must expose the global owner');
 assert(branch2Html.indexOf('src/features/posts/spawn-like-particles.js') < branch2Html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
-assert(true, 'src/features/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
-assert(branch2Html.indexOf('src/features/push-settings.js') < branch2Html.indexOf('src/features/posts/like-effects.js'), 'Push settings module must load before its global caller');
+assert(true, 'src/features/notifications/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(branch2Html.indexOf('src/features/notifications/push-settings.js') < branch2Html.indexOf('src/features/posts/like-effects.js'), 'Push settings module must load before its global caller');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle module must have one window owner');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback module must have one window owner');
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable module must have one window owner');

@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const docs = path.join(repo, 'docs');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
@@ -18,7 +18,7 @@ const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 const notesSubmissionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8');
 const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
-const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
+const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-permission-banner-owner.js'), 'utf8');
 
 const coverage = [
   ['function maybeShowPushPermissionBanner()', 'push-permission-contract'],
@@ -117,7 +117,7 @@ for (const [marker, base] of coverage) {
 
 /* architecture-migration 2026-09-29: notes owner files are demand-loaded via the feature
    manifest (removed from trailing HTML); startup trailing order now ends with these tags */
-const trailing = ['<script src="src/features/auth/reset-account-scoped-ui-state.js"></script>', '<script src="src/features/auth/load-prof.js"></script>', '<script src="src/features/system/invalidate-all-tab-cache.js"></script>', '<script src="src/features/destroy-reels-persistent-container.js"></script>', '<script src="src/features/home/ultra-patches.js"></script>', '<script src="src/features/home/smart-ranking.js"></script>', '<script src="src/features/system/nova-init.js"></script>', '<script src="src/features/posts/spawn-like-particles.js"></script>', '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>', '<script src="src/features/push-settings.js"></script>', '<script src="src/features/system/invalidate-tab-cache-owner.js"></script>', '<script src="src/features/posts/like-effects.js"></script>'].map(marker => html.indexOf(marker));
+const trailing = ['<script src="src/features/auth/reset-account-scoped-ui-state.js"></script>', '<script src="src/features/auth/load-prof.js"></script>', '<script src="src/features/system/invalidate-all-tab-cache.js"></script>', '<script src="src/features/destroy-reels-persistent-container.js"></script>', '<script src="src/features/home/ultra-patches.js"></script>', '<script src="src/features/home/smart-ranking.js"></script>', '<script src="src/features/system/nova-init.js"></script>', '<script src="src/features/posts/spawn-like-particles.js"></script>', '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>', '<script src="src/features/notifications/push-settings.js"></script>', '<script src="src/features/system/invalidate-tab-cache-owner.js"></script>', '<script src="src/features/posts/like-effects.js"></script>'].map(marker => html.indexOf(marker));
 assert(trailing.every(position => position >= 0), 'required trailing scripts are present');
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order is preserved');
 assert.strictEqual((noteModule.match(/window\.(?:viewNote|removeMyNoteFromViewer)\s*=\s*async function\(/g) || []).length, 2, 'approved Note viewer owners must be present exactly twice');

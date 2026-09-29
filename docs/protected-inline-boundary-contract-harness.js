@@ -8,13 +8,13 @@ const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
-const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
+const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-permission-banner-owner.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 
@@ -120,7 +120,7 @@ const scriptMarkers = [
   '<script src="src/features/system/nova-init.js"></script>',
   '<script src="src/features/posts/spawn-like-particles.js"></script>',
   '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>',
-  '<script src="src/features/push-settings.js"></script>',
+  '<script src="src/features/notifications/push-settings.js"></script>',
   '<script src="src/features/system/invalidate-tab-cache-owner.js"></script>',
   '<script src="src/features/posts/like-effects.js"></script>',
 ];

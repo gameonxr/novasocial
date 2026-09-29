@@ -13,7 +13,7 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');

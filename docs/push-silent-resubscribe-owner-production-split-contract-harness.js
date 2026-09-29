@@ -23,7 +23,7 @@ function extractOwner(text) {
     assert(end > start, 'silent resubscribe owner boundary must be discoverable');
     return text.slice(start, end + 2);
   }
-  const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-silent-resubscribe-owner.js'), 'utf8');
+  const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-silent-resubscribe-owner.js'), 'utf8');
   const match = moduleText.match(/window\.silentPushResubscribeIfGranted\s*=\s*(function\(\)\s*\{[\s\S]*?\n\};)/);
   assert(match, 'external silent resubscribe owner assignment must exist');
   return match[1].replace(/^function\(\)/, 'function silentPushResubscribeIfGranted()').replace(/\n\};$/, '\n}');
@@ -38,8 +38,8 @@ const currentOwner = extractOwner(currentHtml);
 const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'external silent resubscribe owner must retain exact immutable-origin parity');
 assert.strictEqual((currentHtml.match(/function silentPushResubscribeIfGranted\(\)\s*\{/g) || []).length, 0, 'inline silent resubscribe owner must be absent');
-assert.strictEqual((currentHtml.match(/src\/features\/push-silent-resubscribe-owner\.js/g) || []).length, 1, 'external silent resubscribe owner must be linked once');
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-silent-resubscribe-owner.js'), 'utf8');
+assert.strictEqual((currentHtml.match(/src\/features\/notifications\/push-silent-resubscribe-owner\.js/g) || []).length, 1, 'external silent resubscribe owner must be linked once');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-silent-resubscribe-owner.js'), 'utf8');
 assert(moduleText.includes('window.silentPushResubscribeIfGranted = function()'), 'external owner must use a classic window assignment');
 assert(contract.includes('EXACT_ORIGIN_PARITY=PASS'), 'contract must record exact parity');
 assert(contract.includes('DETACHED_LIFECYCLE_PROOF=PASS'), 'contract must record detached lifecycle proof');

@@ -7,7 +7,7 @@ const { execFileSync } = require('child_process');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
+const moduleSource = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-permission-banner-owner.js'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
   encoding: 'utf8',
@@ -30,7 +30,7 @@ const currentOwner = extractOwner(moduleSource);
 const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 Push banner owner must retain exact immutable-origin parity');
 assert.strictEqual((currentHtml.match(/function maybeShowPushPermissionBanner\(/g) || []).length, 0, 'inline Push banner owner must be removed');
-assert.strictEqual((currentHtml.match(/src=[\"']src\/features\/push-permission-banner-owner\.js[\"']/g) || []).length, 1, 'one Push banner module linkage must exist');
+assert.strictEqual((currentHtml.match(/src=[\"']src\/features\/notifications\/push-permission-banner-owner\.js[\"']/g) || []).length, 1, 'one Push banner module linkage must exist');
 assert(moduleSource.includes('window.maybeShowPushPermissionBanner = function maybeShowPushPermissionBanner()'), 'classic Push banner owner must be present');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');

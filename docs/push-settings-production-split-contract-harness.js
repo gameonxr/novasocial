@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notifications', 'push-settings.js'), 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'push-settings-production-split-contract.md'), 'utf8');
 const afterEvidence = fs.readFileSync(path.join(repo, 'docs', 'push-settings-after-split-browser-proof-evidence.txt'), 'utf8');
 const rollbackEvidencePath = path.join(repo, 'docs', 'push-settings-parity-rollback-evidence.txt');
@@ -40,7 +40,7 @@ assert.strictEqual((moduleText.match(/window\.resetPushFromSettings\s*=\s*async 
 assert.strictEqual((html.match(/<script\b/gi) || []).length, 130, /* architecture-migration 2026-09-29: calls/groups demand-loaded — 68 lazy tags removed */ '236 opening script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/<\/script>/gi) || []).length, 130, /* architecture-migration 2026-09-29: calls/groups demand-loaded — 68 lazy tags removed */ '231 closing script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 129, '234 external script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/posts/like-effects.js'), 'Push module must load before like-effects');
+assert(html.indexOf('src/features/notifications/push-settings.js') < html.indexOf('src/features/posts/like-effects.js'), 'Push module must load before like-effects');
 assert(html.includes('navigator.serviceWorker.register(\'/sw.js\')'), 'service-worker registration must remain in app boundary');
 assert(!moduleText.includes('VAPID_PUBLIC_KEY'), 'Push module must not own VAPID configuration');
 assert(!moduleText.includes("push_subscriptions"), 'Push module must not own database persistence');

@@ -40,7 +40,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`notifications.js`](../src/features/notifications.js)
+1. [`notifications.js`](../src/features/notifications/notifications.js)
 2. [`notification-dispatch-contract.md`](./notification-dispatch-contract.md)
 3. [`admin-notification-contract.md`](./admin-notification-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
