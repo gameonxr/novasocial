@@ -19,7 +19,7 @@ The harness is static and does not access a chat session, modify messages, or cr
 
 ## References
 
-1. [`insert-mention.js`](../src/features/insert-mention.js)
-2. [`check-mention.js`](../src/features/check-mention.js)
+1. [`insert-mention.js`](../src/features/chat/insert-mention.js)
+2. [`check-mention.js`](../src/features/chat/check-mention.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

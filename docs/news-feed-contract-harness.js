@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'news-feed.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'news', 'news-feed.js'), 'utf8');
 
 for (const marker of [
   'async function showNewsFeed()',
@@ -38,5 +38,5 @@ assert(!source.includes('renderDMs'), 'News feed must not own the protected DM r
 
 console.log('NEWS_FEED_CONTRACT_HARNESS=PASS');
 console.log('LOADING_24H_QUERY_FIELDS_ORDER_CAP_EMPTY_ERROR_ESCAPED_RESULTS_VIEW_POST_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/news-feed.js');
+console.log('MODULE_OWNER=src/features/news/news-feed.js');
 console.log('PRODUCTION_CHANGE=0');

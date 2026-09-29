@@ -22,11 +22,11 @@ async function runHarness() {
   global.clearInterval = handle => { cleared.push(handle); if (activeInterval === handle) activeInterval = null; };
 
   try {
-    const startMonitorModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/start-network-monitor.js', 'utf8');
+    const startMonitorModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/calls/start-network-monitor.js', 'utf8');
     const smStart = startMonitorModule.indexOf('window.startNetworkMonitor = function startNetworkMonitor(){');
     assert(smStart >= 0, 'start-network-monitor module owner must remain present');
     const startMonitorBlock = startMonitorModule.slice(smStart + 'window.startNetworkMonitor = '.length);
-    const stopMonitorModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/stop-network-monitor.js', 'utf8');
+    const stopMonitorModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/calls/stop-network-monitor.js', 'utf8');
     const smStop = stopMonitorModule.indexOf('window.stopNetworkMonitor = function stopNetworkMonitor(){');
     assert(smStop >= 0, 'stop-network-monitor module owner must remain present');
     const stopMonitorBlock = stopMonitorModule.slice(smStop + 'window.stopNetworkMonitor = '.length);

@@ -36,7 +36,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`security-center.js`](../src/features/security-center.js)
+1. [`security-center.js`](../src/features/settings/security-center.js)
 2. [`security-center-contract.md`](./security-center-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

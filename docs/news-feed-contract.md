@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the modal, query 
 
 ## References
 
-1. [`news-feed.js`](../src/features/news-feed.js)
+1. [`news-feed.js`](../src/features/news/news-feed.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

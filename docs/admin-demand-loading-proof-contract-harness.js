@@ -28,17 +28,27 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const manifestSrc = fs.readFileSync(path.join(repo, 'src/loaders/feature-manifest.js'), 'utf8');
 
 // P1 — startup exclusion
+/* cycle-9 2026-09-29: show-report-detail.js moved into admin/ as a documented eager
+   service (admin-family owned: load-reports-list.js:118 + load-user-report-stats.js:30
+   render its entry buttons; the file was already eager-tagged before the re-folder —
+   loading behavior unchanged, organization-only). Same EAGER_SERVICES convention as the
+   calls proof harness. */
+const EAGER_SERVICES = [
+  'src/features/admin/show-report-detail.js',
+];
 const adminTags = html.match(/<script src="src\/features\/admin\//g) || [];
-assert.strictEqual(adminTags.length, 0, 'index.html must contain ZERO admin script tags (demand-loaded)');
-console.log('P1 PASS — admin absent from startup critical path (0 tags)');
+assert.strictEqual(adminTags.length, EAGER_SERVICES.length, 'index.html must contain exactly the documented eager admin service tags (demand-loaded otherwise)');
+const serviceTags = EAGER_SERVICES.filter(f => html.includes(`<script src="${f}"></script>`));
+assert.deepStrictEqual(serviceTags, EAGER_SERVICES, 'the documented eager admin service files must remain tagged');
+console.log(`P1 PASS — admin absent from startup critical path (1 documented eager service retained: show-report-detail)`);
 
 // P2 — manifest linkage + order
 const adminDir = path.join(repo, 'src/features/admin');
-const diskFiles = fs.readdirSync(adminDir).filter(f => f.endsWith('.js')).sort();
+const diskFiles = fs.readdirSync(adminDir).filter(f => f.endsWith('.js') && !EAGER_SERVICES.includes('src/features/admin/' + f)).sort();
 const manifestList = (manifestSrc.match(/"src\/features\/admin\/[^"]+"/g) || []).map(s => s.slice(1, -1));
 assert.strictEqual(manifestList.length, 54, 'admin manifest must list 54 files');
 assert.deepStrictEqual([...manifestList].sort(), diskFiles.map(f => 'src/features/admin/' + f),
-  'admin manifest must exactly cover the admin folder');
+  'admin manifest must exactly cover the admin folder (lazy files; eager services excluded)');
 assert.strictEqual(new Set(manifestList).size, manifestList.length, 'no duplicate manifest entries');
 console.log('P2 PASS — manifest covers all 54 admin files, no duplicates');
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'insert-mention.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'chat', 'insert-mention.js'), 'utf8');
 
 for (const marker of [
   'function insertMention(username, inpId)',
@@ -22,5 +22,5 @@ assert.strictEqual((source.match(/function insertMention\(/g) || []).length, 1, 
 
 console.log('INSERT_MENTION_CONTRACT_HARNESS=PASS');
 console.log('INPUT_LOOKUP_LAST_TOKEN_REPLACEMENT_TRAILING_SPACE_LIST_CLEANUP_FOCUS_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/insert-mention.js');
+console.log('MODULE_OWNER=src/features/chat/insert-mention.js');
 console.log('PRODUCTION_CHANGE=0');

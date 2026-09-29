@@ -19,7 +19,7 @@ The helper owns autocomplete presentation only. DM loading, realtime membership,
 
 ## References
 
-1. [`check-mention.js`](../src/features/check-mention.js)
-2. [`insert-mention.js`](../src/features/insert-mention.js)
+1. [`check-mention.js`](../src/features/chat/check-mention.js)
+2. [`insert-mention.js`](../src/features/chat/insert-mention.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'check-mention.js'), 'utf8');
-const insertion = fs.readFileSync(path.join(repo, 'src', 'features', 'insert-mention.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'chat', 'check-mention.js'), 'utf8');
+const insertion = fs.readFileSync(path.join(repo, 'src', 'features', 'chat', 'insert-mention.js'), 'utf8');
 
 for (const marker of [
   'function checkMention(inp, cid)',
@@ -31,5 +31,5 @@ assert.strictEqual((source.match(/function checkMention\(/g) || []).length, 1, '
 
 console.log('CHECK_MENTION_CONTRACT_HARNESS=PASS');
 console.log('TOKEN_QUERY_MEMBER_FILTER_CURRENT_USER_EXCLUSION_LIST_LIFECYCLE_INSERT_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/check-mention.js');
+console.log('MODULE_OWNER=src/features/chat/check-mention.js');
 console.log('PRODUCTION_CHANGE=0');

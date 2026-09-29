@@ -48,11 +48,17 @@ const EAGER_SERVICES = [
   'src/features/calls/init-calling-system.js',
   'src/features/calls/play-ringtone.js',
   'src/features/calls/stop-ringtone.js',
+  /* cycle-9 2026-09-29: network monitors moved flat → calls/ (organization-only:
+  they read _callState.peer stats and update the nova-call-network-indicator;
+  called only by show-call-screen.js:115 + end-call.js:21; already eager-tagged
+  before the re-folder — loading behavior unchanged) */
+  'src/features/calls/start-network-monitor.js',
+  'src/features/calls/stop-network-monitor.js',
 ];
 const lazyTags = [...callsList, ...groupsList].filter(f => html.includes(`<script src="${f}"></script>`));
 assert.strictEqual(lazyTags.length, 0, 'index.html must contain ZERO lazy calls/groups script tags');
 const serviceTags = EAGER_SERVICES.filter(f => html.includes(`<script src="${f}"></script>`));
-assert.strictEqual(serviceTags.length, 4, 'the 4 documented eager service files must remain tagged');
+assert.strictEqual(serviceTags.length, 6, 'the 6 documented eager service files must remain tagged');
 console.log(`P1 PASS — calls(${callsList.length}) + groups(${groupsList.length}) absent from startup; 4 eager services retained`);
 
 // P2 — manifest linkage + order (relative order preserved vs the pre-move tag order)
