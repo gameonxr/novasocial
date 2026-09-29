@@ -42,8 +42,12 @@
     // stories — feed story ring, FAB create, back-nav, media tools
     stories: ['showCreateStory', 'openSV', 'closeSV', 'trimVideo',
               'showVideoLengthOptions', 'showFilterTray', 'openCropPreview'],
-    // dms — profile/post notifications deep links, blocking, media deletion
-    dms: ['openChat', 'startDM', 'showNewDM', 'replyMsg', 'blockUser', 'unblockUser',
+    // dms — DMs tab renderer (go('dms') calls renderDMs() on cache-miss before
+    // the chunk has loaded — same belt-and-suspenders as the other lazy tab
+    // renderers; without it go() throws a synchronous ReferenceError into its
+    // generic navigation-error catch), profile/post notifications deep links,
+    // blocking, media deletion
+    dms: ['renderDMs', 'openChat', 'startDM', 'showNewDM', 'replyMsg', 'blockUser', 'unblockUser',
           'muteUser', 'unmuteUser', 'deleteMultipleMediaProduction',
           '_updateMessageReactionInPlace', 'loadNotesBar'],
     // groups — DMs screen create-group entry

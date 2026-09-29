@@ -107,7 +107,7 @@ The inline application script and post-inline startup scripts
 |---|---|---|
 | reels | 9 | `go('reels')` tab gate |
 | explore | 3 | `go('explore')` tab gate, hashtag/search taps |
-| dms | 65 | `go('dms')` tab gate, `openChat`/`startDM` stubs |
+| dms | 65 | `go('dms')` tab entry, `renderDMs`/`openChat`/`startDM` stubs |
 | profile | 16 | `go('profile')` tab gate, `showUserProfile`/`viewAvatarFullscreen` stubs |
 | stories | 68 | `openSv`/`showCreateStory` stubs (feed story ring, FAB) |
 | calls | 37 | `initiateCall`/`handleIncomingCall` stubs |
@@ -196,6 +196,18 @@ SW-cached after first fetch. No private API responses are cached by the loader.
     branch2-only allowlist retention is intentional rename-detection data;
     coverage 454/454; calls+groups intra-chunk relative order preserved —
     37 + 11 subsequences, load-time-dependency-free)
+13. ✅ DMs tab-entry regression fix (2026-09-29): cycle 9 left the demand-loaded
+    `renderDMs` without a feature stub — `go('dms')` on cache-miss called the
+    undefined renderer synchronously and fell into go()'s generic
+    navigation-error catch ("App me error aaya hai" screen), while
+    home/notifs (eager) and reels/explore/profile (stubbed) tabs worked.
+    Fix: `renderDMs` added to the dms STUBS entry in
+    `src/loaders/feature-stubs.js` (one entry, same belt-and-suspenders
+    pattern as the other three lazy tab renderers; go.js/loader/manifest/
+    index.html/sw.js untouched). Proven by full jsdom app-load repro
+    (ReferenceError before → Messages screen renders after) + 21/21 flow
+    verification (all tabs, openChat, sendMsg, groups, calls, cache-restore)
+    + battery 320/5 with era-pin identity unchanged.
 
 ## 11. Verification per cycle
 
