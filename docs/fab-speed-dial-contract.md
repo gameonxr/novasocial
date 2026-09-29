@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not open the menu or trigg
 
 ## References
 
-1. [`fab-speed-dial.js`](../src/features/fab-speed-dial.js)
+1. [`fab-speed-dial.js`](../src/features/system/fab-speed-dial.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'fab-longpress-menu.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'fab-longpress-menu.js'), 'utf8');
 
 for (const marker of [
   'function showFabLongPressMenu()',
@@ -32,5 +32,5 @@ assert(!source.includes('supabase'), 'FAB long-press menu must not own persisten
 
 console.log('FAB_LONGPRESS_MENU_CONTRACT_HARNESS=PASS');
 console.log('GUARDS_DISPLAY_ANIMATION_ABOVE_BELOW_PLACEMENT_VIEWPORT_CLAMP_CLOSE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/fab-longpress-menu.js');
+console.log('MODULE_OWNER=src/features/system/fab-longpress-menu.js');
 console.log('PRODUCTION_CHANGE=0');

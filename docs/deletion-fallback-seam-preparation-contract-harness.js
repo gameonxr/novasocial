@@ -32,7 +32,7 @@ const requiredHtmlMarkers = [
   "typeof syncLocalDeletionFallback === 'function'"
 ];
 for (const marker of requiredHtmlMarkers) {
-  const ownerSource = marker === "typeof syncLocalDeletionFallback === 'function'" ? html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'show-app.js'), 'utf8') : moduleText;
+  const ownerSource = marker === "typeof syncLocalDeletionFallback === 'function'" ? html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'show-app.js'), 'utf8') : moduleText;
   assert(ownerSource.includes(marker), `Deletion fallback seam marker must remain protected: ${marker}`);
 }
 assert(fs.existsSync(path.join(repo, 'docs', 'local-deletion-fallback-contract.md')), 'Deletion fallback behavior contract must remain present');
@@ -44,7 +44,7 @@ assert(fs.readFileSync(path.join(repo, 'src', 'features', 'delete-media-producti
 assert(moduleText.includes('for(const item of pending)'), 'Fallback replay must retain ordered item iteration');
 assert(moduleText.includes('try {\n        await deleteMediaProduction') || moduleText.includes('try{\n        await deleteMediaProduction') || moduleText.includes('try{await deleteMediaProduction'), 'Fallback replay must retain per-item isolation');
 assert(moduleText.includes('localStorage.removeItem(\'_mediaDeleteFallback\')') || moduleText.includes('localStorage.removeItem("_mediaDeleteFallback")'), 'Fallback queue must retain post-loop finalization');
-assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'show-app.js'), 'utf8')).includes('syncLocalDeletionFallback().catch(() => {})'), 'Startup must retain non-throwing fallback guard');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'show-app.js'), 'utf8')).includes('syncLocalDeletionFallback().catch(() => {})'), 'Startup must retain non-throwing fallback guard');
 
 console.log('DELETION_FALLBACK_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=QUEUE_READ_ORDERED_REPLAY_ITEM_ISOLATION_FINALIZATION_MEDIA_STARTUP');

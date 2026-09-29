@@ -23,6 +23,6 @@ The harness is static and documentation-only. It does not register event listene
 
 ## References
 
-1. [`setup-fab-drag.js`](../src/features/setup-fab-drag.js)
+1. [`setup-fab-drag.js`](../src/features/system/setup-fab-drag.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

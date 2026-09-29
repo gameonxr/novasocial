@@ -9,7 +9,7 @@ const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'fe
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const tabCacheModules = ['save-tab-to-cache.js', 'try-restore-from-cache.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n');
+const tabCacheModules = ['system/save-tab-to-cache.js', 'system/try-restore-from-cache.js'].filter(f => fs.existsSync(path.join(repo, 'src', 'features', f))).map(f => fs.readFileSync(path.join(repo, 'src', 'features', f), 'utf8')).join('\n'); /* cycle-9 2026-09-29: system family folder */
 const dmsExtraModules = ['refresh-dms-in-place.js', 'load-msgs.js', 'open-chat.js', 'send-msg.js'].map(f => fs.readFileSync(path.join(repo, 'src', 'features', 'dms', f), 'utf8')).join('\n'); /* architecture-migration 2026-09-29: dms family folder */
 const combinedDmsSource = html + '\n' + branchModule + '\n' + tabCacheModules + '\n' + dmsExtraModules;
 assert(branchModule.includes('window.renderDMs = async function(){'), 'external DMs renderer must expose the classic global owner');

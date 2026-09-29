@@ -23,7 +23,7 @@ The extracted `src/features/hide-fab-button.js` module remains unchanged in this
 
 ## References
 
-1. [`hide-fab-button.js`](../src/features/hide-fab-button.js)
+1. [`hide-fab-button.js`](../src/features/system/hide-fab-button.js)
 2. [`restore-fab-button-contract.md`](./restore-fab-button-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

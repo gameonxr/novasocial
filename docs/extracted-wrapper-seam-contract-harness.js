@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const nova = fs.readFileSync(path.join(repo, 'src', 'features', 'nova-init.js'), 'utf8');
+const nova = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'nova-init.js'), 'utf8');
 const likes = fs.readFileSync(path.join(repo, 'src', 'features', 'like-effects.js'), 'utf8');
 
 assert(nova.includes('const _origShowApp = window.showApp;'), 'nova-init must capture the inline showApp global');
@@ -22,7 +22,7 @@ assert(likes.includes('if(nowLiked && !wasLiked && el){'), 'particles must run o
 assert(likes.includes('spawnLikeParticles(el);'), 'like-effects must retain the inline particle helper seam');
 
 const inlineStart = html.indexOf('\n<script>\n');
-const order = ['smart-ranking.js', 'nova-init.js', 'like-effects.js'].map((name) => html.indexOf(`src/features/${name}`));
+const order = ['smart-ranking.js', 'system/nova-init.js', 'like-effects.js'].map((p) => html.indexOf(`src/features/${p}`)); /* cycle-9 2026-09-29: system family folder (smart-ranking/like-effects paths follow their own batches) */
 assert(inlineStart >= 0, 'inline application script boundary must remain');
 assert(order.every((position) => position > inlineStart), 'all wrapper scripts must remain after inline application code');
 assert(order[0] < order[1] && order[1] < order[2], 'wrapper scripts must retain smart-ranking, nova-init, like-effects order');

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'fab-speed-dial.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'fab-speed-dial.js'), 'utf8');
 
 for (const marker of [
   'function toggleFabMenu()',
@@ -43,5 +43,5 @@ assert(!source.includes('supabase'), 'FAB speed dial must not own persistence');
 
 console.log('FAB_SPEED_DIAL_CONTRACT_HARNESS=PASS');
 console.log('GUARDS_FIVE_ITEMS_DELEGATES_SIDE_POSITIONING_DISPLAY_ANIMATION_ROTATION_CLOSE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/fab-speed-dial.js');
+console.log('MODULE_OWNER=src/features/system/fab-speed-dial.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -9,7 +9,7 @@
 
 `invalidateTabCache(tab)` deletes exactly one entry from the existing top-level `_tabCache` object. The owner has exactly eight existing callers across the post, story, profile, and chat refresh paths. Its only dependency is the existing `_tabCache` lexical binding.
 
-The production owner is preserved as an anonymous classic global assignment in [`src/features/invalidate-tab-cache-owner.js`](../src/features/invalidate-tab-cache-owner.js): `window.invalidateTabCache = function(tab) { delete _tabCache[tab]; };`. The existing callers remain unchanged. `_saveTabToCache`, `_tryRestoreFromCache`, `invalidateAllTabCache`, `goBack`, tab navigation, Reels persistence, account switching, admin systems, story/editor systems, messaging, calling, and all other protected boundaries remain outside this split.
+The production owner is preserved as an anonymous classic global assignment in [`src/features/invalidate-tab-cache-owner.js`](../src/features/system/invalidate-tab-cache-owner.js): `window.invalidateTabCache = function(tab) { delete _tabCache[tab]; };`. The existing callers remain unchanged. `_saveTabToCache`, `_tryRestoreFromCache`, `invalidateAllTabCache`, `goBack`, tab navigation, Reels persistence, account switching, admin systems, story/editor systems, messaging, calling, and all other protected boundaries remain outside this split.
 
 ## Completion gates
 

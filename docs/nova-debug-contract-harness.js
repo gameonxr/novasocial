@@ -38,7 +38,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/nova-debug.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/system/nova-debug.js', 'utf8');
     const start = source.indexOf('window.novaDebug = async function novaDebug(){');
     assert(start >= 0, 'novaDebug module owner must remain present');
     const fnSource = source.slice(start + 'window.novaDebug = '.length);

@@ -10,7 +10,7 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const modulePath = path.join(repo, 'src', 'features', 'invalidate-tab-cache-owner.js');
+const modulePath = path.join(repo, 'src', 'features', 'system', 'invalidate-tab-cache-owner.js');
 const moduleExists = fs.existsSync(modulePath);
 const moduleText = moduleExists ? fs.readFileSync(modulePath, 'utf8') : '';
 
@@ -39,7 +39,7 @@ assert.strictEqual(normalizedCurrent, normalizedOrigin, 'candidate owner must ma
 assert.strictEqual(sha256(normalizedOrigin), '19ccfb3a759fc68a9dddea3715cce4962b021ef60c423facc858a938d17bc127', 'candidate hash must remain pinned');
 assert.strictEqual(callerCount, 4, 'candidate must retain exactly eight existing callers');
 assert.strictEqual((html.match(/function invalidateTabCache\(tab\)\s*\{/g) || []).length, moduleExists ? 0 : 1, 'inline owner count must match split state');
-assert.strictEqual((html.match(/src\/features\/invalidate-tab-cache-owner\.js/g) || []).length, moduleExists ? 1 : 0, 'external owner linkage must match split state');
+assert.strictEqual((html.match(/src\/features\/system\/invalidate-tab-cache-owner\.js/g) || []).length, moduleExists ? 1 : 0, 'external owner linkage must match split state');
 assert(currentOwner.includes('delete _tabCache[tab]'), 'candidate must retain one-entry cache deletion');
 assert(!/(?:fetch\(|localStorage|sessionStorage|navigator\.|location\.|history\.|\b(?:insert|update|upsert|delete|rpc|subscribe|upload|navigate|signOut|signIn)\s*\()/i.test(currentOwner.replace('delete _tabCache[tab]', '')), 'candidate must remain free of stateful side-effect tokens');
 

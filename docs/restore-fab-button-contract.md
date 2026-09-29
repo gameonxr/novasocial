@@ -23,7 +23,7 @@ The extracted `src/features/restore-fab-button.js` module remains unchanged in t
 
 ## References
 
-1. [`restore-fab-button.js`](../src/features/restore-fab-button.js)
+1. [`restore-fab-button.js`](../src/features/system/restore-fab-button.js)
 2. [`hide-fab-button-contract.md`](./hide-fab-button-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

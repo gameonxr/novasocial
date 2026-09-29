@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open or close the menu
 
 ## References
 
-1. [`fab-longpress-menu.js`](../src/features/fab-longpress-menu.js)
+1. [`fab-longpress-menu.js`](../src/features/system/fab-longpress-menu.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

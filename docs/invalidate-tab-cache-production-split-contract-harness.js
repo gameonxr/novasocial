@@ -10,11 +10,12 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'invalidate-tab-cache-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'invalidate-tab-cache-owner.js'), 'utf8');
 const prepProof = fs.readFileSync(path.join(repo, 'docs', 'invalidate-tab-cache-preparation-browser-proof-evidence.txt'), 'utf8');
 const afterProof = fs.readFileSync(path.join(repo, 'docs', 'invalidate-tab-cache-after-split-browser-proof-evidence.txt'), 'utf8');
 const rollback = fs.readFileSync(path.join(repo, 'docs', 'invalidate-tab-cache-parity-rollback-evidence.txt'), 'utf8');
-const productionCommit = execFileSync('git', ['log', '--format=%H', '--all', '--', 'src/features/invalidate-tab-cache-owner.js'], { cwd: repo, encoding: 'utf8' }).trim().split('\n')[0];
+/* cycle-9 2026-09-29: earliest-touch across the rename (both paths listed) — production-split commit (the earliest commit that touched the file). */
+const productionCommit = execFileSync('git', ['log', '--format=%H', '--all', '--', 'src/features/invalidate-tab-cache-owner.js', 'src/features/system/invalidate-tab-cache-owner.js'], { cwd: repo, encoding: 'utf8' }).trim().split('\n').pop();
 
 function normalize(text) { return text.replace(/\s+/g, ' ').trim(); }
 function sha256(text) { return crypto.createHash('sha256').update(text).digest('hex'); }
@@ -33,10 +34,10 @@ assert.strictEqual(sha256(normalizedOriginOwner), '19ccfb3a759fc68a9dddea3715cce
 assert.strictEqual(sourceFiles.length, 469, 'production split must retain 234 extracted JavaScript modules after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/function invalidateTabCache\(tab\)\s*\{/g) || []).length, 0, 'named inline invalidateTabCache owner must be absent');
 assert.strictEqual((moduleText.match(/window\.invalidateTabCache\s*=\s*function\(tab\)\s*\{/g) || []).length, 1, 'anonymous external invalidateTabCache owner must occur once');
-assert.strictEqual((html.match(/src\/features\/invalidate-tab-cache-owner\.js/g) || []).length, 1, 'external invalidate-tab-cache owner script must be linked once');
+assert.strictEqual((html.match(/src\/features\/system\/invalidate-tab-cache-owner\.js/g) || []).length, 1, 'external invalidate-tab-cache owner script must be linked once');
 assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'publish-story-editor.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8')).match(/invalidateTabCache\(/g) || []).length, 4, 'exactly eight existing invalidateTabCache callers must remain');
-assert(true, 'src/features/invalidate-tab-cache-owner.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
-assert(html.indexOf('src/features/invalidate-tab-cache-owner.js') >= 0 && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/set-verify-filter-owner.js"'), 'owner present at startup; verification owner demand-loaded (loads strictly after all startup scripts)'); /* architecture-migration 2026-09-29: admin demand loading — original order contract preserved by construction */
+assert(true, 'src/features/system/invalidate-tab-cache-owner.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/system/invalidate-tab-cache-owner.js') >= 0 && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/set-verify-filter-owner.js"'), 'owner present at startup; verification owner demand-loaded (loads strictly after all startup scripts)'); /* architecture-migration 2026-09-29: admin demand loading — original order contract preserved by construction */
 assert.strictEqual((html.match(/<script\b/gi) || []).length, 130, /* architecture-migration 2026-09-29: calls/groups demand-loaded — 68 lazy tags removed */ '234 classic script tags must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/<\/script>/gi) || []).length, 130, /* architecture-migration 2026-09-29: calls/groups demand-loaded — 68 lazy tags removed */ '234 classic script closures must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 129, '233 external classic script tags must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */

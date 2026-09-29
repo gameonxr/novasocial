@@ -117,11 +117,11 @@ for (const marker of protectedMarkers) {
 /* architecture-migration 2026-09-29: stories owner files demand-loaded — startup tail */
 const scriptMarkers = [
   '<script src="src/features/smart-ranking.js"></script>',
-  '<script src="src/features/nova-init.js"></script>',
+  '<script src="src/features/system/nova-init.js"></script>',
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
-  '<script src="src/features/invalidate-tab-cache-owner.js"></script>',
+  '<script src="src/features/system/invalidate-tab-cache-owner.js"></script>',
   '<script src="src/features/like-effects.js"></script>',
 ];
 const positions = scriptMarkers.map(marker => html.indexOf(marker));

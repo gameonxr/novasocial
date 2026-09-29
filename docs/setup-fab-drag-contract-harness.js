@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'setup-fab-drag.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'setup-fab-drag.js'), 'utf8');
 
 for (const marker of [
   'function setupFabDrag()',
@@ -38,5 +38,5 @@ assert(!source.includes('supabase'), 'FAB drag must not own persistence beyond l
 
 console.log('SETUP_FAB_DRAG_CONTRACT_HARNESS=PASS');
 console.log('IDEMPOTENCE_POINTER_EVENTS_LONG_PRESS_THRESHOLD_CLAMP_EDGE_SNAP_STORAGE_RESTORE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/setup-fab-drag.js');
+console.log('MODULE_OWNER=src/features/system/setup-fab-drag.js');
 console.log('PRODUCTION_CHANGE=0');

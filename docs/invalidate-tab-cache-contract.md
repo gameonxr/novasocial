@@ -33,6 +33,6 @@ The standalone harness must pass with contract-artifact pairing, cache/navigatio
 
 ## References
 
-1. [`invalidate-tab-cache-owner.js`](../src/features/invalidate-tab-cache-owner.js)
+1. [`invalidate-tab-cache-owner.js`](../src/features/system/invalidate-tab-cache-owner.js)
 2. [`cache-restore-contract.md`](./cache-restore-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

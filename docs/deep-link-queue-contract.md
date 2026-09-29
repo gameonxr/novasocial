@@ -32,7 +32,7 @@ No production logic is changed by this audit. The inline queue initialization an
 ## References
 
 1. [`index.html`](../index.html)
-2. [`src/features/deep-links.js`](../src/features/deep-links.js)
+2. [`src/features/deep-links.js`](../src/features/system/deep-links.js)
 3. [`CRITICAL_CONTEXT.md`](../../upload/CRITICAL_CONTEXT.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

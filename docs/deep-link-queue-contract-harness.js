@@ -4,7 +4,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const helperSource = fs.readFileSync(path.join(repo, 'src', 'features', 'deep-links.js'), 'utf8');
+const helperSource = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'deep-links.js'), 'utf8');
 const indexSource = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const events = [];
 const timers = [];

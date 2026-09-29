@@ -39,16 +39,16 @@ async function runHarness() {
     assert(start >= 0 && end > start, 'tab-cache boundary must remain present and ordered');
     const block = source.slice(start, end);
     const hasInlineInvalidator = /function invalidateTabCache\(tab\)\s*\{/.test(block);
-    const externalInvalidator = hasInlineInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/invalidate-tab-cache-owner.js', 'utf8');
+    const externalInvalidator = hasInlineInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/system/invalidate-tab-cache-owner.js', 'utf8');
     const invalidatorBinding = hasInlineInvalidator ? 'invalidateTabCache' : 'window.invalidateTabCache';
     const hasInlineAllInvalidator = /function invalidateAllTabCache\(\)\s*\{/.test(block);
-    const externalAllInvalidator = hasInlineAllInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/invalidate-all-tab-cache.js', 'utf8');
+    const externalAllInvalidator = hasInlineAllInvalidator ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/system/invalidate-all-tab-cache.js', 'utf8');
     const allInvalidatorBinding = hasInlineAllInvalidator ? 'invalidateAllTabCache' : 'window.invalidateAllTabCache';
     const hasInlineSaveRestore = /function _saveTabToCache\(tab\)\s*\{/.test(block);
-    const externalSaveRestore = hasInlineSaveRestore ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/save-tab-to-cache.js', 'utf8');
+    const externalSaveRestore = hasInlineSaveRestore ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/system/save-tab-to-cache.js', 'utf8');
     const saveRestoreBinding = hasInlineSaveRestore ? '_saveTabToCache' : 'window._saveTabToCache';
     const hasInlineTryRestore = /function _tryRestoreFromCache\(tab\)\s*\{/.test(block);
-    const externalTryRestore = hasInlineTryRestore ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/try-restore-from-cache.js', 'utf8');
+    const externalTryRestore = hasInlineTryRestore ? '' : fs.readFileSync('/home/z/my-project/novasocial/src/features/system/try-restore-from-cache.js', 'utf8');
     const tryRestoreBinding = hasInlineTryRestore ? '_tryRestoreFromCache' : 'window._tryRestoreFromCache';
     eval(`${block}; ${externalInvalidator}; ${externalAllInvalidator}; ${externalSaveRestore}; ${externalTryRestore}; global._saveTabToCache = ${saveRestoreBinding}; global._tryRestoreFromCache = ${tryRestoreBinding}; global.invalidateTabCache = ${invalidatorBinding}; global.invalidateAllTabCache = ${allInvalidatorBinding};`);
 

@@ -59,7 +59,7 @@ for (const marker of ['document.querySelector', 'scrollIntoView', "style.transit
 for (const forbidden of [/\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i, /fetch\s*\(|XMLHttpRequest|WebSocket/i, /localStorage|sessionStorage|indexedDB|document\.cookie/i, /\bME\b|auth|account|upload|permission|Notification|PushManager/i, /sendMsg|sendMediaMsg|reactMsg|pinMsg|unsendMsg|deleteMsg|forwardMessage|showReportModal|loadMsgs|loadDMs/i, /location\.|history\.|goToProfile|viewPost|window\.open/i]) {
   assert(!forbidden.test(owner), `candidate must remain free of forbidden boundary: ${forbidden}`);
 }
-const tryRestoreModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'try-restore-from-cache.js') /* tab-cache module remains in the startup flat set */, 'utf8');
+const tryRestoreModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'try-restore-from-cache.js') /* tab-cache module remains in the startup flat set */, 'utf8');
 const refreshDmsInPlaceModuleText = fs.readFileSync(path.join(sourceDir, 'refresh-dms-in-place.js'), 'utf8');
 const showMsgMenuModuleText = fs.readFileSync(path.join(sourceDir, 'show-msg-menu.js'), 'utf8');
 const openChatModuleText = fs.readFileSync(path.join(sourceDir, 'open-chat.js'), 'utf8');

@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'invalidate-tab-cache-owner.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'invalidate-tab-cache-owner.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 for (const forbidden of [
@@ -19,7 +19,7 @@ for (const forbidden of [
   assert(!forbidden.test(source), `tab-cache invalidation must remain in-memory-only: ${forbidden}`);
 }
 
-assert(html.includes('src/features/invalidate-tab-cache-owner.js'), 'tab-cache invalidation module must remain linked from HTML');
+assert(html.includes('src/features/system/invalidate-tab-cache-owner.js'), 'tab-cache invalidation module must remain linked from HTML');
 assert.strictEqual((source.match(/window\.invalidateTabCache\s*=\s*function\s*\(/g) || []).length, 1, 'tab-cache invalidation must have one global owner');
 
 const cache = {
