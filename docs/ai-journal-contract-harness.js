@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai-journal.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'ai-journal.js'), 'utf8');
 
 for (const marker of [
   'function showAIJournal()',
@@ -50,5 +50,5 @@ assert(!source.includes('sendMessage'), 'AI journal must not own protected messa
 
 console.log('AI_JOURNAL_CONTRACT_HARNESS=PASS');
 console.log('SCREEN_MODAL_SUMMARY_FIXTURES_MOODS_VALIDATION_LOCAL_STORAGE_SAVE_GENERATION_LOCAL_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/ai-journal.js');
+console.log('MODULE_OWNER=src/features/ai/ai-journal.js');
 console.log('PRODUCTION_CHANGE=0');

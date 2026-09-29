@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'open-music-search.js'), 'utf8');
-const section = fs.readFileSync(path.join(repo, 'src', 'features', 'render-note-music-section.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'open-music-search.js'), 'utf8');
+const section = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'render-note-music-section.js'), 'utf8');
 
 for (const marker of [
   'function openMusicSearch()',
@@ -29,5 +29,5 @@ assert.strictEqual((source.match(/function openMusicSearch\(/g) || []).length, 1
 
 console.log('OPEN_MUSIC_SEARCH_CONTRACT_HARNESS=PASS');
 console.log('PANEL_IDS_HANDLERS_DOM_INSERTION_FOCUS_RECENTS_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/open-music-search.js');
+console.log('MODULE_OWNER=src/features/notes/open-music-search.js');
 console.log('PRODUCTION_CHANGE=0');

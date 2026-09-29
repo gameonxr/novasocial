@@ -7,7 +7,8 @@ const { execFileSync } = require('child_process');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const currentModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
+const currentModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
   encoding: 'utf8',
@@ -30,7 +31,7 @@ const currentOwner = extractOwner(currentModule, true);
 const originOwner = extractOwner(originHtml);
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 submitNote owner must retain exact immutable-origin parity');
 assert.strictEqual(currentHtml.split('async function submitNote(){').length - 1, 0, 'inline submitNote owner must be absent after authorized split');
-assert(currentHtml.includes('src/features/notes-submission-owner.js'), 'production Notes submission owner linkage must be present');
+assert(featureManifestSrc.includes('"src/features/notes/notes-submission-owner.js"'), 'production Notes submission owner linkage must be present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');
 assert(dossier.includes('PRODUCTION_DECISION=BLOCKED'), 'protected Notes dossier must remain blocked');

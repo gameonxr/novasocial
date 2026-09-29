@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open a modal, alter th
 
 ## References
 
-1. [`settings-appearance.js`](../src/features/settings-appearance.js)
+1. [`settings-appearance.js`](../src/features/settings/settings-appearance.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

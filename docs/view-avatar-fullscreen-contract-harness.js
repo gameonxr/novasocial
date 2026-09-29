@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'view-avatar-fullscreen.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'view-avatar-fullscreen.js'), 'utf8');
 
 for (const marker of [
   'function viewAvatarFullscreen(avatarUrl, username)',
@@ -26,5 +26,5 @@ assert.strictEqual((source.match(/function viewAvatarFullscreen\(/g) || []).leng
 
 console.log('VIEW_AVATAR_FULLSCREEN_CONTRACT_HARNESS=PASS');
 console.log('GUARD_REPLACEMENT_ESCAPED_USERNAME_CLOSE_BACKDROP_INSERTION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/view-avatar-fullscreen.js');
+console.log('MODULE_OWNER=src/features/profile/view-avatar-fullscreen.js');
 console.log('PRODUCTION_CHANGE=0');

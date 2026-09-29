@@ -7,6 +7,7 @@ const { execFileSync } = require('child_process');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
   encoding: 'utf8',
@@ -14,7 +15,7 @@ const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
 });
 const contract = fs.readFileSync(path.join(repo, 'docs', 'notes-reaction-owner-independent-proof-contract.md'), 'utf8');
 const dossier = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-reactions-protected-readiness-contract.md'), 'utf8');
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
 
 function extractOwner(text) {
   const start = text.indexOf('function reactToNote(');
@@ -30,7 +31,7 @@ const originOwner = extractOwner(originHtml);
 const currentOwner = moduleText.replace(/^window\.reactToNote = /, '').replace(/;\s*$/, '');
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 external reactToNote owner must retain exact immutable-origin parity');
 assert.strictEqual(currentHtml.split('function reactToNote(').length - 1, 0, 'inline reactToNote owner must be absent after split');
-assert.strictEqual((currentHtml.match(/src\/features\/notes-reaction-owner\.js/g) || []).length, 1, 'production Notes reaction owner must be linked exactly once');
+assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-reaction-owner\.js/g) || []).length, 1, 'production Notes reaction owner must be linked exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
 assert(moduleText.includes('window.reactToNote = function reactToNote('), 'production Notes reaction owner must be a classic global');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');

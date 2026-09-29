@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auto-play-note-music.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'auto-play-note-music.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const noteOwners = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
+const noteOwners = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 
 for (const marker of [
   'function autoPlayNoteMusic(url, startSec)',
@@ -30,5 +30,5 @@ assert.strictEqual((source.match(/function autoPlayNoteMusic\(/g) || []).length,
 
 console.log('AUTO_PLAY_NOTE_MUSIC_CONTRACT_HARNESS=PASS');
 console.log('AUDIO_CLEANUP_PRELOAD_METADATA_START_OFFSET_ICON_LOOP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/auto-play-note-music.js');
+console.log('MODULE_OWNER=src/features/notes/auto-play-note-music.js');
 console.log('PRODUCTION_CHANGE=0');

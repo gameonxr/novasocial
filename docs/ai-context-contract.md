@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not execute mood detection
 
 ## References
 
-1. [`ai-context.js`](../src/features/ai-context.js)
+1. [`ai-context.js`](../src/features/ai/ai-context.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

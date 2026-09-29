@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'render-note-music-section.js'), 'utf8');
-const search = fs.readFileSync(path.join(repo, 'src', 'features', 'open-music-search.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'render-note-music-section.js'), 'utf8');
+const search = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'open-music-search.js'), 'utf8');
 
 for (const marker of [
   'function renderNoteMusicSection()',
@@ -28,5 +28,5 @@ assert.strictEqual((source.match(/function renderNoteMusicSection\(/g) || []).le
 
 console.log('RENDER_NOTE_MUSIC_SECTION_CONTRACT_HARNESS=PASS');
 console.log('GUARDED_LOOKUP_SELECTED_EMPTY_CLEAR_SEARCH_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/render-note-music-section.js');
+console.log('MODULE_OWNER=src/features/notes/render-note-music-section.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not create or play audio.
 
 ## References
 
-1. [`play-next-audio.js`](../src/features/play-next-audio.js)
+1. [`play-next-audio.js`](../src/features/notes/play-next-audio.js)
 2. [`index.html`](../index.html), audio `onended` call sites
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

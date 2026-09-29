@@ -31,16 +31,16 @@ const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', 
 
 assert.strictEqual(moduleOwner, originOwner, 'normalized external owner must match immutable origin/main exactly');
 assert.strictEqual(sha256(originOwner), 'a22a86b644df9efe16c59b6bcf828b97752140b37309fec4fa3aee06ac6a6be6', 'normalized origin owner hash must match the recorded anchor');
-assert.strictEqual(sourceFiles.length, 467, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(sourceFiles.length, 469, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/function setVerifyFilter\(f\)\{/g) || []).length, 0, 'inline setVerifyFilter owner must be absent');
 assert.strictEqual((moduleText.match(/window\.setVerifyFilter\s*=\s*function\(f\)\s*\{/g) || []).length, 1, 'external setVerifyFilter owner must occur once');
 assert.strictEqual((fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').match(/src\/features\/admin\/set-verify-filter-owner\.js/g) || []).length, 1, 'verification filter module must be linked exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: admin family folder + demand loading */
 assert.strictEqual((html.match(/onclick="setVerifyFilter\('/g) || []).length + (verifyTabModule.match(/onclick="setVerifyFilter\('/g) || []).length, 4, 'four verification filter controls must remain');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 404, '236 script tags must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 404, '233 script closures must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 403, '234 external scripts must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 331, '236 script tags must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 331, '233 script closures must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 330, '234 external scripts must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').indexOf('"src/features/admin/set-reports-filter-owner.js"') < fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').indexOf('"src/features/admin/set-verify-filter-owner.js"'), 'verification filter module must load after reports filter owner (manifest order)'); /* architecture-migration 2026-09-29 */
-assert(html.indexOf('src/features/refresh-profile-counts-owner.js') >= 0, 'refresh-counts owner present at startup; verification owner is demand-loaded and loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: original order contract preserved by construction */
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').indexOf('"src/features/profile/refresh-profile-counts-owner.js"') >= 0, 'refresh-counts owner demand-loaded in the profile chunk (manifest)'); /* architecture-migration 2026-09-29: profile family demand loading */
 assert(body.includes('_verifyFilter=f'), 'external owner must preserve verification filter state assignment');
 assert(body.includes("document.getElementById('vf-'+x)"), 'external owner must preserve verification filter control lookup');
 assert(body.includes('loadVerifyList();'), 'external owner must preserve delegated verification-list reload');

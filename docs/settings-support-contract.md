@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the Support modal
 
 ## References
 
-1. [`settings-support.js`](../src/features/settings-support.js)
+1. [`settings-support.js`](../src/features/settings/settings-support.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

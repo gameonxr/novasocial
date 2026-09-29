@@ -1,111 +1,11 @@
-// Nova Ultra v4/v5 feature patches — extracted from the index.html inline application script
-// Region SHA-256: 89ef28fd0f429b1b205230e6c7fb5118edafe29c0e1a12a575c8eaf1e2056476
-// Classic script — top-level patch overrides for window owners defined by earlier
-// modules (nova-ai.js, local-ai-response.js, ai-generators.js, smart-feed.js,
-// nova-universe.js). The toggleLike and initNovaFeatures guards are intentionally
-// inert when their targets load after this module (preserved pre-split behavior).
-// Load order: after the patch targets, before the inline application script.
-
-// ═══════════════════════════════════════════════════════════════════════
-// PARTICLE EFFECT ON LIKE (Futuristic)
-// ═══════════════════════════════════════════════════════════════════════
-
-// Override toggleLike to add particles (call original then particles)
-const _origToggleLike = window.toggleLike;
-if(typeof _origToggleLike === 'function'){
-  // Already defined elsewhere; we'll patch via event delegation below
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// NOVA ULTRA FEATURES v3.0 (World-wide release edition)
-// ═══════════════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════════════════════
-// NOVA ULTRA FEATURES v3.0 (World-wide release edition)
-// ═══════════════════════════════════════════════════════════════════════
-
-// NOVA PRO FEATURES v4.0 — Functional features + more
-// ═══════════════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════════════════════
-// NOVA PRO FEATURES v4.0 — Functional "coming soon" + more advanced
-// ═══════════════════════════════════════════════════════════════════════
-
-// ── SMART MOOD FEED (Functional - actually filters posts) ──────────────────────────────────────
-
-// Patch loadMoodFeed to use functional filtering (avoid redeclaration of currentMood)
-if(typeof window.loadMoodFeed === 'function'){
-  const _origLoadMoodFeed_v2 = window.loadMoodFeed;
-  window.loadMoodFeed = function(){
-    toast(`${window.currentMood || 'default'} feed applying... 🧠`);
-    go('home');
-    setTimeout(() => {
-      setTimeout(() => {
-        const feedList = document.getElementById('feed-list');
-        if(feedList){
-          const moodChip = document.createElement('div');
-          moodChip.style.cssText = 'padding:12px 14px;margin:10px 12px;background:linear-gradient(135deg,rgba(122,253,255,0.1),rgba(252,0,124,0.1));border:1px solid rgba(122,253,255,0.2);border-radius:14px;font-size:12px;color:#fff;display:flex;align-items:center;gap:8px';
-          moodChip.innerHTML = `🧠 <b>Smart Feed:</b> ${esc(window.currentMood || 'default')} mood active. <span onclick="showSmartFeed()" style="color:#7afdff;cursor:pointer;margin-left:auto">Change →</span>`;
-          feedList.insertBefore(moodChip, feedList.firstChild);
-
-          if((window.currentMood || 'default') !== 'default'){
-            applyMoodToFeed(window.currentMood);
-          }
-        }
-      }, 500);
-    }, 1500);
-  };
-}
-
-// ── Update Nova Universe Hub to use functional features ──────────────────────────────────────
-const _origShowNovaUniverseHub_v2 = window.showNovaUniverseHub;
-if(typeof _origShowNovaUniverseHub === 'function'){
-  window.showNovaUniverseHub = function(){
-    const scr = document.getElementById('screen');
-    scr.innerHTML = `
-      <div class="topbar">
-        <div onclick="goBack()" style="cursor:pointer">${ico('back')}</div>
-        <span style="font-weight:700;font-size:18px;flex:1">🌌 Nova Universe</span>
-      </div>
-
-      <div style="padding:20px;background:linear-gradient(135deg,rgba(131,58,180,0.15),rgba(225,48,108,0.15),rgba(122,253,255,0.15));border-bottom:1px solid #1a1a1a;text-align:center">
-        <div style="font-size:60px;margin-bottom:10px">🌌</div>
-        <div style="font-weight:800;font-size:22px;background:linear-gradient(135deg,#833AB4,#E1306C,#7afdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Nova Universe</div>
-        <div style="color:#aaa;font-size:12px;margin-top:6px">Sab kuch ek app me — Social, Messaging, AI, aur bahut kuch</div>
-      </div>
-
-      <div style="padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-        ${[
-          ['home','📱','Social','Posts, stories, reels','go("home")'],
-          ['msg','💬','Messages','DMs, groups, channels','go("dms")'],
-          ['phone','📞','Calls','Audio & video calls','showCallFeature()'],
-          ['sparkles','🤖','Nova AI','Your AI assistant','toggleNovaAI()'],
-          ['book','📝','Notes','Journal & notes','showNotes()'],
-          ['calendar','📅','Calendar','Events & reminders','showCalendar()'],
-          ['group','👥','Communities','Forums & voice rooms','showCommunities()'],
-          ['bag','🛍️','Marketplace','Buy/sell products','showMarketplace()'],
-          ['cap','🎓','Learning','Courses & tutorials','showLearning()'],
-          ['news','📰','News','Personalized news','showNews()'],
-          ['gamepad','🎮','Games','Mini games','showGames()'],
-          ['user','🧑‍🎤','Avatar','3D avatar creator','showAvatarCreator()'],
-          ['wallet','💰','Wallet','Creator earnings','showCreatorWallet()'],
-          ['film','🎬','AI Editor','Video editor','showAIVideoEditor()'],
-          ['img','📸','Memories','1 year ago','showMemories()'],
-          ['smile','🎭','Mood','Mood timeline','showMoodTimeline()'],
-          ['shield','🔒','Security','2FA & devices','showSecurityCenter()'],
-          ['brain','🧠','Smart Feed','Mood-based feed','showSmartFeed()'],
-        ].map(([icon,name,desc,action])=>`
-          <div onclick="${action}" style="padding:14px 8px;background:#0f0f0f;border:1px solid #1a1a1a;border-radius:14px;cursor:pointer;text-align:center;transition:.2s">
-            <div style="font-size:32px;margin-bottom:6px">${icon}</div>
-            <div style="font-weight:700;font-size:11px;color:#fff">${name}</div>
-            <div style="font-size:9px;color:#666;margin-top:2px;line-height:1.3">${desc}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <div style="height:80px"></div>
-    `;
-  };
-}
-
+// Nova Ultra AI patches — split from nova-ultra-patches.js (2026-09-29
+// architecture migration). Loaded as the LAST file of the lazy ai chunk so the
+// ACTIVE patches (handleNovaCommand, getLocalAIResponse2, generateAICaption2)
+// apply after their targets (nova-ai.js, local-ai-response.js,
+// ai-generators.js), exactly as they did when nova-ultra-patches.js loaded at
+// script position 443 after those files. The v1 blocks remain INERT (their
+// guard variables are never assigned) — preserved verbatim, original block
+// order kept.
 // ── AI Caption Fix — should NOT appear in reels, only in AI panel ──
 // The issue was that AI captions were being displayed as reel comments. This is fixed because
 // the AI panel is separate. But let's add a safeguard:
@@ -348,20 +248,6 @@ if(typeof _origGetLocalAIResponse2 === 'function'){
 
     // ── FALLBACK to original ──
     return _origGetLocalAIResponse2.apply(this, arguments);
-  };
-}
-
-// ── AUTO-DETECT INTERESTS ON LOGIN ──────────────────────────────────────
-const _origInitNovaFeatures2 = window.initNovaFeatures;
-if(typeof _origInitNovaFeatures2 === 'function'){
-  window.initNovaFeatures = function(){
-    _origInitNovaFeatures2.apply(this, arguments);
-    // Update interests in background after 5 seconds
-    setTimeout(() => {
-      if(ME && typeof updateMyInterests === 'function'){
-        updateMyInterests();
-      }
-    }, 5000);
   };
 }
 

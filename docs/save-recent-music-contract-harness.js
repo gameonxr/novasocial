@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'save-recent-music.js'), 'utf8');
-const renderer = fs.readFileSync(path.join(repo, 'src', 'features', 'render-recent-music-suggestions.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'save-recent-music.js'), 'utf8');
+const renderer = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'render-recent-music-suggestions.js'), 'utf8');
 
 for (const marker of [
   'function saveRecentMusic(title, artist, artwork, previewUrl)',
@@ -25,5 +25,5 @@ assert.strictEqual((source.match(/function saveRecentMusic\(/g) || []).length, 1
 
 console.log('SAVE_RECENT_MUSIC_CONTRACT_HARNESS=PASS');
 console.log('STORAGE_FALLBACK_DEDUP_NEWEST_FIRST_CAP_PERSIST_GUARDED_FAILURE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/save-recent-music.js');
+console.log('MODULE_OWNER=src/features/notes/save-recent-music.js');
 console.log('PRODUCTION_CHANGE=0');

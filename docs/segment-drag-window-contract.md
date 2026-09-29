@@ -34,6 +34,6 @@ The standalone harness must pass with contract-artifact pairing, music-picker co
 
 ## References
 
-1. [`setup-segment-drag-window.js`](../src/features/setup-segment-drag-window.js)
+1. [`setup-segment-drag-window.js`](../src/features/notes/setup-segment-drag-window.js)
 2. [`show-music-segment-picker-contract.md`](./show-music-segment-picker-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src/features/note-deletion-owner.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src/features/notes/note-deletion-owner.js'), 'utf8');
 
 async function runScenario({ deleteFails = false, artwork = 'https://res.cloudinary.com/demo/image/upload/note.jpg' } = {}) {
   const events = [];

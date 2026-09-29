@@ -37,7 +37,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`local-ai-response.js`](../src/features/local-ai-response.js)
+1. [`local-ai-response.js`](../src/features/ai/local-ai-response.js)
 2. [`contract-artifact-pairing-contract.md`](./contract-artifact-pairing-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -19,6 +19,6 @@
 
 ## References
 
-1. [`explore.js`](../src/features/explore.js)
+1. [`explore.js`](../src/features/explore/explore.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -42,7 +42,7 @@ The remaining `viewNote()`, `removeMyNoteFromViewer()`, `deleteMyNote()`, reacti
 
 1. [`note-viewer-contract.md`](./note-viewer-contract.md)
 2. [`note-viewer-contract-harness.js`](./note-viewer-contract-harness.js)
-3. [`notes-bar.js`](../src/features/notes-bar.js)
+3. [`notes-bar.js`](../src/features/notes/notes-bar.js)
 4. [`high-risk-seam-readiness-matrix-contract.md`](./high-risk-seam-readiness-matrix-contract.md)
 5. [`index.html`](../index.html)
 6. [`notes-browser-proof-evidence.txt`](./notes-browser-proof-evidence.txt)

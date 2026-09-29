@@ -17,7 +17,7 @@ function walk(dir) {
 walk(sourceRoot);
 files.sort();
 
-assert.strictEqual(files.length, 502, 'all 268 extracted source files must remain present after the Push permission banner owner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(files.length, 504, 'all 268 extracted source files must remain present after the Push permission banner owner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 const empty = files.filter(file => fs.statSync(file).size === 0).map(file => path.relative(repo, file));
 const trailing = [];
 for (const file of files) {

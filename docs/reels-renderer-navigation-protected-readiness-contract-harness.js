@@ -5,6 +5,7 @@ const path = require('path');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const contractPath = path.join(repo, 'docs', 'reels-renderer-navigation-protected-readiness-contract.md');
 const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'close-sv.js'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
   'navStack'
@@ -21,9 +22,9 @@ const requiredSections = [
   '`BROWSER_LIVE_ACTIONS=0`'
 ];
 for (const marker of requiredMarkers) assert(source.includes(marker), `protected source marker missing: ${marker}`);
-const rendererModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
+const rendererModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 assert(rendererModule.includes('window.renderReels = async function(){'), 'authorized Reels renderer external owner must be present');
-assert(source.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'authorized Reels renderer linkage must be present');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'authorized Reels renderer linkage must be present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: reels demand loading */
 assert(!source.includes('async function renderReels(){'), 'authorized Reels renderer must not remain inline');
 for (const section of requiredSections) assert(contract.includes(section), `readiness requirement missing: ${section}`);
 assert(contract.includes('PREPARATION_ONLY'), 'dossier must remain preparation-only');

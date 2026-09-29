@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not alter FAB styles, brow
 
 ## References
 
-1. [`fab-customization.js`](../src/features/fab-customization.js)
+1. [`fab-customization.js`](../src/features/settings/fab-customization.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

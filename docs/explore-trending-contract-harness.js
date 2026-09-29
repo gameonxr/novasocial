@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const explore = fs.readFileSync(path.join(repo, 'src', 'features', 'explore.js'), 'utf8');
-const trending = fs.readFileSync(path.join(repo, 'src', 'features', 'trending.js'), 'utf8');
+const explore = fs.readFileSync(path.join(repo, 'src', 'features', 'explore', 'explore.js'), 'utf8');
+const trending = fs.readFileSync(path.join(repo, 'src', 'features', 'explore', 'trending.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const exploreMarkers = [
   'async function renderExplore()',
@@ -44,8 +45,8 @@ const trendingMarkers = [
 for (const marker of trendingMarkers) {
   assert(trending.includes(marker), `Trending marker missing: ${marker}`);
 }
-assert(html.includes('src/features/explore.js'), 'Explore module must remain linked from HTML');
-assert(html.includes('src/features/trending.js'), 'Trending module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/explore/explore.js"'), 'Explore module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: explore demand loading */
+assert(featureManifestSrc.includes('"src/features/explore/trending.js"'), 'Trending module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: explore demand loading */
 assert.strictEqual((explore.match(/function renderExplore\(/g) || []).length, 1, 'Explore renderer must have one module owner');
 assert.strictEqual((trending.match(/function showTrendingPage\(/g) || []).length, 1, 'Trending renderer must have one module owner');
 

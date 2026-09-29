@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not access browser storage or m
 
 ## References
 
-1. [`render-recent-music-suggestions.js`](../src/features/render-recent-music-suggestions.js)
-2. [`save-recent-music.js`](../src/features/save-recent-music.js)
+1. [`render-recent-music-suggestions.js`](../src/features/notes/render-recent-music-suggestions.js)
+2. [`save-recent-music.js`](../src/features/notes/save-recent-music.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'avatar-action-sheet.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'avatar-action-sheet.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'function showAvatarActionSheet()',
@@ -30,12 +31,12 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Avatar sheet marker missing: ${marker}`);
 }
-assert(html.includes('src/features/avatar-action-sheet.js'), 'Avatar action-sheet module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/profile/avatar-action-sheet.js"'), 'Avatar action-sheet module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: profile demand loading */
 assert(!source.includes('db.from('), 'Avatar action sheet must not own persistence');
 assert(!source.includes('upload'), 'Avatar action sheet must not own upload processing');
 assert.strictEqual((source.match(/function showAvatarActionSheet\(/g) || []).length, 1, 'Avatar action sheet must have one module owner');
 
 console.log('AVATAR_ACTION_SHEET_CONTRACT_HARNESS=PASS');
 console.log('REPLACE_VIEW_CHANGE_CANCEL_BACKDROP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/avatar-action-sheet.js');
+console.log('MODULE_OWNER=src/features/profile/avatar-action-sheet.js');
 console.log('PRODUCTION_CHANGE=0');

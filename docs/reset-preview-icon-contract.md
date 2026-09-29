@@ -23,7 +23,7 @@ The extracted `src/features/reset-preview-icon.js` module remains unchanged in t
 
 ## References
 
-1. [`reset-preview-icon.js`](../src/features/reset-preview-icon.js)
+1. [`reset-preview-icon.js`](../src/features/notes/reset-preview-icon.js)
 2. [`play-next-audio-contract.md`](./play-next-audio-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

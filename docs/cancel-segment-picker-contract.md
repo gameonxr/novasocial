@@ -21,7 +21,7 @@ The extracted `src/features/cancel-segment-picker.js` module remains unchanged i
 
 ## References
 
-1. [`cancel-segment-picker.js`](../src/features/cancel-segment-picker.js)
-2. [`show-music-segment-picker.js`](../src/features/show-music-segment-picker.js)
+1. [`cancel-segment-picker.js`](../src/features/notes/cancel-segment-picker.js)
+2. [`show-music-segment-picker.js`](../src/features/notes/show-music-segment-picker.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -41,7 +41,7 @@ const actualNames = [...new Set(matches)].sort();
 const unexpected = actualNames.filter((name) => !expectedNames.includes(name));
 const missing = expectedNames.filter((name) => !actualNames.includes(name));
 
-assert.strictEqual(files.length, 468, 'index.html plus 240 extracted modules must be audited after the DMs renderer owner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(files.length, 470, 'index.html plus 240 extracted modules must be audited after the DMs renderer owner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual(matches.length, 455, 'application surface must retain 455 explicit window assignments after the audit fix 9 dead-function removal (the in-body window._storyFile assignment inside addStoryTextMode; the _storyFile name remains established via prevStoryMedia)'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.deepStrictEqual(unexpected, [], 'no new explicit window assignment names may appear');
 assert.deepStrictEqual(missing, [], 'all established window assignment names must remain present');

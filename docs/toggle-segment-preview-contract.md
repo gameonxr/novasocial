@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not create or play audio.
 
 ## References
 
-1. [`toggle-segment-preview.js`](../src/features/toggle-segment-preview.js)
-2. [`show-music-segment-picker.js`](../src/features/show-music-segment-picker.js)
+1. [`toggle-segment-preview.js`](../src/features/notes/toggle-segment-preview.js)
+2. [`show-music-segment-picker.js`](../src/features/notes/show-music-segment-picker.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

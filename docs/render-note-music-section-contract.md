@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not create browser DOM or mutat
 
 ## References
 
-1. [`render-note-music-section.js`](../src/features/render-note-music-section.js)
-2. [`open-music-search.js`](../src/features/open-music-search.js)
+1. [`render-note-music-section.js`](../src/features/notes/render-note-music-section.js)
+2. [`open-music-search.js`](../src/features/notes/open-music-search.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

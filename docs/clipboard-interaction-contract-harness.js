@@ -10,10 +10,10 @@ const messages = fs.readFileSync(path.join(repo, 'src', 'features', 'message-cli
 const invite = fs.readFileSync(path.join(repo, 'src', 'features', 'copy-invite-link.js'), 'utf8');
 const story = fs.readFileSync(path.join(repo, 'src', 'features', 'copy-story-link.js'), 'utf8');
 const postActions = fs.readFileSync(path.join(repo, 'src', 'features', 'post-actions.js'), 'utf8');
-const settings = fs.readFileSync(path.join(repo, 'src', 'features', 'settings.js'), 'utf8');
-const profile = fs.readFileSync(path.join(repo, 'src', 'features', 'profile-view.js'), 'utf8');
+const settings = fs.readFileSync(path.join(repo, 'src', 'features', 'settings', 'settings.js'), 'utf8');
+const profile = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'profile-view.js'), 'utf8');
 
-assert.strictEqual(files.length, 468, 'index.html plus 240 extracted modules must be audited after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(files.length, 470, 'index.html plus 240 extracted modules must be audited after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((source.match(/navigator\.clipboard\.writeText\(/g) || []).length, 7, 'seven clipboard writeText calls must remain');
 assert.strictEqual((source.match(/document\.execCommand\(['"]copy['"]\)/g) || []).length, 1, 'one legacy copy fallback must remain');
 assert(messages.includes('async function copyMsg(id, text)'), 'message copy helper must remain');

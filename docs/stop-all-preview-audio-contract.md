@@ -19,6 +19,6 @@ The harness is static and deterministic. It does not instantiate audio, play med
 
 ## References
 
-1. [`stop-all-preview-audio.js`](../src/features/stop-all-preview-audio.js)
+1. [`stop-all-preview-audio.js`](../src/features/notes/stop-all-preview-audio.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

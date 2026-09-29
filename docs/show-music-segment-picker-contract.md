@@ -23,7 +23,7 @@ The extracted `src/features/show-music-segment-picker.js` module remains unchang
 
 ## References
 
-1. [`show-music-segment-picker.js`](../src/features/show-music-segment-picker.js)
+1. [`show-music-segment-picker.js`](../src/features/notes/show-music-segment-picker.js)
 2. [`cancel-segment-picker-contract.md`](./cancel-segment-picker-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

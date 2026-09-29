@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'local-ai-response.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'local-ai-response.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'function getLocalAIResponse(text)',
@@ -29,7 +30,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Local AI marker missing: ${marker}`);
 }
-assert(html.includes('src/features/local-ai-response.js'), 'Local AI module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/ai/local-ai-response.js"'), 'Local AI module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: ai demand loading */
 assert(!source.includes('db.from('), 'Local AI fallback must not own database writes');
 assert(!source.includes('window.location'), 'Local AI fallback must not execute navigation');
 assert(!source.includes('sendMessage'), 'Local AI fallback must not send messages');
@@ -37,5 +38,5 @@ assert.strictEqual((source.match(/function getLocalAIResponse\(/g) || []).length
 
 console.log('LOCAL_AI_RESPONSE_CONTRACT_HARNESS=PASS');
 console.log('NORMALIZE_CONTENT_IDENTITY_HELP_PERSONALIZATION_DEFAULT_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/local-ai-response.js');
+console.log('MODULE_OWNER=src/features/ai/local-ai-response.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile-customizer.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'profile-customizer.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'const PROFILE_THEMES = [',
@@ -28,12 +29,12 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Profile customizer marker missing: ${marker}`);
 }
-assert(html.includes('src/features/profile-customizer.js'), 'Profile customizer module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/profile/profile-customizer.js"'), 'Profile customizer module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: profile demand loading */
 assert.strictEqual((source.match(/function showProfileCustomizer\(/g) || []).length, 1, 'Profile customizer renderer must have one module owner');
 assert.strictEqual((source.match(/function setProfileTheme\(/g) || []).length, 1, 'Profile theme setter must have one module owner');
 assert.strictEqual((source.match(/function claimVerifiedPlus\(/g) || []).length, 1, 'Verified Plus helper must have one module owner');
 
 console.log('PROFILE_CUSTOMIZER_CONTRACT_HARNESS=PASS');
 console.log('THEMES_INDEX_GUARD_PERSIST_SYNC_REFRESH_VERIFIED_PLUS=LOCKED');
-console.log('MODULE_OWNER=src/features/profile-customizer.js');
+console.log('MODULE_OWNER=src/features/profile/profile-customizer.js');
 console.log('PRODUCTION_CHANGE=0');

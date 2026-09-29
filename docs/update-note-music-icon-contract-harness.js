@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'update-note-music-icon.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'update-note-music-icon.js'), 'utf8');
 
 for (const marker of [
   'function updateNoteMusicIcon(playing)',
@@ -20,5 +20,5 @@ assert.strictEqual((source.match(/function updateNoteMusicIcon\(/g) || []).lengt
 
 console.log('UPDATE_NOTE_MUSIC_ICON_CONTRACT_HARNESS=PASS');
 console.log('DOM_GUARD_PLAY_PAUSE_SVG_BRANCHES_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/update-note-music-icon.js');
+console.log('MODULE_OWNER=src/features/notes/update-note-music-icon.js');
 console.log('PRODUCTION_CHANGE=0');

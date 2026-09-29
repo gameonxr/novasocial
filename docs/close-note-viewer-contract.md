@@ -23,7 +23,7 @@ The extracted `src/features/close-note-viewer.js` module remains unchanged in th
 
 ## References
 
-1. [`close-note-viewer.js`](../src/features/close-note-viewer.js)
+1. [`close-note-viewer.js`](../src/features/notes/close-note-viewer.js)
 2. [`notes-contract.md`](./notes-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-preview-play.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'toggle-preview-play.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const searchRenderer = fs.readFileSync(path.join(repo, 'src', 'features', 'search-music-for-note.js'), 'utf8');
+const searchRenderer = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'search-music-for-note.js'), 'utf8');
 
 for (const marker of [
   'function togglePreviewPlay(idx, url)',
@@ -28,5 +28,5 @@ assert.strictEqual((source.match(/function togglePreviewPlay\(/g) || []).length,
 
 console.log('TOGGLE_PREVIEW_PLAY_CONTRACT_HARNESS=PASS');
 console.log('GUARDS_AUDIO_LIFECYCLE_ICON_TRANSITIONS_ENDED_CLEANUP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/toggle-preview-play.js');
+console.log('MODULE_OWNER=src/features/notes/toggle-preview-play.js');
 console.log('PRODUCTION_CHANGE=0');

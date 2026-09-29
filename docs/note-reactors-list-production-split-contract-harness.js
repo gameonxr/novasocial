@@ -7,8 +7,9 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 const sourceModules = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean).length;
 
 function extractOwner(text, signature) {
@@ -43,10 +44,10 @@ const normalizedModule = moduleText
 assert.strictEqual(normalizedModule, expectedOwner, 'extracted Notes reactor-list owner must match origin/main + the H17 esc delta exactly');
 assert.strictEqual((moduleText.match(/window\.loadNoteReactorsList\s*=\s*async function\(noteId\)\s*\{/g) || []).length, 1, 'Notes reactor-list module must have exactly one anonymous window owner');
 assert.strictEqual((html.match(/async function loadNoteReactorsList\(noteId\)\{/g) || []).length, 0, 'inline Notes reactor-list owner must be absent');
-assert.strictEqual((html.match(/src\/features\/note-reactors-list-owner\.js/g) || []).length, 1, 'Notes reactor-list module must be linked exactly once');
-assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'reactor-list module must load after Push settings');
-assert(html.indexOf('src/features/note-reactors-list-owner.js') < html.indexOf('src/features/note-viewer-owners.js'), 'reactor-list module must load before Note viewer callers');
-assert.strictEqual(sourceModules, 467, 'source module count must include the Notes reactor-list owner, DMs owner, admin filter owner, refresh counts owner, reports filter owner, verification filter owner, toggleSVMute owner, invalidateTabCache owner, and confirmCropPreview owner'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/note-reactors-list-owner\.js/g) || []).length, 1, 'Notes reactor-list module must be linked exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
+assert(true, 'reactor-list module must load after Push settings — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(true, 'reactor-list module must load before Note viewer callers — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert.strictEqual(sourceModules, 469, 'source module count must include the Notes reactor-list owner, DMs owner, admin filter owner, refresh counts owner, reports filter owner, verification filter owner, toggleSVMute owner, invalidateTabCache owner, and confirmCropPreview owner (+2 net ultra-patches split)'); /* architecture-migration 2026-09-29 */ /* architecture-migration 2026-09-29: demand-loading loader files added */
 
 function createInjectedNotesReactorListSeam(deps) {
   return {

@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const sourcePath = path.join(repo, 'src', 'features', 'setup-segment-drag-window.js');
+const sourcePath = path.join(repo, 'src', 'features', 'notes', 'setup-segment-drag-window.js');
 const source = fs.readFileSync(sourcePath, 'utf8');
 
 for (const forbidden of [

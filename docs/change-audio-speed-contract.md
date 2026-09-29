@@ -23,7 +23,7 @@ The extracted `src/features/change-audio-speed.js` module remains unchanged in t
 
 ## References
 
-1. [`change-audio-speed.js`](../src/features/change-audio-speed.js)
+1. [`change-audio-speed.js`](../src/features/notes/change-audio-speed.js)
 2. [`notes-audio-contract.md`](./notes-audio-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

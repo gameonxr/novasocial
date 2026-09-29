@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not patch live handlers, r
 
 ## References
 
-1. [`ai-moderation.js`](../src/features/ai-moderation.js)
+1. [`ai-moderation.js`](../src/features/ai/ai-moderation.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

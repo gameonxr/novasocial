@@ -7,6 +7,7 @@ const { execFileSync } = require('child_process');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
   encoding: 'utf8',
@@ -24,7 +25,7 @@ function extractOwner(text) {
 }
 function extractCurrentOwner(text) {
   if (text.includes('async function renderReels(){')) return extractOwner(text);
-  const ownerPath = path.join(repo, 'src', 'features', 'reels-renderer-owner.js');
+  const ownerPath = path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js');
   const moduleText = fs.readFileSync(ownerPath, 'utf8');
   const prefix = 'window.renderReels = ';
   assert(moduleText.startsWith(prefix), 'external renderReels owner must use the classic window assignment');
@@ -88,8 +89,8 @@ const normalizedCurrentOwner = normalize(currentOwner);
 const normalizedOriginOwner = normalize(originOwner);
 const ownerHash = sha(normalizedOriginOwner);
 assert.strictEqual(authorizedH11Revert(authorizedHyg001Reinsert(normalizedCurrentOwner)), normalizedOriginOwner, 'Branch2 renderReels owner must retain exact immutable-origin parity (modulo the two authorized H11 security escapes + the authorized HYG-001 dead-code removal)');
-assert(currentHtml.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'renderer must use the approved classic external linkage');
-assert(fs.existsSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js')), 'external renderer owner module must exist');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'renderer must use the approved external linkage (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: reels demand loading */
+assert(fs.existsSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js')), 'external renderer owner module must exist');
 assert(!currentHtml.includes('async function renderReels(){'), 'renderer inline declaration must be removed after split');
 assert(!normalizedCurrentOwner.includes('navStack'), 'navigation-stack mutation must remain outside renderReels');
 assert(!normalizedCurrentOwner.includes('pushNavState'), 'navigation-stack push must remain outside renderReels');
@@ -436,7 +437,7 @@ function runExtractionCandidateSimulation() {
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
   assert.strictEqual(authorizedH11Revert(authorizedHyg001Reinsert(normalize(candidateNamedOwner))), normalize(originOwner), 'candidate owner body must match immutable origin (modulo the two authorized H11 security escapes + the authorized HYG-001 dead-code removal)');
-  assert.strictEqual(sha(candidateHtml), '17f794290e7e468884867dec9e85eae4c28207d802f2e5cb1b637a1c9ae1f77f', 'candidate HTML hash must remain pinned after the nova-ultra-patches split' /* architecture-migration 2026-09-29: discover features demand-loaded — tags removed */);
+  assert.strictEqual(sha(candidateHtml), 'd0d93f91136d828a60f882c7844f46629c351c2820385455e4a22b8b787d5c90', 'candidate HTML hash must remain pinned after the nova-ultra-patches split' /* architecture-migration 2026-09-29: settings/notes/ai/reels/explore/profile demand-loaded — tags removed */);
   return {
     ownerSource: candidateNamedOwner,
     moduleSha256: sha(moduleText),

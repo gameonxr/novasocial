@@ -20,7 +20,7 @@ const actualKeys = [...new Set(matches)].sort();
 const unexpected = actualKeys.filter((key) => !expectedKeys.includes(key));
 const missing = expectedKeys.filter((key) => !actualKeys.includes(key));
 
-assert.strictEqual(files.length, 468, 'index.html plus 240 extracted modules must be audited after the DMs renderer split'); /* architecture-migration 2026-09-30: demand-loading loader files added */ /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(files.length, 470, 'index.html plus 240 extracted modules must be audited after the DMs renderer split'); /* architecture-migration 2026-09-30: demand-loading loader files added */ /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((source.match(/sessionStorage\./g) || []).length, 0, 'sessionStorage must remain unused');
 assert.strictEqual(actualKeys.length, 30, '30 literal localStorage keys must remain'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.deepStrictEqual(unexpected, [], 'no unexpected literal localStorage keys may appear');

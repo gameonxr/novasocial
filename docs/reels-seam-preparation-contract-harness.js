@@ -6,12 +6,13 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const mainHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
-const windowingModulePath = path.join(repo, 'src', 'features', 'reels-video-windowing.js');
+const windowingModulePath = path.join(repo, 'src', 'features', 'reels', 'reels-video-windowing.js');
 const windowingModule = fs.readFileSync(windowingModulePath, 'utf8');
-const rendererModulePath = path.join(repo, 'src', 'features', 'reels-renderer-owner.js');
+const rendererModulePath = path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js');
 const rendererModule = fs.readFileSync(rendererModulePath, 'utf8');
 const rendererSurface = `${html}\n${rendererModule}`;
 const browserProofFiles = [
@@ -40,7 +41,7 @@ for (const marker of requiredMarkers) {
   assert(rendererSurface.includes(marker) || windowingModule.includes(marker), `Reels seam marker must remain in the renderer owner or extracted windowing module: ${marker}`);
 }
 assert(rendererModule.startsWith('window.renderReels = async function(){'), 'renderReels must be the approved classic external owner');
-assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'renderReels external linkage must be present');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'renderReels external linkage must be present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: reels demand loading */
 assert(rendererSurface.includes("const existingContainer = document.getElementById('reels-persistent-container');"), 'persistent-container lookup must remain');
 assert(rendererSurface.includes('if (isSettling)'), 'new swipe must force-complete an in-flight settle');
 assert(rendererSurface.includes('100 / count'), 'restore math must use live child count');

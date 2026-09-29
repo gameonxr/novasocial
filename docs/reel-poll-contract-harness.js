@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const sourcePath = path.join(repo, 'src', 'features', 'reel-poll.js');
+const sourcePath = path.join(repo, 'src', 'features', 'reels', 'reel-poll.js');
 const source = fs.readFileSync(sourcePath, 'utf8');
 
 for (const forbidden of [

@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'close-note-viewer.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'close-note-viewer.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'function closeNoteViewer()',
@@ -18,7 +19,7 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Close note viewer marker missing: ${marker}`);
 }
-assert(html.includes('src/features/close-note-viewer.js'), 'Close note viewer module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/notes/close-note-viewer.js"'), 'Close note viewer module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
 assert(!source.includes('fetch('), 'Close note viewer must not own network requests');
 assert(!source.includes('supabase'), 'Close note viewer must not own remote data access');
 assert(!source.includes('render'), 'Close note viewer must not own note rendering');
@@ -26,5 +27,5 @@ assert.strictEqual((source.match(/function closeNoteViewer\(/g) || []).length, 1
 
 console.log('CLOSE_NOTE_VIEWER_CONTRACT_HARNESS=PASS');
 console.log('AUDIO_PAUSE_FADE_DELAYED_REMOVAL_CLEANUP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/close-note-viewer.js');
+console.log('MODULE_OWNER=src/features/notes/close-note-viewer.js');
 console.log('PRODUCTION_CHANGE=0');

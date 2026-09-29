@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'save-recent-music.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'save-recent-music.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'function saveRecentMusic(title, artist, artwork, previewUrl)',
@@ -19,7 +20,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Recent music marker missing: ${marker}`);
 }
-assert(html.includes('src/features/save-recent-music.js'), 'Recent music module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/notes/save-recent-music.js"'), 'Recent music module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
 assert(!source.includes('db.from('), 'Recent music helper must not own database writes');
 assert(!source.includes('play'), 'Recent music helper must not own playback');
 assert(!source.includes('search'), 'Recent music helper must not own search');
@@ -27,5 +28,5 @@ assert.strictEqual((source.match(/function saveRecentMusic\(/g) || []).length, 1
 
 console.log('RECENT_MUSIC_PERSISTENCE_CONTRACT_HARNESS=PASS');
 console.log('KEY_DEDUP_ORDER_METADATA_CAP_FAILURE_TOLERANCE=LOCKED');
-console.log('MODULE_OWNER=src/features/save-recent-music.js');
+console.log('MODULE_OWNER=src/features/notes/save-recent-music.js');
 console.log('PRODUCTION_CHANGE=0');

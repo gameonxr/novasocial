@@ -16,7 +16,7 @@ function walk(dir) {
 }
 walk(path.join(repo, 'src'));
 const sourceText = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
-const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
 const protectedSignatures = [
   'async function renderDMs()',
   'function openChat(',
@@ -44,7 +44,7 @@ for (const signature of protectedSignatures) {
   const expectedBranch2Count = approvedBranch2Splits.has(signature) ? 0 : 1;
   assert.strictEqual(branch2Html.split(signature).length - 1, expectedBranch2Count, `Branch2 protected signature count mismatch: ${signature}`);
   assert.strictEqual(mainHtml.split(signature).length - 1, 1, `origin/main must contain exactly one protected signature: ${signature}`);
-  if (signature === 'async function submitNote()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must exist');
+  if (signature === 'async function submitNote()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must exist');
 if (signature === 'async function renderReels()') {
     assert(sourceText.includes('window.renderReels = async function(){'), 'approved Reels owner must be present in src as a classic global');
   } else if (signature === 'function reactToNote(') {
@@ -76,7 +76,7 @@ const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
-const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module must expose the global owner');
 assert(branch2Html.indexOf('src/features/spawn-like-particles.js') < branch2Html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');

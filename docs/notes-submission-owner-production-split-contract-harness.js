@@ -6,7 +6,8 @@ const vm = require('vm');
 const { execFileSync } = require('child_process');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const currentHtml = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8');
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
 const authorization = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-owner-production-authorization-addendum.md'), 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'notes-submission-owner-production-split-contract.md'), 'utf8');
@@ -35,7 +36,7 @@ assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\
 assert.strictEqual(sha(originOwner), 'f876963b27ad8661f0609e0dce77d55294e1017d03c88f4c5b9e2bae5de91173', 'origin owner hash must remain pinned');
 assert.strictEqual((currentHtml.match(/async function submitNote\(\)\{/g) || []).length, 0, 'inline submitNote owner must be absent');
 assert.strictEqual((moduleText.match(/window\.submitNote\s*=\s*async function submitNote\(\)\{/g) || []).length, 1, 'external submitNote owner must occur once');
-assert.strictEqual((currentHtml.match(/src\/features\/notes-submission-owner\.js/g) || []).length, 1, 'external linkage must occur exactly once');
+assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-submission-owner\.js/g) || []).length, 1, 'external linkage must occur exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
 assert(authorization.includes('FEATURE_AUTHORIZATION=EXPLICIT_BOUNDED_PRODUCTION_EXTRACTION'), 'authorization must be explicit and bounded');
 assert(authorization.includes('PRODUCTION_DECISION=AUTHORIZED_CONDITIONAL_ON_ALL_GATES'), 'authorization must be conditional on all gates');
 assert(contract.includes('PRODUCTION_SPLIT=REQUIRED'), 'production contract must require split');

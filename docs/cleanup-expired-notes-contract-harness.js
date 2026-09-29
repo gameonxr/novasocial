@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'features', 'cleanup-expired-notes.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'features', 'notes', 'cleanup-expired-notes.js') /* architecture-migration 2026-09-29: family folder */, 'utf8');
 
 for (const marker of [
   'async function cleanupExpiredNotes()',
@@ -35,5 +35,5 @@ assert(!source.includes('navigator.mediaDevices'), 'cleanup must not own recordi
 
 console.log('CLEANUP_EXPIRED_NOTES_CONTRACT_HARNESS=PASS');
 console.log('ONE_SHOT_QUERY_BOUND_MEDIA_RELATED_DATA_NOTE_DELETE_ERROR_BOUNDARY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/cleanup-expired-notes.js');
+console.log('MODULE_OWNER=src/features/notes/cleanup-expired-notes.js');
 console.log('PRODUCTION_CHANGE=0');

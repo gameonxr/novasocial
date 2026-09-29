@@ -8,7 +8,7 @@ const index = read('index.html');
 const saveModule = read('src/features/save-account-session.js');
 const getSaved = read('src/features/get-saved-accounts.js');
 const switchTo = read('src/features/switch-to-account.js');
-const avatar = read('src/features/update-account-avatar.js');
+const avatar = read('src/features/profile/update-account-avatar.js');
 
 assert(getSaved.includes("localStorage.getItem('nova_accounts')"), 'saved-account reader must use nova_accounts');
 assert(getSaved.includes("||'[]'"), 'saved-account reader must use an empty-array fallback');

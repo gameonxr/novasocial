@@ -19,7 +19,7 @@ The harness is static and deterministic. It does not create audio, mutate notes,
 
 ## References
 
-1. [`confirm-music-segment.js`](../src/features/confirm-music-segment.js)
-2. [`show-music-segment-picker.js`](../src/features/show-music-segment-picker.js)
+1. [`confirm-music-segment.js`](../src/features/notes/confirm-music-segment.js)
+2. [`show-music-segment-picker.js`](../src/features/notes/show-music-segment-picker.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

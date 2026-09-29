@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'settings-appearance.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'settings', 'settings-appearance.js'), 'utf8');
 
 for (const marker of [
   'function showSettingsAppearance()',
@@ -27,5 +27,5 @@ assert(!source.includes('supabase'), 'Settings appearance must not own persisten
 
 console.log('SETTINGS_APPEARANCE_CONTRACT_HARNESS=PASS');
 console.log('MODAL_TITLE_FOUR_ROWS_THEME_CUSTOMIZER_DELEGATES_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/settings-appearance.js');
+console.log('MODULE_OWNER=src/features/settings/settings-appearance.js');
 console.log('PRODUCTION_CHANGE=0');

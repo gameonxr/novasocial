@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not create audio or trigger aut
 
 ## References
 
-1. [`auto-play-note-music.js`](../src/features/auto-play-note-music.js)
-2. [`toggle-note-music-manual.js`](../src/features/toggle-note-music-manual.js)
+1. [`auto-play-note-music.js`](../src/features/notes/auto-play-note-music.js)
+2. [`toggle-note-music-manual.js`](../src/features/notes/toggle-note-music-manual.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

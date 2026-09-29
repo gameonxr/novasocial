@@ -33,6 +33,6 @@ The standalone harness must pass with the repository contract suite, protected-i
 
 ## References
 
-1. [`reel-poll.js`](../src/features/reel-poll.js)
+1. [`reel-poll.js`](../src/features/reels/reel-poll.js)
 2. [`reels-seam-preparation-contract.md`](./reels-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

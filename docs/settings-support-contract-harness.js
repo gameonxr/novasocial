@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'settings-support.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'settings', 'settings-support.js'), 'utf8');
 
 for (const marker of [
   'function showSettingsSupport()',
@@ -36,5 +36,5 @@ assert(!source.includes('supabase'), 'Settings support must not own persistence'
 
 console.log('SETTINGS_SUPPORT_CONTRACT_HARNESS=PASS');
 console.log('MODAL_TITLE_SIX_ROWS_SUPPORT_DELEGATES_TOAST_POLICY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/settings-support.js');
+console.log('MODULE_OWNER=src/features/settings/settings-support.js');
 console.log('PRODUCTION_CHANGE=0');

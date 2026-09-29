@@ -39,7 +39,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`send-note-reply.js`](../src/features/send-note-reply.js)
+1. [`send-note-reply.js`](../src/features/notes/send-note-reply.js)
 2. [`dm-seam-preparation-contract.md`](./dm-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

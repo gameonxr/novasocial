@@ -23,7 +23,7 @@ The extracted `src/features/select-note-music-result.js` module remains unchange
 
 ## References
 
-1. [`select-note-music-result.js`](../src/features/select-note-music-result.js)
+1. [`select-note-music-result.js`](../src/features/notes/select-note-music-result.js)
 2. [`show-music-segment-picker-contract.md`](./show-music-segment-picker-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

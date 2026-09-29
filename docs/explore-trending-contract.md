@@ -41,8 +41,8 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`explore.js`](../src/features/explore.js)
-2. [`trending.js`](../src/features/trending.js)
+1. [`explore.js`](../src/features/explore/explore.js)
+2. [`trending.js`](../src/features/explore/trending.js)
 3. [`block-list-contract.md`](./block-list-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

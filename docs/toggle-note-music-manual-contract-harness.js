@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-note-music-manual.js'), 'utf8');
-const autoplay = fs.readFileSync(path.join(repo, 'src', 'features', 'auto-play-note-music.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'toggle-note-music-manual.js'), 'utf8');
+const autoplay = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'auto-play-note-music.js'), 'utf8');
 
 for (const marker of [
   'function toggleNoteMusicManual(url, startSec)',
@@ -23,5 +23,5 @@ assert.strictEqual((source.match(/function toggleNoteMusicManual\(/g) || []).len
 
 console.log('TOGGLE_NOTE_MUSIC_MANUAL_CONTRACT_HARNESS=PASS');
 console.log('ACTIVE_PAUSE_ICON_RESET_EARLY_RETURN_AUTOPLAY_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/toggle-note-music-manual.js');
+console.log('MODULE_OWNER=src/features/notes/toggle-note-music-manual.js');
 console.log('PRODUCTION_CHANGE=0');

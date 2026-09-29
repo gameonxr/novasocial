@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'open-note-creator.js'), 'utf8');
-const music = fs.readFileSync(path.join(repo, 'src', 'features', 'render-note-music-section.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'open-note-creator.js'), 'utf8');
+const music = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'render-note-music-section.js'), 'utf8');
 
 for (const marker of [
   'function openNoteCreator()',
@@ -30,5 +30,5 @@ assert.strictEqual((source.match(/function openNoteCreator\(/g) || []).length, 1
 
 console.log('OPEN_NOTE_CREATOR_CONTRACT_HARNESS=PASS');
 console.log('MODAL_MODE_STATE_INIT_DRAFT_ESCAPE_COMPOSER_CONTROLS_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/open-note-creator.js');
+console.log('MODULE_OWNER=src/features/notes/open-note-creator.js');
 console.log('PRODUCTION_CHANGE=0');

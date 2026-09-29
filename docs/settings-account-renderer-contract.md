@@ -33,6 +33,6 @@ The standalone harness must pass with contract-artifact pairing, settings/accoun
 
 ## References
 
-1. [`settings-account.js`](../src/features/settings-account.js)
+1. [`settings-account.js`](../src/features/settings/settings-account.js)
 2. [`settings-privacy-contract.md`](./settings-privacy-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

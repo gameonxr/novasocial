@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not open a modal, mutate notes,
 
 ## References
 
-1. [`open-note-creator.js`](../src/features/open-note-creator.js)
-2. [`render-note-music-section.js`](../src/features/render-note-music-section.js)
+1. [`open-note-creator.js`](../src/features/notes/open-note-creator.js)
+2. [`render-note-music-section.js`](../src/features/notes/render-note-music-section.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

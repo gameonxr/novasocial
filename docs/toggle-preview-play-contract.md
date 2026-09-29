@@ -21,7 +21,7 @@ The harness is static and deterministic. It does not create audio or play media.
 
 ## References
 
-1. [`toggle-preview-play.js`](../src/features/toggle-preview-play.js)
+1. [`toggle-preview-play.js`](../src/features/notes/toggle-preview-play.js)
 2. [`reset-preview-icon-contract.md`](./reset-preview-icon-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

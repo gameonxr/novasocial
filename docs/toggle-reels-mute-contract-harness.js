@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-reels-mute.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'toggle-reels-mute.js'), 'utf8');
 
 for (const marker of [
   'function toggleReelsMute()',
@@ -25,5 +25,5 @@ assert.strictEqual((source.match(/function toggleReelsMute\(/g) || []).length, 1
 
 console.log('TOGGLE_REELS_MUTE_CONTRACT_HARNESS=PASS');
 console.log('STATE_INVERSION_CURRENT_VIDEO_GUARD_PLAYBACK_ICON_TOAST_PROTECTED_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/toggle-reels-mute.js');
+console.log('MODULE_OWNER=src/features/reels/toggle-reels-mute.js');
 console.log('PRODUCTION_CHANGE=0');

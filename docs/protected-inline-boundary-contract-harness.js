@@ -9,13 +9,13 @@ const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
-const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
-const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
-const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
-const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
+const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
+const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
 const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
-const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 
 const protectedMarkers = [
   'function maybeShowPushPermissionBanner()',
@@ -119,14 +119,14 @@ const scriptMarkers = [
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
-  '<script src="src/features/note-reactors-list-owner.js"></script>',
-  '<script src="src/features/note-viewer-owners.js"></script>',
-  '<script src="src/features/note-deletion-owner.js"></script>',
+  '<script src="src/features/toggle-sv-mute-owner.js"></script>',
+  '<script src="src/features/invalidate-tab-cache-owner.js"></script>',
+  '<script src="src/features/confirm-crop-preview-owner.js"></script>',
   '<script src="src/features/story-editor-owners.js"></script>',
-  '<script src="src/features/like-effects.js"></script>'
+  '<script src="src/features/like-effects.js"></script>',
 ];
 const positions = scriptMarkers.map(marker => html.indexOf(marker));
-assert(positions.every(position => position >= 0), 'required trailing scripts must remain present');
+assert(positions.every(position => position >= 0), 'required trailing scripts must remain present'); /* architecture-migration 2026-09-29: notes owner files + refresh-profile-counts owner are demand-loaded via manifest (removed from trailing HTML) */
 assert(positions.every((position, index) => index === 0 || positions[index - 1] < position), 'trailing script order must remain unchanged');
 
 const sourceFiles = fs.readdirSync(path.join(repo, 'docs')).filter(name => name.endsWith('-contract.md') || name.endsWith('-contract-harness.js'));

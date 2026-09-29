@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'reel-like-helper.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reel-like-helper.js'), 'utf8');
 
 for (const marker of [
   'function dblLikeReel(pid, cont)',
@@ -26,5 +26,5 @@ assert.strictEqual((source.match(/function dblLikeReel\(/g) || []).length, 1, 'R
 
 console.log('REEL_LIKE_HELPER_CONTRACT_HARNESS=PASS');
 console.log('LIKED_GUARD_TOGGLE_DELEGATION_SIX_HEARTS_TIMING_STYLE_CLEANUP_PROTECTED_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/reel-like-helper.js');
+console.log('MODULE_OWNER=src/features/reels/reel-like-helper.js');
 console.log('PRODUCTION_CHANGE=0');

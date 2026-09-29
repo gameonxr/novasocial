@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'follow-list.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'follow-list.js'), 'utf8');
 
 for (const marker of [
   'async function showFollowList(userId, type)',
@@ -37,5 +37,5 @@ assert(!source.includes('deleteAccount'), 'Follow list must not own account dele
 
 console.log('FOLLOW_LIST_CONTRACT_HARNESS=PASS');
 console.log('MODAL_QUERY_INVERSION_LOADING_EMPTY_PROFILE_NAV_OPTIMISTIC_FOLLOW_PERSISTENCE_NOTIFICATION_ERROR_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/follow-list.js');
+console.log('MODULE_OWNER=src/features/profile/follow-list.js');
 console.log('PRODUCTION_CHANGE=0');

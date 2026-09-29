@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-ghost-mode.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'toggle-ghost-mode.js'), 'utf8');
 
 for (const marker of [
   'async function toggleGhostMode()',
@@ -25,5 +25,5 @@ assert(!source.includes('renderReels'), 'Ghost Mode must not own the protected R
 
 console.log('TOGGLE_GHOST_MODE_CONTRACT_HARNESS=PASS');
 console.log('INVERSION_PROFILE_UPDATE_LOCAL_SYNC_STATUS_TEXT_CONDITIONAL_TOAST_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/toggle-ghost-mode.js');
+console.log('MODULE_OWNER=src/features/profile/toggle-ghost-mode.js');
 console.log('PRODUCTION_CHANGE=0');

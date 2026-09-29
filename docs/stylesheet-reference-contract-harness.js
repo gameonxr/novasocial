@@ -6,6 +6,7 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const styles = fs.readdirSync(path.join(repo, 'src/styles')).filter(name => name.endsWith('.css')).sort();
 
 assert.strictEqual(styles.length, 18, 'all 18 extracted stylesheets must remain present');
@@ -20,7 +21,7 @@ for (const name of styles) {
 assert.deepStrictEqual(missing, [], 'no extracted stylesheet may be unreferenced');
 assert.deepStrictEqual(duplicates, [], 'no extracted stylesheet may be linked more than once');
 assert(!html.includes('async function renderDMs('), 'approved DMs renderer must not remain inline');
-assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'protected Reels renderer external linkage must remain present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: reels demand loading */
 
 console.log('STYLESHEET_REFERENCE_HARNESS=PASS');
 console.log(`STYLESHEETS=${styles.length}`);

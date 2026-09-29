@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'features', 'show-edit.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'features', 'settings', 'show-edit.js'), 'utf8');
 
 for (const marker of [
   'function showEdit()',
@@ -36,5 +36,5 @@ assert(!source.includes('navigator.mediaDevices'), 'show-edit must not own media
 
 console.log('SHOW_EDIT_CONTRACT_HARNESS=PASS');
 console.log('SETTINGS_HUB_MODAL_ROUTES_ROLE_GATED_ADMIN_LOGOUT_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/show-edit.js');
+console.log('MODULE_OWNER=src/features/settings/show-edit.js');
 console.log('PRODUCTION_CHANGE=0');

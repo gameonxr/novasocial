@@ -6,12 +6,13 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const moduleDirs = ['src/core', 'src/components', 'src/features', 'src/loaders'];
 /* architecture-migration 2026-09-29: recursive scan — feature files live in feature subfolders; loaders dir added */
 const walkModules = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walkModules(path.join(dir, e.name)) : (e.name.endsWith('.js') ? [path.join(dir, e.name)] : []));
 const modules = moduleDirs.flatMap(dir => walkModules(path.join(repo, dir))).map(f => path.relative(repo, f).split(path.sep).join('/')).sort();
 
-assert.strictEqual(modules.length, 467, 'all extracted JavaScript modules must remain present (463 feature/core/component files + 4 loader files)');
+assert.strictEqual(modules.length, 469, 'all extracted JavaScript modules must remain present (463 feature/core/component files + 4 loader files)'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 
 /* architecture-migration 2026-09-29: a module is referenced when it appears as a startup
    script tag OR as an entry in the feature manifest (demand-loaded chunks). */
@@ -35,11 +36,13 @@ const corePositions = modules.filter(modulePath => modulePath.startsWith('src/co
 const inlinePosition = html.indexOf('<script>');
 assert(corePositions.every(position => position >= 0 && position < inlinePosition), 'all core modules must load before inline application code');
 
-const trailing = ['nova-init.js', 'spawn-like-particles.js', 'sync-local-deletion-fallback.js', 'push-settings.js', 'note-reactors-list-owner.js', 'note-viewer-owners.js', 'note-deletion-owner.js', 'story-editor-owners.js', 'reels-video-windowing.js', 'like-effects.js'].map(name => html.lastIndexOf(`<script src="src/features/${name}"></script>`));
+/* architecture-migration 2026-09-29: notes/reels owner files are demand-loaded — the
+   startup trailing set is now the post-inline startup tail */
+const trailing = ['nova-init.js', 'spawn-like-particles.js', 'sync-local-deletion-fallback.js', 'push-settings.js', 'toggle-sv-mute-owner.js', 'invalidate-tab-cache-owner.js', 'confirm-crop-preview-owner.js', 'story-editor-owners.js', 'like-effects.js'].map(name => html.lastIndexOf(`<script src="src/features/${name}"></script>`));
 assert(trailing.every(position => position >= 0), 'required trailing script references must remain present');
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order must remain unchanged');
 assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
-assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'protected Reels renderer external linkage must remain present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
 
 console.log('MODULE_SCRIPT_REFERENCE_HARNESS=PASS');
 console.log(`MODULES=${modules.length}`);

@@ -6,6 +6,7 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const ids = [];
 const tagPattern = /<[A-Za-z][^>]*\bid\s*=\s*["']([^"']+)["'][^>]*>/g;
 let match;
@@ -20,7 +21,7 @@ assert.deepStrictEqual(duplicates, [], 'static HTML markup must not duplicate el
 assert(!html.includes('function createPeerConnection('), 'approved Calls/WebRTC peer owner must be absent from inline HTML');
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer module owner must remain present');
 assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
-assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'protected Reels renderer external linkage must remain present');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'protected Reels renderer external linkage must remain present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: reels demand loading */
 
 console.log('STATIC_HTML_ID_HARNESS=PASS');
 console.log(`STATIC_IDS=${ids.length}`);

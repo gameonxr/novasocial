@@ -19,6 +19,6 @@ The harness is static and does not open Reels, play media, or alter playback sta
 
 ## References
 
-1. [`toggle-reels-mute.js`](../src/features/toggle-reels-mute.js)
+1. [`toggle-reels-mute.js`](../src/features/reels/toggle-reels-mute.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

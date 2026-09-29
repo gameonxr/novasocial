@@ -22,7 +22,7 @@ assert.strictEqual(new Set(protectedNames).size, 14, 'protected declaration set 
 const source = fs.readdirSync(path.join(repo, 'src'), { recursive: true }).filter(file => String(file).endsWith('.js'));
 for (const name of protectedNames.filter(name => name !== 'submitNote' && name !== 'toggleRecording' && name !== 'createPeerConnection' && name !== 'openChat')) {
   if (name === 'reactToNote') {
-    const reactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+    const reactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
     assert(reactionModule.includes('window.reactToNote = function reactToNote('), 'reactToNote must be externalized as a classic global');
     continue;
   }

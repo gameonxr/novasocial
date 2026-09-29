@@ -3,10 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const autoplay = fs.readFileSync(path.join(repo, 'src', 'features', 'auto-play-note-music.js'), 'utf8');
-const manual = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-note-music-manual.js'), 'utf8');
-const next = fs.readFileSync(path.join(repo, 'src', 'features', 'play-next-audio.js'), 'utf8');
-const cleanup = fs.readFileSync(path.join(repo, 'src', 'features', 'stop-all-preview-audio.js'), 'utf8');
+const autoplay = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'auto-play-note-music.js'), 'utf8');
+const manual = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'toggle-note-music-manual.js'), 'utf8');
+const next = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'play-next-audio.js'), 'utf8');
+const cleanup = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'stop-all-preview-audio.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 const autoplayMarkers = [
@@ -36,8 +36,10 @@ assert(next.includes('allAudios[i+1].play()'), 'Next-audio helper must play the 
 assert(cleanup.includes('function stopAllPreviewAudio()'), 'Preview cleanup helper must remain present');
 assert(cleanup.includes('_previewAudio.pause()'), 'Preview cleanup must pause active preview audio');
 assert(cleanup.includes('_previewPlayingIdx = null'), 'Preview cleanup must reset preview index');
+/* architecture-migration 2026-09-29: notes family is demand-loaded — 'linked' means present in the feature manifest */
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8');
 for (const file of ['auto-play-note-music.js', 'toggle-note-music-manual.js', 'play-next-audio.js', 'stop-all-preview-audio.js']) {
-  assert(html.includes(`src/features/${file}`), `${file} must remain linked from HTML`);
+  assert(featureManifestSrc.includes(`src/features/notes/${file}`), `${file} must remain linked (feature manifest — demand-loaded)`);
 }
 assert.strictEqual((autoplay.match(/function autoPlayNoteMusic\(/g) || []).length, 1, 'Autoplay helper must have one module owner');
 

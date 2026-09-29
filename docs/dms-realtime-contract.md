@@ -45,6 +45,6 @@ The standalone harness passed. The complete repository validation chain also pas
 ## References
 
 1. [`index.html` DMs implementation](../index.html)
-2. [`notes-bar.js` extracted helper boundary](../src/features/notes-bar.js)
+2. [`notes-bar.js` extracted helper boundary](../src/features/notes/notes-bar.js)
 3. [`CRITICAL_CONTEXT.md`](../../upload/CRITICAL_CONTEXT.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

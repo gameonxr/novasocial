@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'update-my-following-count.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'update-my-following-count.js'), 'utf8');
 
 for (const marker of [
   'async function updateMyFollowingCount(delta)',
@@ -22,5 +22,5 @@ assert.strictEqual((source.match(/async function updateMyFollowingCount\(/g) || 
 
 console.log('UPDATE_MY_FOLLOWING_COUNT_CONTRACT_HARNESS=PASS');
 console.log('GUARDED_LOOKUP_PARSE_DELTA_NONNEGATIVE_CLAMP_DATASET_FORMAT_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/update-my-following-count.js');
+console.log('MODULE_OWNER=src/features/profile/update-my-following-count.js');
 console.log('PRODUCTION_CHANGE=0');

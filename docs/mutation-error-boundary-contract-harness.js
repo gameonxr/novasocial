@@ -5,7 +5,7 @@ const path = require('path');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const comments = fs.readFileSync(path.join(repo, 'src', 'features', 'comments.js'), 'utf8');
-const moderation = fs.readFileSync(path.join(repo, 'src', 'features', 'ai-moderation.js'), 'utf8');
+const moderation = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'ai-moderation.js') /* architecture-migration 2026-09-29: ai family folder */, 'utf8');
 
 function functionBlock(source, signature) {
   const start = source.indexOf(signature);

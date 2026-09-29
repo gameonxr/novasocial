@@ -18,6 +18,6 @@ The controller treats empty results as a no-op and catches failures as non-criti
 
 ## References
 
-1. [`cleanup-expired-notes.js`](../src/features/cleanup-expired-notes.js)
+1. [`cleanup-expired-notes.js`](../src/features/notes/cleanup-expired-notes.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

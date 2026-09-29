@@ -19,6 +19,6 @@ The harness is static and deterministic. It does not access a browser or play me
 
 ## References
 
-1. [`update-note-music-icon.js`](../src/features/update-note-music-icon.js)
+1. [`update-note-music-icon.js`](../src/features/notes/update-note-music-icon.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

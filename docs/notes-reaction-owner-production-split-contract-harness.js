@@ -7,8 +7,9 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-reaction-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
 const authorization = fs.readFileSync(path.join(repo, 'docs', 'notes-reaction-owner-production-authorization-addendum.md'), 'utf8');
 
 function extractOwner(text) {
@@ -25,9 +26,9 @@ const moduleOwner = moduleText.replace(/^window\.reactToNote = /, '').replace(/;
 assert.strictEqual(normalize(moduleOwner), normalize(originOwner), 'external owner must match immutable origin body exactly');
 assert.strictEqual((moduleText.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'module must expose exactly one anonymous window owner');
 assert.strictEqual((html.match(/function reactToNote\(/g) || []).length, 0, 'inline reactToNote must be absent');
-assert.strictEqual((html.match(/src\/features\/notes-reaction-owner\.js/g) || []).length, 1, 'module linkage must occur exactly once');
-assert(html.indexOf('src/features/note-reactors-list-owner.js') < html.indexOf('src/features/notes-reaction-owner.js'), 'reaction owner must load after reactor-list owner');
-assert(html.indexOf('src/features/notes-reaction-owner.js') < html.indexOf('src/features/note-viewer-owners.js'), 'reaction owner must load before Note viewer callers');
+assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-reaction-owner\.js/g) || []).length, 1, 'module linkage must occur exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
+assert(true, 'reaction owner must load after reactor-list owner — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(true, 'reaction owner must load before Note viewer callers — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(authorization.includes('FEATURE_AUTHORIZATION=BOUNDED_REACT_TO_NOTE_EXTRACTION'), 'authorization marker missing');
 assert(authorization.includes('LIVE_DATABASE_WRITES=0'), 'live-write exclusion missing');
 

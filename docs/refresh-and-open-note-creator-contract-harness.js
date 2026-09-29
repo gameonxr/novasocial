@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-and-open-note-creator.js'), 'utf8');
-const creator = fs.readFileSync(path.join(repo, 'src', 'features', 'open-note-creator.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'refresh-and-open-note-creator.js'), 'utf8');
+const creator = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'open-note-creator.js'), 'utf8');
 
 for (const marker of [
   'async function refreshAndOpenNoteCreator()',
@@ -29,5 +29,5 @@ assert.strictEqual((source.match(/async function refreshAndOpenNoteCreator\(/g) 
 
 console.log('REFRESH_AND_OPEN_NOTE_CREATOR_CONTRACT_HARNESS=PASS');
 console.log('BOUNDED_QUERY_FILTER_ORDER_ASSIGNMENT_DELAYED_OPEN_PROTECTED_DB_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/refresh-and-open-note-creator.js');
+console.log('MODULE_OWNER=src/features/notes/refresh-and-open-note-creator.js');
 console.log('PRODUCTION_CHANGE=0');

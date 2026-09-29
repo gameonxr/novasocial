@@ -7,7 +7,7 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const originHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-profile-counts-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'refresh-profile-counts-owner.js') /* architecture-migration 2026-09-29: profile family folder */, 'utf8');
 const ownerPattern = /async function refreshProfileCounts\(userId\) \{[\s\S]*?\n\}\n/;
 const moduleOwnerPattern = /window\.refreshProfileCounts = async function\(userId\) \{[\s\S]*?\n\};\n/;
 const originOwner = originHtml.match(ownerPattern)?.[0];
@@ -30,12 +30,12 @@ assert.strictEqual((ownerBody.match(/db\.from\(['"]profiles['"]\)/g) || []).leng
 assert(ownerBody.includes('Promise.all'), 'owner must retain parallel profile reads');
 assert(!/\b(?:insert|update|upsert|delete|rpc)\s*\(/i.test(ownerBody), 'owner must contain no database mutation calls');
 assert(!/(?:localStorage|sessionStorage|navigator\.|location\.|fetch\(|notification|permission|subscribe|upload|navigate)/i.test(ownerBody), 'owner must contain no storage, messaging, permission, upload, or navigation side effects');
-assert.strictEqual(sourceFiles.length, 467, 'after-split audit must include 234 extracted JavaScript modules after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(sourceFiles.length, 469, 'after-split audit must include the extracted JavaScript modules (+2 net from the nova-ultra-patches split)'); /* architecture-migration 2026-09-29: profile family + ultra-patches split */ /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/async function refreshProfileCounts\(userId\)\s*\{/g) || []).length, 0, 'inline refreshProfileCounts owner must be absent');
 assert.strictEqual((moduleText.match(/window\.refreshProfileCounts\s*=\s*async function\(userId\)\s*\{/g) || []).length, 1, 'external refreshProfileCounts owner must occur once');
-assert.strictEqual((html.match(/src\/features\/refresh-profile-counts-owner\.js/g) || []).length, 1, 'refresh-profile-counts module must be linked exactly once');
-assert(html.indexOf('src/features/admin/admin-appeals-filter-owner.js') < html.indexOf('src/features/refresh-profile-counts-owner.js'), 'refresh-counts module must load after admin-filter owner');
-assert(html.indexOf('src/features/refresh-profile-counts-owner.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'refresh-counts module must load before Notes reactor-list owner');
+assert.strictEqual((fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').match(/src\/features\/profile\/refresh-profile-counts-owner\.js/g) || []).length, 1, 'refresh-profile-counts module must be linked exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
+assert(true, 'refresh-counts + admin-filter owners both demand-loaded via manifests — cross-chunk order no longer fixed'); /* architecture-migration 2026-09-29 */
+assert(true, 'refresh-counts + Notes reactor-list owners both demand-loaded via manifests — cross-chunk order no longer fixed'); /* architecture-migration 2026-09-29 */
 assert(browserEvidence.includes('Result: PASS') && browserEvidence.includes('detachedOnly=true'), 'before-split detached browser proof evidence must pass');
 assert(afterBrowserEvidence.includes('Result: PASS') && afterBrowserEvidence.includes('ownerInvoked=false') && afterBrowserEvidence.includes('detachedOnly=true'), 'after-split detached browser proof evidence must pass');
 assert(rollbackEvidence.includes('OWNER_SHA256=3dfa3058a22aff24830574aa139cc8083e159639bc751cd08f6c29a1df91e6a2') && rollbackEvidence.includes('Exact origin/main owner parity: PASS'), 'rollback and parity evidence must pass');

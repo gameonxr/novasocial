@@ -18,6 +18,6 @@ This audit is documentation-only. It does not open a modal, navigate settings, l
 
 ## References
 
-1. [`show-edit.js`](../src/features/show-edit.js)
+1. [`show-edit.js`](../src/features/settings/show-edit.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

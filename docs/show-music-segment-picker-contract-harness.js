@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'show-music-segment-picker.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'show-music-segment-picker.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'function showMusicSegmentPicker(title, artist, artwork, previewUrl)',
@@ -28,12 +29,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Show music segment picker marker missing: ${marker}`);
 }
-assert(html.includes('src/features/show-music-segment-picker.js'), 'Show music segment picker module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/notes/show-music-segment-picker.js"'), 'Show music segment picker module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
 assert(!source.includes('fetch('), 'Show music segment picker must not own network requests');
 assert(!source.includes('supabase'), 'Show music segment picker must not own remote data access');
 assert.strictEqual((source.match(/function showMusicSegmentPicker\(/g) || []).length, 1, 'Show music segment picker must have one module owner');
 
 console.log('SHOW_MUSIC_SEGMENT_PICKER_CONTRACT_HARNESS=PASS');
 console.log('CLEANUP_METADATA_PREVIEW_WAVEFORM_DRAG_INIT_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/show-music-segment-picker.js');
+console.log('MODULE_OWNER=src/features/notes/show-music-segment-picker.js');
 console.log('PRODUCTION_CHANGE=0');

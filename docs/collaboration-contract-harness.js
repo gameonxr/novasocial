@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'collaboration.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'collaboration.js'), 'utf8');
 
 for (const marker of [
   'async function showCollabPicker()',
@@ -41,5 +41,5 @@ assert(!source.includes('renderDMs'), 'Collaboration must not own the protected 
 
 console.log('COLLABORATION_CONTRACT_HARNESS=PASS');
 console.log('PICKER_QUERY_LOADING_EMPTY_CACHE_FILTER_SELECTION_TOAST_CLOSE_CREATE_BUTTON_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/collaboration.js');
+console.log('MODULE_OWNER=src/features/profile/collaboration.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -19,6 +19,6 @@
 
 ## References
 
-1. [`trending.js`](../src/features/trending.js)
+1. [`trending.js`](../src/features/explore/trending.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

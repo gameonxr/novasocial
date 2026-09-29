@@ -3,10 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'search-music-for-note.js'), 'utf8');
-const recent = fs.readFileSync(path.join(repo, 'src', 'features', 'render-recent-music-suggestions.js'), 'utf8');
-const preview = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-preview-play.js'), 'utf8');
-const selection = fs.readFileSync(path.join(repo, 'src', 'features', 'select-note-music-result.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'search-music-for-note.js'), 'utf8');
+const recent = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'render-recent-music-suggestions.js'), 'utf8');
+const preview = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'toggle-preview-play.js'), 'utf8');
+const selection = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'select-note-music-result.js'), 'utf8');
 
 for (const marker of [
   'async function searchMusicForNote(q)',
@@ -34,5 +34,5 @@ assert.strictEqual((source.match(/async function searchMusicForNote\(/g) || []).
 
 console.log('SEARCH_MUSIC_FOR_NOTE_CONTRACT_HARNESS=PASS');
 console.log('DEBOUNCE_QUERY_BRANCH_REQUEST_RESULT_ERROR_HANDLER_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/search-music-for-note.js');
+console.log('MODULE_OWNER=src/features/notes/search-music-for-note.js');
 console.log('PRODUCTION_CHANGE=0');

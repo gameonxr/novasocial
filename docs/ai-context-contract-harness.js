@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai-context.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'ai-context.js'), 'utf8');
 
 for (const marker of [
   'let novaAIContext = {',
@@ -41,5 +41,5 @@ assert(!source.includes('invokeLLM'), 'AI context must remain deterministic and 
 
 console.log('AI_CONTEXT_CONTRACT_HARNESS=PASS');
 console.log('SHARED_STATE_MOOD_ORDER_KEYWORDS_LOWERCASE_FIRST_MATCH_NULL_FALLBACK_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/ai-context.js');
+console.log('MODULE_OWNER=src/features/ai/ai-context.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -19,6 +19,6 @@ The harness is static and does not create DOM nodes, send likes, open Reels, or 
 
 ## References
 
-1. [`reel-like-helper.js`](../src/features/reel-like-helper.js)
+1. [`reel-like-helper.js`](../src/features/reels/reel-like-helper.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai-moderation.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'ai-moderation.js') /* architecture-migration 2026-09-29: family folder */, 'utf8');
 
 for (const marker of [
   'function moderateContent(text)',
@@ -37,5 +37,5 @@ assert(!source.includes('sendMessage'), 'AI moderation must not own protected me
 
 console.log('AI_MODERATION_CONTRACT_HARNESS=PASS');
 console.log('DETERMINISTIC_BANNED_WORDS_SEND_COMMENT_GUARD_DELEGATION_FEEDBACK_ULTRA_INIT_MOOD_STORAGE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/ai-moderation.js');
+console.log('MODULE_OWNER=src/features/ai/ai-moderation.js');
 console.log('PRODUCTION_CHANGE=0');

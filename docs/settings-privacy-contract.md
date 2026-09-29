@@ -33,6 +33,6 @@ The standalone harness must pass with contract-artifact pairing, protected-inlin
 
 ## References
 
-1. [`settings-privacy.js`](../src/features/settings-privacy.js)
+1. [`settings-privacy.js`](../src/features/settings/settings-privacy.js)
 2. [`read-receipts-contract.md`](./read-receipts-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

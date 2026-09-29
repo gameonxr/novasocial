@@ -37,7 +37,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`save-recent-music.js`](../src/features/save-recent-music.js)
+1. [`save-recent-music.js`](../src/features/notes/save-recent-music.js)
 2. [`notes-seam-preparation-contract.md`](./notes-seam-preparation-contract.md)
 3. [`visibility-audio-lifecycle-contract.md`](./visibility-audio-lifecycle-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'update-account-avatar.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'profile', 'update-account-avatar.js'), 'utf8');
 
 for (const marker of [
   'function updateAccountAvatar(userId, avatarUrl)',
@@ -20,5 +20,5 @@ assert.strictEqual((source.match(/function updateAccountAvatar\(/g) || []).lengt
 
 console.log('UPDATE_ACCOUNT_AVATAR_CONTRACT_HARNESS=PASS');
 console.log('SAVED_LOOKUP_MATCH_MUTATION_STORAGE_PERSISTENCE_UNKNOWN_NOOP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/update-account-avatar.js');
+console.log('MODULE_OWNER=src/features/profile/update-account-avatar.js');
 console.log('PRODUCTION_CHANGE=0');

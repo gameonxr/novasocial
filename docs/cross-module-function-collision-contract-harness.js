@@ -26,7 +26,7 @@ for (const file of files) {
   });
 }
 const duplicates = [...seen.entries()].filter(([, locations]) => locations.length > 1);
-assert.strictEqual(files.length, 468, 'index.html plus 240 extracted scripts must be audited after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(files.length, 470, 'index.html plus 240 extracted scripts must be audited after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual(seen.size, 467, 'top-level function inventory must reflect the audit fix 9 dead-function removal (addStoryTextMode)');
 assert.deepStrictEqual(duplicates, [], 'classic scripts must not duplicate top-level function names');
 

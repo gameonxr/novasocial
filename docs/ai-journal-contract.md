@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not open the journal, acce
 
 ## References
 
-1. [`ai-journal.js`](../src/features/ai-journal.js)
+1. [`ai-journal.js`](../src/features/ai/ai-journal.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

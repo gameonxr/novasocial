@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'trending.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'explore', 'trending.js'), 'utf8');
 
 for (const marker of [
   'async function _extractAndStoreHashtags(postId, caption)',
@@ -52,5 +52,5 @@ assert(!source.includes('renderReels'), 'Trending must not own the protected Ree
 
 console.log('TRENDING_CONTRACT_HARNESS=PASS');
 console.log('HASHTAG_EXTRACTION_DEDUP_RPC_LINK_QUERY_FALLBACK_RANKING_SEARCH_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/trending.js');
+console.log('MODULE_OWNER=src/features/explore/trending.js');
 console.log('PRODUCTION_CHANGE=0');

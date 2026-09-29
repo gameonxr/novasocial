@@ -21,8 +21,8 @@ The harness is static and deterministic. It does not contact iTunes or mutate th
 
 ## References
 
-1. [`search-music-for-note.js`](../src/features/search-music-for-note.js)
-2. [`render-recent-music-suggestions.js`](../src/features/render-recent-music-suggestions.js)
-3. [`toggle-preview-play.js`](../src/features/toggle-preview-play.js)
+1. [`search-music-for-note.js`](../src/features/notes/search-music-for-note.js)
+2. [`render-recent-music-suggestions.js`](../src/features/notes/render-recent-music-suggestions.js)
+3. [`toggle-preview-play.js`](../src/features/notes/toggle-preview-play.js)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -23,7 +23,7 @@ The extracted `src/features/select-note-visibility.js` module remains unchanged 
 
 ## References
 
-1. [`select-note-visibility.js`](../src/features/select-note-visibility.js)
+1. [`select-note-visibility.js`](../src/features/notes/select-note-visibility.js)
 2. [`note-visibility-contract.md`](./note-visibility-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

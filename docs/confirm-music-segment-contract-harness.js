@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'confirm-music-segment.js'), 'utf8');
-const picker = fs.readFileSync(path.join(repo, 'src', 'features', 'show-music-segment-picker.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'confirm-music-segment.js'), 'utf8');
+const picker = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'show-music-segment-picker.js'), 'utf8');
 
 for (const marker of [
   'function confirmMusicSegment(title, artist, artwork, previewUrl)',
@@ -25,5 +25,5 @@ assert.strictEqual((source.match(/function confirmMusicSegment\(/g) || []).lengt
 
 console.log('CONFIRM_MUSIC_SEGMENT_CONTRACT_HARNESS=PASS');
 console.log('SEGMENT_AUDIO_CLEANUP_STATE_ASSIGNMENT_PANEL_RENDER_RECENTS_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/confirm-music-segment.js');
+console.log('MODULE_OWNER=src/features/notes/confirm-music-segment.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'fab-customization.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'settings', 'fab-customization.js') /* architecture-migration 2026-09-29: family folder */, 'utf8');
 
 for (const marker of [
   'function changeFabSize()',
@@ -35,5 +35,5 @@ assert(!source.includes('supabase'), 'FAB customization must not own remote pers
 
 console.log('FAB_CUSTOMIZATION_CONTRACT_HARNESS=PASS');
 console.log('SIZE_STYLE_CYCLES_DOM_ASSIGNMENTS_STORAGE_TOAST_MENU_CLOSE_BLUR_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/fab-customization.js');
+console.log('MODULE_OWNER=src/features/settings/fab-customization.js');
 console.log('PRODUCTION_CHANGE=0');

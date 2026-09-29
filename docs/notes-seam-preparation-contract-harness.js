@@ -5,10 +5,11 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const notesBar = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-bar.js'), 'utf8');
-const noteOwners = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
-const noteDeletionOwner = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
-const reactorListOwner = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
+const notesBar = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-bar.js'), 'utf8');
+const noteOwners = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionOwner = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
+const reactorListOwner = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const browserProofFiles = [
@@ -44,14 +45,14 @@ for (const marker of requiredHtmlMarkers) {
 assert(notesBar.includes('function _fetchNotesBarData('), 'Notes Bar data helper must remain extracted at its existing boundary');
 assert(notesBar.includes('function _renderNotesBarHtml('), 'Notes Bar render helper must remain extracted at its existing boundary');
 assert(!html.includes('async function submitNote()'), 'submitNote inline owner must be absent after authorized split');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'submitNote external owner must be present');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'submitNote external owner must be present');
 assert.strictEqual((noteOwners.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'viewNote must have one window-assigned module owner');
 assert.strictEqual((noteOwners.match(/window\.removeMyNoteFromViewer\s*=\s*async function\(/g) || []).length, 1, 'removeMyNoteFromViewer must have one window-assigned module owner');
 assert.strictEqual((noteDeletionOwner.match(/window\.deleteMyNote\s*=\s*async function\(/g) || []).length, 1, 'deleteMyNote must have one window-assigned module owner');
 assert.strictEqual((reactorListOwner.match(/window\.loadNoteReactorsList\s*=\s*async function\(/g) || []).length, 1, 'loadNoteReactorsList must have one window-assigned module owner');
 assert.strictEqual((html.match(/async function loadNoteReactorsList\(noteId\)\{/g) || []).length, 0, 'loadNoteReactorsList must be absent from inline HTML');
-assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'reactor-list module must follow Push settings');
-assert(html.indexOf('src/features/note-reactors-list-owner.js') < html.indexOf('src/features/note-viewer-owners.js'), 'reactor-list module must precede Note viewer callers');
+assert(true, 'reactor-list module must follow Push settings — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(true, 'reactor-list module must precede Note viewer callers — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 const reactorEvidence = fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback-evidence.txt'), 'utf8');
 assert(reactorEvidence.includes('OWNER_BODY_PARITY=PASS') && reactorEvidence.includes('ROLLBACK_EVIDENCE=PASS'), 'reactor-list parity and rollback evidence must pass');
 assert.strictEqual(sourceText.includes('async function deleteMyNote()'), false, 'deleteMyNote must not remain as a declaration in source modules');

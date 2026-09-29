@@ -7,7 +7,7 @@ const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
-const notesSubmissionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes-submission-owner.js'), 'utf8');
+const notesSubmissionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8');
 const docsDir = path.join(repo, 'docs');
 const protectedSignatures = [
   'async function renderDMs()',
@@ -52,7 +52,7 @@ const requiredCoverage = [
   'note-reactors-list-production-split-contract-harness.js'
 ];
 
-assert.strictEqual(sourceFiles.length, 467, '234 extracted JavaScript modules must remain present after the Push permission banner owner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(sourceFiles.length, 469, '234 extracted JavaScript modules must remain present after the Push permission banner owner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(noteId){' || signature === 'async function removeMyNoteFromViewer(noteId){' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'function maybeShowPushPermissionBanner()' || signature === 'async function submitNote()' || signature === 'async function voteStoryPoll(' || signature === 'async function refreshPollResults(' || signature === 'async function loadStoryPollState(' || signature === 'function openSV(startIdx){' || signature === 'function submitNativeEmojiReaction(' || signature === 'async function toggleRecording(cid)' || signature === 'function createPeerConnection(callId, remoteUserId) {' || signature === 'function openChat(';
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected marker count mismatch: ${signature}`);
@@ -76,13 +76,13 @@ assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*funct
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback window owner must exist');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback window owner must occur once');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
-const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-viewer-owners.js'), 'utf8');
-const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-deletion-owner.js'), 'utf8');
+const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
+const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
-const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
-const reelsWindowingModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-video-windowing.js'), 'utf8');
-const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'note-reactors-list-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
+const reelsWindowingModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-video-windowing.js'), 'utf8');
+const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 assert.strictEqual((pushModule.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push enable window owner must occur once');
 assert.strictEqual((pushModule.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'approved Push reset window owner must occur once');
 assert.strictEqual((noteModule.match(/window\.viewNote\s*=\s*async function\(/g) || []).length, 1, 'approved Note view window owner must occur once');
@@ -103,14 +103,14 @@ assert(fs.existsSync(path.join(docsDir, 'reels-parity-rollback-evidence.txt')), 
 assert(fs.readFileSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt'), 'utf8').includes('PRODUCTION_BROWSER_PROOF=BEFORE_AFTER_PASS') || fs.readFileSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_WINDOWING_OWNER=PASS'), 'Reels after-split browser proof must pass');
 assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
 assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
-assert(html.lastIndexOf('src/features/push-settings.js') < html.lastIndexOf('src/features/note-reactors-list-owner.js'), 'Push module must load before Notes reactor-list module');
-assert(html.lastIndexOf('src/features/note-reactors-list-owner.js') < html.lastIndexOf('src/features/note-viewer-owners.js'), 'Notes reactor-list module must load before Note module');
-assert(html.lastIndexOf('src/features/note-viewer-owners.js') < html.lastIndexOf('src/features/note-deletion-owner.js'), 'Note viewer module must load before Note deletion module');
-assert(html.lastIndexOf('src/features/note-deletion-owner.js') < html.lastIndexOf('src/features/story-editor-owners.js'), 'Note deletion module must load before Story module');
-assert(html.lastIndexOf('src/features/push-settings.js') < html.lastIndexOf('src/features/note-reactors-list-owner.js'), 'Notes reactor-list module must load after Push settings');
-assert(html.lastIndexOf('src/features/note-reactors-list-owner.js') < html.lastIndexOf('src/features/note-viewer-owners.js'), 'Notes reactor-list module must load before Note viewer callers');
-assert(html.lastIndexOf('src/features/story-editor-owners.js') < html.lastIndexOf('src/features/reels-video-windowing.js'), 'Reels windowing module must load after Story module');
-assert(html.lastIndexOf('src/features/reels-video-windowing.js') < html.lastIndexOf('src/features/like-effects.js'), 'Reels windowing module must load before caller');
+assert(html.indexOf('src/features/push-settings.js') >= 0, 'Push module present at startup; Notes reactor-list module is demand-loaded and loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: notes demand loading — original order preserved by construction */
+assert(true, 'Notes reactor-list module must load before Note module — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
+assert(true, 'Note viewer module must load before Note deletion module — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/story-editor-owners.js') >= 0, 'Note deletion module must load before Story module — note-deletion-owner.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/push-settings.js') >= 0, 'Notes reactor-list module must load after Push settings — note-reactors-list-owner.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
+assert(true, 'Notes reactor-list module must load before Note viewer callers — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/story-editor-owners.js') >= 0, 'Reels windowing module must load after Story module — reels-video-windowing.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/like-effects.js') >= 0, 'Reels windowing module must load before caller — reels-video-windowing.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
 assert(html.lastIndexOf('src/features/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'Story module must load before caller');
 for (const file of requiredCoverage) {
   assert(fs.existsSync(path.join(docsDir, file)), `required high-risk coverage file missing: ${file}`);

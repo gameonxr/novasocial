@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'explore.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'explore', 'explore.js'), 'utf8');
 
 for (const marker of [
   'async function renderExplore()',
@@ -45,5 +45,5 @@ assert(!source.includes('openChat'), 'Explore must not own protected chat naviga
 
 console.log('EXPLORE_CONTRACT_HARNESS=PASS');
 console.log('GENERATION_FALLBACK_BLOCK_FILTER_SEARCH_UI_PILLS_DEBOUNCE_SMART_ROUTING_CAPS_RENDER_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/explore.js');
+console.log('MODULE_OWNER=src/features/explore/explore.js');
 console.log('PRODUCTION_CHANGE=0');

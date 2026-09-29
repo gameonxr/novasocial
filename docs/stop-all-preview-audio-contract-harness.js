@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'stop-all-preview-audio.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'stop-all-preview-audio.js'), 'utf8');
 
 for (const marker of [
   'function stopAllPreviewAudio()',
@@ -21,5 +21,5 @@ assert.strictEqual((source.match(/function stopAllPreviewAudio\(/g) || []).lengt
 
 console.log('STOP_ALL_PREVIEW_AUDIO_CONTRACT_HARNESS=PASS');
 console.log('GUARDED_PAUSE_REFERENCE_CLEAR_INDEX_RESET_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/stop-all-preview-audio.js');
+console.log('MODULE_OWNER=src/features/notes/stop-all-preview-audio.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -19,7 +19,7 @@ The harness intentionally does not connect to Supabase, use a logged-in account,
 
 ## References
 
-1. [`refresh-and-open-note-creator.js`](../src/features/refresh-and-open-note-creator.js)
-2. [`open-note-creator.js`](../src/features/open-note-creator.js)
+1. [`refresh-and-open-note-creator.js`](../src/features/notes/refresh-and-open-note-creator.js)
+2. [`open-note-creator.js`](../src/features/notes/open-note-creator.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

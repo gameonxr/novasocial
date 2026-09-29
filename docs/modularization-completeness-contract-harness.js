@@ -6,9 +6,10 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
-const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels-renderer-owner.js'), 'utf8');
+const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 
 function countFiles(dir, suffix) {
   return fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith(suffix)).length;
@@ -36,7 +37,7 @@ assert(trailingPositions[0] < trailingPositions[1] && trailingPositions[1] < tra
 assert(html.indexOf('<script>') >= 0, 'protected inline application script must remain present');
 assert(!html.includes('async function renderDMs('), 'approved DMs renderer must be absent from inline HTML');
 assert(dmsModule.includes('window.renderDMs = async function(){'), 'approved DMs renderer must be assigned by its production module');
-assert(html.includes('<script src="src/features/reels-renderer-owner.js"></script>'), 'approved Reels renderer linkage remains present');
+assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'approved Reels renderer linkage remains present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
 assert(reelsModule.includes('window.renderReels = async function(){'), 'approved Reels renderer remains available through its external owner');
 assert(!html.includes('function createPeerConnection('), 'approved WebRTC peer helper must be absent from inline HTML');
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved WebRTC peer helper must be assigned by its production module');

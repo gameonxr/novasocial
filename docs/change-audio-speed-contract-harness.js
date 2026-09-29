@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'change-audio-speed.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'change-audio-speed.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'function changeAudioSpeed(btn)',
@@ -22,12 +23,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Change audio speed marker missing: ${marker}`);
 }
-assert(html.includes('src/features/change-audio-speed.js'), 'Change audio speed module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/notes/change-audio-speed.js"'), 'Change audio speed module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
 assert(!source.includes('fetch('), 'Change audio speed must not own network requests');
 assert(!source.includes('supabase'), 'Change audio speed must not own remote data access');
 assert.strictEqual((source.match(/function changeAudioSpeed\(/g) || []).length, 1, 'Change audio speed must have one module owner');
 
 console.log('CHANGE_AUDIO_SPEED_CONTRACT_HARNESS=PASS');
 console.log('GUARD_ONE_ONEHALF_TWO_CYCLE_LABEL_TOAST_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/change-audio-speed.js');
+console.log('MODULE_OWNER=src/features/notes/change-audio-speed.js');
 console.log('PRODUCTION_CHANGE=0');

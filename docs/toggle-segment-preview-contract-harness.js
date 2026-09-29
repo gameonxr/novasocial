@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-segment-preview.js'), 'utf8');
-const picker = fs.readFileSync(path.join(repo, 'src', 'features', 'show-music-segment-picker.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'toggle-segment-preview.js'), 'utf8');
+const picker = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'show-music-segment-picker.js'), 'utf8');
 
 for (const marker of [
   'function toggleSegmentPreview(url)',
@@ -27,5 +27,5 @@ assert.strictEqual((source.match(/function toggleSegmentPreview\(/g) || []).leng
 
 console.log('TOGGLE_SEGMENT_PREVIEW_CONTRACT_HARNESS=PASS');
 console.log('PAUSE_PLAY_REUSE_OFFSET_ERROR_ICON_ENDED_CLEANUP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/toggle-segment-preview.js');
+console.log('MODULE_OWNER=src/features/notes/toggle-segment-preview.js');
 console.log('PRODUCTION_CHANGE=0');
