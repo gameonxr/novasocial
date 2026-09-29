@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not start a timer, query p
 
 ## References
 
-1. [`search-admin-users.js`](../src/features/search-admin-users.js)
+1. [`search-admin-users.js`](../src/features/admin/search-admin-users.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

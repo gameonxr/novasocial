@@ -31,7 +31,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-audit.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-audit.js', 'utf8');
     const start = source.indexOf('window.adminTabAudit = async function adminTabAudit(content){');
     assert(start >= 0, 'audit-tab module owner must remain present');
     const functionBlock = source.slice(start);

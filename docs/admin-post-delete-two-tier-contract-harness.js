@@ -72,19 +72,19 @@ async function runHarness() {
   }
 
   try {
-    const softDeleteModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-soft-delete-post.js', 'utf8');
+    const softDeleteModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-soft-delete-post.js', 'utf8');
     const sdStart = softDeleteModule.indexOf('window.adminSoftDeletePost = async function adminSoftDeletePost(');
     assert(sdStart >= 0, 'soft-delete module owner must remain present');
     const softDeleteBlock = softDeleteModule.slice(sdStart + 'window.adminSoftDeletePost = '.length);
-    const hardDeleteModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-hard-delete-post.js', 'utf8');
+    const hardDeleteModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-hard-delete-post.js', 'utf8');
     const hdStart = hardDeleteModule.indexOf('window.adminHardDeletePost = async function adminHardDeletePost(');
     assert(hdStart >= 0, 'hard-delete module owner must remain present');
     const hardDeleteBlock = hardDeleteModule.slice(hdStart + 'window.adminHardDeletePost = '.length);
-    const recoverModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-recover-post.js', 'utf8');
+    const recoverModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-recover-post.js', 'utf8');
     const rcStart = recoverModule.indexOf('window.adminRecoverPost = async function adminRecoverPost(');
     assert(rcStart >= 0, 'recover module owner must remain present');
     const recoverBlock = recoverModule.slice(rcStart + 'window.adminRecoverPost = '.length);
-    const deletedListModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-admin-deleted-posts.js', 'utf8');
+    const deletedListModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/load-admin-deleted-posts.js', 'utf8');
     const dlStart = deletedListModule.indexOf('window.loadAdminDeletedPosts = async function loadAdminDeletedPosts(');
     assert(dlStart >= 0, 'deleted-posts module owner must remain present');
     const deletedListBlock = deletedListModule.slice(dlStart + 'window.loadAdminDeletedPosts = '.length);

@@ -58,7 +58,7 @@ async function runHarness() {
   }
 
   try {
-    const source = require('fs').readFileSync('/home/z/my-project/novasocial/src/features/search-user-for-promotion.js', 'utf8');
+    const source = require('fs').readFileSync('/home/z/my-project/novasocial/src/features/admin/search-user-for-promotion.js', 'utf8');
     const start = source.indexOf('window.searchUserForPromotion = async function searchUserForPromotion(query){');
     assert(start >= 0, 'searchUserForPromotion module owner must remain present');
     const fnSource = source.slice(start + 'window.searchUserForPromotion = '.length);

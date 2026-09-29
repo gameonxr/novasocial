@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'switch-admin-tab.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'admin', 'switch-admin-tab.js'), 'utf8');
 
 for (const marker of [
   'function switchAdminTab(tab)',
@@ -27,5 +27,5 @@ assert(!source.includes('delete'), 'Switch admin tab must not own destructive ad
 
 console.log('SWITCH_ADMIN_TAB_CONTRACT_HARNESS=PASS');
 console.log('FULL_ITERATION_ACTIVE_INACTIVE_STYLES_SINGLE_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/switch-admin-tab.js');
+console.log('MODULE_OWNER=src/features/admin/switch-admin-tab.js');
 console.log('PRODUCTION_CHANGE=0');

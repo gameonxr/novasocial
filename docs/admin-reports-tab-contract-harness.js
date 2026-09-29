@@ -45,15 +45,15 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-reports.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-reports.js', 'utf8');
     const start = source.indexOf('window.adminTabReports = async function adminTabReports(content){');
     assert(start >= 0, 'reports tab module owner must remain present');
     const functionBlock = source.slice(start);
-    const loadReportsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-reports-list.js', 'utf8');
+    const loadReportsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/load-reports-list.js', 'utf8');
     const lrStart = loadReportsModule.indexOf('window.loadReportsList = async function loadReportsList(');
     assert(lrStart >= 0, 'reports list module owner must remain present');
     const loadReportsBlock = loadReportsModule.slice(lrStart + 'window.loadReportsList = '.length);
-    const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/set-reports-filter-owner.js', 'utf8');
+    const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/set-reports-filter-owner.js', 'utf8');
     eval(`let _reportsFilter = 'pending'; const window = global; ${functionBlock}; ${loadReportsBlock}; ${moduleOwner}; global.adminTabReports = window.adminTabReports; global.setReportsFilter = window.setReportsFilter; global.loadReportsList = loadReportsList;`);
 
     const reports = [{

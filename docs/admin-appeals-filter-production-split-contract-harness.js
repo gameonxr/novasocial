@@ -8,7 +8,7 @@ const { execFileSync } = require('child_process');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const branch2Html = fs.readFileSync(`${repo}/index.html`, 'utf8');
 const mainHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const modulePath = `${repo}/src/features/admin-appeals-filter-owner.js`;
+const modulePath = `${repo}/src/features/admin/admin-appeals-filter-owner.js`;
 const moduleText = fs.readFileSync(modulePath, 'utf8');
 const afterEvidencePath = `${repo}/docs/admin-appeals-filter-after-split-browser-proof-evidence.txt`;
 const afterEvidence = fs.readFileSync(afterEvidencePath, 'utf8');
@@ -80,12 +80,12 @@ assert(!/\.insert\s*\(|\.update\s*\(|\.upsert\s*\(|\.delete\s*\(|\.rpc\s*\(|fetc
 const sourceFiles = execFileSync('find', [`${repo}/src`, '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 assert(!sourceText.includes(signature), 'candidate must not remain as a named declaration in extracted modules');
-assert(branch2Html.includes('src="src/features/load-appeals-list.js"'), 'existing read-only reload owner must remain external via linkage');
-assert(branch2Html.includes('src="src/features/admin-approve-appeal.js"') && branch2Html.includes('src="src/features/admin-reject-appeal.js"'), 'appeal mutation owners must remain present via external linkage');
-assert(branch2Html.indexOf('src/features/admin-appeals-filter-owner.js') < branch2Html.indexOf('src/features/note-reactors-list-owner.js'), 'admin filter owner must load before the existing Notes owner footer boundary');
-assert.strictEqual((branch2Html.match(/<script\b/gi) || []).length, 469, '397 opening script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((branch2Html.match(/<\/script>/gi) || []).length, 469, '234 closing script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((branch2Html.match(/<script\s+src=/gi) || []).length, 468, '234 external script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/load-appeals-list.js"'), 'existing read-only reload owner must remain external via linkage (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: admin family folder + demand loading */
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/admin-approve-appeal.js"') && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/admin-reject-appeal.js"'), 'appeal mutation owners must remain present via external linkage (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
+assert(branch2Html.indexOf('src/features/admin/admin-appeals-filter-owner.js') < branch2Html.indexOf('src/features/note-reactors-list-owner.js'), 'admin filter owner must load before the existing Notes owner footer boundary');
+assert.strictEqual((branch2Html.match(/<script\b/gi) || []).length, 415, '397 opening script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((branch2Html.match(/<\/script>/gi) || []).length, 415, '234 closing script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((branch2Html.match(/<script\s+src=/gi) || []).length, 414, '234 external script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 
 async function runSeam() {
   const elements = new Map();

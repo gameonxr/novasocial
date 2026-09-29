@@ -37,7 +37,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-team-list.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/load-team-list.js', 'utf8');
     const start = source.indexOf('window.loadTeamList = async function loadTeamList(){');
     assert(start >= 0, 'loadTeamList module owner must remain present');
     const functionBlock = source.slice(start);

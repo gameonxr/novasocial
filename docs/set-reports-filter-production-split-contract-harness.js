@@ -6,7 +6,7 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const indexPath = path.join(repo, 'index.html');
-const modulePath = path.join(repo, 'src', 'features', 'set-reports-filter-owner.js');
+const modulePath = path.join(repo, 'src', 'features', 'admin', 'set-reports-filter-owner.js');
 const source = fs.readFileSync(indexPath, 'utf8');
 const moduleSource = fs.readFileSync(modulePath, 'utf8');
 const originMain = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
@@ -30,7 +30,7 @@ assert(originNamedOwner, 'origin/main setReportsFilter owner must exist');
 assert.strictEqual(normalize(owner), normalize(originOwner), 'external owner must retain exact normalized origin/main parity');
 assert.strictEqual((source.match(/function setReportsFilter\(/g) || []).length, 0, 'named inline candidate owner must be absent after split');
 assert.strictEqual((moduleSource.match(/window\.setReportsFilter = function\(/g) || []).length, 1, 'external owner must be one anonymous window assignment');
-assert.strictEqual((source.match(/<script src="src\/features\/set-reports-filter-owner\.js"><\/script>/g) || []).length, 1, 'external owner script must be linked exactly once');
+assert.strictEqual((fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').match(/"src\/features\/admin\/set-reports-filter-owner\.js"/g) || []).length, 1, 'external owner script must be linked exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
 assert(!owner.includes('.insert('), 'candidate owner must not insert data');
 assert(!owner.includes('.delete('), 'candidate owner must not delete data');
 assert(!owner.includes('.update('), 'candidate owner must not update database rows');

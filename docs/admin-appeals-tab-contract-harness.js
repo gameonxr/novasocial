@@ -42,12 +42,12 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-appeals.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-appeals.js', 'utf8');
     const start = source.indexOf('window.adminTabAppeals = async function adminTabAppeals(content){');
     assert(start >= 0, 'appeals tab module owner must remain present');
     const functionBlock = source.slice(start);
-    const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-appeals-filter-owner.js', 'utf8');
-    const loadAppealsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-appeals-list.js', 'utf8');
+    const moduleOwner = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-appeals-filter-owner.js', 'utf8');
+    const loadAppealsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/load-appeals-list.js', 'utf8');
     const laStart = loadAppealsModule.indexOf('window.loadAppealsList = async function loadAppealsList(');
     assert(laStart >= 0, 'appeals list module owner must remain present');
     const loadAppealsBlock = loadAppealsModule.slice(laStart + 'window.loadAppealsList = '.length);

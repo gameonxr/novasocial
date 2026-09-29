@@ -34,8 +34,8 @@ assert.strictEqual((html.match(/function toggleSVMute\(\)\s*\{/g) || []).length,
 assert.strictEqual((moduleText.match(/window\.toggleSVMute\s*=\s*function\(\)\s*\{/g) || []).length, 1, 'anonymous external owner must occur once');
 assert.strictEqual((html.match(/src\/features\/toggle-sv-mute-owner\.js/g) || []).length, 1, 'external owner script must be linked once');
 assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'render-sv.js'), 'utf8')).match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
-assert(html.indexOf('src/features/set-reports-filter-owner.js') < html.indexOf('src/features/toggle-sv-mute-owner.js'), 'toggle owner must load after reports filter owner');
-assert(html.indexOf('src/features/toggle-sv-mute-owner.js') < html.indexOf('src/features/set-verify-filter-owner.js'), 'toggle owner must load before verification filter owner');
+assert(html.indexOf('src/features/admin/set-reports-filter-owner.js') < html.indexOf('src/features/toggle-sv-mute-owner.js'), 'toggle owner must load after reports filter owner');
+assert(html.indexOf('src/features/toggle-sv-mute-owner.js') >= 0 && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/set-verify-filter-owner.js"'), 'owner present at startup; verification owner demand-loaded (loads strictly after all startup scripts)'); /* architecture-migration 2026-09-29: admin demand loading — original order contract preserved by construction */
 assert(!/\b(?:db\.|localStorage|sessionStorage|fetch\(|navigator\.|location\.|notification|upload|\b(?:insert|update|delete|upsert|rpc)\s*\()/i.test(moduleText), 'module must remain free of stateful or persistence boundaries');
 assert(moduleText.includes('window._svMuted = !window._svMuted;'), 'state flip must remain present');
 assert(moduleText.includes("document.querySelector('#sv-media video')"), 'video lookup must remain present');

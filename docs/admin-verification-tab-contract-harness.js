@@ -42,12 +42,12 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-verify.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-verify.js', 'utf8');
     const start = source.indexOf('window.adminTabVerify = async function adminTabVerify(content){');
     assert(start >= 0, 'verification tab module owner must remain present');
     const functionBlock = source.slice(start);
-    const filterModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/set-verify-filter-owner.js', 'utf8');
-    const loadVerifyModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-verify-list.js', 'utf8');
+    const filterModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/set-verify-filter-owner.js', 'utf8');
+    const loadVerifyModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/load-verify-list.js', 'utf8');
     const lvStart = loadVerifyModule.indexOf('window.loadVerifyList = async function loadVerifyList(');
     assert(lvStart >= 0, 'verification list module owner must remain present');
     const loadVerifyBlock = loadVerifyModule.slice(lvStart + 'window.loadVerifyList = '.length);

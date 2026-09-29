@@ -6,18 +6,27 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const moduleDirs = ['src/core', 'src/components', 'src/features'];
-const modules = moduleDirs.flatMap(dir => fs.readdirSync(path.join(repo, dir)).filter(name => name.endsWith('.js')).map(name => `${dir}/${name}`)).sort();
+const moduleDirs = ['src/core', 'src/components', 'src/features', 'src/loaders'];
+/* architecture-migration 2026-09-29: recursive scan — feature files live in feature subfolders; loaders dir added */
+const walkModules = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walkModules(path.join(dir, e.name)) : (e.name.endsWith('.js') ? [path.join(dir, e.name)] : []));
+const modules = moduleDirs.flatMap(dir => walkModules(path.join(repo, dir))).map(f => path.relative(repo, f).split(path.sep).join('/')).sort();
 
-assert.strictEqual(modules.length, 463, 'all 234 extracted JavaScript modules must remain present after the DMs renderer split');
+assert.strictEqual(modules.length, 467, 'all extracted JavaScript modules must remain present (463 feature/core/component files + 4 loader files)');
 
+/* architecture-migration 2026-09-29: a module is referenced when it appears as a startup
+   script tag OR as an entry in the feature manifest (demand-loaded chunks). */
+const featureManifest = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8');
 const missing = [];
 const duplicates = [];
 for (const modulePath of modules) {
   const marker = `<script src="${modulePath}"></script>`;
   const occurrences = html.split(marker).length - 1;
-  if (occurrences === 0) missing.push(modulePath);
-  if (occurrences > 1) duplicates.push(`${modulePath}:${occurrences}`);
+  const manifestOccurrences = featureManifest.split(`"${modulePath}"`).length - 1;
+  if (occurrences === 0 && manifestOccurrences === 0) missing.push(modulePath);
+  /* transitional state: not-yet-migrated features legitimately appear in BOTH the
+     HTML (eager tag) and the manifest; what is forbidden is TWO tags or TWO manifest
+     listings for the same file. */
+  if (occurrences > 1 || manifestOccurrences > 1) duplicates.push(`${modulePath}:${occurrences}+${manifestOccurrences}`);
 }
 assert.deepStrictEqual(missing, [], 'no extracted JavaScript module may be unreferenced');
 assert.deepStrictEqual(duplicates, [], 'no extracted JavaScript module may be loaded more than once');

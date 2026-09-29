@@ -53,7 +53,7 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/show-admin-user-detail.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/show-admin-user-detail.js', 'utf8');
     const start = source.indexOf('window.showAdminUserDetail = async function showAdminUserDetail(userId){');
     assert(start >= 0, 'showAdminUserDetail declaration must remain present');
     const functionBlock = source.slice(start);

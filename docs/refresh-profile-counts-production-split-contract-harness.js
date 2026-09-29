@@ -34,7 +34,7 @@ assert.strictEqual(sourceFiles.length, 467, 'after-split audit must include 234 
 assert.strictEqual((html.match(/async function refreshProfileCounts\(userId\)\s*\{/g) || []).length, 0, 'inline refreshProfileCounts owner must be absent');
 assert.strictEqual((moduleText.match(/window\.refreshProfileCounts\s*=\s*async function\(userId\)\s*\{/g) || []).length, 1, 'external refreshProfileCounts owner must occur once');
 assert.strictEqual((html.match(/src\/features\/refresh-profile-counts-owner\.js/g) || []).length, 1, 'refresh-profile-counts module must be linked exactly once');
-assert(html.indexOf('src/features/admin-appeals-filter-owner.js') < html.indexOf('src/features/refresh-profile-counts-owner.js'), 'refresh-counts module must load after admin-filter owner');
+assert(html.indexOf('src/features/admin/admin-appeals-filter-owner.js') < html.indexOf('src/features/refresh-profile-counts-owner.js'), 'refresh-counts module must load after admin-filter owner');
 assert(html.indexOf('src/features/refresh-profile-counts-owner.js') < html.indexOf('src/features/note-reactors-list-owner.js'), 'refresh-counts module must load before Notes reactor-list owner');
 assert(browserEvidence.includes('Result: PASS') && browserEvidence.includes('detachedOnly=true'), 'before-split detached browser proof evidence must pass');
 assert(afterBrowserEvidence.includes('Result: PASS') && afterBrowserEvidence.includes('ownerInvoked=false') && afterBrowserEvidence.includes('detachedOnly=true'), 'after-split detached browser proof evidence must pass');

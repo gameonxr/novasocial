@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the admin panel, 
 
 ## References
 
-1. [`switch-admin-tab.js`](../src/features/switch-admin-tab.js)
+1. [`switch-admin-tab.js`](../src/features/admin/switch-admin-tab.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

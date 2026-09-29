@@ -21,7 +21,7 @@ const requiredSections = [
   '`LIVE_SIDE_EFFECTS=0`',
   '`BROWSER_LIVE_ACTIONS=0`'
 ];
-const appealsMutationModules = ['admin-approve-appeal', 'admin-reject-appeal'].map(n => { try { return fs.readFileSync(path.join(repo, 'src', 'features', n + '.js'), 'utf8'); } catch { return ''; } });
+const appealsMutationModules = ['admin-approve-appeal', 'admin-reject-appeal'].map(n => { try { return fs.readFileSync(path.join(repo, 'src', 'features', 'admin', n + '.js'), 'utf8'); } catch { return ''; } }); /* architecture-migration 2026-09-29: admin family folder */
 for (const marker of requiredMarkers) assert(source.includes(marker) || appealsMutationModules.some(m => m.includes(marker)), `protected source marker missing: ${marker}`);
 for (const section of requiredSections) assert(contract.includes(section), `readiness requirement missing: ${section}`);
 assert(contract.includes('PREPARATION_ONLY'), 'dossier must remain preparation-only');

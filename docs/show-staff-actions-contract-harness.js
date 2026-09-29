@@ -23,7 +23,7 @@ async function runHarness() {
   };
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/show-staff-actions.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/show-staff-actions.js', 'utf8');
     const start = source.indexOf('window.showStaffActions = function showStaffActions(userId, username, currentRole, isSuper){');
     assert(start >= 0, 'showStaffActions module owner must remain present');
     const fnSource = source.slice(start + 'window.showStaffActions = '.length);

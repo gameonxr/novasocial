@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'search-admin-users.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'admin', 'search-admin-users.js'), 'utf8');
 
 for (const marker of [
   'async function searchAdminUsers(query)',
@@ -36,5 +36,5 @@ assert(!source.includes('fetch('), 'Admin user search must not own separate netw
 
 console.log('SEARCH_ADMIN_USERS_CONTRACT_HARNESS=PASS');
 console.log('DEBOUNCE_READ_QUERY_FIELDS_ORDER_FILTER_EMPTY_ERROR_ESCAPED_BADGES_DETAIL_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/search-admin-users.js');
+console.log('MODULE_OWNER=src/features/admin/search-admin-users.js');
 console.log('PRODUCTION_CHANGE=0');

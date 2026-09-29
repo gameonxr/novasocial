@@ -46,11 +46,11 @@ async function runHarness() {
   }
 
   try {
-    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-content.js', 'utf8');
+    const source = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-content.js', 'utf8');
     const start = source.indexOf('window.adminTabContent = async function adminTabContent(content){');
     assert(start >= 0, 'content-tab module owner must remain present');
     const functionBlock = source.slice(start + 'window.adminTabContent = '.length);
-    const loadAdminModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/load-admin-content.js', 'utf8');
+    const loadAdminModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/load-admin-content.js', 'utf8');
     const lvStart = loadAdminModule.indexOf('window.loadAdminContent = async function loadAdminContent(type){');
     assert(lvStart >= 0, 'content loader module owner must remain present');
     const loadAdminBlock = loadAdminModule.slice(lvStart + 'window.loadAdminContent = '.length);

@@ -45,11 +45,11 @@ async function runHarness() {
   }
 
   try {
-    const approvalsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-approvals.js', 'utf8');
+    const approvalsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-approvals.js', 'utf8');
     const apStart = approvalsModule.indexOf('window.adminTabApprovals = async function adminTabApprovals(content){');
     assert(apStart >= 0, 'approvals tab module owner must remain present');
     const approvalsBlock = approvalsModule.slice(apStart + 'window.adminTabApprovals = '.length);
-    const myApprovalsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin-tab-myapprovals.js', 'utf8');
+    const myApprovalsModule = fs.readFileSync('/home/z/my-project/novasocial/src/features/admin/admin-tab-myapprovals.js', 'utf8');
     const myStart = myApprovalsModule.indexOf('window.adminTabMyApprovals = async function adminTabMyApprovals(content){');
     assert(myStart >= 0, 'my-approvals tab module owner must remain present');
     const myApprovalsBlock = myApprovalsModule.slice(myStart + 'window.adminTabMyApprovals = '.length);
