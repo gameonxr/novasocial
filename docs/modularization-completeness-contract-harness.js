@@ -28,7 +28,7 @@ assert.strictEqual(components, 2, 'both extracted shared components must remain 
 assert(features >= 200, 'feature extraction set must remain at least 200 modules');
 
 const requiredTrailing = [
-  '<script src="src/features/smart-ranking.js"></script>',
+  '<script src="src/features/home/smart-ranking.js"></script>',
   '<script src="src/features/system/nova-init.js"></script>',
   '<script src="src/features/spawn-like-particles.js"></script>',
   '<script src="src/features/like-effects.js"></script>'

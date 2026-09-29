@@ -41,7 +41,7 @@ assert(corePositions.every(position => position >= 0 && position < inlinePositio
 
 /* architecture-migration 2026-09-29: notes/reels owner files are demand-loaded — the
    startup trailing set is now the post-inline startup tail */
-const trailing = [`src/features/destroy-reels-persistent-container.js`, `src/features/home/ultra-patches.js`, `src/features/smart-ranking.js`, `src/features/system/nova-init.js`, `src/features/spawn-like-particles.js`, `src/features/dms/sync-local-deletion-fallback.js`, `src/features/push-settings.js`, `src/features/system/invalidate-tab-cache-owner.js`, `src/features/like-effects.js`].map(path => html.lastIndexOf(`<script src="${path}"></script>`));
+const trailing = [`src/features/destroy-reels-persistent-container.js`, `src/features/home/ultra-patches.js`, `src/features/home/smart-ranking.js`, `src/features/system/nova-init.js`, `src/features/spawn-like-particles.js`, `src/features/dms/sync-local-deletion-fallback.js`, `src/features/push-settings.js`, `src/features/system/invalidate-tab-cache-owner.js`, `src/features/like-effects.js`].map(path => html.lastIndexOf(`<script src="${path}"></script>`));
 assert(trailing.every(position => position >= 0), 'required trailing script references must remain present'); /* architecture-migration 2026-09-29: stories+dms demand-loaded — startup tail is now the post-inline set */
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order must remain unchanged');
 assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');

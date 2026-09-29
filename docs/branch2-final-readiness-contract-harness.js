@@ -58,11 +58,11 @@ assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 464, 'HTML mus
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
-for (const script of ['src/features/dms/jump-to-message-owner.js', 'src/features/smart-ranking.js', 'src/features/system/nova-init.js', 'src/features/like-effects.js']) {
+for (const script of ['src/features/dms/jump-to-message-owner.js', 'src/features/home/smart-ranking.js', 'src/features/system/nova-init.js', 'src/features/like-effects.js']) {
   assert(html.indexOf(script) > inlineStart, `${script} must remain after inline application code`);
 }
-assert(true, 'src/features/smart-ranking.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
-assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/features/system/nova-init.js'), 'smart-ranking must precede nova-init');
+assert(true, 'src/features/home/smart-ranking.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/home/smart-ranking.js') < html.indexOf('src/features/system/nova-init.js'), 'smart-ranking must precede nova-init');
 assert(html.indexOf('src/features/system/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
 assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
 assert(true, 'src/features/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */

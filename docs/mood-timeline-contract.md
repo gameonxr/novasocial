@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not navigate the screen or
 
 ## References
 
-1. [`mood-timeline.js`](../src/features/mood-timeline.js)
+1. [`mood-timeline.js`](../src/features/home/mood-timeline.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

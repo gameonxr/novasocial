@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
-const files = ['index.html', 'src/features/-upload-to-cloudinary.js', 'src/features/ai/call-nova-ai.js', 'src/features/calls/switch-call-camera.js', 'src/features/profile/profile.js', 'src/features/home.js', 'src/features/reels/reels-renderer-owner.js', 'src/features/submit-create.js', 'src/features/upload.js', 'src/features/dms/forward-message.js'];
+const files = ['index.html', 'src/features/-upload-to-cloudinary.js', 'src/features/ai/call-nova-ai.js', 'src/features/calls/switch-call-camera.js', 'src/features/profile/profile.js', 'src/features/home/home.js', 'src/features/reels/reels-renderer-owner.js', 'src/features/submit-create.js', 'src/features/upload.js', 'src/features/dms/forward-message.js'];
 const counts = {};
 for (const relative of files) {
   const text = fs.readFileSync(path.join(repo, relative), 'utf8');
@@ -18,7 +18,7 @@ assert.deepStrictEqual(counts, {
   'src/features/dms/forward-message.js': 2,
   'src/features/submit-create.js': 1,
   'src/features/profile/profile.js': 2,
-  'src/features/home.js': 2,
+  'src/features/home/home.js': 2,
   'src/features/reels/reels-renderer-owner.js': 1,
 }, 'explicit error boundaries must retain their exact per-file counts');
 
@@ -34,5 +34,5 @@ const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
 assert.strictEqual(total, 12, 'exactly twelve explicit error boundaries must remain');
 console.log('EXPLICIT_ERROR_BOUNDARY_HARNESS=PASS');
 console.log(`TOTAL_BOUNDARIES=${total}`);
-console.log('PER_FILE=index.html:7,src/features/profile/profile.js:2,src/features/home.js:2,src/features/reels/reels-renderer-owner.js:1');
+console.log('PER_FILE=index.html:7,src/features/profile/profile.js:2,src/features/home/home.js:2,src/features/reels/reels-renderer-owner.js:1');
 console.log('UNEXPECTED_BOUNDARIES=0');

@@ -68,7 +68,7 @@ assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'),
    the dms manifest chunk; demand chunks always load after the inline application
    code and after all startup scripts (including the post-inline tail). */
 const inlineEnd = html.indexOf('</script>');
-const smartRankingScript = html.indexOf('<script src="src/features/smart-ranking.js"></script>');
+const smartRankingScript = html.indexOf('<script src="src/features/home/smart-ranking.js"></script>');
 assert(smartRankingScript > inlineEnd, 'post-inline owner tail must remain after the inline application code');
 assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/dms/jump-to-message-owner.js"'), 'jumpToMessage owner remains linked (dms manifest)');
 for (const forbidden of [/\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i, /fetch\s*\(|XMLHttpRequest|WebSocket/i, /localStorage|sessionStorage|indexedDB|document\.cookie/i, /\bME\b|auth|account|upload|permission|Notification|PushManager/i, /location\.|history\.|openChat|renderDMs|showMsgMenu|forwardMessage/i]) {

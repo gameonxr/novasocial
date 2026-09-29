@@ -23,7 +23,7 @@ The extracted `src/features/new-posts-indicator.js` module remains unchanged in 
 
 ## References
 
-1. [`new-posts-indicator.js`](../src/features/new-posts-indicator.js)
+1. [`new-posts-indicator.js`](../src/features/home/new-posts-indicator.js)
 2. [`new-posts-contract.md`](./new-posts-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

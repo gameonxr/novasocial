@@ -30,6 +30,6 @@ No production logic is changed by this audit. The contract records the current o
 ## References
 
 1. [`src/features/init-video-observer.js`](../src/features/init-video-observer.js)
-2. [`src/features/home.js`](../src/features/home.js)
+2. [`src/features/home.js`](../src/features/home/home.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'mood-timeline.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'home', 'mood-timeline.js'), 'utf8');
 
 for (const marker of [
   'function showMoodTimeline()',
@@ -34,5 +34,5 @@ assert(!source.includes('invokeLLM'), 'Mood timeline must remain display-only');
 
 console.log('MOOD_TIMELINE_CONTRACT_HARNESS=PASS');
 console.log('SCREEN_RENDER_FIVE_MOODS_TIMELINE_BACK_NAV_POST_METADATA_INSIGHTS_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/mood-timeline.js');
+console.log('MODULE_OWNER=src/features/home/mood-timeline.js');
 console.log('PRODUCTION_CHANGE=0');

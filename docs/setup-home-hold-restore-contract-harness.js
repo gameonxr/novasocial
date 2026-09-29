@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'setup-home-hold-restore.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'home', 'setup-home-hold-restore.js'), 'utf8');
 
 for (const marker of [
   'function setupHomeHoldRestore()',
@@ -30,5 +30,5 @@ assert(!source.includes('supabase'), 'Home hold restore must not own persistence
 
 console.log('SETUP_HOME_HOLD_RESTORE_CONTRACT_HARNESS=PASS');
 console.log('HOME_FILTER_TWO_SECOND_TOUCH_MOUSE_RESTORE_HAPTIC_CANCELLATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/setup-home-hold-restore.js');
+console.log('MODULE_OWNER=src/features/home/setup-home-hold-restore.js');
 console.log('PRODUCTION_CHANGE=0');

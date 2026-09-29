@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not register browser liste
 
 ## References
 
-1. [`setup-home-hold-restore.js`](../src/features/setup-home-hold-restore.js)
+1. [`setup-home-hold-restore.js`](../src/features/home/setup-home-hold-restore.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

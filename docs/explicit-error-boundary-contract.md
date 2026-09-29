@@ -30,6 +30,6 @@ This is a static, documentation-only audit. It does not trigger uploads, Reels q
 ## References
 
 1. [`src/features/profile.js`](../src/features/profile.js)
-2. [`src/features/home.js`](../src/features/home.js)
+2. [`src/features/home.js`](../src/features/home/home.js)
 3. [`index.html`](../index.html)
 
