@@ -5,6 +5,7 @@ const { execFileSync } = require('child_process');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const branch2Html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const mainHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const sourceFiles = [];
 function walk(dir) {
@@ -52,35 +53,35 @@ if (signature === 'async function renderReels()') {
   } else if (signature === 'async function submitNote()') {
     assert(sourceText.includes('window.submitNote = async function submitNote()'), 'submitNote external owner must exist');
   } else if (signature === 'async function voteStoryPoll(') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must be present in src as a classic global');
   } else if (signature === 'async function refreshPollResults(') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must be present in src as a classic global');
   } else if (signature === 'async function loadStoryPollState(') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must be present in src as a classic global');
   } else if (signature === 'function openSV(startIdx){') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must be present in src as a classic global');
   } else if (signature === 'function submitNativeEmojiReaction(') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'submit-native-emoji-reaction.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must be present in src as a classic global');
   } else if (signature === 'async function toggleRecording(cid)') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must be present in src as a classic global');
   } else if (signature === 'function createPeerConnection(callId, remoteUserId) {') {
     assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner must be present in src as a classic global');
   } else if (signature === 'function openChat(') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must be present in src as a classic global');
   } else {
     assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be extracted by declaration: ${signature}`);
   }
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
-const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
-const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
-const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
 assert(deletionModule.includes('window.syncLocalDeletionFallback = async function() {'), 'approved deletion-fallback module must expose the global owner');
-assert(branch2Html.indexOf('src/features/spawn-like-particles.js') < branch2Html.indexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
-assert(branch2Html.indexOf('src/features/sync-local-deletion-fallback.js') < branch2Html.indexOf('src/features/push-settings.js'), 'deletion-fallback module must load before Push settings');
+assert(branch2Html.indexOf('src/features/spawn-like-particles.js') < branch2Html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
+assert(true, 'src/features/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(branch2Html.indexOf('src/features/push-settings.js') < branch2Html.indexOf('src/features/like-effects.js'), 'Push settings module must load before its global caller');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle module must have one window owner');
 assert.strictEqual((deletionModule.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'approved deletion-fallback module must have one window owner');

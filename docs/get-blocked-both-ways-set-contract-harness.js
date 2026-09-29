@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'get-blocked-both-ways-set.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'get-blocked-both-ways-set.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'async function getBlockedBothWaysSet()',
@@ -24,5 +24,5 @@ assert.strictEqual((source.match(/async function getBlockedBothWaysSet\(/g) || [
 
 console.log('GET_BLOCKED_BOTH_WAYS_SET_CONTRACT_HARNESS=PASS');
 console.log('PARALLEL_DIRECTIONAL_READS_RECIPROCAL_FILTERS_EMPTY_FALLBACK_SET_UNION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/get-blocked-both-ways-set.js');
+console.log('MODULE_OWNER=src/features/dms/get-blocked-both-ways-set.js');
 console.log('PRODUCTION_CHANGE=0');

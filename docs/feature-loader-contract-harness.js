@@ -93,8 +93,16 @@ function loadLoaderInto(env) {
       allPaths.push(p);
     }
   }
-  const dupes = allPaths.filter((p, i) => allPaths.indexOf(p) !== i);
-  assert.strictEqual(dupes.length, 0, `no duplicate manifest paths (got: ${dupes.join(', ')})`);
+  /* architecture-migration 2026-09-29: the notes-bar subsystem is intentionally
+     shared between the dms chunk (renders at the top of the DMs screen) and the
+     reels/notes chunks — the loader dedupes per URL, so a shared file evaluates once. */
+  const SHARED_OK = /^src\/features\/notes\/(notes-bar|load-notes-feed|notes-reaction-owner)\.js$/;
+  const counts = {};
+  for (const p of allPaths) counts[p] = (counts[p] || 0) + 1;
+  const dupes = Object.entries(counts).filter(([p, n]) => n > 1 && !SHARED_OK.test(p));
+  assert.deepStrictEqual(dupes, [], `no unexpected duplicate manifest paths (got: ${dupes.map(d => d[0]).join(', ')})`);
+  const shared = Object.entries(counts).filter(([p, n]) => n > 1);
+  for (const [p, n] of shared) assert(n <= 3, `shared manifest path may appear in at most 3 chunks (load-notes-feed serves notes+dms+reels): ${p}`);
   console.log('L1 PASS — manifest completeness: ' + Object.keys(manifests).length + ' features, ' + allPaths.length + ' files, 0 dangling, 0 duplicate');
 
   // ── L2: transitional eager state ─────────────────────────────────────────

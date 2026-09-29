@@ -23,7 +23,7 @@ The extracted `src/features/sticker-tab.js` module remains unchanged in this che
 
 ## References
 
-1. [`sticker-tab.js`](../src/features/sticker-tab.js)
+1. [`sticker-tab.js`](../src/features/dms/sticker-tab.js)
 2. [`open-sticker-picker-contract.md`](./open-sticker-picker-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

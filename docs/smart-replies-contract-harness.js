@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'smart-replies.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'smart-replies.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const start = source.indexOf('function getSmartReplies');
 const end = source.indexOf('\n}\n\nfunction showSmartReplies', start);
 assert(start >= 0 && end > start, 'getSmartReplies owner must remain identifiable');

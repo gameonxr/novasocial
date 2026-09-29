@@ -19,7 +19,7 @@ The helper owns read conversion only. Block/unblock mutations, error policy, dat
 
 ## References
 
-1. [`get-blocked-both-ways-set.js`](../src/features/get-blocked-both-ways-set.js)
-2. [`get-blocked-list.js`](../src/features/get-blocked-list.js)
+1. [`get-blocked-both-ways-set.js`](../src/features/dms/get-blocked-both-ways-set.js)
+2. [`get-blocked-list.js`](../src/features/dms/get-blocked-list.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

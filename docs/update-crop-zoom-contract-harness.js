@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'update-crop-zoom.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'update-crop-zoom.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 
 for (const marker of [
   'function updateCropZoom(sliderVal)',
@@ -21,5 +21,5 @@ assert.strictEqual((source.match(/function updateCropZoom\(/g) || []).length, 1,
 
 console.log('UPDATE_CROP_ZOOM_CONTRACT_HARNESS=PASS');
 console.log('SLIDER_NORMALIZATION_SCALE_STATE_GUARDED_IMAGE_TRANSFORM_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/update-crop-zoom.js');
+console.log('MODULE_OWNER=src/features/stories/update-crop-zoom.js');
 console.log('PRODUCTION_CHANGE=0');

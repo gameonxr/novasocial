@@ -7,7 +7,7 @@
 
 The extracted owner flips the existing `window._svMuted` state, updates the current `#sv-media video` element when present, and delegates the existing `renderSV()` refresh. The one story-viewer mute control remains the sole caller. Story loading, story rendering, persistence, playback lifecycle, polls, navigation, deletion, and all protected media/call systems remain inline and unchanged.
 
-The production module is [`src/features/toggle-sv-mute-owner.js`](../src/features/toggle-sv-mute-owner.js), loaded once from [`index.html`](../index.html) as a classic script between the reports-filter and verification-filter owners. The public API remains the anonymous classic global `window.toggleSVMute`.
+The production module is [`src/features/toggle-sv-mute-owner.js`](../src/features/stories/toggle-sv-mute-owner.js), loaded once from [`index.html`](../index.html) as a classic script between the reports-filter and verification-filter owners. The public API remains the anonymous classic global `window.toggleSVMute`.
 
 ## Completion gates
 

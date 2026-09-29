@@ -32,8 +32,8 @@ The standalone harness must pass with the existing Story text/draw controls, Sto
 
 ## References
 
-1. [`se-open-text-tool.js`](../src/features/se-open-text-tool.js)
-2. [`se-close-text-panel.js`](../src/features/se-close-text-panel.js)
+1. [`se-open-text-tool.js`](../src/features/stories/se-open-text-tool.js)
+2. [`se-close-text-panel.js`](../src/features/stories/se-close-text-panel.js)
 3. [`story-text-controls-contract.md`](./story-text-controls-contract.md)
 4. [`story-editor-seam-preparation-contract.md`](./story-editor-seam-preparation-contract.md)
 5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

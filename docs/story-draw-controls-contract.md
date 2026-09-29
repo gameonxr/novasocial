@@ -34,9 +34,9 @@ The standalone harness must pass with the existing Story-editor seam preparation
 
 ## References
 
-1. [`se-open-draw-tool.js`](../src/features/se-open-draw-tool.js)
-2. [`se-close-draw-panel.js`](../src/features/se-close-draw-panel.js)
-3. [`se-select-draw-type.js`](../src/features/se-select-draw-type.js)
-4. [`se-select-draw-color.js`](../src/features/se-select-draw-color.js)
+1. [`se-open-draw-tool.js`](../src/features/stories/se-open-draw-tool.js)
+2. [`se-close-draw-panel.js`](../src/features/stories/se-close-draw-panel.js)
+3. [`se-select-draw-type.js`](../src/features/stories/se-select-draw-type.js)
+4. [`se-select-draw-color.js`](../src/features/stories/se-select-draw-color.js)
 5. [`story-editor-seam-preparation-contract.md`](./story-editor-seam-preparation-contract.md)
 6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

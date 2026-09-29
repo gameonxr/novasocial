@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'open-more-emoji-picker.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-more-emoji-picker.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'function openMoreEmojiPicker(noteId)',
@@ -22,12 +23,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Open more emoji picker marker missing: ${marker}`);
 }
-assert(html.includes('src/features/open-more-emoji-picker.js'), 'Open more emoji picker module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/open-more-emoji-picker.js"'), 'Open more emoji picker module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!source.includes('fetch('), 'Open more emoji picker must not own network requests');
 assert(!source.includes('supabase'), 'Open more emoji picker must not own remote data access');
 assert.strictEqual((source.match(/function openMoreEmojiPicker\(/g) || []).length, 1, 'Open more emoji picker must have one module owner');
 
 console.log('OPEN_MORE_EMOJI_PICKER_CONTRACT_HARNESS=PASS');
 console.log('SHEET_INPUT_LIMIT_REACTION_CLEANUP_NATIVE_FOCUS_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/open-more-emoji-picker.js');
+console.log('MODULE_OWNER=src/features/dms/open-more-emoji-picker.js');
 console.log('PRODUCTION_CHANGE=0');

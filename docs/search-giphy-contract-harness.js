@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'search-giphy.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'search-giphy.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'let giphyDebounce;',
@@ -37,5 +37,5 @@ assert(!source.includes('sendMessage'), 'Giphy search must not own protected mes
 
 console.log('SEARCH_GIPHY_CONTRACT_HARNESS=PASS');
 console.log('DEBOUNCE_EMPTY_LOADING_EXTERNAL_PARAMS_CAP_URL_MAPPING_SEND_GIF_ERROR_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/search-giphy.js');
+console.log('MODULE_OWNER=src/features/dms/search-giphy.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -24,5 +24,5 @@ No protected block mutation was moved or rewritten. The next code-level blocking
 ## References
 
 1. [Critical runtime safeguards](file:///home/ubuntu/upload/CRITICAL_CONTEXT.md)
-2. [Bidirectional blocked-user reader](file:///home/ubuntu/novasocial/src/features/get-blocked-both-ways-set.js)
+2. [Bidirectional blocked-user reader](file:///home/ubuntu/novasocial/src/features/dms/get-blocked-both-ways-set.js)
 3. [Current migration map](file:///home/ubuntu/novasocial/MIGRATION_MAP.md)

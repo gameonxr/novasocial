@@ -37,7 +37,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`dm-drafts.js`](../src/features/dm-drafts.js)
+1. [`dm-drafts.js`](../src/features/dms/dm-drafts.js)
 2. [`dm-seam-preparation-contract.md`](./dm-seam-preparation-contract.md)
 3. [`offline-queue-lifecycle-contract.md`](./offline-queue-lifecycle-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

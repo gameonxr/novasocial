@@ -26,7 +26,7 @@ const moduleOwner = moduleText.replace(/^window\.reactToNote = /, '').replace(/;
 assert.strictEqual(normalize(moduleOwner), normalize(originOwner), 'external owner must match immutable origin body exactly');
 assert.strictEqual((moduleText.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'module must expose exactly one anonymous window owner');
 assert.strictEqual((html.match(/function reactToNote\(/g) || []).length, 0, 'inline reactToNote must be absent');
-assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-reaction-owner\.js/g) || []).length, 1, 'module linkage must occur exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: notes demand loading */
+assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-reaction-owner\.js/g) || []).length, 2, 'module linkage (shared subsystem: notes + dms chunks — loader per-URL dedup evaluates once)'); /* architecture-migration 2026-09-29: notes-bar shared subsystem */
 assert(true, 'reaction owner must load after reactor-list owner — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(true, 'reaction owner must load before Note viewer callers — demand-loaded module ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(authorization.includes('FEATURE_AUTHORIZATION=BOUNDED_REACT_TO_NOTE_EXTRACTION'), 'authorization marker missing');

@@ -23,7 +23,7 @@ The extracted `src/features/delete-multiple-media.js` module remains unchanged i
 
 ## References
 
-1. [`delete-multiple-media.js`](../src/features/delete-multiple-media.js)
+1. [`delete-multiple-media.js`](../src/features/dms/delete-multiple-media.js)
 2. [`high-risk-extraction-gate-contract.md`](./high-risk-extraction-gate-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

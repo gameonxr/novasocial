@@ -34,7 +34,7 @@ The standalone harness must pass with the existing `selectVideoLen` contract, se
 
 ## References
 
-1. [`video-length-options.js`](../src/features/video-length-options.js)
+1. [`video-length-options.js`](../src/features/stories/video-length-options.js)
 2. [`select-video-len-contract.md`](./select-video-len-contract.md)
 3. [`segment-drag-window-contract.md`](./segment-drag-window-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

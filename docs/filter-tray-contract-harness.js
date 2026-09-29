@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'filter-tray.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'filter-tray.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 
 for (const marker of [
   'function showFilterTray(mediaUrl)',
@@ -34,5 +34,5 @@ assert(!source.includes('supabase'), 'Filter tray must not own persistence');
 
 console.log('FILTER_TRAY_CONTRACT_HARNESS=PASS');
 console.log('GUARD_STYLING_COMBINED_SOURCES_CHIPS_MEDIA_FALLBACK_INITIAL_SELECTION_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/filter-tray.js');
+console.log('MODULE_OWNER=src/features/stories/filter-tray.js');
 console.log('PRODUCTION_CHANGE=0');

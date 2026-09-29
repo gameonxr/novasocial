@@ -6,8 +6,9 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['-C', repo, 'show', 'origin/main:index.html'], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
-const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const branchModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const startMarker = 'async function renderDMs(){';
 const globalStartMarker = 'window.renderDMs = async function(){';
 const endMarker = '\nasync function openChat('; 
@@ -32,7 +33,7 @@ assert.strictEqual(branchOwnerSource, originOwnerSource, 'external Branch2 rende
 const sourceFiles = fs.readdirSync(path.join(repo, 'src', 'features')).map(file => path.join(repo, 'src', 'features', file));
 const sourceText = sourceFiles.filter(file => file.endsWith('.js')).map(file => fs.readFileSync(file, 'utf8')).join('\n');
 assert(sourceText.includes(globalStartMarker), 'external renderDMs classic global owner must be present');
-assert(html.includes('<script src="src/features/dms-renderer-owner.js"></script>'), 'index.html must load the external DMs owner');
+assert(html.includes('<script src="src/features/dms/dms-renderer-owner.js"></script>'), 'index.html must load the external DMs owner');
 
 function makeQuery(value, calls, label) {
   const query = {

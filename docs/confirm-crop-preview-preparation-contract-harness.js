@@ -8,6 +8,7 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const signature = 'async function confirmCropPreview()';
 
@@ -42,7 +43,7 @@ function extractFunction(text) {
 function normalize(text) { return text.replace(/\s+/g, ' ').trim(); }
 function sha256(text) { return crypto.createHash('sha256').update(text).digest('hex'); }
 
-const ownerModulePath = path.join(repo, 'src', 'features', 'confirm-crop-preview-owner.js');
+const ownerModulePath = path.join(repo, 'src', 'features', 'stories', 'confirm-crop-preview-owner.js') /* architecture-migration 2026-09-29: stories folder */;
 const hasInlineOwner = (html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length === 1;
 const externalOwnerSource = fs.readFileSync(ownerModulePath, 'utf8');
 const currentOwner = hasInlineOwner ? extractFunction(html) : extractFunction(externalOwnerSource.replace('window.confirmCropPreview = async function()', signature));
@@ -57,7 +58,7 @@ assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current candidate must 
 assert.strictEqual(sha256(normalizedOrigin), '668fae8c651998f577e5edb1f361c8ce5868f6050eeb7afea2c81a7f84723ab4', 'normalized origin hash must match the pinned candidate audit');
 assert.strictEqual(sourceFiles.length, hasInlineOwner ? 228 : 469, 'source module count must match the current post-split candidate state for Notes submission'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length, hasInlineOwner ? 1 : 0, 'candidate inline owner count must match the current pre/post-split state');
-const openCropPreviewModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-crop-preview.js'), 'utf8');
+const openCropPreviewModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-crop-preview.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert.strictEqual(((html + '\n' + openCropPreviewModule).match(/onclick="confirmCropPreview\(\)"/g) || []).length, 1, 'candidate must retain exactly one existing Done control caller');
 assert.strictEqual(fs.existsSync(ownerModulePath), !hasInlineOwner, 'candidate external owner presence must match the current pre/post-split state');
 assert.deepStrictEqual(statefulTokens.filter(token => new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(body)), [], 'candidate must contain no stateful operation tokens');

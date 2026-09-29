@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dm-drafts.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dm-drafts.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'function saveDmDraft(cid, text)',
@@ -21,7 +22,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `DM draft marker missing: ${marker}`);
 }
-assert(html.includes('src/features/dm-drafts.js'), 'DM draft module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/dm-drafts.js"'), 'DM draft module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!source.includes('db.from('), 'DM draft helper must not own database writes');
 assert(!source.includes('go('), 'DM draft helper must not own navigation');
 assert(!source.includes('sendMessage'), 'DM draft helper must not own message sending');
@@ -30,5 +31,5 @@ assert.strictEqual((source.match(/function clearDmDraft\(/g) || []).length, 1, '
 
 console.log('DM_DRAFTS_CONTRACT_HARNESS=PASS');
 console.log('STORAGE_ISOLATION_BLANK_CLEAR_FAILURE_TOLERANCE=LOCKED');
-console.log('MODULE_OWNER=src/features/dm-drafts.js');
+console.log('MODULE_OWNER=src/features/dms/dm-drafts.js');
 console.log('PRODUCTION_CHANGE=0');

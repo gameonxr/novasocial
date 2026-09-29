@@ -5,6 +5,7 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const browserProofFiles = [
@@ -33,7 +34,7 @@ const requiredMarkers = [
 ];
 const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'flush-pending-ice-candidates.js'), 'utf8');
 const endCallModule = fs.readFileSync(path.join(repo, 'src', 'features', 'end-call.js'), 'utf8');
-const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
+const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
 for (const marker of requiredMarkers) {
   assert(callsMarkerSurface.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
 }

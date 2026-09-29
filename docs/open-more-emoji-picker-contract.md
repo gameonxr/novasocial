@@ -23,7 +23,7 @@ The extracted `src/features/open-more-emoji-picker.js` module remains unchanged 
 
 ## References
 
-1. [`open-more-emoji-picker.js`](../src/features/open-more-emoji-picker.js)
+1. [`open-more-emoji-picker.js`](../src/features/dms/open-more-emoji-picker.js)
 2. [`note-reaction-contract.md`](./note-reaction-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

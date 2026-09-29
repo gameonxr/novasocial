@@ -21,6 +21,6 @@ The helpers own chat-input presentation only. Message sending, recording, realti
 
 ## References
 
-1. [`chat-input-helpers.js`](../src/features/chat-input-helpers.js)
+1. [`chat-input-helpers.js`](../src/features/dms/chat-input-helpers.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

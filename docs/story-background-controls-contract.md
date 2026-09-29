@@ -34,7 +34,7 @@ The standalone harness must pass with the existing Story text/draw controls, Sto
 
 ## References
 
-1. [`story-background-helpers.js`](../src/features/story-background-helpers.js)
+1. [`story-background-helpers.js`](../src/features/stories/story-background-helpers.js)
 2. [`story-text-controls-contract.md`](./story-text-controls-contract.md)
 3. [`story-draw-controls-contract.md`](./story-draw-controls-contract.md)
 4. [`story-editor-seam-preparation-contract.md`](./story-editor-seam-preparation-contract.md)

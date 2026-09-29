@@ -17,7 +17,7 @@ The helper owns blocked-ID read conversion only. Blocking/unblocking mutations, 
 
 ## References
 
-1. [`get-blocked-list.js`](../src/features/get-blocked-list.js)
-2. [`get-blocked-both-ways-set.js`](../src/features/get-blocked-both-ways-set.js)
+1. [`get-blocked-list.js`](../src/features/dms/get-blocked-list.js)
+2. [`get-blocked-both-ways-set.js`](../src/features/dms/get-blocked-both-ways-set.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

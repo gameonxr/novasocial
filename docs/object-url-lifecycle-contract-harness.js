@@ -11,12 +11,12 @@ const postActions = fs.readFileSync(path.join(repo, 'src', 'features', 'post-act
 const compressImage = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-image.js'), 'utf8');
 const compressVideo = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-video.js'), 'utf8');
 const prevMedia = fs.readFileSync(path.join(repo, 'src', 'features', 'prev-media.js'), 'utf8');
-const storyText = fs.readFileSync(path.join(repo, 'src', 'features', 'story-text-helpers.js'), 'utf8');
+const storyText = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-text-helpers.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 
 assert.strictEqual(files.length, 470, 'index.html plus 240 extracted modules must be audited after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((source.match(/URL\.createObjectURL\(/g) || []).length, 14, '14 object-URL creation calls must remain');
 assert.strictEqual((source.match(/URL\.revokeObjectURL\(/g) || []).length, 8, '8 object-URL revocation calls must remain');
-const storyDownload = fs.readFileSync(path.join(repo, 'src', 'features', 'download-story.js'), 'utf8');
+const storyDownload = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'download-story.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert(storyDownload.includes('async function downloadStory(storyId)'), 'Story download helper must remain present');
 assert(storyDownload.includes('URL.revokeObjectURL(link.href)'), 'Story download must retain object-URL cleanup');
 assert(postActions.includes('async function downloadMedia'), 'post-media download helper must remain present');

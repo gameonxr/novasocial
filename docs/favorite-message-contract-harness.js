@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'favorite-message.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'favorite-message.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'async function favoriteMessage(mid)',
@@ -19,5 +19,5 @@ assert.strictEqual((source.match(/async function favoriteMessage\(/g) || []).len
 
 console.log('FAVORITE_MESSAGE_CONTRACT_HARNESS=PASS');
 console.log('TOAST_MODAL_CLOSE_PERSISTENCE_BOUNDARY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/favorite-message.js');
+console.log('MODULE_OWNER=src/features/dms/favorite-message.js');
 console.log('PRODUCTION_CHANGE=0');

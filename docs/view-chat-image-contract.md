@@ -19,6 +19,6 @@ The existing URL interpolation is preserved and documented rather than changed b
 
 ## References
 
-1. [`view-chat-image.js`](../src/features/view-chat-image.js)
+1. [`view-chat-image.js`](../src/features/dms/view-chat-image.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -9,7 +9,7 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const indexPath = path.join(repo, 'index.html');
 const source = fs.readFileSync(indexPath, 'utf8');
-const modulePath = path.join(repo, 'src', 'features', 'toggle-sv-mute-owner.js');
+const modulePath = path.join(repo, 'src', 'features', 'stories', 'toggle-sv-mute-owner.js') /* architecture-migration 2026-09-29: stories folder */;
 const moduleSource = fs.existsSync(modulePath) ? fs.readFileSync(modulePath, 'utf8') : '';
 const originMain = execFileSync('git', ['show', 'origin/main:index.html'], {
   cwd: repo,
@@ -37,7 +37,7 @@ const ownerHash = crypto.createHash('sha256').update(normalizedOrigin).digest('h
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'current owner must retain normalized origin/main parity');
 assert.strictEqual(ownerHash, 'edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d', 'origin owner hash must remain pinned');
-const renderSVModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'render-sv.js'), 'utf8');
+const renderSVModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'render-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert.strictEqual(((source + '\n' + renderSVModuleText).match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
 const inlineOwnerCount = (source.match(/function toggleSVMute\(\)\s*\{/g) || []).length;
 const externalOwnerCount = (moduleSource.match(/window\.toggleSVMute\s*=\s*function\(\)\s*\{/g) || []).length;

@@ -5,9 +5,10 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
-const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const browserProofFiles = [
   'stories-empty-data-browser-proof-evidence.txt',
   'stories-image-setup-browser-proof-evidence.txt'
@@ -34,7 +35,7 @@ const requiredHtmlMarkers = [
   'multiVote',
   'story_poll_votes'
 ];
-const storyViewerModules = ['show-story-viewers.js', 'close-sv.js', 'vote-story-poll.js', 'refresh-poll-results.js', 'load-story-poll-state.js', 'render-sv.js', 'open-sv.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', name), 'utf8')).join('\n');
+const storyViewerModules = ['show-story-viewers.js', 'close-sv.js', 'vote-story-poll.js', 'refresh-poll-results.js', 'load-story-poll-state.js', 'render-sv.js', 'open-sv.js'].map(name => fs.readFileSync(path.join(repo, 'src', 'features', 'stories', name), 'utf8')).join('\n'); /* architecture-migration 2026-09-29: stories family folder */
 const storyViewerSurface = html + '\n' + storyViewerModules;
 for (const marker of requiredHtmlMarkers) {
   assert(storyViewerSurface.includes(marker), `Stories seam marker must remain inline: ${marker}`);
@@ -76,9 +77,9 @@ const protectedSignatures = [
   'async function refreshPollResults(storyId, pollIdx, options, cardEl, pickedIdxs)',
   'async function loadStoryPollState(storyId, pollIdx, options, cardEl)'
 ];
-const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
-const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
-const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
+const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
+const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
+const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 for (const signature of protectedSignatures) {
   if (signature === 'async function voteStoryPoll(storyId, pollIdx, options, optIdx, cardEl)') {
     assert(storyPollVoteModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
@@ -93,17 +94,17 @@ for (const signature of protectedSignatures) {
     continue;
   }
   if (signature === 'function openSV(startIdx)') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must exist');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must exist');
     continue;
   }
   assert.strictEqual(sourceText.includes(signature), false, `Protected Story signature must not be extracted: ${signature}`);
 }
-const undoStoryEditorModule = fs.readFileSync(path.join(repo, 'src', 'features', 'undo-story-editor.js'), 'utf8');
+const undoStoryEditorModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'undo-story-editor.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const storyCallSurface = html + '\n' + undoStoryEditorModule;
 assert(storyCallSurface.includes('renderStoryElements();'), 'Story viewer must retain its render call boundary');
 assert(storyViewerSurface.includes('await refreshPollResults('), 'Poll voting must retain its result-refresh boundary');
 assert(storyViewerSurface.includes('loadStoryPollState('), 'Poll cards must retain prior-state restoration boundary');
-assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8')).includes('pauseAllVideos()'), 'Story viewers modal must retain media-pause boundary');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8')).includes('pauseAllVideos()'), 'Story viewers modal must retain media-pause boundary');
 
 console.log('STORIES_SEAM_PREPARATION_HARNESS=PASS');
 console.log('DEPENDENCY_MAP=VIEWER_PLAYBACK_VIEWERS_POLL_REPLIES_SUBMISSION_DELETION');

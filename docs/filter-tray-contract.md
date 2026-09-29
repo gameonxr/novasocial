@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not create DOM nodes, load
 
 ## References
 
-1. [`filter-tray.js`](../src/features/filter-tray.js)
+1. [`filter-tray.js`](../src/features/stories/filter-tray.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

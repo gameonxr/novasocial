@@ -437,7 +437,7 @@ function runExtractionCandidateSimulation() {
   assert(!scriptTags.some(tag => tag.includes('type="module"') || tag.includes('defer')), 'candidate script tags must remain classic and non-deferred');
   const candidateNamedOwner = 'async function renderReels(){' + moduleText.slice(candidatePrefix.length, -2);
   assert.strictEqual(authorizedH11Revert(authorizedHyg001Reinsert(normalize(candidateNamedOwner))), normalize(originOwner), 'candidate owner body must match immutable origin (modulo the two authorized H11 security escapes + the authorized HYG-001 dead-code removal)');
-  assert.strictEqual(sha(candidateHtml), 'd0d93f91136d828a60f882c7844f46629c351c2820385455e4a22b8b787d5c90', 'candidate HTML hash must remain pinned after the nova-ultra-patches split' /* architecture-migration 2026-09-29: settings/notes/ai/reels/explore/profile demand-loaded — tags removed */);
+  assert.strictEqual(sha(candidateHtml), '0f5713ade8da4472b68cb18f864b38a83c94b21b11c9e24952ee7ac62ec05cf1', 'candidate HTML hash must remain pinned after the nova-ultra-patches split'/* architecture-migration 2026-09-29: HTML repinned after family migration */ /* architecture-migration 2026-09-29: settings/notes/ai/reels/explore/profile demand-loaded — tags removed */);
   return {
     ownerSource: candidateNamedOwner,
     moduleSha256: sha(moduleText),

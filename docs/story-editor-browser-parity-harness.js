@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src/features/story-editor-owners.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src/features/stories/story-editor-owners.js'), 'utf8');
 // Shared dependency since the H3 staged wrap: the module calls the global esc() helper owned by
 // src/core/utils.js. Load the REAL helper (no mock) so the VM matches the production script order.
 const utilsSource = fs.readFileSync(path.join(repo, 'src', 'core', 'utils.js'), 'utf8');

@@ -6,8 +6,9 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'story-background-helpers.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-background-helpers.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const forbidden of [
   /\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i,
@@ -18,7 +19,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(source), `background controls must remain local UI-only: ${forbidden}`);
 }
-assert(html.includes('src/features/story-background-helpers.js'), 'background controls must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/stories/story-background-helpers.js"'), 'background controls must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert.strictEqual((source.match(/function seOpenBgTool\s*\(/g) || []).length, 1, 'background opener must have one global owner');
 assert.strictEqual((source.match(/function seCloseBgPanel\s*\(/g) || []).length, 1, 'background closer must have one global owner');
 assert.strictEqual((source.match(/function seSelectBg\s*\(/g) || []).length, 1, 'background selector must have one global owner');

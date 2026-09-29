@@ -37,7 +37,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`attachment-sheet.js`](../src/features/attachment-sheet.js)
+1. [`attachment-sheet.js`](../src/features/dms/attachment-sheet.js)
 2. [`dm-seam-preparation-contract.md`](./dm-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -33,6 +33,6 @@ The standalone harness must pass with contract-artifact pairing, DM seam prepara
 
 ## References
 
-1. [`show-new-dm.js`](../src/features/show-new-dm.js)
+1. [`show-new-dm.js`](../src/features/dms/show-new-dm.js)
 2. [`dms-seam-preparation-contract.md`](./dms-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

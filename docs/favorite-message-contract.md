@@ -19,6 +19,6 @@ The harness is static and deterministic. It does not favorite messages, open cha
 
 ## References
 
-1. [`favorite-message.js`](../src/features/favorite-message.js)
+1. [`favorite-message.js`](../src/features/dms/favorite-message.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

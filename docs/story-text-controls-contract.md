@@ -33,9 +33,9 @@ The standalone harness must pass with the existing Story draw-controls contract,
 
 ## References
 
-1. [`se-select-text-color.js`](../src/features/se-select-text-color.js)
-2. [`se-select-font.js`](../src/features/se-select-font.js)
-3. [`se-toggle-gradient-text.js`](../src/features/se-toggle-gradient-text.js)
+1. [`se-select-text-color.js`](../src/features/stories/se-select-text-color.js)
+2. [`se-select-font.js`](../src/features/stories/se-select-font.js)
+3. [`se-toggle-gradient-text.js`](../src/features/stories/se-toggle-gradient-text.js)
 4. [`story-draw-controls-contract.md`](./story-draw-controls-contract.md)
 5. [`story-editor-seam-preparation-contract.md`](./story-editor-seam-preparation-contract.md)
 6. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

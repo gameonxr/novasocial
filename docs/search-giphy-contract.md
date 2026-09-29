@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not access the Giphy endpo
 
 ## References
 
-1. [`search-giphy.js`](../src/features/search-giphy.js)
+1. [`search-giphy.js`](../src/features/dms/search-giphy.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

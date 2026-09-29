@@ -6,8 +6,9 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'disappearing.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'disappearing.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const start = source.indexOf('function showDisappearingOptions');
 const end = source.indexOf('async function setDisappearing');
 assert(start >= 0 && end > start, 'renderer and protected mutator boundaries must remain discoverable');
@@ -22,7 +23,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(renderer), `renderer slice must remain read-only: ${forbidden}`);
 }
-assert(html.includes('src/features/disappearing.js'), 'disappearing module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/disappearing.js"'), 'disappearing module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 
 const body = { innerHTML: '' };
 const events = [];

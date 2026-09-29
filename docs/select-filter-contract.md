@@ -23,7 +23,7 @@ The extracted `src/features/select-filter.js` module remains unchanged in this c
 
 ## References
 
-1. [`select-filter.js`](../src/features/select-filter.js)
+1. [`select-filter.js`](../src/features/stories/select-filter.js)
 2. [`prev-media-contract.md`](./prev-media-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

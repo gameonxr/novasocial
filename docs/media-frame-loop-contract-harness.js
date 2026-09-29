@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const compress = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-video.js'), 'utf8');
-const trim = fs.readFileSync(path.join(repo, 'src', 'features', 'trim-video.js'), 'utf8');
+const trim = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'trim-video.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 
 function assertFrameLoop(source, label) {
   assert(source.includes('let drawing=true') || source.includes('let drawing = true'), `${label} must retain a drawing guard`);

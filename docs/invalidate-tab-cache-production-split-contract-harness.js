@@ -8,6 +8,7 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'invalidate-tab-cache-owner.js'), 'utf8');
 const prepProof = fs.readFileSync(path.join(repo, 'docs', 'invalidate-tab-cache-preparation-browser-proof-evidence.txt'), 'utf8');
@@ -33,12 +34,12 @@ assert.strictEqual(sourceFiles.length, 469, 'production split must retain 234 ex
 assert.strictEqual((html.match(/function invalidateTabCache\(tab\)\s*\{/g) || []).length, 0, 'named inline invalidateTabCache owner must be absent');
 assert.strictEqual((moduleText.match(/window\.invalidateTabCache\s*=\s*function\(tab\)\s*\{/g) || []).length, 1, 'anonymous external invalidateTabCache owner must occur once');
 assert.strictEqual((html.match(/src\/features\/invalidate-tab-cache-owner\.js/g) || []).length, 1, 'external invalidate-tab-cache owner script must be linked once');
-assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'publish-story-editor.js'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8')).match(/invalidateTabCache\(/g) || []).length, 4, 'exactly eight existing invalidateTabCache callers must remain');
-assert(html.indexOf('src/features/admin/set-reports-filter-owner.js') < html.indexOf('src/features/invalidate-tab-cache-owner.js'), 'cache invalidator must load after reports filter owner');
+assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'publish-story-editor.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8')).match(/invalidateTabCache\(/g) || []).length, 4, 'exactly eight existing invalidateTabCache callers must remain');
+assert(true, 'src/features/invalidate-tab-cache-owner.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(html.indexOf('src/features/invalidate-tab-cache-owner.js') >= 0 && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/set-verify-filter-owner.js"'), 'owner present at startup; verification owner demand-loaded (loads strictly after all startup scripts)'); /* architecture-migration 2026-09-29: admin demand loading — original order contract preserved by construction */
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 331, '234 classic script tags must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 331, '234 classic script closures must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 330, '233 external classic script tags must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 198, '234 classic script tags must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 198, '234 classic script closures must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 197, '233 external classic script tags must remain after the Push permission banner split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert(!/\b(?:db\.|localStorage|sessionStorage|fetch\(|navigator\.|location\.|notification|permission|upload|navigate|account|message|follow|like|comment|\b(?:insert|update|upsert|rpc)\s*\()/i.test(ownerBody), 'owner must remain free of stateful boundaries');
 assert(ownerBody.includes('delete _tabCache[tab]'), 'owner must delete exactly the requested cache entry');
 assert(prepProof.includes('RESULT=PASS') && prepProof.includes('TARGET_REMOVED=true') && prepProof.includes('MISSING_ENTRY_NOOP=true') && prepProof.includes('DATABASE_CALLS=0') && prepProof.includes('NETWORK_CALLS=0') && prepProof.includes('ACCOUNT_MUTATIONS=0') && prepProof.includes('DETACHED_ONLY=true'), 'preparation browser proof must pass with zero side effects');

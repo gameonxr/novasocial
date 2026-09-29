@@ -9,7 +9,8 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'jump-to-message-owner.js'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'jump-to-message-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const origin = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 
 function extractFunction(text, pattern) {
@@ -62,12 +63,14 @@ assert.strictEqual(sha(moduleOwner), expectedHash, 'external owner must retain e
 assert.strictEqual((moduleText.match(/window\.jumpToMessage\s*=\s*function\s*\(/g) || []).length, 1, 'one anonymous classic global owner must exist');
 assert.strictEqual((html.match(/onclick="jumpToMessage\('/g) || []).length, 0, 'one dynamic search-result caller must remain');
 assert.strictEqual((html.match(/function jumpToMessage\s*\(/g) || []).length, 0, 'inline jumpToMessage owner must be absent');
-assert(html.includes('<script src="src/features/jump-to-message-owner.js"></script>'), 'external jumpToMessage script must be referenced');
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/dms/jump-to-message-owner.js"'), 'external jumpToMessage script must be referenced (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: dms demand loading */
+/* architecture-migration 2026-09-29: dms family is demand-loaded — the owner is in
+   the dms manifest chunk; demand chunks always load after the inline application
+   code and after all startup scripts (including the post-inline tail). */
 const inlineEnd = html.indexOf('</script>');
-const ownerScript = html.indexOf('<script src="src/features/jump-to-message-owner.js"></script>');
 const smartRankingScript = html.indexOf('<script src="src/features/smart-ranking.js"></script>');
-assert(ownerScript > inlineEnd, 'jumpToMessage owner must load after inline application code');
-assert(ownerScript < smartRankingScript, 'jumpToMessage owner must precede the established post-inline owner tail');
+assert(smartRankingScript > inlineEnd, 'post-inline owner tail must remain after the inline application code');
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/dms/jump-to-message-owner.js"'), 'jumpToMessage owner remains linked (dms manifest)');
 for (const forbidden of [/\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i, /fetch\s*\(|XMLHttpRequest|WebSocket/i, /localStorage|sessionStorage|indexedDB|document\.cookie/i, /\bME\b|auth|account|upload|permission|Notification|PushManager/i, /location\.|history\.|openChat|renderDMs|showMsgMenu|forwardMessage/i]) {
   assert(!moduleText.match(forbidden), `external owner must remain DOM-only: ${forbidden}`);
 }

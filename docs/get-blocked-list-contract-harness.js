@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'get-blocked-list.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'get-blocked-list.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'async function getBlockedList()',
@@ -22,5 +22,5 @@ assert.strictEqual((source.match(/async function getBlockedList\(/g) || []).leng
 
 console.log('GET_BLOCKED_LIST_CONTRACT_HARNESS=PASS');
 console.log('READ_QUERY_USER_FILTER_EMPTY_FALLBACK_ROW_MAP_SET_CONVERSION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/get-blocked-list.js');
+console.log('MODULE_OWNER=src/features/dms/get-blocked-list.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -23,7 +23,7 @@ The extracted `src/features/story-sticker-helpers.js` module remains unchanged i
 
 ## References
 
-1. [`story-sticker-helpers.js`](../src/features/story-sticker-helpers.js)
+1. [`story-sticker-helpers.js`](../src/features/stories/story-sticker-helpers.js)
 2. [`story-editor-elements-contract.md`](./story-editor-elements-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

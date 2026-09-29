@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'message-clipboard-helpers.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'message-clipboard-helpers.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'async function copyMsg(id, text)',
@@ -24,5 +24,5 @@ assert.strictEqual((source.match(/(?:async )?function (?:copyMsg|copyMsgFromEnc)
 
 console.log('MESSAGE_CLIPBOARD_HELPERS_CONTRACT_HARNESS=PASS');
 console.log('CLIPBOARD_WRITE_DECODE_TOAST_MODAL_CLOSE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/message-clipboard-helpers.js');
+console.log('MODULE_OWNER=src/features/dms/message-clipboard-helpers.js');
 console.log('PRODUCTION_CHANGE=0');

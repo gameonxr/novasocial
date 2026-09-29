@@ -32,7 +32,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`favorite-message.js`](../src/features/favorite-message.js)
+1. [`favorite-message.js`](../src/features/dms/favorite-message.js)
 2. [`forward-message-seam-parity-contract.md`](./forward-message-seam-parity-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

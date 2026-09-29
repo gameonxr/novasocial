@@ -33,6 +33,6 @@ The standalone harness must pass with contract-artifact pairing, DM preparation,
 
 ## References
 
-1. [`disappearing.js`](../src/features/disappearing.js)
+1. [`disappearing.js`](../src/features/dms/disappearing.js)
 2. [`dms-seam-preparation-contract.md`](./dms-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

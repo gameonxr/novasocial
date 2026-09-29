@@ -23,7 +23,7 @@ The extracted `src/features/select-video-len.js` module remains unchanged in thi
 
 ## References
 
-1. [`select-video-len.js`](../src/features/select-video-len.js)
+1. [`select-video-len.js`](../src/features/stories/select-video-len.js)
 2. [`cancel-segment-picker-contract.md`](./cancel-segment-picker-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

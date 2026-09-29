@@ -23,7 +23,7 @@ The extracted `src/features/save-local-sticker.js` module remains unchanged in t
 
 ## References
 
-1. [`save-local-sticker.js`](../src/features/save-local-sticker.js)
+1. [`save-local-sticker.js`](../src/features/dms/save-local-sticker.js)
 2. [`get-local-stickers-contract.md`](./get-local-stickers-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

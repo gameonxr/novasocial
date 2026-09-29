@@ -19,6 +19,6 @@ The helper owns local sticker-favorites UI/persistence only. Sticker search, mes
 
 ## References
 
-1. [`message-favorite-toggle.js`](../src/features/message-favorite-toggle.js)
+1. [`message-favorite-toggle.js`](../src/features/dms/message-favorite-toggle.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -19,6 +19,6 @@ The harness is static and does not query messages, open a modal, or access a log
 
 ## References
 
-1. [`message-info.js`](../src/features/message-info.js)
+1. [`message-info.js`](../src/features/dms/message-info.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

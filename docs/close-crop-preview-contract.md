@@ -23,7 +23,7 @@ The extracted `src/features/close-crop-preview.js` module remains unchanged in t
 
 ## References
 
-1. [`close-crop-preview.js`](../src/features/close-crop-preview.js)
+1. [`close-crop-preview.js`](../src/features/stories/close-crop-preview.js)
 2. [`avatar-action-sheet-contract.md`](./avatar-action-sheet-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

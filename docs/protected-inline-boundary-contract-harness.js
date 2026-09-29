@@ -6,15 +6,16 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
-const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 const notesReactionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8');
 const pushBannerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-permission-banner-owner.js'), 'utf8');
-const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 
 const protectedMarkers = [
@@ -81,27 +82,27 @@ for (const marker of protectedMarkers) {
     assert(!html.includes(marker), 'approved Notes reaction marker must be absent from inline HTML');
     assert(notesReactionModule.includes('window.reactToNote = function reactToNote('), 'approved Notes reaction module owner must be present');
   } else if (marker === 'async function voteStoryPoll(') {
-    const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+    const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story poll vote marker must be absent from inline HTML');
     assert(storyPollVoteModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote module owner must be present');
   } else if (marker === 'async function refreshPollResults(') {
-    const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
+    const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story poll refresh marker must be absent from inline HTML');
     assert(storyPollRefreshModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh module owner must be present');
   } else if (marker === 'async function loadStoryPollState(') {
-    const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
+    const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story poll state marker must be absent from inline HTML');
     assert(storyPollStateModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state module owner must be present');
   } else if (marker === 'function openSV(') {
-    const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
+    const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story viewer opener marker must be absent from inline HTML');
     assert(storyViewerOpenModule.includes('window.openSV = function openSV('), 'approved Story viewer opener module owner must be present');
   } else if (marker === 'function submitNativeEmojiReaction(') {
-    const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
+    const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'submit-native-emoji-reaction.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
     assert(!html.includes(marker), 'approved Notes emoji reaction marker must be absent from inline HTML');
     assert(notesEmojiModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction module owner must be present');
   } else if (marker === 'async function toggleRecording(') {
-    const voiceRecordingModule = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
+    const voiceRecordingModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
     assert(!html.includes(marker), 'approved Voice recording marker must be absent from inline HTML');
     assert(voiceRecordingModule.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording module owner must be present');
   } else if (marker === 'function createPeerConnection(') {
@@ -113,16 +114,14 @@ for (const marker of protectedMarkers) {
   }
 }
 
+/* architecture-migration 2026-09-29: stories owner files demand-loaded — startup tail */
 const scriptMarkers = [
   '<script src="src/features/smart-ranking.js"></script>',
   '<script src="src/features/nova-init.js"></script>',
   '<script src="src/features/spawn-like-particles.js"></script>',
-  '<script src="src/features/sync-local-deletion-fallback.js"></script>',
+  '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
-  '<script src="src/features/toggle-sv-mute-owner.js"></script>',
   '<script src="src/features/invalidate-tab-cache-owner.js"></script>',
-  '<script src="src/features/confirm-crop-preview-owner.js"></script>',
-  '<script src="src/features/story-editor-owners.js"></script>',
   '<script src="src/features/like-effects.js"></script>',
 ];
 const positions = scriptMarkers.map(marker => html.indexOf(marker));

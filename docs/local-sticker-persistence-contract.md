@@ -37,8 +37,8 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`get-local-stickers.js`](../src/features/get-local-stickers.js)
-2. [`save-local-sticker.js`](../src/features/save-local-sticker.js)
+1. [`get-local-stickers.js`](../src/features/dms/get-local-stickers.js)
+2. [`save-local-sticker.js`](../src/features/dms/save-local-sticker.js)
 3. [`sticker-favorites-contract.md`](./sticker-favorites-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

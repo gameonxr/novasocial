@@ -34,6 +34,6 @@ The standalone harness must pass with contract-artifact pairing, protected-inlin
 
 ## References
 
-1. [`smart-replies.js`](../src/features/smart-replies.js)
+1. [`smart-replies.js`](../src/features/dms/smart-replies.js)
 2. [`dms-seam-preparation-contract.md`](./dms-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

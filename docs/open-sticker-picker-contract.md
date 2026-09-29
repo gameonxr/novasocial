@@ -36,7 +36,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`open-sticker-picker.js`](../src/features/open-sticker-picker.js)
+1. [`open-sticker-picker.js`](../src/features/dms/open-sticker-picker.js)
 2. [`sticker-favorites-contract.md`](./sticker-favorites-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

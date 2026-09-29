@@ -4,6 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const comments = fs.readFileSync(path.join(repo, 'src', 'features', 'comments.js'), 'utf8');
 const moderation = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'ai-moderation.js') /* architecture-migration 2026-09-29: ai family folder */, 'utf8');
 
@@ -17,9 +18,9 @@ function functionBlock(source, signature) {
 const critical = [
   { source: comments, signature: 'async function sendCmt(pid)', table: "db.from('comments').insert", label: 'sendCmt' },
   { source: fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8'), signature: 'async function submitCreate(type)', table: "db.from('posts').insert", label: 'submitCreate' },
-  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'send-msg.js'), 'utf8'), signature: 'async function sendMsg(cid)', table: "db.from('messages').insert", label: 'sendMsg' },
-  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'block-user.js'), 'utf8'), signature: 'async function blockUser(userId, btn)', table: "db.from('blocks').insert", label: 'blockUser' },
-  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'unblock-user.js'), 'utf8'), signature: 'async function unblockUser(userId, btn)', table: "db.from('blocks').delete", label: 'unblockUser' },
+  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'send-msg.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8'), signature: 'async function sendMsg(cid)', table: "db.from('messages').insert", label: 'sendMsg' },
+  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'block-user.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8'), signature: 'async function blockUser(userId, btn)', table: "db.from('blocks').insert", label: 'blockUser' },
+  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'unblock-user.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8'), signature: 'async function unblockUser(userId, btn)', table: "db.from('blocks').delete", label: 'unblockUser' },
 ];
 
 for (const item of critical) {

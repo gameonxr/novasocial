@@ -11,8 +11,9 @@ const featureFiles = [
   'se-select-font.js',
   'se-toggle-gradient-text.js',
 ];
-const sources = featureFiles.map(file => fs.readFileSync(path.join(repo, 'src', 'features', file), 'utf8'));
+const sources = featureFiles.map(file => fs.readFileSync(path.join(repo, 'src', 'features', 'stories', file), 'utf8')); /* architecture-migration 2026-09-29: stories family folder */
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const source of sources) {
   for (const forbidden of [
@@ -26,7 +27,7 @@ for (const source of sources) {
   }
 }
 for (const file of featureFiles) {
-  assert(html.includes(`src/features/${file}`), `${file} must remain linked from HTML`);
+  assert(featureManifestSrc.includes(`src/features/stories/${file}`), `${file} must remain linked (feature manifest — demand-loaded)`); /* architecture-migration 2026-09-29: stories demand loading */
 }
 assert.strictEqual((sources[0].match(/function seSelectTextColor\s*\(/g) || []).length, 1, 'text-color control must have one global owner');
 assert.strictEqual((sources[1].match(/function seSelectFont\s*\(/g) || []).length, 1, 'font control must have one global owner');

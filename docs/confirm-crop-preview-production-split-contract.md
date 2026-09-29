@@ -9,7 +9,7 @@
 
 `confirmCropPreview()` reads the existing `_cropState`, crop viewport/image DOM elements, and browser canvas/File primitives. It renders the selected crop, closes the existing crop preview, and invokes the existing confirmation callback. Missing crop inputs close safely; canvas conversion failure reports the existing toast, closes the preview, and passes the original file to the existing callback.
 
-The production owner is preserved as an anonymous classic global assignment in [`src/features/confirm-crop-preview-owner.js`](../src/features/confirm-crop-preview-owner.js): `window.confirmCropPreview = async function() { ... };`. The single existing Done-control caller remains unchanged. The owner depends only on `_cropState`, DOM/canvas/File primitives, `closeCropPreview()`, and `toast()`. The upload owner, avatar/profile creation, crop drag/zoom setup, account state, story/editor systems, messaging, calls, navigation, and all protected high-risk systems remain outside this split.
+The production owner is preserved as an anonymous classic global assignment in [`src/features/confirm-crop-preview-owner.js`](../src/features/stories/confirm-crop-preview-owner.js): `window.confirmCropPreview = async function() { ... };`. The single existing Done-control caller remains unchanged. The owner depends only on `_cropState`, DOM/canvas/File primitives, `closeCropPreview()`, and `toast()`. The upload owner, avatar/profile creation, crop drag/zoom setup, account state, story/editor systems, messaging, calls, navigation, and all protected high-risk systems remain outside this split.
 
 ## Completion gates
 
@@ -42,7 +42,7 @@ The production split is reversible with `git revert 74664d31bf280d8e7d638ff8e0a8
 5. [`confirm-crop-preview-production-split-contract-harness.js`](confirm-crop-preview-production-split-contract-harness.js)
 6. [`confirm-crop-preview-parity-rollback-evidence.txt`](confirm-crop-preview-parity-rollback-evidence.txt)
 7. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
-8. [`src/features/confirm-crop-preview-owner.js`](../src/features/confirm-crop-preview-owner.js)
+8. [`src/features/confirm-crop-preview-owner.js`](../src/features/stories/confirm-crop-preview-owner.js)
 
 ## Documentation status
 

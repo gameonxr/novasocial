@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-vanish-mode.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-vanish-mode.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'function toggleVanishMode()',
@@ -19,7 +20,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Vanish Mode marker missing: ${marker}`);
 }
-assert(html.includes('src/features/toggle-vanish-mode.js'), 'Vanish Mode module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/toggle-vanish-mode.js"'), 'Vanish Mode module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!source.includes('db.from('), 'Vanish Mode helper must not own database writes');
 assert(!source.includes('renderDMs'), 'Vanish Mode helper must not own protected DM rendering');
 assert(!source.includes('openChat'), 'Vanish Mode helper must not own chat navigation');
@@ -27,5 +28,5 @@ assert.strictEqual((source.match(/function toggleVanishMode\(/g) || []).length, 
 
 console.log('VANISH_MODE_CONTRACT_HARNESS=PASS');
 console.log('STATE_ICON_BACKGROUND_TOAST_UI_ONLY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/toggle-vanish-mode.js');
+console.log('MODULE_OWNER=src/features/dms/toggle-vanish-mode.js');
 console.log('PRODUCTION_CHANGE=0');

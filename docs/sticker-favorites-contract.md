@@ -36,7 +36,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`toggle-fav-sticker.js`](../src/features/toggle-fav-sticker.js)
+1. [`toggle-fav-sticker.js`](../src/features/dms/toggle-fav-sticker.js)
 2. [`sticker-toggle-contract.md`](./sticker-toggle-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

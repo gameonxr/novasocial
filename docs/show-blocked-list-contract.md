@@ -19,7 +19,7 @@ The harness is static and does not access Supabase, open a modal, or unblock any
 
 ## References
 
-1. [`show-blocked-list.js`](../src/features/show-blocked-list.js)
-2. [`get-blocked-list.js`](../src/features/get-blocked-list.js)
+1. [`show-blocked-list.js`](../src/features/dms/show-blocked-list.js)
+2. [`get-blocked-list.js`](../src/features/dms/get-blocked-list.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

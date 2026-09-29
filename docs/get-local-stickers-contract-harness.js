@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'get-local-stickers.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'get-local-stickers.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'function getLocalStickers(type)',
@@ -17,7 +18,7 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Get local stickers marker missing: ${marker}`);
 }
-assert(html.includes('src/features/get-local-stickers.js'), 'Get local stickers module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/get-local-stickers.js"'), 'Get local stickers module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!source.includes('fetch('), 'Get local stickers must not own network requests');
 assert(!source.includes('supabase'), 'Get local stickers must not own remote data access');
 assert(!source.includes('document.'), 'Get local stickers must not own UI rendering');
@@ -25,5 +26,5 @@ assert.strictEqual((source.match(/function getLocalStickers\(/g) || []).length, 
 
 console.log('GET_LOCAL_STICKERS_CONTRACT_HARNESS=PASS');
 console.log('VALID_READ_MISSING_FALLBACK_MALFORMED_CLEANUP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/get-local-stickers.js');
+console.log('MODULE_OWNER=src/features/dms/get-local-stickers.js');
 console.log('PRODUCTION_CHANGE=0');

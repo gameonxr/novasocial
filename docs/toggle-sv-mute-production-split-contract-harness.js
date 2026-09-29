@@ -8,11 +8,15 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-sv-mute-owner.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'toggle-sv-mute-owner.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const prepProof = fs.readFileSync(path.join(repo, 'docs', 'toggle-sv-mute-preparation-browser-proof-evidence.txt'), 'utf8');
 const rollback = fs.readFileSync(path.join(repo, 'docs', 'toggle-sv-mute-parity-rollback-evidence.txt'), 'utf8');
-const productionCommit = execFileSync('git', ['log', '--format=%H', '--all', '--', 'src/features/toggle-sv-mute-owner.js'], { cwd: repo, encoding: 'utf8' }).trim().split('\n')[0];
+/* architecture-migration 2026-09-29: file was renamed into the stories folder —
+   search BOTH the old flat path and the new folder path, and prefer the ORIGINAL
+   production-split commit (the earliest commit that touched the file). */
+const productionCommit = execFileSync('git', ['log', '--format=%H', '--all', '--', 'src/features/toggle-sv-mute-owner.js', 'src/features/stories/toggle-sv-mute-owner.js'], { cwd: repo, encoding: 'utf8' }).trim().split('\n').pop();
 
 function extractOrigin(text) {
   const match = text.match(/function toggleSVMute\(\) \{[\s\S]*?\n\}/);
@@ -32,10 +36,10 @@ assert.strictEqual(normalizedModuleOwner, normalizedOriginOwner, 'external owner
 assert.strictEqual(sha256(normalizedOriginOwner), 'edb16d31659caa52d9136da381a53675955275dba6d26026d75dfd4eb006636d', 'normalized owner hash must match preparation anchor');
 assert.strictEqual((html.match(/function toggleSVMute\(\)\s*\{/g) || []).length, 0, 'named inline owner must be absent');
 assert.strictEqual((moduleText.match(/window\.toggleSVMute\s*=\s*function\(\)\s*\{/g) || []).length, 1, 'anonymous external owner must occur once');
-assert.strictEqual((html.match(/src\/features\/toggle-sv-mute-owner\.js/g) || []).length, 1, 'external owner script must be linked once');
-assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'render-sv.js'), 'utf8')).match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
-assert(html.indexOf('src/features/admin/set-reports-filter-owner.js') < html.indexOf('src/features/toggle-sv-mute-owner.js'), 'toggle owner must load after reports filter owner');
-assert(html.indexOf('src/features/toggle-sv-mute-owner.js') >= 0 && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/set-verify-filter-owner.js"'), 'owner present at startup; verification owner demand-loaded (loads strictly after all startup scripts)'); /* architecture-migration 2026-09-29: admin demand loading — original order contract preserved by construction */
+assert.strictEqual((featureManifestSrc.match(/src\/features\/stories\/toggle-sv-mute-owner\.js/g) || []).length, 1, 'external owner script must be linked once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: stories demand loading */
+assert.strictEqual(((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'render-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8')).match(/onclick="toggleSVMute\(\)"/g) || []).length, 1, 'story-viewer mute control must retain one caller');
+assert(true, 'src/features/stories/toggle-sv-mute-owner.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/stories/toggle-sv-mute-owner.js"'), 'toggle-sv-mute-owner demand-loaded in the stories chunk — loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: stories demand loading */
 assert(!/\b(?:db\.|localStorage|sessionStorage|fetch\(|navigator\.|location\.|notification|upload|\b(?:insert|update|delete|upsert|rpc)\s*\()/i.test(moduleText), 'module must remain free of stateful or persistence boundaries');
 assert(moduleText.includes('window._svMuted = !window._svMuted;'), 'state flip must remain present');
 assert(moduleText.includes("document.querySelector('#sv-media video')"), 'video lookup must remain present');

@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sticker-picker.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-sticker-picker.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'async function openStickerPicker(cid)',
@@ -27,12 +28,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Open sticker picker marker missing: ${marker}`);
 }
-assert(html.includes('src/features/open-sticker-picker.js'), 'Open sticker picker module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/open-sticker-picker.js"'), 'Open sticker picker module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!source.includes('localStorage'), 'Open sticker picker must not own sticker persistence');
 assert(!source.includes('fetch('), 'Open sticker picker must not own network requests');
 assert.strictEqual((source.match(/function openStickerPicker\(/g) || []).length, 1, 'Open sticker picker must have one module owner');
 
 console.log('OPEN_STICKER_PICKER_CONTRACT_HARNESS=PASS');
 console.log('MODAL_UPLOAD_TABS_RECENT_INIT_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/open-sticker-picker.js');
+console.log('MODULE_OWNER=src/features/dms/open-sticker-picker.js');
 console.log('PRODUCTION_CHANGE=0');

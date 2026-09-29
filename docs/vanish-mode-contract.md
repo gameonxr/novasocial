@@ -36,7 +36,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`toggle-vanish-mode.js`](../src/features/toggle-vanish-mode.js)
+1. [`toggle-vanish-mode.js`](../src/features/dms/toggle-vanish-mode.js)
 2. [`dm-seam-preparation-contract.md`](./dm-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

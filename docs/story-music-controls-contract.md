@@ -33,7 +33,7 @@ The standalone harness must pass with the existing Story background/text/draw co
 
 ## References
 
-1. [`story-music-helpers.js`](../src/features/story-music-helpers.js)
+1. [`story-music-helpers.js`](../src/features/stories/story-music-helpers.js)
 2. [`story-background-controls-contract.md`](./story-background-controls-contract.md)
 3. [`story-text-controls-contract.md`](./story-text-controls-contract.md)
 4. [`story-editor-seam-preparation-contract.md`](./story-editor-seam-preparation-contract.md)

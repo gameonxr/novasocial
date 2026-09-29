@@ -19,6 +19,6 @@ The helper owns crop zoom state/UI synchronization only. Crop persistence, image
 
 ## References
 
-1. [`update-crop-zoom.js`](../src/features/update-crop-zoom.js)
+1. [`update-crop-zoom.js`](../src/features/stories/update-crop-zoom.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

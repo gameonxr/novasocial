@@ -4,6 +4,7 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const start = html.indexOf('<script>');
 const end = html.indexOf('</script>', start);
 assert(start >= 0 && end > start, 'inline application script boundaries must exist');
@@ -31,13 +32,13 @@ for (const name of protectedNames.filter(name => name !== 'submitNote' && name !
     assert(!new RegExp(`(?:async\\s+)?function\\s+${name}\\s*\\(`).test(text), `${name} must not be extracted to src/${file}`);
   }
 }
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved toggleRecording owner must exist in its module');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved toggleRecording owner must exist in its module');
 assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved createPeerConnection owner must exist in its module');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8').includes('window.openChat = async function openChat('), 'approved openChat owner must exist in its module');
-const hasForwardImplementation = /(?:async\s+)?function\s+forwardMessage\s*\(/.test(inline) || /(?:window\.)?forwardMessage\s*=/.test(inline) || fs.readFileSync(path.join(repo, 'src', 'features', 'forward-message.js'), 'utf8').includes('window.forwardMessage = async function forwardMessage(');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved openChat owner must exist in its module');
+const hasForwardImplementation = /(?:async\s+)?function\s+forwardMessage\s*\(/.test(inline) || /(?:window\.)?forwardMessage\s*=/.test(inline) || fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'forward-message.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.forwardMessage = async function forwardMessage(');
 assert.strictEqual(hasForwardImplementation, true, 'forwardMessage must remain an authorized inline implementation');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'complete-forward-message.js'), 'utf8').includes('window.completeForwardMessage = async function completeForwardMessage('), 'approved completeForwardMessage owner must exist in its module');
-assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'show-msg-menu.js'), 'utf8')).includes('onclick="forwardMessage('), 'forwardMessage caller must remain present');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'complete-forward-message.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.completeForwardMessage = async function completeForwardMessage('), 'approved completeForwardMessage owner must exist in its module');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'show-msg-menu.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8')).includes('onclick="forwardMessage('), 'forwardMessage caller must remain present');
 console.log('INLINE_DECLARATION_CLOSURE_HARNESS=PASS');
 console.log(`INLINE_DECLARATIONS=${declarations.length}`);
 console.log(`PROTECTED_DECLARATIONS=${protectedNames.length}`);

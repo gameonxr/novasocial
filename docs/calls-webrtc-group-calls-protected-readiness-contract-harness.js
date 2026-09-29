@@ -4,7 +4,8 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const contractPath = path.join(repo, 'docs', 'calls-webrtc-group-calls-protected-readiness-contract.md');
-const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const contract = fs.readFileSync(contractPath, 'utf8');
 const requiredMarkers = [
   'RTCPeerConnection',

@@ -23,7 +23,7 @@ The extracted `src/features/sticker-toggle-fav.js` module remains unchanged in t
 
 ## References
 
-1. [`sticker-toggle-fav.js`](../src/features/sticker-toggle-fav.js)
+1. [`sticker-toggle-fav.js`](../src/features/dms/sticker-toggle-fav.js)
 2. [`sticker-tab-contract.md`](./sticker-tab-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

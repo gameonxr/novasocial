@@ -31,7 +31,7 @@ const originOwner = extractOwner(originHtml);
 const currentOwner = moduleText.replace(/^window\.reactToNote = /, '').replace(/;\s*$/, '');
 assert.strictEqual(currentOwner.replace(/\r\n/g, '\n'), originOwner.replace(/\r\n/g, '\n'), 'Branch2 external reactToNote owner must retain exact immutable-origin parity');
 assert.strictEqual(currentHtml.split('function reactToNote(').length - 1, 0, 'inline reactToNote owner must be absent after split');
-assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-reaction-owner\.js/g) || []).length, 1, 'production Notes reaction owner must be linked exactly once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29 */
+assert.strictEqual((featureManifestSrc.match(/src\/features\/notes\/notes-reaction-owner\.js/g) || []).length, 2, 'production Notes reaction owner linkage (shared subsystem: notes + dms chunks — loader per-URL dedup evaluates once)'); /* architecture-migration 2026-09-29: notes-bar shared subsystem */
 assert(moduleText.includes('window.reactToNote = function reactToNote('), 'production Notes reaction owner must be a classic global');
 assert(contract.includes('EXACT_ORIGIN_PARITY=REQUIRED'), 'contract must require exact parity');
 assert(contract.includes('DETACHED_SYNTHETIC_PROOF=REQUIRED'), 'contract must require detached proof');

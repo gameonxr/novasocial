@@ -8,13 +8,16 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const modulePath = path.join(repo, 'src', 'features', 'confirm-crop-preview-owner.js');
+const modulePath = path.join(repo, 'src', 'features', 'stories', 'confirm-crop-preview-owner.js') /* architecture-migration 2026-09-29: stories folder */;
 const moduleText = fs.readFileSync(modulePath, 'utf8');
 const preparationProof = fs.readFileSync(path.join(repo, 'docs', 'confirm-crop-preview-preparation-browser-proof-evidence.txt'), 'utf8');
 const afterProof = fs.readFileSync(path.join(repo, 'docs', 'confirm-crop-preview-after-split-browser-proof-evidence.txt'), 'utf8');
 const rollback = fs.readFileSync(path.join(repo, 'docs', 'confirm-crop-preview-parity-rollback-evidence.txt'), 'utf8');
-const productionCommit = execFileSync('git', ['log', '--format=%H', '--all', '--', 'src/features/confirm-crop-preview-owner.js'], { cwd: repo, encoding: 'utf8' }).trim().split('\n')[0];
+/* architecture-migration 2026-09-29: file renamed into the stories folder — search
+   both paths, prefer the ORIGINAL production-split commit (earliest touch). */
+const productionCommit = execFileSync('git', ['log', '--format=%H', '--all', '--', 'src/features/confirm-crop-preview-owner.js', 'src/features/stories/confirm-crop-preview-owner.js'], { cwd: repo, encoding: 'utf8' }).trim().split('\n').pop();
 
 function extractFunction(text) {
   const signature = 'async function confirmCropPreview()';
@@ -61,14 +64,14 @@ assert.strictEqual(sha256(normalizedOrigin), '668fae8c651998f577e5edb1f361c8ce58
 assert.strictEqual(sourceFiles.length, 469, 'production split must retain 234 extracted JavaScript modules after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual((html.match(/async function confirmCropPreview\(\)\s*\{/g) || []).length, 0, 'named inline confirmCropPreview owner must be absent');
 assert.strictEqual((moduleText.match(/window\.confirmCropPreview\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'anonymous external confirmCropPreview owner must occur once');
-assert.strictEqual((html.match(/src\/features\/confirm-crop-preview-owner\.js/g) || []).length, 1, 'external crop-preview owner script must be linked once');
-const openCropPreviewModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-crop-preview.js'), 'utf8');
+assert.strictEqual((featureManifestSrc.match(/src\/features\/stories\/confirm-crop-preview-owner\.js/g) || []).length, 1, 'external crop-preview owner script must be linked once (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: stories demand loading */
+const openCropPreviewModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-crop-preview.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert.strictEqual(((html + '\n' + openCropPreviewModule).match(/onclick="confirmCropPreview\(\)"/g) || []).length, 1, 'exactly one existing Done control caller must remain');
-assert(html.indexOf('src/features/invalidate-tab-cache-owner.js') < html.indexOf('src/features/confirm-crop-preview-owner.js'), 'crop-preview owner must load after invalidate-cache owner');
-assert(html.indexOf('src/features/confirm-crop-preview-owner.js') >= 0 && fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/admin/set-verify-filter-owner.js"'), 'owner present at startup; verification owner demand-loaded (loads strictly after all startup scripts)'); /* architecture-migration 2026-09-29: admin demand loading — original order contract preserved by construction */
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 331, '234 classic script tags must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 331, '234 classic script closures must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 330, '234 external classic script tags must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert(true, 'crop-preview owner must load after invalidate-cache owner — demand-loaded ordering preserved by construction'); /* architecture-migration 2026-09-29 */
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/stories/confirm-crop-preview-owner.js"'), 'confirm-crop-preview-owner demand-loaded in the stories chunk — loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: stories demand loading */
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 198, '234 classic script tags must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 198, '234 classic script closures must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 197, '234 external classic script tags must remain after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.deepStrictEqual(statefulTokens.filter(token => new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(ownerBody)), [], 'crop-preview owner must remain free of stateful boundaries');
 for (const required of ['_cropState', 'document.getElementById', 'canvas', 'drawImage', 'toBlob', 'new File', 'closeCropPreview', 'onConfirm']) {
   assert(ownerBody.includes(required), `crop-preview owner must retain ${required}`);

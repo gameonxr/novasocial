@@ -6,17 +6,18 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const docsDir = path.join(repo, 'docs');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const matrix = fs.readFileSync(path.join(docsDir, 'high-risk-seam-readiness-matrix-contract.md'), 'utf8');
 const gate = fs.readFileSync(path.join(docsDir, 'high-risk-extraction-gate-contract.md'), 'utf8');
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const source = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
-const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
-const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
-const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 
 assert(matrix.includes('Protected production splits | 22/22 protected signatures moved; all bounded scopes are split-complete, including the final-stretch Calls/WebRTC, Story viewer, voice recording, chat/DMs, media upload, tab caching, and auth-helper owners, plus the nova-ultra-patches region; authenticated reaction invocation remains intentionally unperformed'), 'matrix must record the completed protected-signature extraction and supporting Reels helper');
@@ -69,14 +70,14 @@ for (const signature of protectedSignatures) {
   assert.strictEqual(html.split(signature).length - 1, approved ? 0 : 1, `protected signature count mismatch: ${signature}`);
   if (signature === 'async function submitNote()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'approved Notes submission owner must exist');
   else if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
-  else if (signature === 'async function voteStoryPoll(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
-  else if (signature === 'async function refreshPollResults(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
-  else if (signature === 'async function loadStoryPollState(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must exist');
-  else if (signature === 'function openSV(startIdx){') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must exist');
-  else if (signature === 'function submitNativeEmojiReaction(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must exist');
-  else if (signature === 'async function toggleRecording(cid)') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must exist');
+  else if (signature === 'async function voteStoryPoll(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
+  else if (signature === 'async function refreshPollResults(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
+  else if (signature === 'async function loadStoryPollState(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must exist');
+  else if (signature === 'function openSV(startIdx){') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must exist');
+  else if (signature === 'function submitNativeEmojiReaction(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'submit-native-emoji-reaction.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must exist');
+  else if (signature === 'async function toggleRecording(cid)') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must exist');
   else if (signature === 'function createPeerConnection(callId, remoteUserId) {') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner must exist');
-  else if (signature === 'function openChat(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must exist');
+  else if (signature === 'function openChat(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must exist');
   else assert(!source.includes(signature), `protected signature must not be duplicated by declaration: ${signature}`);
 }
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle window owner must exist');

@@ -23,7 +23,7 @@ The extracted `src/features/copy-story-link.js` module remains unchanged in this
 
 ## References
 
-1. [`copy-story-link.js`](../src/features/copy-story-link.js)
+1. [`copy-story-link.js`](../src/features/stories/copy-story-link.js)
 2. [`story-sticker-helpers-contract.md`](./story-sticker-helpers-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -12,8 +12,9 @@ const featureFiles = [
   'se-select-draw-type.js',
   'se-select-draw-color.js',
 ];
-const sources = featureFiles.map(file => fs.readFileSync(path.join(repo, 'src', 'features', file), 'utf8'));
+const sources = featureFiles.map(file => fs.readFileSync(path.join(repo, 'src', 'features', 'stories', file), 'utf8')); /* architecture-migration 2026-09-29: stories family folder */
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const source of sources) {
   for (const forbidden of [
@@ -27,7 +28,7 @@ for (const source of sources) {
   }
 }
 for (const file of featureFiles) {
-  assert(html.includes(`src/features/${file}`), `${file} must remain linked from HTML`);
+  assert(featureManifestSrc.includes(`src/features/stories/${file}`), `${file} must remain linked (feature manifest — demand-loaded)`); /* architecture-migration 2026-09-29: stories demand loading */
 }
 assert.strictEqual((sources[0].match(/function seOpenDrawTool\s*\(/g) || []).length, 1, 'open control must have one global owner');
 assert.strictEqual((sources[1].match(/function seCloseDrawPanel\s*\(/g) || []).length, 1, 'close control must have one global owner');

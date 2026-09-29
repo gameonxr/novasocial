@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'view-chat-image.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'view-chat-image.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'function viewChatImage(url)',
@@ -24,5 +24,5 @@ assert.strictEqual((source.match(/function viewChatImage\(/g) || []).length, 1, 
 
 console.log('VIEW_CHAT_IMAGE_CONTRACT_HARNESS=PASS');
 console.log('MODAL_DARK_SHEET_IMAGE_DOWNLOAD_BACKDROP_PROTECTED_REALTIME_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/view-chat-image.js');
+console.log('MODULE_OWNER=src/features/dms/view-chat-image.js');
 console.log('PRODUCTION_CHANGE=0');

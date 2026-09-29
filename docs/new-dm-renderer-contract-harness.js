@@ -6,8 +6,9 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'show-new-dm.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'show-new-dm.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const forbidden of [
   /\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i,
@@ -18,7 +19,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(source), `new-DM renderer must remain side-effect-free: ${forbidden}`);
 }
-assert(html.includes('src/features/show-new-dm.js'), 'new-DM renderer must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/show-new-dm.js"'), 'new-DM renderer must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert.strictEqual((source.match(/async function showNewDM\s*\(/g) || []).length, 1, 'renderer must have one global owner');
 
 const body = { innerHTML: '' };

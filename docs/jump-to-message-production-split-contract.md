@@ -35,7 +35,7 @@ The split does not move or modify `renderDMs`, `_refreshDmsInPlace`, `_silentBac
 
 ## References
 
-1. [`jump-to-message-owner.js`](../src/features/jump-to-message-owner.js)
+1. [`jump-to-message-owner.js`](../src/features/dms/jump-to-message-owner.js)
 2. [`jump-to-message-preparation-contract.md`](./jump-to-message-preparation-contract.md)
 3. [`jump-to-message-parity-rollback-evidence.txt`](./jump-to-message-parity-rollback-evidence.txt)
 4. [`index.html`](../index.html)

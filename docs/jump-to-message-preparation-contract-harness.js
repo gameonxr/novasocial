@@ -7,7 +7,7 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const origin = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
-const sourceDir = path.join(repo, 'src', 'features');
+const sourceDir = path.join(repo, 'src', 'features', 'dms'); /* architecture-migration 2026-09-29: dms family folder */
 const sourceFiles = fs.readdirSync(sourceDir).filter((name) => name.endsWith('.js'));
 const sourceText = sourceFiles.map((name) => fs.readFileSync(path.join(sourceDir, name), 'utf8')).join('\n');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'jump-to-message-preparation-contract.md'), 'utf8');
@@ -52,14 +52,14 @@ assert.strictEqual((html.match(/function jumpToMessage\s*\(/g) || []).length, 0,
 assert(!sourceText.includes('function jumpToMessage('), 'production owner must remain anonymous in src');
 assert(fs.existsSync(path.join(sourceDir, 'jump-to-message-owner.js')), 'production owner module must exist after the authorized split');
 assert(externalOwnerText.includes('window.jumpToMessage = function'), 'production owner must expose the anonymous classic global');
-assert(html.includes('<script src="src/features/jump-to-message-owner.js"></script>'), 'external owner linkage must remain present');
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/dms/jump-to-message-owner.js"'), 'external owner linkage must remain present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: dms demand loading */
 for (const marker of ['document.querySelector', 'scrollIntoView', "style.transition='0.3s'", "style.background='rgba(225,48,108,0.25)'", 'setTimeout', "document.querySelector('.modal')?.remove()", 'toast("Message not loaded")']) {
   assert(owner.includes(marker), `candidate marker must remain present: ${marker}`);
 }
 for (const forbidden of [/\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i, /fetch\s*\(|XMLHttpRequest|WebSocket/i, /localStorage|sessionStorage|indexedDB|document\.cookie/i, /\bME\b|auth|account|upload|permission|Notification|PushManager/i, /sendMsg|sendMediaMsg|reactMsg|pinMsg|unsendMsg|deleteMsg|forwardMessage|showReportModal|loadMsgs|loadDMs/i, /location\.|history\.|goToProfile|viewPost|window\.open/i]) {
   assert(!forbidden.test(owner), `candidate must remain free of forbidden boundary: ${forbidden}`);
 }
-const tryRestoreModuleText = fs.readFileSync(path.join(sourceDir, 'try-restore-from-cache.js'), 'utf8');
+const tryRestoreModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'try-restore-from-cache.js') /* tab-cache module remains in the startup flat set */, 'utf8');
 const refreshDmsInPlaceModuleText = fs.readFileSync(path.join(sourceDir, 'refresh-dms-in-place.js'), 'utf8');
 const showMsgMenuModuleText = fs.readFileSync(path.join(sourceDir, 'show-msg-menu.js'), 'utf8');
 const openChatModuleText = fs.readFileSync(path.join(sourceDir, 'open-chat.js'), 'utf8');
@@ -85,4 +85,4 @@ console.log('DOM_ONLY_BOUNDARY=PASS');
 console.log('PROTECTED_MESSAGING_EXCLUSIONS=PASS');
 console.log('DETACHED_SYNTHETIC_PROOF=PASS');
 console.log('PRODUCTION_SPLIT=COMPLETE');
-console.log('EXTERNAL_OWNER=src/features/jump-to-message-owner.js');
+console.log('EXTERNAL_OWNER=src/features/dms/jump-to-message-owner.js');

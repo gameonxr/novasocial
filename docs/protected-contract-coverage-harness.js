@@ -6,13 +6,14 @@ const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const docs = path.join(repo, 'docs');
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
-const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'story-editor-owners.js'), 'utf8');
-const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms-renderer-owner.js'), 'utf8');
+const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
+const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 const reactorListModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-reactors-list-owner.js'), 'utf8');
 const notesSubmissionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8');
@@ -80,27 +81,27 @@ for (const [marker, base] of coverage) {
     assert(!html.includes(marker), 'approved Notes reaction owner must be absent from inline HTML');
     assert.strictEqual((notesReactionModule.match(/window\.reactToNote\s*=\s*function reactToNote\(/g) || []).length, 1, 'approved Notes reaction owner must have one owner');
   } else if (marker === 'async function voteStoryPoll(') {
-    const storyPollVoteOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+    const storyPollVoteOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story poll vote owner must be absent from inline HTML');
     assert(storyPollVoteOwnerModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner missing from src');
   } else if (marker === 'async function refreshPollResults(') {
-    const storyPollRefreshOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
+    const storyPollRefreshOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story poll refresh owner must be absent from inline HTML');
     assert(storyPollRefreshOwnerModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner missing from src');
   } else if (marker === 'async function loadStoryPollState(') {
-    const storyPollStateOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
+    const storyPollStateOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story poll state owner must be absent from inline HTML');
     assert(storyPollStateOwnerModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner missing from src');
   } else if (marker === 'function openSV(') {
-    const storyViewerOpenOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
+    const storyViewerOpenOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
     assert(!html.includes(marker), 'approved Story viewer opener must be absent from inline HTML');
     assert(storyViewerOpenOwnerModule.includes('window.openSV = function openSV('), 'approved Story viewer opener missing from src');
   } else if (marker === 'function submitNativeEmojiReaction(') {
-    const notesEmojiOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
+    const notesEmojiOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'submit-native-emoji-reaction.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
     assert(!html.includes(marker), 'approved Notes emoji reaction owner must be absent from inline HTML');
     assert(notesEmojiOwnerModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner missing from src');
   } else if (marker === 'async function toggleRecording(') {
-    const voiceRecordingOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8');
+    const voiceRecordingOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
     assert(!html.includes(marker), 'approved Voice recording owner must be absent from inline HTML');
     assert(voiceRecordingOwnerModule.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner missing from src');
   } else if (marker === 'function createPeerConnection(') {
@@ -116,18 +117,7 @@ for (const [marker, base] of coverage) {
 
 /* architecture-migration 2026-09-29: notes owner files are demand-loaded via the feature
    manifest (removed from trailing HTML); startup trailing order now ends with these tags */
-const trailing = [
-  '<script src="src/features/smart-ranking.js"></script>',
-  '<script src="src/features/nova-init.js"></script>',
-  '<script src="src/features/spawn-like-particles.js"></script>',
-  '<script src="src/features/sync-local-deletion-fallback.js"></script>',
-  '<script src="src/features/push-settings.js"></script>',
-  '<script src="src/features/toggle-sv-mute-owner.js"></script>',
-  '<script src="src/features/invalidate-tab-cache-owner.js"></script>',
-  '<script src="src/features/confirm-crop-preview-owner.js"></script>',
-  '<script src="src/features/story-editor-owners.js"></script>',
-  '<script src="src/features/like-effects.js"></script>'
-].map(marker => html.indexOf(marker));
+const trailing = ['<script src="src/features/reset-account-scoped-ui-state.js"></script>', '<script src="src/features/load-prof.js"></script>', '<script src="src/features/invalidate-all-tab-cache.js"></script>', '<script src="src/features/destroy-reels-persistent-container.js"></script>', '<script src="src/features/home/ultra-patches.js"></script>', '<script src="src/features/smart-ranking.js"></script>', '<script src="src/features/nova-init.js"></script>', '<script src="src/features/spawn-like-particles.js"></script>', '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>', '<script src="src/features/push-settings.js"></script>', '<script src="src/features/invalidate-tab-cache-owner.js"></script>', '<script src="src/features/like-effects.js"></script>'].map(marker => html.indexOf(marker));
 assert(trailing.every(position => position >= 0), 'required trailing scripts are present');
 assert(trailing.every((position, index) => index === 0 || trailing[index - 1] < position), 'required trailing script order is preserved');
 assert.strictEqual((noteModule.match(/window\.(?:viewNote|removeMyNoteFromViewer)\s*=\s*async function\(/g) || []).length, 2, 'approved Note viewer owners must be present exactly twice');

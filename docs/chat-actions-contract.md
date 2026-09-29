@@ -36,7 +36,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`chat-actions.js`](../src/features/chat-actions.js)
+1. [`chat-actions.js`](../src/features/dms/chat-actions.js)
 2. [`dms-seam-preparation-contract.md`](./dms-seam-preparation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

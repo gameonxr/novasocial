@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'story-sticker-helpers.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-sticker-helpers.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const marker of [
   'function seOpenStickerTool()',
@@ -31,12 +32,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Story sticker helper marker missing: ${marker}`);
 }
-assert(html.includes('src/features/story-sticker-helpers.js'), 'Story sticker helpers module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/stories/story-sticker-helpers.js"'), 'Story sticker helpers module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!source.includes('fetch('), 'Story sticker helpers must not own network requests');
 assert(!source.includes('supabase'), 'Story sticker helpers must not own remote data access');
 assert.strictEqual((source.match(/function se(?:OpenStickerTool|CloseStickerPanel|AddSticker|AddCustomSticker)\(/g) || []).length, 4, 'Story sticker helpers must have four owned functions');
 
 console.log('STORY_STICKER_HELPERS_CONTRACT_HARNESS=PASS');
 console.log('PANEL_EMOJI_CUSTOM_GUARD_RENDER_CLEANUP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/story-sticker-helpers.js');
+console.log('MODULE_OWNER=src/features/stories/story-sticker-helpers.js');
 console.log('PRODUCTION_CHANGE=0');

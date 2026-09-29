@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'chat-input-helpers.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'chat-input-helpers.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'function toggleSendBtn()',
@@ -34,5 +34,5 @@ assert.strictEqual((source.match(/function (?:toggleSendBtn|autoGrow)\(/g) || []
 
 console.log('CHAT_INPUT_HELPERS_CONTRACT_HARNESS=PASS');
 console.log('REQUIRED_GUARD_SEND_BRANCHES_PILL_FOCUS_AUTOGROW_THRESHOLD_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/chat-input-helpers.js');
+console.log('MODULE_OWNER=src/features/dms/chat-input-helpers.js');
 console.log('PRODUCTION_CHANGE=0');

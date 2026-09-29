@@ -34,5 +34,5 @@ No production logic is changed by this audit. It records current object-URL owne
 3. [`src/features/compress-image.js`](../src/features/compress-image.js)
 4. [`src/features/compress-video.js`](../src/features/compress-video.js)
 5. [`src/features/prev-media.js`](../src/features/prev-media.js)
-6. [`src/features/story-text-helpers.js`](../src/features/story-text-helpers.js)
+6. [`src/features/story-text-helpers.js`](../src/features/stories/story-text-helpers.js)
 

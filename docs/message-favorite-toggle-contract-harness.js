@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'message-favorite-toggle.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'message-favorite-toggle.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'function toggleFavFromMsg(encUrl)',
@@ -24,5 +24,5 @@ assert.strictEqual((source.match(/function toggleFavFromMsg\(/g) || []).length, 
 
 console.log('MESSAGE_FAVORITE_TOGGLE_CONTRACT_HARNESS=PASS');
 console.log('DECODE_MEMBERSHIP_TOGGLE_TOAST_STORAGE_PERSIST_MODAL_CLOSE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/message-favorite-toggle.js');
+console.log('MODULE_OWNER=src/features/dms/message-favorite-toggle.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'message-info.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'message-info.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 
 for (const marker of [
   'async function showMsgInfo(mid)',
@@ -26,5 +26,5 @@ assert.strictEqual((source.match(/async function showMsgInfo\(/g) || []).length,
 
 console.log('MESSAGE_INFO_CONTRACT_HARNESS=PASS');
 console.log('MODAL_LOADING_MESSAGE_READ_QUERY_SENT_DELIVERED_READERS_EMPTY_STATE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/message-info.js');
+console.log('MODULE_OWNER=src/features/dms/message-info.js');
 console.log('PRODUCTION_CHANGE=0');

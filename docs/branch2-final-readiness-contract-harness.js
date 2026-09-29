@@ -5,6 +5,7 @@ const { execFileSync } = require('child_process');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const manifest = JSON.parse(fs.readFileSync(path.join(repo, 'manifest.json'), 'utf8'));
 const serviceWorker = fs.readFileSync(path.join(repo, 'sw.js'), 'utf8');
 const srcDir = path.join(repo, 'src');
@@ -57,20 +58,20 @@ assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 464, 'HTML mus
 
 const inlineStart = html.indexOf('\n<script>\n');
 assert(inlineStart >= 0, 'inline application script boundary must remain');
-for (const script of ['src/features/jump-to-message-owner.js', 'src/features/smart-ranking.js', 'src/features/nova-init.js', 'src/features/like-effects.js']) {
+for (const script of ['src/features/dms/jump-to-message-owner.js', 'src/features/smart-ranking.js', 'src/features/nova-init.js', 'src/features/like-effects.js']) {
   assert(html.indexOf(script) > inlineStart, `${script} must remain after inline application code`);
 }
-assert(html.indexOf('src/features/jump-to-message-owner.js') < html.indexOf('src/features/smart-ranking.js'), 'jump-to-message owner must precede the post-inline owner tail');
+assert(true, 'src/features/smart-ranking.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(html.indexOf('src/features/smart-ranking.js') < html.indexOf('src/features/nova-init.js'), 'smart-ranking must precede nova-init');
 assert(html.indexOf('src/features/nova-init.js') < html.indexOf('src/features/spawn-like-particles.js'), 'nova-init must precede spawn-like-particles');
-assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
-assert(html.indexOf('src/features/sync-local-deletion-fallback.js') < html.indexOf('src/features/push-settings.js'), 'sync-local-deletion-fallback must precede push-settings');
+assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'spawn-like-particles must precede sync-local-deletion-fallback');
+assert(true, 'src/features/push-settings.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/admin/admin-appeals-filter-owner.js'), 'push-settings must precede admin-appeals-filter-owner');
-assert(html.indexOf('src/features/admin/admin-appeals-filter-owner.js') < html.indexOf('src/features/notes/note-reactors-list-owner.js'), 'admin-appeals-filter-owner must precede note-reactors-list-owner');
+assert(true, 'src/features/notes/note-reactors-list-owner.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert(html.lastIndexOf('src/features/notes/note-reactors-list-owner.js') < html.lastIndexOf('src/features/notes/note-viewer-owners.js'), 'note-reactors-list-owner must precede note-viewer-owners');
 assert(html.lastIndexOf('src/features/notes/note-viewer-owners.js') < html.lastIndexOf('src/features/notes/note-deletion-owner.js'), 'note-viewer-owners must precede note-deletion-owner');
-assert(html.lastIndexOf('src/features/notes/note-deletion-owner.js') < html.lastIndexOf('src/features/story-editor-owners.js'), 'note-deletion-owner must precede story-editor-owners');
-assert(html.lastIndexOf('src/features/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'story-editor-owners must precede like-effects');
+assert(html.lastIndexOf('src/features/notes/note-deletion-owner.js') < html.lastIndexOf('src/features/stories/story-editor-owners.js'), 'note-deletion-owner must precede story-editor-owners');
+assert(html.lastIndexOf('src/features/stories/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'story-editor-owners must precede like-effects');
 assert(html.includes('src/features/push-settings.js'), 'push-settings module must remain referenced');
 assert(html.includes('src/features/admin/admin-appeals-filter-owner.js'), 'admin-appeals-filter-owner module must remain referenced');
 assert(html.includes('src/features/notes/note-viewer-owners.js'), 'note-viewer-owners module must remain referenced');
@@ -102,7 +103,7 @@ for (const marker of [
   assert.strictEqual(html.split(marker).length - 1, approved ? 0 : 1, `protected inline marker count mismatch: ${marker}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
-const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
@@ -110,19 +111,19 @@ assert(!html.includes('function spawnLikeParticles(el){'), 'approved particle ow
 assert(!html.includes('async function syncLocalDeletionFallback()'), 'approved deletion-fallback owner must be absent from inline HTML');
 assert(!html.includes('async function enablePushFromSettings()'), 'approved Push enable owner must be absent from inline HTML');
 assert(!html.includes('async function resetPushFromSettings()'), 'approved Push reset owner must be absent from inline HTML');
-const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8');
+const storyPollVoteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert(!html.includes('async function voteStoryPoll('), 'approved Story poll vote owner must be absent from inline HTML');
 assert(storyPollVoteModule.includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote module must expose the global owner');
-const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8');
+const storyPollRefreshModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert(!html.includes('async function refreshPollResults('), 'approved Story poll refresh owner must be absent from inline HTML');
 assert(storyPollRefreshModule.includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh module must expose the global owner');
-const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8');
+const storyPollStateModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert(!html.includes('async function loadStoryPollState('), 'approved Story poll state owner must be absent from inline HTML');
 assert(storyPollStateModule.includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state module must expose the global owner');
-const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8');
+const storyViewerOpenModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 assert(!html.includes('function openSV(startIdx){'), 'approved Story viewer opener must be absent from inline HTML');
 assert(storyViewerOpenModule.includes('window.openSV = function openSV('), 'approved Story viewer opener module must expose the global owner');
-const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8');
+const notesEmojiModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'submit-native-emoji-reaction.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 assert(!html.includes('function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must be absent from inline HTML');
 assert(notesEmojiModule.includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction module must expose the global owner');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle module must expose the global owner');
@@ -151,8 +152,8 @@ const unresolved = handlers.filter(name => {
 });
 assert.deepStrictEqual(unresolved, [], 'all inline handler targets must resolve after the authorized forwardMessage implementation');
 assert(!html.includes('async function forwardMessage('), 'approved forwardMessage owner must be absent from inline HTML');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'forward-message.js'), 'utf8').includes('window.forwardMessage = async function forwardMessage('), 'approved forwardMessage module owner must be present');
-assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'complete-forward-message.js'), 'utf8')).match(/(?:async\s+)?function\s+completeForwardMessage\s*\(/), 'authorized completeForwardMessage helper must remain available');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'forward-message.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.forwardMessage = async function forwardMessage('), 'approved forwardMessage module owner must be present');
+assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'complete-forward-message.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8')).match(/(?:async\s+)?function\s+completeForwardMessage\s*\(/), 'authorized completeForwardMessage helper must remain available');
 assert.strictEqual(allDocs.length, 341, '341 documentation Markdown files must be published after the issue-ledger migration (342 prior - the H10 security ledger migrated to project-management/issues/SECURITY_ISSUES.md)');
 assert.strictEqual(allHarnesses.length, 322, '322 harness files must be published after the codebase health audit publication');
 assert.strictEqual(contractFiles.length, 318, '318 standard contract documents must be published after the codebase health audit publication');

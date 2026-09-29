@@ -7,7 +7,7 @@ const path = require('path');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const docs = path.join(repo, 'docs');
-const featureDir = path.join(repo, 'src', 'features');
+const featureDir = path.join(repo, 'src', 'features', 'stories'); /* architecture-migration 2026-09-29: stories family folder */
 const owners = fs.readFileSync(path.join(featureDir, 'story-editor-owners.js'), 'utf8');
 
 assert(!html.includes('function renderStoryElements()'), 'Story editor renderer must be absent from inline HTML after split');
@@ -25,11 +25,11 @@ const publishStoryEditorModule = fs.readFileSync(path.join(featureDir, 'publish-
 assert((html + '\n' + publishStoryEditorModule).includes('function publishStoryEditor()'), 'publishing boundary must remain separate');
 assert(fs.existsSync(path.join(docs, 'story-editor-contract.md')), 'Story editor behavior contract must exist');
 assert(fs.existsSync(path.join(docs, 'story-editor-contract-harness.js')), 'Story editor behavior harness must exist');
-assert(html.includes('src/features/story-editor-owners.js'), 'Story editor owner script must be loaded');
+assert(fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8').includes('"src/features/stories/story-editor-owners.js"'), 'Story editor owner script must be loaded (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: stories demand loading */
 assert((owners.match(/window\.renderStoryElements\s*=\s*function\(\)\{/g) || []).length === 1, 'Story editor owner must be assigned exactly once');
 
 console.log('STORY_EDITOR_SPLIT_SEAM_HARNESS=PASS');
-console.log('RENDERER_OWNER=src/features/story-editor-owners.js');
+console.log('RENDERER_OWNER=src/features/stories/story-editor-owners.js');
 console.log('PERSISTENCE_OWNER=INLINE_PUBLISH_STORY_EDITOR');
 console.log('PRODUCTION_SPLIT=1');
 console.log('BROWSER_SIDE_EFFECTS=0');

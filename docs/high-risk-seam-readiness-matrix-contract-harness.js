@@ -5,6 +5,7 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const sourceFiles = execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 const sourceText = sourceFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const gate = fs.readFileSync(path.join(repo, 'docs', 'high-risk-extraction-gate-contract-harness.js'), 'utf8');
@@ -41,18 +42,18 @@ for (const signature of protectedSignatures) {
   if (signature === 'async function submitNote()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-submission-owner.js'), 'utf8').includes('window.submitNote = async function submitNote()'), 'submitNote module owner must exist');
   else if (signature === 'function reactToNote(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'notes-reaction-owner.js'), 'utf8').includes('window.reactToNote = function reactToNote('), 'approved Notes reaction owner must exist');
   else if (signature === 'async function subscribeToPushNotifications()') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'push-subscription-owner.js'), 'utf8').includes('window.subscribeToPushNotifications = async function subscribeToPushNotifications()'), 'approved Push subscription owner must exist');
-  else if (signature === 'async function voteStoryPoll(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'vote-story-poll.js'), 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
-  else if (signature === 'async function refreshPollResults(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'refresh-poll-results.js'), 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
-  else if (signature === 'async function loadStoryPollState(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'load-story-poll-state.js'), 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must exist');
-  else if (signature === 'function openSV(startIdx){') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-sv.js'), 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must exist');
-  else if (signature === 'function submitNativeEmojiReaction(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'submit-native-emoji-reaction.js'), 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must exist');
-  else if (signature === 'async function toggleRecording(cid)') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'toggle-recording.js'), 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must exist');
+  else if (signature === 'async function voteStoryPoll(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'vote-story-poll.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.voteStoryPoll = async function voteStoryPoll('), 'approved Story poll vote owner must exist');
+  else if (signature === 'async function refreshPollResults(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'refresh-poll-results.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.refreshPollResults = async function refreshPollResults('), 'approved Story poll refresh owner must exist');
+  else if (signature === 'async function loadStoryPollState(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'load-story-poll-state.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.loadStoryPollState = async function loadStoryPollState('), 'approved Story poll state owner must exist');
+  else if (signature === 'function openSV(startIdx){') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'open-sv.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8').includes('window.openSV = function openSV('), 'approved Story viewer opener owner must exist');
+  else if (signature === 'function submitNativeEmojiReaction(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'submit-native-emoji-reaction.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.submitNativeEmojiReaction = function submitNativeEmojiReaction('), 'approved Notes emoji reaction owner must exist');
+  else if (signature === 'async function toggleRecording(cid)') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must exist');
   else if (signature === 'function createPeerConnection(callId, remoteUserId) {') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner must exist');
-  else if (signature === 'function openChat(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'open-chat.js'), 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must exist');
+  else if (signature === 'function openChat(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must exist');
   else assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
 const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
-const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'sync-local-deletion-fallback.js'), 'utf8');
+const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
 const noteDeletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-deletion-owner.js'), 'utf8');
@@ -69,8 +70,8 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-production-spli
 assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-production-split-contract-harness.js')), 'Notes reactor-list harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback-evidence.txt')), 'Notes reactor-list rollback evidence must remain present');
 assert(fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_OWNER_TYPE=function'), 'Notes reactor-list browser proof must remain passing');
-assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
-assert(html.lastIndexOf('src/features/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
+assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
+assert(html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
 assert(gate.includes('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS'), 'global high-risk gate must remain blocked for the remaining inline boundary surfaces');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
 assert(matrix.includes('all twenty-two protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must record repository-wide seam inventory alignment');

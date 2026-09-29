@@ -19,6 +19,6 @@ The helpers own clipboard/UI feedback only. Message loading, chat realtime, pers
 
 ## References
 
-1. [`message-clipboard-helpers.js`](../src/features/message-clipboard-helpers.js)
+1. [`message-clipboard-helpers.js`](../src/features/dms/message-clipboard-helpers.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

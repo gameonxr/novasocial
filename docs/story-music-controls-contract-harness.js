@@ -6,8 +6,9 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'story-music-helpers.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-music-helpers.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 for (const forbidden of [
   /\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i,
@@ -18,7 +19,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(source), `music controls must remain local metadata/UI-only: ${forbidden}`);
 }
-assert(html.includes('src/features/story-music-helpers.js'), 'music controls must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/stories/story-music-helpers.js"'), 'music controls must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert.strictEqual((source.match(/function seOpenMusicTool\s*\(/g) || []).length, 1, 'music opener must have one global owner');
 assert.strictEqual((source.match(/function seCloseMusicPanel\s*\(/g) || []).length, 1, 'music closer must have one global owner');
 assert.strictEqual((source.match(/function seSelectMusic\s*\(/g) || []).length, 1, 'music selector must have one global owner');

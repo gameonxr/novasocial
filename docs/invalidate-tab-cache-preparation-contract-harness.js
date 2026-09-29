@@ -8,6 +8,7 @@ const { execFileSync } = require('child_process');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 const originHtml = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: repo, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
 const modulePath = path.join(repo, 'src', 'features', 'invalidate-tab-cache-owner.js');
 const moduleExists = fs.existsSync(modulePath);
@@ -30,7 +31,7 @@ const originOwner = extractOwner(originHtml);
 const currentOwner = moduleExists ? extractModuleOwner(moduleText) : extractOwner(html);
 const normalizedOrigin = normalize(originOwner);
 const normalizedCurrent = normalize(currentOwner);
-const publishStoryEditorModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'publish-story-editor.js'), 'utf8');
+const publishStoryEditorModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'publish-story-editor.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8');
 const callerCount = ((html + '\n' + publishStoryEditorModuleText + '\n' + submitCreateModuleText).match(/\binvalidateTabCache\s*\(/g) || []).length - (moduleExists ? 0 : 1);
 

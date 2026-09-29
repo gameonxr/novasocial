@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const reader = fs.readFileSync(path.join(repo, 'src', 'features', 'get-local-stickers.js'), 'utf8');
-const writer = fs.readFileSync(path.join(repo, 'src', 'features', 'save-local-sticker.js'), 'utf8');
+const reader = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'get-local-stickers.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
+const writer = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'save-local-sticker.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const readerMarkers = [
   'function getLocalStickers(type)',
@@ -28,8 +29,8 @@ const writerMarkers = [
 for (const marker of writerMarkers) {
   assert(writer.includes(marker), `Local-sticker writer marker missing: ${marker}`);
 }
-assert(html.includes('src/features/get-local-stickers.js'), 'Local-sticker reader must remain linked from HTML');
-assert(html.includes('src/features/save-local-sticker.js'), 'Local-sticker writer must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/dms/get-local-stickers.js"'), 'Local-sticker reader must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
+assert(featureManifestSrc.includes('"src/features/dms/save-local-sticker.js"'), 'Local-sticker writer must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: demand loading */
 assert(!writer.includes('db.from('), 'Local-sticker writer must not own database writes');
 assert(!writer.includes('sendSticker'), 'Local-sticker writer must not own sticker sending');
 assert.strictEqual((reader.match(/function getLocalStickers\(/g) || []).length, 1, 'Local-sticker reader must have one module owner');
