@@ -169,12 +169,26 @@ SW-cached after first fetch. No private API responses are cached by the loader.
    ~400 KB tagged + ~42 KB inline ≈ 443 KB vs 1,218 KB baseline)
 8. ✅ profile + explore + reels (go() tab gating) — completed with cycle 5
 9. Startup families re-foldered (posts, home, media, system, auth,
-   notifications) — tags stay, paths update only
+   notifications) — tags stay, paths update only. **Status: deferred —
+   organization-only (zero loading/behavior change). 92 flat startup files
+   remain; moving them touches 227+ harness path pins across 92 harnesses.
+   All lazy-family migration (the behavior-changing work) is COMPLETE;
+   execute this cycle as a standalone follow-up whenever desired.**
 10. ✅ Prefetch activation (shipped live with the loader infrastructure:
     idle prefetch of likely-next, hover intent, connection-aware,
     network-warm-only)
-11. Media lazy-load audit
-12. Dead-path sweep + final audit + report
+11. ✅ Media lazy-load audit (per-file verified: posts.js/post-actions.js feed
+    images + profile/explore grids already `loading="lazy"`; news-feed.js
+    thumbnails gained `loading="lazy"`; home.js story-ring avatars,
+    profile-view covers and the share-sheet QR stay eager — above-the-fold /
+    immediately-visible surfaces; feed videos keep poster + muted +
+    IntersectionObserver pause; reels keep their window; zero renderer
+    rewrites)
+12. ✅ Dead-path sweep + final audit + report (cycle12_final_audit: zero dead
+    references to the 72 pre-cycle-7 flat paths in 814 live files — the
+    branch2-only allowlist retention is intentional rename-detection data;
+    coverage 454/454; calls+groups intra-chunk relative order preserved —
+    37 + 11 subsequences, load-time-dependency-free)
 
 ## 11. Verification per cycle
 
