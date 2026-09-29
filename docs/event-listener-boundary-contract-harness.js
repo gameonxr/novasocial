@@ -22,8 +22,8 @@ const indexText = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const serviceWorkerText = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 const listenerFiles = sourceFiles.filter((file) => fs.readFileSync(file, 'utf8').includes('addEventListener'));
 
-assert.strictEqual(sourceFiles.length, 463, '234 extracted JavaScript modules must remain present after the DMs renderer split');
-assert.strictEqual(count(sourceText, 'addEventListener'), 99, 'extracted modules must retain the audited listener registrations after the forward-message split');
+assert.strictEqual(sourceFiles.length, 467, '234 extracted JavaScript modules must remain present after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(count(sourceText, 'addEventListener'), 102, 'extracted modules must retain the audited listener registrations after the forward-message split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.strictEqual(count(sourceText, 'removeEventListener'), 0, 'the audit must not silently introduce cleanup registrations in extracted modules');
 assert.strictEqual(count(indexText, 'addEventListener'), 5, 'index.html must retain the audited listener registrations after the forward-message split');
 assert.strictEqual(count(indexText, 'removeEventListener'), 0, 'index.html must retain zero cleanup registrations');

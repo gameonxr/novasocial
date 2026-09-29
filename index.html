@@ -212,6 +212,15 @@
 <script src="src/core/diagnostics.js"></script>
 <script src="src/components/modal.js"></script>
 <script src="src/components/shared-ui.js"></script>
+<!-- FEATURE DEMAND LOADING (architecture migration).
+     Loader infrastructure. While a feature's scripts are still listed below
+     (transitional eager state), loadFeature() treats it as loaded and these
+     are inert. As feature families migrate to folders, their script tags
+     are removed and on-demand loading activates for them. -->
+<script src="src/loaders/feature-manifest.js"></script>
+<script src="src/loaders/feature-loader.js"></script>
+<script src="src/loaders/feature-stubs.js"></script>
+<script src="src/loaders/preload-manager.js"></script>
 <script src="src/features/settings.js"></script>
 <script src="src/features/profile.js"></script>
 <script src="src/features/nova-ai.js"></script>
