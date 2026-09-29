@@ -47,7 +47,7 @@
           'muteUser', 'unmuteUser', 'deleteMultipleMediaProduction',
           '_updateMessageReactionInPlace', 'loadNotesBar'],
     // groups — DMs screen create-group entry
-    groups: ['showGC', 'createGC'],
+    groups: ['showGC', 'createGC', 'showGroupInfo'],
     // calls — incoming-call realtime + profile/dms call buttons
     calls: ['initiateCall', 'handleIncomingCall', 'showCallFeature', 'showCallHistory',
             'showCallBubble', 'initiateGroupCall', 'joinGroupCall', 'showGroupCallScreen',

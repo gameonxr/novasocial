@@ -32,17 +32,17 @@ const requiredMarkers = [
   'async function endCall(updateDB)',
   'removeChannel'
 ];
-const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'flush-pending-ice-candidates.js'), 'utf8');
-const endCallModule = fs.readFileSync(path.join(repo, 'src', 'features', 'end-call.js'), 'utf8');
-const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
+const flushPendingIceModule = fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'flush-pending-ice-candidates.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8');
+const endCallModule = fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'end-call.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8');
+const callsMarkerSurface = html + '\n' + flushPendingIceModule + '\n' + endCallModule + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8') + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'create-peer-connection.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8');
 for (const marker of requiredMarkers) {
   assert(callsMarkerSurface.includes(marker), `Calls/WebRTC dependency marker must remain inline: ${marker}`);
 }
 assert(!html.includes('function createPeerConnection(callId, remoteUserId) {'), 'approved createPeerConnection owner must be absent from inline HTML');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved createPeerConnection module owner must be present');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'create-peer-connection.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved createPeerConnection module owner must be present');
 assert(!html.includes('async function endCall(updateDB)'), 'approved endCall owner must be absent from inline HTML');
 assert(endCallModule.includes('window.endCall = async function endCall('), 'approved endCall module owner must be present');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection(callId, remoteUserId) {'), 'approved createPeerConnection external owner must exist');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'create-peer-connection.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8').includes('window.createPeerConnection = function createPeerConnection(callId, remoteUserId) {'), 'approved createPeerConnection external owner must exist');
 assert(endCallModule.includes('window.endCall = async function endCall(updateDB) {'), 'approved endCall external owner must exist');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract.md')), 'Calls/WebRTC behavior contract must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'calls-webrtc-contract-harness.js')), 'Calls/WebRTC behavior harness must remain present');

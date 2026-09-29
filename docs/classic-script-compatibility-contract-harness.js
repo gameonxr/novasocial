@@ -26,7 +26,7 @@ for (const file of extractedFiles.sort()) {
   });
 }
 
-assert.strictEqual(scriptTags.length, 198, 'index.html must retain 236 script tags after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual(scriptTags.length, 130, /* architecture-migration 2026-09-29: calls/groups demand-loaded — 68 lazy tags removed */ 'index.html must retain 236 script tags after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert.deepStrictEqual(moduleTags, [], 'classic script architecture must not contain type=module tags');
 assert.deepStrictEqual(asyncTags, [], 'classic script order must not contain defer or async attributes');
 assert.deepStrictEqual(moduleSyntax, [], 'extracted classic scripts must not contain top-level import/export syntax');

@@ -6,8 +6,9 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'show-add-members.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'groups', 'show-add-members.js') /* architecture-migration 2026-09-29: groups folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29: calls/groups demand loading */
 
 for (const forbidden of [
   /\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i,
@@ -18,7 +19,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(source), `add-members renderer must remain side-effect-free: ${forbidden}`);
 }
-assert(html.includes('src/features/show-add-members.js'), 'add-members renderer must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/groups/show-add-members.js"'), 'add-members renderer must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: groups folder */
 assert.strictEqual((source.match(/async function showAddMembers\s*\(/g) || []).length, 1, 'renderer must have one global owner');
 
 const body = { innerHTML: '' };

@@ -6,8 +6,9 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'tog-gc.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'groups', 'tog-gc.js') /* architecture-migration 2026-09-29: groups folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29: calls/groups demand loading */
 
 for (const forbidden of [
   /\bdb\b|supabase|\.from\(|\.select\(|\.insert\(|\.update\(|\.delete\(|\.rpc\(/i,
@@ -18,7 +19,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(source), `group-call selection helper must remain local-only: ${forbidden}`);
 }
-assert(html.includes('src/features/tog-gc.js'), 'group-call selection helper must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/groups/tog-gc.js"'), 'group-call selection helper must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: groups folder */
 assert.strictEqual((source.match(/function togGC\s*\(/g) || []).length, 1, 'helper must have one global owner');
 
 const nodes = new Map();

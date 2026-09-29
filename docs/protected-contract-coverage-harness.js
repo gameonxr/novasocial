@@ -105,7 +105,7 @@ for (const [marker, base] of coverage) {
     assert(!html.includes(marker), 'approved Voice recording owner must be absent from inline HTML');
     assert(voiceRecordingOwnerModule.includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner missing from src');
   } else if (marker === 'function createPeerConnection(') {
-    const callsPeerOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8');
+    const callsPeerOwnerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'create-peer-connection.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8');
     assert(!html.includes(marker), 'approved Calls/WebRTC peer owner must be absent from inline HTML');
     assert(callsPeerOwnerModule.includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner missing from src');
   } else {

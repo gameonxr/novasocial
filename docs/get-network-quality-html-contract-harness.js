@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'get-network-quality-html.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'get-network-quality-html.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29: calls/groups demand loading */
 
 for (const marker of [
   'function getNetworkQualityHTML()',
@@ -21,12 +22,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Network quality HTML marker missing: ${marker}`);
 }
-assert(html.includes('src/features/get-network-quality-html.js'), 'Network quality HTML module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/calls/get-network-quality-html.js"'), 'Network quality HTML module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: calls folder */
 assert(!source.includes('fetch('), 'Network quality HTML must not own network requests');
 assert(!source.includes('supabase'), 'Network quality HTML must not own remote data access');
 assert.strictEqual((source.match(/function getNetworkQualityHTML\(/g) || []).length, 1, 'Network quality HTML must have one module owner');
 
 console.log('GET_NETWORK_QUALITY_HTML_CONTRACT_HARNESS=PASS');
 console.log('CONNECTION_MAPPING_DEFAULT_FOUR_BARS_CALL_UI_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/get-network-quality-html.js');
+console.log('MODULE_OWNER=src/features/calls/get-network-quality-html.js');
 console.log('PRODUCTION_CHANGE=0');

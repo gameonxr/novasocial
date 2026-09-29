@@ -65,7 +65,7 @@ if (signature === 'async function renderReels()') {
   } else if (signature === 'async function toggleRecording(cid)') {
     assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'toggle-recording.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.toggleRecording = async function toggleRecording('), 'approved Voice recording owner must be present in src as a classic global');
   } else if (signature === 'function createPeerConnection(callId, remoteUserId) {') {
-    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner must be present in src as a classic global');
+    assert(fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'create-peer-connection.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer owner must be present in src as a classic global');
   } else if (signature === 'function openChat(') {
     assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must be present in src as a classic global');
   } else {

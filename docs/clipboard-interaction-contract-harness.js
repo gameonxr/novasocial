@@ -7,7 +7,7 @@ const repo = path.resolve(__dirname, '..');
 const files = [path.join(repo, 'index.html'), ...execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean)];
 const source = files.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const messages = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'message-clipboard-helpers.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
-const invite = fs.readFileSync(path.join(repo, 'src', 'features', 'copy-invite-link.js'), 'utf8');
+const invite = fs.readFileSync(path.join(repo, 'src', 'features', 'groups', 'copy-invite-link.js') /* architecture-migration 2026-09-29: groups folder */, 'utf8');
 const story = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'copy-story-link.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const postActions = fs.readFileSync(path.join(repo, 'src', 'features', 'post-actions.js'), 'utf8');
 const settings = fs.readFileSync(path.join(repo, 'src', 'features', 'settings', 'settings.js'), 'utf8');

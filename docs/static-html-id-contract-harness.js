@@ -19,7 +19,7 @@ assert.strictEqual(ids.length, 42, 'static HTML ID inventory must reflect the ap
 assert.strictEqual(counts.size, 42, 'static HTML IDs must remain unique');
 assert.deepStrictEqual(duplicates, [], 'static HTML markup must not duplicate element IDs');
 assert(!html.includes('function createPeerConnection('), 'approved Calls/WebRTC peer owner must be absent from inline HTML');
-assert(fs.readFileSync(path.join(repo, 'src', 'features', 'create-peer-connection.js'), 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer module owner must remain present');
+assert(fs.readFileSync(path.join(repo, 'src', 'features', 'calls', 'create-peer-connection.js') /* architecture-migration 2026-09-29: calls folder */, 'utf8').includes('window.createPeerConnection = function createPeerConnection('), 'approved Calls/WebRTC peer module owner must remain present');
 assert(!html.includes('async function renderDMs()'), 'approved DMs renderer must not remain inline');
 assert(featureManifestSrc.includes('"src/features/reels/reels-renderer-owner.js"'), 'protected Reels renderer external linkage must remain present (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: reels demand loading */
 

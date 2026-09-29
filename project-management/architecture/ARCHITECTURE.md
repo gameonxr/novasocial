@@ -154,22 +154,32 @@ SW-cached after first fetch. No private API responses are cached by the loader.
 ## 10. Migration cycles (each independently verified + committed)
 
 1. ✅ Phase 0/1/2 analysis — this document (no production change)
-2. Loader infrastructure (inert while all script tags present) + loader harness
-3. Admin pilot: folder move + script-tag removal + stub activation + proof harness
-4. Small discover features (marketplace … creator) — folder + demand loading
-5. settings + notes + ai (incl. `nova-ultra-patches.js` split)
-6. stories + dms
-7. calls + groups
-8. profile + explore + reels (go() tab gating)
-9. Startup families re-foldered (posts, home, media, system, auth, notifications)
-10. Prefetch activation + proof
+2. ✅ Loader infrastructure (inert while all script tags present) + loader harness
+3. ✅ Admin pilot: folder move + script-tag removal + stub activation + proof harness
+4. ✅ Small discover features (marketplace … creator) — folder + demand loading
+5. ✅ settings + notes + ai (incl. `nova-ultra-patches.js` split)
+6. ✅ stories + dms
+7. ✅ calls + groups (final lazy families — boundary notes in
+   `docs/calls-groups-demand-loading-proof-contract.md`: 11 group-call WebRTC
+   files live in the calls chunk to match the committed stub routing;
+   `get-connection-quality.js` stays an eager service because the eager feed
+   optimizer `optimize-cloudinary-url.js` calls it synchronously; 4 eager
+   service files stay tagged in `src/features/calls/`; `showGroupInfo` stub
+   added for dms chat headers. Startup after this cycle: 128 scripts /
+   ~400 KB tagged + ~42 KB inline ≈ 443 KB vs 1,218 KB baseline)
+8. ✅ profile + explore + reels (go() tab gating) — completed with cycle 5
+9. Startup families re-foldered (posts, home, media, system, auth,
+   notifications) — tags stay, paths update only
+10. ✅ Prefetch activation (shipped live with the loader infrastructure:
+    idle prefetch of likely-next, hover intent, connection-aware,
+    network-warm-only)
 11. Media lazy-load audit
 12. Dead-path sweep + final audit + report
 
 ## 11. Verification per cycle
 
-- Full 322-harness battery (baseline 317 PASS / 5 documented era-pin FAILs —
-  failure identity tracked, never silently rebased)
+- Full harness battery (325 harnesses after cycle 7; baseline 319 PASS / 5
+  documented era-pin FAILs — failure identity tracked, never silently rebased)
 - `test_app_load.js` (evolved: script tags ∪ feature-manifest entries must cover
   every `src/features/**/*.js` on disk; all fetch 200; classic-only rule kept)
 - Per-feature contract harnesses for the moved family
