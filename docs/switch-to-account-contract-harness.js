@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'switch-to-account.js'), 'utf8');
-const switcher = fs.readFileSync(path.join(repo, 'src', 'features', 'show-account-switcher.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'switch-to-account.js'), 'utf8');
+const switcher = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'show-account-switcher.js'), 'utf8');
 
 for (const marker of [
   'async function switchToAccount(userId)',
@@ -28,5 +28,5 @@ assert.strictEqual((source.match(/async function switchToAccount\(/g) || []).len
 
 console.log('SWITCH_TO_ACCOUNT_CONTRACT_HARNESS=PASS');
 console.log('TARGET_LOOKUP_GUARD_TOKEN_HANDOFF_SUCCESS_RELOAD_FAILURE_CLEANUP_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/switch-to-account.js');
+console.log('MODULE_OWNER=src/features/auth/switch-to-account.js');
 console.log('PRODUCTION_CHANGE=0');

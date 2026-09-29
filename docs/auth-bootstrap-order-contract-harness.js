@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const authSurface = html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'sync-current-account-to-saved-list.js'), 'utf8');
+const authSurface = html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'sync-current-account-to-saved-list.js'), 'utf8');
 assert.strictEqual((authSurface.match(/db\.auth\.getSession\(\)/g) || []).length, 2, 'two auth session lookups must remain');
 assert.strictEqual((html.match(/db\.auth\.onAuthStateChange\(/g) || []).length, 1, 'one auth state listener must remain');
 assert(html.includes('if(session?.user){'), 'initial authenticated-session branch must remain');

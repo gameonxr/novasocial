@@ -20,6 +20,6 @@ The harness is static and does not access local storage, account sessions, or us
 ## References
 
 1. [`update-account-avatar.js`](../src/features/update-account-avatar.js)
-2. [`show-account-switcher.js`](../src/features/show-account-switcher.js)
+2. [`show-account-switcher.js`](../src/features/auth/show-account-switcher.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

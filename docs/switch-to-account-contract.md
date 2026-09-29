@@ -19,7 +19,7 @@ The helper owns switch orchestration only. Saved-account storage, authentication
 
 ## References
 
-1. [`switch-to-account.js`](../src/features/switch-to-account.js)
-2. [`show-account-switcher.js`](../src/features/show-account-switcher.js)
+1. [`switch-to-account.js`](../src/features/auth/switch-to-account.js)
+2. [`show-account-switcher.js`](../src/features/auth/show-account-switcher.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

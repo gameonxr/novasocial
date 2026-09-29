@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'show-account-switcher.js'), 'utf8');
-const remover = fs.readFileSync(path.join(repo, 'src', 'features', 'remove-account-from-switcher.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'show-account-switcher.js'), 'utf8');
+const remover = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'remove-account-from-switcher.js'), 'utf8');
 
 for (const marker of [
   'async function showAccountSwitcher()',
@@ -27,5 +27,5 @@ assert.strictEqual((source.match(/async function showAccountSwitcher\(/g) || [])
 
 console.log('SHOW_ACCOUNT_SWITCHER_CONTRACT_HARNESS=PASS');
 console.log('SYNC_READ_CURRENT_BRANCH_SWITCH_REMOVE_ADD_ACCOUNT_MODAL_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/show-account-switcher.js');
+console.log('MODULE_OWNER=src/features/auth/show-account-switcher.js');
 console.log('PRODUCTION_CHANGE=0');

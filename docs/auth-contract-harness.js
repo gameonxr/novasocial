@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'auth.js'), 'utf8');
 
 for (const marker of [
   'function setMode(m)',
@@ -48,5 +48,5 @@ assert(!source.includes('sendMessage'), 'Auth must not own protected messaging')
 
 console.log('AUTH_CONTRACT_HARNESS=PASS');
 console.log('MODE_CREDENTIALS_LOGIN_SIGNUP_VERIFICATION_RESET_PASSWORD_RULES_REDIRECT_VISIBILITY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/auth.js');
+console.log('MODULE_OWNER=src/features/auth/auth.js');
 console.log('PRODUCTION_CHANGE=0');

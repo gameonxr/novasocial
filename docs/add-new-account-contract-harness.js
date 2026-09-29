@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'add-new-account.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'add-new-account.js'), 'utf8');
 
 for (const marker of [
   'function addNewAccount()',
@@ -27,5 +27,5 @@ assert.strictEqual((source.match(/function addNewAccount\(/g) || []).length, 1, 
 
 console.log('ADD_NEW_ACCOUNT_CONTRACT_HARNESS=PASS');
 console.log('CAP_GUARD_MARKER_IDENTITY_RESET_UI_AUTH_TRANSITION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/add-new-account.js');
+console.log('MODULE_OWNER=src/features/auth/add-new-account.js');
 console.log('PRODUCTION_CHANGE=0');

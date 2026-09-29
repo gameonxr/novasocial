@@ -39,6 +39,6 @@ The standalone harness passed. The complete repository validation chain also pas
 ## References
 
 1. [`index.html` saved-account session helpers](../index.html)
-2. [`src/features/get-saved-accounts.js`](../src/features/get-saved-accounts.js)
+2. [`src/features/get-saved-accounts.js`](../src/features/auth/get-saved-accounts.js)
 3. [`CRITICAL_CONTEXT.md`](../../upload/CRITICAL_CONTEXT.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

@@ -23,7 +23,7 @@ The extracted `src/features/get-saved-accounts.js` module remains unchanged in t
 
 ## References
 
-1. [`get-saved-accounts.js`](../src/features/get-saved-accounts.js)
+1. [`get-saved-accounts.js`](../src/features/auth/get-saved-accounts.js)
 2. [`account-switcher-contract.md`](./account-switcher-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

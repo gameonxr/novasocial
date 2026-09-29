@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not sign in, sign up, rese
 
 ## References
 
-1. [`auth.js`](../src/features/auth.js)
+1. [`auth.js`](../src/features/auth/auth.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

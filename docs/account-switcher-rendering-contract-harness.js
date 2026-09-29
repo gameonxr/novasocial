@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const switcher = fs.readFileSync(path.join(repo, 'src', 'features', 'show-account-switcher.js'), 'utf8');
-const switchAccount = fs.readFileSync(path.join(repo, 'src', 'features', 'switch-to-account.js'), 'utf8');
-const removal = fs.readFileSync(path.join(repo, 'src', 'features', 'remove-account-from-switcher.js'), 'utf8');
+const switcher = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'show-account-switcher.js'), 'utf8');
+const switchAccount = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'switch-to-account.js'), 'utf8');
+const removal = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'remove-account-from-switcher.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 const switcherMarkers = [
@@ -49,9 +49,9 @@ const removalMarkers = [
 for (const marker of removalMarkers) {
   assert(removal.includes(marker), `Account removal marker missing: ${marker}`);
 }
-assert(html.includes('src/features/show-account-switcher.js'), 'Account switcher module must remain linked from HTML');
-assert(html.includes('src/features/switch-to-account.js'), 'Account switch module must remain linked from HTML');
-assert(html.includes('src/features/remove-account-from-switcher.js'), 'Account removal module must remain linked from HTML');
+assert(html.includes('src/features/auth/show-account-switcher.js'), 'Account switcher module must remain linked from HTML');
+assert(html.includes('src/features/auth/switch-to-account.js'), 'Account switch module must remain linked from HTML');
+assert(html.includes('src/features/auth/remove-account-from-switcher.js'), 'Account removal module must remain linked from HTML');
 assert.strictEqual((switcher.match(/function showAccountSwitcher\(/g) || []).length, 1, 'Account switcher must have one module owner');
 assert.strictEqual((switchAccount.match(/function switchToAccount\(/g) || []).length, 1, 'Account switch must have one module owner');
 

@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not evaluate profile flags
 
 ## References
 
-1. [`client-moderation-guards.js`](../src/features/client-moderation-guards.js)
+1. [`client-moderation-guards.js`](../src/features/auth/client-moderation-guards.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

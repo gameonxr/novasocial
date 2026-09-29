@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'remove-account-from-switcher.js'), 'utf8');
-const accountSession = fs.readFileSync(path.join(repo, 'src', 'features', 'show-account-switcher.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'remove-account-from-switcher.js'), 'utf8');
+const accountSession = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'show-account-switcher.js'), 'utf8');
 
 for (const marker of [
   'function removeAccountFromSwitcher(userId)',
@@ -23,5 +23,5 @@ assert.strictEqual((source.match(/function removeAccountFromSwitcher\(/g) || [])
 
 console.log('REMOVE_ACCOUNT_FROM_SWITCHER_CONTRACT_HARNESS=PASS');
 console.log('CURRENT_ACCOUNT_GUARD_TOAST_EARLY_RETURN_REMOVE_REFRESH_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/remove-account-from-switcher.js');
+console.log('MODULE_OWNER=src/features/auth/remove-account-from-switcher.js');
 console.log('PRODUCTION_CHANGE=0');

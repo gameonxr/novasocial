@@ -5,9 +5,9 @@ const path = require('path');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 function read(relative) { return fs.readFileSync(path.join(repo, relative), 'utf8'); }
 const index = read('index.html');
-const saveModule = read('src/features/save-account-session.js');
-const getSaved = read('src/features/get-saved-accounts.js');
-const switchTo = read('src/features/switch-to-account.js');
+const saveModule = read('src/features/auth/save-account-session.js');
+const getSaved = read('src/features/auth/get-saved-accounts.js');
+const switchTo = read('src/features/auth/switch-to-account.js');
 const avatar = read('src/features/profile/update-account-avatar.js');
 
 assert(getSaved.includes("localStorage.getItem('nova_accounts')"), 'saved-account reader must use nova_accounts');
@@ -24,7 +24,7 @@ for (const field of ['access_token', 'refresh_token', 'savedAt']) {
   assert(saveModule.includes(`${field}:`), `saved-account schema must contain ${field}`);
 }
 assert(saveModule.includes('window.saveAccountSession = function saveAccountSession(userId, username, avatarUrl, session)'), 'saveAccountSession must be exposed as window global in save module');
-assert(read('src/features/sync-current-account-to-saved-list.js').includes('async function syncCurrentAccountToSavedList()'), 'syncCurrentAccountToSavedList owner must remain present in its module');
+assert(read('src/features/auth/sync-current-account-to-saved-list.js').includes('async function syncCurrentAccountToSavedList()'), 'syncCurrentAccountToSavedList owner must remain present in its module');
 
 console.log('SAVED_ACCOUNT_SCHEMA_HARNESS=PASS');
 console.log('STORAGE_KEY=nova_accounts');

@@ -38,9 +38,9 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`show-account-switcher.js`](../src/features/show-account-switcher.js)
-2. [`switch-to-account.js`](../src/features/switch-to-account.js)
-3. [`remove-account-from-switcher.js`](../src/features/remove-account-from-switcher.js)
+1. [`show-account-switcher.js`](../src/features/auth/show-account-switcher.js)
+2. [`switch-to-account.js`](../src/features/auth/switch-to-account.js)
+3. [`remove-account-from-switcher.js`](../src/features/auth/remove-account-from-switcher.js)
 4. [`saved-account-session-contract.md`](./saved-account-session-contract.md)
 5. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

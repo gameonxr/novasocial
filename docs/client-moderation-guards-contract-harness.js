@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'client-moderation-guards.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'auth', 'client-moderation-guards.js'), 'utf8');
 
 for (const marker of [
   'function isBannedClient()',
@@ -28,5 +28,5 @@ assert(!/PROF\.is_msg_banned\s*=(?!=)/.test(source), 'Client moderation guards m
 
 console.log('CLIENT_MODERATION_GUARDS_CONTRACT_HARNESS=PASS');
 console.log('PROFILE_BAN_MESSAGE_BAN_TOASTS_BOOLEAN_PATHS_SIDE_EFFECT_FREE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/client-moderation-guards.js');
+console.log('MODULE_OWNER=src/features/auth/client-moderation-guards.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -19,7 +19,7 @@ The helper owns modal markup only. Account synchronization, saved-session storag
 
 ## References
 
-1. [`show-account-switcher.js`](../src/features/show-account-switcher.js)
-2. [`remove-account-from-switcher.js`](../src/features/remove-account-from-switcher.js)
+1. [`show-account-switcher.js`](../src/features/auth/show-account-switcher.js)
+2. [`remove-account-from-switcher.js`](../src/features/auth/remove-account-from-switcher.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

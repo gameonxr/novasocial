@@ -17,6 +17,6 @@ The helper owns the UI transition into a new-account login flow only. Authentica
 
 ## References
 
-1. [`add-new-account.js`](../src/features/add-new-account.js)
+1. [`add-new-account.js`](../src/features/auth/add-new-account.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
