@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'marketplace.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'marketplace/marketplace.js'), 'utf8');
 
 for (const marker of [
   'function showMarketplace()',
@@ -38,5 +38,5 @@ assert(!source.includes('window.location'), 'Marketplace must not navigate exter
 
 console.log('MARKETPLACE_CONTRACT_HARNESS=PASS');
 console.log('MODAL_SIX_PRODUCTS_METADATA_SELL_BUY_CONFIRMATION_CANCEL_ORDER_TOAST_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/marketplace.js');
+console.log('MODULE_OWNER=src/features/marketplace/marketplace.js');
 console.log('PRODUCTION_CHANGE=0');

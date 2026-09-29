@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the News modal or
 
 ## References
 
-1. [`news.js`](../src/features/news.js)
+1. [`news.js`](../src/features/news/news.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

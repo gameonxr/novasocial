@@ -260,16 +260,16 @@ window.FEATURE_MANIFESTS = {
     "src/features/jump-to-message-owner.js",
   ],
   "memories": [
-    "src/features/memories.js",
+    "src/features/memories/memories.js",
   ],
   "creator": [
-    "src/features/creator-wallet.js",
+    "src/features/creator/creator-wallet.js",
   ],
   "scheduled-posts": [
-    "src/features/scheduled-posts.js",
+    "src/features/scheduled-posts/scheduled-posts.js",
   ],
   "live-stream": [
-    "src/features/live-stream.js",
+    "src/features/live-stream/live-stream.js",
   ],
   "reels": [
     "src/features/reel-poll.js",
@@ -281,14 +281,14 @@ window.FEATURE_MANIFESTS = {
     "src/features/reels-video-windowing.js",
   ],
   "communities": [
-    "src/features/channels.js",
-    "src/features/communities.js",
+    "src/features/communities/channels.js",
+    "src/features/communities/communities.js",
   ],
   "voice-rooms": [
-    "src/features/voice-rooms.js",
+    "src/features/voice-rooms/voice-rooms.js",
   ],
   "calendar": [
-    "src/features/calendar.js",
+    "src/features/calendar/calendar.js",
   ],
   "groups": [
     "src/features/copy-invite-link.js",
@@ -325,16 +325,16 @@ window.FEATURE_MANIFESTS = {
     "src/features/search-add-members.js",
   ],
   "marketplace": [
-    "src/features/marketplace.js",
+    "src/features/marketplace/marketplace.js",
   ],
   "learning": [
-    "src/features/learning.js",
+    "src/features/learning/learning.js",
   ],
   "news": [
-    "src/features/news.js",
+    "src/features/news/news.js",
   ],
   "games": [
-    "src/features/games.js",
+    "src/features/games/games.js",
   ],
   "admin": [
     "src/features/admin/switch-admin-tab.js",

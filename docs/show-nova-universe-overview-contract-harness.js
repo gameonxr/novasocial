@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'show-nova-universe-overview.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'nova-universe/show-nova-universe-overview.js'), 'utf8');
 
 for (const marker of [
   'async function showNovaUniverseOverview()',
@@ -31,5 +31,5 @@ assert(!source.includes('supabase'), 'Nova Universe overview must not own persis
 
 console.log('SHOW_NOVA_UNIVERSE_OVERVIEW_CONTRACT_HARNESS=PASS');
 console.log('ASYNC_SIGNATURE_STABLE_SECTIONS_NAVIGATION_HINT_SIDE_EFFECT_FREE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/show-nova-universe-overview.js');
+console.log('MODULE_OWNER=src/features/nova-universe/show-nova-universe-overview.js');
 console.log('PRODUCTION_CHANGE=0');

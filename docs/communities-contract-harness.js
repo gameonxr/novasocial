@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'communities.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'communities/communities.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   "myCommunities = JSON.parse(localStorage.getItem('nova-communities') || '[]')",
@@ -39,7 +40,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Communities marker missing: ${marker}`);
 }
-assert(html.includes('src/features/communities.js'), 'Communities module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/communities/communities.js"'), 'Communities module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: communities demand loading */
 assert(!source.includes('db.from('), 'Communities module must remain local-storage-backed');
 assert.strictEqual((source.match(/function showCommunities\(/g) || []).length, 1, 'Communities renderer must have one module owner');
 assert.strictEqual((source.match(/function saveCommunity\(/g) || []).length, 1, 'Community save helper must have one module owner');
@@ -47,5 +48,5 @@ assert.strictEqual((source.match(/function openCommunity\(/g) || []).length, 1, 
 
 console.log('COMMUNITIES_CONTRACT_HARNESS=PASS');
 console.log('HYDRATE_RENDER_CREATE_VALIDATE_DEFAULTS_PERSIST_OPEN_DISPATCH_JOIN=LOCKED');
-console.log('MODULE_OWNER=src/features/communities.js');
+console.log('MODULE_OWNER=src/features/communities/communities.js');
 console.log('PRODUCTION_CHANGE=0');

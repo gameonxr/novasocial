@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not call the async helper 
 
 ## References
 
-1. [`show-nova-universe-overview.js`](../src/features/show-nova-universe-overview.js)
+1. [`show-nova-universe-overview.js`](../src/features/nova-universe/show-nova-universe-overview.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

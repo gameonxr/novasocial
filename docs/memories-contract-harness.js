@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'memories.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'memories/memories.js'), 'utf8');
 
 for (const marker of [
   'async function showMemories()',
@@ -43,5 +43,5 @@ assert(!source.includes('renderReels'), 'Memories must not own the protected Ree
 
 console.log('MEMORIES_CONTRACT_HARNESS=PASS');
 console.log('DATE_WINDOWS_POST_QUERY_SAME_DAY_EMPTY_ERROR_MEDIA_CAPTION_NAV_MOOD_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/memories.js');
+console.log('MODULE_OWNER=src/features/memories/memories.js');
 console.log('PRODUCTION_CHANGE=0');

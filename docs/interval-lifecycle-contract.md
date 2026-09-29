@@ -30,7 +30,7 @@ No production logic is changed by this audit. It records timer ownership and cle
 ## References
 
 1. [`index.html`](../index.html)
-2. [`src/features/live-stream.js`](../src/features/live-stream.js)
+2. [`src/features/live-stream.js`](../src/features/live-stream/live-stream.js)
 3. [`network-monitor-contract.md`](./network-monitor-contract.md)
 4. [`reels-persistent-contract.md`](./reels-persistent-contract.md)
 5. [`calls-webrtc-contract.md`](./calls-webrtc-contract.md)

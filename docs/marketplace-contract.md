@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the Marketplace, 
 
 ## References
 
-1. [`marketplace.js`](../src/features/marketplace.js)
+1. [`marketplace.js`](../src/features/marketplace/marketplace.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

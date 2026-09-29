@@ -41,7 +41,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`communities.js`](../src/features/communities.js)
+1. [`communities.js`](../src/features/communities/communities.js)
 2. [`channels-contract.md`](./channels-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

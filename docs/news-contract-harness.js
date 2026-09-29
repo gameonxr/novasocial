@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'news.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'news/news.js'), 'utf8');
 
 for (const marker of [
   'function showNews()',
@@ -36,5 +36,5 @@ assert(source.includes('showNewsFeed'), 'News must preserve the independent inli
 
 console.log('NEWS_CONTRACT_HARNESS=PASS');
 console.log('MODAL_CATEGORIES_DEFAULT_SELECTION_ARTICLES_METADATA_TOAST_INLINE_BOUNDARY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/news.js');
+console.log('MODULE_OWNER=src/features/news/news.js');
 console.log('PRODUCTION_CHANGE=0');

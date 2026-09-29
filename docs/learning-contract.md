@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the Learning moda
 
 ## References
 
-1. [`learning.js`](../src/features/learning.js)
+1. [`learning.js`](../src/features/learning/learning.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

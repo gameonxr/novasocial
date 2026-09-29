@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'learning.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'learning/learning.js'), 'utf8');
 
 for (const marker of [
   'function showLearning()',
@@ -36,5 +36,5 @@ assert(!source.includes('supabase'), 'Learning must not own persistence');
 
 console.log('LEARNING_CONTRACT_HARNESS=PASS');
 console.log('MODAL_HUB_SIX_COURSES_METADATA_PROGRESS_ROUTING_TOAST_CLOSE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/learning.js');
+console.log('MODULE_OWNER=src/features/learning/learning.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'news.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'news/news.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   'function showNews()',
@@ -26,7 +27,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `News marker missing: ${marker}`);
 }
-assert(html.includes('src/features/news.js'), 'News module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/news/news.js"'), 'News module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: news demand loading */
 assert(!source.includes('db.from('), 'Extracted News display must not own database reads');
 assert(!source.includes('fetch('), 'Extracted News display must remain static');
 assert.strictEqual((source.match(/function showNews\(/g) || []).length, 1, 'News renderer must have one module owner');
@@ -34,5 +35,5 @@ assert(!source.includes('function showNewsFeed('), 'Later inline showNewsFeed su
 
 console.log('NEWS_DISPLAY_CONTRACT_HARNESS=PASS');
 console.log('MODAL_CATEGORIES_ARTICLES_METADATA_FEEDBACK_INLINE_SEPARATION=LOCKED');
-console.log('MODULE_OWNER=src/features/news.js');
+console.log('MODULE_OWNER=src/features/news/news.js');
 console.log('PRODUCTION_CHANGE=0');

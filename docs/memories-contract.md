@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not query posts, render me
 
 ## References
 
-1. [`memories.js`](../src/features/memories.js)
+1. [`memories.js`](../src/features/memories/memories.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

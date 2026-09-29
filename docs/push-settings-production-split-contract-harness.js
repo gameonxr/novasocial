@@ -37,9 +37,9 @@ for (const owner of ['enablePushFromSettings', 'resetPushFromSettings']) {
 }
 assert.strictEqual((moduleText.match(/window\.enablePushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'enable Push window owner must occur once');
 assert.strictEqual((moduleText.match(/window\.resetPushFromSettings\s*=\s*async function\(/g) || []).length, 1, 'reset Push window owner must occur once');
-assert.strictEqual((html.match(/<script\b/gi) || []).length, 415, '236 opening script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<\/script>/gi) || []).length, 415, '231 closing script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
-assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 414, '234 external script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\b/gi) || []).length, 404, '236 opening script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<\/script>/gi) || []).length, 404, '231 closing script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
+assert.strictEqual((html.match(/<script\s+src=/gi) || []).length, 403, '234 external script tags required after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */
 assert(html.indexOf('src/features/push-settings.js') < html.indexOf('src/features/like-effects.js'), 'Push module must load before like-effects');
 assert(html.includes('navigator.serviceWorker.register(\'/sw.js\')'), 'service-worker registration must remain in app boundary');
 assert(!moduleText.includes('VAPID_PUBLIC_KEY'), 'Push module must not own VAPID configuration');

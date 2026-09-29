@@ -37,7 +37,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`scheduled-posts.js`](../src/features/scheduled-posts.js)
+1. [`scheduled-posts.js`](../src/features/scheduled-posts/scheduled-posts.js)
 2. [`post-creation-flow-contract.md`](./post-creation-flow-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

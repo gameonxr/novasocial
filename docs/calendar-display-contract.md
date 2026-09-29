@@ -38,7 +38,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`calendar.js`](../src/features/calendar.js)
+1. [`calendar.js`](../src/features/calendar/calendar.js)
 2. [`event-listener-boundary-contract.md`](./event-listener-boundary-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

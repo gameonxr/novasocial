@@ -39,7 +39,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`games.js`](../src/features/games.js)
+1. [`games.js`](../src/features/games/games.js)
 2. [`contract-artifact-pairing-contract.md`](./contract-artifact-pairing-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

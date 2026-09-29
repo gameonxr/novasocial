@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'channels.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'communities/channels.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
 
 const requiredMarkers = [
   "myChannels = JSON.parse(localStorage.getItem('nova-channels') || '[]')",
@@ -36,7 +37,7 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Channels marker missing: ${marker}`);
 }
-assert(html.includes('src/features/channels.js'), 'Channels module must remain linked from HTML');
+assert(featureManifestSrc.includes('"src/features/communities/channels.js"'), 'Channels module must remain linked from HTML (feature manifest — demand-loaded)'); /* architecture-migration 2026-09-29: communities demand loading */
 assert(!source.includes('db.from('), 'Channels module must remain local-storage-backed');
 assert.strictEqual((source.match(/function showChannels\(/g) || []).length, 1, 'Channels renderer must have one module owner');
 assert.strictEqual((source.match(/function saveChannel\(/g) || []).length, 1, 'Channel save helper must have one module owner');
@@ -44,5 +45,5 @@ assert.strictEqual((source.match(/function broadcastToChannel\(/g) || []).length
 
 console.log('CHANNELS_CONTRACT_HARNESS=PASS');
 console.log('HYDRATE_RENDER_CREATE_VALIDATE_PERSIST_OPEN_BROADCAST_SUBSCRIBE=LOCKED');
-console.log('MODULE_OWNER=src/features/channels.js');
+console.log('MODULE_OWNER=src/features/communities/channels.js');
 console.log('PRODUCTION_CHANGE=0');

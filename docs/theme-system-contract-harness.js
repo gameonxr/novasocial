@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'theme-system.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'themes/theme-system.js'), 'utf8');
 
 for (const marker of [
   'function toggleThemePicker()',
@@ -32,5 +32,5 @@ assert(!source.includes('supabase'), 'Theme system must not own remote persisten
 
 console.log('THEME_SYSTEM_CONTRACT_HARNESS=PASS');
 console.log('PANEL_TOGGLE_THEME_ATTRIBUTES_STORAGE_OPTION_HIGHLIGHT_DELAYED_CLOSE_RESTORE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/theme-system.js');
+console.log('MODULE_OWNER=src/features/themes/theme-system.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -21,6 +21,6 @@ The harness is static and documentation-only. It does not open the calendar, cre
 
 ## References
 
-1. [`calendar.js`](../src/features/calendar.js)
+1. [`calendar.js`](../src/features/calendar/calendar.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

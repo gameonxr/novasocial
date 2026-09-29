@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'calendar.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'calendar/calendar.js'), 'utf8');
 
 for (const marker of [
   'function showCalendar()',
@@ -36,5 +36,5 @@ assert(source.includes('addCalendarEvent()'), 'Calendar must preserve the intent
 
 console.log('CALENDAR_CONTRACT_HARNESS=PASS');
 console.log('MODAL_CURRENT_MONTH_GRID_TODAY_HIGHLIGHT_EVENTS_TOASTS_INLINE_EVENT_SEAM=LOCKED');
-console.log('MODULE_OWNER=src/features/calendar.js');
+console.log('MODULE_OWNER=src/features/calendar/calendar.js');
 console.log('PRODUCTION_CHANGE=0');
