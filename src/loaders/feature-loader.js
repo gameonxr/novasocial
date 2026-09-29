@@ -43,12 +43,20 @@ window.__novaFeatureLoader = (function () {
   // ── Transitional state detection ─────────────────────────────────────
   // If the feature's first manifest URL is present as a <script src> tag in the
   // document, the feature was loaded eagerly at page build (pre-migration state).
+  // Loader-injected tags (marker property __novaInjected) are EXCLUDED: a partial
+  // chunk load that failed mid-chain leaves its successfully-injected tags in the
+  // document, and treating those as the transitional eager state made loadFeature
+  // resolve without loading the remaining files — every stub after the failure
+  // point then hit "loaded but did not define" ("Something went wrong — please
+  // try again") for the rest of the page session. Real eager tags from the page
+  // HTML carry no marker and keep the transitional behavior unchanged.
   function featurePresentInDocument(name) {
     const list = manifestFor(name);
     if (!list) return false;
     const first = list[0];
     const tags = document.querySelectorAll('script[src]');
     for (let i = 0; i < tags.length; i++) {
+      if (tags[i].__novaInjected) continue; // demand-load injected tag, not an eager document tag
       const src = tags[i].getAttribute('src');
       if (src === first || (src && src.indexOf(first) >= 0 && src.slice(-first.length) === first)) {
         return true;
@@ -75,6 +83,7 @@ window.__novaFeatureLoader = (function () {
       const el = document.createElement('script');
       el.src = url;
       el.async = false;           // preserve ordering relative to other injected scripts
+      el.__novaInjected = true;   // demand-load marker — see featurePresentInDocument
       el.onload = function () {
         loadedScriptUrls.add(url);
         debug('loaded', url);

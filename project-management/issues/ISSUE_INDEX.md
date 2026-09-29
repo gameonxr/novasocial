@@ -101,6 +101,7 @@
 | ID | Summary | Status |
 |----|---------|--------|
 | HA-M5 | sw.js cache name never versioned (novasocial-v1) + cache-first policy — stale-module risk after deploys | DEFERRED (deploy-gated, owner decision) |
+| PL-1 | sw.js caches non-OK responses (`cache.put` on 404/5xx) — one failed fetch becomes a permanent cache-first failure for that URL | OPEN (deferred — owner decision; record from 2026-09-29 outgoing-call investigation) |
 
 ## issues/code-hygiene/CODE_HYGIENE_ISSUES.md
 

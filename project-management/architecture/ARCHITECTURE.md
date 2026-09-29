@@ -208,6 +208,27 @@ SW-cached after first fetch. No private API responses are cached by the loader.
     (ReferenceError before → Messages screen renders after) + 21/21 flow
     verification (all tabs, openChat, sendMsg, groups, calls, cache-restore)
     + battery 320/5 with era-pin identity unchanged.
+14. ✅ Outgoing-call stub-toast regression fix (2026-09-29): a transient
+    mid-chain script failure during `loadFeature('calls')` left the chunk's
+    successfully-injected `<script src>` tags in the document; on the user's
+    retry, `featurePresentInDocument` matched the leftover first-manifest-URL
+    tag, misread the partial state as the transitional eager state, and
+    resolved loadFeature WITHOUT loading the remaining files — every stub
+    after the failure point (incl. `initiateCall`) then toasted "Something
+    went wrong — please try again" for the rest of the page session, while
+    chunks that never failed (home/reels/dms) kept working. Fix (loader only,
+    2 lines + comments): demand-load-injected script elements are marked
+    (`el.__novaInjected`) and excluded from the transitional-eager tag scan,
+    so a failed chunk retries correctly (only the missing files re-inject —
+    the designed network-chunk-retry semantics). feature-stubs/manifest/
+    index.html/sw.js/demand-loading architecture untouched. Proven by a
+    jsdom failure-injection repro (transient failure at calls file #18 →
+    attempt 2 previously produced the exact stub toast + permanent
+    false-loaded state; after the fix attempt 2 completes the chunk, real
+    `initiateCall` dispatches, call screen renders, zero toasts) + full-flow
+    + real-HTTP flow repros + calls/loader/dependency harnesses PASS
+    (incl. L2 legit-transitional and L6 retry) + 21/21 flow verification
+    + battery 320/5 with era-pin identity unchanged.
 
 ## 11. Verification per cycle
 
