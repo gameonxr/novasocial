@@ -41,7 +41,7 @@ The standalone harness must pass with all JavaScript syntax checks, every curren
 
 ## References
 
-1. [`create.js`](../src/features/create.js)
+1. [`create.js`](../src/features/posts/create.js)
 2. [`index.html`](../index.html)
 3. [`share-story-post-contract.md`](./share-story-post-contract.md)
 4. [`notification-dispatch-contract.md`](./notification-dispatch-contract.md)

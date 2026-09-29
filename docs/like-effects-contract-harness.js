@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'like-effects.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'like-effects.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 for (const forbidden of [
@@ -18,7 +18,7 @@ for (const forbidden of [
 ]) {
   assert(!forbidden.test(source), `like effects module must not own protected persistence: ${forbidden}`);
 }
-assert(html.includes('src/features/like-effects.js'), 'like-effects module must remain linked from HTML');
+assert(html.includes('src/features/posts/like-effects.js'), 'like-effects module must remain linked from HTML');
 
 function makeClassList() {
   return {

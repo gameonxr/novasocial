@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'comments.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'comments.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 const requiredMarkers = [
@@ -35,12 +35,12 @@ const requiredMarkers = [
 for (const marker of requiredMarkers) {
   assert(source.includes(marker), `Comments marker missing: ${marker}`);
 }
-assert(html.includes('src/features/comments.js'), 'Comments module must remain linked from HTML');
+assert(html.includes('src/features/posts/comments.js'), 'Comments module must remain linked from HTML');
 assert.strictEqual((source.match(/function openComments\(/g) || []).length, 1, 'Comments renderer must have one module owner');
 assert.strictEqual((source.match(/function toggleCommentLike\(/g) || []).length, 1, 'Comment-like helper must have one module owner');
 assert.strictEqual((source.match(/function sendCmt\(/g) || []).length, 1, 'Comment submit helper must have one module owner');
 
 console.log('COMMENTS_FLOW_CONTRACT_HARNESS=PASS');
 console.log('QUERY_FALLBACK_LIKES_RENDER_GUARDS_RATE_LIMIT_NOTIFICATIONS_REFRESH=LOCKED');
-console.log('MODULE_OWNER=src/features/comments.js');
+console.log('MODULE_OWNER=src/features/posts/comments.js');
 console.log('PRODUCTION_CHANGE=0');

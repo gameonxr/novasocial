@@ -7,7 +7,7 @@ const path = require('path');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
-const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const storyModule = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-editor-owners.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 const noteViewerModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
@@ -118,11 +118,11 @@ for (const marker of protectedMarkers) {
 const scriptMarkers = [
   '<script src="src/features/home/smart-ranking.js"></script>',
   '<script src="src/features/system/nova-init.js"></script>',
-  '<script src="src/features/spawn-like-particles.js"></script>',
+  '<script src="src/features/posts/spawn-like-particles.js"></script>',
   '<script src="src/features/dms/sync-local-deletion-fallback.js"></script>',
   '<script src="src/features/push-settings.js"></script>',
   '<script src="src/features/system/invalidate-tab-cache-owner.js"></script>',
-  '<script src="src/features/like-effects.js"></script>',
+  '<script src="src/features/posts/like-effects.js"></script>',
 ];
 const positions = scriptMarkers.map(marker => html.indexOf(marker));
 assert(positions.every(position => position >= 0), 'required trailing scripts must remain present'); /* architecture-migration 2026-09-29: notes owner files + refresh-profile-counts owner are demand-loaded via manifest (removed from trailing HTML) */

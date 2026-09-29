@@ -22,6 +22,6 @@ This audit is static and documentation-only. It does not search users, mutate ca
 
 ## References
 
-1. [`mention.js`](../src/features/mention.js)
+1. [`mention.js`](../src/features/posts/mention.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

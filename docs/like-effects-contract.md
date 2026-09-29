@@ -35,5 +35,5 @@ The standalone harness must pass with contract-artifact pairing, post/reaction p
 
 ## References
 
-1. [`like-effects.js`](../src/features/like-effects.js)
+1. [`like-effects.js`](../src/features/posts/like-effects.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)

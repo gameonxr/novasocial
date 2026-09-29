@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'update-post-counts.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'update-post-counts.js'), 'utf8');
 
 for (const marker of [
   'function updatePostCounts(pid,likesCount,commentsCount)',
@@ -26,5 +26,5 @@ assert.strictEqual((source.match(/function updatePostCounts\(/g) || []).length, 
 
 console.log('UPDATE_POST_COUNTS_CONTRACT_HARNESS=PASS');
 console.log('LIKE_COMMENT_TARGET_GUARDS_FORMAT_VISIBILITY_ALTERNATE_TEXT_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/update-post-counts.js');
+console.log('MODULE_OWNER=src/features/posts/update-post-counts.js');
 console.log('PRODUCTION_CHANGE=0');

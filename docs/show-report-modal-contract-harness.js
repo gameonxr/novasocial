@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'show-report-modal.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'show-report-modal.js'), 'utf8');
 
 for (const marker of [
   'function showReportModal(targetType, targetId)',
@@ -36,5 +36,5 @@ assert(source.includes('submitReport('), 'Report persistence must remain an expl
 
 console.log('SHOW_REPORT_MODAL_CONTRACT_HARNESS=PASS');
 console.log('LIFECYCLE_ESCAPED_TARGET_REASON_LIST_CANCEL_HOVER_MOUSE_TOUCH_DELEGATION_INLINE_PERSISTENCE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/show-report-modal.js');
+console.log('MODULE_OWNER=src/features/posts/show-report-modal.js');
 console.log('PRODUCTION_CHANGE=0');

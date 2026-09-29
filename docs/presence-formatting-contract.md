@@ -33,6 +33,6 @@ No production logic is changed by this audit. It locks the pure compatibility se
 
 1. [`src/core/utils.js`](../src/core/utils.js)
 2. [`src/features/profile-view.js`](../src/features/profile-view.js)
-3. [`src/features/posts.js`](../src/features/posts.js)
+3. [`src/features/posts.js`](../src/features/posts/posts.js)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

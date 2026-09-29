@@ -19,6 +19,6 @@ The helper owns post-count presentation only. Like/comment persistence, server r
 
 ## References
 
-1. [`update-post-counts.js`](../src/features/update-post-counts.js)
+1. [`update-post-counts.js`](../src/features/posts/update-post-counts.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

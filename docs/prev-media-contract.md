@@ -23,7 +23,7 @@ The extracted `src/features/prev-media.js` module remains unchanged in this chec
 
 ## References
 
-1. [`prev-media.js`](../src/features/prev-media.js)
+1. [`prev-media.js`](../src/features/posts/prev-media.js)
 2. [`post-creation-contract.md`](./post-creation-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

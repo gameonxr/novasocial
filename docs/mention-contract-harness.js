@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'features', 'mention.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'features', 'posts', 'mention.js'), 'utf8');
 
 for (const marker of [
   'let mentionSearchTimer = null',
@@ -47,5 +47,5 @@ assert(!source.includes('signInWithPassword'), 'mention module must not own auth
 
 console.log('MENTION_CONTRACT_HARNESS=PASS');
 console.log('CAPTION_SEARCH_INSERT_NOTIFICATION_SCHEDULE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/mention.js');
+console.log('MODULE_OWNER=src/features/posts/mention.js');
 console.log('PRODUCTION_CHANGE=0');

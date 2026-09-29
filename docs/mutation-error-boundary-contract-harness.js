@@ -5,7 +5,7 @@ const path = require('path');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
-const comments = fs.readFileSync(path.join(repo, 'src', 'features', 'comments.js'), 'utf8');
+const comments = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'comments.js'), 'utf8');
 const moderation = fs.readFileSync(path.join(repo, 'src', 'features', 'ai', 'ai-moderation.js') /* architecture-migration 2026-09-29: ai family folder */, 'utf8');
 
 function functionBlock(source, signature) {
@@ -17,7 +17,7 @@ function functionBlock(source, signature) {
 
 const critical = [
   { source: comments, signature: 'async function sendCmt(pid)', table: "db.from('comments').insert", label: 'sendCmt' },
-  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8'), signature: 'async function submitCreate(type)', table: "db.from('posts').insert", label: 'submitCreate' },
+  { source: fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'submit-create.js'), 'utf8'), signature: 'async function submitCreate(type)', table: "db.from('posts').insert", label: 'submitCreate' },
   { source: fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'send-msg.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8'), signature: 'async function sendMsg(cid)', table: "db.from('messages').insert", label: 'sendMsg' },
   { source: fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'block-user.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8'), signature: 'async function blockUser(userId, btn)', table: "db.from('blocks').insert", label: 'blockUser' },
   { source: fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'unblock-user.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8'), signature: 'async function unblockUser(userId, btn)', table: "db.from('blocks').delete", label: 'unblockUser' },
@@ -29,7 +29,7 @@ for (const item of critical) {
   assert(body.includes('.throwOnError()'), `${item.label} must retain .throwOnError()`);
 }
 
-assert(html.includes('src/features/comments.js'), 'comments module must remain loaded by index.html');
+assert(html.includes('src/features/posts/comments.js'), 'comments module must remain loaded by index.html');
 assert(moderation.includes('window.sendCmt'), 'AI moderation wrapper must retain the sendCmt global seam');
 assert(comments.includes("if(e.message?.includes('RATE_LIMIT_EXCEEDED'))"), 'sendCmt must retain rate-limit-specific error handling');
 assert(comments.includes("return; // Don't proceed to notifications/refresh if insert failed"), 'sendCmt must stop after a failed insert');

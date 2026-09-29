@@ -15,7 +15,7 @@ function collect(dir) {
 }
 collect(srcDir);
 const extracted = sourceFiles.map(file => fs.readFileSync(file, 'utf8')).join('\n');
-const particleModule = fs.readFileSync(path.join(srcDir, 'features', 'spawn-like-particles.js'), 'utf8');
+const particleModule = fs.readFileSync(path.join(srcDir, 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const proofFiles = [
   'particle-browser-proof-evidence.txt',
   'particle-browser-comparison-proof-evidence.txt',

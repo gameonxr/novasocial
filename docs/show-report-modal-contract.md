@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open a report modal, a
 
 ## References
 
-1. [`show-report-modal.js`](../src/features/show-report-modal.js)
+1. [`show-report-modal.js`](../src/features/posts/show-report-modal.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const createModule = fs.readFileSync(path.join(repo, 'src', 'features', 'create.js'), 'utf8');
+const createModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'create.js'), 'utf8');
 
 const requiredCreateMarkers = [
   'function showCreateMenu()',
@@ -44,7 +44,7 @@ const requiredSubmitMarkers = [
   "go(type==='reel'?'reels':'home')",
   'Upload failed'
 ];
-const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8');
+const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'submit-create.js'), 'utf8');
 const submitCreateSurface = html + '\n' + submitCreateModuleText;
 for (const marker of requiredSubmitMarkers) {
   assert(submitCreateSurface.includes(marker), `Submit-create marker missing: ${marker}`);

@@ -52,7 +52,7 @@ for (const signature of protectedSignatures) {
   else if (signature === 'function openChat(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must exist');
   else assert.strictEqual(sourceText.includes(signature), false, `protected signature must not be duplicated by declaration: ${signature}`);
 }
-const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const noteModule = fs.readFileSync(path.join(repo, 'src', 'features', 'notes', 'note-viewer-owners.js'), 'utf8');
@@ -70,8 +70,8 @@ assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-production-spli
 assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-production-split-contract-harness.js')), 'Notes reactor-list harness must remain present');
 assert(fs.existsSync(path.join(repo, 'docs', 'note-reactors-list-parity-rollback-evidence.txt')), 'Notes reactor-list rollback evidence must remain present');
 assert(fs.readFileSync(path.join(repo, 'docs', 'note-reactors-list-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_OWNER_TYPE=function'), 'Notes reactor-list browser proof must remain passing');
-assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
-assert(html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
+assert(html.lastIndexOf('src/features/posts/spawn-like-particles.js') < html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
+assert(html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/posts/like-effects.js'), 'deletion-fallback module must load before caller');
 assert(gate.includes('DIRECT_EXTRACTION=GATED_FOR_REMAINING_INLINE_BOUNDARY_STATE_BOOTSTRAP_LISTENERS'), 'global high-risk gate must remain blocked for the remaining inline boundary surfaces');
 assert(matrix.includes('particle seam-preparation artifacts present'), 'matrix must record particle seam preparation');
 assert(matrix.includes('all twenty-two protected seam contracts explicitly bind their corresponding evidence inventories'), 'matrix must record repository-wide seam inventory alignment');

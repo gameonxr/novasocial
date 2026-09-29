@@ -32,7 +32,7 @@ const currentOwner = moduleExists ? extractModuleOwner(moduleText) : extractOwne
 const normalizedOrigin = normalize(originOwner);
 const normalizedCurrent = normalize(currentOwner);
 const publishStoryEditorModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'publish-story-editor.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
-const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'submit-create.js'), 'utf8');
+const submitCreateModuleText = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'submit-create.js'), 'utf8');
 const callerCount = ((html + '\n' + publishStoryEditorModuleText + '\n' + submitCreateModuleText).match(/\binvalidateTabCache\s*\(/g) || []).length - (moduleExists ? 0 : 1);
 
 assert.strictEqual(normalizedCurrent, normalizedOrigin, 'candidate owner must match origin/main exactly after normalization');

@@ -4,7 +4,7 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
 const offline = fs.readFileSync(path.join(repo, 'src', 'core', 'offline.js'), 'utf8');
-const posts = fs.readFileSync(path.join(repo, 'src', 'features', 'posts.js'), 'utf8');
+const posts = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'posts.js'), 'utf8');
 
 assert(offline.includes('window._offlineQueue = window._offlineQueue || [];'), 'offline queue must retain singleton initialization');
 assert(offline.includes('window._offlineBanner = null;'), 'offline banner handle must retain initialization');

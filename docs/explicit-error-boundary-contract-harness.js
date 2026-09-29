@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
-const files = ['index.html', 'src/features/-upload-to-cloudinary.js', 'src/features/ai/call-nova-ai.js', 'src/features/calls/switch-call-camera.js', 'src/features/profile/profile.js', 'src/features/home/home.js', 'src/features/reels/reels-renderer-owner.js', 'src/features/submit-create.js', 'src/features/upload.js', 'src/features/dms/forward-message.js'];
+const files = ['index.html', 'src/features/-upload-to-cloudinary.js', 'src/features/ai/call-nova-ai.js', 'src/features/calls/switch-call-camera.js', 'src/features/profile/profile.js', 'src/features/home/home.js', 'src/features/reels/reels-renderer-owner.js', 'src/features/posts/submit-create.js', 'src/features/upload.js', 'src/features/dms/forward-message.js'];
 const counts = {};
 for (const relative of files) {
   const text = fs.readFileSync(path.join(repo, relative), 'utf8');
@@ -16,7 +16,7 @@ assert.deepStrictEqual(counts, {
   'index.html': 0,
   'src/features/upload.js': 1,
   'src/features/dms/forward-message.js': 2,
-  'src/features/submit-create.js': 1,
+  'src/features/posts/submit-create.js': 1,
   'src/features/profile/profile.js': 2,
   'src/features/home/home.js': 2,
   'src/features/reels/reels-renderer-owner.js': 1,

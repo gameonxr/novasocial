@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open the Insights moda
 
 ## References
 
-1. [`insights.js`](../src/features/insights.js)
+1. [`insights.js`](../src/features/posts/insights.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

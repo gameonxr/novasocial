@@ -7,10 +7,10 @@ const repo = path.resolve(__dirname, '..');
 const files = [path.join(repo, 'index.html'), ...execFileSync('find', [path.join(repo, 'src'), '-type', 'f', '-name', '*.js'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean)];
 const source = files.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const index = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
-const postActions = fs.readFileSync(path.join(repo, 'src', 'features', 'post-actions.js'), 'utf8');
+const postActions = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'post-actions.js'), 'utf8');
 const compressImage = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-image.js'), 'utf8');
 const compressVideo = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-video.js'), 'utf8');
-const prevMedia = fs.readFileSync(path.join(repo, 'src', 'features', 'prev-media.js'), 'utf8');
+const prevMedia = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'prev-media.js'), 'utf8');
 const storyText = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'story-text-helpers.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 
 assert.strictEqual(files.length, 470, 'index.html plus 240 extracted modules must be audited after the DMs renderer split'); /* architecture-migration 2026-09-29: demand-loading loader files added */

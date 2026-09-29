@@ -32,6 +32,6 @@ No production logic is changed by this audit. The contract records the clipboard
 1. [`src/features/message-clipboard-helpers.js`](../src/features/dms/message-clipboard-helpers.js)
 2. [`src/features/copy-invite-link.js`](../src/features/copy-invite-link.js)
 3. [`src/features/copy-story-link.js`](../src/features/stories/copy-story-link.js)
-4. [`src/features/post-actions.js`](../src/features/post-actions.js)
+4. [`src/features/post-actions.js`](../src/features/posts/post-actions.js)
 5. [`index.html`](../index.html)
 

@@ -70,7 +70,7 @@ for (const signature of protectedSignatures) {
   else if (signature === 'function openChat(') assert(fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'open-chat.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8').includes('window.openChat = async function openChat('), 'approved DMs chat opener owner must exist');
   else assert.strictEqual(sourceText.includes(signature), false, `protected marker must not be duplicated by declaration: ${signature}`);
 }
-const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 assert(particleModule.includes('window.spawnLikeParticles = function(el){'), 'approved particle window owner must exist');
 assert.strictEqual((particleModule.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'approved particle window owner must occur once');
@@ -102,8 +102,8 @@ assert(fs.readFileSync(path.join(docsDir, 'note-reactors-list-after-split-browse
 assert(fs.existsSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt')), 'Reels after-split browser proof must remain present');
 assert(fs.existsSync(path.join(docsDir, 'reels-parity-rollback-evidence.txt')), 'Reels parity rollback evidence must remain present');
 assert(fs.readFileSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt'), 'utf8').includes('PRODUCTION_BROWSER_PROOF=BEFORE_AFTER_PASS') || fs.readFileSync(path.join(docsDir, 'reels-after-split-browser-proof-evidence.txt'), 'utf8').includes('EXTERNAL_WINDOWING_OWNER=PASS'), 'Reels after-split browser proof must pass');
-assert(html.lastIndexOf('src/features/spawn-like-particles.js') < html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
-assert(html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/like-effects.js'), 'deletion-fallback module must load before caller');
+assert(html.lastIndexOf('src/features/posts/spawn-like-particles.js') < html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must load before deletion-fallback module');
+assert(html.lastIndexOf('src/features/dms/sync-local-deletion-fallback.js') < html.lastIndexOf('src/features/posts/like-effects.js'), 'deletion-fallback module must load before caller');
 assert(html.indexOf('src/features/push-settings.js') >= 0, 'Push module present at startup; Notes reactor-list module is demand-loaded and loads strictly after all startup scripts'); /* architecture-migration 2026-09-29: notes demand loading — original order preserved by construction */
 assert(true, 'Notes reactor-list module must load before Note module — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
 assert(true, 'Note viewer module must load before Note deletion module — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
@@ -111,8 +111,8 @@ assert(true, 'Note deletion module + Story module both demand-loaded (notes + st
 assert(html.indexOf('src/features/push-settings.js') >= 0, 'Notes reactor-list module must load after Push settings — note-reactors-list-owner.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
 assert(true, 'Notes reactor-list module must load before Note viewer callers — both demand-loaded via manifests; intra-chunk manifest order preserved'); /* architecture-migration 2026-09-29 */
 assert(true, 'demand-loaded ordering preserved by construction'); /* architecture-migration 2026-09-29 */
-assert(html.indexOf('src/features/like-effects.js') >= 0, 'Reels windowing module must load before caller — reels-video-windowing.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
-assert(html.lastIndexOf('src/features/stories/story-editor-owners.js') < html.lastIndexOf('src/features/like-effects.js'), 'Story module must load before caller');
+assert(html.indexOf('src/features/posts/like-effects.js') >= 0, 'Reels windowing module must load before caller — reels-video-windowing.js demand-loaded (loads after all startup scripts)'); /* architecture-migration 2026-09-29 */
+assert(html.lastIndexOf('src/features/stories/story-editor-owners.js') < html.lastIndexOf('src/features/posts/like-effects.js'), 'Story module must load before caller');
 for (const file of requiredCoverage) {
   assert(fs.existsSync(path.join(docsDir, file)), `required high-risk coverage file missing: ${file}`);
 }

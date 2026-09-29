@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'report-user.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'report-user.js'), 'utf8');
 
 for (const marker of [
   'function reportUser(userId)',
@@ -19,5 +19,5 @@ assert(!source.includes('supabase'), 'Report-user must not own persistence');
 
 console.log('REPORT_USER_CONTRACT_HARNESS=PASS');
 console.log('SIGNATURE_TARGET_TYPE_ARGUMENT_FORWARDING_SINGLE_DELEGATION_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/report-user.js');
+console.log('MODULE_OWNER=src/features/posts/report-user.js');
 console.log('PRODUCTION_CHANGE=0');

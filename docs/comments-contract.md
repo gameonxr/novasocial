@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open comments, insert 
 
 ## References
 
-1. [`comments.js`](../src/features/comments.js)
+1. [`comments.js`](../src/features/posts/comments.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

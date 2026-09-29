@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'insights.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'insights.js'), 'utf8');
 
 for (const marker of [
   'async function showEnhancedInsights(pid)',
@@ -44,5 +44,5 @@ assert(!source.includes('renderDMs'), 'Insights must not own the protected DM re
 
 console.log('INSIGHTS_CONTRACT_HARNESS=PASS');
 console.log('MODAL_LOADING_DUAL_QUERY_NOT_FOUND_24H_CHART_STATS_ENGAGEMENT_REACTIONS_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/insights.js');
+console.log('MODULE_OWNER=src/features/posts/insights.js');
 console.log('PRODUCTION_CHANGE=0');

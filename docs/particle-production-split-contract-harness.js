@@ -7,7 +7,7 @@ const { execFileSync } = require('child_process');
 const repo = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
-const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const moduleText = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const deletionModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'sync-local-deletion-fallback.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const pushModule = fs.readFileSync(path.join(repo, 'src', 'features', 'push-settings.js'), 'utf8');
 const contract = fs.readFileSync(path.join(repo, 'docs', 'particle-production-split-contract.md'), 'utf8');
@@ -40,8 +40,8 @@ assert(contract.includes('Canonical owner SHA-256'), 'split contract must record
 assert(moduleText.includes('window.spawnLikeParticles = function(el){'), 'particle module must assign the global owner');
 assert.strictEqual((moduleText.match(/window\.spawnLikeParticles\s*=\s*function\(el\)\{/g) || []).length, 1, 'particle module must contain exactly one global owner');
 assert.strictEqual((html.match(/function spawnLikeParticles\(el\)\{/g) || []).length, 0, 'inline particle owner must be absent after split');
-assert.strictEqual(html.split('src/features/spawn-like-particles.js').length - 1, 1, 'particle module must be linked exactly once');
-assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/like-effects.js'), 'particle module must load before global caller');
+assert.strictEqual(html.split('src/features/posts/spawn-like-particles.js').length - 1, 1, 'particle module must be linked exactly once');
+assert(html.indexOf('src/features/posts/spawn-like-particles.js') < html.indexOf('src/features/posts/like-effects.js'), 'particle module must load before global caller');
 assert(source.includes('spawnLikeParticles(el);'), 'global caller handoff must remain present');
 for (const signature of protectedSignatures) {
   const approved = signature === 'async function renderDMs()' || signature === 'async function renderReels()' || signature === 'function spawnLikeParticles(el){' || signature === 'async function syncLocalDeletionFallback()' || signature === 'async function enablePushFromSettings()' || signature === 'async function resetPushFromSettings()' || signature === 'async function viewNote(' || signature === 'function removeMyNoteFromViewer(' || signature === 'async function deleteMyNote()' || signature === 'function renderStoryElements()' || signature === 'async function loadNoteReactorsList(' || signature === 'function reactToNote(' || signature === 'async function submitNote()' || signature === 'async function voteStoryPoll(' || signature === 'async function refreshPollResults(' || signature === 'async function loadStoryPollState(' || signature === 'function openSV(startIdx){' || signature === 'function submitNativeEmojiReaction(' || signature === 'async function toggleRecording(cid)' || signature === 'function createPeerConnection(callId, remoteUserId) {';

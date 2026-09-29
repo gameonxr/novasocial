@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'comments.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'comments.js'), 'utf8');
 
 for (const marker of [
   'async function openComments(pid)',
@@ -46,5 +46,5 @@ assert(!source.includes('renderReels'), 'Comments must not own the protected Ree
 
 console.log('COMMENTS_CONTRACT_HARNESS=PASS');
 console.log('QUERY_FALLBACK_LIKES_EMPTY_RENDER_TOGGLE_MODERATION_RATE_LIMIT_NOTIFICATION_REFRESH_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/comments.js');
+console.log('MODULE_OWNER=src/features/posts/comments.js');
 console.log('PRODUCTION_CHANGE=0');

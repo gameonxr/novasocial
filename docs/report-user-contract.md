@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not open a modal or submit
 
 ## References
 
-1. [`report-user.js`](../src/features/report-user.js)
+1. [`report-user.js`](../src/features/posts/report-user.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

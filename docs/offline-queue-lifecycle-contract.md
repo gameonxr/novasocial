@@ -32,7 +32,7 @@ No production logic is changed by this audit. It records the existing offline li
 ## References
 
 1. [`src/core/offline.js`](../src/core/offline.js)
-2. [`src/features/posts.js`](../src/features/posts.js)
+2. [`src/features/posts.js`](../src/features/posts/posts.js)
 3. [`network-monitor-contract.md`](./network-monitor-contract.md)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

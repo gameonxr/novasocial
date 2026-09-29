@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'prev-media.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'prev-media.js'), 'utf8');
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 
 for (const marker of [
@@ -30,12 +30,12 @@ for (const marker of [
 ]) {
   assert(source.includes(marker), `Prev media marker missing: ${marker}`);
 }
-assert(html.includes('src/features/prev-media.js'), 'Prev media module must remain linked from HTML');
+assert(html.includes('src/features/posts/prev-media.js'), 'Prev media module must remain linked from HTML');
 assert(!source.includes('fetch('), 'Prev media must not own network requests');
 assert(!source.includes('supabase'), 'Prev media must not own remote data access');
 assert.strictEqual((source.match(/function prevMedia\(/g) || []).length, 1, 'Prev media must have one module owner');
 
 console.log('PREV_MEDIA_CONTRACT_HARNESS=PASS');
 console.log('GUARD_PREVIEW_VIDEO_IMAGE_METADATA_TOOLS_ENABLE_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/prev-media.js');
+console.log('MODULE_OWNER=src/features/posts/prev-media.js');
 console.log('PRODUCTION_CHANGE=0');

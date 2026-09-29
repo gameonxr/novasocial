@@ -7,7 +7,7 @@ const path = require('path');
 const repo = process.env.NOVASOCIAL_REPO || path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
 const featureManifestSrc = fs.readFileSync(path.join(repo, 'src', 'loaders', 'feature-manifest.js'), 'utf8'); /* architecture-migration 2026-09-29 */
-const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'spawn-like-particles.js'), 'utf8');
+const particleModule = fs.readFileSync(path.join(repo, 'src', 'features', 'posts', 'spawn-like-particles.js'), 'utf8');
 const dmsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'dms', 'dms-renderer-owner.js') /* architecture-migration 2026-09-29: dms folder */, 'utf8');
 const reelsModule = fs.readFileSync(path.join(repo, 'src', 'features', 'reels', 'reels-renderer-owner.js'), 'utf8');
 
@@ -30,8 +30,8 @@ assert(features >= 200, 'feature extraction set must remain at least 200 modules
 const requiredTrailing = [
   '<script src="src/features/home/smart-ranking.js"></script>',
   '<script src="src/features/system/nova-init.js"></script>',
-  '<script src="src/features/spawn-like-particles.js"></script>',
-  '<script src="src/features/like-effects.js"></script>'
+  '<script src="src/features/posts/spawn-like-particles.js"></script>',
+  '<script src="src/features/posts/like-effects.js"></script>'
 ];
 const trailingPositions = requiredTrailing.map(marker => html.lastIndexOf(marker));
 assert(trailingPositions.every(position => position >= 0), 'required trailing feature scripts must exist');

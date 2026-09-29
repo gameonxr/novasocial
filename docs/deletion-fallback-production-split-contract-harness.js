@@ -46,8 +46,8 @@ assert.strictEqual(sha256(canonicalOwner), sha256(baselineOwner), 'canonical ext
 assert.strictEqual((html.match(/async function syncLocalDeletionFallback\(\)/g) || []).length, 0, 'inline deletion-fallback owner must be absent');
 assert.strictEqual((moduleText.match(/window\.syncLocalDeletionFallback\s*=\s*async function\(\)\s*\{/g) || []).length, 1, 'module deletion-fallback owner must occur once');
 assert.strictEqual(sourceText.includes('async function syncLocalDeletionFallback()'), false, 'named deletion-fallback owner must not be duplicated in src');
-assert(html.indexOf('src/features/spawn-like-particles.js') < html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
-assert(true, 'src/features/like-effects.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
+assert(html.indexOf('src/features/posts/spawn-like-particles.js') < html.indexOf('src/features/dms/sync-local-deletion-fallback.js'), 'particle module must precede deletion-fallback module');
+assert(true, 'src/features/posts/like-effects.js — demand-loaded ordering preserved by construction (lazy chunks load after all startup scripts; intra-chunk order = manifest order)'); /* architecture-migration 2026-09-29 */
 assert((html + '\n' + fs.readFileSync(path.join(repo, 'src', 'features', 'system', 'show-app.js'), 'utf8')).includes('syncLocalDeletionFallback().catch(() => {})'), 'startup global handoff must remain');
 assert(fs.readFileSync(path.join(repo, 'docs', 'deletion-fallback-browser-comparison-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'comparison proof must pass');
 assert(fs.readFileSync(path.join(repo, 'docs', 'deletion-fallback-after-split-browser-proof-evidence.txt'), 'utf8').includes('RESULT=PASS'), 'after-split browser proof must pass');

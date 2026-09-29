@@ -40,6 +40,6 @@ The standalone harness passed. The complete repository validation chain must pas
 ## References
 
 1. [`index.html` protected particle call-site and script order](../index.html)
-2. [`spawn-like-particles.js` production owner](../src/features/spawn-like-particles.js)
+2. [`spawn-like-particles.js` production owner](../src/features/posts/spawn-like-particles.js)
 3. [`particle-after-split-browser-proof-evidence.txt`](./particle-after-split-browser-proof-evidence.txt)
 4. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
