@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'fallback-local-queue.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'media', 'fallback-local-queue.js'), 'utf8');
 
 for (const marker of [
   'function _fallbackLocalQueue(mediaUrl, source, reason)',
@@ -28,5 +28,5 @@ assert(!source.includes('remove('), 'Fallback queue must not perform media delet
 
 console.log('FALLBACK_LOCAL_QUEUE_CONTRACT_HARNESS=PASS');
 console.log('LOCAL_READ_APPEND_TIMESTAMP_CAP_TRIM_WRITE_WARNING_ONLY_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/fallback-local-queue.js');
+console.log('MODULE_OWNER=src/features/media/fallback-local-queue.js');
 console.log('PRODUCTION_CHANGE=0');

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const compress = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-video.js'), 'utf8');
+const compress = fs.readFileSync(path.join(repo, 'src', 'features', 'media', 'compress-video.js'), 'utf8');
 const trim = fs.readFileSync(path.join(repo, 'src', 'features', 'stories', 'trim-video.js') /* architecture-migration 2026-09-29: stories folder */, 'utf8');
 
 function assertFrameLoop(source, label) {

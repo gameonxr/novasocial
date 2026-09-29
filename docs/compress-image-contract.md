@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not create object URLs, de
 
 ## References
 
-1. [`compress-image.js`](../src/features/compress-image.js)
+1. [`compress-image.js`](../src/features/media/compress-image.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

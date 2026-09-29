@@ -23,7 +23,7 @@ The extracted `src/features/derive-video-thumbnail-url.js` module remains unchan
 
 ## References
 
-1. [`derive-video-thumbnail-url.js`](../src/features/derive-video-thumbnail-url.js)
+1. [`derive-video-thumbnail-url.js`](../src/features/media/derive-video-thumbnail-url.js)
 2. [`generate-file-name-contract.md`](./generate-file-name-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

@@ -30,8 +30,8 @@ No production logic is changed by this audit. The contract only exercises existi
 
 ## References
 
-1. [`src/features/cld-url.js`](../src/features/cld-url.js)
-2. [`src/features/optimize-cloudinary-url.js`](../src/features/optimize-cloudinary-url.js)
-3. [`src/features/derive-video-thumbnail-url.js`](../src/features/derive-video-thumbnail-url.js)
+1. [`src/features/cld-url.js`](../src/features/media/cld-url.js)
+2. [`src/features/optimize-cloudinary-url.js`](../src/features/media/optimize-cloudinary-url.js)
+3. [`src/features/derive-video-thumbnail-url.js`](../src/features/media/derive-video-thumbnail-url.js)
 4. [`index.html`](../index.html)
 

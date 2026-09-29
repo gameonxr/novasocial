@@ -23,7 +23,7 @@ The extracted `src/features/extract-cloudinary-public-id.js` module remains unch
 
 ## References
 
-1. [`extract-cloudinary-public-id.js`](../src/features/extract-cloudinary-public-id.js)
+1. [`extract-cloudinary-public-id.js`](../src/features/media/extract-cloudinary-public-id.js)
 2. [`delete-multiple-media-contract.md`](./delete-multiple-media-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

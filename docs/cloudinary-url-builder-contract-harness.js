@@ -11,7 +11,7 @@ const context = {
 };
 vm.createContext(context);
 
-for (const file of ['cld-url.js', 'optimize-cloudinary-url.js', 'derive-video-thumbnail-url.js']) {
+for (const file of ['cld-url.js', 'optimize-cloudinary-url.js', 'derive-video-thumbnail-url.js'].map(f => 'media/' + f) /* cycle-9 2026-09-29: media family folder */) {
   const source = fs.readFileSync(path.join(featureDir, file), 'utf8');
   vm.runInContext(source, context, { filename: file });
 }

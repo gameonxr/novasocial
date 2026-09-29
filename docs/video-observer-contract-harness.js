@@ -4,7 +4,7 @@ const path = require('path');
 const vm = require('vm');
 
 const repo = path.resolve(__dirname, '..');
-const observerSource = fs.readFileSync(path.join(repo, 'src', 'features', 'init-video-observer.js'), 'utf8');
+const observerSource = fs.readFileSync(path.join(repo, 'src', 'features', 'media', 'init-video-observer.js'), 'utf8');
 const homeSource = fs.readFileSync(path.join(repo, 'src', 'features', 'home', 'home.js'), 'utf8');
 const videos = [
   { id: 'visible', paused: false, pause() { this.paused = true; } },

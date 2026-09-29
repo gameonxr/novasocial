@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '..');
-const source = fs.readFileSync(path.join(repo, 'src', 'features', 'compress-image.js'), 'utf8');
+const source = fs.readFileSync(path.join(repo, 'src', 'features', 'media', 'compress-image.js'), 'utf8');
 
 for (const marker of [
   'async function _compressImage(file, config)',
@@ -40,5 +40,5 @@ assert(!source.includes('supabase'), 'Compress image must remain client-side');
 
 console.log('COMPRESS_IMAGE_CONTRACT_HARNESS=PASS');
 console.log('SMALL_FILE_BYPASS_CANVAS_SCALE_DEFAULTS_QUALITY_LOOP_FORMAT_FILENAME_CLEANUP_FALLBACKS_SCOPE=LOCKED');
-console.log('MODULE_OWNER=src/features/compress-image.js');
+console.log('MODULE_OWNER=src/features/media/compress-image.js');
 console.log('PRODUCTION_CHANGE=0');

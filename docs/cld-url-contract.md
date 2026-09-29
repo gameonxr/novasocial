@@ -23,7 +23,7 @@ The extracted `src/features/cld-url.js` module remains unchanged in this checkpo
 
 ## References
 
-1. [`cld-url.js`](../src/features/cld-url.js)
+1. [`cld-url.js`](../src/features/media/cld-url.js)
 2. [`derive-video-thumbnail-url-contract.md`](./derive-video-thumbnail-url-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

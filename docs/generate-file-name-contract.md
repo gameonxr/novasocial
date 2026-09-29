@@ -23,7 +23,7 @@ The extracted `src/features/generate-file-name.js` module remains unchanged in t
 
 ## References
 
-1. [`generate-file-name.js`](../src/features/generate-file-name.js)
+1. [`generate-file-name.js`](../src/features/media/generate-file-name.js)
 2. [`delete-multiple-media-contract.md`](./delete-multiple-media-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

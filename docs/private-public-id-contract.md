@@ -23,7 +23,7 @@ The extracted `src/features/private-public-id.js` module remains unchanged in th
 
 ## References
 
-1. [`private-public-id.js`](../src/features/private-public-id.js)
+1. [`private-public-id.js`](../src/features/media/private-public-id.js)
 2. [`extract-cloudinary-public-id-contract.md`](./extract-cloudinary-public-id-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

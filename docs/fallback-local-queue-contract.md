@@ -19,6 +19,6 @@ The harness is static and documentation-only. It does not access browser storage
 
 ## References
 
-1. [`fallback-local-queue.js`](../src/features/fallback-local-queue.js)
+1. [`fallback-local-queue.js`](../src/features/media/fallback-local-queue.js)
 2. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

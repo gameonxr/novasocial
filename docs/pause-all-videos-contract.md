@@ -23,7 +23,7 @@ The extracted `src/features/pause-all-videos.js` module remains unchanged in thi
 
 ## References
 
-1. [`pause-all-videos.js`](../src/features/pause-all-videos.js)
+1. [`pause-all-videos.js`](../src/features/media/pause-all-videos.js)
 2. [`init-video-observer-contract.md`](./init-video-observer-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

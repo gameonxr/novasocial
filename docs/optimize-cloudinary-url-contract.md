@@ -23,7 +23,7 @@ The extracted `src/features/optimize-cloudinary-url.js` module remains unchanged
 
 ## References
 
-1. [`optimize-cloudinary-url.js`](../src/features/optimize-cloudinary-url.js)
+1. [`optimize-cloudinary-url.js`](../src/features/media/optimize-cloudinary-url.js)
 2. [`cld-url-contract.md`](./cld-url-contract.md)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 
