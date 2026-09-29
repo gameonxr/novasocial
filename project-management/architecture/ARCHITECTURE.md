@@ -30,9 +30,10 @@ NovaSocial's actual architecture (classic scripts + global functions, no bundler
   → 20 post-inline scripts (`nova-init.js`, `like-effects.js`, owner files).
 - **Boot**: inline script `window.addEventListener('load')` → `NovaEngine.boot()`
   → session restore → `loadProf()` → `showApp()` → `go('home')`.
-- **Navigation**: single funnel `window.go(tab)` in `src/features/go.js` dispatches
-  to `renderHome/renderExplore/renderReels/renderDMs/renderNotifs/renderProfile`
-  with skeleton + tab-cache (stale-while-revalidate) already built in.
+- **Navigation**: single funnel `window.go(tab)` in `src/features/system/go.js`
+  dispatches to `renderHome/renderExplore/renderReels/renderDMs/renderNotifs/renderProfile`
+  with skeleton + tab-cache (stale-while-revalidate) already built in. *(cycle 9:
+  startup re-folder — path only, order/behavior unchanged)*
 - **Service worker**: `sw.js` — cache-first for same-origin GETs, network-first
   for navigation, push + notificationclick handlers. Feature chunks fetched via the
   loader are cached by the existing SW with zero `sw.js` changes.
@@ -168,12 +169,18 @@ SW-cached after first fetch. No private API responses are cached by the loader.
    added for dms chat headers. Startup after this cycle: 128 scripts /
    ~400 KB tagged + ~42 KB inline ≈ 443 KB vs 1,218 KB baseline)
 8. ✅ profile + explore + reels (go() tab gating) — completed with cycle 5
-9. Startup families re-foldered (posts, home, media, system, auth,
-   notifications) — tags stay, paths update only. **Status: deferred —
-   organization-only (zero loading/behavior change). 92 flat startup files
-   remain; moving them touches 227+ harness path pins across 92 harnesses.
-   All lazy-family migration (the behavior-changing work) is COMPLETE;
-   execute this cycle as a standalone follow-up whenever desired.**
+9. ✅ Startup families re-foldered (cycle 9, 2026-09-29, organization-only/
+   zero behavior change): all 92 flat startup files moved via git mv (R100
+   byte-identical) into auth(17) posts(16) home(7) media(16) notifications(8)
+   system(20) chat(2) + 6 cross-family eager services per the chunk≠folder
+   convention (admin/show-report-detail, news/news-feed, reels/
+   destroy-reels-persistent-container, calls/start+stop-network-monitor,
+   settings/security-center — tags retained, loading behavior unchanged).
+   Tags stay with paths rewritten in place (exact relative order verified
+   byte-equivalent); loaders/manifest/stubs/prefetch/sw.js byte-identical;
+   129 tags / 346 manifest entries / 454 files unchanged; startup bytes
+   identical; ~250 harness pins evolved + branch2-only allowlist old+new
+   paths; battery 320/5 era-pins identity-matched every batch.
 10. ✅ Prefetch activation (shipped live with the loader infrastructure:
     idle prefetch of likely-next, hover intent, connection-aware,
     network-warm-only)
