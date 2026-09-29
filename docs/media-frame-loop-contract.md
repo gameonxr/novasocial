@@ -29,7 +29,7 @@ No production logic is changed by this audit. It records the media frame-loop sa
 
 ## References
 
-1. [`src/features/compress-video.js`](../src/features/media/compress-video.js)
+1. [`src/features/media/compress-video.js`](../src/features/media/compress-video.js)
 2. [`src/features/trim-video.js`](../src/features/stories/trim-video.js)
 3. [`MIGRATION_MAP.md`](../MIGRATION_MAP.md)
 

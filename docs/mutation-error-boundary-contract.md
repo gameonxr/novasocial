@@ -29,7 +29,7 @@ No production logic is changed by this audit. The contract records a load-bearin
 
 ## References
 
-1. [`src/features/comments.js`](../src/features/posts/comments.js)
+1. [`src/features/posts/comments.js`](../src/features/posts/comments.js)
 2. [`index.html`](../index.html)
 3. [`src/features/ai-moderation.js`](../src/features/ai/ai-moderation.js)
 4. [`CRITICAL_CONTEXT.md`](../../upload/CRITICAL_CONTEXT.md)

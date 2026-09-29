@@ -30,5 +30,5 @@ This is a static, documentation-only audit. It does not log in, switch accounts,
 
 1. [`account-bootstrap-contract.md`](./account-bootstrap-contract.md)
 2. [`logout-account-transition-contract.md`](./logout-account-transition-contract.md)
-3. [`src/features/switch-to-account.js`](../src/features/auth/switch-to-account.js)
+3. [`src/features/auth/switch-to-account.js`](../src/features/auth/switch-to-account.js)
 

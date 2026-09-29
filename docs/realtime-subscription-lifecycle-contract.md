@@ -30,7 +30,7 @@ No production logic is changed by this audit. The contract makes the current reg
 ## References
 
 1. [`index.html`](../index.html)
-2. [`src/features/notifications.js`](../src/features/notifications/notifications.js)
+2. [`src/features/notifications/notifications.js`](../src/features/notifications/notifications.js)
 3. [`src/features/setup-self-profile-realtime-sync.js`](../src/features/setup-self-profile-realtime-sync.js)
 4. [`src/features/setup-notes-realtime.js`](../src/features/notes/setup-notes-realtime.js)
 5. [`dms-realtime-contract.md`](./dms-realtime-contract.md)

@@ -29,8 +29,8 @@ No production code is changed by this audit. The contract records the existing w
 
 ## References
 
-1. [`src/features/nova-init.js`](../src/features/system/nova-init.js)
-2. [`src/features/like-effects.js`](../src/features/posts/like-effects.js)
+1. [`src/features/system/nova-init.js`](../src/features/system/nova-init.js)
+2. [`src/features/posts/like-effects.js`](../src/features/posts/like-effects.js)
 3. [`dependency-loading-order-contract.md`](./dependency-loading-order-contract.md)
 4. [`index.html`](../index.html)
 
