@@ -5,6 +5,16 @@
 window.initiateCall = async function initiateCall(userId, userName, userAvatar, callType) {
   callType = callType || 'audio';
   if (_callState.active) { toast('Pehle current call khatam karo'); return; }
+  // ── POST-MIGRATION REPAIR: UI-prerequisite guard ─────────────────────
+  // A partially-loaded calls chunk can leave initiateCall defined while
+  // showCallScreen is not. Guard BEFORE any DB write or state flip so a
+  // missing renderer can never strand an active call (zombie state:
+  // state/DB active, no UI, second call blocked by the guard above).
+  if (typeof showCallScreen !== 'function') {
+    console.error('[CALL] initiateCall blocked: showCallScreen is not defined (partial calls-chunk load?)');
+    toast('Call screen load nahi hua — dobara try karein');
+    return;
+  }
   let callId;
   try {
     const { data: callRow, error } = await db.from('calls').insert({ caller_id: ME.id, callee_id: userId, call_type: callType, status: 'ringing' }).select().single();
