@@ -78,7 +78,13 @@ async function toggleLike(pid){
 }
 
 function dblLike(pid,cont){
-  cont.appendChild(p);setTimeout(()=>p.remove(),700);
+  // NOTE (post-migration repair, pre-existing Stage-0 defect): this function
+  // previously began with `cont.appendChild(p);setTimeout(()=>p.remove(),700);`
+  // referencing `p` before its declaration inside the flying-hearts loop below —
+  // a ReferenceError on EVERY post double-tap that aborted the function, so the
+  // like toggle and the hearts animation never ran. Verified present at the
+  // known-good baseline 5f68ef as well (pre-migration bug, not a regression).
+  // The dead lines are removed; the loop below owns the animation.
   haptic(20);
   const el=document.getElementById('lbtn-'+pid);
   if(el&&el.dataset.liked!=='true') toggleLike(pid);
