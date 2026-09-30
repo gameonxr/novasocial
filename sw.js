@@ -4,7 +4,10 @@
 // Phase 3: push event handler + notificationclick handler
 // ═══════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'novasocial-v1';
+const CACHE_NAME = 'novasocial-v2'; // POST-MIGRATION REPAIR: bumped from v1 —
+// deploy-time invalidation drops every v1 entry, including any 404/error
+// responses the old non-OK-caching bug stored. Bump this name on every
+// release so stale/poisoned entries can never outlive a deploy.
 const CACHE_URLS = [
   '/',
   '/index.html',
@@ -45,16 +48,25 @@ self.addEventListener('fetch', (event) => {
       if (event.request.mode === 'navigate') {
         return fetch(event.request)
           .then((response) => {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
+            // POST-MIGRATION REPAIR: never cache a non-OK response — a cached
+            // 404/error HTML would be replayed across reloads (cache poison).
+            if (response && response.ok) {
+              const clone = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
+            }
             return response;
           })
           .catch(() => cached || caches.match('/'));
       }
       // Cache-first for other assets
       return cached || fetch(event.request).then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
+        // POST-MIGRATION REPAIR: same guard for JS/CSS/assets — a single 404
+        // during a deploy window used to be cached cache-first and replayed
+        // forever, permanently breaking the affected lazy chunk on a device.
+        if (response && response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
+        }
         return response;
       }).catch(() => cached);
     })
