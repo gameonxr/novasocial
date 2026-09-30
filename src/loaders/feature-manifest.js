@@ -271,6 +271,19 @@ window.FEATURE_MANIFESTS = {
     "src/features/notes/notes-bar.js",
     "src/features/notes/load-notes-feed.js",
     "src/features/notes/notes-reaction-owner.js",
+    // DM bubble utilities (dual membership): these files live in the stories/
+    // notes families but the functions they define are invoked by inline
+    // handlers on DOM the dms chunk renders (load-msgs.js /
+    // -load-older-messages.js bubbles): ontouchstart/move/end + ondblclick
+    // gestures, onended audio chaining. Touch gestures are time-sensitive —
+    // a load-then-re-dispatch stub cannot serve them — so the dms chunk
+    // itself must define them (same pattern as notes-bar.js above).
+    "src/features/stories/swipe-start.js",
+    "src/features/stories/swipe-move.js",
+    "src/features/stories/swipe-end.js",
+    "src/features/stories/heart-react.js",
+    "src/features/notes/play-next-audio.js",
+    "src/features/notes/change-audio-speed.js",
 
   ],
   "memories": [
