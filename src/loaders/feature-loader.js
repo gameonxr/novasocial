@@ -16,14 +16,48 @@
 //      migration state behavior-identical to today.
 //   6. Debug logging only when explicitly enabled.
 //
+// ── FAILURE HARDENING (post-migration repair) ────────────────────────
+//   6a. Per-script LOAD TIMEOUT: a request that neither resolves nor errors
+//       within FEATURE_LOAD_TIMEOUT_MS rejects and removes the tag — the chain
+//       can never hang forever on a stalled request.
+//   6b. Script-eval-error detection: uncaught errors during a chunk file's
+//       evaluation (window error events whose filename matches the injected
+//       URL) reject that file's load — a chunk that throws half its way through
+//       is treated as a failed load, not a silent success.
+//   6c. On chunk failure the stub layer is notified
+//       (window.__novaFeatureStubs.onFeatureFailure) so stubs the partial
+//       execution overwrote are re-installed — the demand-loading boundary
+//       survives partial failures and the next call retries cleanly.
+//
 // No globals are created beyond the loader API itself.
 
 window.__novaFeatureLoader = (function () {
   'use strict';
 
+  const FEATURE_LOAD_TIMEOUT_MS = 20000;
+
   const loadedFeatures = new Set();
   const pendingFeatures = new Map();
   const loadedScriptUrls = new Set();
+
+  // uncaught-error ring buffer — consulted by el.onload to detect eval-time
+  // script errors in injected chunk files (see 6b above)
+  window.__novaScriptErrors = [];
+  window.addEventListener('error', function (ev) {
+    try {
+      if (ev && ev.filename && window.__novaScriptErrors.length < 50) {
+        window.__novaScriptErrors.push({ filename: ev.filename, message: ev.message, ts: Date.now() });
+      }
+    } catch (e) {}
+  });
+
+  function notifyStubsOnFailure(name) {
+    try {
+      if (window.__novaFeatureStubs && typeof window.__novaFeatureStubs.onFeatureFailure === 'function') {
+        window.__novaFeatureStubs.onFeatureFailure(name);
+      }
+    } catch (e) { /* hardening must never break the failure path itself */ }
+  }
 
   function debug() {
     if (window.__NOVA_FEATURE_DEBUG || (window.localStorage && localStorage.getItem('nova-feature-debug') === '1')) {
@@ -80,16 +114,47 @@ window.__novaFeatureLoader = (function () {
         resolve();
         return;
       }
+      let settled = false;
       const el = document.createElement('script');
       el.src = url;
       el.async = false;           // preserve ordering relative to other injected scripts
       el.__novaInjected = true;   // demand-load marker — see featurePresentInDocument
+      // hardening 6a: a request that neither resolves nor errors within the
+      // timeout rejects and removes the tag — the chain can never hang forever
+      const timeoutId = setTimeout(function () {
+        if (settled) return;
+        settled = true;
+        el.remove();
+        debug('TIMEOUT', url);
+        reject(new Error('FeatureLoader: timeout loading ' + url));
+      }, FEATURE_LOAD_TIMEOUT_MS);
       el.onload = function () {
+        if (settled) return;
+        // hardening 6b: did this file throw while evaluating? An uncaught
+        // error whose source matches this URL means partial definitions only —
+        // treat as failure so the chunk is retried instead of half-loaded.
+        const errs = window.__novaScriptErrors || [];
+        for (let i = 0; i < errs.length; i++) {
+          if (errs[i].filename && errs[i].filename.length >= url.length &&
+              errs[i].filename.slice(-url.length) === url) {
+            settled = true;
+            clearTimeout(timeoutId);
+            el.remove();
+            debug('EVAL ERROR', url, errs[i].message);
+            reject(new Error('FeatureLoader: script error in ' + url + ' — ' + errs[i].message));
+            return;
+          }
+        }
+        settled = true;
+        clearTimeout(timeoutId);
         loadedScriptUrls.add(url);
         debug('loaded', url);
         resolve();
       };
       el.onerror = function () {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timeoutId);
         el.remove();
         debug('FAILED', url);
         reject(new Error('FeatureLoader: failed to load ' + url));
@@ -127,8 +192,10 @@ window.__novaFeatureLoader = (function () {
       pendingFeatures.delete(name);
       debug('feature ready', name);
     }, function (err) {
-      // failure → clear pending so the next call retries
+      // failure → clear pending so the next call retries + restore any stubs
+      // the partial execution overwrote (boundary preservation — 6c)
       pendingFeatures.delete(name);
+      notifyStubsOnFailure(name);
       debug('feature failed', name, err.message);
       throw err;
     });
