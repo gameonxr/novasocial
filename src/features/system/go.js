@@ -2,6 +2,24 @@
 // Owner SHA-256: 26fbf56f8dc14774472ee2f4756fd7003befc6439ce72392bac8bdb9215c3068
 // Classic script — exposes window.go
 
+// ── POST-MIGRATION REPAIR: tab-render failure surface ──────────────────
+// Replaces the forever-skeleton left behind when an async tab renderer
+// rejects (chunk load failure, data failure). Only acts if the user is
+// still on the failed tab — a later navigation wins over the error screen.
+window.__novaShowTabError = function __novaShowTabError(tab, err) {
+  try {
+    if (typeof curTab !== 'undefined' && curTab !== tab) return; // user moved on
+    const scr = document.getElementById('screen');
+    if (!scr) return;
+    const msg = String((err && err.message) || err || 'unknown error');
+    scr.innerHTML = '<div style="text-align:center;padding:60px 24px;color:#fff;">' +
+      '<div style="font-size:44px;margin-bottom:14px;">⚠️</div>' +
+      '<div style="font-weight:700;font-size:16px;margin-bottom:6px;">Screen load nahi ho payi</div>' +
+      '<div style="color:#8a8a8a;font-size:12px;margin-bottom:18px;word-break:break-word;">' + esc(msg) + '</div>' +
+      '<button class="bgrd" onclick="go(\'' + tab + '\')" style="padding:12px 28px;">Retry</button></div>';
+  } catch (e) { /* never crash the error path */ }
+};
+
 window.go = function go(tab){
   // Leaving an open chat from a bottom-nav tap must cancel chat-only realtime
   // work before the DMs cache is considered again.
@@ -130,12 +148,24 @@ window.go = function go(tab){
     scr.style.overflow='auto';
     scr.style.display='block';
 
-    if(tab==='home') renderHome();
-    else if(tab==='explore') renderExplore();
-    else if(tab==='reels') renderReels();
-    else if(tab==='dms') renderDMs();
-    else if(tab==='notifs') renderNotifs();
-    else if(tab==='profile') renderProfile();
+    // ── POST-MIGRATION REPAIR: async-renderer failure surface ─────────────
+    // Tab renderers are async. A synchronous throw lands in the catch below
+    // (error screen), but a REJECTED promise (chunk load failure, data
+    // failure) used to become an unhandled rejection while the skeleton
+    // stayed on screen forever — the "DMs sometimes do not load" residual.
+    // Call each renderer once; on rejection, if the user is still on this
+    // tab, replace the skeleton with a visible error + Retry button.
+    {
+      const _renderMap = {home:'renderHome', explore:'renderExplore', reels:'renderReels', dms:'renderDMs', notifs:'renderNotifs', profile:'renderProfile'};
+      const _rfn = _renderMap[tab];
+      if (_rfn) {
+        const _r = window[_rfn](); // sync throw still lands in the outer catch
+        Promise.resolve(_r).catch(function(e){
+          console.error('[go] renderer failed:', tab, e);
+          window.__novaShowTabError(tab, e);
+        });
+      }
+    }
   } catch(e) {
     console.error("Navigation Error:", e);
     document.getElementById('screen').innerHTML = '<div style="text-align:center;padding:40px;color:#E1306C;">App me error aaya hai. Console check karein.</div>';
